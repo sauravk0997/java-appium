@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>disney-qa</groupId>
+    <artifactId>disney-qa</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>disney-qa</name>
+    <url>https://www.thewaltdisneycompany.com/</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <carina-core_version>7.4.28</carina-core_version>
+        <zebrunner-agent.version>1.7.4</zebrunner-agent.version>
+        <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
+        <spring.version>4.1.1.RELEASE</spring.version>
+        <javax-mail.verison>1.6.2</javax-mail.verison>
+        <guava.version>30.0-jre</guava.version>
+        <alice-client-version>1.0.48</alice-client-version>
+        <mitm-proxy-utils-version>1.1.16</mitm-proxy-utils-version>
+        <suite>helloDisney</suite>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>bamtech_releases</id>
+            <name>Bamtech Releases</name>
+            <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-releases</url>
+        </repository>
+        <repository>
+            <id>bamtech_snapshots</id>
+            <name>Bamtech Snapshots</name>
+            <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-snapshots</url>
+        </repository>
+        <repository>
+            <id>qaprosoft_3rdparty</id>
+            <name>Qaprosoft Thirdparty</name>
+            <url>https://ci.qaprosoft.com/nexus/content/repositories/thirdparty/</url>
+        </repository>
+        <repository>
+            <id>qait_releases</id>
+            <name>QAIT Releases</name>
+            <url>https://artifactory.us-east-1.bamgrid.net/qait-maven</url>
+        </repository>
+        <repository>
+            <id>zebrunner_snapshots</id>
+            <name>zebrunner Snapshots</name>
+            <url>https://nexus.zebrunner.dev/repository/ce-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <!-- Browsermob and Guava dependencies were added at the beginning since
+            https traffic couldn't be sniffed -->
+        <dependency>
+            <groupId>com.disney</groupId>
+            <artifactId>disney-api-utils</artifactId>
+            <version>1.5.308</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mailapi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.disney</groupId>
+            <artifactId>mitm-proxy-utils</artifactId>
+            <version>${mitm-proxy-utils-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${javax-mail.verison}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qaprosoft</groupId>
+            <artifactId>carina-core</artifactId>
+            <version>${carina-core_version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.azure</groupId>
+                    <artifactId>azure-storage-blob</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-text</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <!-- Carina has a different version of the SageMaker dependency that we do no want -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sagemakerruntime</artifactId>
+            <version>1.12.94</version>
+        </dependency>
+        <dependency>
+            <groupId>com.disney.alice</groupId>
+            <artifactId>alice-client</artifactId>
+            <version>${alice-client-version}</version>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <!-- to use zebrunner testng agent for webdriver sesssion(s) declaration KEEP THIS-->
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.10.18</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- needed for spring RestTemplate stuff -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+        <!-- For SHA1 hash generation -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>
+        <!-- For displaying more clearly what was changed in JSON objects -->
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+        <!-- For displaying more clearly what was changed in JSON objects -->
+        <dependency>
+            <groupId>com.flipkart.zjsonpatch</groupId>
+            <artifactId>zjsonpatch</artifactId>
+            <version>0.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.lightbody.bmp</groupId>
+            <artifactId>browsermob-core</artifactId>
+            <version>2.1.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.26</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.disney</groupId>
+            <artifactId>concurrency-generator</artifactId>
+            <version>1.3.189</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.qaprosoft</groupId>
+                    <artifactId>carina-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j -->
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.disney</groupId>
+            <artifactId>Google-sheets-wrapper</artifactId>
+            <version>1.0.7</version>
+            <classifier>jar-with-dependencies</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>com.zebrunner</groupId>
+                            <artifactId>agent-core</artifactId>
+                            <version>${zebrunner-agent.version}</version>
+                            <outputDirectory>${project.build.directory}/agent</outputDirectory>
+                            <destFileName>zebrunner-core-agent.jar</destFileName>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <argLine>-javaagent:${project.build.directory}/agent/zebrunner-core-agent.jar</argLine>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${project.build.directory}/test-classes/TestNG_suites/${suite}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
