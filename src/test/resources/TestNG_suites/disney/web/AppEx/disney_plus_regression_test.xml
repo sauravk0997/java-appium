@@ -1,0 +1,149 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name= "Web - Disney+ - Regression Test - Suite" parallel="tests" thread-count="10">
+
+    <parameter name="suiteOwner" value="Web QAA"/>
+    <parameter name="reporting.project-key" value="DIS" />
+    <parameter name="reporting.notification.slack-channels" value="dplus-web-automation-zebrunner"/>
+    <parameter name="com.zebrunner.app/tcm.qtest.project-id" value="19" />
+    <parameter name="jenkinsJobType" value="web"/>
+    <parameter name="jenkinsJobName" value="Disney-Plus-Web-Regression-Test"/>
+    <parameter name="jenkinsUrl" value="https://www.disneyplus.com/"/>
+    <parameter name="jenkinsEmail" value="webqa@disneystreaming.com,derek.smith@disneystreaming.com, web-qaa-team@disneystreaming.com"/>
+    <parameter name="jenkinsEnvironments" value="PROD,QA,BETA,PREVIEW"/>
+    <parameter name="jenkinsRegressionPipeline" value="Disney-Plus-Web-Regression-Pipeline-US-East-1"/>
+    <parameter name="jenkinsQueueRegistration" value="false"/>
+    <parameter name="jenkinsRegressionMatrix_Disney-Plus-Web-Regression-Pipeline-US-East-1" value="browser:chrome, locale:US, language:en-US; browser:firefox, locale:US, language:en-US"/>
+    <parameter name="stringParam::app_version::Branch to test" value="TRUNK"/>
+    <parameter name="choiceParam::locale::Locale to run" value="US,GB,ES,CA,NL"/>
+    <parameter name="choiceParam::language::Language set for Accounts" value="en-US,en-GB,es-ES,fr-CA,nl"/>
+    <parameter name="booleanParam::proxy_server_geoedge::Request GeoEdge API for IP Address instead of using local proxy-server.yaml file" value="true"/>
+    <parameter name="jenkinsDefaultRetryCount" value="1"/>
+    <parameter name="overrideFields" value="test_naming_pattern={method_description},thread_count=30,locale=${locale},language=${language}"/>
+
+    <test verbose="1" name="Web - Disney+ - Global Nav - Hover Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.globalNav.DisneyPlusNavStateHoverTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - Global Nav - Links Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.globalNav.DisneyPlusNavStateNavLinksTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - Global Nav - Profile Switcher Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.globalNav.DisneyPlusNavProfileSwitcherTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - Global Nav - Account Menu Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.globalNav.DisneyPlusNavAccountMenuTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Default Profile - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusDefaultProfileTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Profile Picker - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusProfilePickerTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Create Profile - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusCreateProfileTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Add Profile - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusAddProfileTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Profile Selection - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusProfileSelectionViewTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Kids - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.DisneyPlusProfileKidsTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Edit Profile - Edit Name - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.editProfile.DisneyPlusEditNamePageTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Edit Profile - Delete Profile - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.editProfile.DisneyPlusDeleteProfileTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Edit Profile - Autoplay - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.editProfile.DisneyPlusAutoplayTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Edit Profile - Kids Mode - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.profile.editProfile.DisneyPlusJuniorModeTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - More - Menu - Account Management Screens - Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.account.DisneyPlusProfileAccountManagementTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - User - Email View Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.olpSignup.DisneyPlusUserFlowEmailViewTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - User - Password View Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.olpSignup.DisneyPlusUserFlowPasswordViewTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - Disney+ - User - Errors Tests">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.web.appex.redirects.DisneyPlusUserFlowErrorsTest"/>
+        </classes>
+    </test>
+
+</suite>

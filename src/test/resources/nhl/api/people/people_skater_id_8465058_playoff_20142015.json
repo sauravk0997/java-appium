@@ -1,0 +1,1757 @@
+{
+	"copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+	"people": [
+		{
+			"id": 8465058,
+			"fullName": "Michal Rozsival",
+			"link": "/api/v1/people/8465058",
+			"firstName": "Michal",
+			"lastName": "Rozsival",
+			"primaryNumber": "32",
+			"birthDate": "1978-09-03",
+			"birthCity": "Vlasim",
+			"birthCountry": "CZE",
+			"nationality": "CZE",
+			"height": "6' 1\"",
+			"weight": 210,
+			"active": false,
+			"rookie": false,
+			"shootsCatches": "R",
+			"rosterStatus": "I",
+			"primaryPosition": {
+				"code": "D",
+				"name": "Defenseman",
+				"type": "Defenseman",
+				"abbreviation": "D"
+			},
+			"social": {
+				
+			},
+			"stats": [
+				{
+					"type": {
+						"displayName": "yearByYearPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "19961997",
+							"stat": {
+								"timeOnIce": "00:00",
+								"assists": 6,
+								"goals": 0,
+								"pim": 15,
+								"games": 10,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "00:00",
+								"penaltyMinutes": "15",
+								"shortHandedTimeOnIce": "00:00",
+								"points": 6,
+								"shifts": 0
+							},
+							"team": {
+								"id": 4800,
+								"name": "Swift Current",
+								"link": "/api/v1/teams/4800"
+							},
+							"league": {
+								"id": 21,
+								"name": "WHL",
+								"link": "/api/v1/league/21"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "19971998",
+							"stat": {
+								"timeOnIce": "00:00",
+								"assists": 5,
+								"goals": 0,
+								"pim": 33,
+								"games": 12,
+								"powerPlayGoals": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "00:00",
+								"penaltyMinutes": "33",
+								"faceOffPct": 0.0,
+								"gameWinningGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"points": 5,
+								"shifts": 0
+							},
+							"team": {
+								"id": 4800,
+								"name": "Swift Current",
+								"link": "/api/v1/teams/4800"
+							},
+							"league": {
+								"id": 21,
+								"name": "WHL",
+								"link": "/api/v1/league/21"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "19992000",
+							"stat": {
+								"timeOnIce": "61:52",
+								"assists": 0,
+								"goals": 0,
+								"pim": 4,
+								"shots": 5,
+								"games": 2,
+								"hits": 0,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "01:24",
+								"evenTimeOnIce": "57:18",
+								"penaltyMinutes": "4",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:10",
+								"blocked": 0,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 86
+							},
+							"team": {
+								"id": 5,
+								"name": "Pittsburgh Penguins",
+								"link": "/api/v1/teams/5"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20002001",
+							"stat": {
+								"timeOnIce": "00:00",
+								"assists": 19,
+								"goals": 3,
+								"pim": 23,
+								"games": 21,
+								"powerPlayGoals": 1,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "00:00",
+								"penaltyMinutes": "23",
+								"faceOffPct": 0.0,
+								"gameWinningGoals": 1,
+								"shortHandedGoals": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"points": 22,
+								"shifts": 0
+							},
+							"team": {
+								"id": 6054,
+								"name": "Wilkes-Barre",
+								"link": "/api/v1/teams/6054"
+							},
+							"league": {
+								"id": 153,
+								"name": "AHL",
+								"link": "/api/v1/league/153"
+							},
+							"sequenceNumber": 2
+						},
+						{
+							"season": "20042005",
+							"stat": {
+								"timeOnIce": "00:00",
+								"assists": 2,
+								"goals": 1,
+								"pim": 34,
+								"games": 16,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "00:00",
+								"penaltyMinutes": "34",
+								"faceOffPct": 0.0,
+								"shortHandedTimeOnIce": "00:00",
+								"points": 3,
+								"shifts": 0
+							},
+							"team": {
+								"id": 5450,
+								"name": "Pardubice",
+								"link": "/api/v1/teams/5450"
+							},
+							"league": {
+								"name": "CzRep",
+								"link": "/api/v1/league/null"
+							},
+							"sequenceNumber": 2
+						},
+						{
+							"season": "20052006",
+							"stat": {
+								"timeOnIce": "98:03",
+								"assists": 1,
+								"goals": 0,
+								"pim": 8,
+								"shots": 5,
+								"games": 4,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "17:43",
+								"evenTimeOnIce": "64:16",
+								"penaltyMinutes": "8",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "16:04",
+								"blocked": 5,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 118
+							},
+							"team": {
+								"id": 3,
+								"name": "New York Rangers",
+								"link": "/api/v1/teams/3"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20062007",
+							"stat": {
+								"timeOnIce": "247:29",
+								"assists": 4,
+								"goals": 3,
+								"pim": 10,
+								"shots": 18,
+								"games": 10,
+								"hits": 12,
+								"powerPlayGoals": 2,
+								"powerPlayPoints": 6,
+								"powerPlayTimeOnIce": "45:06",
+								"evenTimeOnIce": "159:12",
+								"penaltyMinutes": "10",
+								"faceOffPct": 0.0,
+								"shotPct": 16.7,
+								"gameWinningGoals": 1,
+								"overTimeGoals": 1,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "43:11",
+								"blocked": 25,
+								"plusMinus": 6,
+								"points": 7,
+								"shifts": 304
+							},
+							"team": {
+								"id": 3,
+								"name": "New York Rangers",
+								"link": "/api/v1/teams/3"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20072008",
+							"stat": {
+								"timeOnIce": "250:49",
+								"assists": 5,
+								"goals": 1,
+								"pim": 10,
+								"shots": 13,
+								"games": 10,
+								"hits": 20,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 1,
+								"powerPlayTimeOnIce": "36:16",
+								"evenTimeOnIce": "180:13",
+								"penaltyMinutes": "10",
+								"faceOffPct": 0.0,
+								"shotPct": 7.7,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "34:20",
+								"blocked": 16,
+								"plusMinus": 4,
+								"points": 6,
+								"shifts": 332
+							},
+							"team": {
+								"id": 3,
+								"name": "New York Rangers",
+								"link": "/api/v1/teams/3"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20082009",
+							"stat": {
+								"timeOnIce": "158:49",
+								"assists": 0,
+								"goals": 0,
+								"pim": 4,
+								"shots": 5,
+								"games": 7,
+								"hits": 13,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "26:53",
+								"evenTimeOnIce": "111:16",
+								"penaltyMinutes": "4",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "20:40",
+								"blocked": 19,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 213
+							},
+							"team": {
+								"id": 3,
+								"name": "New York Rangers",
+								"link": "/api/v1/teams/3"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20102011",
+							"stat": {
+								"timeOnIce": "79:36",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 3,
+								"games": 4,
+								"hits": 11,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "03:28",
+								"evenTimeOnIce": "66:29",
+								"penaltyMinutes": "2",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "09:39",
+								"blocked": 5,
+								"plusMinus": -3,
+								"points": 0,
+								"shifts": 109
+							},
+							"team": {
+								"id": 27,
+								"name": "Phoenix Coyotes",
+								"link": "/api/v1/teams/27"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20112012",
+							"stat": {
+								"timeOnIce": "327:07",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 11,
+								"games": 15,
+								"hits": 31,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "03:07",
+								"evenTimeOnIce": "275:35",
+								"penaltyMinutes": "2",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "48:25",
+								"blocked": 28,
+								"plusMinus": -3,
+								"points": 0,
+								"shifts": 447
+							},
+							"team": {
+								"id": 27,
+								"name": "Phoenix Coyotes",
+								"link": "/api/v1/teams/27"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20122013",
+							"stat": {
+								"timeOnIce": "443:05",
+								"assists": 4,
+								"goals": 0,
+								"pim": 16,
+								"shots": 14,
+								"games": 23,
+								"hits": 49,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "20:29",
+								"evenTimeOnIce": "403:40",
+								"penaltyMinutes": "16",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "18:56",
+								"blocked": 25,
+								"plusMinus": 9,
+								"points": 4,
+								"shifts": 612
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20132014",
+							"stat": {
+								"timeOnIce": "299:23",
+								"assists": 5,
+								"goals": 1,
+								"pim": 8,
+								"shots": 13,
+								"games": 17,
+								"hits": 31,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "10:12",
+								"evenTimeOnIce": "270:04",
+								"penaltyMinutes": "8",
+								"faceOffPct": 0.0,
+								"shotPct": 7.7,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "19:07",
+								"blocked": 21,
+								"plusMinus": -1,
+								"points": 6,
+								"shifts": 415
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "174:22",
+								"assists": 1,
+								"goals": 0,
+								"pim": 6,
+								"shots": 5,
+								"games": 10,
+								"hits": 24,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "169:17",
+								"penaltyMinutes": "6",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:01",
+								"blocked": 9,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 256
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						},
+						{
+							"season": "20152016",
+							"stat": {
+								"timeOnIce": "64:53",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 1,
+								"games": 4,
+								"hits": 10,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:39",
+								"evenTimeOnIce": "60:44",
+								"penaltyMinutes": "2",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:30",
+								"blocked": 7,
+								"plusMinus": -3,
+								"points": 0,
+								"shifts": 96
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"league": {
+								"id": 133,
+								"name": "National Hockey League",
+								"link": "/api/v1/league/133"
+							},
+							"sequenceNumber": 1
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "careerPlayoffs"
+					},
+					"splits": [
+						{
+							"stat": {
+								"timeOnIce": "2205:28",
+								"assists": 20,
+								"goals": 5,
+								"pim": 72,
+								"shots": 93,
+								"games": 106,
+								"hits": 205,
+								"powerPlayGoals": 2,
+								"powerPlayPoints": 7,
+								"powerPlayTimeOnIce": "167:21",
+								"evenTimeOnIce": "1818:04",
+								"penaltyMinutes": "72",
+								"faceOffPct": 0.0,
+								"shotPct": 5.4,
+								"gameWinningGoals": 1,
+								"overTimeGoals": 1,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "220:03",
+								"blocked": 160,
+								"plusMinus": 5,
+								"points": 25,
+								"shifts": 2988,
+								"timeOnIcePerGame": "20:48",
+								"evenTimeOnIcePerGame": "17:09",
+								"shortHandedTimeOnIcePerGame": "02:04",
+								"powerPlayTimeOnIcePerGame": "01:34"
+							}
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "playoffGameLog"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "07:16",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 0,
+								"games": 1,
+								"hits": 0,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "07:16",
+								"penaltyMinutes": "0",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 0,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 9
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 30,
+								"name": "Minnesota Wild",
+								"link": "/api/v1/teams/30"
+							},
+							"date": "2015-05-07",
+							"isHome": false,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030234,
+								"link": "/api/v1/game/2014030234/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030234/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "16:08",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 1,
+								"hits": 0,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "16:03",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:05",
+								"blocked": 4,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 26
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 30,
+								"name": "Minnesota Wild",
+								"link": "/api/v1/teams/30"
+							},
+							"date": "2015-05-05",
+							"isHome": false,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030233,
+								"link": "/api/v1/game/2014030233/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030233/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "17:40",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 0,
+								"games": 1,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "01:09",
+								"evenTimeOnIce": "16:31",
+								"penaltyMinutes": "2",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 1,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 25
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 30,
+								"name": "Minnesota Wild",
+								"link": "/api/v1/teams/30"
+							},
+							"date": "2015-05-03",
+							"isHome": true,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030232,
+								"link": "/api/v1/game/2014030232/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030232/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "16:42",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 1,
+								"games": 1,
+								"hits": 2,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "15:52",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:50",
+								"blocked": 0,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 24
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 30,
+								"name": "Minnesota Wild",
+								"link": "/api/v1/teams/30"
+							},
+							"date": "2015-05-01",
+							"isHome": true,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030231,
+								"link": "/api/v1/game/2014030231/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030231/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "15:01",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 1,
+								"hits": 3,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "15:01",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 1,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 25
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-25",
+							"isHome": true,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030166,
+								"link": "/api/v1/game/2014030166/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030166/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "18:12",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 0,
+								"games": 1,
+								"hits": 2,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "17:16",
+								"penaltyMinutes": "2",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:56",
+								"blocked": 1,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 24
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-23",
+							"isHome": false,
+							"isWin": false,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030165,
+								"link": "/api/v1/game/2014030165/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030165/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "30:04",
+								"assists": 1,
+								"goals": 0,
+								"pim": 0,
+								"shots": 0,
+								"games": 1,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "30:04",
+								"penaltyMinutes": "0",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 0,
+								"plusMinus": 0,
+								"points": 1,
+								"shifts": 38
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-21",
+							"isHome": true,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030164,
+								"link": "/api/v1/game/2014030164/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030164/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "19:37",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 1,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:55",
+								"evenTimeOnIce": "18:42",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 0,
+								"plusMinus": 1,
+								"points": 0,
+								"shifts": 25
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-19",
+							"isHome": true,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030163,
+								"link": "/api/v1/game/2014030163/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030163/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "14:18",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 1,
+								"hits": 2,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "13:32",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:46",
+								"blocked": 2,
+								"plusMinus": -2,
+								"points": 0,
+								"shifts": 28
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-17",
+							"isHome": false,
+							"isWin": false,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030162,
+								"link": "/api/v1/game/2014030162/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030162/content"
+								}
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "19:24",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 0,
+								"games": 1,
+								"hits": 3,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "19:00",
+								"penaltyMinutes": "0",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:24",
+								"blocked": 0,
+								"plusMinus": -1,
+								"points": 0,
+								"shifts": 32
+							},
+							"team": {
+								"id": 16,
+								"name": "Chicago Blackhawks",
+								"link": "/api/v1/teams/16"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"date": "2015-04-15",
+							"isHome": false,
+							"isWin": true,
+							"isOT": false,
+							"game": {
+								"gamePk": 2014030161,
+								"link": "/api/v1/game/2014030161/feed/live",
+								"content": {
+									"link": "/api/v1/game/2014030161/content"
+								}
+							}
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "homeAndAwayPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "99:04",
+								"assists": 1,
+								"goals": 0,
+								"pim": 4,
+								"shots": 3,
+								"games": 5,
+								"hits": 17,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "96:10",
+								"penaltyMinutes": "4",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:50",
+								"blocked": 2,
+								"plusMinus": 1,
+								"points": 1,
+								"shifts": 137,
+								"timeOnIcePerGame": "19:48",
+								"evenTimeOnIcePerGame": "19:14",
+								"shortHandedTimeOnIcePerGame": "00:10",
+								"powerPlayTimeOnIcePerGame": "00:24"
+							},
+							"isHome": true
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "75:18",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 2,
+								"games": 5,
+								"hits": 7,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "73:07",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "02:11",
+								"blocked": 7,
+								"plusMinus": -3,
+								"points": 0,
+								"shifts": 119,
+								"timeOnIcePerGame": "15:03",
+								"evenTimeOnIcePerGame": "14:37",
+								"shortHandedTimeOnIcePerGame": "00:26",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"isHome": false
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "winLossPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "141:52",
+								"assists": 1,
+								"goals": 0,
+								"pim": 4,
+								"shots": 4,
+								"games": 8,
+								"hits": 20,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "138:29",
+								"penaltyMinutes": "4",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "01:19",
+								"blocked": 6,
+								"plusMinus": 0,
+								"points": 1,
+								"shifts": 204,
+								"timeOnIcePerGame": "17:44",
+								"evenTimeOnIcePerGame": "17:18",
+								"shortHandedTimeOnIcePerGame": "00:09",
+								"powerPlayTimeOnIcePerGame": "00:15"
+							},
+							"isWin": true,
+							"isOT": false
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "32:30",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 1,
+								"games": 2,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "30:48",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "01:42",
+								"blocked": 3,
+								"plusMinus": -2,
+								"points": 0,
+								"shifts": 52,
+								"timeOnIcePerGame": "16:15",
+								"evenTimeOnIcePerGame": "15:24",
+								"shortHandedTimeOnIcePerGame": "00:51",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"isWin": false,
+							"isOT": false
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "vsTeamPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "116:36",
+								"assists": 1,
+								"goals": 0,
+								"pim": 2,
+								"shots": 3,
+								"games": 6,
+								"hits": 18,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:55",
+								"evenTimeOnIce": "113:35",
+								"penaltyMinutes": "2",
+								"faceOffWins": 0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "02:06",
+								"blocked": 4,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 172,
+								"timeOnIcePerGame": "19:26",
+								"evenTimeOnIcePerGame": "18:55",
+								"shortHandedTimeOnIcePerGame": "00:21",
+								"powerPlayTimeOnIcePerGame": "00:09"
+							},
+							"opponent": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"opponentDivision": {
+								"id": 16,
+								"name": "Central",
+								"link": "/api/v1/divisions/16"
+							},
+							"opponentConference": {
+								"id": 5,
+								"name": "Western",
+								"link": "/api/v1/conferences/5"
+							}
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "57:46",
+								"assists": 0,
+								"goals": 0,
+								"pim": 4,
+								"shots": 2,
+								"games": 4,
+								"hits": 6,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "01:09",
+								"evenTimeOnIce": "55:42",
+								"penaltyMinutes": "4",
+								"faceOffWins": 0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:55",
+								"blocked": 5,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 84,
+								"timeOnIcePerGame": "14:26",
+								"evenTimeOnIcePerGame": "13:55",
+								"shortHandedTimeOnIcePerGame": "00:13",
+								"powerPlayTimeOnIcePerGame": "00:17"
+							},
+							"opponent": {
+								"id": 30,
+								"name": "Minnesota Wild",
+								"link": "/api/v1/teams/30"
+							},
+							"opponentDivision": {
+								"id": 16,
+								"name": "Central",
+								"link": "/api/v1/divisions/16"
+							},
+							"opponentConference": {
+								"id": 5,
+								"name": "Western",
+								"link": "/api/v1/conferences/5"
+							}
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "vsDivisionPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "174:22",
+								"assists": 1,
+								"goals": 0,
+								"pim": 6,
+								"shots": 5,
+								"games": 10,
+								"hits": 24,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "169:17",
+								"penaltyMinutes": "6",
+								"faceOffWins": 0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:01",
+								"blocked": 9,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 256,
+								"timeOnIcePerGame": "17:26",
+								"evenTimeOnIcePerGame": "16:55",
+								"shortHandedTimeOnIcePerGame": "00:18",
+								"powerPlayTimeOnIcePerGame": "00:12"
+							},
+							"opponentDivision": {
+								"id": 16,
+								"name": "Central",
+								"link": "/api/v1/divisions/16"
+							},
+							"opponentConference": {
+								"id": 5,
+								"name": "Western",
+								"link": "/api/v1/conferences/5"
+							}
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "vsConferencePlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "174:22",
+								"assists": 1,
+								"goals": 0,
+								"pim": 6,
+								"shots": 5,
+								"games": 10,
+								"hits": 24,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "169:17",
+								"penaltyMinutes": "6",
+								"faceOffWins": 0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:01",
+								"blocked": 9,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 256,
+								"timeOnIcePerGame": "17:26",
+								"evenTimeOnIcePerGame": "16:55",
+								"shortHandedTimeOnIcePerGame": "00:18",
+								"powerPlayTimeOnIcePerGame": "00:12"
+							},
+							"opponentConference": {
+								"id": 5,
+								"name": "Western",
+								"link": "/api/v1/conferences/5"
+							}
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "byMonthPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "116:36",
+								"assists": 1,
+								"goals": 0,
+								"pim": 2,
+								"shots": 3,
+								"games": 6,
+								"hits": 18,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:55",
+								"evenTimeOnIce": "113:35",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "02:06",
+								"blocked": 4,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 172,
+								"timeOnIcePerGame": "19:26",
+								"evenTimeOnIcePerGame": "18:55",
+								"shortHandedTimeOnIcePerGame": "00:21",
+								"powerPlayTimeOnIcePerGame": "00:09"
+							},
+							"month": 4
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "57:46",
+								"assists": 0,
+								"goals": 0,
+								"pim": 4,
+								"shots": 2,
+								"games": 4,
+								"hits": 6,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "01:09",
+								"evenTimeOnIce": "55:42",
+								"penaltyMinutes": "4",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:55",
+								"blocked": 5,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 84,
+								"timeOnIcePerGame": "14:26",
+								"evenTimeOnIcePerGame": "13:55",
+								"shortHandedTimeOnIcePerGame": "00:13",
+								"powerPlayTimeOnIcePerGame": "00:17"
+							},
+							"month": 5
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "byDayOfWeekPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "46:12",
+								"assists": 1,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 2,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "46:07",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:05",
+								"blocked": 4,
+								"plusMinus": 0,
+								"points": 1,
+								"shifts": 64,
+								"timeOnIcePerGame": "23:06",
+								"evenTimeOnIcePerGame": "23:03",
+								"shortHandedTimeOnIcePerGame": "00:02",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"dayOfWeek": 2
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "19:24",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 0,
+								"games": 1,
+								"hits": 3,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "19:00",
+								"penaltyMinutes": "0",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:24",
+								"blocked": 0,
+								"plusMinus": -1,
+								"points": 0,
+								"shifts": 32,
+								"timeOnIcePerGame": "19:24",
+								"evenTimeOnIcePerGame": "19:00",
+								"shortHandedTimeOnIcePerGame": "00:24",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"dayOfWeek": 3
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "25:28",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 0,
+								"games": 2,
+								"hits": 2,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "24:32",
+								"penaltyMinutes": "2",
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:56",
+								"blocked": 1,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 33,
+								"timeOnIcePerGame": "12:44",
+								"evenTimeOnIcePerGame": "12:16",
+								"shortHandedTimeOnIcePerGame": "00:28",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"dayOfWeek": 4
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "31:00",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 2,
+								"games": 2,
+								"hits": 4,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "29:24",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "01:36",
+								"blocked": 2,
+								"plusMinus": -2,
+								"points": 0,
+								"shifts": 52,
+								"timeOnIcePerGame": "15:30",
+								"evenTimeOnIcePerGame": "14:42",
+								"shortHandedTimeOnIcePerGame": "00:48",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"dayOfWeek": 5
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "15:01",
+								"assists": 0,
+								"goals": 0,
+								"pim": 0,
+								"shots": 1,
+								"games": 1,
+								"hits": 3,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "00:00",
+								"evenTimeOnIce": "15:01",
+								"penaltyMinutes": "0",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 1,
+								"plusMinus": 0,
+								"points": 0,
+								"shifts": 25,
+								"timeOnIcePerGame": "15:01",
+								"evenTimeOnIcePerGame": "15:01",
+								"shortHandedTimeOnIcePerGame": "00:00",
+								"powerPlayTimeOnIcePerGame": "00:00"
+							},
+							"dayOfWeek": 6
+						},
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "37:17",
+								"assists": 0,
+								"goals": 0,
+								"pim": 2,
+								"shots": 1,
+								"games": 2,
+								"hits": 8,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "35:13",
+								"penaltyMinutes": "2",
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "00:00",
+								"blocked": 1,
+								"plusMinus": 1,
+								"points": 0,
+								"shifts": 50,
+								"timeOnIcePerGame": "18:38",
+								"evenTimeOnIcePerGame": "17:36",
+								"shortHandedTimeOnIcePerGame": "00:00",
+								"powerPlayTimeOnIcePerGame": "01:02"
+							},
+							"dayOfWeek": 7
+						}
+					]
+				},
+				{
+					"type": {
+						"displayName": "goalsByGameSituationPlayoffs"
+					},
+					"splits": []
+				},
+				{
+					"type": {
+						"displayName": "statsSingleSeasonPlayoffs"
+					},
+					"splits": [
+						{
+							"season": "20142015",
+							"stat": {
+								"timeOnIce": "174:22",
+								"assists": 1,
+								"goals": 0,
+								"pim": 6,
+								"shots": 5,
+								"games": 10,
+								"hits": 24,
+								"powerPlayGoals": 0,
+								"powerPlayPoints": 0,
+								"powerPlayTimeOnIce": "02:04",
+								"evenTimeOnIce": "169:17",
+								"penaltyMinutes": "6",
+								"faceOffPct": 0.0,
+								"shotPct": 0.0,
+								"gameWinningGoals": 0,
+								"overTimeGoals": 0,
+								"shortHandedGoals": 0,
+								"shortHandedPoints": 0,
+								"shortHandedTimeOnIce": "03:01",
+								"blocked": 9,
+								"plusMinus": -2,
+								"points": 1,
+								"shifts": 256,
+								"timeOnIcePerGame": "17:26",
+								"evenTimeOnIcePerGame": "16:55",
+								"shortHandedTimeOnIcePerGame": "00:18",
+								"powerPlayTimeOnIcePerGame": "00:12"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

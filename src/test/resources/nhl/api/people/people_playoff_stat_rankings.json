@@ -1,0 +1,26 @@
+{
+  "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "stats" : [ {
+    "type" : {
+      "displayName" : "playoffStatRankings"
+    },
+    "splits" : [ {
+      "season" : "19901991",
+      "stat" : {
+        "rankPowerPlayGoals" : "38th",
+        "rankBlockedShots" : "N/A",
+        "rankAssists" : "13th",
+        "rankShotPct" : "70th",
+        "rankGoals" : "37th",
+        "rankHits" : "N/A",
+        "rankPenaltyMinutes" : "262nd",
+        "rankShortHandedGoals" : "17th",
+        "rankPlusMinus" : "126th",
+        "rankShots" : "66th",
+        "rankPoints" : "21st",
+        "rankOvertimeGoals" : "2nd",
+        "rankGamesPlayed" : "94th"
+      }
+    } ]
+  } ]
+}

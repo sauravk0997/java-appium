@@ -1,0 +1,344 @@
+---
+# Device Settings
+# https://www.json2yaml.com/convert-yaml-to-json
+# Warning: IP's that have a port are open proxies that can be subject to change outside the norm.
+
+#servers:
+- country: Albania
+  ip: 185.237.18.82
+- country: Åland Islands
+  ip:
+- country: American Samoa (US)
+  ip:
+- country: Andorra
+  ip: 91.187.75.250
+- country: Anguilla
+  ip:
+- country: Antigua and Barbuda
+  ip:
+- country: Argentina
+  ip: 168.205.94.26
+- country: Armenia
+  ip: 173.199.123.32
+- country: Aruba
+  ip:
+- country: Australia
+  ip: 110.232.112.216
+- country: Austria
+  ip: 5.132.162.53
+- country: Azerbaijan
+  ip: 85.132.116.243
+- country: Bahamas
+  ip:
+- country: Bahrain
+  ip: bh.p.geoedge.com
+- country: Barbados
+  ip:
+- country: Belarus
+  ip: 45.76.255.140
+- country: Belgium
+  ip: 192.71.249.130
+- country: Belize
+  ip:
+- country: Bolivia
+  ip:
+- country: Bermuda
+  ip:
+- country: Bonaire, Sint Eustatius and Saba
+  ip:
+- country: Bosnia and Herzegovina
+  ip: 109.205.33.161
+- country: Brazil
+  ip: 154.16.57.109
+- country: British Indian Ocean (GB)
+  ip:
+- country: British Virgin Islands
+  ip:
+- country: Bulgaria
+  ip: 78.128.127.155
+- country: Cambodia
+  ip: 103.104.61.42
+- country: Canada
+  ip: 155.138.137.250
+- country: Cayman Islands
+  ip:
+- country: Chile
+  ip: 45.236.129.31
+- country: China
+  ip: 121.40.90.189:8001
+- country: Christmas Island (AU)
+  ip:
+- country: Cocos (Keeling) Islands (AU)
+  ip:
+- country: Colombia
+  ip: 179.61.15.5
+- country: Cook Islands (NZ)
+  ip:
+- country: Costa Rica
+  ip: 200.122.181.118
+- country: Croatia
+  ip: 46.183.184.80
+- country: Curacao
+  ip: 200.124.153.209
+- country: Cyprus
+  ip: 157.97.132.138
+- country: Czech Republic
+  ip: 194.182.66.137
+- country: Denmark
+  ip: 193.36.116.43
+- country: Dominica
+  ip:
+- country: Dominican Republic
+  ip: 167.99.218.235
+- country: Ecuador
+  ip: 190.57.145.10
+- country: Egypt
+  ip: 154.236.177.108:8080
+- country: El Salvador
+  ip:
+- country: Estonia
+  ip: 45.11.183.183
+- country: Falkland Islands (Malvinas)
+  ip:
+- country: Faroe Islands (DK)
+  ip:
+- country: Finland
+  ip: 95.216.187.252
+- country: France
+  ip: 185.94.189.31
+- country: French Guiana
+  ip: 185.94.189.31
+- country: French Polynesia (FR)
+  ip:
+- country: French Southern Territories (FR)
+  ip:
+- country: Georgia
+  ip: 91.239.206.67
+- country: Germany
+  ip: 94.177.229.63
+- country: Gibraltar
+  ip:
+- country: Greece
+  ip: 185.162.237.136
+- country: Greenland
+  ip:
+- country: Grenada
+  ip:
+- country: Guadeloupe
+  ip:
+- country: Guam (US)
+  ip:
+- country: Guatemala
+  ip: 189.84.97.154
+- country: Guernsey
+  ip:
+- country: Guyana
+  ip:
+- country: Haiti
+  ip:
+- country: Honduras
+  ip: 168.205.160.11
+- country: Hong Kong
+  ip: 45.120.156.105
+- country: Hungary
+  ip: 185.225.68.175
+- country: Iceland
+  ip: 185.112.147.76
+- country: India
+  ip: 103.250.185.13
+- country: Indonesia
+  ip: 45.64.96.171
+- country: Iraq
+  ip: iq.p.geoedge.com
+- country: Isle of Man
+  ip: 37.235.55.33
+- country: Ireland
+  ip: 185.108.129.160
+- country: Israel
+  ip: 185.191.204.74
+- country: Italy
+  ip: 83.136.106.132
+- country: Jamaica
+  ip: 144.202.31.219
+- country: Japan
+  ip: 172.104.76.127
+- country: Jersey
+  ip:
+- country: Jordan
+  ip: jo.p.geoedge.com
+- country: Kazakhstan
+  ip: 185.120.77.127
+- country: Kenya
+  ip: ke.p.geoedge.com
+- country: Korea
+  ip: 92.38.135.147
+- country: Kuwait
+  ip: 199.127.102.130
+- country: Kyrgyzstan
+  ip: 91.213.233.207
+- country: Latvia
+  ip: 185.8.60.242
+- country: Lebanon
+  ip: 37.209.251.135
+- country: Liechtenstein
+  ip:
+- country: Lithuania
+  ip: 89.40.15.215
+- country: Luxembourg
+  ip: 92.223.105.43
+- country: Malaysia
+  ip: 210.1.226.114
+- country: Malta
+  ip: 171.22.254.26
+- country: Martinique
+  ip:
+- country: Marshall Islands (US)
+  ip:
+- country: Mauritius
+  ip:
+- country: Mayotte
+  ip:
+- country: Mongolia
+  ip: 43.231.113.12
+- country: Melbourne
+  ip: 103.18.42.111
+- country: Mexico
+  ip: 191.96.145.12
+- country: Moldova
+  ip: 178.17.174.74
+- country: Monaco
+  ip:
+- country: Montenegro
+  ip:
+- country: Montserrat
+  ip:
+- country: Morocco
+  ip: 5.10.73.125
+- country: Netherlands
+  ip: 45.77.139.135
+- country: New Zealand
+  ip: 103.16.180.103
+- country: New Caledonia
+  ip:
+- country: Nicaragua
+  ip: 191.103.125.101
+- country: Nigeria
+  ip: ng.p.geoedge.com
+- country: Niue (NZ)
+  ip:
+- country: Norway
+  ip: 217.170.204.8
+- country: Norfolk Island (AU)
+  ip:
+- country: North Macedonia
+  ip:
+- country: Northern Mariana Islands (US)
+  ip:
+- country: Oman
+  ip: 37.200.224.179:8080
+- country: Pakistan
+  ip: 142.93.51.144
+- country: Panama
+  ip: 190.14.37.108
+- country: Paraguay
+  ip: 181.40.118.238
+- country: Peru
+  ip: 138.186.143.25
+- country: Philippines
+  ip: 115.84.232.42
+- country: Pitcairn Islands (GB)
+  ip:
+- country: Poland
+  ip: 77.55.220.7
+- country: Portugal
+  ip: 94.46.29.88
+- country: Puerto Rico
+  ip: 69.89.37.129
+- country: Qatar
+  ip: 162.243.4.233
+- country: Reunion
+  ip:
+- country: Romania
+  ip: 185.120.144.162
+- country: Russia
+  ip: ru.p.geoedge.com
+- country: Saint Barthelemy
+  ip:
+- country: Saint Kitts and Nevis
+  ip:
+- country: Saint Lucia
+  ip:
+- country: Saint Martin
+  ip:
+- country: Saint Vincent and the Grenadines
+  ip:
+- country: San Marino
+  ip:
+- country: Saudi Arabia
+  ip: 46.151.209.100
+- country: Serbia
+  ip: 185.119.90.56
+- country: Singapore
+  ip: 172.104.162.27
+- country: Sint Maarten (NL)
+  ip:
+- country: Slovakia
+  ip: 195.210.29.159
+- country: Slovenia
+  ip: 192.71.244.25
+- country: South Africa
+  ip: 164.160.89.59
+- country: South Georgia and the South Sandwich Islands
+  ip:
+- country: Spain
+  ip: 185.93.182.49
+- country: St Helena (GB)
+  ip:
+- country: St. Pierre and Miquelon
+  ip:
+- country: Suriname
+  ip:
+- country: Svalbard & Jan Mayen (NO)
+  ip:
+- country: Sweden
+  ip: 194.76.224.154
+- country: Switzerland
+  ip: 176.10.125.70
+- country: Taiwan
+  ip: 2.58.242.198
+- country: Tanzania
+  ip: tz.p.geoedge.com
+- country: Thailand
+  ip: 103.40.117.36
+- country: Tokelau (NZ)
+  ip:
+- country: Trinidad and Tobago
+  ip:
+- country: Tunisia
+  ip: 162.243.20.72
+- country: Turkey
+  ip: 185.181.209.221
+- country: Turks and Caicos Islands
+  ip:
+- country: Ukraine
+  ip: 91.213.8.75
+- country: United Arab Emirates
+  ip: 66.42.81.200
+- country: United Kingdom
+  ip: 37.10.71.104
+- country: United States
+  ip: 69.163.46.156
+- country: United States Virgin Islands
+  ip:
+- country: U.S.Outlying Islands (US)
+  ip:
+- country: Uruguay
+  ip:
+- country: Vatican City
+  ip:
+- country: Venezuela
+  ip: 190.94.247.164
+- country: Vietnam
+  ip: vn.p.geoedge.com
+- country: Wallis and Futuna
+  ip:

@@ -1,0 +1,1024 @@
+{
+	"copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+	"records" : [ {
+		"standingsType" : "regularSeason",
+		"league" : {
+			"id" : 133,
+			"name" : "National Hockey League",
+			"link" : "/api/v1/league/133"
+		},
+		"season" : "19601961",
+		"teamRecords" : [ {
+			"team" : {
+				"id" : 8,
+				"name" : "Montréal Canadiens",
+				"link" : "/api/v1/teams/8",
+				"venue" : {
+					"id" : 5028,
+					"name" : "Bell Centre",
+					"link" : "/api/v1/venues/5028",
+					"city" : "Montréal",
+					"timeZone" : {
+						"id" : "America/Montreal",
+						"offset" : -4,
+						"tz" : "EDT"
+					}
+				},
+				"abbreviation" : "MTL",
+				"teamName" : "Canadiens",
+				"locationName" : "Montréal",
+				"firstYearOfPlay" : "1917",
+				"division" : {
+					"id" : 17,
+					"name" : "Atlantic",
+					"nameShort" : "ATL",
+					"link" : "/api/v1/divisions/17",
+					"abbreviation" : "A"
+				},
+				"conference" : {
+					"id" : 6,
+					"name" : "Eastern",
+					"link" : "/api/v1/conferences/6"
+				},
+				"franchise" : {
+					"franchiseId" : 1,
+					"teamName" : "Canadiens",
+					"link" : "/api/v1/franchises/1"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-04-04",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960030116,
+							"link" : "/api/v1/game/1960030116/feed/live",
+							"gameType" : "P",
+							"season" : "19601961",
+							"gameDate" : "1961-04-05T02:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 2,
+										"losses" : 4,
+										"type" : "league"
+									},
+									"score" : 0,
+									"team" : {
+										"id" : 8,
+										"name" : "Montréal Canadiens",
+										"link" : "/api/v1/teams/8"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 4,
+										"losses" : 2,
+										"type" : "league"
+									},
+									"score" : 3,
+									"team" : {
+										"id" : 16,
+										"name" : "Chicago Blackhawks",
+										"link" : "/api/v1/teams/16"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Chicago Stadium",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "WGN 720",
+								"type" : "home"
+							}, {
+								"name" : "TSN 690 - 98,5FM",
+								"type" : "away"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960030116/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "Montréal",
+				"officialSiteUrl" : "http://www.canadiens.com/",
+				"franchiseId" : 1,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 41,
+				"losses" : 19,
+				"ties" : 10,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 188,
+			"goalsScored" : 254,
+			"points" : 92,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "1",
+			"leagueL10Rank" : "1",
+			"leagueRoadRank" : "2",
+			"leagueHomeRank" : "1",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "wins",
+				"streakNumber" : 1,
+				"streakCode" : "W1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 24,
+					"losses" : 6,
+					"ties" : 5,
+					"type" : "home"
+				}, {
+					"wins" : 17,
+					"losses" : 13,
+					"ties" : 5,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 8,
+					"losses" : 2,
+					"ties" : 0,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		}, {
+			"team" : {
+				"id" : 10,
+				"name" : "Toronto Maple Leafs",
+				"link" : "/api/v1/teams/10",
+				"venue" : {
+					"name" : "Scotiabank Arena",
+					"link" : "/api/v1/venues/null",
+					"city" : "Toronto",
+					"timeZone" : {
+						"id" : "America/Toronto",
+						"offset" : -4,
+						"tz" : "EDT"
+					}
+				},
+				"abbreviation" : "TOR",
+				"teamName" : "Maple Leafs",
+				"locationName" : "Toronto",
+				"firstYearOfPlay" : "1926",
+				"division" : {
+					"id" : 17,
+					"name" : "Atlantic",
+					"nameShort" : "ATL",
+					"link" : "/api/v1/divisions/17",
+					"abbreviation" : "A"
+				},
+				"conference" : {
+					"id" : 6,
+					"name" : "Eastern",
+					"link" : "/api/v1/conferences/6"
+				},
+				"franchise" : {
+					"franchiseId" : 5,
+					"teamName" : "Maple Leafs",
+					"link" : "/api/v1/franchises/5"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-04-01",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960030125,
+							"link" : "/api/v1/game/1960030125/feed/live",
+							"gameType" : "P",
+							"season" : "19601961",
+							"gameDate" : "1961-04-02T01:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 4,
+										"losses" : 1,
+										"type" : "league"
+									},
+									"score" : 3,
+									"team" : {
+										"id" : 17,
+										"name" : "Detroit Red Wings",
+										"link" : "/api/v1/teams/17"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 1,
+										"losses" : 4,
+										"type" : "league"
+									},
+									"score" : 2,
+									"team" : {
+										"id" : 10,
+										"name" : "Toronto Maple Leafs",
+										"link" : "/api/v1/teams/10"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Maple Leaf Gardens",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "WXYT-FM 97.1",
+								"type" : "away"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960030125/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "Toronto",
+				"officialSiteUrl" : "http://www.mapleleafs.com/",
+				"franchiseId" : 5,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 39,
+				"losses" : 19,
+				"ties" : 12,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 176,
+			"goalsScored" : 234,
+			"points" : 90,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "2",
+			"leagueL10Rank" : "2",
+			"leagueRoadRank" : "1",
+			"leagueHomeRank" : "2",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "ties",
+				"streakNumber" : 1,
+				"streakCode" : "1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 21,
+					"losses" : 6,
+					"ties" : 8,
+					"type" : "home"
+				}, {
+					"wins" : 18,
+					"losses" : 13,
+					"ties" : 4,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 5,
+					"losses" : 2,
+					"ties" : 3,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		}, {
+			"team" : {
+				"id" : 16,
+				"name" : "Chicago Blackhawks",
+				"link" : "/api/v1/teams/16",
+				"venue" : {
+					"id" : 5092,
+					"name" : "United Center",
+					"link" : "/api/v1/venues/5092",
+					"city" : "Chicago",
+					"timeZone" : {
+						"id" : "America/Chicago",
+						"offset" : -5,
+						"tz" : "CDT"
+					}
+				},
+				"abbreviation" : "CHI",
+				"teamName" : "Blackhawks",
+				"locationName" : "Chicago",
+				"firstYearOfPlay" : "1926",
+				"division" : {
+					"id" : 16,
+					"name" : "Central",
+					"nameShort" : "CEN",
+					"link" : "/api/v1/divisions/16",
+					"abbreviation" : "C"
+				},
+				"conference" : {
+					"id" : 5,
+					"name" : "Western",
+					"link" : "/api/v1/conferences/5"
+				},
+				"franchise" : {
+					"franchiseId" : 11,
+					"teamName" : "Blackhawks",
+					"link" : "/api/v1/franchises/11"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-04-16",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960030216,
+							"link" : "/api/v1/game/1960030216/feed/live",
+							"gameType" : "P",
+							"season" : "19601961",
+							"gameDate" : "1961-04-17T01:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 8,
+										"losses" : 4,
+										"type" : "league"
+									},
+									"score" : 5,
+									"team" : {
+										"id" : 16,
+										"name" : "Chicago Blackhawks",
+										"link" : "/api/v1/teams/16"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 6,
+										"losses" : 5,
+										"type" : "league"
+									},
+									"score" : 1,
+									"team" : {
+										"id" : 17,
+										"name" : "Detroit Red Wings",
+										"link" : "/api/v1/teams/17"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Detroit Olympia",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "WXYT-FM 97.1",
+								"type" : "home"
+							}, {
+								"name" : "WGN 720",
+								"type" : "away"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960030216/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "Chicago",
+				"officialSiteUrl" : "http://www.chicagoblackhawks.com/",
+				"franchiseId" : 11,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 29,
+				"losses" : 24,
+				"ties" : 17,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 180,
+			"goalsScored" : 198,
+			"points" : 75,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "3",
+			"leagueL10Rank" : "3",
+			"leagueRoadRank" : "4",
+			"leagueHomeRank" : "3",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "losses",
+				"streakNumber" : 1,
+				"streakCode" : "L1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 20,
+					"losses" : 6,
+					"ties" : 9,
+					"type" : "home"
+				}, {
+					"wins" : 9,
+					"losses" : 18,
+					"ties" : 8,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 5,
+					"losses" : 3,
+					"ties" : 2,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		}, {
+			"team" : {
+				"id" : 17,
+				"name" : "Detroit Red Wings",
+				"link" : "/api/v1/teams/17",
+				"venue" : {
+					"id" : 5145,
+					"name" : "Little Caesars Arena",
+					"link" : "/api/v1/venues/5145",
+					"city" : "Detroit",
+					"timeZone" : {
+						"id" : "America/Detroit",
+						"offset" : -4,
+						"tz" : "EDT"
+					}
+				},
+				"abbreviation" : "DET",
+				"teamName" : "Red Wings",
+				"locationName" : "Detroit",
+				"firstYearOfPlay" : "1932",
+				"division" : {
+					"id" : 17,
+					"name" : "Atlantic",
+					"nameShort" : "ATL",
+					"link" : "/api/v1/divisions/17",
+					"abbreviation" : "A"
+				},
+				"conference" : {
+					"id" : 6,
+					"name" : "Eastern",
+					"link" : "/api/v1/conferences/6"
+				},
+				"franchise" : {
+					"franchiseId" : 12,
+					"teamName" : "Red Wings",
+					"link" : "/api/v1/franchises/12"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-04-16",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960030216,
+							"link" : "/api/v1/game/1960030216/feed/live",
+							"gameType" : "P",
+							"season" : "19601961",
+							"gameDate" : "1961-04-17T01:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 8,
+										"losses" : 4,
+										"type" : "league"
+									},
+									"score" : 5,
+									"team" : {
+										"id" : 16,
+										"name" : "Chicago Blackhawks",
+										"link" : "/api/v1/teams/16"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 6,
+										"losses" : 5,
+										"type" : "league"
+									},
+									"score" : 1,
+									"team" : {
+										"id" : 17,
+										"name" : "Detroit Red Wings",
+										"link" : "/api/v1/teams/17"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Detroit Olympia",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "WXYT-FM 97.1",
+								"type" : "home"
+							}, {
+								"name" : "WGN 720",
+								"type" : "away"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960030216/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "Detroit",
+				"officialSiteUrl" : "http://www.detroitredwings.com/",
+				"franchiseId" : 12,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 25,
+				"losses" : 29,
+				"ties" : 16,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 215,
+			"goalsScored" : 195,
+			"points" : 66,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "4",
+			"leagueL10Rank" : "4",
+			"leagueRoadRank" : "3",
+			"leagueHomeRank" : "4",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "losses",
+				"streakNumber" : 1,
+				"streakCode" : "L1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 15,
+					"losses" : 13,
+					"ties" : 7,
+					"type" : "home"
+				}, {
+					"wins" : 10,
+					"losses" : 16,
+					"ties" : 9,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 4,
+					"losses" : 5,
+					"ties" : 1,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		}, {
+			"team" : {
+				"id" : 3,
+				"name" : "New York Rangers",
+				"link" : "/api/v1/teams/3",
+				"venue" : {
+					"id" : 5054,
+					"name" : "Madison Square Garden",
+					"link" : "/api/v1/venues/5054",
+					"city" : "New York",
+					"timeZone" : {
+						"id" : "America/New_York",
+						"offset" : -4,
+						"tz" : "EDT"
+					}
+				},
+				"abbreviation" : "NYR",
+				"teamName" : "Rangers",
+				"locationName" : "New York",
+				"firstYearOfPlay" : "1926",
+				"division" : {
+					"id" : 18,
+					"name" : "Metropolitan",
+					"nameShort" : "Metro",
+					"link" : "/api/v1/divisions/18",
+					"abbreviation" : "M"
+				},
+				"conference" : {
+					"id" : 6,
+					"name" : "Eastern",
+					"link" : "/api/v1/conferences/6"
+				},
+				"franchise" : {
+					"franchiseId" : 10,
+					"teamName" : "Rangers",
+					"link" : "/api/v1/franchises/10"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-03-19",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960020209,
+							"link" : "/api/v1/game/1960020209/feed/live",
+							"gameType" : "R",
+							"season" : "19601961",
+							"gameDate" : "1961-03-20T01:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 39,
+										"losses" : 19,
+										"ties" : 12,
+										"type" : "league"
+									},
+									"score" : 2,
+									"team" : {
+										"id" : 10,
+										"name" : "Toronto Maple Leafs",
+										"link" : "/api/v1/teams/10"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 22,
+										"losses" : 38,
+										"ties" : 12,
+										"type" : "league"
+									},
+									"score" : 2,
+									"team" : {
+										"id" : 3,
+										"name" : "New York Rangers",
+										"link" : "/api/v1/teams/3"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Madison Square Garden III",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "WEPN",
+								"type" : "home"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960020209/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "NY Rangers",
+				"officialSiteUrl" : "http://www.newyorkrangers.com/",
+				"franchiseId" : 10,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 22,
+				"losses" : 38,
+				"ties" : 10,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 248,
+			"goalsScored" : 204,
+			"points" : 54,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "5",
+			"leagueL10Rank" : "5",
+			"leagueRoadRank" : "5",
+			"leagueHomeRank" : "5",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "ties",
+				"streakNumber" : 1,
+				"streakCode" : "1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 15,
+					"losses" : 15,
+					"ties" : 5,
+					"type" : "home"
+				}, {
+					"wins" : 7,
+					"losses" : 23,
+					"ties" : 5,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 3,
+					"losses" : 6,
+					"ties" : 1,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		}, {
+			"team" : {
+				"id" : 6,
+				"name" : "Boston Bruins",
+				"link" : "/api/v1/teams/6",
+				"venue" : {
+					"id" : 5085,
+					"name" : "TD Garden",
+					"link" : "/api/v1/venues/5085",
+					"city" : "Boston",
+					"timeZone" : {
+						"id" : "America/New_York",
+						"offset" : -4,
+						"tz" : "EDT"
+					}
+				},
+				"abbreviation" : "BOS",
+				"teamName" : "Bruins",
+				"locationName" : "Boston",
+				"firstYearOfPlay" : "1924",
+				"division" : {
+					"id" : 17,
+					"name" : "Atlantic",
+					"nameShort" : "ATL",
+					"link" : "/api/v1/divisions/17",
+					"abbreviation" : "A"
+				},
+				"conference" : {
+					"id" : 6,
+					"name" : "Eastern",
+					"link" : "/api/v1/conferences/6"
+				},
+				"franchise" : {
+					"franchiseId" : 6,
+					"teamName" : "Bruins",
+					"link" : "/api/v1/franchises/6"
+				},
+				"previousGameSchedule" : {
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"dates" : [ {
+						"date" : "1961-03-19",
+						"totalItems" : 1,
+						"totalEvents" : 0,
+						"totalGames" : 1,
+						"totalMatches" : 0,
+						"games" : [ {
+							"gamePk" : 1960020210,
+							"link" : "/api/v1/game/1960020210/feed/live",
+							"gameType" : "R",
+							"season" : "19601961",
+							"gameDate" : "1961-03-20T01:00:00Z",
+							"status" : {
+								"abstractGameState" : "Final",
+								"codedGameState" : "7",
+								"detailedState" : "Final",
+								"statusCode" : "7",
+								"startTimeTBD" : false
+							},
+							"teams" : {
+								"away" : {
+									"leagueRecord" : {
+										"wins" : 29,
+										"losses" : 24,
+										"ties" : 17,
+										"type" : "league"
+									},
+									"score" : 3,
+									"team" : {
+										"id" : 16,
+										"name" : "Chicago Blackhawks",
+										"link" : "/api/v1/teams/16"
+									}
+								},
+								"home" : {
+									"leagueRecord" : {
+										"wins" : 15,
+										"losses" : 42,
+										"ties" : 17,
+										"type" : "league"
+									},
+									"score" : 4,
+									"team" : {
+										"id" : 6,
+										"name" : "Boston Bruins",
+										"link" : "/api/v1/teams/6"
+									}
+								}
+							},
+							"venue" : {
+								"name" : "Boston Garden",
+								"link" : "/api/v1/venues/null"
+							},
+							"radioBroadcasts" : [ {
+								"name" : "98.5 Sports Hub",
+								"type" : "home"
+							}, {
+								"name" : "WGN 720",
+								"type" : "away"
+							} ],
+							"content" : {
+								"link" : "/api/v1/game/1960020210/content"
+							},
+							"metadata" : {
+								"isManuallyScored" : false,
+								"isSplitSquad" : false
+							}
+						} ],
+						"events" : [ ],
+						"matches" : [ ]
+					} ]
+				},
+				"shortName" : "Boston",
+				"officialSiteUrl" : "http://www.bostonbruins.com/",
+				"franchiseId" : 6,
+				"active" : true
+			},
+			"leagueRecord" : {
+				"wins" : 15,
+				"losses" : 42,
+				"ties" : 13,
+				"ot" : 0,
+				"type" : "league"
+			},
+			"goalsAgainst" : 254,
+			"goalsScored" : 176,
+			"points" : 43,
+			"divisionRank" : "0",
+			"divisionL10Rank" : "0",
+			"divisionRoadRank" : "0",
+			"divisionHomeRank" : "0",
+			"conferenceRank" : "0",
+			"conferenceL10Rank" : "0",
+			"conferenceRoadRank" : "0",
+			"conferenceHomeRank" : "0",
+			"leagueRank" : "6",
+			"leagueL10Rank" : "6",
+			"leagueRoadRank" : "6",
+			"leagueHomeRank" : "6",
+			"wildCardRank" : "0",
+			"gamesPlayed" : 70,
+			"streak" : {
+				"streakType" : "wins",
+				"streakNumber" : 1,
+				"streakCode" : "W1"
+			},
+			"records" : {
+				"overallRecords" : [ {
+					"wins" : 13,
+					"losses" : 17,
+					"ties" : 5,
+					"type" : "home"
+				}, {
+					"wins" : 2,
+					"losses" : 25,
+					"ties" : 8,
+					"type" : "away"
+				}, {
+					"wins" : 0,
+					"losses" : 0,
+					"type" : "shootOuts"
+				}, {
+					"wins" : 3,
+					"losses" : 7,
+					"ties" : 0,
+					"type" : "lastTen"
+				} ]
+			},
+			"lastUpdated" : "2020-03-26T12:43:16Z"
+		} ]
+	} ]
+}

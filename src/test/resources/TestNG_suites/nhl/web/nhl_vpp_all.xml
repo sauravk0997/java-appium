@@ -1,0 +1,46 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name="NHL-Web_VPP-Smoke-Test-All" annotations="JDK">
+
+    <parameter name="suiteOwner" value="dbotkin"/>
+    <parameter name="reporting.project-key" value="NHL" />
+    <parameter name="com.zebrunner.app/tcm.qtest.project-id" value="8" />
+    <parameter name="jenkinsJobType" value="web"/>
+    <parameter name="jenkinsJobName" value="NHL-Web-VPP-Smoke-Test-All"/>
+    <parameter name="jenkinsUrl" value="https://www.nhl.com/video"/>
+    <parameter name="jenkinsEmail" value="WebQA@disneystreaming.com"/>
+    <parameter name="jenkinsRegressionScheduling" value="0 8 * * *"/>
+    <parameter name="jenkinsRegressionPipeline" value="Web-Regression-Pipeline"/>
+    <parameter name="jenkinsEnvironments" value="PROD,QA"/>
+
+
+    <test verbose="1" name="Web - NHL VPP Smoke Test - Nav">
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.vpp.NhlVppNav"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - NHL VPP Smoke Test - Search">
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.vpp.NhlVppSearch"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - NHL VPP Smoke Test - Data">
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.vpp.NhlVppData"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - NHL VPP Smoke Test - Share">
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.vpp.NhlVppShareTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - NHL VPP Smoke Test - Video - Player">
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.vpp.NhlVppVideoPlayerTest"/>
+        </classes>
+    </test>
+
+</suite>

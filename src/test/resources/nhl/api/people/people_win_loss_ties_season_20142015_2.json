@@ -1,0 +1,237 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "stats": [
+    {
+      "type": {
+        "displayName": "vsConference"
+      },
+      "splits": [
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "1174:18",
+            "ot": 6,
+            "shutouts": 1,
+            "ties": 0,
+            "wins": 7,
+            "losses": 6,
+            "saves": 592,
+            "powerPlaySaves": 80,
+            "shortHandedSaves": 14,
+            "evenSaves": 498,
+            "shortHandedShots": 14,
+            "evenShots": 534,
+            "powerPlayShots": 90,
+            "savePercentage": 0.9278996865203761,
+            "goalAgainstAverage": 2.3503363706037637,
+            "games": 20,
+            "gamesStarted": 19,
+            "shotsAgainst": 638,
+            "goalsAgainst": 46,
+            "timeOnIcePerGame": "58:42",
+            "powerPlaySavePercentage": 88.88888888888889,
+            "shortHandedSavePercentage": 100,
+            "evenStrengthSavePercentage": 93.25842696629213
+          },
+          "opponentConference": {
+            "id": 5,
+            "name": "Western",
+            "link": "/api/v1/conferences/5"
+          }
+        },
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "1711:05",
+            "ot": 5,
+            "shutouts": 2,
+            "ties": 0,
+            "wins": 11,
+            "losses": 12,
+            "saves": 790,
+            "powerPlaySaves": 95,
+            "shortHandedSaves": 32,
+            "evenSaves": 663,
+            "shortHandedShots": 34,
+            "evenShots": 701,
+            "powerPlayShots": 117,
+            "savePercentage": 0.9272300469483568,
+            "goalAgainstAverage": 2.1740612672283643,
+            "games": 31,
+            "gamesStarted": 29,
+            "shotsAgainst": 852,
+            "goalsAgainst": 62,
+            "timeOnIcePerGame": "55:11",
+            "powerPlaySavePercentage": 81.19658119658119,
+            "shortHandedSavePercentage": 94.11764705882352,
+            "evenStrengthSavePercentage": 94.57917261055636
+          },
+          "opponentConference": {
+            "id": 6,
+            "name": "Eastern",
+            "link": "/api/v1/conferences/6"
+          }
+        }
+      ]
+    },
+    {
+      "type": {
+        "displayName": "vsDivision"
+      },
+      "splits": [
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "527:18",
+            "ot": 2,
+            "shutouts": 1,
+            "ties": 0,
+            "wins": 4,
+            "losses": 2,
+            "saves": 288,
+            "powerPlaySaves": 37,
+            "shortHandedSaves": 7,
+            "evenSaves": 244,
+            "shortHandedShots": 7,
+            "evenShots": 258,
+            "powerPlayShots": 44,
+            "savePercentage": 0.9320388349514563,
+            "goalAgainstAverage": 2.389531575952968,
+            "games": 9,
+            "gamesStarted": 9,
+            "shotsAgainst": 309,
+            "goalsAgainst": 21,
+            "timeOnIcePerGame": "58:35",
+            "powerPlaySavePercentage": 84.0909090909091,
+            "shortHandedSavePercentage": 100,
+            "evenStrengthSavePercentage": 94.57364341085271
+          },
+          "opponentDivision": {
+            "id": 16,
+            "name": "Central",
+            "link": "/api/v1/divisions/16"
+          },
+          "opponentConference": {
+            "id": 5,
+            "name": "Western",
+            "link": "/api/v1/conferences/5"
+          }
+        },
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "677:38",
+            "ot": 2,
+            "shutouts": 1,
+            "ties": 0,
+            "wins": 4,
+            "losses": 6,
+            "saves": 323,
+            "powerPlaySaves": 39,
+            "shortHandedSaves": 11,
+            "evenSaves": 273,
+            "shortHandedShots": 11,
+            "evenShots": 285,
+            "powerPlayShots": 48,
+            "savePercentage": 0.938953488372093,
+            "goalAgainstAverage": 1.8594126617147917,
+            "games": 13,
+            "gamesStarted": 12,
+            "shotsAgainst": 344,
+            "goalsAgainst": 21,
+            "timeOnIcePerGame": "52:07",
+            "powerPlaySavePercentage": 81.25,
+            "shortHandedSavePercentage": 100,
+            "evenStrengthSavePercentage": 95.78947368421052
+          },
+          "opponentDivision": {
+            "id": 17,
+            "name": "Atlantic",
+            "link": "/api/v1/divisions/17"
+          },
+          "opponentConference": {
+            "id": 6,
+            "name": "Eastern",
+            "link": "/api/v1/conferences/6"
+          }
+        },
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "1033:27",
+            "ot": 3,
+            "shutouts": 1,
+            "ties": 0,
+            "wins": 7,
+            "losses": 6,
+            "saves": 467,
+            "powerPlaySaves": 56,
+            "shortHandedSaves": 21,
+            "evenSaves": 390,
+            "shortHandedShots": 23,
+            "evenShots": 416,
+            "powerPlayShots": 69,
+            "savePercentage": 0.9192913385826772,
+            "goalAgainstAverage": 2.3803764091150996,
+            "games": 18,
+            "gamesStarted": 17,
+            "shotsAgainst": 508,
+            "goalsAgainst": 41,
+            "timeOnIcePerGame": "57:24",
+            "powerPlaySavePercentage": 81.15942028985508,
+            "shortHandedSavePercentage": 91.30434782608695,
+            "evenStrengthSavePercentage": 93.75
+          },
+          "opponentDivision": {
+            "id": 18,
+            "name": "Metropolitan",
+            "link": "/api/v1/divisions/18"
+          },
+          "opponentConference": {
+            "id": 6,
+            "name": "Eastern",
+            "link": "/api/v1/conferences/6"
+          }
+        },
+        {
+          "season": "20142015",
+          "stat": {
+            "timeOnIce": "647:00",
+            "ot": 4,
+            "shutouts": 0,
+            "ties": 0,
+            "wins": 3,
+            "losses": 4,
+            "saves": 304,
+            "powerPlaySaves": 43,
+            "shortHandedSaves": 7,
+            "evenSaves": 254,
+            "shortHandedShots": 7,
+            "evenShots": 276,
+            "powerPlayShots": 46,
+            "savePercentage": 0.9240121580547113,
+            "goalAgainstAverage": 2.3183925811437405,
+            "games": 11,
+            "gamesStarted": 10,
+            "shotsAgainst": 329,
+            "goalsAgainst": 25,
+            "timeOnIcePerGame": "58:49",
+            "powerPlaySavePercentage": 93.47826086956522,
+            "shortHandedSavePercentage": 100,
+            "evenStrengthSavePercentage": 92.02898550724638
+          },
+          "opponentDivision": {
+            "id": 15,
+            "name": "Pacific",
+            "link": "/api/v1/divisions/15"
+          },
+          "opponentConference": {
+            "id": 5,
+            "name": "Western",
+            "link": "/api/v1/conferences/5"
+          }
+        }
+      ]
+    }
+  ]
+}

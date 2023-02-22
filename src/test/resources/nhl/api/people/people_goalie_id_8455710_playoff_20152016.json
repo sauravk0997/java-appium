@@ -1,0 +1,861 @@
+{
+"copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+"people": [
+{
+"id": 8455710,
+"fullName": "Martin Brodeur",
+"link": "/api/v1/people/8455710",
+"firstName": "Martin",
+"lastName": "Brodeur",
+"primaryNumber": "30",
+"birthDate": "1972-05-06",
+"birthCity": "Montreal",
+"birthStateProvince": "QC",
+"birthCountry": "CAN",
+"nationality": "CAN",
+"height": "6' 2\"",
+"weight": 220,
+"active": false,
+"rookie": false,
+"shootsCatches": "L",
+"rosterStatus": "N",
+"primaryPosition": {
+"code": "G",
+"name": "Goalie",
+"type": "Goalie",
+"abbreviation": "G"
+},
+"social": {
+"twitter": [
+"MartinBrodeur"
+]
+},
+"stats": [
+{
+"type": {
+"displayName": "yearByYearPlayoffs"
+},
+"splits": [
+{
+"season": "19881989",
+"stat": {
+"timeOnIce": "210:00",
+"shutouts": 0,
+"ties": 0,
+"wins": 0,
+"losses": 3,
+"goalAgainstAverage": 3.99,
+"games": 3,
+"goalsAgainst": 14
+},
+"team": {
+"name": "Montreal-Bourassa",
+"link": "/api/v1/teams/null"
+},
+"league": {
+"name": "QAAA",
+"link": "/api/v1/league/null"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19891990",
+"stat": {
+"timeOnIce": "678:00",
+"shutouts": 0,
+"wins": 5,
+"losses": 7,
+"goalAgainstAverage": 4.07,
+"games": 12,
+"goalsAgainst": 46
+},
+"team": {
+"id": 2928,
+"name": "St-Hyacinthe Laser",
+"link": "/api/v1/teams/2928"
+},
+"league": {
+"id": 15,
+"name": "QMJHL",
+"link": "/api/v1/league/15"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19901991",
+"stat": {
+"timeOnIce": "232:00",
+"shutouts": 0,
+"wins": 0,
+"losses": 4,
+"goalAgainstAverage": 4.14,
+"games": 4,
+"goalsAgainst": 16
+},
+"team": {
+"id": 2928,
+"name": "St-Hyacinthe Laser",
+"link": "/api/v1/teams/2928"
+},
+"league": {
+"id": 15,
+"name": "QMJHL",
+"link": "/api/v1/league/15"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19911992",
+"stat": {
+"timeOnIce": "32:04",
+"ot": 0,
+"shutouts": 0,
+"ties": 0,
+"wins": 0,
+"losses": 1,
+"saves": 12,
+"powerPlaySaves": 0,
+"shortHandedSaves": 0,
+"evenSaves": 0,
+"shortHandedShots": 0,
+"evenShots": 3,
+"powerPlayShots": 0,
+"savePercentage": 0.8,
+"goalAgainstAverage": 5.61,
+"games": 1,
+"gamesStarted": 0,
+"shotsAgainst": 15,
+"goalsAgainst": 3,
+"evenStrengthSavePercentage": 0
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19921993",
+"stat": {
+"timeOnIce": "258:00",
+"shutouts": 0,
+"wins": 1,
+"losses": 3,
+"goalAgainstAverage": 4.19,
+"games": 4,
+"goalsAgainst": 18
+},
+"team": {
+"name": "Utica Devils",
+"link": "/api/v1/teams/null"
+},
+"league": {
+"name": "AHL",
+"link": "/api/v1/league/null"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19931994",
+"stat": {
+"timeOnIce": "1170:40",
+"ot": 0,
+"shutouts": 1,
+"ties": 0,
+"wins": 8,
+"losses": 9,
+"saves": 493,
+"powerPlaySaves": 0,
+"shortHandedSaves": 0,
+"evenSaves": 0,
+"shortHandedShots": 0,
+"evenShots": 29,
+"powerPlayShots": 9,
+"savePercentage": 0.928,
+"goalAgainstAverage": 1.95,
+"games": 17,
+"gamesStarted": 0,
+"shotsAgainst": 531,
+"goalsAgainst": 38,
+"powerPlaySavePercentage": 0,
+"evenStrengthSavePercentage": 0
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19941995",
+"stat": {
+"timeOnIce": "1221:58",
+"ot": 0,
+"shutouts": 3,
+"ties": 0,
+"wins": 16,
+"losses": 4,
+"saves": 429,
+"powerPlaySaves": 0,
+"shortHandedSaves": 0,
+"evenSaves": 0,
+"shortHandedShots": 2,
+"evenShots": 22,
+"powerPlayShots": 10,
+"savePercentage": 0.927,
+"goalAgainstAverage": 1.67,
+"games": 20,
+"gamesStarted": 0,
+"shotsAgainst": 463,
+"goalsAgainst": 34,
+"powerPlaySavePercentage": 0,
+"shortHandedSavePercentage": 0,
+"evenStrengthSavePercentage": 0
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19961997",
+"stat": {
+"timeOnIce": "658:48",
+"ot": 0,
+"shutouts": 2,
+"ties": 0,
+"wins": 5,
+"losses": 5,
+"saves": 249,
+"powerPlaySaves": 0,
+"shortHandedSaves": 0,
+"evenSaves": 0,
+"shortHandedShots": 2,
+"evenShots": 14,
+"powerPlayShots": 3,
+"savePercentage": 0.929,
+"goalAgainstAverage": 1.73,
+"games": 10,
+"gamesStarted": 0,
+"shotsAgainst": 268,
+"goalsAgainst": 19,
+"powerPlaySavePercentage": 0,
+"shortHandedSavePercentage": 0,
+"evenStrengthSavePercentage": 0
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19971998",
+"stat": {
+"timeOnIce": "366:10",
+"ot": 0,
+"shutouts": 0,
+"ties": 0,
+"wins": 2,
+"losses": 4,
+"saves": 152,
+"powerPlaySaves": 22,
+"shortHandedSaves": 6,
+"evenSaves": 124,
+"shortHandedShots": 6,
+"evenShots": 132,
+"powerPlayShots": 26,
+"savePercentage": 0.927,
+"goalAgainstAverage": 1.97,
+"games": 6,
+"gamesStarted": 6,
+"shotsAgainst": 164,
+"goalsAgainst": 12,
+"powerPlaySavePercentage": 84.61538461538461,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 93.93939393939394
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19981999",
+"stat": {
+"timeOnIce": "424:32",
+"ot": 0,
+"shutouts": 0,
+"ties": 0,
+"wins": 3,
+"losses": 4,
+"saves": 119,
+"powerPlaySaves": 12,
+"shortHandedSaves": 2,
+"evenSaves": 105,
+"shortHandedShots": 2,
+"evenShots": 121,
+"powerPlayShots": 16,
+"savePercentage": 0.856,
+"goalAgainstAverage": 2.83,
+"games": 7,
+"gamesStarted": 7,
+"shotsAgainst": 139,
+"goalsAgainst": 20,
+"powerPlaySavePercentage": 75,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 86.77685950413223
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "19992000",
+"stat": {
+"timeOnIce": "1450:04",
+"ot": 0,
+"shutouts": 2,
+"ties": 0,
+"wins": 16,
+"losses": 7,
+"saves": 498,
+"powerPlaySaves": 49,
+"shortHandedSaves": 14,
+"evenSaves": 435,
+"shortHandedShots": 15,
+"evenShots": 468,
+"powerPlayShots": 54,
+"savePercentage": 0.927,
+"goalAgainstAverage": 1.61,
+"games": 23,
+"gamesStarted": 22,
+"shotsAgainst": 537,
+"goalsAgainst": 39,
+"powerPlaySavePercentage": 90.74074074074075,
+"shortHandedSavePercentage": 93.33333333333333,
+"evenStrengthSavePercentage": 92.94871794871796
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20002001",
+"stat": {
+"timeOnIce": "1504:43",
+"ot": 0,
+"shutouts": 4,
+"ties": 0,
+"wins": 15,
+"losses": 10,
+"saves": 455,
+"powerPlaySaves": 90,
+"shortHandedSaves": 14,
+"evenSaves": 351,
+"shortHandedShots": 16,
+"evenShots": 384,
+"powerPlayShots": 107,
+"savePercentage": 0.897,
+"goalAgainstAverage": 2.07,
+"games": 25,
+"gamesStarted": 25,
+"shotsAgainst": 507,
+"goalsAgainst": 52,
+"powerPlaySavePercentage": 84.11214953271028,
+"shortHandedSavePercentage": 87.5,
+"evenStrengthSavePercentage": 91.40625
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20012002",
+"stat": {
+"timeOnIce": "381:08",
+"ot": 0,
+"shutouts": 1,
+"ties": 0,
+"wins": 2,
+"losses": 4,
+"saves": 136,
+"powerPlaySaves": 19,
+"shortHandedSaves": 3,
+"evenSaves": 114,
+"shortHandedShots": 3,
+"evenShots": 119,
+"powerPlayShots": 23,
+"savePercentage": 0.938,
+"goalAgainstAverage": 1.42,
+"games": 6,
+"gamesStarted": 6,
+"shotsAgainst": 145,
+"goalsAgainst": 9,
+"powerPlaySavePercentage": 82.6086956521739,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 95.7983193277311
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20022003",
+"stat": {
+"timeOnIce": "1490:34",
+"ot": 0,
+"shutouts": 7,
+"ties": 0,
+"wins": 16,
+"losses": 8,
+"saves": 581,
+"powerPlaySaves": 67,
+"shortHandedSaves": 13,
+"evenSaves": 501,
+"shortHandedShots": 15,
+"evenShots": 532,
+"powerPlayShots": 75,
+"savePercentage": 0.934,
+"goalAgainstAverage": 1.65,
+"games": 24,
+"gamesStarted": 24,
+"shotsAgainst": 622,
+"goalsAgainst": 41,
+"powerPlaySavePercentage": 89.33333333333333,
+"shortHandedSavePercentage": 86.66666666666667,
+"evenStrengthSavePercentage": 94.17293233082707
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20032004",
+"stat": {
+"timeOnIce": "297:58",
+"ot": 0,
+"shutouts": 0,
+"ties": 0,
+"wins": 1,
+"losses": 4,
+"saves": 120,
+"powerPlaySaves": 12,
+"shortHandedSaves": 1,
+"evenSaves": 107,
+"shortHandedShots": 1,
+"evenShots": 116,
+"powerPlayShots": 16,
+"savePercentage": 0.902,
+"goalAgainstAverage": 2.62,
+"games": 5,
+"gamesStarted": 5,
+"shotsAgainst": 133,
+"goalsAgainst": 13,
+"powerPlaySavePercentage": 75,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 92.24137931034483
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20052006",
+"stat": {
+"timeOnIce": "532:59",
+"ot": 1,
+"shutouts": 1,
+"ties": 0,
+"wins": 5,
+"losses": 4,
+"saves": 241,
+"powerPlaySaves": 70,
+"shortHandedSaves": 14,
+"evenSaves": 157,
+"shortHandedShots": 14,
+"evenShots": 166,
+"powerPlayShots": 81,
+"savePercentage": 0.923,
+"goalAgainstAverage": 2.25,
+"games": 9,
+"gamesStarted": 9,
+"shotsAgainst": 261,
+"goalsAgainst": 20,
+"powerPlaySavePercentage": 86.41975308641975,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 94.57831325301204
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20062007",
+"stat": {
+"timeOnIce": "688:06",
+"ot": 0,
+"shutouts": 1,
+"ties": 0,
+"wins": 5,
+"losses": 6,
+"saves": 304,
+"powerPlaySaves": 66,
+"shortHandedSaves": 9,
+"evenSaves": 229,
+"shortHandedShots": 11,
+"evenShots": 247,
+"powerPlayShots": 74,
+"savePercentage": 0.916,
+"goalAgainstAverage": 2.44,
+"games": 11,
+"gamesStarted": 11,
+"shotsAgainst": 332,
+"goalsAgainst": 28,
+"powerPlaySavePercentage": 89.1891891891892,
+"shortHandedSavePercentage": 81.81818181818183,
+"evenStrengthSavePercentage": 92.71255060728745
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20072008",
+"stat": {
+"timeOnIce": "300:58",
+"ot": 0,
+"shutouts": 0,
+"ties": 0,
+"wins": 1,
+"losses": 4,
+"saves": 131,
+"powerPlaySaves": 13,
+"shortHandedSaves": 5,
+"evenSaves": 113,
+"shortHandedShots": 6,
+"evenShots": 124,
+"powerPlayShots": 17,
+"savePercentage": 0.891,
+"goalAgainstAverage": 3.19,
+"games": 5,
+"gamesStarted": 5,
+"shotsAgainst": 147,
+"goalsAgainst": 16,
+"powerPlaySavePercentage": 76.47058823529412,
+"shortHandedSavePercentage": 83.33333333333334,
+"evenStrengthSavePercentage": 91.12903225806451
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20082009",
+"stat": {
+"timeOnIce": "426:41",
+"ot": 1,
+"shutouts": 1,
+"ties": 0,
+"wins": 3,
+"losses": 4,
+"saves": 222,
+"powerPlaySaves": 44,
+"shortHandedSaves": 4,
+"evenSaves": 174,
+"shortHandedShots": 4,
+"evenShots": 189,
+"powerPlayShots": 46,
+"savePercentage": 0.929,
+"goalAgainstAverage": 2.39,
+"games": 7,
+"gamesStarted": 7,
+"shotsAgainst": 239,
+"goalsAgainst": 17,
+"powerPlaySavePercentage": 95.65217391304348,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 92.06349206349206
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20092010",
+"stat": {
+"timeOnIce": "298:44",
+"ot": 1,
+"shutouts": 0,
+"ties": 0,
+"wins": 1,
+"losses": 4,
+"saves": 111,
+"powerPlaySaves": 32,
+"shortHandedSaves": 4,
+"evenSaves": 75,
+"shortHandedShots": 4,
+"evenShots": 82,
+"powerPlayShots": 40,
+"savePercentage": 0.881,
+"goalAgainstAverage": 3.01,
+"games": 5,
+"gamesStarted": 5,
+"shotsAgainst": 126,
+"goalsAgainst": 15,
+"powerPlaySavePercentage": 80,
+"shortHandedSavePercentage": 100,
+"evenStrengthSavePercentage": 91.46341463414635
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+},
+{
+"season": "20112012",
+"stat": {
+"timeOnIce": "1470:54",
+"ot": 3,
+"shutouts": 1,
+"ties": 0,
+"wins": 14,
+"losses": 9,
+"saves": 577,
+"powerPlaySaves": 86,
+"shortHandedSaves": 30,
+"evenSaves": 461,
+"shortHandedShots": 31,
+"evenShots": 491,
+"powerPlayShots": 107,
+"savePercentage": 0.917,
+"goalAgainstAverage": 2.12,
+"games": 24,
+"gamesStarted": 24,
+"shotsAgainst": 629,
+"goalsAgainst": 52,
+"powerPlaySavePercentage": 80.37383177570094,
+"shortHandedSavePercentage": 96.7741935483871,
+"evenStrengthSavePercentage": 93.89002036659878
+},
+"team": {
+"id": 1,
+"name": "New Jersey Devils",
+"link": "/api/v1/teams/1"
+},
+"league": {
+"id": 133,
+"name": "National Hockey League",
+"link": "/api/v1/league/133"
+},
+"sequenceNumber": 1
+}
+]
+},
+{
+"type": {
+"displayName": "careerPlayoffs"
+},
+"splits": [
+{
+"stat": {
+"timeOnIce": "12717:01",
+"ot": 6,
+"shutouts": 24,
+"ties": 0,
+"wins": 113,
+"losses": 91,
+"saves": 4830,
+"savePercentage": 0.9186,
+"goalAgainstAverage": 2.01934,
+"games": 205,
+"gamesStarted": 156,
+"shotsAgainst": 5258,
+"goalsAgainst": 428,
+"timeOnIcePerGame": "62:02"
+}
+}
+]
+},
+{
+"type": {
+"displayName": "playoffGameLog"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "homeAndAwayPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "winLossPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "vsTeamPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "vsDivisionPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "vsConferencePlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "byMonthPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "byDayOfWeekPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "goalsByGameSituationPlayoffs"
+},
+"splits": []
+},
+{
+"type": {
+"displayName": "statsSingleSeasonPlayoffs"
+},
+"splits": []
+}
+]
+}
+]
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" parallel="methods" thread-count="1" name="Android - Disney+ Handset Localization Captures" annotations="JDK">
+
+    <parameter name="suiteOwner" value="bsuscavage"/>
+    <parameter name="reporting.project-key" value="LQA" />
+    <parameter name="com.zebrunner.app/tcm.qtest.project-id" value="60"/>
+    <parameter name="applicationPackage" value="com.disney.disneyplus"/>
+    <parameter name="jenkinsJobType" value="android"/>
+    <parameter name="jenkinsJobName" value="DisneyPlus-Android-Handset-Localization-Captures"/>
+    <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Mobile-Prod-Google-Debug"/>
+    <parameter name="jenkinsEnvironments" value="mobile.google"/>
+    <parameter name="jenkinsMobileDefaultPool" value="any"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
+    <parameter name="booleanParam::enableDebugDisplay::Toggle to enable display dictionary keys in the app" value="false"/>
+    <parameter name="overrideFields" value="capabilities.deviceType=Phone,capabilities.locale=${locale},capabilities.language=${language},capabilities.custom_env=${custom_env},custom_string2=${unpinDictionaries},custom_string3=${setGlobalizationAPI},custom_string4=${globalizationApiVer},custom_string5=${enableDebugDisplay},androidInstallTimeout=120000,adbExecTimeout=90000"/>
+    <parameter name="choiceParam::groups::Group" value=",Maturity,Onboarding - Backgrounds,Onboarding - Full"/>
+    <parameter name="choiceParam::custom_env::App Environment" value="PROD,QA,EDITORIAL"/>
+    <parameter name="choiceParam::locale::Locale to run - Sets the driver locale." value="AD,AL,AR,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
+    <parameter name="choiceParam::language::Language to run - Sets driver language and is used to build default profile localization." value="cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
+    <parameter name="booleanParam::setGlobalizationAPI::Set Globalization API version to 1.x.x or override with a custom value" value="false"/>
+    <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value="1.x.x"/>
+    <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
+    <parameter name="choiceParam::appcenter_use_jenkins_build_version::Override hardcoded build version" value="false,true"/>
+
+    <test verbose="1" name="DisneyPlus Handset Localization Captures" >
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.android.localization.DisneyPlusStarLocalizationCapturesTest"/>
+            <class name="com.disney.qa.tests.disney.android.localization.DisneyPlusAndroidOnboardingLocalizationCaptures"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,1281 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "totalItems": 1,
+  "totalEvents": 0,
+  "totalGames": 1,
+  "totalMatches": 0,
+  "wait": 10,
+  "dates": [{
+    "date": "2020-09-28",
+    "totalItems": 1,
+    "totalEvents": 0,
+    "totalGames": 1,
+    "totalMatches": 0,
+    "games": [{
+      "gamePk": 2019030416,
+      "link": "/api/v1/game/2019030416/feed/live",
+      "gameType": "P",
+      "season": "20192020",
+      "gameDate": "2020-09-29T00:00:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "codedGameState": "1",
+        "detailedState": "Scheduled",
+        "statusCode": "1",
+        "startTimeTBD": false
+      },
+      "teams": {
+        "away": {
+          "leagueRecord": {
+            "wins": 18,
+            "losses": 7,
+            "ot": 0,
+            "type": "league"
+          },
+          "score": 0,
+          "team": {
+            "id": 14,
+            "name": "Automation - Away Team",
+            "link": "/api/v1/teams/14",
+            "venue": {
+              "name": "AMALIE Arena",
+              "link": "/api/v1/venues/null",
+              "city": "Tampa",
+              "timeZone": {
+                "id": "America/New_York",
+                "offset": -5,
+                "tz": "EST"
+              }
+            },
+            "abbreviation": "TBL",
+            "teamName": "Automation - Away",
+            "locationName": "Tampa Bay",
+            "firstYearOfPlay": "1992",
+            "division": {
+              "id": 17,
+              "name": "Atlantic",
+              "nameShort": "ATL",
+              "link": "/api/v1/divisions/17",
+              "abbreviation": "A"
+            },
+            "conference": {
+              "id": 6,
+              "name": "Eastern",
+              "link": "/api/v1/conferences/6"
+            },
+            "franchise": {
+              "franchiseId": 31,
+              "teamName": "Lightning",
+              "link": "/api/v1/franchises/31"
+            },
+            "teamLeaders": [{
+              "leaderCategory": "points",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "34",
+                "team": {
+                  "id": 14,
+                  "name": "Tampa Bay Lightning",
+                  "link": "/api/v1/teams/14"
+                },
+                "person": {
+                  "id": 8476453,
+                  "fullName": "Nikita Kucherov",
+                  "link": "/api/v1/people/8476453",
+                  "firstName": "Nikita",
+                  "lastName": "Kucherov",
+                  "primaryNumber": "86",
+                  "birthDate": "1993-06-17",
+                  "currentAge": 27,
+                  "birthCity": "Maykop",
+                  "birthCountry": "RUS",
+                  "nationality": "RUS",
+                  "height": "5' 11\"",
+                  "weight": 183,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "L",
+                  "rosterStatus": "N",
+                  "currentTeam": {
+                    "id": 14,
+                    "name": "Tampa Bay Lightning",
+                    "link": "/api/v1/teams/14"
+                  },
+                  "primaryPosition": {
+                    "code": "R",
+                    "name": "Right Wing",
+                    "type": "Forward",
+                    "abbreviation": "RW"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }, {
+              "leaderCategory": "assists",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "27",
+                "team": {
+                  "id": 14,
+                  "name": "Tampa Bay Lightning",
+                  "link": "/api/v1/teams/14"
+                },
+                "person": {
+                  "id": 8476453,
+                  "fullName": "Nikita Kucherov",
+                  "link": "/api/v1/people/8476453",
+                  "firstName": "Nikita",
+                  "lastName": "Kucherov",
+                  "primaryNumber": "86",
+                  "birthDate": "1993-06-17",
+                  "currentAge": 27,
+                  "birthCity": "Maykop",
+                  "birthCountry": "RUS",
+                  "nationality": "RUS",
+                  "height": "5' 11\"",
+                  "weight": 183,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "L",
+                  "rosterStatus": "N",
+                  "currentTeam": {
+                    "id": 14,
+                    "name": "Tampa Bay Lightning",
+                    "link": "/api/v1/teams/14"
+                  },
+                  "primaryPosition": {
+                    "code": "R",
+                    "name": "Right Wing",
+                    "type": "Forward",
+                    "abbreviation": "RW"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }, {
+              "leaderCategory": "goals",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "14",
+                "team": {
+                  "id": 14,
+                  "name": "Tampa Bay Lightning",
+                  "link": "/api/v1/teams/14"
+                },
+                "person": {
+                  "id": 8478010,
+                  "fullName": "Brayden Point",
+                  "link": "/api/v1/people/8478010",
+                  "firstName": "Brayden",
+                  "lastName": "Point",
+                  "primaryNumber": "21",
+                  "birthDate": "1996-03-13",
+                  "currentAge": 24,
+                  "birthCity": "Calgary",
+                  "birthStateProvince": "AB",
+                  "birthCountry": "CAN",
+                  "nationality": "CAN",
+                  "height": "5' 10\"",
+                  "weight": 166,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "R",
+                  "rosterStatus": "Y",
+                  "currentTeam": {
+                    "id": 14,
+                    "name": "Tampa Bay Lightning",
+                    "link": "/api/v1/teams/14"
+                  },
+                  "primaryPosition": {
+                    "code": "C",
+                    "name": "Center",
+                    "type": "Forward",
+                    "abbreviation": "C"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }],
+            "shortName": "Tampa Bay",
+            "officialSiteUrl": "http://www.tampabaylightning.com/",
+            "franchiseId": 31,
+            "active": true
+          }
+        },
+        "home": {
+          "leagueRecord": {
+            "wins": 15,
+            "losses": 12,
+            "ot": 0,
+            "type": "league"
+          },
+          "score": 0,
+          "team": {
+            "id": 25,
+            "name": "Automation - Home Team",
+            "link": "/api/v1/teams/25",
+            "venue": {
+              "id": 5019,
+              "name": "American Airlines Center",
+              "link": "/api/v1/venues/5019",
+              "city": "Dallas",
+              "timeZone": {
+                "id": "America/Chicago",
+                "offset": -6,
+                "tz": "CST"
+              }
+            },
+            "abbreviation": "DAL",
+            "teamName": "Automation - Home",
+            "locationName": "Dallas",
+            "firstYearOfPlay": "1993",
+            "division": {
+              "id": 16,
+              "name": "Central",
+              "nameShort": "CEN",
+              "link": "/api/v1/divisions/16",
+              "abbreviation": "C"
+            },
+            "conference": {
+              "id": 5,
+              "name": "Western",
+              "link": "/api/v1/conferences/5"
+            },
+            "franchise": {
+              "franchiseId": 15,
+              "teamName": "Stars",
+              "link": "/api/v1/franchises/15"
+            },
+            "teamLeaders": [{
+              "leaderCategory": "points",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "26",
+                "team": {
+                  "id": 25,
+                  "name": "Dallas Stars",
+                  "link": "/api/v1/teams/25"
+                },
+                "person": {
+                  "id": 8480036,
+                  "fullName": "Miro Heiskanen",
+                  "link": "/api/v1/people/8480036",
+                  "firstName": "Miro",
+                  "lastName": "Heiskanen",
+                  "primaryNumber": "4",
+                  "birthDate": "1999-07-18",
+                  "currentAge": 21,
+                  "birthCity": "Espoo",
+                  "birthCountry": "FIN",
+                  "nationality": "FIN",
+                  "height": "6' 1\"",
+                  "weight": 190,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "L",
+                  "rosterStatus": "Y",
+                  "currentTeam": {
+                    "id": 25,
+                    "name": "Dallas Stars",
+                    "link": "/api/v1/teams/25"
+                  },
+                  "primaryPosition": {
+                    "code": "D",
+                    "name": "Defenseman",
+                    "type": "Defenseman",
+                    "abbreviation": "D"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }, {
+              "leaderCategory": "assists",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "20",
+                "team": {
+                  "id": 25,
+                  "name": "Dallas Stars",
+                  "link": "/api/v1/teams/25"
+                },
+                "person": {
+                  "id": 8480036,
+                  "fullName": "Miro Heiskanen",
+                  "link": "/api/v1/people/8480036",
+                  "firstName": "Miro",
+                  "lastName": "Heiskanen",
+                  "primaryNumber": "4",
+                  "birthDate": "1999-07-18",
+                  "currentAge": 21,
+                  "birthCity": "Espoo",
+                  "birthCountry": "FIN",
+                  "nationality": "FIN",
+                  "height": "6' 1\"",
+                  "weight": 190,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "L",
+                  "rosterStatus": "Y",
+                  "currentTeam": {
+                    "id": 25,
+                    "name": "Dallas Stars",
+                    "link": "/api/v1/teams/25"
+                  },
+                  "primaryPosition": {
+                    "code": "D",
+                    "name": "Defenseman",
+                    "type": "Defenseman",
+                    "abbreviation": "D"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }, {
+              "leaderCategory": "goals",
+              "depth": "singleSeason",
+              "playerStatus": "allPlayers",
+              "season": "2019-2020",
+              "gameType": {
+                "id": "P",
+                "description": "Playoffs",
+                "postseason": true
+              },
+              "limitMetadata": {
+                "limit": 1,
+                "offset": 0,
+                "additionalTies": 0
+              },
+              "leaders": [{
+                "rank": 1,
+                "value": "13",
+                "team": {
+                  "id": 25,
+                  "name": "Dallas Stars",
+                  "link": "/api/v1/teams/25"
+                },
+                "person": {
+                  "id": 8470794,
+                  "fullName": "Joe Pavelski",
+                  "link": "/api/v1/people/8470794",
+                  "firstName": "Joe",
+                  "lastName": "Pavelski",
+                  "primaryNumber": "16",
+                  "birthDate": "1984-07-11",
+                  "currentAge": 36,
+                  "birthCity": "Plover",
+                  "birthStateProvince": "WI",
+                  "birthCountry": "USA",
+                  "nationality": "USA",
+                  "height": "5' 11\"",
+                  "weight": 195,
+                  "active": true,
+                  "alternateCaptain": false,
+                  "captain": false,
+                  "rookie": false,
+                  "shootsCatches": "R",
+                  "rosterStatus": "Y",
+                  "currentTeam": {
+                    "id": 25,
+                    "name": "Dallas Stars",
+                    "link": "/api/v1/teams/25"
+                  },
+                  "primaryPosition": {
+                    "code": "C",
+                    "name": "Center",
+                    "type": "Forward",
+                    "abbreviation": "C"
+                  },
+                  "stats": [{
+                    "type": {
+                      "displayName": "statsSingleSeasonPlayoffs",
+                      "gameType": {
+                        "id": "P",
+                        "description": "Playoffs",
+                        "postseason": true
+                      }
+                    },
+                    "splits": []
+                  }]
+                },
+                "season": "20192020"
+              }]
+            }],
+            "shortName": "Dallas",
+            "officialSiteUrl": "http://www.dallasstars.com/",
+            "franchiseId": 15,
+            "active": true
+          }
+        }
+      },
+      "linescore": {
+        "currentPeriod": 1,
+        "currentPeriodOrdinal": "1st",
+        "currentPeriodTimeRemaining": "20:00",
+        "periods": [{
+          "periodType": "REGULAR",
+          "startTime": "2020-09-29T00:19:56Z",
+          "endTime": "2020-09-29T00:55:22Z",
+          "num": 1,
+          "ordinalNum": "1st",
+          "home": {
+            "goals": 0,
+            "shotsOnGoal": 4,
+            "rinkSide": "right"
+          },
+          "away": {
+            "goals": 0,
+            "shotsOnGoal": 11,
+            "rinkSide": "left"
+          }
+        }, {
+          "periodType": "REGULAR",
+          "startTime": "2020-09-29T01:13:57Z",
+          "endTime": "2020-09-29T01:50:01Z",
+          "num": 2,
+          "ordinalNum": "2nd",
+          "home": {
+            "goals": 0,
+            "shotsOnGoal": 4,
+            "rinkSide": "left"
+          },
+          "away": {
+            "goals": 0,
+            "shotsOnGoal": 10,
+            "rinkSide": "right"
+          }
+        }, {
+          "periodType": "REGULAR",
+          "startTime": "2020-09-29T02:08:31Z",
+          "endTime": "2020-09-29T02:49:27Z",
+          "num": 3,
+          "ordinalNum": "3rd",
+          "home": {
+            "goals": 0,
+            "shotsOnGoal": 14,
+            "rinkSide": "right"
+          },
+          "away": {
+            "goals": 0,
+            "shotsOnGoal": 8,
+            "rinkSide": "left"
+          }
+        }],
+        "shootoutInfo": {
+          "away": {
+            "scores": 0,
+            "attempts": 0
+          },
+          "home": {
+            "scores": 0,
+            "attempts": 0
+          }
+        },
+        "teams": {
+          "home": {
+            "team": {
+              "id": 25,
+              "name": "Dallas Stars",
+              "link": "/api/v1/teams/25"
+            },
+            "goals": 0,
+            "shotsOnGoal": 22,
+            "goaliePulled": false,
+            "numSkaters": 5,
+            "powerPlay": false
+          },
+          "away": {
+            "team": {
+              "id": 14,
+              "name": "Tampa Bay Lightning",
+              "link": "/api/v1/teams/14"
+            },
+            "goals": 0,
+            "shotsOnGoal": 29,
+            "goaliePulled": false,
+            "numSkaters": 5,
+            "powerPlay": false
+          }
+        },
+        "powerPlayStrength": "Even",
+        "hasShootout": false,
+        "intermissionInfo": {
+          "intermissionTimeRemaining": 0,
+          "intermissionTimeElapsed": 0,
+          "inIntermission": false
+        },
+        "powerPlayInfo": {
+          "situationTimeRemaining": 0,
+          "situationTimeElapsed": 0,
+          "inSituation": false
+        }
+      },
+      "scoringPlays": [{
+        "players": [{
+          "player": {
+            "id": 8478010,
+            "fullName": "Brayden Point",
+            "link": "/api/v1/people/8478010"
+          },
+          "playerType": "Scorer",
+          "seasonTotal": 14
+        }, {
+          "player": {
+            "id": 8476453,
+            "fullName": "Nikita Kucherov",
+            "link": "/api/v1/people/8476453"
+          },
+          "playerType": "Assist",
+          "seasonTotal": 27
+        }, {
+          "player": {
+            "id": 8475167,
+            "fullName": "Victor Hedman",
+            "link": "/api/v1/people/8475167"
+          },
+          "playerType": "Assist",
+          "seasonTotal": 12
+        }, {
+          "player": {
+            "id": 8471418,
+            "fullName": "Anton Khudobin",
+            "link": "/api/v1/people/8471418"
+          },
+          "playerType": "Goalie"
+        }],
+        "result": {
+          "event": "Goal",
+          "eventCode": "DAL75",
+          "eventTypeId": "GOAL",
+          "description": "Brayden Point (14) Wrist Shot, assists: Nikita Kucherov (27), Victor Hedman (12)",
+          "secondaryType": "Wrist Shot",
+          "strength": {
+            "code": "PPG",
+            "name": "Power Play"
+          },
+          "gameWinningGoal": true,
+          "emptyNet": false
+        },
+        "about": {
+          "eventIdx": 62,
+          "eventId": 75,
+          "period": 1,
+          "periodType": "REGULAR",
+          "ordinalNum": "1st",
+          "periodTime": "12:23",
+          "periodTimeRemaining": "07:37",
+          "dateTime": "2020-09-29T00:39:44Z",
+          "goals": {
+            "away": 1,
+            "home": 0
+          }
+        },
+        "coordinates": {
+          "x": -80.0,
+          "y": 0.0
+        },
+        "team": {
+          "id": 14,
+          "name": "Tampa Bay Lightning",
+          "link": "/api/v1/teams/14"
+        }
+      }, {
+        "players": [{
+          "player": {
+            "id": 8476399,
+            "fullName": "Blake Coleman",
+            "link": "/api/v1/people/8476399"
+          },
+          "playerType": "Scorer",
+          "seasonTotal": 5
+        }, {
+          "player": {
+            "id": 8476975,
+            "fullName": "Cedric Paquette",
+            "link": "/api/v1/people/8476975"
+          },
+          "playerType": "Assist",
+          "seasonTotal": 3
+        }, {
+          "player": {
+            "id": 8474034,
+            "fullName": "Pat Maroon",
+            "link": "/api/v1/people/8474034"
+          },
+          "playerType": "Assist",
+          "seasonTotal": 5
+        }, {
+          "player": {
+            "id": 8471418,
+            "fullName": "Anton Khudobin",
+            "link": "/api/v1/people/8471418"
+          },
+          "playerType": "Goalie"
+        }],
+        "result": {
+          "event": "Goal",
+          "eventCode": "DAL366",
+          "eventTypeId": "GOAL",
+          "description": "Blake Coleman (5) Slap Shot, assists: Cedric Paquette (3), Pat Maroon (5)",
+          "secondaryType": "Slap Shot",
+          "strength": {
+            "code": "EVEN",
+            "name": "Even"
+          },
+          "gameWinningGoal": false,
+          "emptyNet": false
+        },
+        "about": {
+          "eventIdx": 140,
+          "eventId": 366,
+          "period": 2,
+          "periodType": "REGULAR",
+          "ordinalNum": "2nd",
+          "periodTime": "07:01",
+          "periodTimeRemaining": "12:59",
+          "dateTime": "2020-09-29T01:24:06Z",
+          "goals": {
+            "away": 2,
+            "home": 0
+          }
+        },
+        "coordinates": {
+          "x": 64.0,
+          "y": -12.0
+        },
+        "team": {
+          "id": 14,
+          "name": "Tampa Bay Lightning",
+          "link": "/api/v1/teams/14"
+        }
+      }],
+      "venue": {
+        "id": 5100,
+        "name": "Rogers Place",
+        "link": "/api/v1/venues/5100"
+      },
+      "content": {
+        "link": "/api/v1/game/2019030416/content",
+        "editorial": {
+          "preview": {
+            "title": "Preview",
+            "topicList": "",
+            "items": [{
+              "headline": "3 Keys: Lightning vs. Stars, Game 6 of Stanley Cup Final",
+              "subhead": "Tampa Bay has another chance to win Cup; Dallas seeks to remain disciplined",
+              "id": "319212270",
+              "date": "2020-09-28T10:40:44-0400",
+              "dataURI": "/nhl/id/v1/319212270/details/android-phone-v1.json",
+              "images": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319212290/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319212290/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319212290/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319212290/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319212290/124x70/cut.jpg"
+              }
+            }]
+          },
+          "articles": {
+            "title": "Articles",
+            "topicList": "",
+            "items": []
+          },
+          "recap": {
+            "title": "Recap",
+            "topicList": "",
+            "items": [{
+              "headline": "Lightning win Stanley Cup, defeat Stars in Game 6 of Final",
+              "subhead": "Shut out Dallas for first championship since 2004",
+              "id": "319086198",
+              "date": "2020-09-29T00:41:20-0400",
+              "dataURI": "/nhl/id/v1/319086198/details/android-phone-v1.json",
+              "images": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222786/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222786/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319222786/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319222786/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319222786/124x70/cut.jpg"
+              }
+            }]
+          }
+        },
+        "media": {
+          "epg": [{
+            "title": "NHLTV",
+            "platform": "android-phone",
+            "items": [{
+              "guid": "5bce8f26-5a57-4630-860c-4f7d238ca3ca",
+              "mediaState": "MEDIA_ARCHIVE",
+              "featureContext": "NHL_ROGERS.DEF",
+              "mediaPlaybackId": "2000232561",
+              "mediaFeedType": "NATIONAL",
+              "callLetters": "NBC",
+              "eventId": "221-2005906",
+              "language": "eng",
+              "freeGame": false,
+              "feedName": "",
+              "gameLabel": "",
+              "gamePlus": false
+            }, {
+              "guid": "a27850c0-b129-4213-9d79-437dcd661a3a",
+              "mediaState": "MEDIA_ARCHIVE",
+              "featureContext": "NHL_ROGERS.DEF",
+              "mediaPlaybackId": "2000232571",
+              "mediaFeedType": "AWAY",
+              "callLetters": "CBC",
+              "eventId": "221-2005906",
+              "language": "eng",
+              "freeGame": false,
+              "feedName": "",
+              "gameLabel": "",
+              "gamePlus": false
+            }, {
+              "guid": "50caddbc-ded4-441a-bc88-cb30901f1553",
+              "mediaState": "MEDIA_ARCHIVE",
+              "featureContext": "NHL_ROGERS.DEF",
+              "mediaPlaybackId": "2000232601",
+              "mediaFeedType": "FRENCH",
+              "callLetters": "TVAS",
+              "eventId": "221-2005906",
+              "language": "fra",
+              "freeGame": false,
+              "feedName": "",
+              "gameLabel": "",
+              "gamePlus": false
+            }, {
+              "guid": "9dd75972-42fb-4373-a03c-8f211f5b8b80",
+              "mediaState": "MEDIA_ARCHIVE",
+              "featureContext": "NHL_ROGERS.DEF",
+              "mediaPlaybackId": "2000232621",
+              "mediaFeedType": "COMPOSITE",
+              "callLetters": "",
+              "eventId": "221-2005906",
+              "language": "eng",
+              "freeGame": false,
+              "feedName": "Multi-Cam 1",
+              "gameLabel": "",
+              "gamePlus": false
+            }]
+          }, {
+            "title": "Audio",
+            "items": [{
+              "mediaState": "MEDIA_DONE",
+              "featureContext": "NHL_ROGERS.AUDIO",
+              "mediaPlaybackId": "2000232581",
+              "mediaPlaybackURL": "",
+              "mediaFeedType": "HOME",
+              "callLetters": "KTCK",
+              "eventId": "221-2005906",
+              "language": "eng",
+              "freeGame": false,
+              "feedName": "",
+              "gamePlus": false
+            }, {
+              "mediaState": "MEDIA_DONE",
+              "featureContext": "NHL_ROGERS.AUDIO",
+              "mediaPlaybackId": "2000232591",
+              "mediaPlaybackURL": "",
+              "mediaFeedType": "AWAY",
+              "callLetters": "WFLA",
+              "eventId": "221-2005906",
+              "language": "eng",
+              "freeGame": false,
+              "feedName": "",
+              "gamePlus": false
+            }, {
+              "mediaState": "MEDIA_DONE",
+              "featureContext": "NHL_ROGERS.AUDIO",
+              "mediaPlaybackId": "2000232611",
+              "mediaPlaybackURL": "",
+              "mediaFeedType": "NATIONAL",
+              "callLetters": "NBC",
+              "eventId": "221-2005906",
+              "language": "fra",
+              "freeGame": false,
+              "feedName": "",
+              "gamePlus": false
+            }]
+          }, {
+            "title": "Extended Highlights",
+            "topicList": "318786842",
+            "items": [{
+              "type": "video",
+              "date": "2020-09-28T20:00:00-0400",
+              "headline": "Cup Final, Gm6: TBL @ DAL",
+              "blurb": "Extended highlights of the Tampa Bay Lightning at the Dallas Stars",
+              "eventId": "",
+              "duration": "09:01",
+              "image": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222788/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222788/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319222788/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319222788/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319222788/124x70/cut.jpg"
+              },
+              "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350014/MasterMobile.m3u8",
+              "id": "5420033",
+              "authFlow": false,
+              "flags": []
+            }]
+          }, {
+            "title": "Recap",
+            "topicList": "318786842",
+            "items": [{
+              "type": "video",
+              "date": "2020-09-28T20:00:00-0400",
+              "headline": "Recap: TBL 2, DAL 0",
+              "blurb": "The Lightning shut out and beat the Stars in Game 6, 2-0, to win the Stanley Cup Final",
+              "eventId": "",
+              "duration": "05:03",
+              "image": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222692/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319222692/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319222692/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319222692/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319222692/124x70/cut.jpg"
+              },
+              "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350012/MasterMobile.m3u8",
+              "id": "5420031",
+              "authFlow": false,
+              "flags": []
+            }]
+          }, {
+            "title": "Power Play",
+            "items": []
+          }],
+          "milestones": {
+            "title": "Milestones",
+            "streamStart": "2020-09-29T00:00:46+0000",
+            "items": [{
+              "title": "Broadcast Start",
+              "description": "Broadcast Start",
+              "type": "BROADCAST_START",
+              "timeAbsolute": "2020-09-29T00:00:46+0000",
+              "timeOffset": "0",
+              "period": "",
+              "statsEventId": "",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "",
+              "ordinalNum": "",
+              "highlight": {}
+            }, {
+              "title": "Period Start",
+              "description": "Period Start",
+              "type": "PERIOD_START",
+              "timeAbsolute": "2020-09-29T00:20:37+0000",
+              "timeOffset": "1191",
+              "period": "1",
+              "statsEventId": "51",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "00:00",
+              "ordinalNum": "1st",
+              "highlight": {}
+            }, {
+              "title": "Goal",
+              "description": "Brayden Point (14) Wrist Shot, assists: Nikita Kucherov (27), Victor Hedman (12)",
+              "type": "GOAL",
+              "timeAbsolute": "2020-09-29T00:39:26+0000",
+              "timeOffset": "2320",
+              "period": "1",
+              "statsEventId": "75",
+              "teamId": "14",
+              "playerId": "8478010",
+              "periodTime": "12:23",
+              "ordinalNum": "1st",
+              "highlight": {
+                "type": "video",
+                "date": "2020-09-28T20:00:00-0400",
+                "headline": "Point opens scoring with PPG",
+                "blurb": "Cup Final, Gm6: Brayden Point fires a shot, follows up his own rebound and knocks it home on the power play to open the scoring",
+                "eventId": "75",
+                "duration": "00:37",
+                "image": {
+                  "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/960x540/cut.jpg",
+                  "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/568x320/cut.jpg",
+                  "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/372x210/cut.jpg",
+                  "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/320x180/cut.jpg",
+                  "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/124x70/cut.jpg"
+                },
+                "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350000/MasterMobile.m3u8",
+                "id": "5420019",
+                "authFlow": false,
+                "flags": ["goal"]
+              }
+            }, {
+              "title": "Period End",
+              "description": "End of 1st Period",
+              "type": "PERIOD_END",
+              "timeAbsolute": "2020-09-29T00:55:20+0000",
+              "timeOffset": "3274",
+              "period": "1",
+              "statsEventId": "225",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "20:00",
+              "ordinalNum": "1st",
+              "highlight": {}
+            }, {
+              "title": "Period Start",
+              "description": "Period Start",
+              "type": "PERIOD_START",
+              "timeAbsolute": "2020-09-29T01:14:15+0000",
+              "timeOffset": "4409",
+              "period": "2",
+              "statsEventId": "351",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "00:00",
+              "ordinalNum": "2nd",
+              "highlight": {}
+            }, {
+              "title": "Goal",
+              "description": "Blake Coleman (5) Slap Shot, assists: Cedric Paquette (3), Pat Maroon (5)",
+              "type": "GOAL",
+              "timeAbsolute": "2020-09-29T01:23:55+0000",
+              "timeOffset": "4989",
+              "period": "2",
+              "statsEventId": "366",
+              "teamId": "14",
+              "playerId": "8476399",
+              "periodTime": "07:01",
+              "ordinalNum": "2nd",
+              "highlight": {
+                "type": "video",
+                "date": "2020-09-28T20:00:00-0400",
+                "headline": "Coleman's one-time tally",
+                "blurb": "Cup Final, Gm6: Blake Coleman takes a pass from Cedric Paquette and one-times it into the back of the net to double the lead",
+                "eventId": "366",
+                "duration": "00:37",
+                "image": {
+                  "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/960x540/cut.jpg",
+                  "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/568x320/cut.jpg",
+                  "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/372x210/cut.jpg",
+                  "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/320x180/cut.jpg",
+                  "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/124x70/cut.jpg"
+                },
+                "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350004/MasterMobile.m3u8",
+                "id": "5420023",
+                "authFlow": false,
+                "flags": ["goal"]
+              }
+            }, {
+              "title": "Period End",
+              "description": "End of 2nd Period",
+              "type": "PERIOD_END",
+              "timeAbsolute": "2020-09-29T01:50:01+0000",
+              "timeOffset": "6555",
+              "period": "2",
+              "statsEventId": "436",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "20:00",
+              "ordinalNum": "2nd",
+              "highlight": {}
+            }, {
+              "title": "Period Start",
+              "description": "Period Start",
+              "type": "PERIOD_START",
+              "timeAbsolute": "2020-09-29T02:08:30+0000",
+              "timeOffset": "7664",
+              "period": "3",
+              "statsEventId": "553",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "00:00",
+              "ordinalNum": "3rd",
+              "highlight": {}
+            }, {
+              "title": "Period End",
+              "description": "End of 3rd Period",
+              "type": "PERIOD_END",
+              "timeAbsolute": "2020-09-29T02:49:27+0000",
+              "timeOffset": "10121",
+              "period": "3",
+              "statsEventId": "804",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "20:00",
+              "ordinalNum": "3rd",
+              "highlight": {}
+            }, {
+              "title": "Broadcast End",
+              "description": "Broadcast End",
+              "type": "BROADCAST_END",
+              "timeAbsolute": "2020-09-29T03:04:12+0000",
+              "timeOffset": "11006",
+              "period": "",
+              "statsEventId": "",
+              "teamId": "",
+              "playerId": "",
+              "periodTime": "",
+              "ordinalNum": "",
+              "highlight": {}
+            }]
+          }
+        },
+        "highlights": {
+          "scoreboard": {
+            "title": "Highlights",
+            "topicList": "318786842",
+            "items": [{
+              "type": "video",
+              "date": "2020-09-28T20:00:00-0400",
+              "headline": "Point opens scoring with PPG",
+              "blurb": "Cup Final, Gm6: Brayden Point fires a shot, follows up his own rebound and knocks it home on the power play to open the scoring",
+              "eventId": "75",
+              "duration": "00:37",
+              "image": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319220500/124x70/cut.jpg"
+              },
+              "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350000/MasterMobile.m3u8",
+              "id": "5420019",
+              "authFlow": false,
+              "flags": ["goal"]
+            }, {
+              "type": "video",
+              "date": "2020-09-28T20:00:00-0400",
+              "headline": "Coleman's one-time tally",
+              "blurb": "Cup Final, Gm6: Blake Coleman takes a pass from Cedric Paquette and one-times it into the back of the net to double the lead",
+              "eventId": "366",
+              "duration": "00:37",
+              "image": {
+                "xxhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/960x540/cut.jpg",
+                "xhdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/568x320/cut.jpg",
+                "hdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/372x210/cut.jpg",
+                "mdpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/320x180/cut.jpg",
+                "ldpi": "http://cms.nhl.bamgrid.com/images/photos/319220920/124x70/cut.jpg"
+              },
+              "mediaPlaybackURL": "https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5350004/MasterMobile.m3u8",
+              "id": "5420023",
+              "authFlow": false,
+              "flags": ["goal"]
+            }]
+          }
+        }
+      },
+      "seriesSummary": {
+        "gamePk": 2019030416,
+        "gameNumber": 6,
+        "gameLabel": "Game 6",
+        "necessary": true,
+        "gameCode": 416,
+        "gameTime": "2020-09-29T00:00:00Z",
+        "seriesStatus": "Lightning win 4-2",
+        "seriesStatusShort": "TBL wins 4-2",
+        "series": {
+          "seriesNumber": 1,
+          "seriesCode": "O",
+          "names": {
+            "matchupName": "Lightning (2) vs. Stars (3)",
+            "matchupShortName": "TBL v DAL",
+            "teamAbbreviationA": "TBL",
+            "teamAbbreviationB": "DAL",
+            "seriesSlug": "lightning-vs-stars-series-o"
+          },
+          "currentGame": {
+            "seriesSummary": {
+              "gamePk": 2019030416,
+              "gameNumber": 6,
+              "gameLabel": "Game 6",
+              "necessary": true,
+              "gameCode": 416,
+              "gameTime": "2020-09-29T00:00:00Z",
+              "seriesStatus": "Lightning win 4-2",
+              "seriesStatusShort": "TBL wins 4-2"
+            }
+          },
+          "conference": {
+            "link": "/api/v1/conferences/null"
+          },
+          "round": {
+            "number": 4,
+            "code": 4,
+            "names": {
+              "name": "Stanley Cup Final",
+              "shortName": "SCF"
+            },
+            "format": {
+              "name": "BO7",
+              "description": "Best of 7",
+              "numberOfGames": 7,
+              "numberOfWins": 4
+            }
+          },
+          "matchupTeams": [{
+            "team": {
+              "id": 14,
+              "name": "Tampa Bay Lightning",
+              "link": "/api/v1/teams/14"
+            },
+            "seed": {
+              "type": "2",
+              "rank": 2,
+              "isTop": true
+            },
+            "seriesRecord": {
+              "wins": 4,
+              "losses": 2
+            }
+          }, {
+            "team": {
+              "id": 25,
+              "name": "Dallas Stars",
+              "link": "/api/v1/teams/25"
+            },
+            "seed": {
+              "type": "3",
+              "rank": 3,
+              "isTop": false
+            },
+            "seriesRecord": {
+              "wins": 2,
+              "losses": 4
+            }
+          }]
+        }
+      },
+      "metadata": {
+        "isManuallyScored": false,
+        "isSplitSquad": false,
+        "description": "Rogers Place, Edmonton"
+      }
+    }],
+    "events": [],
+    "matches": []
+  }]
+}

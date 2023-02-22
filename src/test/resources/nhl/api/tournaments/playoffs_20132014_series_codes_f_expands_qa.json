@@ -1,0 +1,469 @@
+{"copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "id" : 1,
+  "name" : "Playoffs",
+  "season" : "20132014",
+  "rounds" : [ {
+    "number" : 1,
+    "code" : 1,
+    "names" : {
+      "name" : "First Round",
+      "shortName" : "R1"
+    },
+    "format" : {
+      "name" : "BO7",
+      "description" : "Best of 7",
+      "numberOfGames" : 7,
+      "numberOfWins" : 4
+    },
+    "series" : [ {
+      "seriesNumber" : 6,
+      "seriesCode" : "F",
+      "names" : {
+        "matchupName" : "Blues (2) vs. Blackhawks (3)",
+        "matchupShortName" : "STL v CHI",
+        "teamAbbreviationA" : "STL",
+        "teamAbbreviationB" : "CHI",
+        "seriesSlug" : "blues-vs-blackhawks-series-f"
+      },
+      "currentGame" : {
+        "seriesSummary" : {
+          "gamePk" : 2013030166,
+          "gameNumber" : 6,
+          "gameLabel" : "Game 6",
+          "necessary" : true,
+          "gameCode" : 166,
+          "gameTime" : "2014-04-27T19:00:00Z",
+          "seriesStatus" : "Blackhawks win 4-2",
+          "seriesStatusShort" : "CHI wins 4-2"
+        }
+      },
+      "conference" : {
+        "id" : 5,
+        "name" : "Western",
+        "link" : "/api/v1/conferences/5"
+      },
+      "round" : {
+        "number" : 1
+      },
+      "schedule" : [ {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-17",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030161,
+            "link" : "/api/v1/game/2013030161/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-18T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 0,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 0,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Scottrade Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030161/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-19",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030162,
+            "link" : "/api/v1/game/2013030162/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-19T19:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 0,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 0,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Scottrade Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030162/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-21",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030163,
+            "link" : "/api/v1/game/2013030163/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-22T00:30:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 0,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030163/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-23",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030164,
+            "link" : "/api/v1/game/2013030164/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-24T01:30:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030164/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-25",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030165,
+            "link" : "/api/v1/game/2013030165/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-26T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 3,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 3,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Scottrade Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030165/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-27",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030166,
+            "link" : "/api/v1/game/2013030166/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-27T19:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 4,
+                  "type" : "league"
+                },
+                "score" : 1,
+                "team" : {
+                  "id" : 19,
+                  "name" : "St. Louis Blues",
+                  "link" : "/api/v1/teams/19"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 4,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 5,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030166/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      } ],
+      "matchupTeams" : [ {
+        "team" : {
+          "id" : 19,
+          "name" : "St. Louis Blues",
+          "link" : "/api/v1/teams/19"
+        },
+        "seed" : {
+          "type" : "2",
+          "rank" : 2,
+          "isTop" : true
+        },
+        "seriesRecord" : {
+          "wins" : 2,
+          "losses" : 4
+        }
+      }, {
+        "team" : {
+          "id" : 16,
+          "name" : "Chicago Blackhawks",
+          "link" : "/api/v1/teams/16"
+        },
+        "seed" : {
+          "type" : "3",
+          "rank" : 3,
+          "isTop" : false
+        },
+        "seriesRecord" : {
+          "wins" : 4,
+          "losses" : 2
+        }
+      } ]
+    } ]
+  } ]
+}

@@ -1,0 +1,300 @@
+package com.disney.qa.disney.apple.pages.common;
+
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.MobileUtilsExtended;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DELETE_ACCOUNT_MENU_ITEM;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
+
+	//LOCATORS
+	private ExtendedWebElement editProfilesBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_EDIT_PROFILE.getText()));
+
+	@FindBy(xpath = "//XCUIElementTypeApplication[@name=\"Disney+\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther")
+	private ExtendedWebElement exitJuniorModePin;
+	@FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"%s\"]/preceding-sibling::*")
+	private ExtendedWebElement profileAvatar;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
+	private ExtendedWebElement pinProtectedProfileLock;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"EDIT PROFILES\"`]/preceding-sibling::*")
+	private ExtendedWebElement profilesTray;
+
+	@FindBy(xpath = "//*[contains(@name, 'Version')]")
+	private ExtendedWebElement appVersion;
+
+	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
+	private ExtendedWebElement accountUnverifiedBadge;
+
+	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
+
+	@ExtendedFindBy(accessibilityId = "emptyView")
+	private ExtendedWebElement watchlistEmpty;
+
+	@FindBy(xpath = "//*[@name='accountView']/XCUIElementTypeCollectionView/XCUIElementTypeCell[%s]")
+	private ExtendedWebElement moreMenuItemByIndex;
+
+	//HELP WEBVIEW
+	@ExtendedFindBy(accessibilityId = "TopBrowserBar")
+	private ExtendedWebElement webviewBrowserBar;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Done\"`]")
+	private ExtendedWebElement webviewDoneBtn;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
+	private ExtendedWebElement webviewAddressBar;
+
+	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
+	private ExtendedWebElement exitKidsProfileButton;
+
+	@ExtendedFindBy(accessibilityId = "accountTab")
+	private ExtendedWebElement accountTab;
+
+	private ExtendedWebElement deleteAccountButton = xpathNameOrName.format(getDictionary()
+					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+							DELETE_ACCOUNT_MENU_ITEM.getText()),
+			DELETE_ACCOUNT_MENU_ITEM.getText());
+
+
+	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
+	private ExtendedWebElement exitKidsProfile;
+
+	public ExtendedWebElement getExitKidsProfile() {
+		return exitKidsProfile;
+	}
+
+	public ExtendedWebElement getExitJuniorModePin() {
+		return exitJuniorModePin;
+	}
+
+	public enum MoreMenu {
+		WATCHLIST(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
+		APP_SETTINGS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),
+		ACCOUNT(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()), 3),
+		LEGAL(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()), 4),
+		HELP(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
+		LOG_OUT(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
+
+		String menuOption;
+		int index;
+
+		MoreMenu(String menuOption, int index) {
+			this.menuOption = menuOption;
+			this.index = index;
+		}
+
+		public String getMenuOption() {
+			return menuOption;
+		}
+
+		public int getIndex() {
+			return index;
+		}
+	}
+
+	//FUNCTIONS
+
+	public DisneyPlusMoreMenuIOSPageBase(WebDriver driver) {
+		super(driver);
+	}
+
+	@Override
+	public boolean isOpened() {
+		return editProfilesBtn.isPresent();
+	}
+
+	public ExtendedWebElement getProfileAvatar(String profile) {
+		return profileAvatar.format(profile);
+	}
+
+	public boolean isMenuOptionPresent(MoreMenu option) {
+		return getDynamicCellByLabel(option.getMenuOption()).isElementPresent();
+	}
+
+	public void clickMenuOption(MoreMenu option) {
+		try {
+			getDynamicCellByLabel(option.getMenuOption()).click();
+		} catch (NoSuchElementException e) {
+			LOGGER.debug("ElementTypeCell located by Label Equals value not found. Falling back to Xpath");
+			getDynamicXpathContainsName(option.getMenuOption()).click();
+		}
+	}
+
+	public void  clickMenuOptionByIndex(MoreMenu option) {
+		moreMenuItemByIndex.format(option.getIndex()).click();
+	}
+
+	public ExtendedWebElement getDeleteAccountButton() {
+		return deleteAccountButton;
+	}
+
+	public boolean isEditProfilesBtnPresent() {
+		return editProfilesBtn.isElementPresent();
+	}
+
+	public DisneyPlusEditProfileIOSPageBase clickEditProfilesBtn() {
+		new MobileUtilsExtended().clickElementAtLocation(editProfilesBtn, 50, 50);
+		return initPage(DisneyPlusEditProfileIOSPageBase.class);
+	}
+
+	private ExtendedWebElement getProfileCell(String profile, boolean secured) {
+		if(secured) {
+			return getDynamicCellByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), profile));
+		} else {
+			return getDynamicCellByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), profile));
+		}
+	}
+
+	public boolean isProfileSwitchDisplayed(String profileName) {
+		return getProfileCell(profileName, false).isElementPresent();
+	}
+
+	public boolean isSecureProfileSwitchDisplayed(String profileName) {
+		return getProfileCell(profileName, true).isElementPresent();
+	}
+
+	public void swipeCells(String profile, int swipes, IMobileUtils.Direction direction) {
+		new MobileUtilsExtended().swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
+	}
+
+	public boolean isHelpWebviewOpen() {
+		return webviewBrowserBar.isElementPresent()
+				&& webviewDoneBtn.isElementPresent()
+				&& webviewAddressBar.getText().contains("help.disneyplus.com");
+	}
+
+	public void clickWebviewDoneBtn() {
+		webviewDoneBtn.click();
+	}
+
+	public boolean isAppVersionDisplayed() {
+		return appVersion.isElementPresent();
+	}
+
+	public String getAppVersionText() {
+		return appVersion.getText();
+	}
+
+	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
+		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
+		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
+			new IOSUtils().clickElementAtLocation(wifiContainer, 50, 90);
+		}
+	}
+
+	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
+		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
+		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
+			new IOSUtils().clickElementAtLocation(downloadContainer, 50, 90);
+		}
+	}
+
+	public boolean isDeviceStorageCorrectlyDisplayed() {
+		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPhone %s", getDictionary().getValueAfterPlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
+		if(storageText.isElementPresent()) {
+			return storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
+					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
+					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+		} else {
+			return false;
+		}
+	}
+
+	public boolean isDeleteDownloadsEnabled() {
+		ExtendedWebElement deleteAllDownloads = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
+		if(deleteAllDownloads.isElementPresent()) {
+			return deleteAllDownloads.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+		} else {
+			return false;
+		}
+	}
+
+	public void clickDeleteAllDownloads() {
+		getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).click();
+	}
+
+	public boolean areAllDeleteModalItemsPresent() {
+		return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
+				&& getDynamicXpathContainsName(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
+				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
+				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
+	}
+
+	public boolean isDownloadOverWifiEnabled() {
+		return getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+	}
+
+	public boolean areWatchlistTitlesDisplayed(String... titles) {
+		List<String> items = Arrays.asList(titles);
+		List<ExtendedWebElement> entryCells = new ArrayList<>();
+		List<Boolean> validations = new ArrayList<>();
+		items.forEach(title -> entryCells.add(getDynamicCellByLabel(title)));
+
+		entryCells.forEach(entry -> validations.add(entry.isElementPresent()));
+		return !validations.contains(false);
+	}
+
+	public boolean areWatchlistTitlesProperlyOrdered(String... titles) {
+		List<String> items = Arrays.asList(titles);
+		List<ExtendedWebElement> entryCells = getCellsWithLabels();
+		List<Boolean> validations = new ArrayList<>();
+		for (int i = 0; i < items.size(); i++) {
+			try {
+				validations.add(entryCells.get(i).getText().equals(titles[i]));
+			} catch (IndexOutOfBoundsException e) {
+				return false;
+			}
+		}
+		return !validations.contains(false);
+	}
+
+	public boolean isWatchlistHeaderDisplayed() {
+		return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_TITLE.getText())).isElementPresent();
+	}
+
+	public boolean isWatchlistEmptyBackgroundDisplayed() {
+		return watchlistEmpty.isPresent();
+	}
+
+	public boolean isAccountUnverifiedBadgeDisplayed() {
+		return accountUnverifiedBadge.isPresent();
+	}
+
+	public boolean isAddProfileButtonPresent() {
+		return addProfileBtn.isElementPresent();
+	}
+
+	public void clickAddProfile() {
+		addProfileBtn.click();
+	}
+
+	public List<ExtendedWebElement> getDisplayedTitles() {
+		pause(2);
+		List<ExtendedWebElement> titles = findExtendedWebElements(cell.getBy());
+		titles.subList(0, 4).clear();
+		LOGGER.info("Titles: {}", titles);
+		return titles;
+	}
+
+	public boolean isExitKidsProfileButtonPresent() {
+		return exitKidsProfileButton.isPresent();
+	}
+
+	public void tapAccountTab(){
+		accountTab.click();
+	}
+}

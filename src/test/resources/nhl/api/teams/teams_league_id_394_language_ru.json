@@ -1,0 +1,157 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "teams": [
+    {
+      "id": 7408,
+      "name": "Сборная США",
+      "link": "/api/v1/teams/7408",
+      "abbreviation": "USA",
+      "teamName": "США",
+      "locationName": "США",
+      "division": {
+        "id": 21,
+        "name": "Group A",
+        "link": "/api/v1/divisions/21"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7401,
+      "name": "Сборная Канады",
+      "link": "/api/v1/teams/7401",
+      "abbreviation": "CAN",
+      "teamName": "Канада",
+      "locationName": "Канада",
+      "division": {
+        "id": 21,
+        "name": "Group A",
+        "link": "/api/v1/divisions/21"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7402,
+      "name": " Сборная Чехии",
+      "link": "/api/v1/teams/7402",
+      "abbreviation": "CZE",
+      "teamName": "Чехия",
+      "locationName": "Чехия",
+      "division": {
+        "id": 21,
+        "name": "Group A",
+        "link": "/api/v1/divisions/21"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7403,
+      "name": "Сборная Европы",
+      "link": "/api/v1/teams/7403",
+      "abbreviation": "EUR",
+      "teamName": "Европа",
+      "locationName": "Европа",
+      "division": {
+        "id": 21,
+        "name": "Group A",
+        "link": "/api/v1/divisions/21"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7404,
+      "name": "Сборная Финляндии",
+      "link": "/api/v1/teams/7404",
+      "abbreviation": "FIN",
+      "teamName": "Финляндия",
+      "locationName": "Финляндия",
+      "division": {
+        "id": 22,
+        "name": "Group B",
+        "link": "/api/v1/divisions/22"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7405,
+      "name": "Сборная Северной Америки",
+      "link": "/api/v1/teams/7405",
+      "abbreviation": "NAT",
+      "teamName": "Северная Америка",
+      "locationName": "Северная Америка",
+      "division": {
+        "id": 22,
+        "name": "Group B",
+        "link": "/api/v1/divisions/22"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7406,
+      "name": "Сборная России",
+      "link": "/api/v1/teams/7406",
+      "abbreviation": "RUS",
+      "teamName": "Россия",
+      "locationName": "Россия",
+      "division": {
+        "id": 22,
+        "name": "Group B",
+        "link": "/api/v1/divisions/22"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    },
+    {
+      "id": 7407,
+      "name": "Сборная Швеции",
+      "link": "/api/v1/teams/7407",
+      "abbreviation": "SWE",
+      "teamName": "Швеция",
+      "locationName": "Швеция",
+      "division": {
+        "id": 22,
+        "name": "Group B",
+        "link": "/api/v1/divisions/22"
+      },
+      "conference": {
+        "id": 7,
+        "name": "World Cup of Hockey",
+        "link": "/api/v1/conferences/7"
+      },
+      "active": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+---
+# Device Settings
+# https://www.json2yaml.com/convert-yaml-to-json
+
+#Browsers
+browsers:
+- browser: chrome
+  os: [WIN7, WIN8, WIN81, WIN10, YOSEMITE, EL CAPITAN, SIERRA, HIGH SIERRA]
+- browser: firefox
+  os: [WIN7, WIN8, WIN81, WIN10, YOSEMITE, EL CAPITAN, SIERRA, HIGH SIERRA]
+- browser: ie
+  os: [WIN81, WIN10]
+- browser: edge
+  os: [WIN10]
+- browser: safari
+  os: [YOSEMITE, EL CAPITAN, SIERRA, HIGH SIERRA]

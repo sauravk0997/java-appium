@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" parallel="methods" thread-count="1" name="Android - Disney+ - Handset Promotional Assets Test" annotations="JDK">
+
+    <parameter name="suiteOwner" value="bsuscavage"/>
+    <parameter name="reporting.project-key" value="DIS" />
+    <parameter name="com.zebrunner.app/tcm.qtest.project-id" value="60"/>
+    <parameter name="applicationPackage" value="com.disney.disneyplus"/>
+    <parameter name="jenkinsJobType" value="android"/>
+    <parameter name="jenkinsJobName" value="DisneyPlus-Android-HandSet-Promotional-Assets-Test"/>
+    <parameter name="jenkinsEmail" value="mobileqa@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com,rusty.coleman@hulu.com"/>
+    <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Mobile-Prod-Google-Debug,Disney-Mobile-Prod-Google-Release"/>
+    <parameter name="jenkinsEnvironments" value="mobile.google"/>
+    <parameter name="jenkinsMobileDefaultPool" value="any"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="jenkinsDefaultRetryCount" value="3"/>
+    <parameter name="overrideFields" value="browsermob_proxy=true,capabilities.deviceType=Phone,capabilities.custom_env=${custom_env},custom_string=${custom_country},browsermob_proxy=true"/>
+    <parameter name="choiceParam::custom_env::App Environment" value="PROD,QA,EDITORIAL"/>
+    <parameter name="choiceParam::custom_country::Country" value="All,Austria,Belgium,Belgium-Dutch,Belgium-French,Denmark,
+    Finland,France,Germany,Greenland,Guernsey,Iceland,Ireland,Isle of Man,Italy,Jersey,Luxembourg,Mauritius,Monaco,
+    Netherlands,Norway,Portugal,Singapore,Spain,Sweden,Switzerland,Switzerland-French,Switzerland-Italian,United Kingdom"/>
+
+    <test verbose="1" name="DisneyPlus Android Handset Promotional Assets Test" >
+        <classes>
+            <class name="com.disney.qa.tests.disney.android.DisneyPlusPromotionalAssetValuesTest">
+            </class>
+        </classes>
+    </test>
+</suite>

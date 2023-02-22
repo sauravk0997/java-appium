@@ -1,0 +1,510 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "teams": [
+    {
+      "id": 4,
+      "name": "Philadelphia Flyers",
+      "link": "/api/v1/teams/4",
+      "venue": {
+        "name": "Wells Fargo Center",
+        "link": "/api/v1/venues/null",
+        "city": "Philadelphia",
+        "timeZone": {
+          "id": "America/New_York",
+          "offset": -4,
+          "tz": "EDT"
+        }
+      },
+      "abbreviation": "PHI",
+      "teamName": "Flyers",
+      "locationName": "Philadelphia",
+      "firstYearOfPlay": "1967",
+      "division": {
+        "id": 1,
+        "name": "Atlantic",
+        "link": "/api/v1/divisions/1"
+      },
+      "conference": {
+        "id": 1,
+        "name": "Eastern",
+        "link": "/api/v1/conferences/1"
+      },
+      "franchise": {
+        "franchiseId": 16,
+        "teamName": "Flyers",
+        "link": "/api/v1/franchises/16"
+      },
+      "roster": {
+        "roster": [
+          {
+            "person": {
+              "id": 8444957,
+              "fullName": "Shawn Anderson",
+              "link": "/api/v1/people/8444957"
+            },
+            "jerseyNumber": "37",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8445017,
+              "fullName": "Shawn Antoski",
+              "link": "/api/v1/people/8445017"
+            },
+            "jerseyNumber": "8",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8445712,
+              "fullName": "David Brown",
+              "link": "/api/v1/people/8445712"
+            },
+            "jerseyNumber": "21",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8445735,
+              "fullName": "Rod Brind'Amour",
+              "link": "/api/v1/people/8445735"
+            },
+            "jerseyNumber": "17",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8446407,
+              "fullName": "Eric Desjardins",
+              "link": "/api/v1/people/8446407"
+            },
+            "jerseyNumber": "37",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8446408,
+              "fullName": "Rob DiMaio",
+              "link": "/api/v1/people/8446408"
+            },
+            "jerseyNumber": "18",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8446415,
+              "fullName": "Gilbert Dionne",
+              "link": "/api/v1/people/8446415"
+            },
+            "jerseyNumber": "45",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8446423,
+              "fullName": "Kevin Dineen",
+              "link": "/api/v1/people/8446423"
+            },
+            "jerseyNumber": "11",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8446791,
+              "fullName": "Brent Fedyk",
+              "link": "/api/v1/people/8446791"
+            },
+            "jerseyNumber": "37",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8447004,
+              "fullName": "Garry Galley",
+              "link": "/api/v1/people/8447004"
+            },
+            "jerseyNumber": "28",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8447477,
+              "fullName": "Kevin Haller",
+              "link": "/api/v1/people/8447477"
+            },
+            "jerseyNumber": "7",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8448622,
+              "fullName": "John Leclair",
+              "link": "/api/v1/people/8448622"
+            },
+            "jerseyNumber": "10",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8448641,
+              "fullName": "Mark Lamb",
+              "link": "/api/v1/people/8448641"
+            },
+            "jerseyNumber": "7",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8449020,
+              "fullName": "Craig MacTavish",
+              "link": "/api/v1/people/8449020"
+            },
+            "jerseyNumber": "14",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8449453,
+              "fullName": "Ryan McGill",
+              "link": "/api/v1/people/8449453"
+            },
+            "jerseyNumber": "45",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8450725,
+              "fullName": "Mark Recchi",
+              "link": "/api/v1/people/8450725"
+            },
+            "jerseyNumber": "28",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8451291,
+              "fullName": "Anatoli Semenov",
+              "link": "/api/v1/people/8451291"
+            },
+            "jerseyNumber": "19",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8451789,
+              "fullName": "Petr Svoboda",
+              "link": "/api/v1/people/8451789"
+            },
+            "jerseyNumber": "23",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8452695,
+              "fullName": "Rob Zettler",
+              "link": "/api/v1/people/8452695"
+            },
+            "jerseyNumber": "24",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8455575,
+              "fullName": "Josef Beranek",
+              "link": "/api/v1/people/8455575"
+            },
+            "jerseyNumber": "18",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8456149,
+              "fullName": "Karl Dykhuis",
+              "link": "/api/v1/people/8456149"
+            },
+            "jerseyNumber": "28",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8456759,
+              "fullName": "Patrik Juhlin",
+              "link": "/api/v1/people/8456759"
+            },
+            "jerseyNumber": "12",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8457193,
+              "fullName": "Stewart Malgunas",
+              "link": "/api/v1/people/8457193"
+            },
+            "jerseyNumber": "23",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8457704,
+              "fullName": "Shjon Podein",
+              "link": "/api/v1/people/8457704"
+            },
+            "jerseyNumber": "25",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8457785,
+              "fullName": "Mikael Renberg",
+              "link": "/api/v1/people/8457785"
+            },
+            "jerseyNumber": "19",
+            "position": {
+              "code": "R",
+              "name": "Right Wing",
+              "type": "Forward",
+              "abbreviation": "RW"
+            }
+          },
+          {
+            "person": {
+              "id": 8458202,
+              "fullName": "Chris Therien",
+              "link": "/api/v1/people/8458202"
+            },
+            "jerseyNumber": "6",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8458515,
+              "fullName": "Eric Lindros",
+              "link": "/api/v1/people/8458515"
+            },
+            "jerseyNumber": "88",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8458564,
+              "fullName": "Yanick Dupre",
+              "link": "/api/v1/people/8458564"
+            },
+            "jerseyNumber": "15",
+            "position": {
+              "code": "L",
+              "name": "Left Wing",
+              "type": "Forward",
+              "abbreviation": "LW"
+            }
+          },
+          {
+            "person": {
+              "id": 8458636,
+              "fullName": "Dmitry Yushkevich",
+              "link": "/api/v1/people/8458636"
+            },
+            "jerseyNumber": "22",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8458952,
+              "fullName": "Jason Bowen",
+              "link": "/api/v1/people/8458952"
+            },
+            "jerseyNumber": "28",
+            "position": {
+              "code": "D",
+              "name": "Defenseman",
+              "type": "Defenseman",
+              "abbreviation": "D"
+            }
+          },
+          {
+            "person": {
+              "id": 8459412,
+              "fullName": "Jim Montgomery",
+              "link": "/api/v1/people/8459412"
+            },
+            "jerseyNumber": "32",
+            "position": {
+              "code": "C",
+              "name": "Center",
+              "type": "Forward",
+              "abbreviation": "C"
+            }
+          },
+          {
+            "person": {
+              "id": 8447775,
+              "fullName": "Ron Hextall",
+              "link": "/api/v1/people/8447775"
+            },
+            "jerseyNumber": "27",
+            "position": {
+              "code": "G",
+              "name": "Goalie",
+              "type": "Goalie",
+              "abbreviation": "G"
+            }
+          },
+          {
+            "person": {
+              "id": 8457866,
+              "fullName": "Dominic Roussel",
+              "link": "/api/v1/people/8457866"
+            },
+            "jerseyNumber": "30",
+            "position": {
+              "code": "G",
+              "name": "Goalie",
+              "type": "Goalie",
+              "abbreviation": "G"
+            }
+          }
+        ],
+        "link": "/api/v1/teams/4/roster"
+      },
+      "shortName": "Philadelphia",
+      "officialSiteUrl": "http://www.philadelphiaflyers.com",
+      "franchiseId": 16,
+      "active": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "drafts" : [ {
+    "draftYear" : 2004,
+    "rounds" : [ {
+      "roundNumber" : 1,
+      "round" : "1",
+      "picks" : [ {
+        "year" : 2004,
+        "round" : "1",
+        "pickOverall" : 1,
+        "pickInRound" : 1,
+        "team" : {
+          "id" : 15,
+          "name" : "Washington Capitals",
+          "link" : "/api/v1/teams/15"
+        }
+      } ]
+    } ]
+  } ]
+}

@@ -1,0 +1,110 @@
+[
+	{
+		"description": "List all support languages",
+		"endpoint": "/api/v1/languages"
+	},
+	{
+		"description": "List all game types",
+		"endpoint": "/api/v1/gameTypes"
+	},
+	{
+		"description": "List all stat types",
+		"endpoint": "/api/v1/statTypes"
+	},
+	{
+		"description": "List all the player status options",
+		"endpoint": "/api/v1/playerStatus"
+	},
+	{
+		"description": "List all standings types",
+		"endpoint": "/api/v1/standingsTypes"
+	},
+	{
+		"description": "List all expands",
+		"endpoint": "/api/v1/expands"
+	},
+	{
+		"description": "List all status types",
+		"endpoint": "/api/v1/gameStatus"
+	},
+	{
+		"description": "List all play types",
+		"endpoint": "/api/v1/playTypes"
+	},
+	{
+		"description": "List all play types for player",
+		"endpoint": "/api/v1/playTypesPlayer"
+	},
+	{
+		"description": "List all possible positions",
+		"endpoint": "/api/v1/positions"
+	},
+	{
+		"description": "List all possible platforms",
+		"endpoint": "/api/v1/platforms"
+	},
+	{
+		"description": "List all possible platforms",
+		"endpoint": "/api/v1/powerPlayStrength"
+	},
+	{
+		"description": "List all possible player league leader types",
+		"endpoint": "/api/v1/leagueLeaderTypes"
+	},
+	{
+		"description": "List all possible depth types for the stats leader endpoint",
+		"endpoint": "/api/v1/depthTypes"
+	},
+	{
+		"description": "List all possible image types for the logos",
+		"endpoint": "/api/v1/imageTypes"
+	},
+	{
+		"description": "List all possible image sizes for the logos",
+		"endpoint": "/api/v1/imageSizes"
+	},
+	{
+		"description": "List all possible roster types",
+		"endpoint": "/api/v1/rosterTypes"
+	},
+	{
+		"description": "Lists all possible {language}_{site} params.",
+		"endpoint": "/api/v1/siteLanguage"
+	},
+	{
+		"description": "List all possible team designations",
+		"endpoint": "/api/v1/teamDesignations"
+	},
+	{
+		"description": "List all possible hockey roster statuses",
+		"endpoint": "/api/v1/rosterStatuses"
+	},
+	{
+		"description": "List all possible event types",
+		"endpoint": "/api/v1/eventTypes"
+	},
+	{
+		"description": "List all possible schedule types",
+		"endpoint": "/api/v1/scheduleTypes"
+	},
+	{
+		"description": "List all possible tournament types",
+		"endpoint": "/api/v1/tournamentTypes"
+	},
+	{
+		"description": "List all possible series codes",
+		"endpoint": "/api/v1/seriesCodes"
+	},
+	{
+		"description": "List all possible performer types",
+		"endpoint": "/api/v1/performerTypes"
+	},
+	{
+		"description": "List all possible draft prospect categories",
+		"endpoint": "/api/v1/prospectCategories"
+	},
+	{
+		"description": "List all configuration endpoints",
+		"endpoint": "/api/v1/configurations"
+	}
+]

@@ -1,0 +1,2630 @@
+{
+	"copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+	"teams": [
+		{
+			"id": 2,
+			"name": "New York Islanders",
+			"link": "/api/v1/teams/2",
+			"venue": {
+				"name": "Barclays Center",
+				"link": "/api/v1/venues/null",
+				"city": "Brooklyn",
+				"timeZone": {
+					"id": "America/New_York",
+					"offset": -4,
+					"tz": "EDT"
+				}
+			},
+			"abbreviation": "NYI",
+			"teamName": "Islanders",
+			"locationName": "New York",
+			"firstYearOfPlay": "1972",
+			"division": {
+				"id": 18,
+				"name": "Metropolitan",
+				"link": "/api/v1/divisions/18"
+			},
+			"conference": {
+				"id": 6,
+				"name": "Eastern",
+				"link": "/api/v1/conferences/6"
+			},
+			"franchise": {
+				"franchiseId": 22,
+				"teamName": "Islanders",
+				"link": "/api/v1/franchises/22"
+			},
+			"roster": {
+				"roster": [
+					{
+						"person": {
+							"id": 8460720,
+							"fullName": "Eric Boulton",
+							"link": "/api/v1/people/8460720",
+							"firstName": "Eric",
+							"lastName": "Boulton",
+							"primaryNumber": "36",
+							"birthDate": "1976-08-17",
+							"currentAge": 40,
+							"birthCity": "Halifax",
+							"birthStateProvince": "NS",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 0\"",
+							"weight": 227,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "36",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8468598,
+							"fullName": "Lubomir Visnovsky",
+							"link": "/api/v1/people/8468598",
+							"firstName": "Lubomir",
+							"lastName": "Visnovsky",
+							"primaryNumber": "11",
+							"birthDate": "1976-08-11",
+							"birthCity": "Topolcany",
+							"birthCountry": "SVK",
+							"nationality": "SVK",
+							"height": "5' 10\"",
+							"weight": 192,
+							"active": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "65:19",
+												"assists": 2,
+												"goals": 0,
+												"pim": 0,
+												"shots": 5,
+												"games": 4,
+												"hits": 1,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "05:58",
+												"evenTimeOnIce": "59:21",
+												"penaltyMinutes": "0",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 8,
+												"plusMinus": 5,
+												"points": 2,
+												"shifts": 76,
+												"timeOnIcePerGame": "16:19",
+												"evenTimeOnIcePerGame": "14:50",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "01:29"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "11",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8470144,
+							"fullName": "Frans Nielsen",
+							"link": "/api/v1/people/8470144",
+							"firstName": "Frans",
+							"lastName": "Nielsen",
+							"primaryNumber": "51",
+							"birthDate": "1984-04-24",
+							"currentAge": 33,
+							"birthCity": "Herning",
+							"birthCountry": "DNK",
+							"nationality": "DNK",
+							"height": "6' 1\"",
+							"weight": 188,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 17,
+								"name": "Detroit Red Wings",
+								"link": "/api/v1/teams/17"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "113:16",
+												"assists": 1,
+												"goals": 1,
+												"pim": 0,
+												"shots": 11,
+												"games": 7,
+												"hits": 5,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "12:11",
+												"evenTimeOnIce": "89:45",
+												"penaltyMinutes": "0",
+												"faceOffPct": 46.15,
+												"shotPct": 9.1,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "11:20",
+												"blocked": 18,
+												"plusMinus": -1,
+												"points": 2,
+												"shifts": 175,
+												"timeOnIcePerGame": "16:10",
+												"evenTimeOnIcePerGame": "12:49",
+												"shortHandedTimeOnIcePerGame": "01:37",
+												"powerPlayTimeOnIcePerGame": "01:44"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "51",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8470187,
+							"fullName": "Johnny Boychuk",
+							"link": "/api/v1/people/8470187",
+							"firstName": "Johnny",
+							"lastName": "Boychuk",
+							"primaryNumber": "55",
+							"birthDate": "1984-01-19",
+							"currentAge": 33,
+							"birthCity": "Edmonton",
+							"birthStateProvince": "AB",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 2\"",
+							"weight": 227,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "182:03",
+												"assists": 2,
+												"goals": 0,
+												"pim": 2,
+												"shots": 20,
+												"games": 7,
+												"hits": 33,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "12:19",
+												"evenTimeOnIce": "153:22",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "16:22",
+												"blocked": 18,
+												"plusMinus": -1,
+												"points": 2,
+												"shifts": 207,
+												"timeOnIcePerGame": "26:00",
+												"evenTimeOnIcePerGame": "21:54",
+												"shortHandedTimeOnIcePerGame": "02:20",
+												"powerPlayTimeOnIcePerGame": "01:45"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "55",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8470644,
+							"fullName": "Colin McDonald",
+							"link": "/api/v1/people/8470644",
+							"firstName": "Colin",
+							"lastName": "McDonald",
+							"primaryNumber": "36",
+							"birthDate": "1984-09-30",
+							"currentAge": 32,
+							"birthCity": "Wethersfield",
+							"birthStateProvince": "CT",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 2\"",
+							"weight": 219,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 4,
+								"name": "Philadelphia Flyers",
+								"link": "/api/v1/teams/4"
+							},
+							"primaryPosition": {
+								"code": "R",
+								"name": "Right Wing",
+								"type": "Forward",
+								"abbreviation": "RW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "23:30",
+												"assists": 0,
+												"goals": 0,
+												"pim": 2,
+												"shots": 1,
+												"games": 2,
+												"hits": 12,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:00",
+												"evenTimeOnIce": "23:30",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 0,
+												"plusMinus": 1,
+												"points": 0,
+												"shifts": 42,
+												"timeOnIcePerGame": "11:45",
+												"evenTimeOnIcePerGame": "11:45",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:00"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "36",
+						"position": {
+							"code": "R",
+							"name": "Right Wing",
+							"type": "Forward",
+							"abbreviation": "RW"
+						}
+					},
+					{
+						"person": {
+							"id": 8471311,
+							"fullName": "Tyler Kennedy",
+							"link": "/api/v1/people/8471311",
+							"firstName": "Tyler",
+							"lastName": "Kennedy",
+							"primaryNumber": "48",
+							"birthDate": "1986-07-15",
+							"birthCity": "Sault Ste. Marie",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "5' 11\"",
+							"weight": 185,
+							"active": false,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "31:39",
+												"assists": 0,
+												"goals": 0,
+												"pim": 2,
+												"shots": 7,
+												"games": 3,
+												"hits": 5,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:00",
+												"evenTimeOnIce": "31:39",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 0,
+												"plusMinus": -3,
+												"points": 0,
+												"shifts": 51,
+												"timeOnIcePerGame": "10:33",
+												"evenTimeOnIcePerGame": "10:33",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:00"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "48",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8471362,
+							"fullName": "Mikhail Grabovski",
+							"link": "/api/v1/people/8471362",
+							"firstName": "Mikhail",
+							"lastName": "Grabovski",
+							"birthDate": "1984-01-31",
+							"currentAge": 33,
+							"birthCity": "Potsdam",
+							"birthCountry": "DEU",
+							"nationality": "BLR",
+							"height": "5' 11\"",
+							"weight": 186,
+							"active": true,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 54,
+								"name": "Vegas Golden Knights",
+								"link": "/api/v1/teams/54"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "43:20",
+												"assists": 0,
+												"goals": 0,
+												"pim": 0,
+												"shots": 5,
+												"games": 3,
+												"hits": 4,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "02:54",
+												"evenTimeOnIce": "40:26",
+												"penaltyMinutes": "0",
+												"faceOffPct": 53.65,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 3,
+												"plusMinus": -1,
+												"points": 0,
+												"shifts": 65,
+												"timeOnIcePerGame": "14:26",
+												"evenTimeOnIcePerGame": "13:28",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:58"
+											}
+										}
+									]
+								}
+							]
+						},
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8473449,
+							"fullName": "Kyle Okposo",
+							"link": "/api/v1/people/8473449",
+							"firstName": "Kyle",
+							"lastName": "Okposo",
+							"primaryNumber": "21",
+							"birthDate": "1988-04-16",
+							"currentAge": 29,
+							"birthCity": "St. Paul",
+							"birthStateProvince": "MN",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 0\"",
+							"weight": 218,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 7,
+								"name": "Buffalo Sabres",
+								"link": "/api/v1/teams/7"
+							},
+							"primaryPosition": {
+								"code": "R",
+								"name": "Right Wing",
+								"type": "Forward",
+								"abbreviation": "RW"
+							},
+							"social": {
+								"twitter": [
+									"BookerT2116"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "129:35",
+												"assists": 1,
+												"goals": 2,
+												"pim": 2,
+												"shots": 16,
+												"games": 7,
+												"hits": 11,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "15:33",
+												"evenTimeOnIce": "114:02",
+												"penaltyMinutes": "2",
+												"faceOffPct": 41.66,
+												"shotPct": 12.5,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 3,
+												"plusMinus": 1,
+												"points": 3,
+												"shifts": 164,
+												"timeOnIcePerGame": "18:30",
+												"evenTimeOnIcePerGame": "16:17",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "02:13"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "21",
+						"position": {
+							"code": "R",
+							"name": "Right Wing",
+							"type": "Forward",
+							"abbreviation": "RW"
+						}
+					},
+					{
+						"person": {
+							"id": 8473504,
+							"fullName": "Cal Clutterbuck",
+							"link": "/api/v1/people/8473504",
+							"firstName": "Cal",
+							"lastName": "Clutterbuck",
+							"primaryNumber": "15",
+							"birthDate": "1987-11-18",
+							"currentAge": 29,
+							"birthCity": "Welland",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "5' 11\"",
+							"weight": 218,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "R",
+								"name": "Right Wing",
+								"type": "Forward",
+								"abbreviation": "RW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "89:47",
+												"assists": 1,
+												"goals": 2,
+												"pim": 26,
+												"shots": 12,
+												"games": 7,
+												"hits": 40,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:41",
+												"evenTimeOnIce": "82:25",
+												"penaltyMinutes": "26",
+												"faceOffPct": 0.0,
+												"shotPct": 16.7,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "06:41",
+												"blocked": 4,
+												"plusMinus": 1,
+												"points": 3,
+												"shifts": 155,
+												"timeOnIcePerGame": "12:49",
+												"evenTimeOnIcePerGame": "11:46",
+												"shortHandedTimeOnIcePerGame": "00:57",
+												"powerPlayTimeOnIcePerGame": "00:05"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "15",
+						"position": {
+							"code": "R",
+							"name": "Right Wing",
+							"type": "Forward",
+							"abbreviation": "RW"
+						}
+					},
+					{
+						"person": {
+							"id": 8473546,
+							"fullName": "Michael Grabner",
+							"link": "/api/v1/people/8473546",
+							"firstName": "Michael",
+							"lastName": "Grabner",
+							"primaryNumber": "40",
+							"birthDate": "1987-10-05",
+							"currentAge": 29,
+							"birthCity": "Villach",
+							"birthCountry": "AUT",
+							"nationality": "AUT",
+							"height": "6' 1\"",
+							"weight": 185,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 3,
+								"name": "New York Rangers",
+								"link": "/api/v1/teams/3"
+							},
+							"primaryPosition": {
+								"code": "R",
+								"name": "Right Wing",
+								"type": "Forward",
+								"abbreviation": "RW"
+							},
+							"social": {
+								"twitter": [
+									"Grabs40"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "23:29",
+												"assists": 1,
+												"goals": 0,
+												"pim": 2,
+												"shots": 0,
+												"games": 2,
+												"hits": 1,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:00",
+												"evenTimeOnIce": "22:01",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "01:28",
+												"blocked": 1,
+												"plusMinus": 1,
+												"points": 1,
+												"shifts": 38,
+												"timeOnIcePerGame": "11:44",
+												"evenTimeOnIcePerGame": "11:00",
+												"shortHandedTimeOnIcePerGame": "00:44",
+												"powerPlayTimeOnIcePerGame": "00:00"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "40",
+						"position": {
+							"code": "R",
+							"name": "Right Wing",
+							"type": "Forward",
+							"abbreviation": "RW"
+						}
+					},
+					{
+						"person": {
+							"id": 8473565,
+							"fullName": "Brian Strait",
+							"link": "/api/v1/people/8473565",
+							"firstName": "Brian",
+							"lastName": "Strait",
+							"primaryNumber": "47",
+							"birthDate": "1988-01-04",
+							"currentAge": 29,
+							"birthCity": "Waltham",
+							"birthStateProvince": "MA",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 1\"",
+							"weight": 206,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 52,
+								"name": "Winnipeg Jets",
+								"link": "/api/v1/teams/52"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "131:49",
+												"assists": 0,
+												"goals": 0,
+												"pim": 4,
+												"shots": 4,
+												"games": 7,
+												"hits": 13,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:14",
+												"evenTimeOnIce": "124:00",
+												"penaltyMinutes": "4",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "07:35",
+												"blocked": 17,
+												"plusMinus": -3,
+												"points": 0,
+												"shifts": 179,
+												"timeOnIcePerGame": "18:49",
+												"evenTimeOnIcePerGame": "17:42",
+												"shortHandedTimeOnIcePerGame": "01:05",
+												"powerPlayTimeOnIcePerGame": "00:02"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "47",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8473579,
+							"fullName": "Nikolay Kulemin",
+							"link": "/api/v1/people/8473579",
+							"firstName": "Nikolay",
+							"lastName": "Kulemin",
+							"primaryNumber": "86",
+							"birthDate": "1986-07-14",
+							"currentAge": 30,
+							"birthCity": "Magnitogorsk",
+							"birthCountry": "RUS",
+							"nationality": "RUS",
+							"height": "6' 1\"",
+							"weight": 225,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "109:57",
+												"assists": 1,
+												"goals": 1,
+												"pim": 2,
+												"shots": 5,
+												"games": 7,
+												"hits": 22,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:23",
+												"evenTimeOnIce": "97:20",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 20.0,
+												"gameWinningGoals": 1,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "12:14",
+												"blocked": 7,
+												"plusMinus": 0,
+												"points": 2,
+												"shifts": 176,
+												"timeOnIcePerGame": "15:42",
+												"evenTimeOnIcePerGame": "13:54",
+												"shortHandedTimeOnIcePerGame": "01:44",
+												"powerPlayTimeOnIcePerGame": "00:03"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "86",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8474066,
+							"fullName": "Thomas Hickey",
+							"link": "/api/v1/people/8474066",
+							"firstName": "Thomas",
+							"lastName": "Hickey",
+							"primaryNumber": "14",
+							"birthDate": "1989-02-08",
+							"currentAge": 28,
+							"birthCity": "Calgary",
+							"birthStateProvince": "AB",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 0\"",
+							"weight": 189,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "149:55",
+												"assists": 1,
+												"goals": 0,
+												"pim": 2,
+												"shots": 14,
+												"games": 7,
+												"hits": 16,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "03:37",
+												"evenTimeOnIce": "131:32",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "14:46",
+												"blocked": 15,
+												"plusMinus": 5,
+												"points": 1,
+												"shifts": 184,
+												"timeOnIcePerGame": "21:25",
+												"evenTimeOnIcePerGame": "18:47",
+												"shortHandedTimeOnIcePerGame": "02:06",
+												"powerPlayTimeOnIcePerGame": "00:31"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "14",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8474573,
+							"fullName": "Josh Bailey",
+							"link": "/api/v1/people/8474573",
+							"firstName": "Josh",
+							"lastName": "Bailey",
+							"primaryNumber": "12",
+							"birthDate": "1989-10-02",
+							"currentAge": 27,
+							"birthCity": "Bowmanville",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 1\"",
+							"weight": 210,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "R",
+								"name": "Right Wing",
+								"type": "Forward",
+								"abbreviation": "RW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "121:59",
+												"assists": 3,
+												"goals": 2,
+												"pim": 0,
+												"shots": 12,
+												"games": 7,
+												"hits": 7,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "12:18",
+												"evenTimeOnIce": "109:41",
+												"penaltyMinutes": "0",
+												"faceOffPct": 0.0,
+												"shotPct": 16.7,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 3,
+												"plusMinus": 1,
+												"points": 5,
+												"shifts": 161,
+												"timeOnIcePerGame": "17:25",
+												"evenTimeOnIcePerGame": "15:40",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "01:45"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "12",
+						"position": {
+							"code": "R",
+							"name": "Right Wing",
+							"type": "Forward",
+							"abbreviation": "RW"
+						}
+					},
+					{
+						"person": {
+							"id": 8474612,
+							"fullName": "Travis Hamonic",
+							"link": "/api/v1/people/8474612",
+							"firstName": "Travis",
+							"lastName": "Hamonic",
+							"primaryNumber": "24",
+							"birthDate": "1990-08-16",
+							"currentAge": 26,
+							"birthCity": "St. Malo",
+							"birthStateProvince": "MB",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 2\"",
+							"weight": 205,
+							"active": true,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 20,
+								"name": "Calgary Flames",
+								"link": "/api/v1/teams/20"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "24",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8474659,
+							"fullName": "Matt Donovan",
+							"link": "/api/v1/people/8474659",
+							"firstName": "Matt",
+							"lastName": "Donovan",
+							"primaryNumber": "65",
+							"birthDate": "1990-05-09",
+							"birthCity": "Edmond",
+							"birthStateProvince": "OK",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 1\"",
+							"weight": 205,
+							"active": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "22:41",
+												"assists": 0,
+												"goals": 0,
+												"pim": 10,
+												"shots": 1,
+												"games": 2,
+												"hits": 1,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "01:10",
+												"evenTimeOnIce": "20:59",
+												"penaltyMinutes": "10",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:32",
+												"blocked": 0,
+												"plusMinus": 0,
+												"points": 0,
+												"shifts": 41,
+												"timeOnIcePerGame": "11:20",
+												"evenTimeOnIcePerGame": "10:29",
+												"shortHandedTimeOnIcePerGame": "00:16",
+												"powerPlayTimeOnIcePerGame": "00:35"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "65",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8474709,
+							"fullName": "Matt Martin",
+							"link": "/api/v1/people/8474709",
+							"firstName": "Matt",
+							"lastName": "Martin",
+							"primaryNumber": "15",
+							"birthDate": "1989-05-08",
+							"currentAge": 28,
+							"birthCity": "Windsor",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 3\"",
+							"weight": 220,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 10,
+								"name": "Toronto Maple Leafs",
+								"link": "/api/v1/teams/10"
+							},
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								"twitter": [
+									"mattymarts17"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "83:24",
+												"assists": 1,
+												"goals": 0,
+												"pim": 12,
+												"shots": 9,
+												"games": 7,
+												"hits": 52,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:42",
+												"evenTimeOnIce": "82:42",
+												"penaltyMinutes": "12",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 2,
+												"plusMinus": 1,
+												"points": 1,
+												"shifts": 141,
+												"timeOnIcePerGame": "11:54",
+												"evenTimeOnIcePerGame": "11:48",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:06"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "15",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8475166,
+							"fullName": "John Tavares",
+							"link": "/api/v1/people/8475166",
+							"firstName": "John",
+							"lastName": "Tavares",
+							"primaryNumber": "91",
+							"birthDate": "1990-09-20",
+							"currentAge": 26,
+							"birthCity": "Mississauga",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 1\"",
+							"weight": 211,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": true,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								"twitter": [
+									"91Tavares"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "135:11",
+												"assists": 4,
+												"goals": 2,
+												"pim": 2,
+												"shots": 18,
+												"games": 7,
+												"hits": 10,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "16:06",
+												"evenTimeOnIce": "118:57",
+												"penaltyMinutes": "2",
+												"faceOffPct": 40.51,
+												"shotPct": 11.1,
+												"gameWinningGoals": 1,
+												"overTimeGoals": 1,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:08",
+												"blocked": 6,
+												"plusMinus": 2,
+												"points": 6,
+												"shifts": 182,
+												"timeOnIcePerGame": "19:18",
+												"evenTimeOnIcePerGame": "16:59",
+												"shortHandedTimeOnIcePerGame": "00:01",
+												"powerPlayTimeOnIcePerGame": "02:18"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "91",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8475177,
+							"fullName": "Calvin de Haan",
+							"link": "/api/v1/people/8475177",
+							"firstName": "Calvin",
+							"lastName": "de Haan",
+							"primaryNumber": "44",
+							"birthDate": "1991-05-09",
+							"currentAge": 26,
+							"birthCity": "Carp",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 1\"",
+							"weight": 197,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "86:44",
+												"assists": 1,
+												"goals": 0,
+												"pim": 2,
+												"shots": 3,
+												"games": 5,
+												"hits": 14,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:31",
+												"evenTimeOnIce": "83:18",
+												"penaltyMinutes": "2",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "02:55",
+												"blocked": 12,
+												"plusMinus": -2,
+												"points": 1,
+												"shifts": 116,
+												"timeOnIcePerGame": "17:20",
+												"evenTimeOnIcePerGame": "16:39",
+												"shortHandedTimeOnIcePerGame": "00:35",
+												"powerPlayTimeOnIcePerGame": "00:06"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "44",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8475181,
+							"fullName": "Nick Leddy",
+							"link": "/api/v1/people/8475181",
+							"firstName": "Nick",
+							"lastName": "Leddy",
+							"primaryNumber": "2",
+							"birthDate": "1991-03-20",
+							"currentAge": 26,
+							"birthCity": "Eden Prairie",
+							"birthStateProvince": "MN",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 0\"",
+							"weight": 199,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								"twitter": [
+									"ledpipe08"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "172:38",
+												"assists": 5,
+												"goals": 0,
+												"pim": 0,
+												"shots": 15,
+												"games": 7,
+												"hits": 14,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "17:44",
+												"evenTimeOnIce": "150:20",
+												"penaltyMinutes": "0",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "04:34",
+												"blocked": 12,
+												"plusMinus": 0,
+												"points": 5,
+												"shifts": 190,
+												"timeOnIcePerGame": "24:39",
+												"evenTimeOnIcePerGame": "21:28",
+												"shortHandedTimeOnIcePerGame": "00:39",
+												"powerPlayTimeOnIcePerGame": "02:32"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "2",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8475231,
+							"fullName": "Casey Cizikas",
+							"link": "/api/v1/people/8475231",
+							"firstName": "Casey",
+							"lastName": "Cizikas",
+							"primaryNumber": "53",
+							"birthDate": "1991-02-27",
+							"currentAge": 26,
+							"birthCity": "Toronto",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "5' 11\"",
+							"weight": 201,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "95:51",
+												"assists": 0,
+												"goals": 1,
+												"pim": 0,
+												"shots": 11,
+												"games": 7,
+												"hits": 16,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:42",
+												"evenTimeOnIce": "83:57",
+												"penaltyMinutes": "0",
+												"faceOffPct": 47.25,
+												"shotPct": 9.1,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "11:12",
+												"blocked": 6,
+												"plusMinus": 1,
+												"points": 1,
+												"shifts": 161,
+												"timeOnIcePerGame": "13:41",
+												"evenTimeOnIcePerGame": "11:59",
+												"shortHandedTimeOnIcePerGame": "01:36",
+												"powerPlayTimeOnIcePerGame": "00:06"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "53",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8475314,
+							"fullName": "Anders Lee",
+							"link": "/api/v1/people/8475314",
+							"firstName": "Anders",
+							"lastName": "Lee",
+							"primaryNumber": "27",
+							"birthDate": "1990-07-03",
+							"currentAge": 27,
+							"birthCity": "Edina",
+							"birthStateProvince": "MN",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 3\"",
+							"weight": 228,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "73:45",
+												"assists": 1,
+												"goals": 0,
+												"pim": 7,
+												"shots": 8,
+												"games": 5,
+												"hits": 7,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "12:51",
+												"evenTimeOnIce": "60:07",
+												"penaltyMinutes": "7",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:47",
+												"blocked": 2,
+												"plusMinus": -2,
+												"points": 1,
+												"shifts": 99,
+												"timeOnIcePerGame": "14:45",
+												"evenTimeOnIcePerGame": "12:01",
+												"shortHandedTimeOnIcePerGame": "00:09",
+												"powerPlayTimeOnIcePerGame": "02:34"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "27",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8475754,
+							"fullName": "Brock Nelson",
+							"link": "/api/v1/people/8475754",
+							"firstName": "Brock",
+							"lastName": "Nelson",
+							"primaryNumber": "29",
+							"birthDate": "1991-10-15",
+							"currentAge": 25,
+							"birthCity": "Warroad",
+							"birthStateProvince": "MN",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 3\"",
+							"weight": 206,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "86:01",
+												"assists": 0,
+												"goals": 2,
+												"pim": 2,
+												"shots": 8,
+												"games": 6,
+												"hits": 6,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "09:16",
+												"evenTimeOnIce": "76:20",
+												"penaltyMinutes": "2",
+												"faceOffPct": 42.55,
+												"shotPct": 25.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:25",
+												"blocked": 3,
+												"plusMinus": 1,
+												"points": 2,
+												"shifts": 120,
+												"timeOnIcePerGame": "14:20",
+												"evenTimeOnIcePerGame": "12:43",
+												"shortHandedTimeOnIcePerGame": "00:04",
+												"powerPlayTimeOnIcePerGame": "01:32"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "29",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8476147,
+							"fullName": "Kael Mouillierat",
+							"link": "/api/v1/people/8476147",
+							"firstName": "Kael",
+							"lastName": "Mouillierat",
+							"primaryNumber": "22",
+							"birthDate": "1987-12-09",
+							"birthCity": "Edmonton",
+							"birthStateProvince": "AB",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 0\"",
+							"weight": 188,
+							"active": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "22",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8476158,
+							"fullName": "Harry Zolnierczyk",
+							"link": "/api/v1/people/8476158",
+							"firstName": "Harry",
+							"lastName": "Zolnierczyk",
+							"primaryNumber": "26",
+							"birthDate": "1987-09-01",
+							"currentAge": 29,
+							"birthCity": "Toronto",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "5' 11\"",
+							"weight": 180,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 18,
+								"name": "Nashville Predators",
+								"link": "/api/v1/teams/18"
+							},
+							"primaryPosition": {
+								"code": "L",
+								"name": "Left Wing",
+								"type": "Forward",
+								"abbreviation": "LW"
+							},
+							"social": {
+								"twitter": [
+									"HarryZ87"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "26",
+						"position": {
+							"code": "L",
+							"name": "Left Wing",
+							"type": "Forward",
+							"abbreviation": "LW"
+						}
+					},
+					{
+						"person": {
+							"id": 8476195,
+							"fullName": "Cory Conacher",
+							"link": "/api/v1/people/8476195",
+							"firstName": "Cory",
+							"lastName": "Conacher",
+							"primaryNumber": "19",
+							"birthDate": "1989-12-14",
+							"currentAge": 27,
+							"birthCity": "Burlington",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "5' 8\"",
+							"weight": 180,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 14,
+								"name": "Tampa Bay Lightning",
+								"link": "/api/v1/teams/14"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "19",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8476458,
+							"fullName": "Ryan Strome",
+							"link": "/api/v1/people/8476458",
+							"firstName": "Ryan",
+							"lastName": "Strome",
+							"primaryNumber": "18",
+							"birthDate": "1993-07-11",
+							"currentAge": 23,
+							"birthCity": "Mississauga",
+							"birthStateProvince": "ON",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 1\"",
+							"weight": 199,
+							"active": true,
+							"rookie": false,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 22,
+								"name": "Edmonton Oilers",
+								"link": "/api/v1/teams/22"
+							},
+							"primaryPosition": {
+								"code": "C",
+								"name": "Center",
+								"type": "Forward",
+								"abbreviation": "C"
+							},
+							"social": {
+								"twitter": [
+									"strome18"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "122:50",
+												"assists": 2,
+												"goals": 2,
+												"pim": 2,
+												"shots": 12,
+												"games": 7,
+												"hits": 16,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "14:56",
+												"evenTimeOnIce": "105:25",
+												"penaltyMinutes": "2",
+												"faceOffPct": 33.33,
+												"shotPct": 16.7,
+												"gameWinningGoals": 1,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "02:29",
+												"blocked": 1,
+												"plusMinus": 1,
+												"points": 4,
+												"shifts": 172,
+												"timeOnIcePerGame": "17:32",
+												"evenTimeOnIcePerGame": "15:03",
+												"shortHandedTimeOnIcePerGame": "00:21",
+												"powerPlayTimeOnIcePerGame": "02:08"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "18",
+						"position": {
+							"code": "C",
+							"name": "Center",
+							"type": "Forward",
+							"abbreviation": "C"
+						}
+					},
+					{
+						"person": {
+							"id": 8476852,
+							"fullName": "Griffin Reinhart",
+							"link": "/api/v1/people/8476852",
+							"firstName": "Griffin",
+							"lastName": "Reinhart",
+							"birthDate": "1994-01-24",
+							"currentAge": 23,
+							"birthCity": "North Vancouver",
+							"birthStateProvince": "BC",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 4\"",
+							"weight": 212,
+							"active": true,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 54,
+								"name": "Vegas Golden Knights",
+								"link": "/api/v1/teams/54"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								"twitter": [
+									"GriffinReinhart"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "12:42",
+												"assists": 0,
+												"goals": 0,
+												"pim": 0,
+												"shots": 1,
+												"games": 1,
+												"hits": 2,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:00",
+												"evenTimeOnIce": "12:42",
+												"penaltyMinutes": "0",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 0,
+												"plusMinus": -2,
+												"points": 0,
+												"shifts": 20,
+												"timeOnIcePerGame": "12:42",
+												"evenTimeOnIcePerGame": "12:42",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:00"
+											}
+										}
+									]
+								}
+							]
+						},
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8476429,
+							"fullName": "Scott Mayfield",
+							"link": "/api/v1/people/8476429",
+							"firstName": "Scott",
+							"lastName": "Mayfield",
+							"primaryNumber": "42",
+							"birthDate": "1992-10-14",
+							"currentAge": 24,
+							"birthCity": "St. Louis",
+							"birthStateProvince": "MO",
+							"birthCountry": "USA",
+							"nationality": "USA",
+							"height": "6' 4\"",
+							"weight": 224,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": true,
+							"shootsCatches": "R",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "D",
+								"name": "Defenseman",
+								"type": "Defenseman",
+								"abbreviation": "D"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "24:50",
+												"assists": 0,
+												"goals": 0,
+												"pim": 0,
+												"shots": 1,
+												"games": 2,
+												"hits": 9,
+												"powerPlayGoals": 0,
+												"powerPlayPoints": 0,
+												"powerPlayTimeOnIce": "00:00",
+												"evenTimeOnIce": "24:50",
+												"penaltyMinutes": "0",
+												"faceOffPct": 0.0,
+												"shotPct": 0.0,
+												"gameWinningGoals": 0,
+												"overTimeGoals": 0,
+												"shortHandedGoals": 0,
+												"shortHandedPoints": 0,
+												"shortHandedTimeOnIce": "00:00",
+												"blocked": 3,
+												"plusMinus": -1,
+												"points": 0,
+												"shifts": 40,
+												"timeOnIcePerGame": "12:25",
+												"evenTimeOnIcePerGame": "12:25",
+												"shortHandedTimeOnIcePerGame": "00:00",
+												"powerPlayTimeOnIcePerGame": "00:00"
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "42",
+						"position": {
+							"code": "D",
+							"name": "Defenseman",
+							"type": "Defenseman",
+							"abbreviation": "D"
+						}
+					},
+					{
+						"person": {
+							"id": 8470860,
+							"fullName": "Jaroslav Halak",
+							"link": "/api/v1/people/8470860",
+							"firstName": "Jaroslav",
+							"lastName": "Halak",
+							"primaryNumber": "41",
+							"birthDate": "1985-05-13",
+							"currentAge": 32,
+							"birthCity": "Bratislava",
+							"birthCountry": "SVK",
+							"nationality": "SVK",
+							"height": "5' 11\"",
+							"weight": 181,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 2,
+								"name": "New York Islanders",
+								"link": "/api/v1/teams/2"
+							},
+							"primaryPosition": {
+								"code": "G",
+								"name": "Goalie",
+								"type": "Goalie",
+								"abbreviation": "G"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "417:44",
+												"shutouts": 0,
+												"wins": 3,
+												"losses": 4,
+												"saves": 199,
+												"powerPlaySaves": 20,
+												"shortHandedSaves": 2,
+												"evenSaves": 177,
+												"shortHandedShots": 2,
+												"evenShots": 191,
+												"powerPlayShots": 22,
+												"savePercentage": 0.926,
+												"goalAgainstAverage": 2.3,
+												"games": 7,
+												"gamesStarted": 7,
+												"shotsAgainst": 215,
+												"goalsAgainst": 16,
+												"timeOnIcePerGame": "59:40",
+												"powerPlaySavePercentage": 90.9090909090909,
+												"shortHandedSavePercentage": 100.0,
+												"evenStrengthSavePercentage": 92.67015706806284
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "41",
+						"position": {
+							"code": "G",
+							"name": "Goalie",
+							"type": "Goalie",
+							"abbreviation": "G"
+						}
+					},
+					{
+						"person": {
+							"id": 8473434,
+							"fullName": "Chad Johnson",
+							"link": "/api/v1/people/8473434",
+							"firstName": "Chad",
+							"lastName": "Johnson",
+							"primaryNumber": "31",
+							"birthDate": "1986-06-10",
+							"currentAge": 31,
+							"birthCity": "Saskatoon",
+							"birthStateProvince": "SK",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 3\"",
+							"weight": 196,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"currentTeam": {
+								"id": 53,
+								"name": "Arizona Coyotes",
+								"link": "/api/v1/teams/53"
+							},
+							"primaryPosition": {
+								"code": "G",
+								"name": "Goalie",
+								"type": "Goalie",
+								"abbreviation": "G"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "31",
+						"position": {
+							"code": "G",
+							"name": "Goalie",
+							"type": "Goalie",
+							"abbreviation": "G"
+						}
+					},
+					{
+						"person": {
+							"id": 8473607,
+							"fullName": "Michal Neuvirth",
+							"link": "/api/v1/people/8473607",
+							"firstName": "Michal",
+							"lastName": "Neuvirth",
+							"primaryNumber": "30",
+							"birthDate": "1988-03-23",
+							"currentAge": 29,
+							"birthCity": "�st� nad Labem",
+							"birthCountry": "CZE",
+							"nationality": "CZE",
+							"height": "6' 1\"",
+							"weight": 209,
+							"active": true,
+							"alternateCaptain": false,
+							"captain": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "Y",
+							"currentTeam": {
+								"id": 4,
+								"name": "Philadelphia Flyers",
+								"link": "/api/v1/teams/4"
+							},
+							"primaryPosition": {
+								"code": "G",
+								"name": "Goalie",
+								"type": "Goalie",
+								"abbreviation": "G"
+							},
+							"social": {
+								"twitter": [
+									"mneuvirth30"
+								]
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": [
+										{
+											"season": "20142015",
+											"stat": {
+												"timeOnIce": "11:00",
+												"shutouts": 0,
+												"wins": 0,
+												"losses": 0,
+												"saves": 6,
+												"powerPlaySaves": 3,
+												"shortHandedSaves": 0,
+												"evenSaves": 3,
+												"shortHandedShots": 0,
+												"evenShots": 3,
+												"powerPlayShots": 3,
+												"savePercentage": 1.0,
+												"goalAgainstAverage": 0.0,
+												"games": 1,
+												"gamesStarted": 0,
+												"shotsAgainst": 6,
+												"goalsAgainst": 0,
+												"timeOnIcePerGame": "11:00",
+												"powerPlaySavePercentage": 100.0,
+												"evenStrengthSavePercentage": 100.0
+											}
+										}
+									]
+								}
+							]
+						},
+						"jerseyNumber": "30",
+						"position": {
+							"code": "G",
+							"name": "Goalie",
+							"type": "Goalie",
+							"abbreviation": "G"
+						}
+					},
+					{
+						"person": {
+							"id": 8474690,
+							"fullName": "Kevin Poulin",
+							"link": "/api/v1/people/8474690",
+							"firstName": "Kevin",
+							"lastName": "Poulin",
+							"primaryNumber": "35",
+							"birthDate": "1990-04-12",
+							"birthCity": "Montreal",
+							"birthStateProvince": "QC",
+							"birthCountry": "CAN",
+							"nationality": "CAN",
+							"height": "6' 2\"",
+							"weight": 206,
+							"active": false,
+							"rookie": false,
+							"shootsCatches": "L",
+							"rosterStatus": "N",
+							"primaryPosition": {
+								"code": "G",
+								"name": "Goalie",
+								"type": "Goalie",
+								"abbreviation": "G"
+							},
+							"social": {
+								
+							},
+							"stats": [
+								{
+									"type": {
+										"displayName": "statsSingleSeasonPlayoffs"
+									},
+									"splits": []
+								}
+							]
+						},
+						"jerseyNumber": "35",
+						"position": {
+							"code": "G",
+							"name": "Goalie",
+							"type": "Goalie",
+							"abbreviation": "G"
+						}
+					}
+				],
+				"link": "/api/v1/teams/2/roster"
+			},
+			"social": {
+				"twitter": [
+					"NYIslanders"
+				],
+				"facebook": [
+					"NEWYORKISLANDERS"
+				],
+				"instagram": [
+					"NY_Islanders"
+				],
+				"vine": [
+					"NewYorkIslanders"
+				],
+				"periscope": [
+					"NYIslanders"
+				],
+				"youtube": [
+					"nyislanders"
+				],
+				"pinterest": [
+					"nyislanders"
+				],
+				"googleplus": [
+					"+nyislanders"
+				],
+				"snapchat": [
+					"nyisles"
+				]
+			},
+			"shortName": "NY Islanders",
+			"officialSiteUrl": "http://www.newyorkislanders.com",
+			"franchiseId": 22,
+			"active": true
+		}
+	]
+}

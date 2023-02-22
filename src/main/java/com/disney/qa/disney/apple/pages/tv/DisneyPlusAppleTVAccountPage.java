@@ -1,0 +1,32 @@
+package com.disney.qa.disney.apple.pages.tv;
+
+import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+@DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
+public class DisneyPlusAppleTVAccountPage extends DisneyPlusApplePageBase {
+    public DisneyPlusAppleTVAccountPage(WebDriver driver) {super(driver);}
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'changeEmailCell'`]")
+    private ExtendedWebElement changeEmailBtn;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'changePasswordCell'`]")
+    private ExtendedWebElement changePasswordBtn;
+
+    @Override
+    public boolean isOpened() {
+        boolean isPresent = changeEmailBtn.isElementPresent() && changePasswordBtn.isElementPresent();
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return isPresent;
+    }
+
+    public void clickChangeEmailBtn() { changeEmailBtn.click(); }
+
+    public void clickChangePasswordBtn() { changePasswordBtn.click(); }
+
+}

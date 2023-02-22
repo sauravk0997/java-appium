@@ -1,0 +1,3619 @@
+{"copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+	"id" : 1,
+	"name" : "Playoffs",
+	"season" : "20132014",
+	"rounds" : [ {
+		"number" : 1,
+		"code" : 1,
+		"names" : {
+			"name" : "First Round",
+			"shortName" : "R1"
+		},
+		"format" : {
+			"name" : "BO7",
+			"description" : "Best of 7",
+			"numberOfGames" : 7,
+			"numberOfWins" : 4
+		},
+		"series" : [ {
+			"seriesNumber" : 1,
+			"seriesCode" : "A",
+			"names" : {
+				"matchupName" : "Bruins (1) vs. Red Wings (WC2)",
+				"matchupShortName" : "BOS v DET",
+				"teamAbbreviationA" : "BOS",
+				"teamAbbreviationB" : "DET",
+				"seriesSlug" : "bruins-vs-red-wings-series-a"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030115,
+					"gameNumber" : 5,
+					"gameLabel" : "Game 5",
+					"necessary" : true,
+					"gameCode" : 115,
+					"gameTime" : "2014-04-26T19:00:00Z",
+					"seriesStatus" : "Bruins win 4-1",
+					"seriesStatusShort" : "BOS wins 4-1"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030111,
+						"link" : "/api/v1/game/2013030111/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-18T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5085,
+							"name" : "TD Garden",
+							"link" : "/api/v1/venues/5085"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030111/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030112,
+						"link" : "/api/v1/game/2013030112/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-20T19:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5085,
+							"name" : "TD Garden",
+							"link" : "/api/v1/venues/5085"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030112/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030113,
+						"link" : "/api/v1/game/2013030113/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-22T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030113/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030114,
+						"link" : "/api/v1/game/2013030114/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-25T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030114/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030115,
+						"link" : "/api/v1/game/2013030115/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-26T19:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5085,
+							"name" : "TD Garden",
+							"link" : "/api/v1/venues/5085"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030115/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 6,
+					"name" : "Boston Bruins",
+					"link" : "/api/v1/teams/6"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 1
+				}
+			}, {
+				"team" : {
+					"id" : 17,
+					"name" : "Detroit Red Wings",
+					"link" : "/api/v1/teams/17"
+				},
+				"seed" : {
+					"type" : "WC2",
+					"rank" : 4,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 1,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 2,
+			"seriesCode" : "B",
+			"names" : {
+				"matchupName" : "Lightning (2) vs. Canadiens (3)",
+				"matchupShortName" : "TBL v MTL",
+				"teamAbbreviationA" : "TBL",
+				"teamAbbreviationB" : "MTL",
+				"seriesSlug" : "lightning-vs-canadiens-series-b"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030124,
+					"gameNumber" : 4,
+					"gameLabel" : "Game 4",
+					"necessary" : true,
+					"gameCode" : 124,
+					"gameTime" : "2014-04-22T23:00:00Z",
+					"seriesStatus" : "Canadiens win 4-0",
+					"seriesStatusShort" : "MTL wins 4-0"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-16",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030121,
+						"link" : "/api/v1/game/2013030121/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-16T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 14,
+									"name" : "Tampa Bay Lightning",
+									"link" : "/api/v1/teams/14"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Tampa Bay Times Forum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030121/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030122,
+						"link" : "/api/v1/game/2013030122/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-18T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 14,
+									"name" : "Tampa Bay Lightning",
+									"link" : "/api/v1/teams/14"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Tampa Bay Times Forum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030122/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030123,
+						"link" : "/api/v1/game/2013030123/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-20T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 14,
+									"name" : "Tampa Bay Lightning",
+									"link" : "/api/v1/teams/14"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Centre Bell",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030123/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030124,
+						"link" : "/api/v1/game/2013030124/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-22T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 14,
+									"name" : "Tampa Bay Lightning",
+									"link" : "/api/v1/teams/14"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Centre Bell",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030124/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 14,
+					"name" : "Tampa Bay Lightning",
+					"link" : "/api/v1/teams/14"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 0,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 8,
+					"name" : "Montréal Canadiens",
+					"link" : "/api/v1/teams/8"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 0
+				}
+			} ]
+		}, {
+			"seriesNumber" : 3,
+			"seriesCode" : "C",
+			"names" : {
+				"matchupName" : "Penguins (1) vs. Blue Jackets (WC1)",
+				"matchupShortName" : "PIT v CBJ",
+				"teamAbbreviationA" : "PIT",
+				"teamAbbreviationB" : "CBJ",
+				"seriesSlug" : "penguins-vs-blue-jackets-series-c"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030136,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 136,
+					"gameTime" : "2014-04-28T23:00:00Z",
+					"seriesStatus" : "Penguins win 4-2",
+					"seriesStatusShort" : "PIT wins 4-2"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-16",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030131,
+						"link" : "/api/v1/game/2013030131/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-16T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "CONSOL Energy Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030131/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030132,
+						"link" : "/api/v1/game/2013030132/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-19T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "CONSOL Energy Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030132/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030133,
+						"link" : "/api/v1/game/2013030133/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-21T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5059,
+							"name" : "Nationwide Arena",
+							"link" : "/api/v1/venues/5059"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030133/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030134,
+						"link" : "/api/v1/game/2013030134/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-23T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5059,
+							"name" : "Nationwide Arena",
+							"link" : "/api/v1/venues/5059"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030134/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030135,
+						"link" : "/api/v1/game/2013030135/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-26T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "CONSOL Energy Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030135/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030136,
+						"link" : "/api/v1/game/2013030136/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-28T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 29,
+									"name" : "Columbus Blue Jackets",
+									"link" : "/api/v1/teams/29"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5059,
+							"name" : "Nationwide Arena",
+							"link" : "/api/v1/venues/5059"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030136/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 5,
+					"name" : "Pittsburgh Penguins",
+					"link" : "/api/v1/teams/5"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			}, {
+				"team" : {
+					"id" : 29,
+					"name" : "Columbus Blue Jackets",
+					"link" : "/api/v1/teams/29"
+				},
+				"seed" : {
+					"type" : "WC1",
+					"rank" : 4,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 4,
+			"seriesCode" : "D",
+			"names" : {
+				"matchupName" : "Rangers (2) vs. Flyers (3)",
+				"matchupShortName" : "NYR v PHI",
+				"teamAbbreviationA" : "NYR",
+				"teamAbbreviationB" : "PHI",
+				"seriesSlug" : "rangers-vs-flyers-series-d"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030147,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 147,
+					"gameTime" : "2014-04-30T23:00:00Z",
+					"seriesStatus" : "Rangers win 4-3",
+					"seriesStatusShort" : "NYR wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030141,
+						"link" : "/api/v1/game/2013030141/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-17T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030141/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030142,
+						"link" : "/api/v1/game/2013030142/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-20T16:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030142/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030143,
+						"link" : "/api/v1/game/2013030143/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-23T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5096,
+							"name" : "Wells Fargo Center",
+							"link" : "/api/v1/venues/5096"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030143/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030144,
+						"link" : "/api/v1/game/2013030144/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-25T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5096,
+							"name" : "Wells Fargo Center",
+							"link" : "/api/v1/venues/5096"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030144/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030145,
+						"link" : "/api/v1/game/2013030145/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-27T16:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030145/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-29",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030146,
+						"link" : "/api/v1/game/2013030146/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-29T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5096,
+							"name" : "Wells Fargo Center",
+							"link" : "/api/v1/venues/5096"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030146/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-30",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030147,
+						"link" : "/api/v1/game/2013030147/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-30T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 4,
+									"name" : "Philadelphia Flyers",
+									"link" : "/api/v1/teams/4"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030147/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 3,
+					"name" : "New York Rangers",
+					"link" : "/api/v1/teams/3"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 4,
+					"name" : "Philadelphia Flyers",
+					"link" : "/api/v1/teams/4"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 5,
+			"seriesCode" : "E",
+			"names" : {
+				"matchupName" : "Avalanche (1) vs. Wild (WC1)",
+				"matchupShortName" : "COL v MIN",
+				"teamAbbreviationA" : "COL",
+				"teamAbbreviationB" : "MIN",
+				"seriesSlug" : "avalanche-vs-wild-series-e"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030157,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 157,
+					"gameTime" : "2014-05-01T01:30:00Z",
+					"seriesStatus" : "Wild win 4-3",
+					"seriesStatusShort" : "MIN wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030151,
+						"link" : "/api/v1/game/2013030151/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-18T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5064,
+							"name" : "Pepsi Center",
+							"link" : "/api/v1/venues/5064"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030151/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030152,
+						"link" : "/api/v1/game/2013030152/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-20T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5064,
+							"name" : "Pepsi Center",
+							"link" : "/api/v1/venues/5064"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030152/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030153,
+						"link" : "/api/v1/game/2013030153/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-21T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5098,
+							"name" : "Xcel Energy Center",
+							"link" : "/api/v1/venues/5098"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030153/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030154,
+						"link" : "/api/v1/game/2013030154/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-25T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5098,
+							"name" : "Xcel Energy Center",
+							"link" : "/api/v1/venues/5098"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030154/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030155,
+						"link" : "/api/v1/game/2013030155/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-27T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5064,
+							"name" : "Pepsi Center",
+							"link" : "/api/v1/venues/5064"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030155/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030156,
+						"link" : "/api/v1/game/2013030156/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-29T01:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5098,
+							"name" : "Xcel Energy Center",
+							"link" : "/api/v1/venues/5098"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030156/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-30",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030157,
+						"link" : "/api/v1/game/2013030157/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-05-01T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 30,
+									"name" : "Minnesota Wild",
+									"link" : "/api/v1/teams/30"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 21,
+									"name" : "Colorado Avalanche",
+									"link" : "/api/v1/teams/21"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5064,
+							"name" : "Pepsi Center",
+							"link" : "/api/v1/venues/5064"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030157/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 21,
+					"name" : "Colorado Avalanche",
+					"link" : "/api/v1/teams/21"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 30,
+					"name" : "Minnesota Wild",
+					"link" : "/api/v1/teams/30"
+				},
+				"seed" : {
+					"type" : "WC1",
+					"rank" : 4,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			} ]
+		}, {
+			"seriesNumber" : 6,
+			"seriesCode" : "F",
+			"names" : {
+				"matchupName" : "Blues (2) vs. Blackhawks (3)",
+				"matchupShortName" : "STL v CHI",
+				"teamAbbreviationA" : "STL",
+				"teamAbbreviationB" : "CHI",
+				"seriesSlug" : "blues-vs-blackhawks-series-f"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030166,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 166,
+					"gameTime" : "2014-04-27T19:00:00Z",
+					"seriesStatus" : "Blackhawks win 4-2",
+					"seriesStatusShort" : "CHI wins 4-2"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030161,
+						"link" : "/api/v1/game/2013030161/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-18T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Scottrade Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030161/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030162,
+						"link" : "/api/v1/game/2013030162/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-19T19:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Scottrade Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030162/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030163,
+						"link" : "/api/v1/game/2013030163/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-22T00:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5092,
+							"name" : "United Center",
+							"link" : "/api/v1/venues/5092"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030163/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030164,
+						"link" : "/api/v1/game/2013030164/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-24T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5092,
+							"name" : "United Center",
+							"link" : "/api/v1/venues/5092"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030164/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030165,
+						"link" : "/api/v1/game/2013030165/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-26T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Scottrade Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030165/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030166,
+						"link" : "/api/v1/game/2013030166/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-27T19:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5092,
+							"name" : "United Center",
+							"link" : "/api/v1/venues/5092"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030166/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 19,
+					"name" : "St. Louis Blues",
+					"link" : "/api/v1/teams/19"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 16,
+					"name" : "Chicago Blackhawks",
+					"link" : "/api/v1/teams/16"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			} ]
+		}, {
+			"seriesNumber" : 7,
+			"seriesCode" : "G",
+			"names" : {
+				"matchupName" : "Ducks (1) vs. Stars (WC2)",
+				"matchupShortName" : "ANA v DAL",
+				"teamAbbreviationA" : "ANA",
+				"teamAbbreviationB" : "DAL",
+				"seriesSlug" : "ducks-vs-stars-series-g"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030176,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 176,
+					"gameTime" : "2014-04-28T00:00:00Z",
+					"seriesStatus" : "Ducks win 4-2",
+					"seriesStatusShort" : "ANA wins 4-2"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-16",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030171,
+						"link" : "/api/v1/game/2013030171/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-17T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5046,
+							"name" : "Honda Center",
+							"link" : "/api/v1/venues/5046"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030171/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030172,
+						"link" : "/api/v1/game/2013030172/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-19T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5046,
+							"name" : "Honda Center",
+							"link" : "/api/v1/venues/5046"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030172/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030173,
+						"link" : "/api/v1/game/2013030173/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-22T01:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5019,
+							"name" : "American Airlines Center",
+							"link" : "/api/v1/venues/5019"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030173/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030174,
+						"link" : "/api/v1/game/2013030174/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-24T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5019,
+							"name" : "American Airlines Center",
+							"link" : "/api/v1/venues/5019"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030174/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030175,
+						"link" : "/api/v1/game/2013030175/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-26T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5046,
+							"name" : "Honda Center",
+							"link" : "/api/v1/venues/5046"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030175/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030176,
+						"link" : "/api/v1/game/2013030176/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-28T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 24,
+									"name" : "Anaheim Ducks",
+									"link" : "/api/v1/teams/24"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5019,
+							"name" : "American Airlines Center",
+							"link" : "/api/v1/venues/5019"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030176/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 24,
+					"name" : "Anaheim Ducks",
+					"link" : "/api/v1/teams/24"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			}, {
+				"team" : {
+					"id" : 25,
+					"name" : "Dallas Stars",
+					"link" : "/api/v1/teams/25"
+				},
+				"seed" : {
+					"type" : "WC2",
+					"rank" : 4,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 8,
+			"seriesCode" : "H",
+			"names" : {
+				"matchupName" : "Sharks (2) vs. Kings (3)",
+				"matchupShortName" : "SJS v LAK",
+				"teamAbbreviationA" : "SJS",
+				"teamAbbreviationB" : "LAK",
+				"seriesSlug" : "sharks-vs-kings-series-h"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 2013030187,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 187,
+					"gameTime" : "2014-05-01T02:00:00Z",
+					"seriesStatus" : "Kings win 4-3",
+					"seriesStatusShort" : "LAK wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030181,
+						"link" : "/api/v1/game/2013030181/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-18T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "SAP Center at San Jose",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030181/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030182,
+						"link" : "/api/v1/game/2013030182/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-21T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 7,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "SAP Center at San Jose",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030182/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030183,
+						"link" : "/api/v1/game/2013030183/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-23T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "STAPLES Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030183/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030184,
+						"link" : "/api/v1/game/2013030184/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-25T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "STAPLES Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030184/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030185,
+						"link" : "/api/v1/game/2013030185/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-27T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "SAP Center at San Jose",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030185/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030186,
+						"link" : "/api/v1/game/2013030186/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-04-29T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "STAPLES Center",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030186/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "2014-04-30",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 2013030187,
+						"link" : "/api/v1/game/2013030187/feed/live",
+						"gameType" : "P",
+						"season" : "20132014",
+						"gameDate" : "2014-05-01T02:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 26,
+									"name" : "Los Angeles Kings",
+									"link" : "/api/v1/teams/26"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "SAP Center at San Jose",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/2013030187/content"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 28,
+					"name" : "San Jose Sharks",
+					"link" : "/api/v1/teams/28"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 26,
+					"name" : "Los Angeles Kings",
+					"link" : "/api/v1/teams/26"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			} ]
+		} ]
+	} ]
+}

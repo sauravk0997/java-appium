@@ -1,0 +1,63 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "name": "Playoffs",
+  "season": "19931994",
+  "rounds": [
+    {
+      "number": 1,
+      "code": 1,
+      "names": {
+        "name": "Conference Quarterfinals",
+        "shortName": "CQF"
+      },
+      "format": {
+        "name": "BO7",
+        "description": "Best of 7",
+        "numberOfGames": 7,
+        "numberOfWins": 4
+      }
+    },
+    {
+      "number": 2,
+      "code": 2,
+      "names": {
+        "name": "Conference Semifinals",
+        "shortName": "CSF"
+      },
+      "format": {
+        "name": "BO7",
+        "description": "Best of 7",
+        "numberOfGames": 7,
+        "numberOfWins": 4
+      }
+    },
+    {
+      "number": 3,
+      "code": 3,
+      "names": {
+        "name": "Conference Finals",
+        "shortName": "CF"
+      },
+      "format": {
+        "name": "BO7",
+        "description": "Best of 7",
+        "numberOfGames": 7,
+        "numberOfWins": 4
+      }
+    },
+    {
+      "number": 4,
+      "code": 4,
+      "names": {
+        "name": "Stanley Cup Final",
+        "shortName": "F"
+      },
+      "format": {
+        "name": "BO7",
+        "description": "Best of 7",
+        "numberOfGames": 7,
+        "numberOfWins": 4
+      }
+    }
+  ]
+}

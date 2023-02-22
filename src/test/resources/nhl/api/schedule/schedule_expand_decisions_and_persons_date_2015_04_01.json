@@ -1,0 +1,900 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "totalItems": 4,
+  "dates": [
+    {
+      "date": "2015-04-01",
+      "totalItems": 4,
+      "games": [
+        {
+          "gamePk": 2014021149,
+          "link": "/api/v1/game/2014021149/feed/live",
+          "gameType": "R",
+          "season": "20142015",
+          "gameDate": "2015-04-01T23:30:00Z",
+          "status": {
+            "abstractGameState": "Final",
+            "codedGameState": "7",
+            "detailedState": "Final",
+            "statusCode": "7"
+          },
+          "teams": {
+            "away": {
+              "leagueRecord": {
+                "wins": 29,
+                "losses": 43,
+                "ot": 6,
+                "type": "league"
+              },
+              "score": 3,
+              "team": {
+                "id": 10,
+                "name": "Toronto Maple Leafs",
+                "link": "/api/v1/teams/10"
+              }
+            },
+            "home": {
+              "leagueRecord": {
+                "wins": 22,
+                "losses": 47,
+                "ot": 8,
+                "type": "league"
+              },
+              "score": 4,
+              "team": {
+                "id": 7,
+                "name": "Buffalo Sabres",
+                "link": "/api/v1/teams/7"
+              }
+            }
+          },
+          "decisions": {
+            "winner": {
+              "id": 8474765,
+              "fullName": "Anders Lindback",
+              "link": "/api/v1/people/8474765",
+              "firstName": "Anders",
+              "lastName": "Lindback",
+              "primaryNumber": "29",
+              "birthDate": "1988-05-03",
+              "birthCity": "Gävle",
+              "birthCountry": "SWE",
+              "nationality": "SWE",
+              "height": "6' 6\"",
+              "weight": 215,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "N",
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "anders-lindback-8474765",
+                "lastFirstName": "Lindback, Anders"
+              }
+            },
+            "loser": {
+              "id": 8473541,
+              "fullName": "Jonathan Bernier",
+              "link": "/api/v1/people/8473541",
+              "firstName": "Jonathan",
+              "lastName": "Bernier",
+              "birthDate": "1988-08-07",
+              "currentAge": 27,
+              "birthCity": "Laval",
+              "birthStateProvince": "QC",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 0\"",
+              "weight": 184,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 24,
+                "name": "Anaheim Ducks",
+                "link": "/api/v1/teams/24"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "jonathan-bernier-8473541",
+                "lastFirstName": "Bernier, Jonathan"
+              }
+            },
+            "firstStar": {
+              "id": 8470018,
+              "fullName": "Matt Ellis",
+              "link": "/api/v1/people/8470018",
+              "firstName": "Matt",
+              "lastName": "Ellis",
+              "primaryNumber": "37",
+              "birthDate": "1981-08-31",
+              "birthCity": "Welland",
+              "birthStateProvince": "ON",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 0\"",
+              "weight": 208,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "N",
+              "primaryPosition": {
+                "code": "L",
+                "name": "Left Wing",
+                "type": "Forward",
+                "abbreviation": "LW"
+              },
+              "otherNames": {
+                "slug": "matt-ellis-8470018",
+                "lastFirstName": "Ellis, Matt"
+              }
+            },
+            "secondStar": {
+              "id": 8467407,
+              "fullName": "Brian Gionta",
+              "link": "/api/v1/people/8467407",
+              "firstName": "Brian",
+              "lastName": "Gionta",
+              "primaryNumber": "12",
+              "birthDate": "1979-01-18",
+              "currentAge": 37,
+              "birthCity": "Rochester",
+              "birthStateProvince": "NY",
+              "birthCountry": "USA",
+              "nationality": "USA",
+              "height": "5' 7\"",
+              "weight": 178,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": true,
+              "rookie": false,
+              "shootsCatches": "R",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 7,
+                "name": "Buffalo Sabres",
+                "link": "/api/v1/teams/7"
+              },
+              "primaryPosition": {
+                "code": "R",
+                "name": "Right Wing",
+                "type": "Forward",
+                "abbreviation": "RW"
+              },
+              "otherNames": {
+                "slug": "brian-gionta-8467407",
+                "lastFirstName": "Gionta, Brian"
+              }
+            },
+            "thirdStar": {
+              "id": 8475728,
+              "fullName": "Johan Larsson",
+              "link": "/api/v1/people/8475728",
+              "firstName": "Johan",
+              "lastName": "Larsson",
+              "primaryNumber": "22",
+              "birthDate": "1992-07-25",
+              "currentAge": 24,
+              "birthCity": "Lau",
+              "birthCountry": "SWE",
+              "nationality": "SWE",
+              "height": "5' 11\"",
+              "weight": 200,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 7,
+                "name": "Buffalo Sabres",
+                "link": "/api/v1/teams/7"
+              },
+              "primaryPosition": {
+                "code": "L",
+                "name": "Left Wing",
+                "type": "Forward",
+                "abbreviation": "LW"
+              },
+              "otherNames": {
+                "slug": "johan-larsson-8475728",
+                "lastFirstName": "Larsson, Johan"
+              }
+            }
+          },
+          "venue": {
+            "name": "First Niagara Center"
+          },
+          "content": {
+            "link": "/api/v1/game/2014021149/content"
+          }
+        },
+        {
+          "gamePk": 2014021150,
+          "link": "/api/v1/game/2014021150/feed/live",
+          "gameType": "R",
+          "season": "20142015",
+          "gameDate": "2015-04-02T00:00:00Z",
+          "status": {
+            "abstractGameState": "Final",
+            "codedGameState": "7",
+            "detailedState": "Final",
+            "statusCode": "7"
+          },
+          "teams": {
+            "away": {
+              "leagueRecord": {
+                "wins": 31,
+                "losses": 29,
+                "ot": 17,
+                "type": "league"
+              },
+              "score": 4,
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              }
+            },
+            "home": {
+              "leagueRecord": {
+                "wins": 42,
+                "losses": 24,
+                "ot": 11,
+                "type": "league"
+              },
+              "score": 1,
+              "team": {
+                "id": 5,
+                "name": "Pittsburgh Penguins",
+                "link": "/api/v1/teams/5"
+              }
+            }
+          },
+          "decisions": {
+            "winner": {
+              "id": 8473461,
+              "fullName": "Steve Mason",
+              "link": "/api/v1/people/8473461",
+              "firstName": "Steve",
+              "lastName": "Mason",
+              "primaryNumber": "35",
+              "birthDate": "1988-05-29",
+              "currentAge": 28,
+              "birthCity": "Oakville",
+              "birthStateProvince": "ON",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 4\"",
+              "weight": 210,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "R",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "steve-mason-8473461",
+                "lastFirstName": "Mason, Steve"
+              }
+            },
+            "loser": {
+              "id": 8470594,
+              "fullName": "Marc-Andre Fleury",
+              "link": "/api/v1/people/8470594",
+              "firstName": "Marc-Andre",
+              "lastName": "Fleury",
+              "primaryNumber": "29",
+              "birthDate": "1984-11-28",
+              "currentAge": 31,
+              "birthCity": "Sorel",
+              "birthStateProvince": "QC",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 2\"",
+              "weight": 180,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 5,
+                "name": "Pittsburgh Penguins",
+                "link": "/api/v1/teams/5"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "marc-andre-fleury-8470594",
+                "lastFirstName": "Fleury, Marc-Andre"
+              }
+            },
+            "firstStar": {
+              "id": 8475170,
+              "fullName": "Brayden Schenn",
+              "link": "/api/v1/people/8475170",
+              "firstName": "Brayden",
+              "lastName": "Schenn",
+              "primaryNumber": "10",
+              "birthDate": "1991-08-22",
+              "currentAge": 24,
+              "birthCity": "Saskatoon",
+              "birthStateProvince": "SK",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 1\"",
+              "weight": 195,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "primaryPosition": {
+                "code": "C",
+                "name": "Center",
+                "type": "Forward",
+                "abbreviation": "C"
+              },
+              "otherNames": {
+                "slug": "brayden-schenn-8475170",
+                "lastFirstName": "Schenn, Brayden"
+              }
+            },
+            "secondStar": {
+              "id": 8467329,
+              "fullName": "Vincent Lecavalier",
+              "link": "/api/v1/people/8467329",
+              "firstName": "Vincent",
+              "lastName": "Lecavalier",
+              "primaryNumber": "44",
+              "birthDate": "1980-04-21",
+              "birthCity": "Ile Bizard",
+              "birthStateProvince": "QC",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 4\"",
+              "weight": 215,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "N",
+              "primaryPosition": {
+                "code": "C",
+                "name": "Center",
+                "type": "Forward",
+                "abbreviation": "C"
+              },
+              "otherNames": {
+                "slug": "vincent-lecavalier-8467329",
+                "lastFirstName": "Lecavalier, Vincent"
+              }
+            },
+            "thirdStar": {
+              "id": 8469470,
+              "fullName": "Carlo Colaiacovo",
+              "link": "/api/v1/people/8469470",
+              "firstName": "Carlo",
+              "lastName": "Colaiacovo",
+              "primaryNumber": "25",
+              "birthDate": "1983-01-27",
+              "birthCity": "Toronto",
+              "birthStateProvince": "ON",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 1\"",
+              "weight": 202,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "primaryPosition": {
+                "code": "D",
+                "name": "Defenseman",
+                "type": "Defenseman",
+                "abbreviation": "D"
+              },
+              "otherNames": {
+                "slug": "carlo-colaiacovo-8469470",
+                "lastFirstName": "Colaiacovo, Carlo"
+              }
+            }
+          },
+          "venue": {
+            "name": "CONSOL Energy Center"
+          },
+          "content": {
+            "link": "/api/v1/game/2014021150/content"
+          }
+        },
+        {
+          "gamePk": 2014021151,
+          "link": "/api/v1/game/2014021151/feed/live",
+          "gameType": "R",
+          "season": "20142015",
+          "gameDate": "2015-04-02T02:00:00Z",
+          "status": {
+            "abstractGameState": "Final",
+            "codedGameState": "7",
+            "detailedState": "Final",
+            "statusCode": "7"
+          },
+          "teams": {
+            "away": {
+              "leagueRecord": {
+                "wins": 23,
+                "losses": 41,
+                "ot": 13,
+                "type": "league"
+              },
+              "score": 1,
+              "team": {
+                "id": 22,
+                "name": "Edmonton Oilers",
+                "link": "/api/v1/teams/22"
+              }
+            },
+            "home": {
+              "leagueRecord": {
+                "wins": 50,
+                "losses": 22,
+                "ot": 7,
+                "type": "league"
+              },
+              "score": 5,
+              "team": {
+                "id": 24,
+                "name": "Anaheim Ducks",
+                "link": "/api/v1/teams/24"
+              }
+            }
+          },
+          "decisions": {
+            "winner": {
+              "id": 8475883,
+              "fullName": "Frederik Andersen",
+              "link": "/api/v1/people/8475883",
+              "firstName": "Frederik",
+              "lastName": "Andersen",
+              "primaryNumber": "31",
+              "birthDate": "1989-10-02",
+              "currentAge": 26,
+              "birthCity": "Herning",
+              "birthCountry": "DNK",
+              "nationality": "DNK",
+              "height": "6' 4\"",
+              "weight": 220,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 10,
+                "name": "Toronto Maple Leafs",
+                "link": "/api/v1/teams/10"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "frederik-andersen-8475883",
+                "lastFirstName": "Andersen, Frederik"
+              }
+            },
+            "loser": {
+              "id": 8475681,
+              "fullName": "Ben Scrivens",
+              "link": "/api/v1/people/8475681",
+              "firstName": "Ben",
+              "lastName": "Scrivens",
+              "primaryNumber": "40",
+              "birthDate": "1986-09-11",
+              "birthCity": "Spruce Grove",
+              "birthStateProvince": "AB",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 2\"",
+              "weight": 181,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "N",
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "ben-scrivens-8475681",
+                "lastFirstName": "Scrivens, Ben"
+              }
+            },
+            "firstStar": {
+              "id": 8475164,
+              "fullName": "Jakob Silfverberg",
+              "link": "/api/v1/people/8475164",
+              "firstName": "Jakob",
+              "lastName": "Silfverberg",
+              "primaryNumber": "33",
+              "birthDate": "1990-10-13",
+              "currentAge": 25,
+              "birthCity": "Gävle",
+              "birthCountry": "SWE",
+              "nationality": "SWE",
+              "height": "6' 2\"",
+              "weight": 196,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "R",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 24,
+                "name": "Anaheim Ducks",
+                "link": "/api/v1/teams/24"
+              },
+              "primaryPosition": {
+                "code": "R",
+                "name": "Right Wing",
+                "type": "Forward",
+                "abbreviation": "RW"
+              },
+              "otherNames": {
+                "slug": "jakob-silfverberg-8475164",
+                "lastFirstName": "Silfverberg, Jakob"
+              }
+            },
+            "secondStar": {
+              "id": 8476854,
+              "fullName": "Hampus Lindholm",
+              "link": "/api/v1/people/8476854",
+              "firstName": "Hampus",
+              "lastName": "Lindholm",
+              "primaryNumber": "47",
+              "birthDate": "1994-01-20",
+              "currentAge": 22,
+              "birthCity": "Helsingborg",
+              "birthCountry": "SWE",
+              "nationality": "SWE",
+              "height": "6' 3\"",
+              "weight": 205,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 24,
+                "name": "Anaheim Ducks",
+                "link": "/api/v1/teams/24"
+              },
+              "primaryPosition": {
+                "code": "D",
+                "name": "Defenseman",
+                "type": "Defenseman",
+                "abbreviation": "D"
+              },
+              "otherNames": {
+                "slug": "hampus-lindholm-8476854",
+                "lastFirstName": "Lindholm, Hampus"
+              }
+            },
+            "thirdStar": {
+              "id": 8467400,
+              "fullName": "Francois Beauchemin",
+              "link": "/api/v1/people/8467400",
+              "firstName": "Francois",
+              "lastName": "Beauchemin",
+              "primaryNumber": "32",
+              "birthDate": "1980-06-04",
+              "currentAge": 36,
+              "birthCity": "Sorel",
+              "birthStateProvince": "QC",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 1\"",
+              "weight": 208,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 21,
+                "name": "Colorado Avalanche",
+                "link": "/api/v1/teams/21"
+              },
+              "primaryPosition": {
+                "code": "D",
+                "name": "Defenseman",
+                "type": "Defenseman",
+                "abbreviation": "D"
+              },
+              "otherNames": {
+                "slug": "francois-beauchemin-8467400",
+                "lastFirstName": "Beauchemin, Francois"
+              }
+            }
+          },
+          "venue": {
+            "name": "Honda Center"
+          },
+          "content": {
+            "link": "/api/v1/game/2014021151/content"
+          }
+        },
+        {
+          "gamePk": 2014021152,
+          "link": "/api/v1/game/2014021152/feed/live",
+          "gameType": "R",
+          "season": "20142015",
+          "gameDate": "2015-04-02T02:30:00Z",
+          "status": {
+            "abstractGameState": "Final",
+            "codedGameState": "7",
+            "detailedState": "Final",
+            "statusCode": "7"
+          },
+          "teams": {
+            "away": {
+              "leagueRecord": {
+                "wins": 35,
+                "losses": 30,
+                "ot": 12,
+                "type": "league"
+              },
+              "score": 1,
+              "team": {
+                "id": 21,
+                "name": "Colorado Avalanche",
+                "link": "/api/v1/teams/21"
+              }
+            },
+            "home": {
+              "leagueRecord": {
+                "wins": 38,
+                "losses": 30,
+                "ot": 9,
+                "type": "league"
+              },
+              "score": 5,
+              "team": {
+                "id": 28,
+                "name": "San Jose Sharks",
+                "link": "/api/v1/teams/28"
+              }
+            }
+          },
+          "decisions": {
+            "winner": {
+              "id": 8471774,
+              "fullName": "Alex Stalock",
+              "link": "/api/v1/people/8471774",
+              "firstName": "Alex",
+              "lastName": "Stalock",
+              "primaryNumber": "32",
+              "birthDate": "1987-07-28",
+              "currentAge": 28,
+              "birthCity": "St. Paul",
+              "birthStateProvince": "MN",
+              "birthCountry": "USA",
+              "nationality": "USA",
+              "height": "6' 0\"",
+              "weight": 190,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 30,
+                "name": "Minnesota Wild",
+                "link": "/api/v1/teams/30"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "alex-stalock-8471774",
+                "lastFirstName": "Stalock, Alex"
+              }
+            },
+            "loser": {
+              "id": 8473499,
+              "fullName": "Reto Berra",
+              "link": "/api/v1/people/8473499",
+              "firstName": "Reto",
+              "lastName": "Berra",
+              "birthDate": "1987-01-03",
+              "currentAge": 29,
+              "birthCity": "Bulach",
+              "birthCountry": "CHE",
+              "nationality": "CHE",
+              "height": "6' 4\"",
+              "weight": 210,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 13,
+                "name": "Florida Panthers",
+                "link": "/api/v1/teams/13"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "reto-berra-8473499",
+                "lastFirstName": "Berra, Reto"
+              }
+            },
+            "firstStar": {
+              "id": 8471774,
+              "fullName": "Alex Stalock",
+              "link": "/api/v1/people/8471774",
+              "firstName": "Alex",
+              "lastName": "Stalock",
+              "primaryNumber": "32",
+              "birthDate": "1987-07-28",
+              "currentAge": 28,
+              "birthCity": "St. Paul",
+              "birthStateProvince": "MN",
+              "birthCountry": "USA",
+              "nationality": "USA",
+              "height": "6' 0\"",
+              "weight": 190,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 30,
+                "name": "Minnesota Wild",
+                "link": "/api/v1/teams/30"
+              },
+              "primaryPosition": {
+                "code": "G",
+                "name": "Goalie",
+                "type": "Goalie",
+                "abbreviation": "G"
+              },
+              "otherNames": {
+                "slug": "alex-stalock-8471774",
+                "lastFirstName": "Stalock, Alex"
+              }
+            },
+            "secondStar": {
+              "id": 8466158,
+              "fullName": "Scott Hannan",
+              "link": "/api/v1/people/8466158",
+              "firstName": "Scott",
+              "lastName": "Hannan",
+              "primaryNumber": "27",
+              "birthDate": "1979-01-23",
+              "birthCity": "Richmond",
+              "birthStateProvince": "BC",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 1\"",
+              "weight": 215,
+              "active": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "primaryPosition": {
+                "code": "D",
+                "name": "Defenseman",
+                "type": "Defenseman",
+                "abbreviation": "D"
+              },
+              "otherNames": {
+                "slug": "scott-hannan-8466158",
+                "lastFirstName": "Hannan, Scott"
+              }
+            },
+            "thirdStar": {
+              "id": 8476919,
+              "fullName": "Chris Tierney",
+              "link": "/api/v1/people/8476919",
+              "firstName": "Chris",
+              "lastName": "Tierney",
+              "primaryNumber": "50",
+              "birthDate": "1994-07-01",
+              "currentAge": 22,
+              "birthCity": "Keswick",
+              "birthStateProvince": "ON",
+              "birthCountry": "CAN",
+              "nationality": "CAN",
+              "height": "6' 0\"",
+              "weight": 195,
+              "active": true,
+              "alternateCaptain": false,
+              "captain": false,
+              "rookie": false,
+              "shootsCatches": "L",
+              "rosterStatus": "Y",
+              "currentTeam": {
+                "id": 28,
+                "name": "San Jose Sharks",
+                "link": "/api/v1/teams/28"
+              },
+              "primaryPosition": {
+                "code": "C",
+                "name": "Center",
+                "type": "Forward",
+                "abbreviation": "C"
+              },
+              "otherNames": {
+                "slug": "chris-tierney-8476919",
+                "lastFirstName": "Tierney, Chris"
+              }
+            }
+          },
+          "venue": {
+            "name": "SAP Center at San Jose"
+          },
+          "content": {
+            "link": "/api/v1/game/2014021152/content"
+          }
+        }
+      ]
+    }
+  ]
+}

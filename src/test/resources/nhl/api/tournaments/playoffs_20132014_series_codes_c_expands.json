@@ -1,0 +1,470 @@
+{
+  "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "id" : 1,
+  "name" : "Playoffs",
+  "season" : "20132014",
+  "rounds" : [ {
+    "number" : 1,
+    "code" : 1,
+    "names" : {
+      "name" : "First Round",
+      "shortName" : "R1"
+    },
+    "format" : {
+      "name" : "BO7",
+      "description" : "Best of 7",
+      "numberOfGames" : 7,
+      "numberOfWins" : 4
+    },
+    "series" : [ {
+      "seriesNumber" : 3,
+      "seriesCode" : "C",
+      "names" : {
+        "matchupName" : "Penguins (1) vs. Blue Jackets (WC1)",
+        "matchupShortName" : "PIT v CBJ",
+        "teamAbbreviationA" : "PIT",
+        "teamAbbreviationB" : "CBJ",
+        "seriesSlug" : "penguins-vs-blue-jackets-series-c"
+      },
+      "currentGame" : {
+        "seriesSummary" : {
+          "gamePk" : 2013030136,
+          "gameNumber" : 6,
+          "gameLabel" : "Game 6",
+          "necessary" : true,
+          "gameCode" : 136,
+          "gameTime" : "2014-04-28T23:00:00Z",
+          "seriesStatus" : "Penguins win 4-2",
+          "seriesStatusShort" : "PIT wins 4-2"
+        }
+      },
+      "conference" : {
+        "id" : 6,
+        "name" : "Eastern",
+        "link" : "/api/v1/conferences/6"
+      },
+      "round" : {
+        "number" : 1
+      },
+      "schedule" : [ {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-16",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030131,
+            "link" : "/api/v1/game/2013030131/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-16T23:30:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 0,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 0,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "CONSOL Energy Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030131/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-19",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030132,
+            "link" : "/api/v1/game/2013030132/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-19T23:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "CONSOL Energy Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030132/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-21",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030133,
+            "link" : "/api/v1/game/2013030133/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-21T23:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 1,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 1,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5059,
+              "name" : "Nationwide Arena",
+              "link" : "/api/v1/venues/5059"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030133/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-23",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030134,
+            "link" : "/api/v1/game/2013030134/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-23T23:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5059,
+              "name" : "Nationwide Arena",
+              "link" : "/api/v1/venues/5059"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030134/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-26",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030135,
+            "link" : "/api/v1/game/2013030135/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-26T23:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 3,
+                  "type" : "league"
+                },
+                "score" : 1,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 3,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "CONSOL Energy Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030135/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-04-28",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030136,
+            "link" : "/api/v1/game/2013030136/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-04-28T23:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 4,
+                  "losses" : 2,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 5,
+                  "name" : "Pittsburgh Penguins",
+                  "link" : "/api/v1/teams/5"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 2,
+                  "losses" : 4,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 29,
+                  "name" : "Columbus Blue Jackets",
+                  "link" : "/api/v1/teams/29"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5059,
+              "name" : "Nationwide Arena",
+              "link" : "/api/v1/venues/5059"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030136/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      } ],
+      "matchupTeams" : [ {
+        "team" : {
+          "id" : 5,
+          "name" : "Pittsburgh Penguins",
+          "link" : "/api/v1/teams/5"
+        },
+        "seed" : {
+          "type" : "1",
+          "rank" : 1,
+          "isTop" : true
+        },
+        "seriesRecord" : {
+          "wins" : 4,
+          "losses" : 2
+        }
+      }, {
+        "team" : {
+          "id" : 29,
+          "name" : "Columbus Blue Jackets",
+          "link" : "/api/v1/teams/29"
+        },
+        "seed" : {
+          "type" : "WC1",
+          "rank" : 4,
+          "isTop" : false
+        },
+        "seriesRecord" : {
+          "wins" : 2,
+          "losses" : 4
+        }
+      } ]
+    } ]
+  } ]
+}

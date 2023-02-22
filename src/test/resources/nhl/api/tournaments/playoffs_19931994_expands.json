@@ -1,0 +1,7913 @@
+{
+	"copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+	"id" : 1,
+	"name" : "Playoffs",
+	"season" : "19931994",
+	"rounds" : [ {
+		"number" : 1,
+		"code" : 1,
+		"names" : {
+			"name" : "Conference Quarterfinals",
+			"shortName" : "CQF"
+		},
+		"format" : {
+			"name" : "BO7",
+			"description" : "Best of 7",
+			"numberOfGames" : 7,
+			"numberOfWins" : 4
+		},
+		"series" : [ {
+			"seriesNumber" : 1,
+			"seriesCode" : "A",
+			"names" : {
+				"matchupName" : "Rangers (1) vs. Islanders ()",
+				"matchupShortName" : "NYR v NYI",
+				"teamAbbreviationA" : "NYR",
+				"teamAbbreviationB" : "NYI",
+				"seriesSlug" : "rangers-vs-islanders-series-a"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030114,
+					"gameNumber" : 4,
+					"gameLabel" : "Game 4",
+					"necessary" : true,
+					"gameCode" : 114,
+					"gameTime" : "1994-04-24T23:35:00Z",
+					"seriesStatus" : "Rangers win 4-0",
+					"seriesStatusShort" : "NYR wins 4-0"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030111,
+						"link" : "/api/v1/game/1993030111/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-17T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 2,
+									"name" : "New York Islanders",
+									"link" : "/api/v1/teams/2"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030111/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030111,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 111,
+							"gameTime" : "1994-04-17T23:35:00Z",
+							"seriesStatus" : "Rangers lead 1-0",
+							"seriesStatusShort" : "NYR leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030112,
+						"link" : "/api/v1/game/1993030112/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-18T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 2,
+									"name" : "New York Islanders",
+									"link" : "/api/v1/teams/2"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030112/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030112,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 112,
+							"gameTime" : "1994-04-18T23:35:00Z",
+							"seriesStatus" : "Rangers lead 2-0",
+							"seriesStatusShort" : "NYR leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030113,
+						"link" : "/api/v1/game/1993030113/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 2,
+									"name" : "New York Islanders",
+									"link" : "/api/v1/teams/2"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Nassau Veterans Memorial Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030113/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030113,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 113,
+							"gameTime" : "1994-04-21T23:35:00Z",
+							"seriesStatus" : "Rangers lead 3-0",
+							"seriesStatusShort" : "NYR leads 3-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030114,
+						"link" : "/api/v1/game/1993030114/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-24T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 2,
+									"name" : "New York Islanders",
+									"link" : "/api/v1/teams/2"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Nassau Veterans Memorial Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030114/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030114,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 114,
+							"gameTime" : "1994-04-24T23:35:00Z",
+							"seriesStatus" : "Rangers win 4-0",
+							"seriesStatusShort" : "NYR wins 4-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 3,
+					"name" : "New York Rangers",
+					"link" : "/api/v1/teams/3"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 0
+				}
+			}, {
+				"team" : {
+					"id" : 2,
+					"name" : "New York Islanders",
+					"link" : "/api/v1/teams/2"
+				},
+				"seed" : {
+					"rank" : 8,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 0,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 2,
+			"seriesCode" : "B",
+			"names" : {
+				"matchupName" : "Penguins (3) vs. Capitals ()",
+				"matchupShortName" : "PIT v WSH",
+				"teamAbbreviationA" : "PIT",
+				"teamAbbreviationB" : "WSH",
+				"seriesSlug" : "penguins-vs-capitals-series-b"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030126,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 126,
+					"gameTime" : "1994-04-27T23:35:00Z",
+					"seriesStatus" : "Capitals win 4-2",
+					"seriesStatusShort" : "WSH wins 4-2"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030121,
+						"link" : "/api/v1/game/1993030121/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-17T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Civic Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030121/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030121,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 121,
+							"gameTime" : "1994-04-17T23:35:00Z",
+							"seriesStatus" : "Capitals lead 1-0",
+							"seriesStatusShort" : "WSH leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030122,
+						"link" : "/api/v1/game/1993030122/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-19T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Civic Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030122/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030122,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 122,
+							"gameTime" : "1994-04-19T23:35:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030123,
+						"link" : "/api/v1/game/1993030123/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Capital Centre",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030123/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030123,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 123,
+							"gameTime" : "1994-04-21T23:35:00Z",
+							"seriesStatus" : "Capitals lead 2-1",
+							"seriesStatusShort" : "WSH leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030124,
+						"link" : "/api/v1/game/1993030124/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Capital Centre",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030124/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030124,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 124,
+							"gameTime" : "1994-04-23T23:35:00Z",
+							"seriesStatus" : "Capitals lead 3-1",
+							"seriesStatusShort" : "WSH leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030125,
+						"link" : "/api/v1/game/1993030125/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Civic Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030125/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030125,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 125,
+							"gameTime" : "1994-04-25T23:35:00Z",
+							"seriesStatus" : "Capitals lead 3-2",
+							"seriesStatusShort" : "WSH leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030126,
+						"link" : "/api/v1/game/1993030126/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-27T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 5,
+									"name" : "Pittsburgh Penguins",
+									"link" : "/api/v1/teams/5"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Capital Centre",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030126/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030126,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 126,
+							"gameTime" : "1994-04-27T23:35:00Z",
+							"seriesStatus" : "Capitals win 4-2",
+							"seriesStatusShort" : "WSH wins 4-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 5,
+					"name" : "Pittsburgh Penguins",
+					"link" : "/api/v1/teams/5"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 15,
+					"name" : "Washington Capitals",
+					"link" : "/api/v1/teams/15"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			} ]
+		}, {
+			"seriesNumber" : 3,
+			"seriesCode" : "C",
+			"names" : {
+				"matchupName" : "Devils (2) vs. Sabres ()",
+				"matchupShortName" : "NJD v BUF",
+				"teamAbbreviationA" : "NJD",
+				"teamAbbreviationB" : "BUF",
+				"seriesSlug" : "devils-vs-sabres-series-c"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030137,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 137,
+					"gameTime" : "1994-04-29T23:35:00Z",
+					"seriesStatus" : "Devils win 4-3",
+					"seriesStatusShort" : "NJD wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030131,
+						"link" : "/api/v1/game/1993030131/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-17T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030131/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030131,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 131,
+							"gameTime" : "1994-04-17T23:35:00Z",
+							"seriesStatus" : "Sabres lead 1-0",
+							"seriesStatusShort" : "BUF leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030132,
+						"link" : "/api/v1/game/1993030132/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-19T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030132/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030132,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 132,
+							"gameTime" : "1994-04-19T23:35:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030133,
+						"link" : "/api/v1/game/1993030133/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Buffalo Memorial Auditorium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030133/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030133,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 133,
+							"gameTime" : "1994-04-21T23:35:00Z",
+							"seriesStatus" : "Devils lead 2-1",
+							"seriesStatusShort" : "NJD leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030134,
+						"link" : "/api/v1/game/1993030134/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Buffalo Memorial Auditorium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030134/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030134,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 134,
+							"gameTime" : "1994-04-23T23:35:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030135,
+						"link" : "/api/v1/game/1993030135/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030135/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030135,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 135,
+							"gameTime" : "1994-04-25T23:35:00Z",
+							"seriesStatus" : "Devils lead 3-2",
+							"seriesStatusShort" : "NJD leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030136,
+						"link" : "/api/v1/game/1993030136/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-27T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Buffalo Memorial Auditorium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030136/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030136,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 136,
+							"gameTime" : "1994-04-27T23:35:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-29",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030137,
+						"link" : "/api/v1/game/1993030137/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-29T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 7,
+									"name" : "Buffalo Sabres",
+									"link" : "/api/v1/teams/7"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030137/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030137,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 137,
+							"gameTime" : "1994-04-29T23:35:00Z",
+							"seriesStatus" : "Devils win 4-3",
+							"seriesStatusShort" : "NJD wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 1,
+					"name" : "New Jersey Devils",
+					"link" : "/api/v1/teams/1"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 7,
+					"name" : "Buffalo Sabres",
+					"link" : "/api/v1/teams/7"
+				},
+				"seed" : {
+					"rank" : 6,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 4,
+			"seriesCode" : "D",
+			"names" : {
+				"matchupName" : "Bruins () vs. Canadiens ()",
+				"matchupShortName" : "BOS v MTL",
+				"teamAbbreviationA" : "BOS",
+				"teamAbbreviationB" : "MTL",
+				"seriesSlug" : "bruins-vs-canadiens-series-d"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030147,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 147,
+					"gameTime" : "1994-04-29T23:35:00Z",
+					"seriesStatus" : "Bruins win 4-3",
+					"seriesStatusShort" : "BOS wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-16",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030141,
+						"link" : "/api/v1/game/1993030141/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-16T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030141/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030141,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 141,
+							"gameTime" : "1994-04-16T23:35:00Z",
+							"seriesStatus" : "Bruins lead 1-0",
+							"seriesStatusShort" : "BOS leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030142,
+						"link" : "/api/v1/game/1993030142/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-18T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030142/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030142,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 142,
+							"gameTime" : "1994-04-18T23:35:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030143,
+						"link" : "/api/v1/game/1993030143/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Montreal Forum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030143/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030143,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 143,
+							"gameTime" : "1994-04-21T23:35:00Z",
+							"seriesStatus" : "Bruins lead 2-1",
+							"seriesStatusShort" : "BOS leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030144,
+						"link" : "/api/v1/game/1993030144/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Montreal Forum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030144/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030144,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 144,
+							"gameTime" : "1994-04-23T23:35:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030145,
+						"link" : "/api/v1/game/1993030145/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030145/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030145,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 145,
+							"gameTime" : "1994-04-25T23:35:00Z",
+							"seriesStatus" : "Canadiens lead 3-2",
+							"seriesStatusShort" : "MTL leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030146,
+						"link" : "/api/v1/game/1993030146/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-27T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Montreal Forum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030146/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030146,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 146,
+							"gameTime" : "1994-04-27T23:35:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-29",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030147,
+						"link" : "/api/v1/game/1993030147/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-29T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 8,
+									"name" : "Montréal Canadiens",
+									"link" : "/api/v1/teams/8"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030147/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030147,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 147,
+							"gameTime" : "1994-04-29T23:35:00Z",
+							"seriesStatus" : "Bruins win 4-3",
+							"seriesStatusShort" : "BOS wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 6,
+					"name" : "Boston Bruins",
+					"link" : "/api/v1/teams/6"
+				},
+				"seed" : {
+					"rank" : 4,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 8,
+					"name" : "Montréal Canadiens",
+					"link" : "/api/v1/teams/8"
+				},
+				"seed" : {
+					"rank" : 5,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 5,
+			"seriesCode" : "E",
+			"names" : {
+				"matchupName" : "Red Wings (1) vs. Sharks ()",
+				"matchupShortName" : "DET v SJS",
+				"teamAbbreviationA" : "DET",
+				"teamAbbreviationB" : "SJS",
+				"seriesSlug" : "red-wings-vs-sharks-series-e"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030157,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 157,
+					"gameTime" : "1994-04-30T23:35:00Z",
+					"seriesStatus" : "Sharks win 4-3",
+					"seriesStatusShort" : "SJS wins 4-3"
+				}
+			},
+			"conference" : {
+				"link" : "/api/v1/conferences/null"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030151,
+						"link" : "/api/v1/game/1993030151/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-18T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030151/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030151,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 151,
+							"gameTime" : "1994-04-18T23:35:00Z",
+							"seriesStatus" : "Sharks lead 1-0",
+							"seriesStatusShort" : "SJS leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030152,
+						"link" : "/api/v1/game/1993030152/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-20T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030152/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030152,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 152,
+							"gameTime" : "1994-04-20T23:35:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030153,
+						"link" : "/api/v1/game/1993030153/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030153/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030153,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 153,
+							"gameTime" : "1994-04-23T02:35:00Z",
+							"seriesStatus" : "Red Wings lead 2-1",
+							"seriesStatusShort" : "DET leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030154,
+						"link" : "/api/v1/game/1993030154/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-24T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030154/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030154,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 154,
+							"gameTime" : "1994-04-24T02:35:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030155,
+						"link" : "/api/v1/game/1993030155/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-27T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030155/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030155,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 155,
+							"gameTime" : "1994-04-27T02:35:00Z",
+							"seriesStatus" : "Sharks lead 3-2",
+							"seriesStatusShort" : "SJS leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030156,
+						"link" : "/api/v1/game/1993030156/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-28T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 7,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030156/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030156,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 156,
+							"gameTime" : "1994-04-28T23:35:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-30",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030157,
+						"link" : "/api/v1/game/1993030157/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-30T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 17,
+									"name" : "Detroit Red Wings",
+									"link" : "/api/v1/teams/17"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5047,
+							"name" : "Joe Louis Arena",
+							"link" : "/api/v1/venues/5047"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030157/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030157,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 157,
+							"gameTime" : "1994-04-30T23:35:00Z",
+							"seriesStatus" : "Sharks win 4-3",
+							"seriesStatusShort" : "SJS wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 17,
+					"name" : "Detroit Red Wings",
+					"link" : "/api/v1/teams/17"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 28,
+					"name" : "San Jose Sharks",
+					"link" : "/api/v1/teams/28"
+				},
+				"seed" : {
+					"rank" : 8,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			} ]
+		}, {
+			"seriesNumber" : 6,
+			"seriesCode" : "F",
+			"names" : {
+				"matchupName" : "Flames (3) vs. Canucks ()",
+				"matchupShortName" : "CGY v VAN",
+				"teamAbbreviationA" : "CGY",
+				"teamAbbreviationB" : "VAN",
+				"seriesSlug" : "flames-vs-canucks-series-f"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030167,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 167,
+					"gameTime" : "1994-05-01T01:35:00Z",
+					"seriesStatus" : "Canucks win 4-3",
+					"seriesStatusShort" : "VAN wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030161,
+						"link" : "/api/v1/game/1993030161/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-19T01:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Olympic Saddledome",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030161/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030161,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 161,
+							"gameTime" : "1994-04-19T01:35:00Z",
+							"seriesStatus" : "Canucks lead 1-0",
+							"seriesStatusShort" : "VAN leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030162,
+						"link" : "/api/v1/game/1993030162/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T01:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 7,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Olympic Saddledome",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030162/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030162,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 162,
+							"gameTime" : "1994-04-21T01:35:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030163,
+						"link" : "/api/v1/game/1993030163/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030163/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030163,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 163,
+							"gameTime" : "1994-04-23T02:35:00Z",
+							"seriesStatus" : "Flames lead 2-1",
+							"seriesStatusShort" : "CGY leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030164,
+						"link" : "/api/v1/game/1993030164/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030164/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030164,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 164,
+							"gameTime" : "1994-04-25T02:35:00Z",
+							"seriesStatus" : "Flames lead 3-1",
+							"seriesStatusShort" : "CGY leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030165,
+						"link" : "/api/v1/game/1993030165/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-27T01:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Olympic Saddledome",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030165/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030165,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 165,
+							"gameTime" : "1994-04-27T01:35:00Z",
+							"seriesStatus" : "Flames lead 3-2",
+							"seriesStatusShort" : "CGY leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030166,
+						"link" : "/api/v1/game/1993030166/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-29T02:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030166/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030166,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 166,
+							"gameTime" : "1994-04-29T02:35:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-30",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030167,
+						"link" : "/api/v1/game/1993030167/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-01T01:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 20,
+									"name" : "Calgary Flames",
+									"link" : "/api/v1/teams/20"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Olympic Saddledome",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030167/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030167,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 167,
+							"gameTime" : "1994-05-01T01:35:00Z",
+							"seriesStatus" : "Canucks win 4-3",
+							"seriesStatusShort" : "VAN wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 20,
+					"name" : "Calgary Flames",
+					"link" : "/api/v1/teams/20"
+				},
+				"seed" : {
+					"type" : "3",
+					"rank" : 3,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 23,
+					"name" : "Vancouver Canucks",
+					"link" : "/api/v1/teams/23"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			} ]
+		}, {
+			"seriesNumber" : 7,
+			"seriesCode" : "G",
+			"names" : {
+				"matchupName" : "Maple Leafs (2) vs. Blackhawks ()",
+				"matchupShortName" : "TOR v CHI",
+				"teamAbbreviationA" : "TOR",
+				"teamAbbreviationB" : "CHI",
+				"seriesSlug" : "maple-leafs-vs-blackhawks-series-g"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030176,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 176,
+					"gameTime" : "1994-04-29T00:35:00Z",
+					"seriesStatus" : "Maple Leafs win 4-2",
+					"seriesStatusShort" : "TOR wins 4-2"
+				}
+			},
+			"conference" : {
+				"link" : "/api/v1/conferences/null"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030171,
+						"link" : "/api/v1/game/1993030171/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-18T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030171/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030171,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 171,
+							"gameTime" : "1994-04-18T23:35:00Z",
+							"seriesStatus" : "Maple Leafs lead 1-0",
+							"seriesStatusShort" : "TOR leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030172,
+						"link" : "/api/v1/game/1993030172/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-20T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030172/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030172,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 172,
+							"gameTime" : "1994-04-20T23:35:00Z",
+							"seriesStatus" : "Maple Leafs lead 2-0",
+							"seriesStatusShort" : "TOR leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030173,
+						"link" : "/api/v1/game/1993030173/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-24T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Chicago Stadium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030173/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030173,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 173,
+							"gameTime" : "1994-04-24T00:35:00Z",
+							"seriesStatus" : "Maple Leafs lead 2-1",
+							"seriesStatusShort" : "TOR leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030174,
+						"link" : "/api/v1/game/1993030174/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Chicago Stadium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030174/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030174,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 174,
+							"gameTime" : "1994-04-25T00:35:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-26",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030175,
+						"link" : "/api/v1/game/1993030175/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-26T23:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030175/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030175,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 175,
+							"gameTime" : "1994-04-26T23:35:00Z",
+							"seriesStatus" : "Maple Leafs lead 3-2",
+							"seriesStatusShort" : "TOR leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-28",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030176,
+						"link" : "/api/v1/game/1993030176/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-29T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 16,
+									"name" : "Chicago Blackhawks",
+									"link" : "/api/v1/teams/16"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Chicago Stadium",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030176/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030176,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 176,
+							"gameTime" : "1994-04-29T00:35:00Z",
+							"seriesStatus" : "Maple Leafs win 4-2",
+							"seriesStatusShort" : "TOR wins 4-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 10,
+					"name" : "Toronto Maple Leafs",
+					"link" : "/api/v1/teams/10"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			}, {
+				"team" : {
+					"id" : 16,
+					"name" : "Chicago Blackhawks",
+					"link" : "/api/v1/teams/16"
+				},
+				"seed" : {
+					"rank" : 6,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 8,
+			"seriesCode" : "H",
+			"names" : {
+				"matchupName" : "Stars () vs. Blues ()",
+				"matchupShortName" : "DAL v STL",
+				"teamAbbreviationA" : "DAL",
+				"teamAbbreviationB" : "STL",
+				"seriesSlug" : "stars-vs-blues-series-h"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030184,
+					"gameNumber" : 4,
+					"gameLabel" : "Game 4",
+					"necessary" : true,
+					"gameCode" : 184,
+					"gameTime" : "1994-04-25T00:35:00Z",
+					"seriesStatus" : "Stars win 4-0",
+					"seriesStatusShort" : "DAL wins 4-0"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 1
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030181,
+						"link" : "/api/v1/game/1993030181/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-18T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 1,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Reunion Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030181/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030181,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 181,
+							"gameTime" : "1994-04-18T00:35:00Z",
+							"seriesStatus" : "Stars lead 1-0",
+							"seriesStatusShort" : "DAL leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030182,
+						"link" : "/api/v1/game/1993030182/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-21T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 2,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Reunion Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030182/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030182,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 182,
+							"gameTime" : "1994-04-21T00:35:00Z",
+							"seriesStatus" : "Stars lead 2-0",
+							"seriesStatusShort" : "DAL leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030183,
+						"link" : "/api/v1/game/1993030183/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-23T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 3,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "St. Louis Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030183/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030183,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 183,
+							"gameTime" : "1994-04-23T00:35:00Z",
+							"seriesStatus" : "Stars lead 3-0",
+							"seriesStatusShort" : "DAL leads 3-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-04-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030184,
+						"link" : "/api/v1/game/1993030184/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-04-25T00:35:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 0,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 19,
+									"name" : "St. Louis Blues",
+									"link" : "/api/v1/teams/19"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "St. Louis Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030184/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030184,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 184,
+							"gameTime" : "1994-04-25T00:35:00Z",
+							"seriesStatus" : "Stars win 4-0",
+							"seriesStatusShort" : "DAL wins 4-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 25,
+					"name" : "Dallas Stars",
+					"link" : "/api/v1/teams/25"
+				},
+				"seed" : {
+					"rank" : 4,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 0
+				}
+			}, {
+				"team" : {
+					"id" : 19,
+					"name" : "St. Louis Blues",
+					"link" : "/api/v1/teams/19"
+				},
+				"seed" : {
+					"rank" : 5,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 0,
+					"losses" : 4
+				}
+			} ]
+		} ]
+	}, {
+		"number" : 2,
+		"code" : 2,
+		"names" : {
+			"name" : "Conference Semifinals",
+			"shortName" : "CSF"
+		},
+		"format" : {
+			"name" : "BO7",
+			"description" : "Best of 7",
+			"numberOfGames" : 7,
+			"numberOfWins" : 4
+		},
+		"series" : [ {
+			"seriesNumber" : 1,
+			"seriesCode" : "I",
+			"names" : {
+				"matchupName" : "Rangers (1) vs. Capitals ()",
+				"matchupShortName" : "NYR v WSH",
+				"teamAbbreviationA" : "NYR",
+				"teamAbbreviationB" : "WSH",
+				"seriesSlug" : "rangers-vs-capitals-series-i"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030215,
+					"gameNumber" : 5,
+					"gameLabel" : "Game 5",
+					"necessary" : true,
+					"gameCode" : 215,
+					"gameTime" : "1994-05-09T23:30:00Z",
+					"seriesStatus" : "Rangers win 4-1",
+					"seriesStatusShort" : "NYR wins 4-1"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 2
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-01",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030211,
+						"link" : "/api/v1/game/1993030211/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-02T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030211/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030211,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 211,
+							"gameTime" : "1994-05-02T00:00:00Z",
+							"seriesStatus" : "Rangers lead 1-0",
+							"seriesStatusShort" : "NYR leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-03",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030212,
+						"link" : "/api/v1/game/1993030212/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-03T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030212/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030212,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 212,
+							"gameTime" : "1994-05-03T23:30:00Z",
+							"seriesStatus" : "Rangers lead 2-0",
+							"seriesStatusShort" : "NYR leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-05",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030213,
+						"link" : "/api/v1/game/1993030213/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-05T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 0,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Capital Centre",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030213/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030213,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 213,
+							"gameTime" : "1994-05-05T23:30:00Z",
+							"seriesStatus" : "Rangers lead 3-0",
+							"seriesStatusShort" : "NYR leads 3-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-07",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030214,
+						"link" : "/api/v1/game/1993030214/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-07T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Capital Centre",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030214/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030214,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 214,
+							"gameTime" : "1994-05-07T23:30:00Z",
+							"seriesStatus" : "Rangers lead 3-1",
+							"seriesStatusShort" : "NYR leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-09",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030215,
+						"link" : "/api/v1/game/1993030215/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-09T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 15,
+									"name" : "Washington Capitals",
+									"link" : "/api/v1/teams/15"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030215/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030215,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 215,
+							"gameTime" : "1994-05-09T23:30:00Z",
+							"seriesStatus" : "Rangers win 4-1",
+							"seriesStatusShort" : "NYR wins 4-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 3,
+					"name" : "New York Rangers",
+					"link" : "/api/v1/teams/3"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 1
+				}
+			}, {
+				"team" : {
+					"id" : 15,
+					"name" : "Washington Capitals",
+					"link" : "/api/v1/teams/15"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 1,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 2,
+			"seriesCode" : "J",
+			"names" : {
+				"matchupName" : "Devils (2) vs. Bruins ()",
+				"matchupShortName" : "NJD v BOS",
+				"teamAbbreviationA" : "NJD",
+				"teamAbbreviationB" : "BOS",
+				"seriesSlug" : "devils-vs-bruins-series-j"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030226,
+					"gameNumber" : 6,
+					"gameLabel" : "Game 6",
+					"necessary" : true,
+					"gameCode" : 226,
+					"gameTime" : "1994-05-11T23:30:00Z",
+					"seriesStatus" : "Devils win 4-2",
+					"seriesStatusShort" : "NJD wins 4-2"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 2
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-01",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030221,
+						"link" : "/api/v1/game/1993030221/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-01T17:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030221/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030221,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 221,
+							"gameTime" : "1994-05-01T17:00:00Z",
+							"seriesStatus" : "Bruins lead 1-0",
+							"seriesStatusShort" : "BOS leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-03",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030222,
+						"link" : "/api/v1/game/1993030222/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-03T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030222/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030222,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 222,
+							"gameTime" : "1994-05-03T23:30:00Z",
+							"seriesStatus" : "Bruins lead 2-0",
+							"seriesStatusShort" : "BOS leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-05",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030223,
+						"link" : "/api/v1/game/1993030223/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-05T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030223/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030223,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 223,
+							"gameTime" : "1994-05-05T23:30:00Z",
+							"seriesStatus" : "Bruins lead 2-1",
+							"seriesStatusShort" : "BOS leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-07",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030224,
+						"link" : "/api/v1/game/1993030224/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-07T23:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030224/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030224,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 224,
+							"gameTime" : "1994-05-07T23:00:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-09",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030225,
+						"link" : "/api/v1/game/1993030225/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-09T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030225/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030225,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 225,
+							"gameTime" : "1994-05-09T23:30:00Z",
+							"seriesStatus" : "Devils lead 3-2",
+							"seriesStatusShort" : "NJD leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-11",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030226,
+						"link" : "/api/v1/game/1993030226/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-11T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 6,
+									"name" : "Boston Bruins",
+									"link" : "/api/v1/teams/6"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Boston Garden",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030226/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030226,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 226,
+							"gameTime" : "1994-05-11T23:30:00Z",
+							"seriesStatus" : "Devils win 4-2",
+							"seriesStatusShort" : "NJD wins 4-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 1,
+					"name" : "New Jersey Devils",
+					"link" : "/api/v1/teams/1"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 2
+				}
+			}, {
+				"team" : {
+					"id" : 6,
+					"name" : "Boston Bruins",
+					"link" : "/api/v1/teams/6"
+				},
+				"seed" : {
+					"rank" : 4,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 2,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 3,
+			"seriesCode" : "K",
+			"names" : {
+				"matchupName" : "Maple Leafs (2) vs. Sharks ()",
+				"matchupShortName" : "TOR v SJS",
+				"teamAbbreviationA" : "TOR",
+				"teamAbbreviationB" : "SJS",
+				"seriesSlug" : "maple-leafs-vs-sharks-series-k"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030237,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 237,
+					"gameTime" : "1994-05-15T00:00:00Z",
+					"seriesStatus" : "Maple Leafs win 4-3",
+					"seriesStatusShort" : "TOR wins 4-3"
+				}
+			},
+			"conference" : {
+				"link" : "/api/v1/conferences/null"
+			},
+			"round" : {
+				"number" : 2
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-02",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030231,
+						"link" : "/api/v1/game/1993030231/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-02T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030231/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030231,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 231,
+							"gameTime" : "1994-05-02T23:30:00Z",
+							"seriesStatus" : "Sharks lead 1-0",
+							"seriesStatusShort" : "SJS leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-04",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030232,
+						"link" : "/api/v1/game/1993030232/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-04T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030232/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030232,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 232,
+							"gameTime" : "1994-05-04T23:30:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-06",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030233,
+						"link" : "/api/v1/game/1993030233/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-07T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030233/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030233,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 233,
+							"gameTime" : "1994-05-07T02:30:00Z",
+							"seriesStatus" : "Sharks lead 2-1",
+							"seriesStatusShort" : "SJS leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-08",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030234,
+						"link" : "/api/v1/game/1993030234/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-09T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 8,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030234/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030234,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 234,
+							"gameTime" : "1994-05-09T00:00:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-10",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030235,
+						"link" : "/api/v1/game/1993030235/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-11T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "San Jose Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030235/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030235,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 235,
+							"gameTime" : "1994-05-11T02:30:00Z",
+							"seriesStatus" : "Sharks lead 3-2",
+							"seriesStatusShort" : "SJS leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-12",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030236,
+						"link" : "/api/v1/game/1993030236/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-12T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030236/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030236,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 236,
+							"gameTime" : "1994-05-12T23:30:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-14",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030237,
+						"link" : "/api/v1/game/1993030237/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-15T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 28,
+									"name" : "San Jose Sharks",
+									"link" : "/api/v1/teams/28"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030237/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030237,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 237,
+							"gameTime" : "1994-05-15T00:00:00Z",
+							"seriesStatus" : "Maple Leafs win 4-3",
+							"seriesStatusShort" : "TOR wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 10,
+					"name" : "Toronto Maple Leafs",
+					"link" : "/api/v1/teams/10"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 28,
+					"name" : "San Jose Sharks",
+					"link" : "/api/v1/teams/28"
+				},
+				"seed" : {
+					"rank" : 8,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 4,
+			"seriesCode" : "L",
+			"names" : {
+				"matchupName" : "Stars () vs. Canucks ()",
+				"matchupShortName" : "DAL v VAN",
+				"teamAbbreviationA" : "DAL",
+				"teamAbbreviationB" : "VAN",
+				"seriesSlug" : "stars-vs-canucks-series-l"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030245,
+					"gameNumber" : 5,
+					"gameLabel" : "Game 5",
+					"necessary" : true,
+					"gameCode" : 245,
+					"gameTime" : "1994-05-11T02:30:00Z",
+					"seriesStatus" : "Canucks win 4-1",
+					"seriesStatusShort" : "VAN wins 4-1"
+				}
+			},
+			"conference" : {
+				"id" : 5,
+				"name" : "Western",
+				"link" : "/api/v1/conferences/5"
+			},
+			"round" : {
+				"number" : 2
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-02",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030241,
+						"link" : "/api/v1/game/1993030241/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-03T00:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 1,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Reunion Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030241/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030241,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 241,
+							"gameTime" : "1994-05-03T00:30:00Z",
+							"seriesStatus" : "Canucks lead 1-0",
+							"seriesStatusShort" : "VAN leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-04",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030242,
+						"link" : "/api/v1/game/1993030242/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-05T00:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 4,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Reunion Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030242/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030242,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 242,
+							"gameTime" : "1994-05-05T00:30:00Z",
+							"seriesStatus" : "Canucks lead 2-0",
+							"seriesStatusShort" : "VAN leads 2-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-06",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030243,
+						"link" : "/api/v1/game/1993030243/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-07T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 6,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030243/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030243,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 243,
+							"gameTime" : "1994-05-07T02:30:00Z",
+							"seriesStatus" : "Canucks lead 2-1",
+							"seriesStatusShort" : "VAN leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-08",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030244,
+						"link" : "/api/v1/game/1993030244/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-08T21:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 7,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030244/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030244,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 244,
+							"gameTime" : "1994-05-08T21:00:00Z",
+							"seriesStatus" : "Canucks lead 3-1",
+							"seriesStatusShort" : "VAN leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-10",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030245,
+						"link" : "/api/v1/game/1993030245/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-11T02:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 5,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 25,
+									"name" : "Dallas Stars",
+									"link" : "/api/v1/teams/25"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030245/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030245,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 245,
+							"gameTime" : "1994-05-11T02:30:00Z",
+							"seriesStatus" : "Canucks win 4-1",
+							"seriesStatusShort" : "VAN wins 4-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 25,
+					"name" : "Dallas Stars",
+					"link" : "/api/v1/teams/25"
+				},
+				"seed" : {
+					"rank" : 4,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 1,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 23,
+					"name" : "Vancouver Canucks",
+					"link" : "/api/v1/teams/23"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 1
+				}
+			} ]
+		} ]
+	}, {
+		"number" : 3,
+		"code" : 3,
+		"names" : {
+			"name" : "Conference Finals",
+			"shortName" : "CF"
+		},
+		"format" : {
+			"name" : "BO7",
+			"description" : "Best of 7",
+			"numberOfGames" : 7,
+			"numberOfWins" : 4
+		},
+		"series" : [ {
+			"seriesNumber" : 1,
+			"seriesCode" : "M",
+			"names" : {
+				"matchupName" : "Rangers (1) vs. Devils (2)",
+				"matchupShortName" : "NYR v NJD",
+				"teamAbbreviationA" : "NYR",
+				"teamAbbreviationB" : "NJD",
+				"seriesSlug" : "rangers-vs-devils-series-m"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030317,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 317,
+					"gameTime" : "1994-05-27T23:30:00Z",
+					"seriesStatus" : "Rangers win 4-3",
+					"seriesStatusShort" : "NYR wins 4-3"
+				}
+			},
+			"conference" : {
+				"id" : 6,
+				"name" : "Eastern",
+				"link" : "/api/v1/conferences/6"
+			},
+			"round" : {
+				"number" : 3
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-15",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030311,
+						"link" : "/api/v1/game/1993030311/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-15T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030311/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030311,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 311,
+							"gameTime" : "1994-05-15T23:30:00Z",
+							"seriesStatus" : "Devils lead 1-0",
+							"seriesStatusShort" : "NJD leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-17",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030312,
+						"link" : "/api/v1/game/1993030312/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-17T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030312/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030312,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 312,
+							"gameTime" : "1994-05-17T23:30:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-19",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030313,
+						"link" : "/api/v1/game/1993030313/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-19T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 10,
+									"losses" : 2,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030313/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030313,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 313,
+							"gameTime" : "1994-05-19T23:30:00Z",
+							"seriesStatus" : "Rangers lead 2-1",
+							"seriesStatusShort" : "NYR leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-21",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030314,
+						"link" : "/api/v1/game/1993030314/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-21T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 10,
+									"losses" : 3,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 10,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030314/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030314,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 314,
+							"gameTime" : "1994-05-21T23:30:00Z",
+							"seriesStatus" : "Series tied 2-2",
+							"seriesStatusShort" : "Tied 2-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-23",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030315,
+						"link" : "/api/v1/game/1993030315/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-23T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 11,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 10,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030315/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030315,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 315,
+							"gameTime" : "1994-05-23T23:30:00Z",
+							"seriesStatus" : "Devils lead 3-2",
+							"seriesStatusShort" : "NJD leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-25",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030316,
+						"link" : "/api/v1/game/1993030316/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-25T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 11,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 11,
+									"losses" : 8,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Brendan Byrne Arena",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030316/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030316,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 316,
+							"gameTime" : "1994-05-25T23:30:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-27",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030317,
+						"link" : "/api/v1/game/1993030317/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-27T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 11,
+									"losses" : 9,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 1,
+									"name" : "New Jersey Devils",
+									"link" : "/api/v1/teams/1"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 12,
+									"losses" : 4,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030317/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030317,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 317,
+							"gameTime" : "1994-05-27T23:30:00Z",
+							"seriesStatus" : "Rangers win 4-3",
+							"seriesStatusShort" : "NYR wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 3,
+					"name" : "New York Rangers",
+					"link" : "/api/v1/teams/3"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 1,
+					"name" : "New Jersey Devils",
+					"link" : "/api/v1/teams/1"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		}, {
+			"seriesNumber" : 2,
+			"seriesCode" : "N",
+			"names" : {
+				"matchupName" : "Maple Leafs (2) vs. Canucks ()",
+				"matchupShortName" : "TOR v VAN",
+				"teamAbbreviationA" : "TOR",
+				"teamAbbreviationB" : "VAN",
+				"seriesSlug" : "maple-leafs-vs-canucks-series-n"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030325,
+					"gameNumber" : 5,
+					"gameLabel" : "Game 5",
+					"necessary" : true,
+					"gameCode" : 325,
+					"gameTime" : "1994-05-25T01:00:00Z",
+					"seriesStatus" : "Canucks win 4-1",
+					"seriesStatusShort" : "VAN wins 4-1"
+				}
+			},
+			"conference" : {
+				"link" : "/api/v1/conferences/null"
+			},
+			"round" : {
+				"number" : 3
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-16",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030321,
+						"link" : "/api/v1/game/1993030321/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-17T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 8,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030321/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030321,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 321,
+							"gameTime" : "1994-05-17T00:00:00Z",
+							"seriesStatus" : "Maple Leafs lead 1-0",
+							"seriesStatusShort" : "TOR leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-18",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030322,
+						"link" : "/api/v1/game/1993030322/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-18T23:30:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Maple Leaf Gardens",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030322/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030322,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 322,
+							"gameTime" : "1994-05-18T23:30:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-20",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030323,
+						"link" : "/api/v1/game/1993030323/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-21T01:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 10,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030323/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030323,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 323,
+							"gameTime" : "1994-05-21T01:00:00Z",
+							"seriesStatus" : "Canucks lead 2-1",
+							"seriesStatusShort" : "VAN leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-22",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030324,
+						"link" : "/api/v1/game/1993030324/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-23T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 8,
+									"type" : "league"
+								},
+								"score" : 0,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 11,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030324/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030324,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 324,
+							"gameTime" : "1994-05-23T00:00:00Z",
+							"seriesStatus" : "Canucks lead 3-1",
+							"seriesStatusShort" : "VAN leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-24",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030325,
+						"link" : "/api/v1/game/1993030325/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-05-25T01:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 9,
+									"losses" : 9,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 10,
+									"name" : "Toronto Maple Leafs",
+									"link" : "/api/v1/teams/10"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 12,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030325/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030325,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 325,
+							"gameTime" : "1994-05-25T01:00:00Z",
+							"seriesStatus" : "Canucks win 4-1",
+							"seriesStatusShort" : "VAN wins 4-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 10,
+					"name" : "Toronto Maple Leafs",
+					"link" : "/api/v1/teams/10"
+				},
+				"seed" : {
+					"type" : "2",
+					"rank" : 2,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 1,
+					"losses" : 4
+				}
+			}, {
+				"team" : {
+					"id" : 23,
+					"name" : "Vancouver Canucks",
+					"link" : "/api/v1/teams/23"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 1
+				}
+			} ]
+		} ]
+	}, {
+		"number" : 4,
+		"code" : 4,
+		"names" : {
+			"name" : "Stanley Cup Final",
+			"shortName" : "SCF"
+		},
+		"format" : {
+			"name" : "BO7",
+			"description" : "Best of 7",
+			"numberOfGames" : 7,
+			"numberOfWins" : 4
+		},
+		"series" : [ {
+			"seriesNumber" : 1,
+			"seriesCode" : "O",
+			"names" : {
+				"matchupName" : "Rangers (1) vs. Canucks ()",
+				"matchupShortName" : "NYR v VAN",
+				"teamAbbreviationA" : "NYR",
+				"teamAbbreviationB" : "VAN",
+				"seriesSlug" : "rangers-vs-canucks-series-o"
+			},
+			"currentGame" : {
+				"seriesSummary" : {
+					"gamePk" : 1993030417,
+					"gameNumber" : 7,
+					"gameLabel" : "Game 7",
+					"necessary" : true,
+					"gameCode" : 417,
+					"gameTime" : "1994-06-15T00:00:00Z",
+					"seriesStatus" : "Rangers win 4-3",
+					"seriesStatusShort" : "NYR wins 4-3"
+				}
+			},
+			"conference" : {
+				"link" : "/api/v1/conferences/null"
+			},
+			"round" : {
+				"number" : 4
+			},
+			"schedule" : [ {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-05-31",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030411,
+						"link" : "/api/v1/game/1993030411/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-01T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 13,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 12,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030411/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030411,
+							"gameNumber" : 1,
+							"gameLabel" : "Game 1",
+							"necessary" : true,
+							"gameCode" : 411,
+							"gameTime" : "1994-06-01T00:00:00Z",
+							"seriesStatus" : "Canucks lead 1-0",
+							"seriesStatusShort" : "VAN leads 1-0"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-02",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030412,
+						"link" : "/api/v1/game/1993030412/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-03T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 13,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 13,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030412/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030412,
+							"gameNumber" : 2,
+							"gameLabel" : "Game 2",
+							"necessary" : true,
+							"gameCode" : 412,
+							"gameTime" : "1994-06-03T00:00:00Z",
+							"seriesStatus" : "Series tied 1-1",
+							"seriesStatusShort" : "Tied 1-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-04",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030413,
+						"link" : "/api/v1/game/1993030413/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-05T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 14,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 5,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 13,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030413/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030413,
+							"gameNumber" : 3,
+							"gameLabel" : "Game 3",
+							"necessary" : true,
+							"gameCode" : 413,
+							"gameTime" : "1994-06-05T00:00:00Z",
+							"seriesStatus" : "Rangers lead 2-1",
+							"seriesStatusShort" : "NYR leads 2-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-07",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030414,
+						"link" : "/api/v1/game/1993030414/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-08T01:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 15,
+									"losses" : 5,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 13,
+									"losses" : 8,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030414/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030414,
+							"gameNumber" : 4,
+							"gameLabel" : "Game 4",
+							"necessary" : true,
+							"gameCode" : 414,
+							"gameTime" : "1994-06-08T01:00:00Z",
+							"seriesStatus" : "Rangers lead 3-1",
+							"seriesStatusShort" : "NYR leads 3-1"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-09",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030415,
+						"link" : "/api/v1/game/1993030415/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-10T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 14,
+									"losses" : 8,
+									"type" : "league"
+								},
+								"score" : 6,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 15,
+									"losses" : 6,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030415/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030415,
+							"gameNumber" : 5,
+							"gameLabel" : "Game 5",
+							"necessary" : true,
+							"gameCode" : 415,
+							"gameTime" : "1994-06-10T00:00:00Z",
+							"seriesStatus" : "Rangers lead 3-2",
+							"seriesStatusShort" : "NYR leads 3-2"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-11",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030416,
+						"link" : "/api/v1/game/1993030416/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-12T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 15,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 1,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 15,
+									"losses" : 8,
+									"type" : "league"
+								},
+								"score" : 4,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							}
+						},
+						"venue" : {
+							"name" : "Pacific Coliseum",
+							"link" : "/api/v1/venues/null"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030416/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030416,
+							"gameNumber" : 6,
+							"gameLabel" : "Game 6",
+							"necessary" : true,
+							"gameCode" : 416,
+							"gameTime" : "1994-06-12T00:00:00Z",
+							"seriesStatus" : "Series tied 3-3",
+							"seriesStatusShort" : "Tied 3-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			}, {
+				"totalItems" : 1,
+				"totalEvents" : 0,
+				"totalGames" : 1,
+				"totalMatches" : 0,
+				"metaData" : {
+					"timeStamp" : "20210713_183651"
+				},
+				"wait" : 10,
+				"dates" : [ {
+					"date" : "1994-06-14",
+					"totalItems" : 1,
+					"totalEvents" : 0,
+					"totalGames" : 1,
+					"totalMatches" : 0,
+					"games" : [ {
+						"gamePk" : 1993030417,
+						"link" : "/api/v1/game/1993030417/feed/live",
+						"gameType" : "P",
+						"season" : "19931994",
+						"gameDate" : "1994-06-15T00:00:00Z",
+						"status" : {
+							"abstractGameState" : "Final",
+							"codedGameState" : "7",
+							"detailedState" : "Final",
+							"statusCode" : "7",
+							"startTimeTBD" : false
+						},
+						"teams" : {
+							"away" : {
+								"leagueRecord" : {
+									"wins" : 15,
+									"losses" : 9,
+									"type" : "league"
+								},
+								"score" : 2,
+								"team" : {
+									"id" : 23,
+									"name" : "Vancouver Canucks",
+									"link" : "/api/v1/teams/23"
+								}
+							},
+							"home" : {
+								"leagueRecord" : {
+									"wins" : 16,
+									"losses" : 7,
+									"type" : "league"
+								},
+								"score" : 3,
+								"team" : {
+									"id" : 3,
+									"name" : "New York Rangers",
+									"link" : "/api/v1/teams/3"
+								}
+							}
+						},
+						"venue" : {
+							"id" : 5054,
+							"name" : "Madison Square Garden",
+							"link" : "/api/v1/venues/5054"
+						},
+						"content" : {
+							"link" : "/api/v1/game/1993030417/content"
+						},
+						"seriesSummary" : {
+							"gamePk" : 1993030417,
+							"gameNumber" : 7,
+							"gameLabel" : "Game 7",
+							"necessary" : true,
+							"gameCode" : 417,
+							"gameTime" : "1994-06-15T00:00:00Z",
+							"seriesStatus" : "Rangers win 4-3",
+							"seriesStatusShort" : "NYR wins 4-3"
+						}
+					} ],
+					"events" : [ ],
+					"matches" : [ ]
+				} ]
+			} ],
+			"matchupTeams" : [ {
+				"team" : {
+					"id" : 3,
+					"name" : "New York Rangers",
+					"link" : "/api/v1/teams/3"
+				},
+				"seed" : {
+					"type" : "1",
+					"rank" : 1,
+					"isTop" : true
+				},
+				"seriesRecord" : {
+					"wins" : 4,
+					"losses" : 3
+				}
+			}, {
+				"team" : {
+					"id" : 23,
+					"name" : "Vancouver Canucks",
+					"link" : "/api/v1/teams/23"
+				},
+				"seed" : {
+					"rank" : 7,
+					"isTop" : false
+				},
+				"seriesRecord" : {
+					"wins" : 3,
+					"losses" : 4
+				}
+			} ]
+		} ]
+	} ]
+}

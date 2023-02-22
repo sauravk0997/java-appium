@@ -1,0 +1,201 @@
+{
+  "nhlPlayoffEditorial": {
+    "season": 20162017,
+    "defaultRoundNum": 2,
+    "rounds": [
+      {
+        "name": "First Round",
+        "shortName": "R1",
+        "roundNumber": 1,
+        "series": [
+          {
+            "series": "A",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "NYR 4-2, will face OTT",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "B",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "OTT 4-2, will face NYR",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "C",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "WSH 4-2, will face PIT",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "D",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "PIT 4-1, will face WSH/TOR",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "E",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "NSH 4-0, will face STL",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 5,
+            "confName": "Western"
+          },
+          {
+            "series": "F",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "STL 4-1, will face NSH",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 5,
+            "confName": "Western"
+          },
+          {
+            "series": "G",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "ANA 4-0, will face EDM/SJS",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 5,
+            "confName": "Western"
+          },
+          {
+            "series": "H",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "EDM 4-2, will face ANA",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 5,
+            "confName": "Western"
+          }
+        ]
+      },
+      {
+        "name": "Second Round",
+        "shortName": "R2",
+        "roundNumber": 2,
+        "series": [
+          {
+            "series": "I",
+            "matchup": "Senators (2) vs. Rangers (WC1)",
+            "matchupShort": "OTT vs. NYR",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "OTT",
+            "teamB": "NYR",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "J",
+            "matchup": "Capitals (1) vs. Penguins (2)",
+            "matchupShort": "WSH vs. PIT",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "WSH",
+            "teamB": "PIT",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "K",
+            "matchup": "Blues (3) vs. Predators (WC2)",
+            "matchupShort": "STL vs NSH",
+            "seriesStatus": "NSH 4-2, will face ANA/EDM",
+            "seriesStatusShort": "",
+            "teamA": "STL",
+            "teamB": "NSH",
+            "confId": 5,
+            "confName": "Western"
+          },
+          {
+            "series": "L",
+            "matchup": "Ducks (1) vs. Oilers (2)",
+            "matchupShort": "ANA vs. EDM/",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "ANA",
+            "teamB": "EDM",
+            "confId": 5,
+            "confName": "Western"
+          }
+        ]
+      },
+      {
+        "name": "Conference Finals",
+        "shortName": "CF",
+        "roundNumber": 3,
+        "series": [
+          {
+            "series": "M",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 6,
+            "confName": "Eastern"
+          },
+          {
+            "series": "N",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": 5,
+            "confName": "Western"
+          }
+        ]
+      },
+      {
+        "name": "Stanley Cup Final",
+        "shortName": "SCF",
+        "roundNumber": 4,
+        "series": [
+          {
+            "series": "O",
+            "matchup": "",
+            "matchupShort": "",
+            "seriesStatus": "",
+            "seriesStatusShort": "",
+            "teamA": "",
+            "teamB": "",
+            "confId": "",
+            "confName": ""
+          }
+        ]
+      }
+    ]
+  }
+}

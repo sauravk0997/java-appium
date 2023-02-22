@@ -1,0 +1,91 @@
+{
+  "copyright": "Copyright 2015 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+  "currentPeriod": 3,
+  "currentPeriodOrdinal": "3e",
+  "currentPeriodTimeRemaining": "FINALE",
+  "periods": [
+    {
+      "num": 1,
+      "ordinalNum": "1re",
+      "periodType": "REGULAR",
+      "startTime": "2016-01-27T03:15:21Z",
+      "endTime": "2016-01-27T03:51:46Z",
+      "home": {
+        "goals": 2,
+        "shotsOnGoal": 9
+      },
+      "away": {
+        "goals": 0,
+        "shotsOnGoal": 6
+      }
+    },
+    {
+      "num": 2,
+      "ordinalNum": "2e",
+      "periodType": "REGULAR",
+      "startTime": "2016-01-27T04:10:07Z",
+      "endTime": "2016-01-27T04:47:11Z",
+      "home": {
+        "goals": 2,
+        "shotsOnGoal": 11
+      },
+      "away": {
+        "goals": 0,
+        "shotsOnGoal": 5
+      }
+    },
+    {
+      "num": 3,
+      "ordinalNum": "3e",
+      "periodType": "REGULAR",
+      "startTime": "2016-01-27T05:05:22Z",
+      "endTime": "2016-01-27T05:49:52Z",
+      "home": {
+        "goals": 2,
+        "shotsOnGoal": 4
+      },
+      "away": {
+        "goals": 1,
+        "shotsOnGoal": 11
+      }
+    }
+  ],
+  "shootoutInfo": {
+    "away": {
+      "scores": 0,
+      "attempts": 0
+    },
+    "home": {
+      "scores": 0,
+      "attempts": 0
+    }
+  },
+  "teams": {
+    "home": {
+      "team": {
+        "id": 28,
+        "name": "Sharks de San Jose",
+        "link": "/api/v1/teams/28"
+      },
+      "goals": 6,
+      "shotsOnGoal": 24,
+      "goaliePulled": false,
+      "numSkaters": 5,
+      "powerPlay": false
+    },
+    "away": {
+      "team": {
+        "id": 21,
+        "name": "Avalanche du Colorado",
+        "link": "/api/v1/teams/21"
+      },
+      "goals": 1,
+      "shotsOnGoal": 22,
+      "goaliePulled": false,
+      "numSkaters": 5,
+      "powerPlay": false
+    }
+  },
+  "powerPlayStrength": "Even",
+  "hasShootout": false
+}

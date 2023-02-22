@@ -1,0 +1,53 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "conferences": [
+    {
+      "id": 1,
+      "name": "Est",
+      "link": "/api/v1/conferences/1",
+      "abbreviation": "XVE",
+      "shortName": "East",
+      "active": false
+    },
+    {
+      "id": 2,
+      "name": "Ouest",
+      "link": "/api/v1/conferences/2",
+      "abbreviation": "XVW",
+      "shortName": "West",
+      "active": false
+    },
+    {
+      "id": 3,
+      "name": "Prince of Wales",
+      "link": "/api/v1/conferences/3",
+      "abbreviation": "",
+      "shortName": "PRWL",
+      "active": false
+    },
+    {
+      "id": 4,
+      "name": "Clarence Campbell",
+      "link": "/api/v1/conferences/4",
+      "abbreviation": "",
+      "shortName": "CMBL",
+      "active": false
+    },
+    {
+      "id": 5,
+      "name": "Ouest",
+      "link": "/api/v1/conferences/5",
+      "abbreviation": "W",
+      "shortName": "West",
+      "active": true
+    },
+    {
+      "id": 6,
+      "name": "Est",
+      "link": "/api/v1/conferences/6",
+      "abbreviation": "E",
+      "shortName": "East",
+      "active": true
+    }
+  ]
+}

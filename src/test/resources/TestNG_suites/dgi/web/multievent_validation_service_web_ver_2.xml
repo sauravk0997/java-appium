@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite verbose="1" name="DGI - Web - Multievent validation (with pause)" annotations="JDK" parallel="methods" thread-count="1">
+
+    <parameter name="suiteOwner" value="achowdhury"/>
+    <parameter name="reporting.project-key" value="DGI" />
+    <parameter name="jenkinsJobType" value="web"/>
+    <parameter name="jenkinsJobName" value="DGI-Web-Multievent-Validation-Tests-With-Pause"/>
+    <parameter name="jenkinsEmail" value=""/>
+    <parameter name="jenkinsEnvironments" value="PROD,BETA,QA"/>
+    <parameter name="jenkinsRegressionPipeline" value="DGI-Web-Regression-Pipeline"/>
+    <parameter name="jenkinsRegressionScheduling" value="@daily"/>
+    <parameter name="choiceParam::app_version::Branch to test" value="LIVE"/>
+    <parameter name="stringParam::events::Events to be sent for validation" value="urn:dss:event:glimpse:impression:pageView,urn:dss:event:glimpse:impression:containerView,urn:dss:event:glimpse:engagement:interaction,urn:dss:event:glimpse:engagement:input,urn:dss:telemetry-service:event:stream-sample"/>
+    <parameter name="stringParam::timeout::Pause timeout (in seconds) after each page load" value="10"/>
+    <parameter name="overrideFields" value="custom_string=${events},custom_string2=${timeout}"/>
+
+
+    <test verbose="1" name="Multievent Web Validation Tests (with pause)">
+        <classes>
+            <class name="com.disney.qa.tests.dgi.web.multievent.MultiEventValidationServiceWebTestWithPause"/>
+        </classes>
+    </test>
+
+</suite>

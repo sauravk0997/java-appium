@@ -1,0 +1,984 @@
+{
+  "copyright" : "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "id" : 1,
+  "name" : "Playoffs",
+  "season" : "20132014",
+  "rounds" : [ {
+    "number" : 3,
+    "code" : 3,
+    "names" : {
+      "name" : "Conference Finals",
+      "shortName" : "CF"
+    },
+    "format" : {
+      "name" : "BO7",
+      "description" : "Best of 7",
+      "numberOfGames" : 7,
+      "numberOfWins" : 4
+    },
+    "series" : [ {
+      "seriesNumber" : 1,
+      "seriesCode" : "M",
+      "names" : {
+        "matchupName" : "Canadiens (3) vs. Rangers (2)",
+        "matchupShortName" : "MTL v NYR",
+        "teamAbbreviationA" : "MTL",
+        "teamAbbreviationB" : "NYR",
+        "seriesSlug" : "canadiens-vs-rangers-series-m"
+      },
+      "currentGame" : {
+        "seriesSummary" : {
+          "gamePk" : 2013030316,
+          "gameNumber" : 6,
+          "gameLabel" : "Game 6",
+          "necessary" : true,
+          "gameCode" : 316,
+          "gameTime" : "2014-05-30T00:00:00Z",
+          "seriesStatus" : "Rangers win 4-2",
+          "seriesStatusShort" : "NYR wins 4-2"
+        }
+      },
+      "conference" : {
+        "id" : 6,
+        "name" : "Eastern",
+        "link" : "/api/v1/conferences/6"
+      },
+      "round" : {
+        "number" : 3
+      },
+      "schedule" : [ {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-17",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030311,
+            "link" : "/api/v1/game/2013030311/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-17T17:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 6,
+                  "type" : "league"
+                },
+                "score" : 7,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 8,
+                  "losses" : 4,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Centre Bell",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030311/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-19",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030312,
+            "link" : "/api/v1/game/2013030312/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-20T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 6,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 8,
+                  "losses" : 5,
+                  "type" : "league"
+                },
+                "score" : 1,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Centre Bell",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030312/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-22",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030313,
+            "link" : "/api/v1/game/2013030313/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-23T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 5,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5054,
+              "name" : "Madison Square Garden",
+              "link" : "/api/v1/venues/5054"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030313/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-25",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030314,
+            "link" : "/api/v1/game/2013030314/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-26T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 6,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5054,
+              "name" : "Madison Square Garden",
+              "link" : "/api/v1/venues/5054"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030314/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-27",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030315,
+            "link" : "/api/v1/game/2013030315/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-28T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 8,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 6,
+                  "type" : "league"
+                },
+                "score" : 7,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "Centre Bell",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030315/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-29",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030316,
+            "link" : "/api/v1/game/2013030316/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-30T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 0,
+                "team" : {
+                  "id" : 8,
+                  "name" : "Montréal Canadiens",
+                  "link" : "/api/v1/teams/8"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 12,
+                  "losses" : 8,
+                  "type" : "league"
+                },
+                "score" : 1,
+                "team" : {
+                  "id" : 3,
+                  "name" : "New York Rangers",
+                  "link" : "/api/v1/teams/3"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5054,
+              "name" : "Madison Square Garden",
+              "link" : "/api/v1/venues/5054"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030316/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      } ],
+      "matchupTeams" : [ {
+        "team" : {
+          "id" : 8,
+          "name" : "Montréal Canadiens",
+          "link" : "/api/v1/teams/8"
+        },
+        "seed" : {
+          "type" : "3",
+          "rank" : 3,
+          "isTop" : true
+        },
+        "seriesRecord" : {
+          "wins" : 2,
+          "losses" : 4
+        }
+      }, {
+        "team" : {
+          "id" : 3,
+          "name" : "New York Rangers",
+          "link" : "/api/v1/teams/3"
+        },
+        "seed" : {
+          "type" : "2",
+          "rank" : 2,
+          "isTop" : false
+        },
+        "seriesRecord" : {
+          "wins" : 4,
+          "losses" : 2
+        }
+      } ]
+    }, {
+      "seriesNumber" : 2,
+      "seriesCode" : "N",
+      "names" : {
+        "matchupName" : "Blackhawks (3) vs. Kings (3)",
+        "matchupShortName" : "CHI v LAK",
+        "teamAbbreviationA" : "CHI",
+        "teamAbbreviationB" : "LAK",
+        "seriesSlug" : "blackhawks-vs-kings-series-n"
+      },
+      "currentGame" : {
+        "seriesSummary" : {
+          "gamePk" : 2013030327,
+          "gameNumber" : 7,
+          "gameLabel" : "Game 7",
+          "necessary" : true,
+          "gameCode" : 327,
+          "gameTime" : "2014-06-02T00:00:00Z",
+          "seriesStatus" : "Kings win 4-3",
+          "seriesStatusShort" : "LAK wins 4-3"
+        }
+      },
+      "conference" : {
+        "id" : 5,
+        "name" : "Western",
+        "link" : "/api/v1/conferences/5"
+      },
+      "round" : {
+        "number" : 3
+      },
+      "schedule" : [ {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-18",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030321,
+            "link" : "/api/v1/game/2013030321/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-18T19:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 8,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 1,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 4,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030321/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-21",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030322,
+            "link" : "/api/v1/game/2013030322/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-22T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 6,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 5,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030322/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-24",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030323,
+            "link" : "/api/v1/game/2013030323/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-25T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 6,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "STAPLES Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030323/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-26",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030324,
+            "link" : "/api/v1/game/2013030324/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-27T01:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 9,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 2,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 5,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "STAPLES Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030324/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-28",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030325,
+            "link" : "/api/v1/game/2013030325/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-29T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 8,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 10,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 5,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030325/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-05-30",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030326,
+            "link" : "/api/v1/game/2013030326/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-05-31T01:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 7,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 9,
+                  "type" : "league"
+                },
+                "score" : 3,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              }
+            },
+            "venue" : {
+              "name" : "STAPLES Center",
+              "link" : "/api/v1/venues/null"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030326/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      }, {
+        "totalItems" : 1,
+        "totalEvents" : 0,
+        "totalGames" : 1,
+        "totalMatches" : 0,
+        "wait" : 10,
+        "dates" : [ {
+          "date" : "2014-06-01",
+          "totalItems" : 1,
+          "totalEvents" : 0,
+          "totalGames" : 1,
+          "totalMatches" : 0,
+          "games" : [ {
+            "gamePk" : 2013030327,
+            "link" : "/api/v1/game/2013030327/feed/live",
+            "gameType" : "P",
+            "season" : "20132014",
+            "gameDate" : "2014-06-02T00:00:00Z",
+            "status" : {
+              "abstractGameState" : "Final",
+              "codedGameState" : "7",
+              "detailedState" : "Final",
+              "statusCode" : "7",
+              "startTimeTBD" : false
+            },
+            "teams" : {
+              "away" : {
+                "leagueRecord" : {
+                  "wins" : 12,
+                  "losses" : 9,
+                  "type" : "league"
+                },
+                "score" : 5,
+                "team" : {
+                  "id" : 26,
+                  "name" : "Los Angeles Kings",
+                  "link" : "/api/v1/teams/26"
+                }
+              },
+              "home" : {
+                "leagueRecord" : {
+                  "wins" : 11,
+                  "losses" : 8,
+                  "type" : "league"
+                },
+                "score" : 4,
+                "team" : {
+                  "id" : 16,
+                  "name" : "Chicago Blackhawks",
+                  "link" : "/api/v1/teams/16"
+                }
+              }
+            },
+            "venue" : {
+              "id" : 5164,
+              "name" : "United Center",
+              "link" : "/api/v1/venues/5164"
+            },
+            "content" : {
+              "link" : "/api/v1/game/2013030327/content"
+            }
+          } ],
+          "events" : [ ],
+          "matches" : [ ]
+        } ]
+      } ],
+      "matchupTeams" : [ {
+        "team" : {
+          "id" : 16,
+          "name" : "Chicago Blackhawks",
+          "link" : "/api/v1/teams/16"
+        },
+        "seed" : {
+          "type" : "3",
+          "rank" : 3,
+          "isTop" : true
+        },
+        "seriesRecord" : {
+          "wins" : 3,
+          "losses" : 4
+        }
+      }, {
+        "team" : {
+          "id" : 26,
+          "name" : "Los Angeles Kings",
+          "link" : "/api/v1/teams/26"
+        },
+        "seed" : {
+          "type" : "3",
+          "rank" : 3,
+          "isTop" : false
+        },
+        "seriesRecord" : {
+          "wins" : 4,
+          "losses" : 3
+        }
+      } ]
+    } ]
+  } ]
+}

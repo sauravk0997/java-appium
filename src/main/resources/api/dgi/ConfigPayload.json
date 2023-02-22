@@ -1,0 +1,39 @@
+{
+  "entity_relationship_list": [
+    {
+      "child": "urn:dss:event:glimpse:impression:containerView",
+      "child_key": "containerViewId",
+      "parent_key": "pageViewId",
+      "parent": "urn:dss:event:glimpse:impression:pageView",
+      "check_childless_parents": true
+    },
+    {
+      "child": "urn:dss:event:glimpse:engagement:interaction",
+      "child_key": "interactionId",
+      "parent_key": "pageViewId",
+      "parent": "urn:dss:event:glimpse:impression:pageView",
+      "check_childless_parents": false
+    },
+    {
+      "child": "urn:dss:event:glimpse:engagement:interaction",
+      "child_key": "interactionId",
+      "parent_key": "containerViewId",
+      "parent": "urn:dss:event:glimpse:impression:containerView",
+      "check_childless_parents": false
+    },
+    {
+      "child": "urn:dss:event:glimpse:engagement:input",
+      "child_key": "inputId",
+      "parent_key": "pageViewId",
+      "parent":"urn:dss:event:glimpse:impression:pageView",
+      "check_childless_parents": false
+    },
+    {
+      "child": "urn:dss:event:glimpse:engagement:input",
+      "child_key": "inputId",
+      "parent_key": "containerViewId",
+      "parent": "urn:dss:event:glimpse:impression:containerView",
+      "check_childless_parents": false
+    }
+  ]
+}

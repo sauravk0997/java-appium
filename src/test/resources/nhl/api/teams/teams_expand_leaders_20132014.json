@@ -1,0 +1,213 @@
+{
+  "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2022. All Rights Reserved.",
+  "teams": [
+    {
+      "id": 4,
+      "name": "Philadelphia Flyers",
+      "link": "/api/v1/teams/4",
+      "venue": {
+        "name": "Wells Fargo Center",
+        "city": "Philadelphia",
+        "timeZone": {
+          "id": "America/New_York",
+          "offset": -4
+        }
+      },
+      "abbreviation": "PHI",
+      "teamName": "Flyers",
+      "locationName": "Philadelphia",
+      "firstYearOfPlay": "1967",
+      "division": {
+        "id": 18,
+        "name": "Metropolitan",
+        "link": "/api/v1/divisions/18"
+      },
+      "conference": {
+        "id": 6,
+        "name": "Eastern",
+        "link": "/api/v1/conferences/6"
+      },
+      "franchise": {
+        "franchiseId": 16,
+        "teamName": "Flyers",
+        "link": "/api/v1/franchises/16"
+      },
+      "teamLeaders": [
+        {
+          "leaderCategory": "goals",
+          "season": "2013-2014",
+          "gameType": {
+            "id": "R",
+            "description": "Regular season"
+          },
+          "limitMetadata": {
+            "limit": 5,
+            "offset": 0,
+            "additionalTies": 2
+          },
+          "leaders": [
+            {
+              "rank": 1,
+              "value": "29",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8474190,
+                "fullName": "Wayne Simmonds",
+                "link": "/api/v1/people/8474190"
+              }
+            },
+            {
+              "rank": 2,
+              "value": "28",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8473512,
+                "fullName": "Claude Giroux",
+                "link": "/api/v1/people/8473512"
+              }
+            },
+            {
+              "rank": 3,
+              "value": "23",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8474161,
+                "fullName": "Jakub Voracek",
+                "link": "/api/v1/people/8474161"
+              }
+            },
+            {
+              "rank": 4,
+              "value": "22",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8476177,
+                "fullName": "Matt Read",
+                "link": "/api/v1/people/8476177"
+              }
+            },
+            {
+              "rank": 5,
+              "value": "20",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8468486,
+                "fullName": "Scott Hartnell",
+                "link": "/api/v1/people/8468486"
+              }
+            }
+          ]
+        },
+        {
+          "leaderCategory": "points",
+          "season": "2013-2014",
+          "gameType": {
+            "id": "R",
+            "description": "Regular season"
+          },
+          "limitMetadata": {
+            "limit": 5,
+            "offset": 0,
+            "additionalTies": 0
+          },
+          "leaders": [
+            {
+              "rank": 1,
+              "value": "86",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8473512,
+                "fullName": "Claude Giroux",
+                "link": "/api/v1/people/8473512"
+              }
+            },
+            {
+              "rank": 2,
+              "value": "62",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8474161,
+                "fullName": "Jakub Voracek",
+                "link": "/api/v1/people/8474161"
+              }
+            },
+            {
+              "rank": 3,
+              "value": "60",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8474190,
+                "fullName": "Wayne Simmonds",
+                "link": "/api/v1/people/8474190"
+              }
+            },
+            {
+              "rank": 4,
+              "value": "52",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8468486,
+                "fullName": "Scott Hartnell",
+                "link": "/api/v1/people/8468486"
+              }
+            },
+            {
+              "rank": 5,
+              "value": "44",
+              "team": {
+                "id": 4,
+                "name": "Philadelphia Flyers",
+                "link": "/api/v1/teams/4"
+              },
+              "person": {
+                "id": 8468309,
+                "fullName": "Mark Streit",
+                "link": "/api/v1/people/8468309"
+              }
+            }
+          ]
+        }
+      ],
+      "officialSiteUrl": "http://www.philadelphiaflyers.com",
+      "franchiseId": 16,
+      "shortName": "Philadelphia",
+      "active": true
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite verbose="1" name="NHL - Web - Homepage" annotations="JDK" parallel="tests">
+
+    <parameter name="suiteOwner" value="shashem"/>
+    <parameter name="reporting.project-key" value="NHL" />
+    <parameter name="jenkinsJobType" value="web"/>
+    <parameter name="jenkinsJobName" value="NHL-Web-SmokeTest-Homepage"/>
+    <parameter name="jenkinsUrl" value="https://www.nhl.com/"/>
+    <parameter name="jenkinsEmail" value="WebQA@disneystreaming.com"/>
+    <parameter name="jenkinsRegressionPipeline" value="NHL-Web-Regression-Pipeline"/>
+    <parameter name="jenkinsEnvironments" value="PROD"/>
+    <parameter name="jenkinsRegressionMatrix" value="browser:chrome; browser:firefox"/>
+    <parameter name="jenkinsRegressionScheduling" value="@daily"/>
+    <parameter name="overrideFields" value="test_naming_pattern={method_description},thread_count=8"/>
+
+    <test verbose="1" name="Web - NHL - Search Section Tests" parallel="methods">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.nhlwebhomepage.header.NhlHomepageSearchTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="Web - NHL - Account Section Tests" parallel="methods">
+        <parameter name="{ds_custom_provider}" value="true"/>
+        <classes>
+            <class name="com.disney.qa.tests.nhl.web.nhlwebhomepage.header.NhlHomepageAccountTest"/>
+        </classes>
+    </test>
+
+</suite>

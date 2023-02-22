@@ -1,0 +1,67 @@
+package com.disney.qa.disney.apple.pages.common;
+
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
+	public DisneyPlusDownloadsIOSPageBase(WebDriver driver) {
+		super(driver);
+	}
+
+	//LOCATORS
+	@ExtendedFindBy(accessibilityId = "Downloads")
+	@CacheLookup
+	private ExtendedWebElement downloadsHeader;
+
+	private ExtendedWebElement editButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
+
+	private ExtendedWebElement selectAllButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SELECT_ALL_LABEL.getText()));
+
+	private ExtendedWebElement cancelButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL.getText()));
+
+	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
+
+	//FUNCTIONS
+	@Override
+	public boolean isOpened() {
+		return downloadsHeader.isPresent();
+	}
+
+	public void waitForDownloadToComplete() {
+		waitUntil(ExpectedConditions.elementToBeClickable(downloadCompleteButton.getBy()), EXTRA_LONG_TIMEOUT);
+	}
+
+	public void tapDownloadedAssetFromListView(String downloadedAsset) {
+		staticTextLabelName.format(downloadedAsset).click();
+	}
+
+	public void tapDownloadedAsset(String downloadedAsset) {
+		dynamicBtnFindByLabelContains.format(downloadedAsset).click();
+	}
+
+	public boolean isContentHeaderPresent(String downloadedAsset) {
+		return dynamicBtnFindByLabelContains.format(downloadedAsset).isElementPresent();
+	}
+
+	public ExtendedWebElement getEditButton() {
+		return editButton;
+	}
+
+	public ExtendedWebElement getSelectAllButton() {
+		return selectAllButton;
+	}
+
+	public ExtendedWebElement getCancelButton() {
+		return cancelButton;
+	}
+
+	public ExtendedWebElement getDownloadCompleteButton() {
+		return downloadCompleteButton;
+	}
+}

@@ -1,0 +1,34 @@
+package com.disney.qa.disney.apple.pages.tv;
+
+import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangeEmailIOSPageBase;
+import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+@DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusChangeEmailIOSPageBase.class)
+public class DisneyPlusAppleTVChangeEmailPage extends DisneyPlusChangeEmailIOSPageBase {
+    public DisneyPlusAppleTVChangeEmailPage(WebDriver driver) {super(driver);}
+
+    @ExtendedFindBy(accessibilityId = "textFieldEmail")
+    private ExtendedWebElement emailTextField;
+
+    @Override
+    public boolean isOpened() {
+        boolean isPresent = emailTextField.isElementPresent();
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return isPresent;
+    }
+
+    public void clickEmailField() { emailTextField.click(); }
+
+    public void enterEmail(String email) {
+        emailTextField.type(email);
+    }
+
+    public void clickSave() {
+        primaryButton.click();
+    }
+}
