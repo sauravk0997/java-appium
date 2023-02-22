@@ -1,0 +1,51 @@
+package com.disney.qa.disney.apple.pages.common;
+
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
+
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    protected ExtendedWebElement enterYourDOBTitle;
+
+    @ExtendedFindBy(accessibilityId = "subtitleLabel")
+    private ExtendedWebElement dobSubTitle;
+
+    @ExtendedFindBy(accessibilityId = "birthdateTextFieldHeaderLabel")
+    private ExtendedWebElement birthdateTextFieldHeaderLabel;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label ==\"Cancel\"`]")
+    private ExtendedWebElement cancelBtn;
+
+    @ExtendedFindBy(accessibilityId = "dateTextField")
+    private ExtendedWebElement dateTextField;
+
+    @ExtendedFindBy(accessibilityId = "primaryButton")
+    private ExtendedWebElement confirmButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label ==\"Done\"`]")
+    private ExtendedWebElement doneBtn;
+
+    protected ExtendedWebElement dateOfBirthHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DATE_OF_BIRTH_TITLE.getText()));
+
+    //FUNCTIONS
+    public DisneyPlusDOBCollectionPageBase(WebDriver driver) {
+        super(driver);
+    }
+
+    @Override
+    public boolean isOpened() {
+        return dateOfBirthHeader.isPresent();
+    }
+
+    public boolean isInvalidDOBMessageDisplayed() { return labelError.isPresent(); }
+
+    public void enterDOB(String dob) {
+        dateTextField.type(dob);
+        confirmButton.click();
+    }
+}

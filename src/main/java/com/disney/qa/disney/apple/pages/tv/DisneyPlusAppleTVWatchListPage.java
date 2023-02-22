@@ -1,0 +1,41 @@
+package com.disney.qa.disney.apple.pages.tv;
+
+import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.phone.DisneyPlusMoreMenuIOSPage;
+import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+
+@SuppressWarnings("squid:MaximumInheritanceDepth")
+@DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusMoreMenuIOSPage.class)
+public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
+
+    @ExtendedFindBy(accessibilityId = "watchlist")
+    private ExtendedWebElement watchlistCollectionView;
+
+    @ExtendedFindBy(accessibilityId = "watchlistButton")
+    private ExtendedWebElement removeWatchlistBtn;
+
+    @ExtendedFindBy(accessibilityId = "Add the current title to your Watchlist")
+    private ExtendedWebElement addWatchlistBtn;
+
+    public DisneyPlusAppleTVWatchListPage(WebDriver driver) {
+        super(driver);
+    }
+
+    @Override
+    public boolean isOpened() {
+        boolean isPresent = watchlistCollectionView.isElementPresent();
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return isPresent;
+    }
+
+    public boolean isRemoveWatchlistBtnOpen() {
+        return removeWatchlistBtn.isElementPresent();
+    }
+
+    public void clickRemoveWatchlistBtn() {
+        removeWatchlistBtn.click();
+    }
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" parallel="methods" thread-count="1" name="iOS - Disney+ - EDS Handset Captures" annotations="JDK">
+
+    <parameter name="suiteOwner" value="bsuscavage"/>
+    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="disney"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="DisneyPlus-iOS-EDS-Handset-Captures"/>
+    <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_12;newCommandTimeout=120"/>
+    <parameter name="overrideFields" value="browsermob_proxy=true"/>
+
+    <test verbose="1" name="DisneyPlus iOS EDS Handset Captures Test">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.eds.DisneyPlusEdsVideoCaptureTest">
+            </class>
+        </classes>
+    </test>
+
+</suite>

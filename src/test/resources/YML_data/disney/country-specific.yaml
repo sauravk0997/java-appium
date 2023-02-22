@@ -1,0 +1,2371 @@
+---
+# Country Settings for Disney Plus
+# https://www.json2yaml.com/convert-yaml-to-json
+
+#servers:
+- country: United States
+  code: US
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "75093"
+  zip-ca: "90401"
+  exp: "03/30"
+  cvv: "555"
+  language: en
+  live: enable
+  supportedLanguages: [en, es-419]
+  fallbackLanguage: en
+  ratingSystem: MPAAAndTVPG
+  ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
+  isStarzCountry: "false"
+  isBundleCountry: "true"
+  isZipCodeCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isSubscriberAgreementCountry: "false"
+- country: Norfolk Island (AU)
+  code: NF
+  paypalEmail: "sidformlb+ppaus@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4462 0300 0000 0000"
+  prod-cc: "4265 3400 0006 548"
+  zip: "2055"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: NCS
+  ratingValues: [ "G","PG","M","MA15+","R18+" ]
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "false"
+- country: Netherlands
+  code: NL
+  paypalEmail: "sidformlb+ppnlds@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4553 9615 6654 0379"
+  prod-cc: "4513 7230 8938 90"
+  zip: "7364 CA"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB, nl]
+  fallbackLanguage: en-GB
+  ratingSystem: Kijkwijzer
+  ratingValues: [ "AL","6","9","12","16","18" ]
+  isSubscriberAgreementCountry: "false"
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Niue (NZ)
+  code: NU
+  paypalEmail: "sidformlb+ppnz@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4000 0200 0000 0000"
+  prod-cc: "4065 9362 1762 6331"
+  zip: "6021"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB, nl]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Andorra
+  code: AD
+  paypalEmail: "fsmlbam+paypal_test_ad@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4036 1541 2493 7207"
+  prod-cc: "5420 5672 6712 5416"
+  zip: "AD500"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [es-ES, fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Anguilla
+  code: AI
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4517 2900 0010 692"
+  prod-cc: "4520 3850 8005 89"
+  zip: "38721"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Antigua and Barbuda
+  code: AG
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5182 8400 0003 8651"
+  prod-cc: "4520 3925 3923 4215"
+  zip: "00200"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Albania
+  code: AL
+  paypalEmail: "albaniatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5137 2975 4600 73"
+  prod-cc: "5137 2975 4600 73"
+  zip: "1001"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isSubscriberAgreementCountry: "false"
+- country: Argentina
+  code: AR
+  paypalEmail: "sb-a8f602852683@personal.example.com"
+  paypalPass: "o&'W(n9I"
+  cc: "2228 4200 0589 6727"
+  prod-cc: "4195 5100 0004 19"
+  prod-ftf-cc: "4195 5100 0004 6958"
+  zip: "1865"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isTaxIdCountry: "true"
+  isCityCountry: "true"
+  isProvinceDropdownCountry: "true"
+  isComboCountry: "true"
+  isMegaBundleCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: American Samoa (US)
+  code: AS
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "96799"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isZipCodeCountry: "true"
+  isBundleCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Aruba
+  code: AW
+  paypalEmail: "fsmlbam+paypal_test_na@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5455 8100 0021 9254"
+  prod-cc: "4520 3976 7006 951"
+  zip: "00200"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Australia
+  code: AU
+  paypalEmail: "sidformlb+ppaus@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4462 0300 0000 0000"
+  prod-cc: "4265 3400 0006 548"
+  zip: "2055"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: NCS
+  ratingValues: [ "G","PG","M","MA15+","R18+" ]
+  isMatureContentOnboardingCountry: "true"
+- country: Austria
+  code: AT
+  paypalEmail: "sb-nvfuk1776762@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4137 3599 4703 6446"
+  prod-cc: "5266 5000 0007 846"
+  zip: "2491"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: FSKAndFSFAndE
+  ratingValues: [ "0","6","12","16","18" ]
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Åland Islands
+  code: AX
+  paypalEmail: "fsmlbam+paypal_test_fi@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5526 2113 0946 6057"
+  prod-cc: "4100 5600 0005 74"
+  zip: "00180"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fi, sv, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Bosnia and Herzegovina
+  code: BA
+  paypalEmail: "bosniatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5140 0218 9045 06"
+  prod-cc: "5209 06999 9910 154"
+  zip: "70243"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isProvinceDropdownCountry: "true"
+  isOneIdTrustedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isSubscriberAgreementCountry: "false"
+  isCreditCardOnlyCountry: "true"
+- country: Bahamas
+  code: BS
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5524 5600 0027 0370"
+  prod-cc: "4539 3800 0095 193"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+#- country: Bahrain
+#  code: BH
+#  live: disable
+- country: Barbados
+  code: BB
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5524 5900 0043 6259"
+  prod-cc: "4439 2947 6576 587"
+  zip: "BB17131"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Belgium
+  code: BE
+  paypalEmail: "fsmlbam+paypal_test_be@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4642 4214 2911 1242"
+  prod-cc: "4427 7003 9008 44"
+  zip: "1047"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB, fr-FR, nl]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Belize
+  code: BZ
+  paypalEmail: "fsmlbam+paypal_test_bz@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5546 4000 0062 9719"
+  prod-cc: "4915 5137 1678 5652"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Bermuda
+  code: BM
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4018 1700 0071 748"
+  prod-cc: "5123 0740 7314 4806"
+  zip: "2469"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Bolivia
+  code: BO
+  paypalEmail: "sb-byxmi3450308@personal.example.com"
+  paypalPass: "qn,ew^1D"
+  cc: "4263 6900 0052 717"
+  prod-cc: "5305 7399 9998 67"
+  zip: "28422"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+- country: Bonaire, Sint Eustatius and Saba
+  code: BQ
+  paypalEmail: "fsmlbam+paypal_test_na@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4576 9600 0025 240"
+  prod-cc: "4521 4016 5030 310"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Brazil
+  code: BR
+  paypalEmail: "sb-kvhra2853445@personal.example.com"
+  paypalPass: "I?E4m:U%"
+  cardHolderErrorName: "TRANSACTION_NOT_PERMITTED"
+  cc: "2226 6138 2738 5729"
+  prod-cc: "2228 9628 6000 9953"
+  ftf-cc: "2226 6138 2738 5729"
+  exp: "03/30"
+  cvv: "555"
+  taxid: "579.092.444-10"
+  live: disable
+  zip: "68900-000"
+  supportedLanguages: [pt-BR, en]
+  fallbackLanguage: en
+  ratingSystem: DJCTQ
+  ratingValues: [ "L","10","12","14","16","18" ]
+  isSubscriberAgreementCountry: "true"
+  isStarzCountry: "false"
+  isTaxIdCountry: "true"
+  isCreditDropdownCountry: "true"
+  isComboCountry: "true"
+  isMegaBundleCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: British Virgin Islands
+  code: VG
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4118 4600 0060 326"
+  prod-cc: "4546 7892 3590 4274"
+  exp: "03/30"
+  cvv: "555"
+  zip: "00801"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Bulgaria
+  code: BG
+  paypalEmail: "bulgariatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5100 5042 9626 77"
+  prod-cc: "5115 8063 2681 3491"
+  zip: "70243"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Canada
+  code: CA
+  paypalEmail: "sidformlb+ppca@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5187 7277 0017 3679"
+  prod-cc: "4553 9670 2050 560"
+  zip: "A1A 1A1"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en, fr-CA]
+  fallbackLanguage: en
+  isSubscriberAgreementCountry: "false"
+  ratingSystem: MPAAAndTVPG
+  ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
+  isZipCodeCountry: "true"
+  isMatureContentOnboardingCountry: "true" 
+- country: Cayman Islands
+  code: KY
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5489 6400 0064 3694"
+  prod-cc: "4262 9780 4583 8895"
+  zip: "KY1"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Curacao
+  code: CW
+  paypalEmail: "fsmlbam+paypal_test_na@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4563 6943 7099 7448"
+  prod-cc: "4161 9336 5464 76"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isExcludedForcedSACountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Chile
+  code: CL
+  paypalEmail: "sb-y44rs2843254@personal.example.com"
+  paypalPass: "sR9-x/Z#"
+  cc: "4214 1369 2447 3982"
+  prod-cc: "4023 6532 1517 7818"
+  prod-ftf-cc: "4023 6546 2996 1136"
+  zip: "8320000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isTaxIdCountry: "true"
+  isCityCountry: "true"
+  isProvinceDropdownCountry: "true"
+  isAdressCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+  isMegaBundleCountry: "true"
+  isPaypalQACountry: "true"
+  isMatureContentOnboardingCountry: "true"
+#- country: China
+#  code: CN
+#  live: disable
+- country: Christmas Island (AU)
+  code: CX
+  paypalEmail: "sidformlb+ppaus@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4462 0300 0000 0000"
+  prod-cc: "4265 3400 0006 548"
+  zip: "2055"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: NCS
+  ratingValues: [ "G","PG","M","MA15+","R18+" ]
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isCreditCardOnlyCountry: "true"
+  isSubscriberAgreementCountry: "false"
+- country: Cocos (Keeling) Islands (AU)
+  code: CC
+  paypalEmail: "sidformlb+ppaus@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4462 0300 0000 0000"
+  prod-cc: "4265 3400 0006 548"
+  zip: "2055"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: NCS
+  ratingValues: [ "G","PG","M","MA15+","R18+" ]
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isCreditCardOnlyCountry: "true"
+- country: Colombia
+  code: CO
+  paypalEmail: "sb-datbe2853187@personal.example.com"
+  paypalPass: "EZ.d?7\","
+  cc: "4010 9345 8780 3487" 
+  prod-cc: "4027 3900 2015 615"
+  prod-ftf-cc: "4080 2938 1617 4599"
+  zip: "110831"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isTaxIdCountry: "true"
+  isCityCountry: "true"
+  isProvinceDropdownCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+  isMegaBundleCountry: "true"
+  isMatureContentOnboardingCountry: "true" 
+- country: Cook Islands (NZ)
+  code: CK
+  paypalEmail: "sidformlb+ppnz@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4000 0200 0000 0000"
+  prod-cc: "4065 9362 1762 6331"
+  zip: "6021"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: OFLC
+  ratingValues: [ G,M,PG,R15,R16,RP13,RP16,R,RP18,R18 ]
+  isSubscriberAgreementCountry: "false"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Costa Rica
+  code: CR
+  paypalEmail: "sb-wcj8k2853015@personal.example.com"
+  paypalPass: "d-brH8RC"
+  cc: "3770 4524 1800 648"
+  prod-cc: "4027 5100 0001 65"
+  prod-ftf-cc: "4027 5100 0056 44"
+  ftf-cc": "5595 2689 0091 1572"
+  zip: "110831"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Czech Republic
+  code: CZ
+  paypalEmail: "sb-mcgpb12057379@personal.example.com"
+  paypalPass: "K3JcG/+0"
+  cc: "5142 8995 0607 05"
+  prod-cc: "5115 8014 7382 19"
+  zip: "70243"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [cs, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Denmark
+  code: DK
+  paypalEmail: "sb-nvfuk1776762@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4010 0952 9641 5920"
+  prod-cc: "5260 4521 1317 8948"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [da, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Dominican Republic
+  code: DO
+  paypalEmail: "sb-eonnv3124523@personal.example.com"
+  paypalPass: "sO@*uV8u"
+  cc: "5598 9650 0084 3186"
+  prod-cc: "4076 7322 2633 9447"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Dominica
+  code: DM
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4224 1800 0014 575"
+  prod-cc: "4439 3458 2377 0567"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Estonia
+  code: EE
+  paypalEmail: "sb-839g111980063@personal.example.com"
+  paypalPass: "Cu.-7*;x"
+  cc: "5100 0214 2146 68"
+  prod-cc: "5124 5816 8642 18"
+  zip: "10113"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Ecuador
+  code: EC
+  paypalEmail: "fsmlbam+paypal_test_ec@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4048 3700 0034 584"
+  prod-cc: "5397 0623 6012 59"
+  prod-ftf-cc: "5397 0623 6012 6973"
+  ftf-cc: "5536 7700 0012 4164"
+  zip: "170515"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMegaBundleCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+#- country: Egypt
+#  code: EG
+#  live: disable
+- country: El Salvador
+  code: SV
+  paypalEmail: "sb-qlwjh3433592@personal.example.com"
+  paypalPass: "U(I!f^e9"
+  cc: "5595 2893 0033 6137"
+  prod-cc: "4007 3035 2090 6457"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Falkland Islands (Malvinas)
+  code: FK
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "FIQQ 1ZZ"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Faroe Islands (DK)
+  code: FO
+  paypalEmail: "sb-nvfuk1776762@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4010 0952 9641 5920"
+  prod-cc: "5260 4521 1317 8948"
+  zip: "927"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Finland
+  code: FI
+  paypalEmail: "fsmlbam+paypal_test_fi@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5526 2113 0946 6057"
+  prod-cc: "4100 5600 0005 74"
+  zip: "00180"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fi, sv, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: France
+  code: FR
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "75008"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: French Guiana
+  code: GF
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Gibraltar
+  code: GI
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "WC2N 5DU"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "false"
+- country: Germany
+  code: DE
+  paypalEmail: "sb-psw8j898588@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5100 2900 2900 2909"
+  prod-cc: "4295 9010 0231 1798"
+  zip: "10115"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: FSKAndFSFAndE
+  ratingValues: [ "0","6","12","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+- country: Greece
+  code: GR
+  paypalEmail: "sb-okn1g12056753@personal.example.com"
+  paypalPass: "9B!_9g&e"
+  cc: "4020 6896 7692 42"
+  prod-cc: "5115 8011 2713 980"
+  zip: "104"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [el, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Greenland
+  code: GL
+  paypalEmail: "sb-nvfuk1776762@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "2223 0000 4841 0010"
+  prod-cc: "5260 4521 1317 8948"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [da, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Grenada
+  code: GD
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4037 5800 0085 049"
+  prod-cc: "4037 5835 9031 0060"
+  zip: "38901"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Guadeloupe
+  code: GP
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "97102"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Guam (US)
+  code: GU
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "94086"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en]
+  fallbackLanguage: en
+  ratingSystem: MPAAAndTVPG
+  ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
+  isSubscriberAgreementCountry: "false"
+  isBundleCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isZipCodeCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Guatemala
+  code: GT
+  paypalEmail: "sb-0muvs2769074@personal.example.com"
+  paypalPass: "4nY#B-m$"
+  cc: "5595 3987 0047 5252"
+  prod-cc: "4073 1794 5224 1447"
+  zip: "01001"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isGeoEdgeSupportedRegionWithIssues: "true"
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Guernsey
+  code: GG
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "GY6 8"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [ en-GB ]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isPaypalQACountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Guyana
+  code: GY
+  paypalEmail: "fsmlbam+paypal_test_gy@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5275 8800 0022 5799"
+  prod-cc: "4192 9893 1082 9506"
+  zip: "413741"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Haiti
+  code: HT
+  paypalEmail: "fsmlbam+paypal_test_ht@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5546 0900 0074 7130"
+  prod-cc: "5460 5252 5458 6918"
+  zip: "HT"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isCreditCardOnlyCountry: "true"
+- country: Honduras
+  code: HN
+  paypalEmail: "sb-eijvv3440880@personal.example.com"
+  paypalPass: "i^L%z4;J"
+  cc: "3777 4380 0725 780"
+  prod-cc: "4040 4127 2373 1015"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Hong Kong
+  code: HK
+  paypalEmail: "sb-82i8w7110769@personal.example.com"
+  paypalPass: "b?Lxd4E?"
+  cc: "5154 8726 0928 4067"
+  prod-cc: "4006 1267 8978 675"
+  exp: "03/30"
+  cvv: "555"
+  zip: "999077"
+  live: disable
+  supportedLanguages: [zh-HK, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusAPAC
+  ratingValues: [ "G","PG","12+","15+","18+" ]
+  isSubscriberAgreementCountry: "false"
+  isStarOnboardingCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Croatia
+  code: HR
+  paypalEmail: "croatiatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "4006 3018 5712 81"
+  prod-cc: "5124 5812 7391 820"
+  zip: "20000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isEuCountry: "true"
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Hungary
+  code: HU
+  paypalEmail: "sb-bh8gh11893999@personal.example.com"
+  paypalPass: "g&N+<J9M"
+  cc: "4002 5943 0198 19"
+  prod-cc: "5115 8018 1625 1872"
+  zip: "2800"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [hu, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isSubscriberAgreementCountry: "false"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Iceland
+  code: IS
+  paypalEmail: "fsmlbam+paypal_test_is@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5535 5265 3919 4040"
+  prod-cc: "4558 7692 3045 531"
+  zip: "105"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Ireland
+  code: IE
+  paypalEmail: "sb-vg9js895089@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5425 2334 3010 9903"
+  prod-cc: "4547 9315 2048 253"
+  zip: "47545"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: India
+  code: IN
+  live: disable
+- country: Indonesia
+  code: ID
+  live: disable
+- country: Isle of Man
+  code: IM
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "IM7"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [ en-GB ]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isPaypalQACountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: British Indian Ocean (GB)
+  code: IO
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "WC2N 5DU"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isSubscriberAgreementCountry: "false"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+- country: Israel
+  code: IL
+  live: disable
+- country: Italy
+  code: IT
+  paypalEmail: "sb-mdgea887462@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5500 0000 0000 0004"
+  prod-cc: "4025 4726 8628 5523"
+  zip: "20121"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [it, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Jamaica
+  code: JM
+  paypalEmail: "sb-u547n53445833@personal.example.com"
+  paypalPass: "g=i8oVqg"
+  cc: "5578 3800 0029 1788"
+  prod-cc: "4179 7582 2375 0951"
+  zip: "JMDCN01"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Japan
+  code: JP
+  paypalEmail: "sb-rpkw57110874@personal.example.com"
+  paypalPass: "Z-2|M+Qp"
+  cc: "5154 8496 0810 5758"
+  prod-cc: 4244 1899 9941 562
+  zip: "540-0002" 
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [ja, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusAPAC
+  ratingValues: [ "G","PG","12+","15+","18+" ]
+  isSubscriberAgreementCountry: "false"
+  isStarOnboardingCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Jersey
+  code: JE
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "5100 3010 0006 46"
+  zip: "3"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [ en-GB ]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isPaypalQACountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Jordan
+  code: JO
+  live: disable
+- country: Korea
+  code: KR
+  live: disable
+  cc: "9490 2200 1166 9217"
+  prod-cc: "4009 2347 8364 9823"
+  zip: "01000" 
+  exp: "03/30"
+  cvv: "55"
+  supportedLanguages: [ko-KR, en]
+  fallbackLanguage: en
+  ratingSystem: KCCAndKMRB
+  ratingValues: [ "All","7+","12+","15+","18","19+" ]
+  isSubscriberAgreementCountry: "false"
+  isEmailCheckBoxOptInCountry : "true"
+  isMatureContentOnboardingCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isBillingCheckBoxOptInCountry: "true"
+  isCardPinCountry : "true"
+  isBillingDOBCountry: "true"
+  billingMinimumAge: "19"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+#- country: Kuwait
+#  code: KW
+#  live: disable
+- country: Lebanon
+  code: LB
+  live: disable
+- country: Luxembourg
+  code: LU
+  paypalEmail: "fsmlbam+paypal_test_lu@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5592 9809 2044 3880"
+  prod-cc: "4558 0317 3095 677"
+  zip: "1137"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: North Macedonia
+  code: MK
+  paypalEmail: "macedoniatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5117 4421 1671 81"
+  prod-cc: "5160 5171 2635 97"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isSubscriberAgreementCountry: "false"
+  isGeoEdgeUnsupportedRegion: "true"
+  isOneIdTrustedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Marshall Islands (US)
+  code: MH
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "96960"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en]
+  fallbackLanguage: en
+  ratingSystem: MPAAAndTVPG
+  ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
+  isZipCodeCountry: "true"  
+  isSubscriberAgreementCountry: "false"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Malaysia
+  code: MY
+  live: disable
+- country: Martinique
+  code: MQ
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "97207"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Mauritius
+  code: MU
+  paypalEmail: "sb-mnwca1255882@personal.example.com"
+  paypalPass: "nXW0n^HM"
+  cc: "4032 0317 0302 1161"
+  prod-cc: "4226 4728 7205 4722"
+  zip: "80821"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isEuCountry: "true"
+- country: Mayotte
+  code: YT
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "97660"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Mexico
+  code: MX
+  paypalEmail: "sb-rsuzc2853666@personal.example.com"
+  paypalPass: ")%h:g2Xp"
+  cardHolderErrorName: "TRANSACTION_NOT_PERMITTED"
+  cc: "5579 9100 5479 2593"
+  prod-cc: "2308 7631 2726 0055"
+  prod-ftf-cc: "2308 7631 2726 0055"
+  ftf-cc: "5579 2400 2719 6932"
+  zip: "03500"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isStarzCountry: "false"
+  isTaxIdCountry: "true"
+  isComboCountry: "true"
+  isMegaBundleCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Monaco
+  code: MC
+  paypalEmail: "fsmlbam+paypal_test_mc@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4242 4242 4242 4242"
+  prod-cc: "4010 0517 9535 4987"
+  exp: "03/30"
+  cvv: "555"
+  zip: "98000"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Montenegro
+  code: ME
+  paypalEmail: "montenegrotest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5100 1438 6743 07"
+  prod-cc: "5155 2951 7182 370"
+  zip: "81101"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isSubscriberAgreementCountry: "false"
+  isGeoEdgeUnsupportedRegion: "true"
+  isOneIdTrustedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Malta
+  code: MT
+  paypalEmail: "maltatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "4018 8191 7029 63"
+  prod-cc: "5124 5855 1276 4192"
+  zip: "MTP 1001"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+- country: Montserrat
+  code: MS
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "5576 1765 6734 207"
+  exp: "03/30"
+  cvv: "555"
+  zip: "MSR1110"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: New Caledonia
+  code: NC
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  zip: "98800"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isOneIdTrustedRegion: "true"
+- country: New Zealand
+  code: NZ
+  paypalEmail: "sidformlb+ppnz@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4000 0200 0000 0000"
+  prod-cc: "4128 3132 7492 38"
+  zip: "6021"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: OFLC
+  ratingValues: [ G,PG,M,RP13+13+R13,R15,RP16+16+R16,RP18+18+R18 ]
+  isMatureContentOnboardingCountry: "true"
+- country: Nicaragua
+  code: NI
+  paypalEmail: "fsmlbam+paypal_test_ni@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5548 4300 0067 6319"
+  prod-cc: "4026 8093 1743 3387"
+  zip: "11006"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+- country: Norway
+  code: "NO"
+  paypalEmail: "fsmlbam+paypal_test_no@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5436 2223 1801 8184"
+  prod-cc: "4047 1260 0921 9775"
+  zip: "0001"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [no, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  #  live: disable
+  #- country: Oman
+  #  code: OM
+  #  live: disable
+- country: Panama
+  code: PA
+  paypalEmail: "sb-q3l3k2854027@personal.example.com"
+  paypalPass: "P[%c6)#@"
+  cc: "3702 4279 8336 897"
+  prod-cc: "4076 8800 0004 5464"
+  prod-ftf-cc: "4044 9641 2004 1246"
+  ftf-cc: "5549 4600 0021 7961"
+  zip: "0801"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: St. Pierre and Miquelon
+  code: PM
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "97500"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Pitcairn Islands (GB)
+  code: PN
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "612"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  isGeoEdgeUnsupportedRegion: "true"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: French Polynesia (FR)
+  code: PF
+  paypalEmail: "fsmlbam+paypal_test_re@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5130 1535 7121 78"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "98733"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR,en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Paraguay
+  code: PY
+  paypalEmail: "fsmlbam+paypal_test_py@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4037 7700 0060 497"
+  prod-cc: "4037 7740 2314 5328"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Peru
+  code: PE
+  paypalEmail: "sb-mvp5b2852712@personal.example.com"
+  paypalPass: "p\"bzU!H4"
+  cc: "5540 4600 0087 0917"
+  prod-cc: "4040 7100 0005 94"
+  prod-ftf-cc: "4009 1733 7191 2682"
+  ftf-cc: "5540 4600 0087 0917"
+  zip: "46970"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMegaBundleCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+# - country: Philippines
+#  code: PH
+#  live: disable
+- country: Poland
+  code: PL
+  paypalEmail: "sb-uhzhe11933472@personal.example.com"
+  paypalPass: "38Dq/PRz"
+  cc: "4063 2213 8233 0890"
+  prod-cc: "4125 4168 4618 8894"
+  zip: "34-434"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [ pl, en-GB ]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Portugal
+  code: PT
+  paypalEmail: "fsmlbam+paypal_test_pt@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5489 6306 6953 0449"
+  prod-cc: "4001 9028 3182 6811"
+  zip: "1000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [pt-PT, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isProvinceDropdownCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Puerto Rico
+  code: PR
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "3782 8224 6310 005"
+  prod-cc: "4030 4455 7515 6057"
+  zip: "94086"
+  exp: "03/30"
+  cvv: "6666"
+  live: enable
+  supportedLanguages: [en, es-419]
+  fallbackLanguage: en
+  isStarzCountry: "false"
+  isBundleCountry: "true"
+  isZipCodeCountry: "true"
+- country: Qatar
+  code: QA
+  live: disable
+- country: Reunion
+  code: RE
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "34747"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Romania
+  code: RO
+  paypalEmail: "romaniatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "4040 8198 2587 14"
+  prod-cc: "5115 8058 7123 6918"
+  zip: "500326"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [ro, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Serbia
+  code: RS
+  paypalEmail: "serbiatest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "4006 2184 3475 91"
+  prod-cc: "4006 2184 3475 91"
+  zip: "24430"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "false"
+  isMatureContentOnboardingCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isProvinceDropdownCountry: "true"
+- country: Russia
+  code: RU
+  live: disable
+- country: Saint Barthelemy
+  code: BL
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "56207"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Saint Kitts and Nevis
+  code: KN
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5498 8900 0054 5725"
+  prod-cc: "4576 8619 0878 565"
+  zip: "KN 01 01"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Saint Lucia
+  code: LC
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4037 5900 0099 428"
+  prod-cc: "4187 7187 2033 2497"
+  zip: "LC01 501"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Saint Martin
+  code: MF
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "97150"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Northern Mariana Islands (US)
+  code: MP
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "96950"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isZipCodeCountry: "true"
+  isBundleCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Saint Vincent and the Grenadines
+  code: VC
+  paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4309 2400 0090 721"
+  prod-cc: "4037 6074 3331 7832"
+  zip: "VC0100"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Saudi Arabia
+  code: SA
+  live: disable
+- country: Singapore
+  code: SG
+  paypalEmail: "sb-nmvxk4032798@personal.example.com"
+  paypalPass: "KFI74Pk*"
+  cc: "4006 8200 0002 056"
+  prod-cc: "4006 1022 3939 2509"
+  zip: "569933"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [zh-Hans, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: MDA
+  ratingValues: [G,PG,PG13,NC16,M18,R21]
+  isSubscriberAgreementCountry: "false"
+  isStarOnboardingCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Svalbard & Jan Mayen (NO)
+  code: SJ
+  paypalEmail: "fsmlbam+paypal_test_no@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5436 2223 1801 8184"
+  prod-cc: "4047 1260 0921 9775"
+  zip: "0001"
+  exp: "03/30"
+  cvv: "555"
+  supportedLanguages: [no, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Sint Maarten (NL)
+  code: SX
+  paypalEmail: "sidformlb+ppnlds@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4309 1900 0066 937"
+  prod-cc: "4513 7230 8938 90"
+  zip: "7364 CA"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB, nl]
+  fallbackLanguage: en-GB
+  ratingSystem: Kijkwijzer
+  ratingValues: [ "AL","6","9","12","16","18" ]
+  isSubscriberAgreementCountry: "false"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+- country: San Marino
+  code: SM
+  paypalEmail: "sanmarinotest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "5148 5994 9497 59"
+  prod-cc: "5148 5994 9497 59"
+  zip: "47893"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [it,en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Slovakia
+  code: SK
+  paypalEmail: "sb-xnj1o11934034@personal.example.com"
+  paypalPass: ",=I1m6ib"
+  cc: "5100 8462 9593 63"
+  prod-cc: "5104 4927 3238 12"
+  zip: "010 01"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [sk,en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Slovenia
+  code: SI
+  paypalEmail: "sb-tpezg12013581@personal.example.com"
+  paypalPass: "6$0:?Yl3"
+  cc: "5150 7674 1611 30"
+  prod-cc: "5150 7674 1611 30"
+  zip: "1260"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isSubscriberAgreementCountry: "true"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: South Africa
+  code: ZA
+  live: disable
+- country: South Georgia and the South Sandwich Islands
+  code: GS
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "SIQQ 1ZZ"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: Spain
+  code: ES
+  paypalEmail: "sb-ue82s879680@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5413 3300 8909 9999"
+  prod-cc: "4150 3574 1920 9626"
+  zip: "08830"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-ES, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isProvinceDropdownCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: St Helena (GB)
+  code: SH
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "08830"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-ES, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Suriname
+  code: SR
+  paypalEmail: "fsmlbam+paypal_test_sr@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5440 2800 0079 9549"
+  prod-cc: "5229 9195 3233 5804"
+  zip: "00000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Sweden
+  code: SE
+  paypalEmail: "fsmlbam+paypal_test_se@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5140 7784 7945 3327"
+  prod-cc: "4021 5051 5127 7196"
+  zip: "12x xx"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [sv, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Switzerland
+  code: CH
+  paypalEmail: "sb-1n0ui887748@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4166 6766 6766 6746"
+  prod-cc: "4546 6605 6062 531"
+  zip: "3436"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, it, fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isSubscriberAgreementCountry: "false"
+- country: French Southern Territories (FR)
+  code: TF
+  paypalEmail: "fsmlbam+paypal_test_re@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5130 1535 7121 78"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "98733"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR,en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isCreditCardOnlyCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Taiwan
+  code: TW
+  paypalEmail: "disneytaiwantest1@paypal.com"
+  paypalPass: "Taiwantest123"
+  cc: "5274 7708 0241 5154"
+  prod-cc: "5242 2882 3273 67"
+  exp: "03/30"
+  cvv: "555"
+  zip: "10400"
+  live: disable
+  supportedLanguages: [zh-Hant, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusAPAC
+  ratingValues: [ "G","PG","12+","15+","18+" ]
+  isSubscriberAgreementCountry: "false"
+  isStarOnboardingCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+- country: Thailand
+  code: TH
+  live: disable
+- country: Trinidad and Tobago
+  code: TT
+  paypalEmail: "fsmlbam+paypal_test_tt@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4107 5700 0095 546"
+  prod-cc: "4147 9043 5056 7813"
+  zip: "150110"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+- country: Tokelau (NZ)
+  code: TK
+  paypalEmail: "sidformlb+ppnz@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "4000 0200 0000 0000"
+  prod-cc: "4065 9362 1762 6331"
+  zip: "6021"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB, nl]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isCreditCardOnlyCountry: "true"
+- country: Turkey
+  code: TR
+  paypalEmail: ""
+  paypalPass: ""
+  cc: "5100 0581 0999 9488"
+  prod-cc: "4038 1037 6874 78"
+  zip: "34440"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [tr, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: AI
+  ratingValues: [ GA,7+,13+,18+ ]
+  isOneIdTrustedRegion: "true"
+  isCreditCardOnlyCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Turks and Caicos Islands
+  code: TC
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5505 8200 0074 7873"
+  prod-cc: "4439 6172 9234 0084"
+  zip: "TKCA 1ZZ"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: United Arab Emirates
+  code: AE
+  live: disable
+- country: United Kingdom
+  code: GB
+  paypalEmail: "sb-yrtem898379@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "5136 3333 3333 3335"
+  prod-cc: "4021 9345 7287 5646"
+  zip: "WC2N 5DU"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "false"
+  isMatureContentOnboardingCountry: "true"
+- country: Vatican City
+  code: VA
+  paypalEmail: "vaticancitytest@disney.com"
+  paypalPass: "Disneytest2022"
+  cc: "4063 0569 3687 03"
+  prod-cc: "4063 0569 3687 03"
+  zip: "00120"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  isOneIdTrustedRegion: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: United States Virgin Islands
+  code: VI
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "4219 8100 0065 518"
+  prod-cc: "5269 9984 6919 4443"
+  zip: "00801"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  isStarzCountry: "false"
+  isGeoEdgeUnsupportedRegion: "true"
+  isBundleCountry: "true"
+  isZipCodeCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isExcludedForcedSACountry: "true"
+- country: U.S.Outlying Islands (US)
+  code: UM
+  paypalEmail: "pankaj_1314128573_per@mlb.com"
+  paypalPass: "baseball"
+  cc: "5186 4100 0009 0486"
+  prod-cc: "2708 3387 8626 8479"
+  zip: "96898"
+  exp: "03/30"
+  cvv: "555"
+  live: enable
+  supportedLanguages: [en-GB, nl]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isZipCodeCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Uruguay
+  code: UY
+  paypalEmail: "sb-b1hb432698614@personal.example.com"
+  paypalPass: "uU!k=O7'"
+  cc: "4157 2303 0093 385"
+  prod-cc: "4075 9600 0004 5465"
+  prod-ftf-cc: "4010 7034 2317 5990"
+  ftf-cc": "5591 0000 0095 3277"
+  zip: "10000"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  ratingSystem: DisneyPlusLATAM
+  ratingValues: [ 0+,7+,10+,12+,13+,14+,16+ ]
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Venezuela
+  code: VE
+  paypalEmail: "sb-cdb5y1295237@personal.example.com"
+  paypalPass: "):u5>A:x"
+  cc: "5549 7200 0094 4793"
+  prod-cc: "3799 4853 7648 027"
+  zip: "7101"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [es-419, en]
+  fallbackLanguage: en
+  isSubscriberAgreementCountry: "true"
+  isComboCountry: "true"
+  isGeoEdgeSupportedRegionWithIssues: "true"
+- country: Wallis and Futuna
+  code: WF
+  paypalEmail: "sb-g1z1a860428@personal.example.com"
+  paypalPass: "Welcome123$"
+  cc: "4035 5010 0000 0008"
+  prod-cc: "4010 0588 6324 1632"
+  zip: "98600"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [fr-FR, en-GB]
+  fallbackLanguage: en-GB
+  isGeoEdgeUnsupportedRegion: "true"
+  isSubscriberAgreementCountry: "true"
+  isReviewSubscriptionCountry: "true"
+  isEuCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isOneIdTrustedRegion: "true"
+- country: Liechtenstein
+  code: LI
+  paypalEmail: "fsmlbam+paypal_test_li@gmail.com"
+  paypalPass: "Welcome123$"
+  cc: "5224 2417 9500 57"
+  prod-cc: "5224 2417 9500 57"
+  zip: "9493"
+  exp: "12/25"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: FSKAndFSFAndE
+  ratingValues: [ "0","6","12","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+  isMatureContentOnboardingCountry: "true"
+  isReviewSubscriptionCountry: "true"
+- country: Lithuania
+  code: LT
+  paypalEmail: "lithuania@disney.com "
+  paypalPass: "Disneytest2022"
+  cc: "4096 7667 6086 9506"
+  prod-cc: "5124 5853 1251 8269"
+  zip: "LT-00104"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+- country: Latvia
+  code: LV
+  paypalEmail: "sb-z0uwx12061282@personal.example.com"
+  paypalPass: "Q=r8Lp7h"
+  cc: "5100 9121 5121 71"
+  prod-cc: "5124 5852 4251 2861"
+  zip: "LV-5011"
+  exp: "03/30"
+  cvv: "555"
+  live: disable
+  supportedLanguages: [de, en-GB]
+  fallbackLanguage: en-GB
+  ratingSystem: DisneyPlusEMEA
+  ratingValues: [ "0","6","9","12","14","16","18" ]
+  isOneIdTrustedRegion: "true"
+  isEuCountry: "true"
+  isSubscriberAgreementCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  isGeoEdgeUnsupportedRegion: "true"
+- country: Cyprus
+  code: CY
+  live: disable
+
+

@@ -1,0 +1,31 @@
+/target
+#Ignore Eclipse project files
+.metadata
+.settings
+.project
+.classpath
+.springBeans
+test-output
+*.log
+*.class
+target/
+bin/
+
+#Ignore Intellij project files
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven
+log/
+target/
+
+sonar*

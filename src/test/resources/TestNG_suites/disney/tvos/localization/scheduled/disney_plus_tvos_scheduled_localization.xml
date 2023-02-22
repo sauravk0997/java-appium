@@ -1,0 +1,50 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name="tvOS - Disney+ - Localization Scheduled Screenshot Tests" annotations="JDK" thread-count="1" configfailurepolicy="continue">
+
+    <parameter name="suiteOwner" value="fkhan"/>
+    <parameter name="reporting.project-key" value="LQA"/>
+    <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="DisneyPlus-AppleTV-Localization-Scheduled"/>
+    <parameter name="jenkinsEnvironments" value="PROD,QA"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_1,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value=""/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="choiceParam::region::Locale to run" value="AD,AL,AR,AT,AX,BA,BE,BG,BR,CA,CH,CK,CX,CZ,DE,DK,EE,ES,FI,FO,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
+    <parameter name="choiceParam::regionLanguage::Language to run" value="cs,da,de,de-DE,el,en,en-GB,es,es-419,es-ES,fi,fr,fr-CA,fr-FR,fr-GR,hu,it,it-IT,ja,ko,nl,nl-NL,no,pl,pt,pt-BR,ro,sk,sv,sv-SE,tr,zh-HK,zh-hans,zh-hant"/>
+    <parameter name="stringParam::groups::Test Group selection. Leave blank to run full regression." value="SubUI,BGImage,Onboarding"/>
+    <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
+    <parameter name="booleanParam::debugDictionary::Select to enable dictionary keys" value="false"/>
+    <parameter name="stringParam::globalization::Set Globalization API version" value=""/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
+    <parameter name="jenkinsRegressionPipeline" value="Disney-AppleTV-Localization-Pipeline-Group-1,Disney-AppleTV-Localization-Pipeline-Group-2,Disney-AppleTV-Localization-Pipeline-Group-3"/>
+
+    <parameter name="jenkinsRegressionScheduling_Disney-AppleTV-Localization-Pipeline-Group-1" value="H 11 * * 6"/>
+    <parameter name="jenkinsRegressionMatrix_Disney-AppleTV-Localization-Pipeline-Group-1"
+               value="region:AR, regionLanguage:es-419; region:AR, regionLanguage:en; region:BR, regionLanguage:pt-BR; region:BR, regionLanguage:en; region:FR, regionLanguage:fr-FR; region:FR, regionLanguage:en-GB; region:ES, regionLanguage:es-ES; region:ES, regionLanguage:en-GB; region:DE, regionLanguage:de-DE; region:DE, regionLanguage:en-GB; region:TR, regionLanguage:tr; region:TR, regionLanguage:en-GB; region:PL, regionLanguage:pl; region:PL, regionLanguage:en-GB; region:KR, regionLanguage:ko; region:KR, regionLanguage:en; region:JP, regionLanguage:ja; region:JP, regionLanguage:en; region:GR, regionLanguage:el; region:GR, regionLanguage:en-GB; region:MX, regionLanguage:es-419; region:MX, regionLanguage:en"/>
+
+    <parameter name="jenkinsRegressionScheduling_Disney-AppleTV-Localization-Pipeline-Group-2" value="H 11 1-7,15-21 * 7"/>
+    <parameter name="jenkinsRegressionMatrix_Disney-AppleTV-Localization-Pipeline-Group-2"
+               value="region:GB, regionLanguage:en-GB; region:CA, regionLanguage:fr-CA; region:CA, regionLanguage:en; region:CH, regionLanguage:de; region:CH, regionLanguage:fr-FR; region:CH, regionLanguage:it; region:CH, regionLanguage:en-GB; region:AT, regionLanguage:de; region:AT, regionLanguage:en; region:LU, regionLanguage:de; region:LU, regionLanguage:fr-FR; region:LU, regionLanguage:en-GB; region:IT, regionLanguage:it; region:IT, regionLanguage:en-GB; region:NL, regionLanguage:nl; region:NL, regionLanguage:en-GB; region:SG, regionLanguage:zh-Hans; region:SG, regionLanguage:en-GB; region:NO, regionLanguage:no; region:NO, regionLanguage:en-GB"/>
+
+    <parameter name="jenkinsRegressionScheduling_Disney-AppleTV-Localization-Pipeline-Group-3" value="H 11 8-14,22-28 * 7"/>
+    <parameter name="jenkinsRegressionMatrix_Disney-AppleTV-Localization-Pipeline-Group-3"
+               value="region:DK, regionLanguage:da; region:DK, regionLanguage:en-GB; region:SE, regionLanguage:sv; region:SE, regionLanguage:en-GB; region:PT, regionLanguage:pt; region:PT, regionLanguage:en-GB; region:FI, regionLanguage:fi; region:FI, regionLanguage:en-GB; region:RO, regionLanguage:ro; region:RO, regionLanguage:en-GB; region:CZ, regionLanguage:cs; region:CZ, regionLanguage:en-GB; region:HU, regionLanguage:hu; region:HU, regionLanguage:en-GB; region:HK, regionLanguage:zh-HK; region:HK, regionLanguage:en-GB; region:TW, regionLanguage:zh-Hant; region:TW, regionLanguage:en; region:SK, regionLanguage:sk; region:SK, regionLanguage:en-GB"/>
+
+    <parameter name="overrideFields"
+               value="custom_string=${unpinDictionaries},custom_string2=${regionLanguage},custom_string3=${region},custom_string4=${globalization},custom_string5={debugDictionary},browsermob_proxy=true"/>
+
+    <test verbose="1" name="Disney Plus Onboarding Scheduled Localization Screenshots">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVOnboardingLocalizationCaptures">
+            </class>
+        </classes>
+    </test>
+    <test verbose="1" name="Disney Plus Subscriber Scheduled Localization Screenshots">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVSubscriberLocalizationCaptures">
+            </class>
+        </classes>
+    </test>
+</suite>

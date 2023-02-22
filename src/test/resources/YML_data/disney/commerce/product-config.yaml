@@ -1,0 +1,20 @@
+- product: DIS
+  fullName: Disney Plus
+  abbrevName: Disney+
+  webName: disneyplus
+  hasBrandLogos: "true"
+  hasSubscriberAgreementForBundleUpgrade: "true"
+  shouldAllowAllTestsOnQa: "false"
+  disableRestartSubscription: "false"
+  usePaypalMock: "true"
+  hasLaunched: "true"
+- product: STA
+  fullName: Star Plus
+  abbrevName: Star+
+  webName: starplus
+  hasBrandLogos: "false"
+  hasSubscriberAgreementForBundleUpgrade: "true"
+  shouldAllowAllTestsOnQa: "false"
+  disableRestartSubscription: "true"
+  usePaypalMock: "true"
+  hasLaunched: "true"

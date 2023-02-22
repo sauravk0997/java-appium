@@ -1,0 +1,72 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" thread-count="7" name="iOS - Disney+ - Tablet Nightly" annotations="JDK">
+
+    <parameter name="suiteOwner" value="gkrishna1"/>
+    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="hiddenParam::appcenter_app_name::app center app name"
+               value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Nightly"/>
+    <parameter name="jenkinsEmail"
+               value="Lauren.Churus@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com"/>
+    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="capabilities"
+               value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Pro_Gen_3_1,iPad_Air_4_Gen,iPad_8_Gen_1,iPad_Mini_5_Gen,iPad_Gen_9,iPad_8_Gen;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
+    <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
+    <parameter name="jenkinsJobExecutionOrder" value="1"/>
+    <parameter name="jenkinsJobExecutionMode" value="continue"/>
+    <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
+    <parameter name="jenkinsRegressionScheduling" value="H 1 * * *"/>
+    <parameter name="overrideFields" value=""/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
+               value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player"/>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusTabletBasicTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Onboarding Acceptance" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu Acceptance" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAppSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuWatchlistTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAccountSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuProfilesTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuLegalTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuArielProfilesTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Details Acceptance" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsSeriesTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player Acceptance" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerThumbnailSeekTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdvisoryTest"/>
+        </classes>
+    </test>
+</suite>
