@@ -3,7 +3,6 @@ package com.disney.qa.api.disney;
 import com.disney.exceptions.ApiDetectiveUnblockException;
 import com.disney.qa.api.disney.pojo.*;
 import com.disney.qa.common.http.resttemplate.RestTemplateBuilder;
-import com.disney.qa.common.utils.AndroidUtilsExtended;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.util.disney.DisneyGlobalUtils;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -458,8 +457,6 @@ public class DisneyApiProvider {
             var deviceType = IDriverPool.currentDevice.get().getDeviceType();
 
             switch (deviceType) {
-                case ANDROID_TV:
-                    return DeviceType.Type.ANDROID_TV.getType().replace('_', '-');
                 case APPLE_TV:
                     return DeviceType.Type.APPLE_TV.getType().replace('_', '-');
                 default:
@@ -660,22 +657,6 @@ public class DisneyApiProvider {
          */
 
         switch (platform) {
-            case "android":
-                version = new AndroidUtilsExtended().getAppVersionName(DisneyParameters.getAndroidPackage());
-                version = StringUtils.substringBefore(version, "-");
-
-                String[] sections = version.split("\\.");
-                version = String.format("%s.%s", sections[0], sections[1]);
-
-                platform = "/" + platform + "/";
-                apiPath = DisneyParameters.getAppConfigsHost() + "prod" + platform + "disney/" + version + ".json";
-                LOGGER.info("Config Path: {}", apiPath);
-                break;
-            case "android-tv":
-                version = new AndroidUtilsExtended().getAppVersionName(DisneyParameters.getAndroidPackage());
-                platform = "/" + platform + "/";
-                apiPath = DisneyParameters.getAppConfigsHost() + DisneyParameters.getEnvironmentType(env).toLowerCase() + platform + version + File.separator + path;
-                break;
             case "ios":
                 version = new MobileUtilsExtended().getInstalledAppVersion();
                 platform = "/" + platform + "/";
@@ -685,20 +666,6 @@ public class DisneyApiProvider {
                 version = new MobileUtilsExtended().getInstalledAppVersion();
                 platform = "/tvos/";
                 apiPath = DisneyParameters.getAppConfigsHost() + env + platform + version + File.separator + path;
-                break;
-            case "web":
-                headers.add(REFERER, REFERER_KEY);
-                if (
-                        R.CONFIG.get("env").equalsIgnoreCase("LOCAL") ||
-                                R.CONFIG.get("env").equalsIgnoreCase("DEV") ||
-                                R.CONFIG.get("env").equalsIgnoreCase("DEV-NEXT")
-                ) {
-                    apiPath = DisneyParameters.getWebConfigsHost() + "qa" + REMOTE_APP_CONFIG + path;
-                } else if (R.CONFIG.get("env").equalsIgnoreCase("HOTFIX")) {
-                    apiPath = DisneyParameters.getWebConfigsHost() + "prod" + REMOTE_APP_CONFIG + path;
-                } else {
-                    apiPath = DisneyParameters.getWebConfigsHost() + R.CONFIG.get("env").toLowerCase() + REMOTE_APP_CONFIG + path;
-                }
                 break;
             default:
                 throw new InvalidCriteriaException("Platform " + platform + " is not supported.");

@@ -1,6 +1,0 @@
-mutation
-updateProfileMaturityRatingWithActionGrant($input: UpdateProfileMaturityRatingWithActionGrantInput!) {
-                updateProfileMaturityRatingWithActionGrant(updateProfileMaturityRatingWithActionGrant: $input) {
-                accepted
-                }
-            }

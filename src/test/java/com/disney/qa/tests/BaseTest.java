@@ -1,16 +1,7 @@
 package com.disney.qa.tests;
 
-import com.disney.qa.api.dgi.validationservices.hora.HoraValidator;
-import com.disney.util.disney.DisneyGlobalUtils;
-import com.disney.util.disney.ZebrunnerXrayLabels;
-import com.qaprosoft.carina.browsermobproxy.ProxyPool;
 import java.lang.invoke.MethodHandles;
-import java.text.ParseException;
 
-import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.zebrunner.agent.core.registrar.Label;
-import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeSuite;
@@ -18,8 +9,6 @@ import org.testng.annotations.BeforeSuite;
 import com.qaprosoft.carina.core.foundation.AbstractTest;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.zebrunner.agent.core.registrar.Xray;
-import net.lightbody.bmp.BrowserMobProxy;
-import org.testng.asserts.SoftAssert;
 
 
 public class BaseTest extends AbstractTest {
@@ -51,51 +40,7 @@ public class BaseTest extends AbstractTest {
             // Xray.enableRealTimeSync();
         }
     }
-
-    public void checkAssertions(SoftAssert softAssert) {
-        if (horaEnabled()) {
-            BrowserMobProxy proxy = ProxyPool.getProxy();
-            HoraValidator hv = new HoraValidator(proxy, "har");
-            hv.assertValidation(softAssert);
-        }
-        softAssert.assertAll();
-    }
-    public void checkAssertions(SoftAssert softAssert, JSONArray checkList) {
-        if (horaEnabled()) {
-            BrowserMobProxy proxy = ProxyPool.getProxy();
-            HoraValidator hv = new HoraValidator(proxy, "har");
-            hv.assertValidation(softAssert);
-            hv.checkListForPQOE(softAssert, checkList);
-        }
-        softAssert.assertAll();
-    }
     public boolean horaEnabled() {
         return R.CONFIG.getBoolean("enable_hora_validation");
-    }
-
-    public void setZebrunnerXrayLabels(ZebrunnerXrayLabels xrayLabels) {
-        if (xrayLabels.getPartner().equalsIgnoreCase(DisneyGlobalUtils.getProject()) &&
-                xrayLabels.getLocale().equalsIgnoreCase(locale) || getDevice().isTv()) {
-            Label.attachToTest(ZEBRUNNER_XRAY_TEST_KEY, xrayLabels.getXrayTestIds());
-            LOGGER.info("Attached Xray labels: {} for project: {}, locale: {}",
-                    xrayLabels.getXrayTestIds(), xrayLabels.getPartner(), xrayLabels.getLocale());
-        } else {
-            LOGGER.info("Test run is configured for project: {} locale: {}, did not attach Xray labels: {} for project: {} "
-                            + "locale: {}",
-                    DisneyGlobalUtils.getProject(), locale, xrayLabels.getXrayTestIds(), xrayLabels.getPartner(),
-                    xrayLabels.getLocale());
-        }
-    }
-
-    public void setHoraZebrunnerLabels(ZebrunnerXrayLabels labels) {
-        if (horaEnabled()){
-            setZebrunnerXrayLabels(labels);
-        }
-    }
-
-    public void analyticPause(){
-        if (horaEnabled()){
-            pause(5);
-        }
     }
 }

@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.web.common.DisneyPlusBasePage.*;
 
 @SuppressWarnings("squid:S2187")
 public class BaseMobileTest extends BaseTest implements IMobileUtils {
@@ -34,6 +33,11 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
     protected static final String PARTNER = R.CONFIG.get("partner");
     protected static final String CHECKED = "Checked";
     protected static final String UNCHECKED = "Unchecked";
+    private static final String BAMTECH_CDN_BYPASS_VALUE = "21ea40fe-bdb5-4426-b134-66f98acb2b68";
+    private static final String BAMTECH_CANONBALL_PREVIEW_VALUE = "3Br5QesdzePvQEH";
+    private static final String IS_GEOEDGE_UNSUPPORTED_REGION = "isGeoEdgeUnsupportedRegion";
+    private static final String IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES = "isGeoEdgeSupportedRegionWithIssues";
+
     protected static final String BROWSERMOB_PROXY = "browsermob_proxy";
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
@@ -99,7 +103,7 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
         boolean countryHasNotLaunched = disneyGlobalUtils.getBooleanFromCountries(countryCode, "hasNotLaunched");
 
         if (DisneyParameters.getEnv().equalsIgnoreCase("prod")) {
-            headers.put(DisneyHttpHeaders.DISNEY_STAGING, DISNEY_STAGING_VALUE);
+            headers.put(DisneyHttpHeaders.DISNEY_STAGING, TRUE);
             if ((countryHasNotLaunched || !productHasLaunched)) {
                 headers.put(DisneyHttpHeaders.BAMTECH_CDN_BYPASS, BAMTECH_CDN_BYPASS_VALUE);
             }
@@ -156,13 +160,5 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
             e.printStackTrace();
             Assert.fail(String.format("Proxy Cannot be started for country '%s'. Manual validation is required.", country));
         }
-    }
-
-    public boolean isAndroidTablet() {
-        return IDriverPool.currentDevice.get().getDeviceType() == DeviceType.Type.ANDROID_TABLET;
-    }
-
-    public boolean isFireTablet() {
-        return "Amazon".equals(IDriverPool.currentDevice.get().getCapabilities().getCapability("deviceManufacturer"));
     }
 }

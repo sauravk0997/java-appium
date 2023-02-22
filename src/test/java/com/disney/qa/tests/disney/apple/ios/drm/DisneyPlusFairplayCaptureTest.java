@@ -47,12 +47,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.android.pages.tv.DisneyPlusAndroidTVDiscoverPage.HomePageItems.CONTENT_TITLES;
-
 public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 
     private static final String COUNTRY = R.CONFIG.get("locale");
     private static final String LANGUAGE = R.CONFIG.get("language");
+
+    private static final String CONTENT_TITLES = "$..title.full..content";
 
     @Test
     public void fairplayPayloadCapture() throws IOException {
@@ -82,7 +82,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 
         SetRequest setRequest = SetRequest.builder().account(disneyAccount).refType(entry.getValue()).setId(entry.getKey()).language(disneyAccount.getProfileLang()).region(disneyAccount.getCountryCode()).build();
         JsonNode set = searchApi.getSet(setRequest).getJsonNode().get(0);
-        var getSetAssets = apiProvider.queryResponse(set, CONTENT_TITLES.getValue());
+        var getSetAssets = apiProvider.queryResponse(set, CONTENT_TITLES);
 
         proxy.get().newHar();
         ((IOSDriver<?>) getCastedDriver()).resetApp();
