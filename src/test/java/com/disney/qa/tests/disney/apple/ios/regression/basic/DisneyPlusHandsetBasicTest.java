@@ -17,6 +17,8 @@ public class DisneyPlusHandsetBasicTest extends DisneyBaseTest {
     @Test(description = "App Opens to Welcome Screen", groups = {"Smoke"})
     public void testAppLaunch() {
         setGlobalVariables();
+        //TODO: Get rid of this log once this is safely merged in apple-automation repo.
+        LOGGER.info("Cross repo commit test!");
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
 
