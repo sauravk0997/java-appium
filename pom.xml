@@ -8,9 +8,6 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>apple-automation</name>
-    <url>https://www.thewaltdisneycompany.com/</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <carina-core_version>7.4.28</carina-core_version>
