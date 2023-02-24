@@ -8,7 +8,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>disney-qa</name>
+    <name>apple-automation</name>
     <url>https://www.thewaltdisneycompany.com/</url>
 
     <properties>
