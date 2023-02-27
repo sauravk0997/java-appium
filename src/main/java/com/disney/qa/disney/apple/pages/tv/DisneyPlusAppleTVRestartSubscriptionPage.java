@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.tv;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusRestartSubscriptionIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -12,26 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESTARTSUBSCRIPTION_CTA;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESTARTSUBSCRIPTION_LOGOUT;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESTART_SUB_COPY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESTART_SUB_COPY_2;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusRestartSubscriptionIOSPageBase.class)
 public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartSubscriptionIOSPageBase {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Restart Subscription\"`]")
-    private ExtendedWebElement restartSubscriptionButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Are you sure you want to log out?\"`]")
-    private ExtendedWebElement logoutPageHeader;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'paywallSubscribeRestart'`]")
-    private ExtendedWebElement paywallSubscribeRestart;
-
     @ExtendedFindBy(accessibilityId = "restoreButton")
     private ExtendedWebElement restartSubscriptionLocalizedButton;
+
+    private String restartSubscription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.RESTART_SUBSCRIPTION.getText());
 
     public DisneyPlusAppleTVRestartSubscriptionPage(WebDriver driver) {
         super(driver);
@@ -39,7 +30,7 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = paywallSubscribeRestart.isElementPresent();
+        boolean isPresent = getDynamicAccessibilityId(restartSubscription).isPresent();
         UniversalUtils.captureAndUpload(getCastedDriver());
         return isPresent;
     }
@@ -54,8 +45,13 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
                 }).collect(Collectors.toList());
     }
 
+    public ExtendedWebElement getLogoutHeader() {
+        return staticTextByLabel.format(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOG_OUT_CONFIRMATION_TITLE.getText()));
+    }
+
     public boolean isLogoutPageOpen() {
-        boolean isPresent = logoutPageHeader.isElementPresent();
+        boolean isPresent = getLogoutHeader().isPresent();
         UniversalUtils.captureAndUpload(getCastedDriver());
         return isPresent;
     }
