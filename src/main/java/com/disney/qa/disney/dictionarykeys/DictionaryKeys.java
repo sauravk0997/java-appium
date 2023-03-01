@@ -110,6 +110,7 @@ public enum DictionaryKeys {
     DEVICE_STORAGE_INTERNAL_LABEL("modal_internalstorage_label"),
     DEVICE_STORAGE_USED("device_storage_used"),
     DISMISS_BTN("btn_dismiss"),
+    DISNEYPLUS_PREMIUM("billing_change_plan_current_standalone_premium"),
     DOWNLOAD("btn_download_space"),
     DOWNLOAD_COMPLETE("download_complete"),
     DOWNLOAD_IN_PROGRESS_PERCENT("download_inprogress_percent"),
