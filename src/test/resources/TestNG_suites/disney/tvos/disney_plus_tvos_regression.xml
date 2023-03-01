@@ -4,10 +4,12 @@
     <parameter name="suiteOwner" value="fkhan"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
-    <parameter name="reporting.tcm.xray.test-execution-key" value="XCDQA-103135"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-tvOS-Regression"/>
     <parameter name="jenkinsEnvironments" value="PROD,QA"/>
+    <parameter name="jenkinsEmail"
+               value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
                value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS;newCommandTimeout=180"/>

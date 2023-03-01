@@ -6,7 +6,7 @@
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="disney"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Promotional-Assets-Test"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com"/>
+    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com"/>
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000"/>
