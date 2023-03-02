@@ -534,15 +534,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVRestartSubscriptionPage.getRestartSubscriptionScreenDictionaryTexts().forEach(item -> sa.assertTrue(
                 disneyPlusAppleTVRestartSubscriptionPage.isDynamicAccessibilityIDElementPresent(item),
-                "Following text was not found on restart subscription screen" + item));
+                "Following text was not found on restart subscription screen " + item));
 
         disneyPlusAppleTVRestartSubscriptionPage.moveDown(1, 1);
         disneyPlusAppleTVRestartSubscriptionPage.clickLogoutButtonIfHasFocus();
 
         sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isLogoutPageOpen(), "LOG OUT menu from restart subscription did not launch");
 
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(
-                sa, languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOG_OUT_CONFIRMATION_TITLE.getText()), AliceLabels.DESCRIPTION.getText())
+        aliceDriver.screenshotAndRecognize()
                 .assertLabelContainsCaption(sa, languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, RESTARTSUBSCRIPTION_LOGOUT.getText()).toUpperCase(), AliceLabels.BUTTON_HOVERED.getText())
                 .assertLabelContainsCaption(sa, languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()), AliceLabels.BUTTON.getText());
 

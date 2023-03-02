@@ -265,7 +265,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isDynamicAccessibilityIDElementPresent(String id) {
-        return dynamicAccessibilityId.format(id).isElementPresent();
+        return dynamicAccessibilityId.format(id).isPresent();
     }
 
     public ExtendedWebElement getDynamicCellByLabel(String label) {

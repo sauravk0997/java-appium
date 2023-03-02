@@ -30,6 +30,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @FindBy(xpath = "//XCUIElementTypeStaticText[@name='%s']/../following-sibling::*/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
+    private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
+
     private ExtendedWebElement o2Subscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_O2.getText()),
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_O2.getText())));
@@ -160,6 +162,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         pause(1);
         changeLink.format(text).click();
     }
+
+    public boolean isDisneyPlusPremiumSubscriptionPresent() { return disneyPlusPremiumSubscription.isPresent(); }
+
+    public void openDisneyPlusPremiumWebView() { disneyPlusPremiumSubscription.click(); }
 
     public boolean isO2SubscriptionMessagePresent() {
         return o2Subscription.isPresent();
