@@ -67,7 +67,7 @@ jobs:
           echo -e "Job Status: ${{ steps.build_tv_os_smoke.outputs.result }}"
 
   pr_comment_failure:
-    needs: [ios_handset_smoke_tests]
+    needs: [ios_handset_smoke_tests, tv_os_smoke_tests]
     runs-on: self-hosted
     if: failure()
     steps:
