@@ -1,0 +1,155 @@
+name: Run Smoke - Api-Utils Update
+on:
+  pull_request:
+    types: [ labeled ]
+    branches:
+      - master
+
+env:
+  JENKINS_CREDENTIALS: ${{ secrets.JENKINS_USER_TOKEN_ENCR }}
+  JENKINS_URL: "https://automation.qateam.bamgrid.com/jenkins"
+  JENKINS_PARAMS: |
+    {
+      "branch":"${{ github.head_ref }}"
+    }
+
+jobs:
+  android_handset_smoke_tests:
+    if: ${{ github.event.label.name == 'disney api utils update' }}
+    runs-on: self-hosted
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          repository: qait/qait-github-actions
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Run Android Smoke Tests
+        id: build_android_handset_smoke
+        uses: ./action-build-job
+        with:
+          url: ${{ env.JENKINS_URL }}
+          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
+          folder_path: Automation
+          job_name: DisneyPlus-Android-Api-Utils-Run
+          parameters: ${{ env.JENKINS_PARAMS }}
+          start_timeout: 60
+          build_timeout: 1500
+          interval: 30
+      - run: |
+          echo -e "Job Status: ${{ steps.build_android_handset_smoke.outputs.result }}"
+
+  android_tv_smoke_tests:
+    needs: [android_handset_smoke_tests]
+    if: ${{ (always()) && (github.event.label.name == 'disney api utils update') }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: qait/qait-github-actions
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Run Android Tv Smoke Tests
+        id: build_android_tv_handset_smoke
+        uses: ./action-build-job
+        with:
+          url: ${{ env.JENKINS_URL }}
+          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
+          folder_path: Automation
+          job_name: DisneyPlus-AndroidTV-Api-Utils-Run
+          parameters: ${{ env.JENKINS_PARAMS }}
+          start_timeout: 60
+          build_timeout: 1500
+          interval: 30
+      - run: |
+          echo -e "Job Status: ${{ steps.build_android_tv_smoke.outputs.result }}"
+
+  ios_handset_smoke_tests:
+    if: ${{ github.event.label.name == 'disney api utils update' }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: qait/qait-github-actions
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Run iOS Handset Smoke Tests
+        id: build_ios_handset_smoke
+        uses: ./action-build-job
+        with:
+          url: ${{ env.JENKINS_URL }}
+          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
+          folder_path: Automation
+          job_name: Hello-Disney-Test
+          #job_name: DisneyPlus-iOS-Api-Utils-Run
+          parameters: ${{ env.JENKINS_PARAMS }}
+          start_timeout: 60
+          build_timeout: 1500
+          interval: 30
+      - run: |
+          echo -e "Job Status: ${{ steps.build_ios_handset_smoke.outputs.result }}"
+
+  tv_os_smoke_tests:
+    if: ${{ github.event.label.name == 'disney api utils update' }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: qait/qait-github-actions
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Run tvOS Smoke Tests
+        id: build_tv_os_smoke
+        uses: ./action-build-job
+        with:
+          url: ${{ env.JENKINS_URL }}
+          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
+          folder_path: Automation
+          job_name: Hello-Disney-Test
+          #job_name: DisneyPlus-tvOS-Api-Utils-Run
+          parameters: ${{ env.JENKINS_PARAMS }}
+          start_timeout: 60
+          build_timeout: 1500
+          interval: 30
+      - run: |
+          echo -e "Job Status: ${{ steps.build_tv_os_smoke.outputs.result }}"
+
+  web_smoke_tests:
+    if: ${{ github.event.label.name == 'disney api utils update' }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          repository: qait/qait-github-actions
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Run Web Smoke Tests
+        id: build_web_smoke
+        uses: ./action-build-job
+        with:
+          url: ${{ env.JENKINS_URL }}
+          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
+          folder_path: Automation
+          job_name: Disney-Plus-Web-Api-Utils-Run
+          parameters: ${{ env.JENKINS_PARAMS }}
+          start_timeout: 60
+          build_timeout: 1500
+          interval: 30
+      - run: |
+          echo -e "Job Status: ${{ steps.build_web_smoke.outputs.result }}"
+
+  pr_comment_failure:
+    needs: [android_handset_smoke_tests, android_tv_smoke_tests, ios_handset_smoke_tests, tv_os_smoke_tests, web_smoke_tests]
+    runs-on: self-hosted
+    if: failure()
+    steps:
+      - name: Comment on Results
+        id: pr_comment_fail_notifier
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            🚨 Smoke test failures. Please review results. 🚨
