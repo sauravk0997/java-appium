@@ -30,7 +30,7 @@ jobs:
         with:
           url: ${{ env.JENKINS_URL }}
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
-          folder_path: Automation
+          folder_path: apple-automation
           job_name: Hello-Disney-Test
           #job_name: DisneyPlus-iOS-Api-Utils-Run
           parameters: ${{ env.JENKINS_PARAMS }}
