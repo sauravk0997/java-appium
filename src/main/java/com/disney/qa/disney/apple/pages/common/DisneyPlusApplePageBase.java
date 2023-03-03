@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV {
 
@@ -119,9 +120,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByName;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
+    private ExtendedWebElement globalNavBarView;
 
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
@@ -143,8 +145,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement actionableAlertTitle;
     @ExtendedFindBy(accessibilityId = "actionableAlertMessage")
     protected ExtendedWebElement actionableAlertMessage;
-    @ExtendedFindBy(accessibilityId = "btn_resume")
-    protected ExtendedWebElement resumeBtn;
     @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
     protected ExtendedWebElement systemAlertSecondaryBtn;
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
@@ -203,9 +203,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "thumbnailView")
     private ExtendedWebElement thumbnailView;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
-    private ExtendedWebElement globalNavBarView;
 
     @ExtendedFindBy(accessibilityId = "toggleView")
     private ExtendedWebElement toggleView;
@@ -438,10 +435,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return false;
     }
 
-    public String getBundleID() {
-        return BUNDLE_ID;
-    }
-
     public ExtendedWebElement getBackArrow() {
         return backArrow;
     }
@@ -522,10 +515,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void moveRight(int times, int timeout) {
         keyPressTimes(IRemoteControllerAppleTV::clickRight, times, timeout);
-    }
-
-    public void moveBack(int times, int timeout) {
-        keyPressTimes(IRemoteControllerAppleTV::clickMenu, times, timeout);
     }
 
     public void clickContent(int carouselColumn, int tileRow) {
@@ -648,14 +637,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         systemAlertDefaultBtn.click();
     }
 
-    public ExtendedWebElement getResumeButton() {
-        return resumeBtn;
-    }
-
-    public void clickResume() {
-        resumeBtn.click();
-    }
-
     public boolean isPrimaryButtonPresent() {
         return primaryButton.isElementPresent();
     }
@@ -670,10 +651,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickPrimaryButton() {
         primaryButton.click();
-    }
-
-    public boolean isPrimaryButtonFocused() {
-        return isFocused(primaryButton);
     }
 
     public void clickSecondaryButton() {
@@ -838,9 +815,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void clickCustomButton() {
-        customButton.click();
+    public void goBackToDisneyAppFromSafari() {
+        Dimension size = getDriver().manage().window().getSize();
+        if (R.CONFIG.get(DEVICE_TYPE).equals("Phone")) {
+            LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
+            new IOSUtils().tapAtCoordinateNoOfTimes((int)(size.width * 0.2), (int)(size.height * 0.04), 1);
+        } else {
+            new IOSUtils().tapAtCoordinateNoOfTimes((int)(size.width * 0.04), (int)(size.height * 0.01), 1);
+        }
+    }
 
+    public boolean  verifyTextOnWebView(String text) {
+        return staticTextLabelContains.format(text).isPresent(SHORT_TIMEOUT);
     }
 
     public void dismissPickerWheelKeyboard() {

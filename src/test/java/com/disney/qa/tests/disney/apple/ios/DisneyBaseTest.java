@@ -30,8 +30,11 @@ import java.util.Date;
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
+    public static final String KIDS_PROFILE = "KIDS";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String PHONE = "Phone";
+    public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
+    public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String STANDALONE_MONTHLY_ADS = "Disney Plus Monthly - US - Web - With Ads";
