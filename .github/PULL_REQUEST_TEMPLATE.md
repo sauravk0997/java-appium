@@ -13,3 +13,14 @@
 
 ## Link to Forked Job run if applicable:
 
+**Handset:**
+
+--------------
+
+**Tablet:**
+
+--------------
+
+**tvOS:**
+
+--------------
