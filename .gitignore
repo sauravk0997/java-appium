@@ -28,4 +28,6 @@ bin/
 log/
 target/
 
+reports/
+
 sonar*
