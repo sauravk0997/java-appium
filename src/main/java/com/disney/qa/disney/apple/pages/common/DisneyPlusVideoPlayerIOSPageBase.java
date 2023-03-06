@@ -187,13 +187,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
         displayVideoController();
-        new MobileUtilsExtended().clickElementAtLocation(pauseButton, 50, 50);
+        pauseButton.click();
         LOGGER.info("Pause button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
-        new MobileUtilsExtended().clickElementAtLocation(playButton, 50, 50);
+        displayVideoController();
+        playButton.click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }

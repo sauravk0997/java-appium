@@ -27,6 +27,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     //Test constants
     protected static final String  SHORT_SERIES = "Bluey";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT = 85;
+    private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
 
     @DataProvider(name = "autoplay-state")
@@ -204,7 +205,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         editProfile.toggleAutoplay(disneyAccount.get().getFirstName(), "OFF");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         //Forward the content
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         int remainingTime = disneyPlusVideoPlayerIOSPageBase.getRemainingTime();
         pause(remainingTime);
         sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
