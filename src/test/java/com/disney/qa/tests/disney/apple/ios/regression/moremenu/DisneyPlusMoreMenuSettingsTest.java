@@ -123,21 +123,37 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "User was not returned to the More Menu after closing Watchlist");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61663", "XMOBQA-62713"})
-    @Test(description = "User taps on Help", groups = {"More Menu"})
-    public void verifyHelp() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72991"})
+    @Test(description = "Help Center > Open in New Browser", groups = {"More Menu"})
+    public void verifyHelpCenter() {
         setGlobalVariables();
-        onboard(disneyAccount.get().getFirstName());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isHelpWebviewOpen(),
-                "'Help' webview was not opened");
-
-        disneyPlusMoreMenuIOSPageBase.clickWebviewDoneBtn();
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(),
-                "User was not returned to the More Menu after closing Watchlist");
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getFirstName());
+        SoftAssert sa = new SoftAssert();
+        moreMenu.clickMoreTab();
+        //Scenario: Verify Help hyperlink
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
+        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' webview was not opened");
+        moreMenu.goBackToDisneyAppFromSafari();
+        Assert.assertTrue(moreMenu.isOpened(), "User was not returned to the More Menu after navigating back from safari");
+        //Scenario: Verify Info hyperlink
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.selectInfoHyperlink();
+        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
+        sa.assertTrue(editProfilePage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"User was not navigated to Disney plus help center");
+        moreMenu.goBackToDisneyAppFromSafari();
+        editProfilePage.clickDoneBtn();
+        //Scenario: Verify Learn More on Kids profile
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickJuniorModeLearnMoreLink();
+        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
+        sa.assertTrue(editProfilePage.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61665"})
