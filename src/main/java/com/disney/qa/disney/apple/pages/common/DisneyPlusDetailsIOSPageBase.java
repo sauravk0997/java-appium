@@ -42,6 +42,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
     private ExtendedWebElement extrasButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
+    private ExtendedWebElement notificationPopUp;
+
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -127,8 +130,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement downloadBtn = dynamicBtnFindByLabel.format("downloadEpisodeList");
     private ExtendedWebElement downloadCompleteButton = dynamicBtnFindByLabelContains.format("downloadComplete");
 
-    private static final String VISIBLE = "visible";
-
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -141,6 +142,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOpened(long time) {
+        if (notificationPopUp.isPresent()) {
+            dismissNotificationsPopUp();
+        }
         return shareBtn.isElementPresent(time);
     }
 
