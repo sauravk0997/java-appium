@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -53,10 +54,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement webviewBrowserBar;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Done\"`]")
-	private ExtendedWebElement webviewDoneBtn;
+	protected ExtendedWebElement webviewDoneBtn;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
-	private ExtendedWebElement webviewAddressBar;
+	protected ExtendedWebElement tabletWebviewAddressBar;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
+	private ExtendedWebElement phoneWebviewAddressBar;
 
 	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
 	private ExtendedWebElement exitKidsProfileButton;
@@ -172,13 +176,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isHelpWebviewOpen() {
-		return webviewBrowserBar.isElementPresent()
-				&& webviewDoneBtn.isElementPresent()
-				&& webviewAddressBar.getText().contains("help.disneyplus.com");
-	}
-
-	public void clickWebviewDoneBtn() {
-		webviewDoneBtn.click();
+		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+		return addressbar.getText().contains("help.disneyplus.com");
 	}
 
 	public boolean isAppVersionDisplayed() {
