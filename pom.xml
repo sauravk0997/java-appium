@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.disney</groupId>
             <artifactId>disney-api-utils</artifactId>
-            <version>1.5.308</version>
+            <version>1.5.326</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.testng</groupId>
