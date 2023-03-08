@@ -14,7 +14,6 @@ import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 public class DisneyPlusiOSBVT extends DisneyBaseTest {
     //Test constants
     private static final String  SHORT_SERIES = "Bluey";
-    private static final String KIDS = "Kids";
     private static final String TEST = "Test";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
@@ -35,7 +34,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         IOSUtils utils = new IOSUtils();
         SoftAssert sa = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened());
@@ -79,7 +78,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(SHORT_SERIES), "Short Series not found on Watchlist");
 
         moreMenu.getBackArrow().click();
-        whoIsWatching.clickProfile(KIDS);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
         pause(1); //to handle transition
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
