@@ -222,6 +222,10 @@
                     <groupId>com.zebrunner</groupId>
                     <artifactId>agent-testng</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>
