@@ -219,24 +219,8 @@
                     <artifactId>carina-core</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-edge-driver</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-ie-driver</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenium-safari-driver</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.disney</groupId>
-                    <artifactId>hatter-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.maven</groupId>
-                    <artifactId>maven-model</artifactId>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>agent-testng</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
