@@ -21,7 +21,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENT
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
-    private static final String KIDS_PROFILE = "KIDS";
     private static final String WRONG_PASSWORD = "local123b456@";
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";

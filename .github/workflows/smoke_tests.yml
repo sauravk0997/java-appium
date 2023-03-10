@@ -6,6 +6,7 @@ on:
       - main
 
 env:
+  JENKINS_FOLDER_PATH: ${{ github.event.repository.name }}
   JENKINS_CREDENTIALS: ${{ secrets.JENKINS_USER_TOKEN_ENCR }}
   JENKINS_URL: "https://automation.qateam.bamgrid.com/jenkins"
   JENKINS_PARAMS: |
@@ -30,7 +31,7 @@ jobs:
         with:
           url: ${{ env.JENKINS_URL }}
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
-          folder_path: apple-automation
+          folder_path: ${{ env.JENKINS_FOLDER_PATH }}
           job_name: Hello-Disney-Test
           #job_name: DisneyPlus-iOS-Api-Utils-Run
           parameters: ${{ env.JENKINS_PARAMS }}
@@ -56,7 +57,7 @@ jobs:
         with:
           url: ${{ env.JENKINS_URL }}
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
-          folder_path: Automation
+          folder_path: ${{ env.JENKINS_FOLDER_PATH }}
           job_name: Hello-Disney-Test
           #job_name: DisneyPlus-tvOS-Api-Utils-Run
           parameters: ${{ env.JENKINS_PARAMS }}

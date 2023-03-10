@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
@@ -9,8 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_DELETE_PROFILE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
@@ -53,6 +53,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"Profile Name\"`]")
     private ExtendedWebElement profileNameTextField;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
+    protected ExtendedWebElement groupWatchHyperLink;
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
@@ -142,6 +145,18 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isProfileTitlePresent(String username) {
         return getDynamicAccessibilityId(username).isElementPresent();
+    }
+
+    public void selectInfoHyperlink() {
+        groupWatchHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
+    }
+
+    public void clickJuniorModeLearnMoreLink() {
+        String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
+        ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
+        new IOSUtils().swipe(learnMoreLink);
+        learnMoreLink.click(SHORT_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
