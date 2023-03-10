@@ -25,7 +25,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String WRONG_PASSWORD = "local123b456@";
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
-    private static final String RESTRICTED = "Restricted";
     private static final String TWENTY_EIGHTEEN = "2018";
     private static final String NINETEEN_EIGHTY = "1980";
 

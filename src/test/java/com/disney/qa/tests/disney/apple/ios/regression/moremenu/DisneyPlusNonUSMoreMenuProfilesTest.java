@@ -12,8 +12,6 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
-    private static final String RESTRICTED = "Restricted";
-
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
     @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu"})
