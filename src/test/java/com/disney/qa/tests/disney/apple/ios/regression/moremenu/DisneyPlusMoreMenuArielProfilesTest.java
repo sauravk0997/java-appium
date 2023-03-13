@@ -9,7 +9,9 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -23,6 +25,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String NINETEEN_EIGHTY = "1980";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
     @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu"})
@@ -366,6 +369,61 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
         editProfilePage.getGroupWatchAndShareplay().click();
         Assert.assertTrue(editProfilePage.getGroupWatchAndShareplayTooltip().isPresent(), "GroupWatch and Shareplay tooltip is not shown on tapping groupwatch cell");
+    }
+
+    @Maintainer("mboulogne1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu"})
+    public void verifyProfileCreationRestrictedFunctionality() {
+        setGlobalVariables();
+        SoftAssert sa = new SoftAssert();
+        setAppToAccountSettings();
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+
+        disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
+
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+                "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
+
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase1 = new DisneyPlusAccountIOSPageBase(getDriver());
+        sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
+                "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
+
+        disneyPlusAccountIOSPageBase.getBackArrow().click();
+        disneyPlusMoreMenuIOSPageBase.clickAddProfile();
+
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+                "User was not directed to Password entry upon clicking 'Add Profile'");
+
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+
+        try {
+            disneyPlusEditProfileIOSPageBase.clickSkipBtn();
+            disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
+            disneyPlusEditProfileIOSPageBase.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            disneyPlusEditProfileIOSPageBase.chooseGender();
+            disneyPlusEditProfileIOSPageBase.clickSaveBtn();
+            disneyPlusEditProfileIOSPageBase.clickPrimaryButton();
+            disneyPlusEditProfileIOSPageBase.clickSecondaryButtonByCoordinates();
+
+            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
+                    "Profile created after submitting credentials was not saved");
+        } catch (NoSuchElementException e) {
+            sa.fail("Could not create a profile after submitting user credentials.");
+        }
+
+        sa.assertAll();
+    }
+
+    private void setAppToAccountSettings() {
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
 
     private void onboard() {

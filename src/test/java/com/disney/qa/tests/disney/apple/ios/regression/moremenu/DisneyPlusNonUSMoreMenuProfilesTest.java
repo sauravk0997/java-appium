@@ -1,0 +1,64 @@
+package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
+
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
+
+    @Maintainer("mboulogne1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu"})
+    public void verifyProfileCreationRestrictedFunctionality() {
+        setGlobalVariables();
+        SoftAssert sa = new SoftAssert();
+        setAppToAccountSettings();
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+
+        disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
+
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+                "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
+
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase1 = new DisneyPlusAccountIOSPageBase(getDriver());
+        sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
+                "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
+
+        disneyPlusAccountIOSPageBase.getBackArrow().click();
+        disneyPlusMoreMenuIOSPageBase.clickAddProfile();
+
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+                "User was not directed to Password entry upon clicking 'Add Profile'");
+
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+
+        try {
+            disneyPlusEditProfileIOSPageBase.clickSkipBtn();
+            disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
+            disneyPlusEditProfileIOSPageBase.clickSaveBtn();
+            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
+                    "Profile created after submitting credentials was not saved");
+        } catch (NoSuchElementException e) {
+            sa.fail("Could not create a profile after submitting user credentials.");
+        }
+
+        sa.assertAll();
+    }
+
+    private void setAppToAccountSettings() {
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+    }
+}
