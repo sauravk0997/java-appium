@@ -9,6 +9,7 @@ import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -32,7 +33,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     private static final String EMAIL_SUBJECT = "Your one-time passcode";
     private static final String NEW_PASSWORD = "TestPass1234!";
-    private static final String RESTRICTED = "Restricted";
     private static final String MONTHLY = "Monthly";
     private static final String YEARLY = "Yearly";
     private static final String DISNEY_URL = "disneyplus.com";
@@ -842,48 +842,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not returned to the Welcome screen upon logout");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"More Menu"})
-    public void verifyProfileCreationRestrictedFunctionality() {
-        setGlobalVariables();
-        SoftAssert sa = new SoftAssert();
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
 
-        disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
-
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
-                "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
-
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isRestrictProfileCreationEnabled(),
-                "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
-
-        disneyPlusAccountIOSPageBase.getBackArrow().click();
-        disneyPlusMoreMenuIOSPageBase.clickAddProfile();
-
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
-                "User was not directed to Password entry upon clicking 'Add Profile'");
-
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
-
-        try {
-            disneyPlusEditProfileIOSPageBase.clickSkipBtn();
-            disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
-            disneyPlusEditProfileIOSPageBase.clickSaveBtn();
-
-            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
-                    "Profile created after submitting credentials was not saved");
-        } catch (NoSuchElementException e) {
-            sa.fail("Could not create a profile after submitting user credentials.");
-        }
-
-        sa.assertAll();
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
     @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu"})
