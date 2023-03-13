@@ -16,7 +16,7 @@
         <spring.version>4.1.1.RELEASE</spring.version>
         <javax-mail.verison>1.6.2</javax-mail.verison>
         <guava.version>30.0-jre</guava.version>
-        <alice-client-version>1.0.48</alice-client-version>
+        <alice-client-version>1.0.50</alice-client-version>
         <suite>helloDisney</suite>
     </properties>
 
