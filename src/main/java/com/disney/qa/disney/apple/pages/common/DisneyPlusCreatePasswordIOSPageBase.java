@@ -15,10 +15,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
 
-    protected ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), "6", "2"));
-
-    protected ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), "6", "2"));
-
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
 
     public DisneyPlusCreatePasswordIOSPageBase(WebDriver driver) {
@@ -57,6 +53,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordStrengthHeaderPresent() {
+        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), "6", "2"));
         return passwordStrengthHeader.isElementPresent();
     }
 
@@ -65,8 +62,8 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isInvalidPasswordErrorDisplayed() {
+        ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), "6", "2"));
         return passwordLengthError.isElementPresent();
     }
-
 
 }

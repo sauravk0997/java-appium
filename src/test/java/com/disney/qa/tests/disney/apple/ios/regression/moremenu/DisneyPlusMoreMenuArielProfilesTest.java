@@ -228,7 +228,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72956"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72973"})
     @Test(description = "Add Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13MinorConsentAbandonFlow() {
         setGlobalVariables();
