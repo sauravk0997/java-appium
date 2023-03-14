@@ -120,6 +120,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         String invalidPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
+        //wait for action grant to expire
+        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
         createKidsProfile();
         passwordPage.submitPasswordWhileLoggedIn("IncorrectPassword!123");
         //Verify that error is shown on screen
@@ -180,6 +182,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
+        //wait for action grant to expire
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
         passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
@@ -211,6 +215,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
+        //wait for action grant to expire
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
         passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
@@ -233,6 +239,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
+        //wait for action grant to expire
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
         passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
