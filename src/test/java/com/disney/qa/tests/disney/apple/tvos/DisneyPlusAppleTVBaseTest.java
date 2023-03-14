@@ -313,10 +313,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     }
 
     public void logIn(DisneyAccount user) {
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
-        Assert.assertTrue(disneyPlusAppleTVHomePage.isOpened(),
+
+        //Fix for issue when global nav is sometimes expanded.
+        if (homePage.isGlobalNavExpanded()) {
+            homePage.clickSelect();
+        }
+
+        Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }
 
