@@ -208,8 +208,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-
+        
         disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
