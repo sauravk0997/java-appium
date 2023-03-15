@@ -16,19 +16,19 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV {
-
-    private static final String BUNDLE_ID = "com.disney.disneyplus.enterprise";
 
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
@@ -865,5 +865,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getDynamicTextEntryFieldByName(String name) {
         return dynamicTextEntryFieldByName.format(name);
+    }
+
+    /**
+     *
+     * @param min session to be kept alive for these many minutes
+     * @param element check on this element to make sure session is alive
+     *
+     */
+    public void keepSessionAlive(int min, ExtendedWebElement element) {
+        LOGGER.info("pausing session for {} mins", min);
+        int pauseInterval = 15;
+        int upperbound = min * 60/ pauseInterval ;
+        AtomicInteger count = new AtomicInteger(0);
+        IntStream.range(0, upperbound).forEach(i -> {
+            pause(pauseInterval);
+            count.addAndGet(pauseInterval);
+            Assert.assertTrue(element.isPresent(),
+                    String.format("Element was not present after %d seconds elapsed.", count.get()));
+        } );
     }
 }
