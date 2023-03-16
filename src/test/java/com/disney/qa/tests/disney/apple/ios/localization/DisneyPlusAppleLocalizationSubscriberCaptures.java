@@ -32,6 +32,10 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
+    private static final String WATCH_AGAIN_SET_REF_ID = "6e365205-5805-c877-9e04-6443a40523f2";
+    private static final String BECAUSE_YOU_WATCHED_SET_ID = "2724a4f6-caf9-4b9a-9b7f-54f1f108d833";
+    private static final String BECAUSE_YOU_WATCHED_SET_ID_2 = "bd1bfb9a-bbf7-43a0-ac5e-3e3889d7224d";
+    public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
     private void createProfile(String profileName) {
@@ -39,7 +43,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         moreMenuPage.clickAddProfile();
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Skip button is not present.")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Skip button is not present.")
                 .until(it -> avatarPage.isSkipButtonPresent());
         avatarPage.clickSkipButton();
 
@@ -137,7 +141,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
         passwordPage.submitPasswordForLogin(testAccount.getUserPass());
-        pause(5);
+        pause(SWIPE_COUNTER);
         getScreenshots("WhoseWatchingPage");
 
         whoseWatchingPage.clickProfile("Test");
@@ -220,7 +224,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             swipeInContainer(null, Direction.DOWN, 500);
         }
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Change link was not present")
                 .until(it -> accountPage.isChangeLinkPresent(testAccount.getEmail()));
         Date startTime = verifyEmail.getStartTime();
         accountPage.clickChangeLink(testAccount.getEmail());
@@ -258,7 +262,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         iosUtils.get().dismissKeyboardForPhone();
         changeEmailPage.clickCancelBtn();
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Change link was not present")
                 .until(it -> {
                     if (!debugMode) {
                         return accountPage.isChangeLinkPresent(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
@@ -363,7 +367,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Help page did not open.")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Help page did not open.")
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
         getScreenshots("HelpWebview");
@@ -691,9 +695,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S6.22
         pinPage.getBackArrow().click();
-        pause(5);
+        pause(SWIPE_COUNTER);
         pinPage.getPinCancelButton().click();
-        pause(5);
+        pause(SWIPE_COUNTER);
         whoPage.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
@@ -701,7 +705,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getKidProofExitToggleSwitch().click();
         passwordPage.typePassword(testAccount.getUserPass());
         passwordPage.clickPrimaryButton();
-        pause(5);
+        pause(SWIPE_COUNTER);
         getScreenshots("KidsProofModeOn");
 
         //S6.23
@@ -818,7 +822,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         searchPage.searchForMedia("The Simpsons");
         List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
         series.get(0).click();
-        pause(5);
+        pause(SWIPE_COUNTER);
         getScreenshots("SeriesLandingPage");
 
         utils.swipePageTillElementTappable(detailsPage.getEpisodesTab(), 3, null, Direction.UP, 1000);
@@ -841,7 +845,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         series = searchPage.getDisplayedTitles();
         series.get(0).click();
-        pause(5);
+        pause(SWIPE_COUNTER);
 
         //S7.4
         utils.swipePageTillElementTappable(detailsPage.getSeasonSelectorButton(), 3, null, Direction.UP, 1000);
@@ -907,7 +911,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .getDynamicRowButtonLabel(
                         getDictionary()
                                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 7);
-        utils.swipePageTillElementTappable(lastEpisodeButton, 5, null, Direction.UP, 500);
+        utils.swipePageTillElementTappable(lastEpisodeButton, SWIPE_COUNTER, null, Direction.UP, 500);
         lastEpisodeButton.click();
         pause(2);
         getScreenshots("DownloadIsQueued");
@@ -1188,6 +1192,107 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(2);
         getScreenshots("WelchLockedProfile");
+
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+    }
+
+    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
+    public void editorialContents(String TUID) {
+        setup();
+        setPathToZip("SubscriberUI_13_editorial_contents");
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyAccount testAccount = disneyAccount.get();
+        loginDismiss(testAccount);
+
+        //setup the continue watching collection since this is a fresh account
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
+        searchPage.searchForMedia("Simpsons");
+        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
+        movies.get(0).click();
+        detailsPage.clickPlayButton();
+        //let it play for just a few seconds to go into the "continue watching" collection
+        pause(10);
+        videoPlayerPage.clickBackButton();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+
+        //S13.1
+        homePage.isOpened();
+        getScreenshots("HomeLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("Home" + i);
+        }
+
+        //S13.2
+        //Swipe to a brand page, swipe a few times and take screenshots
+        swipe(homePage.getDisneyTile(), Direction.DOWN);
+        homePage.clickDisneyTile();
+        brandPage.isOpened();
+        getScreenshots("DisneyLandingPage");
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("DisneyBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickPixarTile();
+        brandPage.isOpened();
+        getScreenshots("PixarLandingPage");
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("PixarBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickMarvelTile();
+        brandPage.isOpened();
+        getScreenshots("MarvelLandingPage");
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("MarvelBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickStarWarsTile();
+        brandPage.isOpened();
+        getScreenshots("StarWarsLandingPage");
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("StarWarsBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickNatGeoTile();
+        brandPage.isOpened();
+        getScreenshots("NatGeoLandingPage");
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("NatGeoBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+
+        if(homePage.isStarTilePresent()) {
+            homePage.clickStarTile();
+            brandPage.isOpened();
+
+            getScreenshots("StarLandingPage");
+            for (int i = 0; i < SWIPE_COUNTER; i++) {
+                swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+                getScreenshotsNoCountUpdate("StarBrand" + i);
+            }
+
+        }
 
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
