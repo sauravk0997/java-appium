@@ -316,7 +316,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
-        //Fix for issue when global nav is sometimes expanded.
+        //QTE-1688 to investigate issue, fix below for when global nav is sometimes expanded.
         if (homePage.isGlobalNavExpanded()) {
             homePage.clickSelect();
         }
