@@ -95,7 +95,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isStarTilePresent() {
-        return starTile.isElementPresent();
+        return starTile.isPresent();
     }
     public void clickStarTile() {
         starTile.click();

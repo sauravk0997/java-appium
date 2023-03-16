@@ -1221,6 +1221,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S13.1
         homePage.isOpened();
+        pause(2);
         getScreenshots("HomeLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
@@ -1233,7 +1234,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         swipe(homePage.getDisneyTile(), Direction.DOWN);
         homePage.clickDisneyTile();
         brandPage.isOpened();
+        pause(2);
         getScreenshots("DisneyLandingPage");
+
         for (int i = 0; i < SWIPE_COUNTER; i++) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 500);
             getScreenshotsNoCountUpdate("DisneyBrand" + i);
@@ -1243,7 +1246,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         homePage.getBackArrow().click();
         homePage.clickPixarTile();
         brandPage.isOpened();
+        pause(2);
         getScreenshots("PixarLandingPage");
+
         for (int i = 0; i < SWIPE_COUNTER; i++) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 500);
             getScreenshotsNoCountUpdate("PixarBrand" + i);
@@ -1253,7 +1258,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         homePage.getBackArrow().click();
         homePage.clickMarvelTile();
         brandPage.isOpened();
+        pause(2);
         getScreenshots("MarvelLandingPage");
+
         for (int i = 0; i < SWIPE_COUNTER; i++) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 500);
             getScreenshotsNoCountUpdate("MarvelBrand" + i);
@@ -1263,7 +1270,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         homePage.getBackArrow().click();
         homePage.clickStarWarsTile();
         brandPage.isOpened();
+        pause(2);
         getScreenshots("StarWarsLandingPage");
+
         for (int i = 0; i < SWIPE_COUNTER; i++) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 500);
             getScreenshotsNoCountUpdate("StarWarsBrand" + i);
@@ -1273,7 +1282,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         homePage.getBackArrow().click();
         homePage.clickNatGeoTile();
         brandPage.isOpened();
+        pause(2);
         getScreenshots("NatGeoLandingPage");
+
         for (int i = 0; i < SWIPE_COUNTER; i++) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 500);
             getScreenshotsNoCountUpdate("NatGeoBrand" + i);
@@ -1285,8 +1296,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         if(homePage.isStarTilePresent()) {
             homePage.clickStarTile();
             brandPage.isOpened();
-
+            pause(2);
             getScreenshots("StarLandingPage");
+
             for (int i = 0; i < SWIPE_COUNTER; i++) {
                 swipeInContainer(null, IMobileUtils.Direction.UP, 500);
                 getScreenshotsNoCountUpdate("StarBrand" + i);
