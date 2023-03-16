@@ -19,27 +19,18 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62217"})
-    @Test(description = "Verify pressing 'Sign Up' on the Welcome screen navigates correctly", groups = {"Onboarding"})
-    public void verifySignUpButtonNavigation() {
-        setGlobalVariables();
-        handleAlert();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen as expected");
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
     public void verifySignUpPageUI() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
+
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
-
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
+        SoftAssert sa = new SoftAssert();
         sa.assertTrue(disneyPlusSignUpIOSPageBase.getBackArrow().isElementPresent(),
                 "Back Button (arrow) was not displayed as expected");
 
@@ -68,8 +59,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding"})
     public void verifyExistingEmailSubmission() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(disneyAccount.get().getEmail());
 
@@ -81,23 +74,29 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
     public void verifyInvalidEmailSubmissions() {
         setGlobalVariables();
-        String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        welcomePage.clickSignUpButton();
 
         disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
+        String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
 
         sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
                 "XMOBQA-62229 - Submitting no email did not produce an invalid email error");
 
-        returnToEmailSubmit();
+        if (!disneyPlusSignUpIOSPageBase.isOpened()) {
+            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
+        }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutSymbol.com");
 
         sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
                 "XMOBQA-62225 - Missing '@' did not produce an invalid email error");
 
-        returnToEmailSubmit();
+        if (!disneyPlusSignUpIOSPageBase.isOpened()) {
+            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
+        }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutDomain");
 
         sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
@@ -110,8 +109,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify signup with new account", groups = {"Onboarding"})
     public void verifyNewEmailSubmission() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
 
@@ -123,12 +124,14 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding"})
     public void verifySubmitPasswordPageUI() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
-        String email = generateGmailAccount();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
 
+        String email = generateGmailAccount();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(email);
 
         Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isOpened(),
@@ -156,7 +159,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify invalid password submissions", groups = {"Onboarding"})
     public void verifyInvalidPasswordSubmissions() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
@@ -201,11 +204,11 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify valid Privacy Policy and Subscriber Agreement links, and Legal UI", groups = {"Onboarding"})
     public void verifyUSLegalHyperlinks() {
         setGlobalVariables();
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-
+        SoftAssert sa = new SoftAssert();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        
         disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
@@ -250,7 +253,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
         restart();
-        verifySignUpButtonNavigation();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
 
@@ -332,15 +335,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidEmailError, NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
-
-    public void returnToEmailSubmit() {
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        if (!disneyPlusSignUpIOSPageBase.isOpened()) {
-            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
-        }
-    }
-
+    
     private void verifyLegalPageUI(SoftAssert sa, String locale) {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
