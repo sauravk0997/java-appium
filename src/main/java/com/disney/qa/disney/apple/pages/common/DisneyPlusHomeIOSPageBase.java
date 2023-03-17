@@ -94,6 +94,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         nationalGeographicTile.click();
     }
 
+    public boolean isStarTilePresent() {
+        return starTile.isPresent();
+    }
     public void clickStarTile() {
         starTile.click();
     }
@@ -113,5 +116,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
         new IOSUtils().swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, IMobileUtils.Direction.UP);
         continueWatchingContentView.click();
+    }
+
+    public ExtendedWebElement getDisneyTile() {
+        return disneyTile;
     }
 }

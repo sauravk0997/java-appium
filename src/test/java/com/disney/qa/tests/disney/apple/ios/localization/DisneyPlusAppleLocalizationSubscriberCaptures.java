@@ -32,6 +32,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
+    public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
     private void createProfile(String profileName) {
@@ -1188,6 +1189,119 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(2);
         getScreenshots("WelchLockedProfile");
+
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+    }
+
+    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
+    public void editorialContents(String TUID) {
+        setup();
+        setPathToZip("SubscriberUI_13_editorial_contents");
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyAccount testAccount = disneyAccount.get();
+        loginDismiss(testAccount);
+
+        //setup the continue watching collection since this is a fresh account
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
+        searchPage.searchForMedia("Simpsons");
+        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
+        movies.get(0).click();
+        detailsPage.clickPlayButton();
+        //let it play for just a few seconds to go into the "continue watching" collection
+        pause(10);
+        videoPlayerPage.clickBackButton();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+
+        //S13.1
+        homePage.isOpened();
+        pause(2);
+        getScreenshots("HomeLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("Home" + i);
+        }
+
+        //S13.2
+        //Swipe to a brand page, swipe a few times and take screenshots
+        swipe(homePage.getDisneyTile(), Direction.DOWN);
+        homePage.clickDisneyTile();
+        brandPage.isOpened();
+        pause(2);
+        getScreenshots("DisneyLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("DisneyBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickPixarTile();
+        brandPage.isOpened();
+        pause(2);
+        getScreenshots("PixarLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("PixarBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickMarvelTile();
+        brandPage.isOpened();
+        pause(2);
+        getScreenshots("MarvelLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("MarvelBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickStarWarsTile();
+        brandPage.isOpened();
+        pause(2);
+        getScreenshots("StarWarsLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("StarWarsBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+        homePage.clickNatGeoTile();
+        brandPage.isOpened();
+        pause(2);
+        getScreenshots("NatGeoLandingPage");
+
+        for (int i = 0; i < SWIPE_COUNTER; i++) {
+            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            getScreenshotsNoCountUpdate("NatGeoBrand" + i);
+        }
+
+        swipe(homePage.getBackArrow(), Direction.DOWN);
+        homePage.getBackArrow().click();
+
+        if(homePage.isStarTilePresent()) {
+            homePage.clickStarTile();
+            brandPage.isOpened();
+            pause(2);
+            getScreenshots("StarLandingPage");
+
+            for (int i = 0; i < SWIPE_COUNTER; i++) {
+                swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+                getScreenshotsNoCountUpdate("StarBrand" + i);
+            }
+
+        }
 
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
