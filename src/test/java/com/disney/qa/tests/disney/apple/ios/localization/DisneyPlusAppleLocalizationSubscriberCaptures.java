@@ -32,9 +32,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
-    private static final String WATCH_AGAIN_SET_REF_ID = "6e365205-5805-c877-9e04-6443a40523f2";
-    private static final String BECAUSE_YOU_WATCHED_SET_ID = "2724a4f6-caf9-4b9a-9b7f-54f1f108d833";
-    private static final String BECAUSE_YOU_WATCHED_SET_ID_2 = "bd1bfb9a-bbf7-43a0-ac5e-3e3889d7224d";
     public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
@@ -43,7 +40,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         moreMenuPage.clickAddProfile();
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Skip button is not present.")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Skip button is not present.")
                 .until(it -> avatarPage.isSkipButtonPresent());
         avatarPage.clickSkipButton();
 
@@ -141,7 +138,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
         passwordPage.submitPasswordForLogin(testAccount.getUserPass());
-        pause(SWIPE_COUNTER);
+        pause(5);
         getScreenshots("WhoseWatchingPage");
 
         whoseWatchingPage.clickProfile("Test");
@@ -224,7 +221,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             swipeInContainer(null, Direction.DOWN, 500);
         }
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Change link was not present")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> accountPage.isChangeLinkPresent(testAccount.getEmail()));
         Date startTime = verifyEmail.getStartTime();
         accountPage.clickChangeLink(testAccount.getEmail());
@@ -262,7 +259,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         iosUtils.get().dismissKeyboardForPhone();
         changeEmailPage.clickCancelBtn();
 
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Change link was not present")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> {
                     if (!debugMode) {
                         return accountPage.isChangeLinkPresent(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
@@ -367,7 +364,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, SWIPE_COUNTER, "Help page did not open.")
+        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Help page did not open.")
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
         getScreenshots("HelpWebview");
@@ -695,9 +692,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S6.22
         pinPage.getBackArrow().click();
-        pause(SWIPE_COUNTER);
+        pause(5);
         pinPage.getPinCancelButton().click();
-        pause(SWIPE_COUNTER);
+        pause(5);
         whoPage.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
@@ -705,7 +702,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getKidProofExitToggleSwitch().click();
         passwordPage.typePassword(testAccount.getUserPass());
         passwordPage.clickPrimaryButton();
-        pause(SWIPE_COUNTER);
+        pause(5);
         getScreenshots("KidsProofModeOn");
 
         //S6.23
@@ -822,7 +819,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         searchPage.searchForMedia("The Simpsons");
         List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
         series.get(0).click();
-        pause(SWIPE_COUNTER);
+        pause(5);
         getScreenshots("SeriesLandingPage");
 
         utils.swipePageTillElementTappable(detailsPage.getEpisodesTab(), 3, null, Direction.UP, 1000);
@@ -845,7 +842,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         series = searchPage.getDisplayedTitles();
         series.get(0).click();
-        pause(SWIPE_COUNTER);
+        pause(5);
 
         //S7.4
         utils.swipePageTillElementTappable(detailsPage.getSeasonSelectorButton(), 3, null, Direction.UP, 1000);
@@ -911,7 +908,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .getDynamicRowButtonLabel(
                         getDictionary()
                                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 7);
-        utils.swipePageTillElementTappable(lastEpisodeButton, SWIPE_COUNTER, null, Direction.UP, 500);
+        utils.swipePageTillElementTappable(lastEpisodeButton, 5, null, Direction.UP, 500);
         lastEpisodeButton.click();
         pause(2);
         getScreenshots("DownloadIsQueued");
