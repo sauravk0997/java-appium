@@ -12,6 +12,8 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "avatarSelectionScreenView")
     ExtendedWebElement avatarSelectionScreenView;
 
+    ExtendedWebElement chooseAvatarTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
+
     private ExtendedWebElement skipButton = getDynamicAccessibilityId(
             getDictionary().getDictionaryItem(
                     DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -35,7 +37,14 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return avatarSelectionScreenView.isElementPresent();
+        return avatarSelectionScreenView.isPresent()
+                && chooseAvatarTitle.isPresent();
+    }
+
+    public void verifyChooseAvatarPage() {
+        backButton.isElementPresent();
+        staticTextByLabel.format("Featured").isPresent();
+        staticTextByLabel.format("Disney").isPresent();
     }
 
     public ExtendedWebElement getSkipButton() {
