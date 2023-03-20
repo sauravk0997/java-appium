@@ -365,7 +365,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     }
 
     public void getScreenshots(String filename, ThreadLocal<String> directory) {
-        UniversalUtils.storeScreenshot(getCastedDriver(), filename + "_tvOS", directory.get());
+        UniversalUtils.storeScreenshot(getCastedDriver(), filename, directory.get());
     }
 
     /**
