@@ -9,16 +9,17 @@ import com.disney.qa.disney.DisneyProductData;
 import com.disney.util.disney.DisneyGlobalUtils;
 import com.qaprosoft.carina.browsermobproxy.ProxyPool;
 import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,6 +29,7 @@ import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:S2187")
 public class BaseMobileTest extends BaseTest implements IMobileUtils {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected ThreadLocal<BrowserMobProxy> proxy = new ThreadLocal<>();
 
     protected static final String PARTNER = R.CONFIG.get("partner");
@@ -155,6 +157,7 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
             }
             proxy.get().addHeaders(headers);
             proxy.get().enableHarCaptureTypes(captureTypes);
+            LOGGER.info("Device proxy port: {}", getDevice().getProxyPort());
             proxy.get().start(Integer.parseInt(getDevice().getProxyPort()));
         } catch (NullPointerException e) {
             e.printStackTrace();
