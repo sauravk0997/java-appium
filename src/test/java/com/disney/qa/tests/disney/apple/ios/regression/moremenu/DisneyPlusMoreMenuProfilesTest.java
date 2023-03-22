@@ -67,6 +67,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
         sa.assertTrue(utils.areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
                 "XMOBQA-62630 - Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
+        sa.assertAll();
 
     }
 
@@ -122,6 +123,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             sa.assertNotEquals(avatar.getAttribute("name"), THE_CHILD,
                     "XMOBQA-62634 - The previously selected Avatar was available for selection unexpectedly");
         }
+        sa.assertAll();
 
     }
 }
