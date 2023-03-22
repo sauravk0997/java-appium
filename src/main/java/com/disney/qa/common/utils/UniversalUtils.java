@@ -50,7 +50,7 @@ public class UniversalUtils implements IDriverPool {
         BufferedImage fullImage = null;
 
         new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(element.getBy()));
-        File srcFile = driver.findElement(element.getBy()).getScreenshotAs(OutputType.FILE);
+        File srcFile = element.getElement().getScreenshotAs(OutputType.FILE);
         try {
             fullImage = ImageIO.read(srcFile);
 
