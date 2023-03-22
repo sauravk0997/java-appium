@@ -20,8 +20,8 @@ public class DisneyPlusAtmosCaptureTest extends DisneyBaseTest {
         HARUtils harUtils = new HARUtils(proxy.get());
 
         String movieProgramId = R.CONFIG.get("env").equals("PROD")
-                ? DisneyMovies.AVENGERS_ENDGAME_PROD.getProgramId()
-                : DisneyMovies.AVENGERS_ENDGAME_QA.getProgramId();
+                ? "4925d08a-32c3-44b9-829b-e1624dc3b6f0"
+                : "3f10bdef-9efc-47e3-80be-05ee2d3ccf37";
 
         searchApi.get().addMovieToWatchlist(disneyAccount.get(), movieProgramId);
 
