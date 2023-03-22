@@ -173,6 +173,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
         disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        disneyPlusAppleTVHomePage.dismissTravelingAlert();
 
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
