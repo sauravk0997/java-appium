@@ -86,6 +86,23 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
         BufferedImage moreMenuAvatar = utils.getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(TEST));
 
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62638"})
+    @Test(description = "Verify: Edit Profile User can change Avatar", groups = {"More Menu"})
+    public void verifyEditProfileUserCanChangeAvatar() {
+        setGlobalVariables();
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        ExtendedWebElement[] avatars;
+        MobileUtilsExtended utils = new MobileUtilsExtended();
+
+        setAppToHomeScreen(disneyAccount.get());
+        disneyPlusMoreMenuIOSPageBase.clickMoreTab();
+        BufferedImage moreMenuAvatar = utils.getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(TEST));
+
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
         disneyPlusEditProfileIOSPageBase.clickEditModeProfile(TEST);
         disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
