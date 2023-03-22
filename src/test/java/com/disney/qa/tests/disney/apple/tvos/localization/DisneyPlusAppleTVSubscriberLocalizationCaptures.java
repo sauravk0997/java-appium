@@ -236,8 +236,9 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        disneyPlusAppleTVHomePage.isGlobalNavExpanded();
+        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+            disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
+        }
         disneyPlusAppleTVHomePage.clickProfileTab();
         disneyPlusAppleTVWhoIsWatchingPage.isOpened();
         getScreenshots("1-Profile", baseDirectory);
