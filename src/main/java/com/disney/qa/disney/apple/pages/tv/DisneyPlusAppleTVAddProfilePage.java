@@ -1,11 +1,10 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 
@@ -16,7 +15,8 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
         super(driver);
     }
 
-    private ExtendedWebElement selectAvatarSkipBtn = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_CHOOSEPROFILEICON_SKIP.getText()));
+    @ExtendedFindBy(accessibilityId = "skipAvatarSelectionBarButton")
+    private ExtendedWebElement skipAvatarSelectionBtn;
 
-    public void clickSelectAvatarSkipBtn() { selectAvatarSkipBtn.click(); }
+    public void clickSelectAvatarSkipBtn() { skipAvatarSelectionBtn.click(); }
 }
