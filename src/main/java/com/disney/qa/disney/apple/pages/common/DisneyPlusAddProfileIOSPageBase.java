@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
@@ -51,7 +52,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private ExtendedWebElement addProfileHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
-    private ExtendedWebElement chooseAvatarTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
     private String genderMan = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
@@ -77,7 +77,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        return addProfileHeader.isElementPresent();
+        return addProfileHeader.isPresent();
     }
 
     public boolean isProfilePresent(String profileName) {
@@ -99,10 +99,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         juniorModeToggle.click();
     }
 
-    public boolean isChooseAvatarPageOpen() {
-        return chooseAvatarTitle.isElementPresent();
-    }
-
     public void clickSkipBtn() {
         skipBtn.click();
     }
@@ -120,7 +116,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         enterProfileName(profileName);
         enterDOB(month, day, year);
         chooseGender();
-        saveBtn.click();
+        new MobileUtilsExtended().clickElementAtLocation(saveBtn, 50, 50);
+        //Save button is not tappable
+        //saveBtn.click();
     }
 
     //format: Month, day, year

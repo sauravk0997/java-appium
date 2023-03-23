@@ -55,20 +55,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
-    @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding"})
-    public void verifyExistingEmailSubmission() {
-        setGlobalVariables();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen as expected");
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(disneyAccount.get().getEmail());
-
-        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(),
-                "User was not directed to Password Entry as expected");
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62225", "XMOBQA-62227", "XMOBQA-62229"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
@@ -118,6 +105,21 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         Assert.assertTrue(initPage(DisneyPlusCreatePasswordIOSPageBase.class).isOpened(),
                 "User was not directed to Create Password as expected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
+    @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding"})
+    public void verifyExistingEmailSubmission() {
+        setGlobalVariables();
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
+
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(disneyAccount.get().getEmail());
+
+        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(),
+                "User was not directed to Password Entry as expected");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
@@ -208,7 +210,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        
+
         disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
