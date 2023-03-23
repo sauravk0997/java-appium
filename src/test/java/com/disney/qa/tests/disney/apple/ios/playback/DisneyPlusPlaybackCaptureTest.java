@@ -24,17 +24,11 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
             searchApi.get().addSeriesToWatchlist(disneyAccount.get(), mediaId);
         }
 
-
-
-        //Login
         setAppToHomeScreen(disneyAccount.get());
-        //use API to add content to watchlist
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-
-        //click badge content view
         watchlistPage.getBadgeContentView().click();
 
         detailsIOSPageBase.clickPlayButton();
