@@ -639,9 +639,8 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
         //Apple TV S3.3 Click on Help and Review the page
         disneyPlusAppleTVSettingsPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP);
-        disneyPlusAppleTVSettingsPage.isHelpWebviewOpen();
         getScreenshots("3-SettingsHelp", baseDirectory);
-        disneyPlusAppleTVSettingsPage.clickTypeButton();
+        disneyPlusApplePageBase.clickMenu();
 
         //Apple TV S3.4 Back to the settings page, click on Legal.
         disneyPlusAppleTVSettingsPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
