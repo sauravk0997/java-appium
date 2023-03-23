@@ -15,7 +15,6 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        HARUtils harUtils = new HARUtils(proxy.get());
 
         String mediaId = R.CONFIG.get("capabilities.contentId");
 
@@ -35,6 +34,6 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         detailsIOSPageBase.clickPlayButton();
         pause(10);
 
-        harUtils.publishHAR("Playback.har");
+        HARUtils.attachHarAsArtifact(proxy.get(), "playback.har");
     }
 }
