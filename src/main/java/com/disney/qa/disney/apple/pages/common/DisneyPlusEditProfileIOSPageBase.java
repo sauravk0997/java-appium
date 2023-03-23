@@ -18,8 +18,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
 
-    private final ExtendedWebElement chooseAvatarTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
-
     @ExtendedFindBy(accessibilityId = "editProfile")
     protected ExtendedWebElement editProfileView;
 
