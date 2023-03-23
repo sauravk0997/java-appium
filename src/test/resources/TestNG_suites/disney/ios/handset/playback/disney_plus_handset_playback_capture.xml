@@ -4,7 +4,7 @@
     <parameter name="suiteOwner" value="jsilveti"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Prod-Enterprise,Disney-Enterprise"/>
-    <parameter name="choiceParam::jenkinsEnvironments::Environment name" value="Prod, QA"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="choiceParam::content_type::The type of media to be played. programId for a Movie. seriesId for a Series" value="programId,seriesId"/>
     <parameter name="stringParam::content_id::Id of the Media to be played" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
