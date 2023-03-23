@@ -8,6 +8,7 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
+import com.qaprosoft.carina.core.foundation.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,5 +124,10 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
             case IAP:
                 iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Jarvis", platformName, "adhoc", "latest"));
         }
+    }
+
+    public String getDate() {
+        String date = DateUtils.now();
+        return date.replace(":", "_");
     }
 }

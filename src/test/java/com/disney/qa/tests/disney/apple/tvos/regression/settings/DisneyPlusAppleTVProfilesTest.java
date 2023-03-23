@@ -5,6 +5,8 @@ import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVChooseAvatarPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVEditProfilePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWhoIsWatchingPage;
@@ -63,7 +65,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
 
         logIn(entitledUser);
 
@@ -74,7 +76,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVWhoIsWatchingPage.clickAddProfile();
         UniversalUtils.captureAndUpload(getCastedDriver());
 
-        sa.assertTrue(disneyPlusAppleTVEditProfilePage.isChooseAvatarPageOpen(), "Choose avatar page is not open after clicking add profile");
+        sa.assertTrue(chooseAvatarPage.isOpened(), "Choose avatar page is not open after clicking add profile");
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), "Who is watching page is not open after clicking menu on Choose Avatar screen");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
