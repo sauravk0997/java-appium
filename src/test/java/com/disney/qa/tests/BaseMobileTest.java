@@ -14,12 +14,9 @@ import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 
-import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -29,7 +26,6 @@ import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:S2187")
 public class BaseMobileTest extends BaseTest implements IMobileUtils {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected ThreadLocal<BrowserMobProxy> proxy = new ThreadLocal<>();
 
     protected static final String PARTNER = R.CONFIG.get("partner");
