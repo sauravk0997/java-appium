@@ -27,7 +27,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusHandsetBasicTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest"/>
         </classes>
     </test>
 

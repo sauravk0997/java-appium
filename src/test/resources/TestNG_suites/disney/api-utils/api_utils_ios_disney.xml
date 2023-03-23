@@ -18,7 +18,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic Api Utils tests" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusHandsetBasicTest">
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest">
                 <methods>
                     <include name="testChangingProfiles"/>
                 </methods>

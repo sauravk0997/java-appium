@@ -8,7 +8,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class DisneyPlusHandsetBasicTest extends DisneyBaseTest {
+public class DisneyPlusBasicTest extends DisneyBaseTest {
 
     private static final String TEST_USER = "test_user";
     private static final String ADULT_DOB = "1988-1-1";
