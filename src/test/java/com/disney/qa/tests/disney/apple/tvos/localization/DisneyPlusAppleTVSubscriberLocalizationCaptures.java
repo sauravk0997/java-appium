@@ -557,8 +557,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVHomePage.isOpened();
         pause(5);// wait for screen to load
         disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+            disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
+        }
+        disneyPlusAppleTVHomePage.clickSearchIcon();
         disneyPlusAppleTVSearchPage.isOpened();
         disneyPlusAppleTVSearchPage.typeInSearchField("Avatar");
         pause(3);
