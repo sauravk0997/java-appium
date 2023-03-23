@@ -19,11 +19,15 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         HARUtils harUtils = new HARUtils(proxy.get());
 
-        String movieProgramId = R.CONFIG.get("env").equals("PROD")
-                ? DOCTOR_STRANGE_PROD
-                : DOCTOR_STRANGE_QA;
+        String mediaId = R.CONFIG.get("capabilities.contentId");
 
-        searchApi.get().addMovieToWatchlist(disneyAccount.get(), movieProgramId);
+        if(R.CONFIG.get("capabilities.contentType").equals("programId")) {
+            searchApi.get().addMovieToWatchlist(disneyAccount.get(), mediaId);
+        } else {
+            searchApi.get().addSeriesToWatchlist(disneyAccount.get(), mediaId);
+        }
+
+
 
         //Login
         setAppToHomeScreen(disneyAccount.get());
