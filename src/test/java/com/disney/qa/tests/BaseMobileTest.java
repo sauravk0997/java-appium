@@ -157,7 +157,6 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
             }
             proxy.get().addHeaders(headers);
             proxy.get().enableHarCaptureTypes(captureTypes);
-            LOGGER.info("Device proxy port: {}", getDevice().getProxyPort());
             proxy.get().start(Integer.parseInt(getDevice().getProxyPort()));
         } catch (NullPointerException e) {
             e.printStackTrace();

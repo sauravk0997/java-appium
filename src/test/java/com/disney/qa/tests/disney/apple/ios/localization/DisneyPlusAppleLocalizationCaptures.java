@@ -28,7 +28,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase completeSubscriptionIOSPageBase = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
         setPathToZip("Onboarding_Backgrounds");
-        HARUtils.attachHarAsArtifact(proxy.get(), "ios 15.3 tablet har");
 
         //Create an expired account
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
