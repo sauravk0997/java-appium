@@ -11,8 +11,6 @@
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-Playback-Capture"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="stringParam::githubPath::Github project path" value=""/>
-    <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
