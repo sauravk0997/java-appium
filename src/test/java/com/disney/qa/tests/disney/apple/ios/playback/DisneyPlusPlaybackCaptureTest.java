@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 
 public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
 
+    private static final String DOCTOR_STRANGE_PROD = "058f2e46-e6ad-44ef-9188-81219c510094";
+    private static final String DOCTOR_STRANGE_QA = "c0e322cb-85e5-47bc-a568-0a82977799a5";
+
     @Test(description = "Capture playback requests in har file.")
     public void capturePlaybackHar() {
         setGlobalVariables();
@@ -17,8 +20,8 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         HARUtils harUtils = new HARUtils(proxy.get());
 
         String movieProgramId = R.CONFIG.get("env").equals("PROD")
-                ? "058f2e46-e6ad-44ef-9188-81219c510094"
-                : "c0e322cb-85e5-47bc-a568-0a82977799a5";
+                ? DOCTOR_STRANGE_PROD
+                : DOCTOR_STRANGE_QA;
 
         searchApi.get().addMovieToWatchlist(disneyAccount.get(), movieProgramId);
 
