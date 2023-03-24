@@ -34,6 +34,6 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         detailsIOSPageBase.clickPlayButton();
         pause(10);
 
-        HARUtils.attachHarAsArtifact(proxy.get(), "playback.har");
+        HARUtils.attachHarAsArtifact(proxy.get(), "playback");
     }
 }
