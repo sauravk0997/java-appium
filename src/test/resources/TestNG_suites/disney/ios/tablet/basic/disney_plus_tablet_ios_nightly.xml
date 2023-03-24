@@ -27,7 +27,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusTabletBasicTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest"/>
         </classes>
     </test>
 
@@ -35,6 +35,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTabletTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
         </classes>
