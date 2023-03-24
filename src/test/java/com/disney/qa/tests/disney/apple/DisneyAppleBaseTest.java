@@ -9,6 +9,7 @@ import com.disney.qa.tests.BaseMobileTest;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.DateUtils;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     public static final String APP = "app";
     private static final String TVOS = "tvOS";
     public static final String IOS = "ios";
+    protected static final boolean USE_MULTIVERSE = R.CONFIG.getBoolean("useMultiverse");
 
     protected DisneyBaseTest.BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();

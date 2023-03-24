@@ -45,7 +45,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    protected static final boolean USE_MULTIVERSE = R.CONFIG.getBoolean("useMultiverse");
 
     protected ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
     protected ThreadLocal<DisneyAccount> disneyAccount = new ThreadLocal<>();
