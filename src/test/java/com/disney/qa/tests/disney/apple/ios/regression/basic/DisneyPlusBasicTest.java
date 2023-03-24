@@ -8,7 +8,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class DisneyPlusHandsetBasicTest extends DisneyBaseTest {
+public class DisneyPlusBasicTest extends DisneyBaseTest {
 
     private static final String TEST_USER = "test_user";
     private static final String ADULT_DOB = "1988-1-1";
@@ -276,17 +276,5 @@ public class DisneyPlusHandsetBasicTest extends DisneyBaseTest {
                 "Expected - Video player should be opened");
 
         softAssert.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62709"})
-    @Test(description = "Verify Video Player Controls", groups = {"Smoke"}, enabled = false)
-    public void testVideoPlayerControls() {
-        //Test not implemented. Video player not visible due to DRM
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62711"})
-    @Test(description = "Verify Video Player Back Nav", groups = {"Smoke"}, enabled = false)
-    public void testVideoPlayerBackNav() {
-        //Test not implemented. Video player not visible due to DRM
     }
 }
