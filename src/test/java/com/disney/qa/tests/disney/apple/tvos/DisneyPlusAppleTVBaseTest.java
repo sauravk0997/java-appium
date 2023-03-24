@@ -5,6 +5,7 @@ import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.tvos.*;
@@ -85,7 +86,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusApplePageBase.setDictionary(languageUtils.get());
         apiProvider.set(new DisneyContentApiChecker());
         searchApi = new DisneySearchApi(PLATFORM, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), apiProvider.get().getPartner());
-        disneyAccountApi = new DisneyAccountApi(PLATFORM, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), apiProvider.get().getPartner());
+        disneyAccountApi =  new DisneyAccountApi(getApiConfiguration(apiProvider.get().getPartner()));
     }
 
     public void installJarvis() {
@@ -418,5 +419,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
             jarvis.clickConfig(GLOBALIZATION_VERSION.getText());
             jarvis.setOverride(globalizationVersion);
         }
+    }
+
+    public ApiConfiguration getApiConfiguration(String partner) {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(partner)
+                .useMultiverse(USE_MULTIVERSE)
+                .build();
+        return apiConfiguration;
     }
 }

@@ -5,6 +5,7 @@ import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
@@ -38,8 +39,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RESTRICTED = "Restricted";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
-    public static final String STANDALONE_MONTHLY_ADS = "Disney Plus Monthly - US - Web - With Ads";
-    public static final String STANDALONE_MONTHLY_NO_ADS = "Disney Plus Monthly - US - Web";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
@@ -169,7 +168,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         setBuildType();
         try {
             disneyApiHandler.set(new DisneyContentApiChecker());
-            disneyAccountApi.set(new DisneyAccountApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
+            disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
             String version = new MobileUtilsExtended().getInstalledAppVersion();
             configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version));
             languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
@@ -313,4 +312,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
         }
     }
+
+    public ApiConfiguration getApiConfiguration(String partner) {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(partner)
+                .useMultiverse(USE_MULTIVERSE)
+                .build();
+        return apiConfiguration;
+}
+
 }
