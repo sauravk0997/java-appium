@@ -12,7 +12,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPhone_12,iPhone_12_Pro;deviceType=Phone;timeoutMs=120000"/>
+               value="platformName=iOS;deviceName=iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_12_1,iPhone_12_Pro,iphone_13_pro,iphone_14;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="booleanParam::enableDebugDisplay::Toggle to enable display dictionary keys in the app" value="false"/>
     <parameter name="overrideFields"
