@@ -4,20 +4,18 @@
     <parameter name="suiteOwner" value="jsilveti"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Prod-Enterprise,Disney-Enterprise"/>
-    <parameter name="choiceParam::jenkinsEnvironments::Environment name" value="Prod, QA"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="choiceParam::content_type::The type of media to be played. programId for a Movie. seriesId for a Series" value="programId,seriesId"/>
     <parameter name="stringParam::content_id::Id of the Media to be played" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-Playback-Capture"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="stringParam::githubPath::Github project path" value=""/>
-    <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_12_1,iPhone_12_Pro,iphone_13_pro,iphone_14;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
-    <parameter name="overrideFields" value="capabilities.contentType=${content_type},capabilities.contentId=${content_id}"/>
+    <parameter name="overrideFields" value="browsermob_proxy=true,capabilities.contentType=${content_type},capabilities.contentId=${content_id}"/>
 
     <test verbose="1" name="iOS - Disney+ - Handset Playback Capture" parallel="methods">
         <classes>
