@@ -173,7 +173,6 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
         disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        disneyPlusAppleTVHomePage.dismissTravelingAlert();
 
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
@@ -281,7 +280,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(5); //load page fully
         disneyPlusAppleTVChooseAvatarPage.isOpened();
         getScreenshots("8-ChooseAvatar", baseDirectory);
-        
+
         disneyPlusAppleTVAddProfilePage.clickSelectAvatarSkipBtn();
         disneyPlusAppleTVAddProfilePage.isOpened();
         disneyPlusAppleTVAddProfilePage.moveRight(1, 1);
