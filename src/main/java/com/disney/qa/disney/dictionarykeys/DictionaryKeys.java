@@ -23,7 +23,6 @@ public enum DictionaryKeys {
     BTN_ACCOUNT_HOLD_UPDATE_PAYMENT("btn_account_hold_update_payment"),
     BTN_ADD_PROFILE("btn_add_profile"),
     BTN_BACK_DIALOG_NOT_NOW("btn_back_dialog_notnow"),
-    BTN_CHOOSEPROFILEICON_SKIP("btn_chooseprofileicon_skip"),
     BTN_CONTINUE("btn_continue"),
     BTN_CREATE_PIN("btn_create_pin"),
     BTN_DATE_OF_BIRTH_CONTINUE("btn_date_of_birth_continue"),

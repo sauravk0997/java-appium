@@ -281,8 +281,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(5); //load page fully
         disneyPlusAppleTVChooseAvatarPage.isOpened();
         getScreenshots("8-ChooseAvatar", baseDirectory);
-
-        //ExtendedWebElement[] avatars = disneyPlusAppleTVAddProfilePage.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        
         disneyPlusAppleTVAddProfilePage.clickSelectAvatarSkipBtn();
         disneyPlusAppleTVAddProfilePage.isOpened();
         disneyPlusAppleTVAddProfilePage.moveRight(1, 1);
