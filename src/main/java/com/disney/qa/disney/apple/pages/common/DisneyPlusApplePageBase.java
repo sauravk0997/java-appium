@@ -575,6 +575,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return webviewUrlBar.getText();
     }
 
+    public void waitUntilWebviewUrlContains(String expectedText) {
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Webview URL did not contain the expected text...").until(it -> getWebviewUrl().contains(expectedText));
+    }
+
     // Will take you to continue button on tvOS on screen keyboard
     public void moveToContinueBtnKeyboardEntry() {
         boolean isClearBtnPresent = keyboardClear.isElementPresent(SHORT_TIMEOUT);
