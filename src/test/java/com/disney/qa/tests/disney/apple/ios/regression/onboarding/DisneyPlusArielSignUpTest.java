@@ -157,6 +157,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Onboarding"})
     public void testSignUpDoBUnder18() {
         setGlobalVariables();
+        SoftAssert softAssert = new SoftAssert();
         handleAlert();
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -176,10 +177,17 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
+
+        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
+
         disneyPlusDOBCollectionPageBase.isOpened();
         disneyPlusDOBCollectionPageBase.enterDOB(DOB_MINOR);
-        Assert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
                 "Contact CS screen did not appear.");
+
+        softAssert.assertAll();
     }
 
     @Maintainer("mboulogne1")
@@ -207,6 +215,10 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
+
         disneyPlusDOBCollectionPageBase.isOpened();
         disneyPlusDOBCollectionPageBase.enterDOB(DOB_INVALID);
         softAssert.assertTrue(disneyPlusDOBCollectionPageBase.isInvalidDOBMessageDisplayed(),
@@ -214,8 +226,6 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         disneyPlusDOBCollectionPageBase.enterDOB(DOB_ADULT);
         //Dismiss error message for paywall - QAA-11256
         disneyPlusPaywallIOSPageBase.dismissPaywallErrorAlert();
-        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
         softAssert.assertAll();
     }
 
