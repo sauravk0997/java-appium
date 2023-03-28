@@ -142,7 +142,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
         LOGGER.info("Attempting to launch Jarvis app...");
         launchJarvis(true);
-        JarvisAppleBase jarvis = initPage(JarvisAppleBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
 
         if (!jarvis.isAppPresent(JarvisAppleBase.AppName.IOS_DISNEY)) {
             jarvis.clickPlaceholderJarvisApp();

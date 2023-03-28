@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
+import com.disney.jarvisutils.pages.apple.JarvisHandset;
+import com.disney.jarvisutils.pages.apple.JarvisTablet;
 import com.qaprosoft.carina.core.foundation.utils.factory.ICustomTypePageFactory;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
@@ -69,5 +73,18 @@ public class BaseTest extends AbstractTest {
 
     public boolean horaEnabled() {
         return R.CONFIG.getBoolean("enable_hora_validation");
+    }
+
+    public JarvisAppleBase getJarvisPageFactory() {
+        switch (currentDevice.get().getDeviceType()) {
+            case APPLE_TV:
+                return new JarvisAppleTV(getDriver());
+            case IOS_PHONE:
+                return new JarvisHandset(getDriver());
+            case IOS_TABLET:
+                return new JarvisTablet(getDriver());
+            default:
+                throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
+        }
     }
 }
