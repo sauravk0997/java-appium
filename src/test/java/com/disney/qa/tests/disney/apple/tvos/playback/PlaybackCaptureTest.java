@@ -24,10 +24,8 @@ public class PlaybackCaptureTest extends DisneyPlusAppleTVBaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        R.CONFIG.put("browsermob_proxy", "true");
         DisneyCountryData countryData = new DisneyCountryData();
         String fullCountryName = (String) countryData.searchAndReturnCountryData(country, "code", "country");
-        restartDriver(true);
         initiateProxy(fullCountryName, CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT,
                 CaptureType.REQUEST_COOKIES, CaptureType.RESPONSE_COOKIES, CaptureType.REQUEST_BINARY_CONTENT, CaptureType.RESPONSE_BINARY_CONTENT,
                 CaptureType.REQUEST_HEADERS, CaptureType.RESPONSE_HEADERS);
