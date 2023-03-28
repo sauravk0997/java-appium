@@ -6,7 +6,7 @@ import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.common.jarvis.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;

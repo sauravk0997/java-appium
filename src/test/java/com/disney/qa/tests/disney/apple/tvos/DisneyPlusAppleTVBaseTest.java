@@ -9,8 +9,8 @@ import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.tvos.*;
-import com.disney.qa.common.jarvis.apple.JarvisAppleBase;
-import com.disney.qa.common.jarvis.apple.JarvisAppleTV;
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -50,9 +50,9 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
-import static com.disney.qa.common.jarvis.apple.JarvisAppleBase.JARVIS;
-import static com.disney.qa.common.jarvis.apple.JarvisAppleTV.Configs.*;
-import static com.disney.qa.common.jarvis.apple.JarvisAppleTV.DictionaryResourceKeys.DECORATIONS;
+import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.JARVIS;
+import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
+import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.DECORATIONS;
 import static com.disney.qa.disney.apple.pages.tv.AppleTVConstants.*;
 import static org.testng.Assert.fail;
 
