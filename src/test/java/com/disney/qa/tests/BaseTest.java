@@ -1,20 +1,11 @@
 package com.disney.qa.tests;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
-import com.qaprosoft.carina.core.foundation.utils.factory.ICustomTypePageFactory;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeSuite;
@@ -52,23 +43,6 @@ public class BaseTest extends AbstractTest {
             Xray.setExecutionKey(xrayExectionKey);
             // Xray.enableRealTimeSync();
         }
-    }
-
-    //TODO: Remove after upgrade to Carina 8
-    @BeforeSuite
-    public void setReflectionEnabled() {
-        ConfigurationBuilder REFLECTION_CONFIG = new ConfigurationBuilder().addUrls(Arrays.stream(Package.getPackages())
-                        .map(Package::getName)
-                        .map(s -> s.split("\\.")[0])
-                        .distinct()
-                        .map(ClasspathHelper::forPackage).reduce((c1, c2) -> {
-                            Collection<URL> c3 = new HashSet<>();
-                            c3.addAll(c1);
-                            c3.addAll(c2);
-                            return c3;
-                        }).orElseThrow())
-                .addScanners(new SubTypesScanner(false));
-        ICustomTypePageFactory.REFLECTIONS.merge(new Reflections(REFLECTION_CONFIG));
     }
 
     public boolean horaEnabled() {
