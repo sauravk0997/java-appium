@@ -18,6 +18,7 @@
         <guava.version>30.0-jre</guava.version>
         <alice-client-version>1.0.50</alice-client-version>
         <jarvis-utils-version>1.0.5</jarvis-utils-version>
+        <disney-api-utils-version>1.5.347</disney-api-utils-version>
         <suite>helloDisney</suite>
     </properties>
 
@@ -62,7 +63,7 @@
         <dependency>
             <groupId>com.disney</groupId>
             <artifactId>disney-api-utils</artifactId>
-            <version>1.5.341</version>
+            <version>${disney-api-utils-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.testng</groupId>
