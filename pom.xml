@@ -229,6 +229,12 @@
             <groupId>com.disney.jarvisutils</groupId>
             <artifactId>jarvis-utils</artifactId>
             <version>${jarvis-utils-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.qaprosoft</groupId>
+                    <artifactId>carina-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
