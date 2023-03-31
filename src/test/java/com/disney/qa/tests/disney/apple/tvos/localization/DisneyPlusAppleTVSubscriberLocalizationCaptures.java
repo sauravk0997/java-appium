@@ -235,8 +235,9 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        disneyPlusAppleTVHomePage.isGlobalNavExpanded();
+        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+            disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
+        }
         disneyPlusAppleTVHomePage.clickProfileTab();
         disneyPlusAppleTVWhoIsWatchingPage.isOpened();
         getScreenshots("1-Profile", baseDirectory);
@@ -280,8 +281,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVChooseAvatarPage.isOpened();
         getScreenshots("8-ChooseAvatar", baseDirectory);
 
-        ExtendedWebElement[] avatars = disneyPlusAppleTVAddProfilePage.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        disneyPlusAppleTVAddProfilePage.clickAny(avatars[0]);
+        disneyPlusAppleTVAddProfilePage.clickSelectAvatarSkipBtn();
         disneyPlusAppleTVAddProfilePage.isOpened();
         disneyPlusAppleTVAddProfilePage.moveRight(1, 1);
         disneyPlusAppleTVAddProfilePage.clickSelect();
@@ -555,8 +555,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVHomePage.isOpened();
         pause(5);// wait for screen to load
         disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+            disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
+        }
+        disneyPlusAppleTVHomePage.clickSearchIcon();
         disneyPlusAppleTVSearchPage.isOpened();
         disneyPlusAppleTVSearchPage.typeInSearchField("Avatar");
         pause(3);
@@ -621,8 +625,9 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVHomePage.isOpened();
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        disneyPlusAppleTVHomePage.isGlobalNavExpanded();
+        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+            disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
+        }
         disneyPlusAppleTVHomePage.clickSettingsTab();
 
         disneyPlusAppleTVSettingsPage.isOpened();
@@ -636,9 +641,8 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
         //Apple TV S3.3 Click on Help and Review the page
         disneyPlusAppleTVSettingsPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP);
-        disneyPlusAppleTVSettingsPage.isHelpWebviewOpen();
         getScreenshots("3-SettingsHelp", baseDirectory);
-        disneyPlusAppleTVSettingsPage.clickTypeButton();
+        disneyPlusApplePageBase.clickMenu();
 
         //Apple TV S3.4 Back to the settings page, click on Legal.
         disneyPlusAppleTVSettingsPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
