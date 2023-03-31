@@ -485,8 +485,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
                 "Browser webview did not open");
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(CABLEVISION_URL),
-                "Webview did not open to the expected url");
+        //Use wait instead of instant check to account for multiple redirects in browser.
+        disneyPlusAccountIOSPageBase.waitUntilWebviewUrlContains(CABLEVISION_URL);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502", "XMOBQA-61569"})
