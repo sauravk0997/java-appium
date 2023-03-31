@@ -10,7 +10,7 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.carina.GeoedgeProxyServer;
-import com.disney.qa.common.jarvis.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
@@ -321,6 +321,5 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .useMultiverse(USE_MULTIVERSE)
                 .build();
         return apiConfiguration;
-}
-
+    }
 }

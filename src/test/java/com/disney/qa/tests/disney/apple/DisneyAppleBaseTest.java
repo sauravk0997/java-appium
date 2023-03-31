@@ -1,9 +1,10 @@
 package com.disney.qa.tests.disney.apple;
 
+import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.qa.common.jarvis.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -39,9 +40,9 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
 
     public enum BuildType {
-        ENTERPRISE("com.disney.disneyplus.enterprise", JarvisAppleBase.JARVIS_ENTERPRISE_BUNDLE),
-        AD_HOC("com.bamtech.dominguez", JarvisAppleBase.JARVIS_BUNDLE),
-        IAP("com.disney.disneyplus", JarvisAppleBase.JARVIS_IAP_BUNDLE);
+        ENTERPRISE("com.disney.disneyplus.enterprise", JarvisAppleParameters.getEnterpriseBundle()),
+        AD_HOC("com.bamtech.dominguez", JarvisAppleParameters.getAdhocBundle()),
+        IAP("com.disney.disneyplus", JarvisAppleParameters.getIapBundle());
 
         private String disneyBundle;
         private String jarvisBundle;
@@ -66,17 +67,17 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
         if(sessionBundles.get(APP).contains("Enterprise")) {
             buildType = BuildType.ENTERPRISE;
             sessionBundles.put(DISNEY, buildType.getDisneyBundle());
-            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleBase.JARVIS_ENTERPRISE_BUNDLE);
+            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getEnterpriseBundle());
             removeAdHocApps();
             removePurchaseApps();
         } else if (sessionBundles.get(APP).contains("Disney_iOS_AdHoc") || sessionBundles.get(APP).contains("Disney_IAP")) {
             buildType = BuildType.IAP;
-            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleBase.JARVIS_IAP_BUNDLE);
+            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getIapBundle());
             removeEnterpriseApps();
             removeAdHocApps();
         } else {
             buildType = BuildType.AD_HOC;
-            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleBase.JARVIS_BUNDLE);
+            sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getAdhocBundle());
             removeEnterpriseApps();
             removePurchaseApps();
         }
