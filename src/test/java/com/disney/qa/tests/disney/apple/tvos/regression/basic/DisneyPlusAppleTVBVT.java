@@ -19,7 +19,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72582"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106585"})
     @Test(description = "tvOS Basic Verification Test", groups = {"BVT"})
     public void tvOSBVT() {
         DisneyPlusAppleTVWelcomeScreenPage welcome = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
