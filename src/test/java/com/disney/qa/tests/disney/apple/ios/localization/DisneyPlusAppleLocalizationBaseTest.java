@@ -54,8 +54,8 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected void setPathToZip(String testName) {
         pathToZip.set(String.format("%s_%s_%s_%s.zip",
                 testName,
-                languageUtils.get().getLocale(),
-                languageUtils.get().getUserLanguage(),
+                R.CONFIG.get("locale"),
+                R.CONFIG.get("language"),
                 DateUtils.now()));
     }
 
