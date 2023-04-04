@@ -20,7 +20,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106585"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72582"})
     @Test(description = "iOS Basic Verification Test", groups = {"BVT"})
     public void iOSBVT() {
         setGlobalVariables();
