@@ -199,7 +199,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"}, enabled = false)
+    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"})
     public void capturePurchaseFlow(String TUID) {
         setup();
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
