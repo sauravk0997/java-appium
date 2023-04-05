@@ -199,7 +199,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"})
+    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"}, enabled = false)
     public void capturePurchaseFlow(String TUID) {
         setup();
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
@@ -232,6 +232,62 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             pause(3);
             getScreenshots("PlanSelection");
             paywallIOSPageBase.clickBasicPlan();
+        }
+
+        paywallIOSPageBase.isOpened();
+        getScreenshots("SkuSelection");
+        paywallIOSPageBase.clickPurchaseButton();
+
+        paywallIOSPageBase.waitForSubscribeOverlay();
+        getScreenshots("SandboxSubscribe");
+        paywallIOSPageBase.clickOverlaySubscribeButton();
+        try {
+            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
+        iosUtils.get().acceptAlert();
+        iosUtils.get().acceptAlert();
+
+        initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
+        getScreenshots("ProfileSelect");
+        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+    }
+
+    @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel"})
+    public void captureArielOnboarding(String TUID) {
+        setup();
+        setPathToZip("Onboarding_Ariel");
+        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+
+        if (buildType != BuildType.IAP) {
+            skipExecution("Test run is not against IAP compatible build.");
+        }
+        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+        relaunch();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+
+        if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
+            LOGGER.info("Checkbox needed");
+            signUpIOSPageBase.clickUncheckedBoxes();
+        }
+
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        signUpIOSPageBase.clickAgreeAndContinueIfPresent();
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+
+        if(isArielRegion) {
+            iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+            signUpIOSPageBase.clickAgreeAndContinue();
+        }
+
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+
+        if (isArielRegion) {
+            pause(3);
+            getScreenshots("PlanSelection");
+            paywallIOSPageBase.getSelectPaymentPlanBtn().click();
         }
 
         paywallIOSPageBase.isOpened();
