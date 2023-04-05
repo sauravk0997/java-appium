@@ -8,6 +8,7 @@ import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.util.HARUtils;
 import com.disney.util.disney.DisneyGlobalUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -273,6 +274,8 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             signUpIOSPageBase.clickUncheckedBoxes();
         }
 
+        HARUtils.attachHarAsArtifact(proxy.get(), "After_sandbox_testhar");
+
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
@@ -293,6 +296,8 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         paywallIOSPageBase.isOpened();
         getScreenshots("SkuSelection");
         paywallIOSPageBase.clickPurchaseButton();
+
+        HARUtils.attachHarAsArtifact(proxy.get(), "testhar");
 
         paywallIOSPageBase.waitForSubscribeOverlay();
         getScreenshots("SandboxSubscribe");
