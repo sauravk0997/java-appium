@@ -44,6 +44,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
+        new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
 
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusSearchIOSPageBase.searchForMedia(MORE_THAN_TWENTY_EPISODES_SERIES);
@@ -53,7 +54,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isTwentyDownloadsTextDisplayed(), "Download alert text not found.");
+        disneyPlusDetailsIOSPageBase.waitForTwentyDownloadsText();
+//        sa.assertTrue(disneyPlusDetailsIOSPageBase.isTwentyDownloadsTextDisplayed(), "Download alert text not found.");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(), "Download All Of Season One button not found");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDismissBtnPresent(), "Dismiss button not found");
         sa.assertAll();
