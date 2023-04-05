@@ -119,6 +119,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByName;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
+    private ExtendedWebElement dynamicOtherFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
@@ -286,6 +288,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeButtonByName(String name) {
         return dynamicBtnFindByName.format(name);
+    }
+
+    public ExtendedWebElement getTypeOtherByName(String name) {
+        return dynamicOtherFindByName.format(name);
     }
 
     public ExtendedWebElement getTypeButtonContainsLabel(String label) {
