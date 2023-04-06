@@ -88,7 +88,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         details.addToWatchlist();
         details.startDownload();
-        details.waitForDownloadToComplete();
+        details.waitForSeriesDownloadToComplete();
         details.clickPlayButton().isOpened();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 
@@ -126,7 +126,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusOriginalsIOSPageBase originals = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
@@ -161,7 +160,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         details.addToWatchlist();
         details.startDownload();
-        details.waitForMovieDownloadComplete();
+        details.waitForSeriesDownloadToComplete();
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 
@@ -180,7 +179,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS), KIDS + " Profile not found on Profile Switch display.");
 
         homePage.clickDownloadsIcon();
-        sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
+        sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed on Kids profile.");
 
         downloads.tapDownloadedAssetFromListView(KIDS_SHORT_SERIES);
         downloads.tapDownloadedAsset("Play Bluey");

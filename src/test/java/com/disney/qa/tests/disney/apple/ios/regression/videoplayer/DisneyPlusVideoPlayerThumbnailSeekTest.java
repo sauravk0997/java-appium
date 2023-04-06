@@ -58,7 +58,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         results.get(0).click();
 
         disneyPlusDetailsIOSPageBase.startDownload();
-        disneyPlusDetailsIOSPageBase.waitForDownloadToComplete();
+        disneyPlusDetailsIOSPageBase.waitForSeriesDownloadToComplete();
         disneyPlusHomeIOSPageBase.clickDownloadsIcon();
         disneyPlusDownloadsIOSPageBase.tapDownloadedAssetFromListView("Bluey");
         disneyPlusDownloadsIOSPageBase.tapDownloadedAsset("Play Bluey");

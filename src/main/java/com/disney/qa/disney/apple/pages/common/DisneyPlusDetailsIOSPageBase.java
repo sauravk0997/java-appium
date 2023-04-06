@@ -182,15 +182,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public void waitForDownloadToComplete() {
-        LOGGER.info("Waiting for download to complete");
+    public void waitForSeriesDownloadToComplete() {
+        LOGGER.info("Waiting for series download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
                 .until(it -> downloadCompleteButton.isPresent());
         LOGGER.info("Download completed");
     }
 
     public void waitForMovieDownloadComplete() {
-        LOGGER.info("Waiting for download to complete");
+        LOGGER.info("Waiting for movie download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Downloaded button is not present")
                 .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
         LOGGER.info("Download completed");
