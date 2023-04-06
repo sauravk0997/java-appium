@@ -35,7 +35,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        R.CONFIG.put("capabilities.fullReset", "true");
         boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
