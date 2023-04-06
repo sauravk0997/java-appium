@@ -46,7 +46,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         removeApp(buildType.getDisneyBundle());
         installOldApp(isEnterpriseBuild, oldAppVersion.get());
         relaunch();
-//        startApp(buildType.getDisneyBundle());
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
@@ -61,7 +60,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         //install new app
         installLatestApp(isEnterpriseBuild);
-        startApp(buildType.getDisneyBundle());
+        relaunch();
         sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -140,7 +139,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         //install old app
         removeApp(buildType.getDisneyBundle());
         installOldApp(isEnterpriseBuild, oldAppVersion.get());
-        startApp(buildType.getDisneyBundle());
+        relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
@@ -225,7 +224,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         //install old app
         removeApp(buildType.getDisneyBundle());
         installOldApp(isEnterpriseBuild, oldAppVersion.get());
-        startApp(buildType.getDisneyBundle());
+        relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
