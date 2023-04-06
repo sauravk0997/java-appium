@@ -274,9 +274,19 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             signUpIOSPageBase.clickUncheckedBoxes();
         }
 
-        HARUtils.attachHarAsArtifact(proxy.get(), "After_sandbox_testhar");
+        //S1.1
+        pause(2);
+        getScreenshots("EmailPage");
 
+        //S1.2
+        signUpIOSPageBase.submitEmailAddress("badEmail");
+        pause(2);
+        getScreenshots("BadEmailError");
+
+        //S1.3
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        pause(2);
+        getScreenshots("PasswordPage");
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
 
@@ -296,8 +306,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         paywallIOSPageBase.isOpened();
         getScreenshots("SkuSelection");
         paywallIOSPageBase.clickPurchaseButton();
-
-        HARUtils.attachHarAsArtifact(proxy.get(), "testhar");
 
         paywallIOSPageBase.waitForSubscribeOverlay();
         getScreenshots("SandboxSubscribe");
