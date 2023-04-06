@@ -27,6 +27,8 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
 
+	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -43,6 +45,14 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void tapDownloadedAsset(String downloadedAsset) {
 		dynamicBtnFindByLabelContains.format(downloadedAsset).click();
+	}
+
+	public void tapDownloadedAssetText(String downloadedAsset) {
+		staticTextLabelContains.format(downloadedAsset).click();
+	}
+
+	public boolean isDownloadsEmptyHeaderPresent() {
+		return downloadsEmptyHeader.isElementPresent();
 	}
 
 	public boolean isContentHeaderPresent(String downloadedAsset) {

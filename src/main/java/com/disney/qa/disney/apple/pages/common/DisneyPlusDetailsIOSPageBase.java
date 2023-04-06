@@ -42,9 +42,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
     private ExtendedWebElement extrasButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
-    private ExtendedWebElement notificationPopUp;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -142,9 +139,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOpened(long time) {
-        if (notificationPopUp.isPresent()) {
-            dismissNotificationsPopUp();
-        }
+        dismissNotificationsPopUp();
         return shareBtn.isElementPresent(time);
     }
 
@@ -191,6 +186,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
                 .until(it -> downloadCompleteButton.isPresent());
+        LOGGER.info("Download completed");
+    }
+
+    public void waitForMovieDownloadComplete() {
+        LOGGER.info("Waiting for download to complete");
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Downloaded button is not present")
+                .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
         LOGGER.info("Download completed");
     }
 

@@ -22,6 +22,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -210,6 +211,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
+    protected ExtendedWebElement notificationPopUp;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
+    private ExtendedWebElement dynamicAccessProfileIcon;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -800,7 +807,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        dynamicTypeLinkRowLabel("Not Now", 1).click();
+        if (notificationPopUp.isPresent()) {
+            dynamicTypeLinkRowLabel("Not Now", 1).click();
+        }
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
@@ -894,5 +903,40 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.assertTrue(element.isPresent(),
                     String.format("Element was not present after %d seconds elapsed.", count.get()));
         } );
+    }
+
+    public void clickProfile(String name, boolean onboarding) {
+        LOGGER.info("Clicking profile name '{}'...", name);
+        ExtendedWebElement profileIcon;
+        if(onboarding) {
+            profileIcon = dynamicAccessProfileIcon.format(
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of("user_profile", name)));
+            profileIcon.click();
+        } else {
+            profileIcon = dynamicAccessProfileIcon.format(
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", name)));
+            profileIcon.click();
+        }
+    }
+
+    public void clickProfile(String name) {
+        clickProfile(name, false);
+    }
+
+    public void clickPinProtectedProfile(String name) {
+        dynamicAccessProfileIcon.format(
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()),  Map.of("user_profile", name)))
+                .click();
+    }
+
+    public boolean isAccessModeProfileIconPresent(String username) {
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return dynamicAccessProfileIcon.format(
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()),  Map.of("user_profile", username)))
+                .isElementPresent();
     }
 }
