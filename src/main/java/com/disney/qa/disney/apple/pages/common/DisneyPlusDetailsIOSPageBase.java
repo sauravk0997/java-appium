@@ -280,8 +280,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isTwentyDownloadsTextDisplayed() {
         UniversalUtils.captureAndUpload(getCastedDriver());
-        String twentyDownloadsText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText());
-        return getDynamicAccessibilityId(twentyDownloadsText.replace("${E}", "20")).isElementPresent();
+        String twentyDownloadsText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText()), Map.of("E", Integer.parseInt("20")));
+        return getDynamicAccessibilityId(twentyDownloadsText).isElementPresent();
     }
 
     public boolean isSeasonButtonDisplayed(String season) {

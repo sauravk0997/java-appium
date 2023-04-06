@@ -1,7 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.disney.DisneyLanguageUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.HARUtils;
@@ -34,7 +35,7 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
     private String returningLandscape = "image_welcome_background_authenticated_unentitled_returning_landscape_";
     private String ripcutHost = DisneyParameters.getRipcutHost();
 
-    DisneyLanguageUtils localLanguageUtils;
+    DisneyLocalizationUtils localLanguageUtils;
 
     @DataProvider
     private Object[] dataProvider() {
@@ -85,10 +86,15 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
     }
 
     private void testSetup(String country) {
-        localLanguageUtils = new DisneyLanguageUtils(getData(country, "code").toString(), getData(country, "language").toString());
+        localLanguageUtils = new DisneyLocalizationUtils(
+                getData(country, "code").toString(),
+                getData(country, "language").toString(),
+                IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
         String language = getData(country, "language").toString();
         initiateProxy(StringUtils.substringBefore(country, "-"));
-        localLanguageUtils.setDictionaries();
+        localLanguageUtils.setDictionaries(configApi.get().getDictionaryVersions());
         handleAlert();
 
         R.CONFIG.put("capabilities.language", language);
@@ -113,16 +119,16 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
         String newUserCode = getData(country, "newUserCode").toString();
         String returningUserCode = getData(country, "returningUserCode").toString();
 
-        softAssert.assertEquals(localLanguageUtils.getPaywallItem(String.format("%s%s", newPortrait, newUserCode)), portraitHash,
-                "Expected - New Portait image hash in dictionary to match regional expectation");
+        softAssert.assertEquals(localLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, String.format("%s%s", newPortrait, newUserCode)), portraitHash,
+                "Expected - New Portrait image hash in dictionary to match regional expectation");
 
-        softAssert.assertEquals(localLanguageUtils.getPaywallItem(String.format("%s%s", newLandscape, newUserCode)), landscapeHash,
+        softAssert.assertEquals(localLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, String.format("%s%s", newLandscape, newUserCode)), landscapeHash,
                 "Expected - New Landscape image hash in dictionary to match regional expectation");
 
-        softAssert.assertEquals(localLanguageUtils.getPaywallItem(String.format("%s%s", returningPortrait, returningUserCode)), portraitHash,
+        softAssert.assertEquals(localLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, String.format("%s%s", returningPortrait, returningUserCode)), portraitHash,
                 "Expected - Returning Portrait image hash in dictionary to match regional expectation");
 
-        softAssert.assertEquals(localLanguageUtils.getPaywallItem(String.format("%s%s", returningLandscape, returningUserCode)), landscapeHash,
+        softAssert.assertEquals(localLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, String.format("%s%s", returningLandscape, returningUserCode)), landscapeHash,
                 "Expected - Returning Landscape Image hash in dictionary to match regional expectation");
 
         softAssert.assertTrue(HARUtils.harContainsValue(proxy.get(), ripcutHost, HARUtils.RequestDataType.URL, portraitHash),
