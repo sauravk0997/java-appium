@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.search.assets.DisneyMovies;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -12,7 +10,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -26,7 +23,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
     private static final String  DETAILS_TAB_METADATA_MOVIE = "Hocus Pocus";
     private static final String  ALL_METADATA_MOVIE = "Turning Red";
-    private static final String DEVICE_TYPE = "capabilities.deviceType";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
@@ -145,13 +141,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
-        //Currently banner is not detected on iPad by Alice driver (QCE-684).
-        if("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
-        } else {
-            LOGGER.info((R.CONFIG.get(DEVICE_TYPE)) + " device type detected, will not validate banner image");
-        }
-
+        //Verify main details page UI elements
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");

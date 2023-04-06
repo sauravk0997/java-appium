@@ -381,7 +381,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             String metaDataLabelSeasons = getParsedString(metaDataLabel, "1",",");
             String[] seasonParse = metaDataLabelSeasons.split(" ");
             String numberOfSeasons = seasonParse[0];
-            String multiSeason = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_TOTAL_SEASONS.getText()), numberOfSeasons);
+            String multiSeason = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_TOTAL_SEASONS.getText());
+            multiSeason = getDictionary().formatPlaceholderString(multiSeason, Map.of("number_of_seasons", Integer.parseInt(numberOfSeasons)));
             return multiSeason.contains(metaDataLabelSeasons);
         }
     }
@@ -479,5 +480,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getInfoView() {
         return infoView;
+    }
+
+    public boolean isHeroImagePresent() {
+        return getTypeOtherByName("heroImage").isPresent();
     }
 }
