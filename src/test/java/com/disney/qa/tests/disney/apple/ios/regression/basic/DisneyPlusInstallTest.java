@@ -116,7 +116,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-XXXXX"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73477"})
     @Test(description = "Old app with kids download to new app installation", groups = {"Install"})
     public void testOldAppToNewAppInstallDownloadKids() {
         setGlobalVariables();
@@ -201,7 +201,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-XXXXX"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73476"})
     @Test(description = "Old app with adult download to new app install", groups = {"Install"})
     public void testOldAppToNewAppInstallDownloadAdult() {
         setGlobalVariables();
@@ -283,7 +283,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
                 "Old app version and new app version are the same");
 
-        moreMenu.clickProfile(KIDS);
+        whoIsWatching.clickProfile(KIDS);
         sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
 
         homePage.clickDownloadsIcon();
