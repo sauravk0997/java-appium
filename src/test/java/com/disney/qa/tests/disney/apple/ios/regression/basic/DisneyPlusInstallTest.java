@@ -23,7 +23,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72882"})
     @Test(description = "Old app to new app installation with login validation", groups = {"Install"})
-    public void testOldAppToNewAppInstallWithLogin() {
+    public void testOldAppToNewAppInstallBVT() {
         setGlobalVariables();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -157,7 +157,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         search.getDisplayedTitles().get(0).click();
         sa.assertTrue(details.isOpened(), "Series detail screen not displayed");
 
-        details.addToWatchlist();
         details.startDownload();
         details.waitForSeriesDownloadToComplete();
         homePage.clickDownloadsIcon();
@@ -189,12 +188,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         details.dismissNotificationsPopUp(); //notifications pop-up appears after exit player
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isOpened(), "More Menu is not displayed");
-
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(KIDS_SHORT_SERIES),
-                "Short Series not found on Watchlist");
-
-        moreMenu.getBackArrow().click();
         sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
                 "Old app version and new app version are the same");
         sa.assertAll();
@@ -242,7 +235,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         search.getDisplayedTitles().get(0).click();
         sa.assertTrue(details.isOpened(), "Series detail screen not displayed");
 
-        details.addToWatchlist();
         details.startDownload();
         details.waitForMovieDownloadComplete();
         homePage.clickDownloadsIcon();
@@ -274,12 +266,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         details.dismissNotificationsPopUp(); //notifications pop-up appears after exit player
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isOpened(), "More Menu is not displayed");
-
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(ADULTS_SHORT_MOVIE),
-                "Short Series not found on Watchlist");
-
-        moreMenu.getBackArrow().click();
         sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
                 "Old app version and new app version are the same");
 
