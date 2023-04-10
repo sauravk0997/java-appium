@@ -63,7 +63,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
 
         details.addToWatchlist();
         details.startDownload();
-        details.waitForDownloadToComplete();
+        details.waitForSeriesDownloadToComplete();
         details.clickPlayButton().isOpened();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 
