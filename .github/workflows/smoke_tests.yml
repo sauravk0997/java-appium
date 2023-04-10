@@ -32,8 +32,7 @@ jobs:
           url: ${{ env.JENKINS_URL }}
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
           folder_path: ${{ env.JENKINS_FOLDER_PATH }}
-          job_name: Hello-Disney-Test
-          #job_name: DisneyPlus-iOS-Api-Utils-Run
+          job_name: DisneyPlus-iOS-Api-Utils-Run
           parameters: ${{ env.JENKINS_PARAMS }}
           start_timeout: 60
           build_timeout: 1500
@@ -58,8 +57,7 @@ jobs:
           url: ${{ env.JENKINS_URL }}
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
           folder_path: ${{ env.JENKINS_FOLDER_PATH }}
-          job_name: Hello-Disney-Test
-          #job_name: DisneyPlus-tvOS-Api-Utils-Run
+          job_name: DisneyPlus-tvOS-Api-Utils-Run
           parameters: ${{ env.JENKINS_PARAMS }}
           start_timeout: 60
           build_timeout: 1500
