@@ -163,7 +163,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 
         downloads.tapDownloadedAssetFromListView(KIDS_SHORT_SERIES);
-        downloads.tapDownloadedAsset("Play Bluey");
+        downloads.tapDownloadedAsset(KIDS_SHORT_SERIES);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
         videoPlayer.clickBackButton();
@@ -180,7 +180,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed on Kids profile.");
 
         downloads.tapDownloadedAssetFromListView(KIDS_SHORT_SERIES);
-        downloads.tapDownloadedAsset("Play Bluey");
+        downloads.tapDownloadedAsset(KIDS_SHORT_SERIES);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 
@@ -241,7 +241,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 
         downloads.tapDownloadedAssetFromListView(ADULTS_SHORT_MOVIE);
-        downloads.tapDownloadedAsset("Play Purl");
+        downloads.tapDownloadedAsset(ADULTS_SHORT_MOVIE);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
         videoPlayer.clickBackButton();
@@ -258,7 +258,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 
         downloads.tapDownloadedAssetFromListView(ADULTS_SHORT_MOVIE);
-        downloads.tapDownloadedAsset("Play Purl");
+        downloads.tapDownloadedAsset(ADULTS_SHORT_MOVIE);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 

@@ -44,7 +44,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void tapDownloadedAsset(String downloadedAsset) {
-		dynamicBtnFindByLabelContains.format(downloadedAsset).click();
+		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
 	}
 
 	public void tapDownloadedAssetText(String downloadedAsset) {

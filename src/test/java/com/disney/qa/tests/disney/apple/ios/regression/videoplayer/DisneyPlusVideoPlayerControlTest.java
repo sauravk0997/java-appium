@@ -47,7 +47,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         detailsPage.waitForSeriesDownloadToComplete();
         homePage.clickDownloadsIcon();
         downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
-        downloadsPage.tapDownloadedAsset("Play Bluey");
+        downloadsPage.tapDownloadedAsset(SHORT_SERIES);
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
