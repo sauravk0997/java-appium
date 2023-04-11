@@ -268,6 +268,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         relaunch();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
         if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
             LOGGER.info("Checkbox needed");
@@ -288,7 +289,23 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(2);
         getScreenshots("PasswordPage");
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+
+        //S1.4 & S1.5
+        createPasswordPage.submitPasswordValue("");
+        pause(1);
+        getScreenshots("EmptyPasswordError");
+        createPasswordPage.submitPasswordValue("123");
+        pause(1);
+        getScreenshots("BadPasswordError");
+        createPasswordPage.enterPasswordValue("fair1234");
+        pause(1);
+        getScreenshots("Fair");
+        createPasswordPage.enterPasswordValue("fair12345");
+        pause(1);
+        getScreenshots("Good");
+        createPasswordPage.enterPasswordValue("fair123456!");
+        pause(1);
+        getScreenshots("Great");
 
         if(isArielRegion) {
             iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
