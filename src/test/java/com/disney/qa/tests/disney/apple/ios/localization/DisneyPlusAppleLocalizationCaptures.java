@@ -307,6 +307,8 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(1);
         getScreenshots("Great");
 
+        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+
         if(isArielRegion) {
             iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
             signUpIOSPageBase.clickAgreeAndContinue();
