@@ -344,33 +344,14 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(2);
         getScreenshots("PremiumPlan");
 
+        //1.10
+        paywallPage.clickCancelBtn();
+        paywallPage.getSystemAlertDefaultBtn().click();
+        pause(3);
+        getScreenshots("OneStepAway");
 
-//
-//        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-//
-//        if (isArielRegion) {
-//            pause(3);
-//            getScreenshots("PlanSelection");
-//            paywallIOSPageBase.getSelectPaymentPlanBtn().click();
-//        }
-//
-//        paywallIOSPageBase.isOpened();
-//        getScreenshots("SkuSelection");
-//        paywallIOSPageBase.clickPurchaseButton();
-//
-//        paywallIOSPageBase.waitForSubscribeOverlay();
-//        getScreenshots("SandboxSubscribe");
-//        paywallIOSPageBase.clickOverlaySubscribeButton();
-//        try {
-//            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
-//        } catch (NoSuchElementException nse) {
-//            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-//        }
-//        iosUtils.get().acceptAlert();
-//        iosUtils.get().acceptAlert();
-//
-//        initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
-//        getScreenshots("ProfileSelect");
+        //TODO: finish //1.11 and create new jenkins job
+
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 }
