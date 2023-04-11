@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -10,7 +8,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -30,6 +27,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String ORIGINALS_METADATA_SERIES = "Moon Knight";
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String ASPECT_RATIO_SERIES = "The Simpsons";
+    private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String DEVICE_TYPE = "capabilities.deviceType";
 
     @Maintainer("csolmaz")
@@ -45,7 +43,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
 
         disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia("Phineas and Ferb");
+        disneyPlusSearchIOSPageBase.searchForMedia(MORE_THAN_TWENTY_EPISODES_SERIES);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
         pause(5);
@@ -183,6 +181,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.isOpened();
 
         //Verify main details page UI elements
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
@@ -190,13 +189,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isGroupWatchButtonDisplayed(), "Details page group watch button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
-
-        //Currently banner is not detected on iPad by Alice driver (QCE-684).
-        if("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
-        } else {
-            LOGGER.info((R.CONFIG.get(DEVICE_TYPE)) + " device type detected, will not validate banner image");
-        }
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
         sa.assertTrue(detailsPage.doesMetadataYearContainDetailsTabYear(), "Metadata year does not contain details tab year.");
         sa.assertAll();
