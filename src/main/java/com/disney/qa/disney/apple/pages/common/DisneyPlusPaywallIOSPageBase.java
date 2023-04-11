@@ -48,12 +48,11 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
     private ExtendedWebElement purchasePlanBtn;
 
-    public ExtendedWebElement getSelectPaymentPlanBtn() {
-        return selectPaymentPlanBtn;
-    }
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SELECT\"`][1]")
-    private ExtendedWebElement selectPaymentPlanBtn;
+    private ExtendedWebElement selectBasicPaymentPlanBtn;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SELECT\"`][2]")
+    private ExtendedWebElement selectPremiumPaymentPlanBtn;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
     private ExtendedWebElement overlaySubscribeBtn;
@@ -163,5 +162,13 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         if (isViewAlertPresent()) {
             alertFinishLaterBtn.click();
         }
+    }
+
+    public ExtendedWebElement getSelectPremiumPaymentPlanBtn() {
+        return selectPremiumPaymentPlanBtn;
+    }
+
+    public ExtendedWebElement getSelectBasicPaymentPlanBtn() {
+        return selectBasicPaymentPlanBtn;
     }
 }

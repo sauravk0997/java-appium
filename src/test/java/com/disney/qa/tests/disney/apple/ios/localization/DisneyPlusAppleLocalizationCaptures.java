@@ -8,7 +8,6 @@ import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.util.HARUtils;
 import com.disney.util.disney.DisneyGlobalUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -334,6 +333,16 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         signUpIOSPageBase.clickAgreeAndContinue();
         pause(2);
         getScreenshots("chooseYourPlanPage");
+
+        //S1.9
+        paywallPage.getSelectBasicPaymentPlanBtn().click();
+        pause(2);
+        getScreenshots("BasicPlan");
+
+        paywallPage.getBackArrow().click();
+        paywallPage.getSelectPremiumPaymentPlanBtn().click();
+        pause(2);
+        getScreenshots("PremiumPlan");
 
 
 //
