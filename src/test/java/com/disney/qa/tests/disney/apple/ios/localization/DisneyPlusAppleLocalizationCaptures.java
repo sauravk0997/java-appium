@@ -309,36 +309,44 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
 
-        if(isArielRegion) {
-            iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
-            signUpIOSPageBase.clickAgreeAndContinue();
-        }
+        //S1.7
+        pause(1);
+        getScreenshots("birthdatePage");
 
-        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        iosUtils.get().setBirthDate(Person.MINOR.getMonth().getText(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+        pause(2);
+        getScreenshots("minorError");
 
-        if (isArielRegion) {
-            pause(3);
-            getScreenshots("PlanSelection");
-            paywallIOSPageBase.getSelectPaymentPlanBtn().click();
-        }
 
-        paywallIOSPageBase.isOpened();
-        getScreenshots("SkuSelection");
-        paywallIOSPageBase.clickPurchaseButton();
-
-        paywallIOSPageBase.waitForSubscribeOverlay();
-        getScreenshots("SandboxSubscribe");
-        paywallIOSPageBase.clickOverlaySubscribeButton();
-        try {
-            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
-        } catch (NoSuchElementException nse) {
-            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-        }
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
-
-        initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
-        getScreenshots("ProfileSelect");
+//        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+//        signUpIOSPageBase.clickAgreeAndContinue();
+//
+//        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+//
+//        if (isArielRegion) {
+//            pause(3);
+//            getScreenshots("PlanSelection");
+//            paywallIOSPageBase.getSelectPaymentPlanBtn().click();
+//        }
+//
+//        paywallIOSPageBase.isOpened();
+//        getScreenshots("SkuSelection");
+//        paywallIOSPageBase.clickPurchaseButton();
+//
+//        paywallIOSPageBase.waitForSubscribeOverlay();
+//        getScreenshots("SandboxSubscribe");
+//        paywallIOSPageBase.clickOverlaySubscribeButton();
+//        try {
+//            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
+//        } catch (NoSuchElementException nse) {
+//            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+//        }
+//        iosUtils.get().acceptAlert();
+//        iosUtils.get().acceptAlert();
+//
+//        initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
+//        getScreenshots("ProfileSelect");
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 }

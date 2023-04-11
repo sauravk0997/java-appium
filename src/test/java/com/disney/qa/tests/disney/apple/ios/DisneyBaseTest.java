@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @SuppressWarnings("squid:S2187")
@@ -53,7 +55,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
 
     public enum Person {
-        ADULT(DateHelper.Month.NOVEMBER, "5", "1955");
+        ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
+        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
+
+
+
 
         DateHelper.Month month;
         String day;
