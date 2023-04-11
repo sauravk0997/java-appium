@@ -313,6 +313,9 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(1);
         getScreenshots("birthdatePage");
 
+        signUpIOSPageBase.clickPrimaryButton();
+        getScreenshots("birthdatePageEmptyError");
+
         iosUtils.get().setBirthDate(Person.MINOR.getMonth().getText(), Person.MINOR.getDay(), Person.MINOR.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         pause(2);
