@@ -266,9 +266,12 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         }
         initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
         relaunch();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+
+        welcomePage.clickSignUpButton();
 
         if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
             LOGGER.info("Checkbox needed");
@@ -310,7 +313,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
 
         //S1.7
-        pause(1);
+        pause(2);
         getScreenshots("birthdatePage");
 
         signUpIOSPageBase.clickPrimaryButton();
@@ -321,9 +324,18 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(2);
         getScreenshots("minorError");
 
+        signUpIOSPageBase.clickSystemAlertSecondaryBtn();
 
-//        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
-//        signUpIOSPageBase.clickAgreeAndContinue();
+        //S1.8
+        welcomePage.clickSignUpButton();
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+        pause(2);
+        getScreenshots("chooseYourPlanPage");
+
+
 //
 //        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 //
