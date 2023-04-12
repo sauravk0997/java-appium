@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 //        setSystemLanguage(regionLanguage.get(), region.get());
 //        restartDriver(true);
         initiateProxy(country);
-//        pause(10);
+        pause(10);
         clearAppCache();
 //        languageUtils.set(new DisneyLocalizationUtils(region.get(), regionLanguage.get(), "apple-tv", "prod", PARTNER));
 //        DisneyMobileConfigApi configApi = new DisneyMobileConfigApi("tvos", "prod", PARTNER, new MobileUtilsExtended().getInstalledAppVersion());
