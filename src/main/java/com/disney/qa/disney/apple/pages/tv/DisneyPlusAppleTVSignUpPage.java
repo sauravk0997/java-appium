@@ -92,10 +92,12 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     }
 
     public void selectCheckBoxesForKr(boolean isKr) {
-        keyPressTimes(IRemoteControllerAppleTV::clickDown,  2, 1);
-        clickSelect();
-        clickDown();
-        clickSelect();
-        keyPressTimes(IRemoteControllerAppleTV::clickUp,  3, 1);
+        if(isKr) {
+            keyPressTimes(IRemoteControllerAppleTV::clickDown, 2, 1);
+            clickSelect();
+            clickDown();
+            clickSelect();
+            keyPressTimes(IRemoteControllerAppleTV::clickUp, 3, 1);
+        }
     }
 }
