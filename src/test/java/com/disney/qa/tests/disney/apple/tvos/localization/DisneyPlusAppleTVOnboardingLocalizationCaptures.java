@@ -80,14 +80,16 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVSignUpPage.isLocalizedPageWithPrimaryButtonOpened();
         getScreenshots("2-EnterEmail", baseDirectory);
 
-        disneyPlusAppleTVSignUpPage.moveDown(2, 1);
-        disneyPlusAppleTVSignUpPage.clickSelect();
+        boolean isKr = locale.equalsIgnoreCase("kr");
+        disneyPlusAppleTVSignUpPage.proceedToLegalPage(isKr);
+//        disneyPlusAppleTVSignUpPage.moveDown(2, 1);
+//        disneyPlusAppleTVSignUpPage.clickSelect();
         pause(5);
         disneyPlusAppleTVLegalPage.isOpened();
         getScreenshots("3-PrivacyPolicy", baseDirectory);
 
         disneyPlusAppleTVLegalPage.clickMenuTimes(1, 1);
-        disneyPlusAppleTVSignUpPage.moveUp(2, 1);
+        disneyPlusAppleTVSignUpPage.moveUp(isKr ? 4 : 2, 1);
         disneyPlusAppleTVLoginPage.clickEmailField();
         disneyPlusAppleTVLoginPage.clickLocalizationEnterNewBtn();
         pause(5);
@@ -195,13 +197,13 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
 
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(5);
         disneyPlusAppleTVSignUpPage.isRestartSubBtnPresent();
         getScreenshots("18-WelcomeBack", baseDirectory);
 
         disneyPlusAppleTVSignUpPage.clickRestartSubscription();
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         //Some countries have subscriber agreement requirement:
         if (languageUtils.get().isSubscriberAgreementRequired()) {
@@ -210,7 +212,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             disneyPlusApplePageBase.clickPrimaryButton();
         }
 
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(5);
         disneyPlusAppleTVRestartSubscriptionPage.isOpened();
         getScreenshots("19-RestartPaywall", baseDirectory);
@@ -242,6 +244,8 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         disneyPlusAppleTVSignUpPage.isOpened();
 
+        boolean isKr = locale.equalsIgnoreCase("kr");
+        disneyPlusAppleTVSignUpPage.selectCheckBoxesForKr(isKr);
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
         if (languageUtils.get().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
