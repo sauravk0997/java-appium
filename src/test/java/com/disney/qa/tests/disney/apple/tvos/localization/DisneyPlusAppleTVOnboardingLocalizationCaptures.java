@@ -198,7 +198,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
 
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        pause(5);
+        pause(15);
         disneyPlusAppleTVSignUpPage.isRestartSubBtnPresent();
         getScreenshots("18-WelcomeBack", baseDirectory);
 
@@ -213,7 +213,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
 
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        pause(5);
+        pause(15);
         disneyPlusAppleTVRestartSubscriptionPage.isOpened();
         getScreenshots("19-RestartPaywall", baseDirectory);
 
@@ -283,7 +283,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(account.getUserPass());
 //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVRestartSubscriptionPage.isLocalizedPageWithPrimaryButtonOpened();
-        pause(5);
+        pause(15);
         getScreenshots(count + "-WelcomeBack", baseDirectory);
 
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
