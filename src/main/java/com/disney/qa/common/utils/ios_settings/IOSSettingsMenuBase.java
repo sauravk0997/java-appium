@@ -2,9 +2,11 @@ package com.disney.qa.common.utils.ios_settings;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.util.HARUtils;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -48,11 +50,25 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Back")
     protected ExtendedWebElement backBtn;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    private ExtendedWebElement sandboxPasswordBox;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
+    protected ExtendedWebElement sandboxSigninButton;
+
+    @FindBy(id = "Subscriptions")
+    protected ExtendedWebElement subscriptionsButton;
+
     protected IOSUtils utils;
 
     public IOSSettingsMenuBase(WebDriver driver) {
         super(driver);
         utils = new IOSUtils();
+    }
+
+    public void submitSandboxPassword(String password) {
+        sandboxPasswordBox.type(password);
+        sandboxSigninButton.click();
     }
 
     @Override
@@ -76,6 +92,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
+        subscriptionsButton.click();
 
         if(appSubscriptionButton.format(appName).isElementPresent()) {
             appSubButtons = findExtendedWebElements(appSubscriptionButton.format(appName).getBy());
@@ -107,6 +124,11 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         utils.swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
+        try {
+            submitSandboxPassword("G0Disney!");
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
     }
 
     protected void cancelActiveSubscription() {
