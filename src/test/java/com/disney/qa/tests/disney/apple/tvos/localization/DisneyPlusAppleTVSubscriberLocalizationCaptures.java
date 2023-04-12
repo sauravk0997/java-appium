@@ -160,6 +160,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
+        disneyPlusAppleTVHomePage.isOpened();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
@@ -346,6 +347,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
+        disneyPlusAppleTVHomePage.isOpened();
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.clickNavMenuSettings();
 
