@@ -20,8 +20,7 @@
                value="AD,AL,AR,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
     <parameter name="choiceParam::language::Language to run"
                value="cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
-    <parameter name="choiceParam::groups::Group"
-               value="Onboarding - Ariel"/>
+    <parameter name="choiceParam::groups::Group" value="Onboarding - Ariel"/>
     <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
     <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value=""/>
 
