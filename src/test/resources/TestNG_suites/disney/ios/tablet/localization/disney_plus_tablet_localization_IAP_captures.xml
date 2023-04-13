@@ -25,7 +25,7 @@
     <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
     <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value=""/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet Localization Captures" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Localization IAP Captures" parallel="methods">
         <parameter name="{ds_custom_provider}" value="true"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.localization.DisneyPlusAppleLocalizationCaptures"/>
