@@ -119,6 +119,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByName;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
+    private ExtendedWebElement dynamicOtherFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
@@ -209,6 +211,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
+    protected ExtendedWebElement notificationPopUp;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -286,6 +291,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeButtonByName(String name) {
         return dynamicBtnFindByName.format(name);
+    }
+
+    public ExtendedWebElement getTypeOtherByName(String name) {
+        return dynamicOtherFindByName.format(name);
     }
 
     public ExtendedWebElement getTypeButtonContainsLabel(String label) {
@@ -794,7 +803,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        dynamicTypeLinkRowLabel("Not Now", 1).click();
+        if (notificationPopUp.isPresent()) {
+            dynamicTypeLinkRowLabel("Not Now", 1).click();
+        }
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }

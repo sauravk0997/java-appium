@@ -42,9 +42,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
     private ExtendedWebElement extrasButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
-    private ExtendedWebElement notificationPopUp;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -142,9 +139,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOpened(long time) {
-        if (notificationPopUp.isPresent()) {
-            dismissNotificationsPopUp();
-        }
+        dismissNotificationsPopUp();
         return shareBtn.isElementPresent(time);
     }
 
@@ -187,10 +182,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public void waitForDownloadToComplete() {
-        LOGGER.info("Waiting for download to complete");
+    public void waitForSeriesDownloadToComplete() {
+        LOGGER.info("Waiting for series download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
                 .until(it -> downloadCompleteButton.isPresent());
+        LOGGER.info("Download completed");
+    }
+
+    public void waitForMovieDownloadComplete() {
+        LOGGER.info("Waiting for movie download to complete");
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Downloaded button is not present")
+                .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
         LOGGER.info("Download completed");
     }
 
@@ -278,8 +280,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isTwentyDownloadsTextDisplayed() {
         UniversalUtils.captureAndUpload(getCastedDriver());
-        String twentyDownloadsText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText());
-        return getDynamicAccessibilityId(twentyDownloadsText.replace("${E}", "20")).isElementPresent();
+        String twentyDownloadsText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText()), Map.of("E", Integer.parseInt("20")));
+        return getDynamicAccessibilityId(twentyDownloadsText).isElementPresent();
     }
 
     public boolean isSeasonButtonDisplayed(String season) {
@@ -380,7 +383,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             String metaDataLabelSeasons = getParsedString(metaDataLabel, "1",",");
             String[] seasonParse = metaDataLabelSeasons.split(" ");
             String numberOfSeasons = seasonParse[0];
-            String multiSeason = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_TOTAL_SEASONS.getText()), numberOfSeasons);
+            String multiSeason = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_TOTAL_SEASONS.getText());
+            multiSeason = getDictionary().formatPlaceholderString(multiSeason, Map.of("number_of_seasons", Integer.parseInt(numberOfSeasons)));
             return multiSeason.contains(metaDataLabelSeasons);
         }
     }
@@ -478,5 +482,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getInfoView() {
         return infoView;
+    }
+
+    public boolean isHeroImagePresent() {
+        return getTypeOtherByName("heroImage").isPresent();
     }
 }

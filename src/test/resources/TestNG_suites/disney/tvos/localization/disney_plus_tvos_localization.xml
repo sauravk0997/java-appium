@@ -21,13 +21,13 @@
     <parameter name="overrideFields"
                value="custom_string=${unpinDictionaries},custom_string2=${regionLanguage},custom_string3=${region},custom_string4=${globalization},custom_string5={debugDictionary},browsermob_proxy=true"/>
 
-    <test verbose="1" name="Disney Plus Onboarding Localization Screenshots">
+    <test verbose="1" name="Disney Plus Onboarding Localization Screenshots" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVOnboardingLocalizationCaptures">
             </class>
         </classes>
     </test>
-    <test verbose="1" name="Disney Plus Subscriber Localization Screenshots">
+    <test verbose="1" name="Disney Plus Subscriber Localization Screenshots" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVSubscriberLocalizationCaptures">
             </class>
