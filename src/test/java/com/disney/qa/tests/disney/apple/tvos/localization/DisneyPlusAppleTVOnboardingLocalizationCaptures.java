@@ -76,8 +76,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
         boolean isKr = locale.equalsIgnoreCase("kr");
         disneyPlusAppleTVSignUpPage.proceedToLegalPage(isKr);
-//        disneyPlusAppleTVSignUpPage.moveDown(2, 1);
-//        disneyPlusAppleTVSignUpPage.clickSelect();
         pause(5);
         disneyPlusAppleTVLegalPage.isOpened();
         getScreenshots("3-PrivacyPolicy", baseDirectory);
