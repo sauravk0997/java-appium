@@ -161,7 +161,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         disneyPlusAppleTVHomePage.isOpened();
-        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+        if (!disneyPlusAppleTVHomePage. isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
         disneyPlusAppleTVHomePage.isGlobalNavExpanded();
@@ -188,7 +188,6 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
     @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = {"SubscriberFlowProfiles", "SubUI"})
     public void captureSubscriberUIFlowProfiles() throws URISyntaxException {
-        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
