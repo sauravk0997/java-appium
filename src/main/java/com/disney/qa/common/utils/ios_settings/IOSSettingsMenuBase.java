@@ -91,7 +91,10 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
-        subscriptionsButton.click();
+
+        if(subscriptionsButton.isElementPresent()) {
+            subscriptionsButton.click();
+        }
 
         if(appSubscriptionButton.format(appName).isElementPresent()) {
             appSubButtons = findExtendedWebElements(appSubscriptionButton.format(appName).getBy());
