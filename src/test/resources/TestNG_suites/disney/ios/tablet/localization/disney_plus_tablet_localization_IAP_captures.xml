@@ -3,7 +3,7 @@
 
     <parameter name="suiteOwner" value="bsuscavage"/>
     <parameter name="reporting.project-key" value="LQA"/>
-    <parameter name="appcenter_app_name" value="Disney-Ad-Hoc"/>
+    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Localization-IAP-Captures"/>
     <parameter name="jenkinsEmail" value=""/>
