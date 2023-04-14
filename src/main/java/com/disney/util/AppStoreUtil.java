@@ -7,6 +7,9 @@ import java.util.List;
 
 public class AppStoreUtil {
 
+    private AppStoreUtil() {
+    }
+
     public static void clearPurchaseHistoryForSandboxAccounts(String emailPrefix) {
         AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
 
