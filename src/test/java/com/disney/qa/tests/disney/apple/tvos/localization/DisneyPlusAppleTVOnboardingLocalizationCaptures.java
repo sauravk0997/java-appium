@@ -42,15 +42,9 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
         DisneyCountryData countryData = new DisneyCountryData();
         String country = (String) countryData.searchAndReturnCountryData(locale, "code", "country");
-//        setSystemLanguage(regionLanguage.get(), region.get());
-//        restartDriver(true);
         initiateProxy(country);
         pause(10);
         clearAppCache();
-//        languageUtils.set(new DisneyLocalizationUtils(region.get(), regionLanguage.get(), "apple-tv", "prod", PARTNER));
-//        DisneyMobileConfigApi configApi = new DisneyMobileConfigApi("tvos", "prod", PARTNER, new MobileUtilsExtended().getInstalledAppVersion());
-//        languageUtils.get().setDictionaries(configApi.getDictionaryVersions());
-//        DisneyPlusApplePageBase.setDictionary(languageUtils.get());
     }
 
     @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding"})
