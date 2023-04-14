@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -8,6 +9,7 @@ import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.disney.DisneyGlobalUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +17,8 @@ import org.testng.annotations.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
@@ -337,12 +341,14 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         getScreenshots("chooseYourPlanPage");
 
         //S1.9
-        paywallPage.getSelectBasicPaymentPlanBtn().click();
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
         pause(2);
         getScreenshots("basicPlan");
 
         paywallPage.getBackArrow().click();
-        paywallPage.getSelectPremiumPaymentPlanBtn().click();
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText()),2).click();
         pause(2);
         getScreenshots("premiumPlan");
 
@@ -364,7 +370,8 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
 
-        paywallPage.getSelectBasicPaymentPlanBtn().click();
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
 
         paywallPage.isOpened();
         paywallPage.clickPurchaseButton();
