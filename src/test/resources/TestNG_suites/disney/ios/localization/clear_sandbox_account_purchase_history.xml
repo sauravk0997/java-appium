@@ -3,7 +3,7 @@
 
     <parameter name="suiteOwner" value="jsilveti"/>
     <parameter name="jenkinsJobName" value="iOS-Clear-Sandbox-Account-Purchase-History"/>
-    <parameter name="jenkinsPipelineScheduling" value="@daily"/>
+    <parameter name="scheduling" value="H 6 * * *"/>
     <parameter name="hiddenParam::groups::Group" value="clearAccounts"/>
 
     <test verbose="1" name="iOS Clear Sandbox Account Purchase History">
