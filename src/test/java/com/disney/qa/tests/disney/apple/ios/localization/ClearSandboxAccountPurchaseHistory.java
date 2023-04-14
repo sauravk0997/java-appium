@@ -12,7 +12,7 @@ public class ClearSandboxAccountPurchaseHistory extends BaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @Test(description = "App Opens to Welcome Screen", groups = {"clearAccounts"})
+    @Test(description = "Clears app purchase history", groups = {"clearAccounts"})
     public void clearDSSSandboxAccounts() {
         LOGGER.info("Clearing purchase history for dsqaaiap perfix accounts");
         AppStoreUtil.clearPurchaseHistoryForSandboxAccounts("dsqaaiap");
