@@ -281,35 +281,35 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         //S1.1
         pause(2);
-        getScreenshots("EmailPage");
+        getScreenshots("emailPage");
 
         //S1.2
         signUpIOSPageBase.submitEmailAddress("badEmail");
         pause(2);
-        getScreenshots("BadEmailError");
+        getScreenshots("badEmailError");
 
         //S1.3
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         pause(2);
-        getScreenshots("PasswordPage");
+        getScreenshots("passwordPage");
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
 
         //S1.4 & S1.5
         createPasswordPage.submitPasswordValue("");
         pause(1);
-        getScreenshots("EmptyPasswordError");
+        getScreenshots("emptyPasswordError");
         createPasswordPage.submitPasswordValue("123");
         pause(1);
-        getScreenshots("BadPasswordError");
+        getScreenshots("badPasswordError");
         createPasswordPage.enterPasswordValue("fair1234");
         pause(1);
-        getScreenshots("Fair");
+        getScreenshots("fair");
         createPasswordPage.enterPasswordValue("fair12345");
         pause(1);
-        getScreenshots("Good");
+        getScreenshots("good");
         createPasswordPage.enterPasswordValue("fair123456!");
         pause(1);
-        getScreenshots("Great");
+        getScreenshots("great");
 
         createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
 
@@ -339,18 +339,18 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         //S1.9
         paywallPage.getSelectBasicPaymentPlanBtn().click();
         pause(2);
-        getScreenshots("BasicPlan");
+        getScreenshots("basicPlan");
 
         paywallPage.getBackArrow().click();
         paywallPage.getSelectPremiumPaymentPlanBtn().click();
         pause(2);
-        getScreenshots("PremiumPlan");
+        getScreenshots("premiumPlan");
 
         //1.10
         paywallPage.clickCancelBtn();
         paywallPage.getSystemAlertDefaultBtn().click();
         pause(3);
-        getScreenshots("OneStepAway");
+        getScreenshots("oneStepAway");
 
         //1.11
         paywallPage.clickCancelBtn();
@@ -380,10 +380,10 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         iosUtils.get().acceptAlert();
 
         pause(3);
-        getScreenshots("ProfilePage");
+        getScreenshots("profilePage");
 
         addProfilePage.clickGenderDropDown();
-        getScreenshots("GenderOptions");
+        getScreenshots("genderOptions");
 
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
