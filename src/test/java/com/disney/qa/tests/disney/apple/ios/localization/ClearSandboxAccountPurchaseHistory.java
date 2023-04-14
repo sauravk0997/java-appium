@@ -27,7 +27,7 @@ public class ClearSandboxAccountPurchaseHistory extends BaseTest {
             Assert.assertTrue(
                     appStoreConnectApi.clearAccountPurchaseHistory(
                             account.getId()).getStatusCode().is2xxSuccessful(),
-                    "Clear account purchase history was not succesful!");
+                    "Clear account purchase history was not successful!");
         }
     }
 }
