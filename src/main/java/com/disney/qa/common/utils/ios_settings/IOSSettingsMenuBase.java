@@ -96,20 +96,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
             subscriptionsButton.click();
         }
 
-        if(appSubscriptionButton.format(appName).isElementPresent()) {
-            appSubButtons = findExtendedWebElements(appSubscriptionButton.format(appName).getBy());
-            for (int i = 0, appSubButtonsSize = appSubButtons.size(); i < appSubButtonsSize; i++) {
-                ExtendedWebElement app = appSubButtons.get(i);
-                if (app.getName().contains("Next billing date:")) {
-                    appSubButtonIndex = i;
-                    app.click();
-                    cancelActiveSubscription();
-                    backBtn.click();
-                    waitForExpiryTime = true;
-                    break;
-                }
-            }
-        } else if (cancelSubscriptionBtn.isElementPresent()) {
+        if (cancelSubscriptionBtn.isElementPresent()) {
             cancelActiveSubscription();
             doneBtn.click();
             waitForExpiryTime = true;
