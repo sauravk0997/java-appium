@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
@@ -69,6 +70,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
     @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu"})
     public void verifyU13AutoplayAndBackgroundVideoOff() {
@@ -91,6 +93,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13AuthenticationAbandonFlow() {
@@ -110,6 +113,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
@@ -131,6 +135,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13RestrictionONAuthentication() {
@@ -172,7 +177,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
         softAssert.assertAll();
     }
-
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Add Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu"})
     public void  verifyAddProfileU13MinorConsentAgree() {
@@ -205,7 +210,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
         softAssert.assertAll();
     }
-
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13MinorConsentDecline() {
@@ -228,6 +233,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72973"})
     @Test(description = "Add Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13MinorConsentAbandonFlow() {
@@ -255,6 +261,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentAgree() {
@@ -297,6 +304,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentDecline() {
@@ -324,6 +332,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentAbandonFlow() {
@@ -354,6 +363,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
     @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {"Ariel-More Menu"})
     public void verifyAdTierUserCoViewing() {
@@ -369,6 +379,41 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
         editProfilePage.getGroupWatchAndShareplay().click();
         Assert.assertTrue(editProfilePage.getGroupWatchAndShareplayTooltip().isPresent(), "GroupWatch and Shareplay tooltip is not shown on tapping groupwatch cell");
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72869"})
+    @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {"Ariel-More Menu"})
+    public void verifyU13PasswordGrantForWelch() {
+        setGlobalVariables();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        SoftAssert softAssert = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.clickSaveProfileButton();
+        //Consent authentication
+        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            new IOSUtils().scrollDown();
+        }
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        softAssert.assertFalse(passwordPage.isHeaderTextDisplayed(), "Enter your password page was displayed after selecting full catalog");
+        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
+        passwordPage.clickSecondaryButtonByCoordinates();
+        softAssert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        softAssert.assertAll();
     }
 
     @Maintainer("mboulogne1")
