@@ -40,6 +40,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
         if (unpinDictionaries || displayDictionaryKeys || (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null"))) {
+            LOGGER.info("Jarvis block");
             installJarvis();
             setJarvisOverrides();
         }
