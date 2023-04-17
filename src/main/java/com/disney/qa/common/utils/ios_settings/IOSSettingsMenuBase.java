@@ -2,6 +2,9 @@ package com.disney.qa.common.utils.ios_settings;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
+import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
+import com.qaprosoft.carina.core.foundation.utils.Configuration;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -110,11 +113,13 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
+        CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+
         utils.swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
         try {
-            submitSandboxPassword("G0Disney!");
+            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
