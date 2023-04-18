@@ -319,6 +319,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
 
         //QTE-1688 to investigate issue, fix below for when global nav is sometimes expanded.
         if (homePage.isGlobalNavExpanded()) {
+            LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
         }
 
