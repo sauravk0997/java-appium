@@ -32,7 +32,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61201", "XMOBQA-61207"})
     @Test(description = "Cellular Data Usage Page UI test")
     public void verifyCellularDataUsagePageUI() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
@@ -73,7 +73,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61203"})
     @Test(description = "Wi-Fi Data Usage Page UI test")
     public void verifyWiFiDataUsageUI() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
@@ -107,7 +107,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61211", "XMOBQA-61229", "XMOBQA-61231", "XMOBQA-61235"})
     @Test(description = "Verify that the user can only stream on Wi-Fi when Wi-Fi Only is selected", enabled = false)
     public void verifyWiFiOnlyVideoPlayback() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -185,7 +185,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61213"})
     @Test(description = "Verify functionality when the user enables Download Over Wi-Fi Only", enabled = false)
     public void verifyWiFiOnlyDownloads() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = new DisneyPlusSearchIOSPageBase(getDriver());
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
@@ -244,7 +244,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61215"})
     @Test(description = "Verify functionality when the user disables Download Over Wi-Fi Only", enabled = false)
     public void verifyCarrierDownloads() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -275,7 +275,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61217", "XMOBQA-61219", "XMOBQA-61221"})
     @Test(description = "Download Quality Settings UI Elements and Navigation test")
     public void verifyDownloadQualitySettingsUI() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -336,7 +336,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61205", "XMOBQA-61223", "XMOBQA-61225", "XMOBQA-62421", "XMOBQA-62423"})
     @Test(description = "App Settings Page UI test")
     public void verifyAppSettingsDefaultUI() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -385,7 +385,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62425", "XMOBQA-62427", "XMOBQA-62429", "XMOBQA-61233"})
     @Test(description = "App Settings Page UI updates for Downloads test")
     public void verifyAppSettingsUIDownloadsUpdates() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

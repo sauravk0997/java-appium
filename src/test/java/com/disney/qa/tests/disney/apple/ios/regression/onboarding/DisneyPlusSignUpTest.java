@@ -23,7 +23,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
     public void verifySignUpPageUI() {
-        setGlobalVariables();
+        initialSetup();
 
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
@@ -60,7 +60,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62225", "XMOBQA-62227", "XMOBQA-62229"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
     public void verifyInvalidEmailSubmissions() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -95,7 +95,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62231"})
     @Test(description = "Verify signup with new account", groups = {"Onboarding"})
     public void verifyNewEmailSubmission() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -110,7 +110,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
     @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding"})
     public void verifyExistingEmailSubmission() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -125,7 +125,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
     @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding"})
     public void verifySubmitPasswordPageUI() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -160,7 +160,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62235"})
     @Test(description = "Verify invalid password submissions", groups = {"Onboarding"})
     public void verifyInvalidPasswordSubmissions() {
-        setGlobalVariables();
+        initialSetup();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -175,7 +175,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
     @Test(description = "Verify onboarding stepper for EU based users", groups = {"Onboarding"}, enabled = false)
     public void verifyOnboardingStepperEU() {
-        setGlobalVariables();
+        initialSetup();
         initiateProxy("Germany");
         handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -205,7 +205,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
     @Test(description = "Verify valid Privacy Policy and Subscriber Agreement links, and Legal UI", groups = {"Onboarding"})
     public void verifyUSLegalHyperlinks() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -247,9 +247,9 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62379", "XMOBQA-62381", "XMOBQA-62383", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
     @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {"Onboarding"}, enabled = false)
     public void verifyEULegalHyperlinks() {
-        setGlobalVariables();
+        initialSetup();
         initiateProxy("Netherlands");
-        setGlobalVariables("NL", "en");
+        initialSetup("NL", "en");
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
@@ -324,7 +324,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62054"})
     @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding"})
     public void verifyInvalidEmailError() {
-        setGlobalVariables();
+        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);

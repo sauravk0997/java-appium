@@ -17,7 +17,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back")
     public void capturePauseResume() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
         videoPlayerIOSPageBase
@@ -31,7 +31,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back")
     public void capturePauseResumeScrub() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
@@ -46,7 +46,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back")
     public void capturePauseScrubResume() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();

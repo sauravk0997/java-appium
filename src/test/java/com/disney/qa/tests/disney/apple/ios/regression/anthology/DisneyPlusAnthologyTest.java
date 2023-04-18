@@ -22,7 +22,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640", "XMOBQA-72646"})
     @Test(description = "Verify Anthology Series - Upcoming", groups = {"Anthology"})
     public void verifyAnthologyUpcoming() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -45,7 +45,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72300"})
     @Test(description = "Verify Anthology Live Badge", groups = {"Anthology"})
     public void verifyAnthologyLiveBadge() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -71,7 +71,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72299"})
     @Test(description = "Verify Anthology Live Playback", groups = {"Anthology"})
     public void verifyAnthologyLivePlayback() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
@@ -89,7 +89,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72303"})
     @Test(description = "Verify Anthology Series - Ended", groups = {"Anthology"})
     public void verifyAnthologyEnded() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

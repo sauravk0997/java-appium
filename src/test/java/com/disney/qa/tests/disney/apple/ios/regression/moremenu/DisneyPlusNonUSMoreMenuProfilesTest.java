@@ -16,7 +16,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
     @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu"})
     public void verifyProfileCreationRestrictedFunctionality() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());

@@ -108,7 +108,7 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
 
     @Test(dataProvider = "dataProvider")
     public void testPromotionalItems(String TUID) {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         testSetup(country);

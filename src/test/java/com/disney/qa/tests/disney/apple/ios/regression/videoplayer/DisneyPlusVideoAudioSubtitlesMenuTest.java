@@ -18,7 +18,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     @Test(description = " Verify Menu, Languages and UI", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifySubtitleMenuLanguageUI() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -48,7 +48,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     @Test(description = "Verify Menu, Languages and UI(change options)", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifySubtitleMenuLanguageChangesPersist() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

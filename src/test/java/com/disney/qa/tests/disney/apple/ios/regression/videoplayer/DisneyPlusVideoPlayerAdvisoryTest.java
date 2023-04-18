@@ -21,7 +21,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
     @Test(description = "Video Player > Content Rating Overlay > Verify Additional Advisory > smoking_disclaimer", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyAdditionalAdvisorySmokingDisclaimer() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -49,7 +49,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
     @Test(description = "Video Player > Content Rating Overlay > Verify Additional Advisory > PSE", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyAdditionalAdvisoryPSE() {
-        setGlobalVariables();
+        initialSetup();
 
         //Captain marvel - PSE and product_placement_disclaimer
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

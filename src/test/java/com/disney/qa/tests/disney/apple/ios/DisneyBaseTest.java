@@ -153,7 +153,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         } else if (!homePage.isOpened()) {
             restart();
-            setGlobalVariables();
+            initialSetup();
             loginToHome(account, profileName);
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
@@ -161,12 +161,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         pause(3);
     }
 
-    public void setGlobalVariables() {
+    public void initialSetup() {
         new GeoedgeProxyServer().setProxyHostForSelenoid();
-        setGlobalVariables(R.CONFIG.get("locale"), R.CONFIG.get("language"));
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
     }
 
-    public void setGlobalVariables(String locale, String language, String... planType) {
+    public void initialSetup(String locale, String language, String... planType) {
         // Call getDriver to set platform variables
         LOGGER.info("Starting API threads");
         getDriver();
