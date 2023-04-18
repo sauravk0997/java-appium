@@ -8,7 +8,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Localization-Captures"/>
     <parameter name="jenkinsEmail" value=""/>
-    <parameter name="jenkinsEnvironments" value="ios"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
