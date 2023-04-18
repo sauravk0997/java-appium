@@ -17,8 +17,8 @@
         <javax-mail.verison>1.6.2</javax-mail.verison>
         <guava.version>30.0-jre</guava.version>
         <alice-client-version>1.0.50</alice-client-version>
-        <jarvis-utils-version>1.0.5</jarvis-utils-version>
-        <disney-api-utils-version>1.5.347</disney-api-utils-version>
+        <jarvis-utils-version>1.0.7</jarvis-utils-version>
+        <disney-api-utils-version>1.5.353</disney-api-utils-version>
         <suite>helloDisney</suite>
     </properties>
 

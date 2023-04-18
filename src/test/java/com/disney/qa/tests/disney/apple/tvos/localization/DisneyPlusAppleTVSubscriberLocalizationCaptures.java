@@ -37,16 +37,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
     private static final String THE_SIMPSONS = "The Simpsons";
     private static final String SHANG_CHI = "Shang-Chi";
     private static final String WINNIE_THE_POOH = "Winnie the Pooh";
-    private final ThreadLocal<DisneyLocalizationUtils> languageUtils = new ThreadLocal<>();
-    private final ThreadLocal<String> regionLanguage = new ThreadLocal<>();
-    private final ThreadLocal<String> region = new ThreadLocal<>();
     private final ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     private final ThreadLocal<String> pathToZip = new ThreadLocal<>();
     private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(DisneyPlusAppleTVBaseTest.PLATFORM, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        R.CONFIG.put("capabilities.fullReset", "true");
         boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
@@ -55,19 +51,9 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
             setJarvisOverrides();
         }
         DisneyCountryData countryData = new DisneyCountryData();
-        regionLanguage.set(R.CONFIG.get("custom_string2"));
-        region.set(R.CONFIG.get("custom_string3"));
-        String country = (String) countryData.searchAndReturnCountryData(region.get(), "code", "country");
-        setSystemLanguage(regionLanguage.get(), region.get());
-        restartDriver(true);
+        String country = (String) countryData.searchAndReturnCountryData(locale, "code", "country");
         initiateProxy(country);
-        regionLanguage.set(handleAppLanguage(regionLanguage.get()));
-        pause(10);
         clearAppCache();
-        languageUtils.set(new DisneyLocalizationUtils(region.get(), regionLanguage.get(), "apple-tv", "prod", PARTNER));
-        DisneyMobileConfigApi configApi = new DisneyMobileConfigApi("tvos", "prod", PARTNER, new MobileUtilsExtended().getInstalledAppVersion());
-        languageUtils.get().setDictionaries(configApi.getDictionaryVersions());
-        DisneyPlusApplePageBase.setDictionary(languageUtils.get());
     }
 
     @Test(description = "Subscriber Flow of Login", groups = {"SusbscriberLoginFlow", "SubUI"})
@@ -78,13 +64,13 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("LoginScreenshots/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Log_In", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Log_In", language.toUpperCase(), locale, getDate()));
 
         //Apple TV S1.1
         loginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
-        applePage.dismissUnexpectedErrorAlert();
+//        applePage.dismissUnexpectedErrorAlert();
         pause(10); //handle initial load of app
         welcomePage.isOpened();
         getScreenshots("1-WelcomePage", baseDirectory);
@@ -160,21 +146,22 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("globalNavSearch/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Global_Nav_Search_Watchlist", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Global_Nav_Search_Watchlist", language.toUpperCase(), locale, getDate()));
 
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(10); //handle initial load of app
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
         disneyPlusAppleTVWelcomeScreenPage.clickSelect();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
-        if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
+        disneyPlusAppleTVHomePage.isOpened();
+        if (!disneyPlusAppleTVHomePage. isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
         disneyPlusAppleTVHomePage.isGlobalNavExpanded();
@@ -201,7 +188,6 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
     @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = {"SubscriberFlowProfiles", "SubUI"})
     public void captureSubscriberUIFlowProfiles() throws URISyntaxException {
-        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -213,12 +199,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVAppLanguagePage disneyPlusAppleTVAppLanguagePage = new DisneyPlusAppleTVAppLanguagePage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("Profile/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Profile", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Profile", language.toUpperCase(), locale, getDate()));
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        disneyAccountApi.addProfile(user, ADULT_PROFILE_NAME, regionLanguage.get(), null, false);
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        disneyAccountApi.addProfile(user, ADULT_PROFILE_NAME, languageUtils.get().getUserLanguage(), null, false);
 
         pause(10); //handle initial load of app
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
@@ -226,7 +212,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWelcomeScreenPage.clickSelect();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         user.setProfileId(disneyAccountApi.getDisneyProfiles(user).get(1).getProfileId());
         disneyAccountApi.patchStarOnboardingStatus(user,true);
@@ -316,7 +302,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(5); //load delete view
         getScreenshots("12-DeleteProfile", baseDirectory);
 
-        disneyPlusAppleTVEditProfilePage.dismissUnexpectedErrorAlert();
+//        disneyPlusAppleTVEditProfilePage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVEditProfilePage.clickSaveProfileButton();
         disneyPlusAppleTVWhoIsWatchingPage.isOpened();
         disneyPlusAppleTVWhoIsWatchingPage.clickSelect();
@@ -348,18 +334,19 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVAccountPage disneyPlusAppleTVAccountPage = new DisneyPlusAppleTVAccountPage(getDriver());
         EmailApi emailApi = new EmailApi();
 
-        DisneyAccount user = disneyAccountApi.createAccountForOTP(region.get(), regionLanguage.get());
+        DisneyAccount user = disneyAccountApi.createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
         baseDirectory.set("AccountSettingsScreens/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Account_Settings", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Account_Settings", language.toUpperCase(), locale, getDate()));
 
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
         disneyPlusAppleTVWelcomeScreenPage.clickSelect();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
+        disneyPlusAppleTVHomePage.isOpened();
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.clickNavMenuSettings();
 
@@ -502,10 +489,10 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         baseDirectory.set("PCONSettings/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_PCON_Settings", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_PCON_Settings", language.toUpperCase(), locale, getDate()));
 
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
-        disneyAccountApi.addProfile(entitledUser, KIDS_PROFILE_NAME, regionLanguage.get(), null, true);
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
+        disneyAccountApi.addProfile(entitledUser, KIDS_PROFILE_NAME, languageUtils.get().getUserLanguage(), null, true);
         List<DisneyProfile> profiles = disneyAccountApi.getDisneyProfiles(entitledUser);
         entitledUser.setProfiles(profiles);
 
@@ -525,13 +512,13 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         List<String> ratings = profileList.get(0).getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues();
         disneyAccountApi.editContentRatingProfileSetting(entitledUser, system, ratings.get(0));
 
-        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+//        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
         disneyPlusAppleTVHomePage.clickSelect();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(entitledUser.getUserPass());
-        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+//        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(DEFAULT_PROFILE).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
         pause(5);// wait for screen to load
@@ -554,7 +541,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         //S6.3  Go to Search menu and enter "avatar" in search field. Review the message on the bottom.
         disneyPlusAppleTVHomePage.isOpened();
         pause(5);// wait for screen to load
-        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+//        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
@@ -570,7 +557,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened();
         disneyPlusAppleTVHomePage.getTypeCellLabelContains(KIDS_PROFILE_NAME).clickIfPresent();
-        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
+//        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.isOpened();
             disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
@@ -609,18 +596,18 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVLegalPage disneyPlusAppleTVLegalPage = new DisneyPlusAppleTVLegalPage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("SettingsScreenshots/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Settings", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Settings", language.toUpperCase(), locale, getDate()));
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         disneyPlusAppleTVWelcomeScreenPage.waitForWelcomePageToLoad();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
         disneyPlusAppleTVWelcomeScreenPage.clickSelect();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
 
@@ -670,18 +657,18 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+        DisneyAccount user = disneyAccountApi.createAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("PlayerScreenshots/");
-        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Video_Player", regionLanguage.get().toUpperCase(), region.get(), getDate()));
+        pathToZip.set(String.format("%s_%s_%s_%s.zip", "Sub_UI_Video_Player", language.toUpperCase(), locale, getDate()));
         loginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
-        applePageBase.dismissUnexpectedErrorAlert();
+//        applePageBase.dismissUnexpectedErrorAlert();
 
         welcomeScreenPage.waitForWelcomePageToLoad();
         welcomeScreenPage.moveDown(1, 1);
         welcomeScreenPage.clickSelect();
         loginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         passwordPage.logInWithPasswordLocalized(user.getUserPass());
-        applePageBase.dismissUnexpectedErrorAlert();
+//        applePageBase.dismissUnexpectedErrorAlert();
         whoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         homePage.isOpened();
         homePage.moveDownFromHeroTileToBrandTile();
