@@ -14,6 +14,7 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
@@ -27,7 +28,7 @@ import org.testng.annotations.AfterMethod;
 
 import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 @SuppressWarnings("squid:S2187")
@@ -172,6 +173,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
         iosUtils.set(new IOSUtils());
         setBuildType();
+
+        if (buildType == BuildType.IAP) {
+            LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
+            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+            relaunch();
+        }
+
         try {
             disneyApiHandler.set(new DisneyContentApiChecker());
             disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));

@@ -263,13 +263,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         setup();
         setPathToZip("Onboarding_Ariel");
 
-        if (buildType != BuildType.IAP) {
-            skipExecution("Test run is not against IAP compatible build.");
-        }
 
-        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-
-        relaunch();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
