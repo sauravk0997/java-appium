@@ -1,7 +1,6 @@
 package com.disney.qa.api.disney;
 
 import com.disney.exceptions.ApiDetectiveUnblockException;
-import com.disney.qa.api.disney.pojo.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.http.resttemplate.RestTemplateBuilder;
 import com.disney.qa.common.utils.MobileUtilsExtended;
