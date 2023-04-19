@@ -16,6 +16,8 @@ import java.util.List;
 
 public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
 
+    protected static final String  SHORT_SERIES = "Bluey";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61937"})
     @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player"})
     @Maintainer("gkrishna1")
@@ -58,10 +60,10 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         results.get(0).click();
 
         disneyPlusDetailsIOSPageBase.startDownload();
-        disneyPlusDetailsIOSPageBase.waitForDownloadToComplete();
+        disneyPlusDetailsIOSPageBase.waitForSeriesDownloadToComplete();
         disneyPlusHomeIOSPageBase.clickDownloadsIcon();
-        disneyPlusDownloadsIOSPageBase.tapDownloadedAssetFromListView("Bluey");
-        disneyPlusDownloadsIOSPageBase.tapDownloadedAsset("Play Bluey");
+        disneyPlusDownloadsIOSPageBase.tapDownloadedAssetFromListView(SHORT_SERIES);
+        disneyPlusDownloadsIOSPageBase.tapDownloadedAsset(SHORT_SERIES);
         disneyPlusVideoPlayerIOSPageBase.isOpened();
         disneyPlusVideoPlayerIOSPageBase.seekOnPlayer();
         sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isThumbnailViewPresent(),"thumbnail view on player for downloaded content is not present");

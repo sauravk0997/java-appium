@@ -211,6 +211,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
+    protected ExtendedWebElement notificationPopUp;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -751,6 +754,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickSaveProfileButton() {
         saveProfileButton.click();
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 
     public void clickTypeButton() {
@@ -800,7 +804,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        dynamicTypeLinkRowLabel("Not Now", 1).click();
+        if (notificationPopUp.isPresent()) {
+            dynamicTypeLinkRowLabel("Not Now", 1).click();
+        }
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
