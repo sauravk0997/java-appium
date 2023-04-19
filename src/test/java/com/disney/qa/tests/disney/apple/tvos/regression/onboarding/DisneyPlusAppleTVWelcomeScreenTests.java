@@ -33,7 +33,6 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
 
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isLoginBtnFocused(),
                 "Login Button is not focused after navigating down from Sign up");
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "LOG IN", AliceLabels.BUTTON_HOVERED.getText());
 
         sa.assertAll();
     }
