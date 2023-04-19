@@ -409,7 +409,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        softAssert.assertFalse(passwordPage.isHeaderTextDisplayed(), "Enter your password page was displayed after selecting full catalog");
+        softAssert.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
         softAssert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
@@ -463,6 +463,50 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
 
         sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
+    @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {"Ariel-More Menu"})
+    public void verifyU13RestrictionOnWelchActionGrant() {
+        setGlobalVariables();
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        moreMenu.clickMoreTab();
+        moreMenu.tapAccountTab();
+        //Restrict Profile Creation toggle ON
+        moreMenu.clickToggleView();
+        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        accountPage.isOpened();
+        moreMenu.tapBackButton();
+        pause(2);
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.clickSaveProfileButton();
+        //Consent authentication
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            new IOSUtils().scrollDown();
+        }
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        //Welch Full catalog access
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        Assert.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
+        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
+        passwordPage.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
     }
 
     private void setAppToAccountSettings() {

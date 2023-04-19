@@ -4,11 +4,11 @@
     <parameter name="suiteOwner" value="bsuscavage"/>
     <parameter name="reporting.project-key" value="LQA"/>
     <parameter name="choiceParam::appcenter_app_name::AppCenter App Name"
-               value="Disney-Prod-Enterprise,Disney-Enterprise,Disney-Ad-Hoc,Dominguez-Prod,Dominguez-QA"/>
+               value="Disney-Prod-Enterprise,Disney-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Localization-Captures"/>
     <parameter name="jenkinsEmail" value=""/>
-    <parameter name="jenkinsEnvironments" value="ios"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>

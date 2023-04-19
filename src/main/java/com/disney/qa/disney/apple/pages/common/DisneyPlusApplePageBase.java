@@ -754,6 +754,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickSaveProfileButton() {
         saveProfileButton.click();
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 
     public void clickTypeButton() {
