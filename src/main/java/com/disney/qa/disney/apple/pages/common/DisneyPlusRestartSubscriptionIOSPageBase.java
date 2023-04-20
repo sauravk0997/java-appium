@@ -6,6 +6,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
  * Page for when the user's entitlement expires
@@ -20,6 +22,10 @@ public class DisneyPlusRestartSubscriptionIOSPageBase extends DisneyPlusApplePag
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'paywallLandingRestart'`]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement disneyPlusLogo;
+
+    // After clicking Log Out button once. Not the same Identifier as "dismissBtn".
+    private ExtendedWebElement logOutConfirmationButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGOUT.getText()));
+    private ExtendedWebElement logOutCancelButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()));
 
     private ExtendedWebElement primaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.RESTART_SUB_COPY);
     private ExtendedWebElement secondaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.RESTART_SUB_COPY_2);
@@ -52,4 +58,8 @@ public class DisneyPlusRestartSubscriptionIOSPageBase extends DisneyPlusApplePag
     public void clickRestartSubscriptionButton() {
         restartSubscriptionButton.click();
     }
+
+    public ExtendedWebElement getLogOutConfirmationButton() { return logOutConfirmationButton; }
+
+    public ExtendedWebElement getLogOutCancelButton() { return logOutCancelButton; }
 }
