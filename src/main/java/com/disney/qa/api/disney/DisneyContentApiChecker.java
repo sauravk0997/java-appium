@@ -1,6 +1,6 @@
 package com.disney.qa.api.disney;
 
-import com.disney.qa.api.disney.pojo.DisneyAccount;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
