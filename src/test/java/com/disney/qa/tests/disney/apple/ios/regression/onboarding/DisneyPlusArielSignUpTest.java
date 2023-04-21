@@ -19,7 +19,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
     @Test(description = "Verify onboarding stepper for US based users", groups = {"Ariel"})
     public void verifyOnboardingStepperUS() {
-        setGlobalVariables();
+        initialSetup();
         handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -45,7 +45,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
     @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"Ariel"})
     public void verifyPaywallCancel() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -81,7 +81,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
     @Test(description = "Sign Up - Verify Paywall UI", groups = {"Ariel"})
     public void verifyPaywallUI() {
-        setGlobalVariables();
+        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -123,7 +123,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel"})
     public void verifyValidPasswordSubmissions() {
-        setGlobalVariables();
+        initialSetup();
         verifySignUpButtonNavigation();
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -156,7 +156,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Onboarding"})
     public void testSignUpDoBUnder18() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
@@ -194,7 +194,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
     @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Onboarding"})
     public void testSignUpDOBOver18() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
@@ -230,7 +230,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     private void verifySignUpButtonNavigation() {
-        setGlobalVariables();
+        initialSetup();
         handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();

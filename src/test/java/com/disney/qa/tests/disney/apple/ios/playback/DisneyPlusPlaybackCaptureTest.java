@@ -10,7 +10,7 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
 
     @Test(description = "Capture playback requests in har file.")
     public void capturePlaybackHar() {
-        setGlobalVariables();
+        initialSetup();
         startProxyAndRestart(languageUtils.get().getCountryName());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);

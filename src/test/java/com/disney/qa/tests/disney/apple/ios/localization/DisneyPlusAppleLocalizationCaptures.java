@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -8,6 +9,7 @@ import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.disney.DisneyGlobalUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,6 +17,8 @@ import org.testng.annotations.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
@@ -251,6 +255,137 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
         getScreenshots("ProfileSelect");
+        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+    }
+
+    @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel"})
+    public void captureArielOnboarding(String TUID) {
+        setup();
+        setPathToZip("Onboarding_Ariel");
+
+
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
+
+        welcomePage.clickSignUpButton();
+
+        if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
+            LOGGER.info("Checkbox needed");
+            signUpIOSPageBase.clickUncheckedBoxes();
+        }
+
+        //S1.1
+        pause(2);
+        getScreenshots("emailPage");
+
+        //S1.2
+        signUpIOSPageBase.submitEmailAddress("badEmail");
+        pause(2);
+        getScreenshots("badEmailError");
+
+        //S1.3
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        pause(2);
+        getScreenshots("passwordPage");
+        signUpIOSPageBase.clickAgreeAndContinueIfPresent();
+
+        //S1.4 & S1.5
+        createPasswordPage.submitPasswordValue("");
+        pause(1);
+        getScreenshots("emptyPasswordError");
+        createPasswordPage.submitPasswordValue("123");
+        pause(1);
+        getScreenshots("badPasswordError");
+        createPasswordPage.enterPasswordValue("fair1234");
+        pause(1);
+        getScreenshots("fair");
+        createPasswordPage.enterPasswordValue("fair12345");
+        pause(1);
+        getScreenshots("good");
+        createPasswordPage.enterPasswordValue("fair123456!");
+        pause(1);
+        getScreenshots("great");
+
+        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+
+        //S1.7
+        pause(2);
+        getScreenshots("birthdatePage");
+
+        signUpIOSPageBase.clickPrimaryButton();
+        getScreenshots("birthdatePageEmptyError");
+
+        iosUtils.get().setBirthDate(Person.MINOR.getMonth().getText(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+        pause(2);
+        getScreenshots("minorError");
+
+        signUpIOSPageBase.clickSystemAlertSecondaryBtn();
+
+        //S1.8
+        welcomePage.clickSignUpButton();
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+        pause(2);
+        getScreenshots("chooseYourPlanPage");
+
+        //S1.9
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
+        pause(2);
+        getScreenshots("basicPlan");
+
+        paywallPage.getBackArrow().click();
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText()),2).click();
+        pause(2);
+        getScreenshots("premiumPlan");
+
+        //1.10
+        paywallPage.clickCancelBtn();
+        paywallPage.getSystemAlertDefaultBtn().click();
+        pause(3);
+        getScreenshots("oneStepAway");
+
+        //1.11
+        paywallPage.clickCancelBtn();
+        paywallPage.getSystemAlertDefaultBtn().click();
+
+        welcomePage.clickSignUpButton();
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        signUpIOSPageBase.clickAgreeAndContinueIfPresent();
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+
+        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+
+        paywallPage.getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
+
+        paywallPage.isOpened();
+        paywallPage.clickPurchaseButton();
+
+        paywallPage.waitForSubscribeOverlay();
+        paywallPage.clickOverlaySubscribeButton();
+        try {
+            paywallPage.submitSandboxPassword("G0Disney!");
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
+        iosUtils.get().acceptAlert();
+        iosUtils.get().acceptAlert();
+
+        pause(3);
+        getScreenshots("profilePage");
+
+        addProfilePage.clickGenderDropDown();
+        getScreenshots("genderOptions");
+
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 }

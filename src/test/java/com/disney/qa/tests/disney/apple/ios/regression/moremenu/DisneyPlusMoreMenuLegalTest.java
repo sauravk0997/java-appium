@@ -29,7 +29,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void onboard(String locale, String language) {
         LOGGER.info("Language in test: " + language);
         LOGGER.info("Country in test: " + locale);
-        setGlobalVariables(locale, language);
+        initialSetup(locale, language);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         setAppToHomeScreen(disneyAccount.get());
@@ -57,7 +57,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62263"})
     @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu"})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
 
@@ -80,7 +80,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62265"})
     @Test(description = "Verify hyperlink functionality opens into browser", groups = {"More Menu"})
     public void verifyUserTapsOnLink() {
-        setGlobalVariables();
+        initialSetup();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = new DisneyplusLegalIOSPageBase(getDriver());
 
         onboard("US", "en");
@@ -110,7 +110,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62266"})
     @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu"})
     public void verifyImpressumTab(String TUID) {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         onboard(country, "en");

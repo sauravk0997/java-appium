@@ -2,9 +2,13 @@ package com.disney.qa.common.utils.ios_settings;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
+import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
+import com.qaprosoft.carina.core.foundation.utils.Configuration;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -48,11 +52,25 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Back")
     protected ExtendedWebElement backBtn;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    private ExtendedWebElement sandboxPasswordBox;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
+    protected ExtendedWebElement sandboxSigninButton;
+
+    @FindBy(id = "Subscriptions")
+    protected ExtendedWebElement subscriptionsButton;
+
     protected IOSUtils utils;
 
     public IOSSettingsMenuBase(WebDriver driver) {
         super(driver);
         utils = new IOSUtils();
+    }
+
+    public void submitSandboxPassword(String password) {
+        sandboxPasswordBox.type(password);
+        sandboxSigninButton.click();
     }
 
     @Override
@@ -77,20 +95,11 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         appStoreTab.click();
         manageSandboxAcct();
 
-        if(appSubscriptionButton.format(appName).isElementPresent()) {
-            appSubButtons = findExtendedWebElements(appSubscriptionButton.format(appName).getBy());
-            for (int i = 0, appSubButtonsSize = appSubButtons.size(); i < appSubButtonsSize; i++) {
-                ExtendedWebElement app = appSubButtons.get(i);
-                if (app.getName().contains("Next billing date:")) {
-                    appSubButtonIndex = i;
-                    app.click();
-                    cancelActiveSubscription();
-                    backBtn.click();
-                    waitForExpiryTime = true;
-                    break;
-                }
-            }
-        } else if (cancelSubscriptionBtn.isElementPresent()) {
+        if(subscriptionsButton.isElementPresent()) {
+            subscriptionsButton.click();
+        }
+
+        if (cancelSubscriptionBtn.isElementPresent()) {
             cancelActiveSubscription();
             doneBtn.click();
             waitForExpiryTime = true;
@@ -104,9 +113,16 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
+        CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+
         utils.swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
+        try {
+            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
     }
 
     protected void cancelActiveSubscription() {

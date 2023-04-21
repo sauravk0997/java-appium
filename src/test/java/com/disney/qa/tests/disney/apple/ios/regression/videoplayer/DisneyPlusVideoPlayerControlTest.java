@@ -30,7 +30,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyCloseButtonControlOnPlayer() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -67,7 +67,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyRewindButtonControlOnPlayer() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);
@@ -92,7 +92,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = " Video Player > Tap on screen to Forward", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyForwardButtonControlOnPlayer() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);
@@ -115,7 +115,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContent() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
@@ -132,7 +132,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContentMovie() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
@@ -149,7 +149,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "Video Player > Player Controls UI - Confirm Program Title for Movies / Series / Extras", groups = {"Video Player"}, dataProvider = "contentType")
     @Maintainer("gkrishna1")
     public void verifyProgramTitleOnPlayer(String contentType, String content) {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -188,7 +188,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "Video Player > Player Controls UI", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyPlayerControlUI() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);

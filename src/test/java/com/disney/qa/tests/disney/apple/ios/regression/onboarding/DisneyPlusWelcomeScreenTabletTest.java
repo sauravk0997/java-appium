@@ -12,7 +12,7 @@ public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62330", "XMOBQA-62333"})
     @Test(description = "Verify the Welcome screen elements in Landscape mode (Tablet only)")
     public void verifyWelcomeScreenLandscape() {
-        setGlobalVariables();
+        initialSetup();
         handleAlert();
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
