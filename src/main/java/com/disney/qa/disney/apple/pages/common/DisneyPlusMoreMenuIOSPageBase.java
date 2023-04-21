@@ -74,11 +74,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 			DELETE_ACCOUNT_MENU_ITEM.getText());
 
 
-	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
-	private ExtendedWebElement exitKidsProfile;
-
 	public ExtendedWebElement getExitKidsProfile() {
-		return exitKidsProfile;
+		return exitKidsProfileButton;
 	}
 
 	public ExtendedWebElement getExitJuniorModePin() {
@@ -291,6 +288,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isExitKidsProfileButtonPresent() {
 		return exitKidsProfileButton.isPresent();
+	}
+
+	public String getExitKidsProfileButtonText() {
+		return exitKidsProfileButton.getText();
+	}
+
+	public void tapExitKidsProfileButton() {
+		exitKidsProfileButton.click();
 	}
 
 	public void tapAccountTab(){
