@@ -533,7 +533,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
-        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE", "Exit junior mode verbiage doesn't match teh expected value");
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE", "Exit junior mode verbiage doesn't match the expected value");
         moreMenu.tapExitKidsProfileButton();
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
