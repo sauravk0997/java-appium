@@ -8,6 +8,8 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_BTN;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEXT;
 
@@ -79,8 +81,8 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public boolean isWelcomeSubTextPresent() {
-        String subTextLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, WELCOME_SUB_TEXT.getText());
-        return getDynamicAccessibilityId(subTextLabel.replace("${PRICE_0}/${TIME_UNIT_0}", "---/---")
-                .replace("${PRICE_1}/${TIME_UNIT_1}", "---/---")).isElementPresent();
+        String subTextLabel = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, WELCOME_SUB_TEXT.getText()),
+                Map.of("PRICE_0", "---", "TIME_UNIT_0", "---", "PRICE_1", "---", "TIME_UNIT_1", "---"));
+        return getDynamicAccessibilityId(subTextLabel).isElementPresent();
     }
 }
