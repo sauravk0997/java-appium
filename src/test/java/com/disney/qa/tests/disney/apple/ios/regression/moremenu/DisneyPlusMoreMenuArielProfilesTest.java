@@ -509,6 +509,40 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
     }
 
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72663"})
+    @Test(description = "Kids Profile new copy and rename to Junior Mode", groups = {"Ariel-More Menu"})
+    public void verifyJuniorModeCopy() {
+        initialSetup();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        setAppToHomeScreen(disneyAccount.get());
+
+        whoIsWatching.clickProfile("Test");
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on add profile page");
+        addProfile.tapCancelButton();
+        addProfile.tapBackButton();
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE", "Exit junior mode verbiage doesn't match the expected value");
+        moreMenu.tapExitKidsProfileButton();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        new IOSUtils().scrollDown();
+        pause(1); //to handle transition
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on edit profile page");
+        editProfilePage.clickDoneBtn();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

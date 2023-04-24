@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
-    private static final String TEST = "Test";
     private static final String ADULT_DOB = "1923-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
@@ -84,10 +83,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(disneyAccount.get());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
-        BufferedImage moreMenuAvatar = utils.getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(TEST));
+        BufferedImage moreMenuAvatar = utils.getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
 
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
-        disneyPlusEditProfileIOSPageBase.clickEditModeProfile(TEST);
+        disneyPlusEditProfileIOSPageBase.clickEditModeProfile(DEFAULT_PROFILE);
         disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
         chooseAvatarPage.isOpened();
         chooseAvatarPage.verifyChooseAvatarPage();
