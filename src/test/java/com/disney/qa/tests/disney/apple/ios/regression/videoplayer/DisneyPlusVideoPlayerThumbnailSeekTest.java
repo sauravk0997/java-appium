@@ -22,7 +22,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeek() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -44,7 +44,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeekForDownloadedAsset() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);

@@ -18,7 +18,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62030", "XMOBQA-62032"})
     @Test(description = "Log In - Verify Login Screen UI", groups = {"Onboarding"})
     public void testLogInScreen() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         handleAlert();
@@ -38,7 +38,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62038"})
     @Test(description = "Log In - Verify Password Screen UI", groups = {"Onboarding"})
     public void testPasswordScreen() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -61,7 +61,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62036"})
     @Test(description = "Log in - Verify valid email", groups = {"Onboarding"})
     public void testValidEmailLogin() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
 
@@ -75,7 +75,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62046"})
     @Test(description = "Log in - Verify valid password - One Profile", groups = {"Onboarding"})
     public void testValidPasswordOneProfile() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -94,7 +94,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62046"})
     @Test(description = "Log in - Verify valid password - Multiple Profiles", groups = {"Onboarding"})
     public void testValidPasswordMultipleProfiles() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -114,7 +114,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62034", "XMOBQA-62048"})
     @Test(description = "Log in - Verify invalid email format", groups = {"Onboarding"})
     public void testInvalidEmailFormat() {
-        setGlobalVariables();
+        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -132,7 +132,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62050"})
     @Test(description = "Log in - Verify invalid email format - One Character", groups = {"Onboarding"})
     public void testInvalidEmailFormatOneChar() {
-        setGlobalVariables();
+        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -150,7 +150,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62050"})
     @Test(description = "Log in - Verify invalid email format - No TLD", groups = {"Onboarding"})
     public void testInvalidEmailFormatNoTopLevelDomain() {
-        setGlobalVariables();
+        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -167,7 +167,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62052"})
     @Test(description = "Log in - Verify login no email", groups = {"Onboarding"})
     public void testLoginNoEmail() {
-        setGlobalVariables();
+        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -185,7 +185,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62040"})
     @Test(description = "Log in - Verify invalid password", groups = {"Onboarding"})
     public void testInvalidPassword() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -205,7 +205,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62056"})
     @Test(description = "Log in - Verify empty password", groups = {"Onboarding"})
     public void testEmptyPassword() {
-        setGlobalVariables();
+        initialSetup();
         String noPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_NO_PASSWORD_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
@@ -224,7 +224,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62042"})
     @Test(description = "Log in - Verify Show and Hide Password", groups = {"Onboarding"})
     public void testShowHidePassword() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -251,7 +251,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62068", "XMOBQA-62070"})
     @Test(description = "Log in - Unknown email - try again", groups = {"Onboarding"})
     public void testEmailNoAccountTryAgain() {
-        setGlobalVariables();
+        initialSetup();
         String noEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
@@ -274,7 +274,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62068", "XMOBQA-62072"})
     @Test(description = "Log in - Unknown email - sign up", groups = {"Onboarding"})
     public void testEmailNoAccountSignUp() {
-        setGlobalVariables();
+        initialSetup();
         String noEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
@@ -302,7 +302,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62074", "XMOBQA-62076"})
     @Test(description = "Verify Choose Profiles Screen", groups = {"Onboarding"})
     public void testChooseProfiles() {
-        setGlobalVariables();
+        initialSetup();
         String kidProfile = "kidProfile";
         String profile3 = "profile 3";
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -333,7 +333,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62066"})
     @Test(description = "Log in - Test non-entitled account", groups = {"Onboarding"})
     public void testNotEntitledAccount() {
-        setGlobalVariables();
+        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyAccount nonActiveAccount = disneyAccountApi.get().createAccount("US", "en");
         SoftAssert softAssert = new SoftAssert();
@@ -357,7 +357,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62062, XMOBQA-62195"})
     @Test(description = "Log in - expired account", groups = {"Onboarding"})
     public void testExpiredAccount() {
-        setGlobalVariables();
+        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -382,7 +382,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62058"})
     @Test(description = "Log in - Incorrect Password", groups = {"Onboarding"})
     public void testIncorrectPassword() {
-        setGlobalVariables();
+        initialSetup();
         String invalidPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
@@ -402,7 +402,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
     @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Onboarding"})
     public void verifyRestartSubscriptionPaywallUI() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -440,7 +440,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62679"})
     @Test(description = "Log in - Verify Account on Hold", groups = {"Onboarding"})
     public void verifyAccountOnHold() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -466,7 +466,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62082"})
     @Test(description = "Log in - Verify Minor User is blocked from logging in", groups = {"Onboarding"})
     public void verifyMinorLogInBlocked() throws InterruptedException {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);

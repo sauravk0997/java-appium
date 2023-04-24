@@ -39,7 +39,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "Verify Up Next UI", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyUpNextUI() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
@@ -52,7 +52,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "User Taps play icon", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyPlayIconOnUpNextUI() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -80,7 +80,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "User Taps See All Episodes", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyUpNextSeeAllEpisodes() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -96,7 +96,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "User allows autoplay to occur", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyAutoPlayOnPlayerView() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -125,7 +125,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "Up Next Logic -Extra content", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void VerifyUpNextLogicForExtraContent() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -160,7 +160,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "Up Next Behavior when app gets backgrounded", groups = {"Video Player"}, dataProvider = "autoplay-state")
     @Maintainer("gkrishna1")
     public void verifyUpNextBehaviorWhenAppIsBackgrounded(String autoplayState) {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -191,7 +191,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(description = "Autoplay does not autoplay if disabled", groups = {"Video Player"})
     @Maintainer("gkrishna1")
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
