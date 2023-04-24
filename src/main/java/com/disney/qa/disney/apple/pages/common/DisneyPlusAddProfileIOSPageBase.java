@@ -30,6 +30,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     protected ExtendedWebElement addProfileBtn;
 
+    @ExtendedFindBy(accessibilityId = "Cancel")
+    private ExtendedWebElement cancelButton;
+
     //Visibility set to false
     //dict key: create_profile_add_profile
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Add Profile\"`]")
@@ -133,7 +136,15 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByLabel.format(genderPreferNotToSay).click();
     }
 
+    public boolean isJuniorModeTextPresent() {
+        return staticTextByLabel.format("Junior Mode").isPresent();
+    }
+    
     public void clickGenderDropDown() {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
+    }
+
+    public void tapCancelButton() {
+        cancelButton.click();
     }
 }
