@@ -224,7 +224,8 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         String noPasswordInputError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, PASSWORD_REQUIRED.getText());
-        String invalidRequestError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_REQUEST.getText());
+        String invalidPasswordError = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
         String commonPassword = "Test123";
 
         SoftAssert sa = new SoftAssert();
@@ -238,11 +239,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVPasswordPage.clickSignUp();
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), noPasswordInputError);
         disneyPlusAppleTVPasswordPage.createNewPasswordEntry(StringGenerator.generateWord(5));
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), invalidRequestError);
+        sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), invalidPasswordError);
         disneyPlusAppleTVPasswordPage.clickBack();
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         disneyPlusAppleTVPasswordPage.createNewPasswordEntry(commonPassword);
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), invalidRequestError);
+        sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), invalidPasswordError);
 
         sa.assertAll();
     }
