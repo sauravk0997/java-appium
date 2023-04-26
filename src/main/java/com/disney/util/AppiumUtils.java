@@ -6,6 +6,7 @@ import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -285,11 +286,11 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
     /** switches to a webView **/
     public void switchToWebview() {
         LOGGER.info(StringUtils.join(getDriver().getWindowHandles(), ","));
-        Set<String> contextNames = ((AppiumDriver) getDriver()).getContextHandles();
+        Set<String> contextNames = ((IOSDriver) getDriver()).getContextHandles();
         for (String contextName : contextNames) {
             LOGGER.info("Available contexts: " + contextName);
             if (contextName.contains("WEBVIEW")){
-                ((AppiumDriver) driver).context(contextName);
+                ((IOSDriver) driver).context(contextName);
                 LOGGER.info("Switched to " + contextName);
                 break;
             }
