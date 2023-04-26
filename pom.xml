@@ -10,8 +10,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <carina-core_version>7.4.28</carina-core_version>
-        <zebrunner-agent.version>1.7.4</zebrunner-agent.version>
+        <carina-core_version>1.0.0</carina-core_version>
+        <zebrunner-agent.version>1.9.3</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
         <javax-mail.verison>1.6.2</javax-mail.verison>
@@ -32,11 +32,6 @@
             <id>bamtech_snapshots</id>
             <name>Bamtech Snapshots</name>
             <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-snapshots</url>
-        </repository>
-        <repository>
-            <id>qaprosoft_3rdparty</id>
-            <name>Qaprosoft Thirdparty</name>
-            <url>https://ci.qaprosoft.com/nexus/content/repositories/thirdparty/</url>
         </repository>
         <repository>
             <id>qait_releases</id>
@@ -93,9 +88,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.qaprosoft</groupId>
+            <groupId>com.zebrunner</groupId>
             <artifactId>carina-core</artifactId>
-            <version>${carina-core_version}</version>
+            <version>1.0.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.azure</groupId>
@@ -106,6 +101,11 @@
                     <artifactId>commons-text</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zebrunner</groupId>
+            <artifactId>carina-appcenter</artifactId>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -124,17 +124,11 @@
             <version>${alice-client-version}</version>
         </dependency>
 
-        <!-- Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
         <dependency>
             <!-- to use zebrunner testng agent for webdriver sesssion(s) declaration KEEP THIS-->
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.18</version>
+            <version>1.12.10</version>
             <scope>test</scope>
         </dependency>
         <!-- needed for spring RestTemplate stuff -->
@@ -198,40 +192,42 @@
             <version>1.1.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.disney</groupId>
-            <artifactId>hatter-core</artifactId>
-            <version>1.0.13</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.hulu.sidekick</groupId>
-                    <artifactId>locksmith</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.qaprosoft</groupId>
-                    <artifactId>carina-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.zebrunner</groupId>
-                    <artifactId>agent-testng</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--Hatter to be reintroduced once the carina versions are in parity-->
+<!--        <dependency>-->
+<!--            <groupId>com.disney</groupId>-->
+<!--            <artifactId>hatter-core</artifactId>-->
+<!--            <version>1.0.13</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.hulu.sidekick</groupId>-->
+<!--                    <artifactId>locksmith</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.squareup.okhttp3</groupId>-->
+<!--                    <artifactId>okhttp</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.qaprosoft</groupId>-->
+<!--                    <artifactId>carina-core</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.zebrunner</groupId>-->
+<!--                    <artifactId>agent-testng</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>io.rest-assured</groupId>-->
+<!--                    <artifactId>rest-assured</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.disney.jarvisutils</groupId>
             <artifactId>jarvis-utils</artifactId>
             <version>${jarvis-utils-version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>com.qaprosoft</groupId>
+                    <groupId>com.zebrunner</groupId>
                     <artifactId>carina-core</artifactId>
                 </exclusion>
             </exclusions>
