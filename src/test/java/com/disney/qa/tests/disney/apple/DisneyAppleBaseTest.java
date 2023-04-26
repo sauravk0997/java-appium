@@ -8,15 +8,17 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.appcenter.AppCenterManager;
-import com.qaprosoft.carina.core.foundation.utils.DateUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.DateUtils;
+import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.zebrunner.carina.utils.common.CommonUtils.pause;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends BaseMobileTest {
