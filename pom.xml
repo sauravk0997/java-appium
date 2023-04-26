@@ -90,7 +90,7 @@
         <dependency>
             <groupId>com.zebrunner</groupId>
             <artifactId>carina-core</artifactId>
-            <version>1.0.0</version>
+            <version>${carina-core_version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.azure</groupId>
