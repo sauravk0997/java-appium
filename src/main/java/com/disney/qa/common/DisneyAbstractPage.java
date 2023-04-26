@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 
-import static com.zebrunner.agent.core.webdriver.RemoteWebDriverFactory.getDriver;
-
 public abstract class DisneyAbstractPage extends AbstractPage {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
