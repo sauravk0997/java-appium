@@ -8,11 +8,11 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.appletv.IRemoteControllerAppleTV;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -480,6 +480,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public int getNumberOfItemsByCell() {
         List<ExtendedWebElement> titles = findExtendedWebElements(cell.getBy());
+        cell.findExtendedWebElements(cell.getBy());
         return titles.size();
     }
 
