@@ -141,14 +141,14 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     public void startScreenRecording() {
         IOSStartScreenRecordingOptions options = new IOSStartScreenRecordingOptions()
                 .withVideoQuality(VideoQuality.MEDIUM).withVideoType("libx264").withTimeLimit(Duration.ofSeconds(600));
-        IOSDriver<?> driver = (IOSDriver<?>) ((EventFiringWebDriver) getDriver()).getWrappedDriver();
+        IOSDriver driver = (IOSDriver) ((EventFiringWebDriver) getDriver()).getWrappedDriver();
         driver.startRecordingScreen(options);
         LOGGER.info("Starting screen capture ...");
     }
 
     //TODO This is used to upload a video to your local computer. Use Carina to upload data to a remote server
     public void stopScreenRecording() {
-        IOSDriver<?> driver = (IOSDriver<?>) ((EventFiringWebDriver) getDriver()).getWrappedDriver();
+        IOSDriver driver = (IOSDriver) ((EventFiringWebDriver) getDriver()).getWrappedDriver();
         String videoBase64 = driver.stopRecordingScreen();
         String pathToSaved = String.format(DEFAULT_VIDEO_PATH, "VideoRecording" + new Date().getTime());
         decodeBase64StringToVideo(videoBase64, pathToSaved);
@@ -208,7 +208,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     }
 
     public void lockDevice() {
-        IOSDriver<?> driver = (IOSDriver<?>) getCastedDriver();
+        IOSDriver driver = (IOSDriver) getCastedDriver();
         driver.lockDevice();
     }
 
