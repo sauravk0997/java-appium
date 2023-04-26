@@ -1,12 +1,12 @@
 package com.disney.qa.common.utils;
 
 import com.disney.util.ZipUtils;
-import com.qaprosoft.carina.core.foundation.report.ReportContext;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.registrar.Artifact;
 import com.zebrunner.agent.core.registrar.Screenshot;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.report.ReportContext;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.Range;
 import org.imgscalr.Scalr;
