@@ -1,5 +1,7 @@
 package com.disney.qa.tests;
 
+import com.browserup.bup.BrowserUpProxy;
+import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.disney.DisneyHttpHeaders;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.disney.DisneyPlusOverrideKeys;
@@ -7,13 +9,11 @@ import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.disney.DisneyCountryData;
 import com.disney.qa.disney.DisneyProductData;
 import com.disney.util.disney.DisneyGlobalUtils;
-import com.qaprosoft.carina.browsermobproxy.ProxyPool;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.proxy.CaptureType;
+import com.zebrunner.carina.proxy.browserup.ProxyPool;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 
@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:S2187")
 public class BaseMobileTest extends BaseTest implements IMobileUtils {
-    protected ThreadLocal<BrowserMobProxy> proxy = new ThreadLocal<>();
+    protected ThreadLocal<BrowserUpProxy> proxy = new ThreadLocal<>();
 
     protected static final String PARTNER = R.CONFIG.get("partner");
     protected static final String CHECKED = "Checked";
@@ -42,12 +42,10 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
 
     public WebDriver getCastedDriver() {
         WebDriver drv = getDriver();
-
-        if (drv instanceof EventFiringWebDriver) {
-            return ((EventFiringWebDriver) drv).getWrappedDriver();
-        } else {
-            return drv;
+        if (drv instanceof Decorated<?>) {
+            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
         }
+        return drv;
     }
 
     /**
