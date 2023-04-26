@@ -1,16 +1,17 @@
 package com.disney.qa.common;
 
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.Configuration.Parameter;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.zebrunner.carina.utils.Configuration;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+
+import static com.zebrunner.agent.core.webdriver.RemoteWebDriverFactory.getDriver;
 
 public abstract class DisneyAbstractPage extends AbstractPage {
 
@@ -19,7 +20,7 @@ public abstract class DisneyAbstractPage extends AbstractPage {
     protected static final long EXTRA_LONG_TIMEOUT = 300;
     protected static final int LONG_TIMEOUT = 60;
     protected static final int FORTY_FIVE_SEC_TIMEOUT = 45;
-    protected static final long EXPLICIT_TIMEOUT = Configuration.getLong(Parameter.EXPLICIT_TIMEOUT); // 30
+    protected static final long EXPLICIT_TIMEOUT = Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT); // 30
     protected static final int DELAY = 10;
     protected static final int HALF_TIMEOUT = 5;
     protected static final int SHORT_TIMEOUT = 3;
@@ -37,13 +38,11 @@ public abstract class DisneyAbstractPage extends AbstractPage {
     public abstract boolean isOpened();
     
     public WebDriver getCastedDriver() {
-    	WebDriver drv = getDriver();
-    	
-        if (drv instanceof EventFiringWebDriver) {
-            return ((EventFiringWebDriver) drv).getWrappedDriver();
-        } else {
-            return drv;
+        WebDriver drv = getDriver();
+        if (drv instanceof Decorated<?>) {
+            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
         }
+        return drv;
     }
 
     public String getElementText(ExtendedWebElement element) {
