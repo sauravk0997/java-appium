@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -49,7 +50,7 @@ public class UniversalUtils implements IDriverPool {
         WebDriver driver = getDriver();
         BufferedImage fullImage = null;
 
-        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(element.getBy()));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(element.getBy()));
         File srcFile = element.getElement().getScreenshotAs(OutputType.FILE);
         try {
             fullImage = ImageIO.read(srcFile);
