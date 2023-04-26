@@ -85,7 +85,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
         var getSetAssets = apiProvider.queryResponse(set, CONTENT_TITLES);
 
         proxy.get().newHar();
-        ((IOSDriver<?>) getCastedDriver()).resetApp();
+        ((IOSDriver) getCastedDriver()).resetApp();
         new IOSUtils().handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
         disneyPlusWelcomeScreenIOSPage.clickLogInButton();
         disneyPlusLoginIOSPage.submitEmail(disneyAccount.getEmail());
