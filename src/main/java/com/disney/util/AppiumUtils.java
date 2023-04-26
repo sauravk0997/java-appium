@@ -1,10 +1,9 @@
 package com.disney.util;
 
 import com.disney.qa.common.DisneyAbstractPage;
-import com.qaprosoft.carina.core.foundation.utils.android.IAndroidUtils.SelectorType;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.AppiumDriver;
+import com.zebrunner.carina.utils.android.IAndroidUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +37,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * ExtendedWebElement res = AndroidUtils.scroll("News", newsListContainer);
      **/
     public boolean scroll(String scrollToElement, ExtendedWebElement container) {
-        return scroll(scrollToElement, container, SelectorType.ID, SelectorType.TEXT);
+        return scroll(scrollToElement, container, IAndroidUtils.SelectorType.ID, IAndroidUtils.SelectorType.TEXT);
     }
 
     /** Scrolls into view in a container specified by it's instance (index)
@@ -54,8 +53,8 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * ExtendedWebElement res = AndroidUtils.scroll("News", newsListContainer, AndroidUtils.SelectorType.CLASS_NAME, 1,
      *                          AndroidUtils.SelectorType.TEXT);
      **/
-    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, SelectorType containerSelectorType,
-                          int containerInstance, SelectorType eleSelectorType) {
+    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, IAndroidUtils.SelectorType containerSelectorType,
+                          int containerInstance, IAndroidUtils.SelectorType eleSelectorType) {
         boolean res = false;
         long startTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
@@ -104,8 +103,8 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * ExtendedWebElement res = AndroidUtils.scroll("News", newsListContainer, AndroidUtils.SelectorType.CLASS_NAME, 1,
      *                          AndroidUtils.SelectorType.TEXT, 2);
      **/
-    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, SelectorType containerSelectorType,
-                          int containerInstance, SelectorType eleSelectorType, int eleSelectorInstance) {
+    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, IAndroidUtils.SelectorType containerSelectorType,
+                          int containerInstance, IAndroidUtils.SelectorType eleSelectorType, int eleSelectorInstance) {
         boolean res = false;
         long startTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
@@ -152,8 +151,8 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * ExtendedWebElement res = AndroidUtils.scroll("News", newsListContainer, AndroidUtils.SelectorType.CLASS_NAME,
      *                          AndroidUtils.SelectorType.TEXT);
      **/
-    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, SelectorType containerSelectorType,
-                          SelectorType eleSelectorType){
+    public boolean scroll(String scrollToEle, ExtendedWebElement scrollableContainer, IAndroidUtils.SelectorType containerSelectorType,
+                          IAndroidUtils.SelectorType eleSelectorType){
         boolean res = false;
         long startTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
@@ -191,7 +190,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * @return boolean
      * <p>
      **/
-    private String getScrollContainerSelector(ExtendedWebElement scrollableContainer, SelectorType containerSelectorType){
+    private String getScrollContainerSelector(ExtendedWebElement scrollableContainer, IAndroidUtils.SelectorType containerSelectorType){
         LOGGER.debug(scrollableContainer.getBy().toString());
         String scrollableContainerBy;
         String scrollViewContainerFinder = "";
@@ -247,7 +246,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
      * @return String
      * <p>
      **/
-    private String getScrollToElementSelector(String scrollToEle, SelectorType eleSelectorType){
+    private String getScrollToElementSelector(String scrollToEle, IAndroidUtils.SelectorType eleSelectorType){
         String neededElementFinder = "";
         String scrollToEleTrimmed = "";
 
