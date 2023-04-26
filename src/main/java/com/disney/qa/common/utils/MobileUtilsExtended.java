@@ -1,10 +1,10 @@
 package com.disney.qa.common.utils;
 
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.utils.resources.L10N;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.utils.Configuration;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.utils.resources.L10N;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.AppiumDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
@@ -13,7 +13,6 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.decorators.Decorated;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
