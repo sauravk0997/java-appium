@@ -18,7 +18,6 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeMultipart;
-import javax.mail.search.SearchTerm;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -33,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.qaprosoft.carina.core.foundation.utils.common.CommonUtils.pause;
+import static com.zebrunner.carina.utils.common.CommonUtils.pause;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 /**
