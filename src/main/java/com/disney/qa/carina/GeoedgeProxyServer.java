@@ -1,14 +1,15 @@
 package com.disney.qa.carina;
 
+import com.browserup.bup.BrowserUpProxy;
+import com.browserup.bup.proxy.auth.AuthType;
 import com.disney.qa.common.http.resttemplate.RestTemplateBuilder;
 import com.disney.qa.disney.DisneyCountryData;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.qaprosoft.carina.browsermobproxy.ProxyPool;
-import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.proxy.auth.AuthType;
+import com.zebrunner.carina.crypto.CryptoTool;
+import com.zebrunner.carina.crypto.CryptoToolBuilder;
+import com.zebrunner.carina.proxy.browserup.ProxyPool;
+import com.zebrunner.carina.utils.Configuration;
+import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
+
 public class GeoedgeProxyServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -44,7 +47,7 @@ public class GeoedgeProxyServer {
             .getClassLoader()
             .getResourceAsStream("geoedge/proxy-servers.yaml");
     private ArrayList<Object> countryList = yaml.load(countryStream);
-    private CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+    private CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
     private boolean useGeoEdgeProxyIpRequest = R.CONFIG.getBoolean("proxy_server_geoedge");
     private int proxyPortForThread = 0;
 
@@ -69,12 +72,12 @@ public class GeoedgeProxyServer {
      * @throws Exception is returned if the country in question can't be found.
      */
     @java.lang.SuppressWarnings("squid:S00112")
-    public BrowserMobProxy getGeoedgeProxy(String country) {
+    public BrowserUpProxy getGeoedgeProxy(String country) {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
         this.proxyPortForThread = ProxyPool.getProxy().getPort(); //get port is available only before stop!!!
         ProxyPool.stopProxy();
 
-        BrowserMobProxy proxy = ProxyPool.createProxy();
+        BrowserUpProxy proxy = ProxyPool.createProxy();
         proxy.setTrustAllServers(true);
         proxy.setMitmDisabled(false);
         proxy.setConnectTimeout(180, TimeUnit.SECONDS);
@@ -150,7 +153,7 @@ public class GeoedgeProxyServer {
                         LOGGER.debug("Link Local: " + ia.isLinkLocalAddress());
                         LOGGER.debug("Local Address: " + ia.isSiteLocalAddress());
                         LOGGER.debug("Is Reachable: " + ia.isReachable(1));
-                        R.CONFIG.put("browsermob_host", ia.getHostAddress());
+                        R.CONFIG.put("proxy_host", ia.getHostAddress());
                         allowList.addIpToAllowList(ia.getHostAddress());
                     }
                 }
@@ -172,8 +175,8 @@ public class GeoedgeProxyServer {
 
         LOGGER.info(String.format("Checking Proxy Info: %s:%s", Configuration.get(Configuration.Parameter.PROXY_HOST), currentPort));
 
-        R.CONFIG.put("browsermob_port", currentPort);
-        String bmPort = R.CONFIG.get("browsermob_port");
+        R.CONFIG.put("browserup_port", currentPort);
+        String bmPort = R.CONFIG.get("browserup_port");
 
         if (bmPort.isEmpty()) {
             throw new RuntimeException("Browser Mob Port Value wasn't properly set for Proxy, aborting.");
