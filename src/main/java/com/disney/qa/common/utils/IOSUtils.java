@@ -1,12 +1,12 @@
 package com.disney.qa.common.utils;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.DriverHelper;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.DriverHelper;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
@@ -633,19 +633,6 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         IOSDriver driver = (IOSDriver) getCastedDriver();
         LOGGER.info("Unlocking the device");
         driver.unlockDevice();
-    }
-
-    /**
-     * Terminates an existing application on the device.
-     *
-     * @param bundleId
-     */
-    @Override
-    public void terminateApp(String bundleId) {
-        Map<String, Object> params = new HashMap<>();
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        params.put(BUNDLE_ID, bundleId);
-        js.executeScript(Gestures.TERMINATE_APP.getGesture(), params);
     }
 
     /**
