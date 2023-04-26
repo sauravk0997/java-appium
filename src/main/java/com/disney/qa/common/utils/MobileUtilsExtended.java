@@ -12,6 +12,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,11 +235,9 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
 
     public WebDriver getCastedDriver() {
         WebDriver drv = getDriver();
-
-        if (drv instanceof EventFiringWebDriver) {
-            return ((EventFiringWebDriver) drv).getWrappedDriver();
-        } else {
-            return drv;
+        if (drv instanceof Decorated<?>) {
+            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
         }
+        return drv;
     }
 }
