@@ -1,6 +1,6 @@
 package com.disney.util;
 
-import net.lightbody.bmp.BrowserMobProxy;
+import com.browserup.bup.BrowserUpProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +19,9 @@ public class ProxyUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private BrowserMobProxy proxy;
+    private BrowserUpProxy proxy;
 
-    public ProxyUtils(BrowserMobProxy proxy){
+    public ProxyUtils(BrowserUpProxy proxy){
         this.proxy = proxy;
     }
 
