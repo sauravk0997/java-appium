@@ -15,6 +15,8 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value=""/>
+    <parameter name="reporting.notification.slack-channels" value="disney-api-utils-mv-a-release-channel"/>
+    <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic Api Utils tests" parallel="methods">
         <classes>
