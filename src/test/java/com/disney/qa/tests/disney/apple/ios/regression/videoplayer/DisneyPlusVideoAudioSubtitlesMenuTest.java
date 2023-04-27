@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
