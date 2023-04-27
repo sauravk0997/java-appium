@@ -1,5 +1,6 @@
 package com.disney.qa.common.utils;
 
+import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.IDriverPool;
@@ -180,7 +181,8 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      */
     public String getInstalledAppVersionFull() {
         StringBuilder sb = new StringBuilder();
-        String build = URLDecoder.decode(Configuration.getMobileApp(), StandardCharsets.UTF_8);
+
+        String build = AppCenterManager.getInstance().getDirectLink(URLDecoder.decode(Configuration.getMobileApp(), StandardCharsets.UTF_8));
 
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
         var deviceType = IDriverPool.currentDevice.get().getDeviceType();
