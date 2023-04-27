@@ -15,8 +15,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBas
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.browsermobproxy.ProxyPool;
 import com.qaprosoft.carina.core.foundation.utils.DateUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
