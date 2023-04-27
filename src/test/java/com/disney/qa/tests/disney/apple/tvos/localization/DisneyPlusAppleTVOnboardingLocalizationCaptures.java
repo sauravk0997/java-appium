@@ -2,27 +2,21 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneyCountryData;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
-import com.qaprosoft.carina.core.foundation.utils.DateUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.UUID;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
 
