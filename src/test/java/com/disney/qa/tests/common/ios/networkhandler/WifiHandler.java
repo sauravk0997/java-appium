@@ -3,7 +3,7 @@ package com.disney.qa.tests.common.ios.networkhandler;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.IOSUtils.SystemBundles;
 import com.disney.qa.tests.BaseMobileTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
