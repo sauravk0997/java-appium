@@ -2,12 +2,12 @@ package com.disney.qa.common.utils.ios_settings;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
-import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import com.zebrunner.carina.crypto.CryptoTool;
+import com.zebrunner.carina.crypto.CryptoToolBuilder;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +16,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
@@ -113,7 +115,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
-        CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
 
         utils.swipe(sandboxAccount);
         sandboxAccount.click();
