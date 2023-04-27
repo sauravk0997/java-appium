@@ -3,9 +3,9 @@ package com.disney.qa.disney.apple.pages.tv;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.google.common.collect.ImmutableMap;
-import com.qaprosoft.carina.core.foundation.utils.appletv.RemoteControlKeyword;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.utils.appletv.RemoteControlKeyword;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
