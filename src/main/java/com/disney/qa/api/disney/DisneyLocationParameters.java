@@ -1,6 +1,6 @@
 package com.disney.qa.api.disney;
 
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 
 public enum DisneyLocationParameters {
 
