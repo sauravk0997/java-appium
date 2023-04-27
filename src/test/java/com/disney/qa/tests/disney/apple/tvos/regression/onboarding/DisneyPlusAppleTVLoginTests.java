@@ -10,7 +10,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang.RandomStringUtils;
 import org.testng.Assert;
