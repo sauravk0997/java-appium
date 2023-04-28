@@ -182,7 +182,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
     public String getInstalledAppVersionFull() {
         StringBuilder sb = new StringBuilder();
 
-        String build = AppCenterManager.getInstance().getDirectLink(URLDecoder.decode(Configuration.getMobileApp(), StandardCharsets.UTF_8));
+        String build = getDevice().getCapabilities().getCapability("app").toString();
 
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
         var deviceType = IDriverPool.currentDevice.get().getDeviceType();
