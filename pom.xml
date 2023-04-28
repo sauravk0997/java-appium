@@ -93,10 +93,6 @@
                     <groupId>com.azure</groupId>
                     <artifactId>azure-storage-blob</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-text</artifactId>
-                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
