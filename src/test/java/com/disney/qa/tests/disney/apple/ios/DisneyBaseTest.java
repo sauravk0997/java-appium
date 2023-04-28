@@ -319,7 +319,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("App Download: {}", appCenterAppName);
         if(appCenterAppName.contains("Dominguez_Non-IAP_Prod_Enterprise_for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", "latest"));
-        } else if (!appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
+        } else if (appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", "latest"));
         }
     }
@@ -329,7 +329,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("App Download: {}", appCenterAppName, version);
         if (appCenterAppName.contains("Dominguez_Non-IAP_Prod_Enterprise_for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
-        } else if (!appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
+        } else if (appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
         }
     }

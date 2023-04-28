@@ -199,12 +199,8 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-
         oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
 
         //install old app
         removeApp(buildType.getDisneyBundle());
