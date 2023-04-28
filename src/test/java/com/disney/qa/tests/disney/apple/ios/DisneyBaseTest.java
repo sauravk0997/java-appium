@@ -47,6 +47,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
 
+    public static final String IOS_APP = "app";
+
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     protected ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
@@ -312,15 +314,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void installLatestApp(boolean isEnterpriseBuild) {
-        if (isEnterpriseBuild) {
+    public void installLatestApp() {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if(appCenterAppName.contains("Dominguez_Non-IAP_Prod_Enterprise_for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", "latest"));
+        } else if (!appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", "latest"));
         }
     }
 
-    public void installOldApp(boolean isEnterpriseBuild, String version) {
-        if (isEnterpriseBuild) {
+    public void installOldApp(String version) {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        LOGGER.info("App Download: {}", appCenterAppName, version);
+        if (appCenterAppName.contains("Dominguez_Non-IAP_Prod_Enterprise_for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
+        } else if (!appCenterAppName.contains("Dominguez_iOS_Enterprise_Prod")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
         }
     }
 

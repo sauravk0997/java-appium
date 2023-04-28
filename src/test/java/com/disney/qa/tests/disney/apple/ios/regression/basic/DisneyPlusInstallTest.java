@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusInstallTest extends DisneyBaseTest {
-   ThreadLocal<String> oldAppVersion = new ThreadLocal<>();
+    ThreadLocal<String> oldAppVersion = new ThreadLocal<>();
     private static final String KIDS_SHORT_SERIES = "Bluey";
     private static final String ADULTS_SHORT_MOVIE = "Purl";
     private static final String KIDS = "KIDS";
@@ -35,16 +35,12 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
         oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
-
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        installOldApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -59,7 +55,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
                 "Current app version found does not match expected old app version");
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        installLatestApp();
         relaunch();
         sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
 
@@ -129,16 +125,12 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
         oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
-
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        installOldApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -169,7 +161,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        installLatestApp();
         relaunch();
         sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
 
@@ -216,7 +208,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        installOldApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -247,7 +239,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        installLatestApp();
         relaunch();
         sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
 
