@@ -340,6 +340,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
                 .partner(partner)
                 .useMultiverse(USE_MULTIVERSE)
+                .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
                 .build();
         return apiConfiguration;
     }
