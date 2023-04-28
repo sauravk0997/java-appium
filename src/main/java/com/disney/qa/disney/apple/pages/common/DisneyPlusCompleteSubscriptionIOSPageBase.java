@@ -26,8 +26,8 @@ public class DisneyPlusCompleteSubscriptionIOSPageBase extends DisneyPlusApplePa
 
     private ExtendedWebElement primaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUB_TITLE);
     private ExtendedWebElement secondaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.COMPLETE_SUB_COPY);
-    private ExtendedWebElement restartSubscriptionButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUBSCRIPTION_BTN);
-
+    private ExtendedWebElement completeSubscriptionButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUBSCRIPTION_BTN);
+    //Logout button
     public ExtendedWebElement getDismissButton() {
         return dimissBtn;
     }
@@ -49,6 +49,6 @@ public class DisneyPlusCompleteSubscriptionIOSPageBase extends DisneyPlusApplePa
     }
 
     public ExtendedWebElement getCompleteSubscriptionButton() {
-        return restartSubscriptionButton;
+        return completeSubscriptionButton;
     }
 }
