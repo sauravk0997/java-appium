@@ -76,7 +76,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws Exception {
-        getCastedDriver();
+        getDriver();
         iosUtils.set(new IOSUtils());
         setBuildType();
         languageUtils.set(new DisneyLocalizationUtils(country, language, "tvos", "prod", PARTNER));
