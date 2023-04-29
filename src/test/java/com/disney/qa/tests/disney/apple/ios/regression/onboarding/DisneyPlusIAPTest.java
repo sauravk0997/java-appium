@@ -18,7 +18,7 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"IAP"})
+    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-IAP"})
     public void verifyIAPDisneyPlanCards(DisneyPlusPaywallIOSPageBase.PlanType planType) {
         initialSetup();
         if (buildType != BuildType.IAP) {
