@@ -28,14 +28,16 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        sa.assertTrue(dobCollectionPage.isOpened(), "DOB collection page didn't open after signing up");
         iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
-        sa.assertTrue(paywallIOSPageBase.isPlanCardTitlePresent(), "Choose your plan card 'title' is not as expected");
-        sa.assertTrue(paywallIOSPageBase.isPlanCardSubTitlePresent(), "Choose your plan card 'subtitle' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not as expected");
         sa.assertTrue(paywallIOSPageBase.isFooterLabelPresent(), "Choose your plan card 'footer label' is not as expected");
         sa.assertTrue(paywallIOSPageBase.verifyPlanCardFor(planType), "Plan card UI is not as expected");
         paywallIOSPageBase.getSelectButtonFor(planType).click();
