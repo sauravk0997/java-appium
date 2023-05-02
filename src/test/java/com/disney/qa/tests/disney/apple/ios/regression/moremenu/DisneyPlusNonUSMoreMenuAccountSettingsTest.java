@@ -17,7 +17,7 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
     @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {"More Menu"})
     public void verifyAccountMonthlyToAnnualDisplays_Apple() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
@@ -44,7 +44,7 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
     @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu"})
     public void verifyAccountMonthlyToAnnualDisplays_Google() {
-        setGlobalVariables();
+        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
