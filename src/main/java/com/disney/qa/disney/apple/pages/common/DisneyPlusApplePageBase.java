@@ -218,6 +218,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         super(driver);
     }
 
+    public void waitForPresenceOfAnElement(ExtendedWebElement element) {
+        fluentWait(getDriver(), DELAY, SHORT_TIMEOUT, "Element is not present").until(it -> element.isElementPresent(ONE_SEC_TIMEOUT));
+    }
+
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
         return dynamicIosClassChainElementTypeImage.format(label);
     }
@@ -674,6 +678,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      */
     public void clickSecondaryButtonByCoordinates() {
         new MobileUtilsExtended().clickElementAtLocation(secondaryButton, 50, 50);
+    }
+
+    public void clickPrimaryButtonByCoordinates() {
+        new MobileUtilsExtended().clickElementAtLocation(primaryButton, 50, 50);
     }
 
     public boolean isAlertDefaultBtnPresent() {
