@@ -35,8 +35,6 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
     private static final String BAMTECH_CANONBALL_PREVIEW_VALUE = "3Br5QesdzePvQEH";
     private static final String IS_GEOEDGE_UNSUPPORTED_REGION = "isGeoEdgeUnsupportedRegion";
     private static final String IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES = "isGeoEdgeSupportedRegionWithIssues";
-
-    protected static final String BROWSERMOB_PROXY = "browsermob_proxy";
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
 
@@ -60,13 +58,13 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
         }
     }
 
-    //Starts a BrowserMob proxy session for the United States with Basic Request and Response captures
+    //Starts a BrowserUp proxy session for the United States with Basic Request and Response captures
     public void initiateProxy() {
         initiateProxy("United States");
     }
 
     /**
-     * Starts a BrowserMob proxy session for the designated country with Basic Request and Response captures
+     * Starts a BrowserUp proxy session for the designated country with Basic Request and Response captures
      *
      * @param country - Country NAME to proxy to.
      */
@@ -77,7 +75,7 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
     //TODO:Move this to a centralized location(identical to web)
 
     /**
-     * Starts a BrowserMob proxy session for the designated country with specified capture types
+     * Starts a BrowserUp proxy session for the designated country with specified capture types
      *
      * @param country      - Country NAME to proxy to
      * @param captureTypes - Desired capture types to record
@@ -91,7 +89,7 @@ public class BaseMobileTest extends BaseTest implements IMobileUtils {
                 .searchAndReturnCountryData(country,
                         "country",
                         "code");
-        R.CONFIG.put("browsermob_proxy", "true");
+        R.CONFIG.put("browserup_proxy", "true");
         getDriver();
         DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
         DisneyProductData productData = new DisneyProductData();

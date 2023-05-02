@@ -68,7 +68,7 @@ public class GeoedgeProxyServer {
      * Retrieve a new GeoEdge proxy, attempts to stop any proxy that is currently running prior.
      *
      * @param country searches for a proxy matching the country in question.
-     * @return returns BrowserMobProxy connected to the correct Geoedge proxy server.
+     * @return returns BrowserUpProxy connected to the correct Geoedge proxy server.
      * @throws Exception is returned if the country in question can't be found.
      */
     @java.lang.SuppressWarnings("squid:S00112")
@@ -164,7 +164,7 @@ public class GeoedgeProxyServer {
     }
 
     /**
-     * This will check the proxy port that was started when we called browsermob_proxy = true in the @BeforeClass.  It will
+     * This will check the proxy port that was started when we called browserup_proxy = true in the @BeforeClass.  It will
      * then pull that back for use for Geoedge Proxying.
      */
     @java.lang.SuppressWarnings("squid:S00112")
@@ -187,7 +187,7 @@ public class GeoedgeProxyServer {
     /**
      * This will grab the port value of the stored proxy on the current thread.
      *
-     * @return brings back BrowserMobProxy port that was set on the current thread.
+     * @return brings back BrowserUpProxy port that was set on the current thread.
      */
     public int getProxyPortForThread() {
         return this.proxyPortForThread;

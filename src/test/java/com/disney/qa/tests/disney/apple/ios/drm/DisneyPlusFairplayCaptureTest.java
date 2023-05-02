@@ -107,7 +107,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
     public void initiateProxy(String country, String devicePort, CaptureType... captureTypes) {
         GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
         geoedgeProxyFreshInstance.setProxyHostForSelenoid();
-        R.CONFIG.put("browsermob_proxy", "true");
+        R.CONFIG.put("browserup_proxy", "true");
         getDriver();
 
         Map<String, String> headers = new HashMap<>();

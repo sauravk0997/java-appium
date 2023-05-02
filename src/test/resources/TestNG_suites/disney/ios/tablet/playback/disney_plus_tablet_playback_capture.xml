@@ -15,7 +15,7 @@
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
-    <parameter name="overrideFields" value="browsermob_proxy=true,capabilities.contentType=${content_type},capabilities.contentId=${content_id}"/>
+    <parameter name="overrideFields" value="browserup_proxy=true,capabilities.contentType=${content_type},capabilities.contentId=${content_id}"/>
 
     <test verbose="1" name="iOS - Disney+ - Tablet Playback Capture" parallel="methods">
         <classes>
