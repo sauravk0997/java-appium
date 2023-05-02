@@ -20,7 +20,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62612"})
     @Test(description = "Verify empty Watchlist display", groups = {"More Menu"})
     public void verifyEmptyWatchlistDisplay() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         onboard();
@@ -39,7 +39,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62610"})
     @Test(description = "Verify populated Watchlist display", groups = {"More Menu"})
     public void verifyPopulatedWatchlistDisplay() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusBrandIOSPageBase disneyPlusBrandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);

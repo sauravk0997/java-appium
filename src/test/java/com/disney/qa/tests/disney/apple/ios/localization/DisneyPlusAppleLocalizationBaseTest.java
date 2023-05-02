@@ -33,7 +33,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
     protected void setup() {
-        setGlobalVariables();
+        initialSetup();
         String locale = languageUtils.get().getLocale();
 
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).build();

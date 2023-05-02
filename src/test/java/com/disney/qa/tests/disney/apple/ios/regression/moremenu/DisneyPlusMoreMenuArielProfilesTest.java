@@ -31,7 +31,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
     @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu"})
     public void verifyExistingProfileMinorAuth() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -74,7 +74,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
     @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu"})
     public void verifyU13AutoplayAndBackgroundVideoOff() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
@@ -97,7 +97,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13AuthenticationAbandonFlow() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -117,7 +117,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -139,7 +139,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
     @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13RestrictionONAuthentication() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -181,7 +181,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Add Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu"})
     public void  verifyAddProfileU13MinorConsentAgree() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
@@ -214,7 +214,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13MinorConsentDecline() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -237,7 +237,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72973"})
     @Test(description = "Add Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu"})
     public void verifyAddProfileU13MinorConsentAbandonFlow() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -265,7 +265,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentAgree() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -308,7 +308,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentDecline() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -336,7 +336,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
     @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu"})
     public void verifyEditProfileU13MinorConsentAbandonFlow() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
@@ -367,7 +367,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
     @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {"Ariel-More Menu"})
     public void verifyAdTierUserCoViewing() {
-        setGlobalVariables(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
         setAppToHomeScreen(disneyAccount.get());
 
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -385,7 +385,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72869"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {"Ariel-More Menu"})
     public void verifyU13PasswordGrantForWelch() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -420,7 +420,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
     @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu"})
     public void verifyProfileCreationRestrictedFunctionality() {
-        setGlobalVariables();
+        initialSetup();
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -469,7 +469,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
     @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {"Ariel-More Menu"})
     public void verifyU13RestrictionOnWelchActionGrant() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -507,6 +507,40 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72663"})
+    @Test(description = "Kids Profile new copy and rename to Junior Mode", groups = {"Ariel-More Menu"})
+    public void verifyJuniorModeCopy() {
+        initialSetup();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        setAppToHomeScreen(disneyAccount.get());
+
+        whoIsWatching.clickProfile("Test");
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on add profile page");
+        addProfile.tapCancelButton();
+        addProfile.tapBackButton();
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE", "Exit junior mode verbiage doesn't match the expected value");
+        moreMenu.tapExitKidsProfileButton();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        new IOSUtils().scrollDown();
+        pause(1); //to handle transition
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on edit profile page");
+        editProfilePage.clickDoneBtn();
     }
 
     private void setAppToAccountSettings() {

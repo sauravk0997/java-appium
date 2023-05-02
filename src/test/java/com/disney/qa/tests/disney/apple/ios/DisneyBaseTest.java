@@ -14,6 +14,7 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
@@ -26,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDate;
+
 import java.util.Date;
 
 @SuppressWarnings("squid:S2187")
@@ -53,7 +56,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
 
     public enum Person {
-        ADULT(DateHelper.Month.NOVEMBER, "5", "1955");
+        ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
+        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
 
         DateHelper.Month month;
         String day;
@@ -146,7 +150,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         } else if (!homePage.isOpened()) {
             restart();
-            setGlobalVariables();
+            initialSetup();
             loginToHome(account, profileName);
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
@@ -154,18 +158,25 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         pause(3);
     }
 
-    public void setGlobalVariables() {
+    public void initialSetup() {
         new GeoedgeProxyServer().setProxyHostForSelenoid();
-        setGlobalVariables(R.CONFIG.get("locale"), R.CONFIG.get("language"));
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
     }
 
-    public void setGlobalVariables(String locale, String language, String... planType) {
+    public void initialSetup(String locale, String language, String... planType) {
         // Call getDriver to set platform variables
         LOGGER.info("Starting API threads");
         getDriver();
         handleAlert();
         iosUtils.set(new IOSUtils());
         setBuildType();
+
+        if (buildType == BuildType.IAP) {
+            LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
+            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+            relaunch();
+        }
+
         try {
             disneyApiHandler.set(new DisneyContentApiChecker());
             disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
@@ -319,6 +330,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
                 .partner(partner)
                 .useMultiverse(USE_MULTIVERSE)
+                .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
                 .build();
         return apiConfiguration;
     }

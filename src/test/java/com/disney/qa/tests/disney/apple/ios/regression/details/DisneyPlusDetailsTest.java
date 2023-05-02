@@ -20,7 +20,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details"})
     public void verifyAddSeriesAndMovieToWatchlist() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);

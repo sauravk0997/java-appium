@@ -12,7 +12,7 @@ public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62330", "XMOBQA-62332"})
     @Test(description = "Verify the Welcome screen elements in Portrait mode", groups = {"Onboarding"})
     public void verifyWelcomeScreenPortrait() {
-        setGlobalVariables();
+        initialSetup();
         handleAlert();
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());

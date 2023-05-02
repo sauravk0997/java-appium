@@ -24,7 +24,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72882"})
     @Test(description = "Old app to new app installation with login validation", groups = {"Install"})
     public void testOldAppToNewAppInstallBVT() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -119,7 +119,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73477"})
     @Test(description = "Old app with kids download to new app installation", groups = {"Install"})
     public void testOldAppToNewAppInstallDownloadKids() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -197,7 +197,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73476"})
     @Test(description = "Old app with adult download to new app install", groups = {"Install"})
     public void testOldAppToNewAppInstallDownloadAdult() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

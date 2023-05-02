@@ -23,7 +23,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72582"})
     @Test(description = "iOS Basic Verification Test", groups = {"BVT"})
     public void iOSBVT() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);

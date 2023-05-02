@@ -28,7 +28,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
     @Test(description = "Movies Details Screen - Play vs Continue", groups = {"Details"})
     public void verifyMoviePlayVsContinue() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -53,7 +53,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
     @Test(description = "Movies Detail Page > User taps checkmark to remove watchlist", groups = {"Details"})
     public void verifyRemoveMovieFromWatchlist() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -82,7 +82,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62393"})
     @Test(description = "Movies Details Screen - If no Extra content, do not show section", groups = {"Details"})
     public void verifyMovieNoExtras() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -100,7 +100,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71794"})
     @Test(description = "Movie Details: Verify Details Tab Metadata", groups = {"Details"})
     public void verifyMoviesDetailsTabMetadata() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -128,7 +128,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62391"})
     @Test(description = "Movies Details - Verify UI Elements", groups = {"Details"})
     public void verifyMovieDetailsUIElements() {
-        setGlobalVariables();
+        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
