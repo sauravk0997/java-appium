@@ -317,8 +317,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
-        //QTE-1688 to investigate issue, fix below for when global nav is sometimes expanded.
         if (homePage.isGlobalNavExpanded()) {
+            LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
         }
 
@@ -388,28 +388,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                     return isRunning;
                 });
 
-        if (displayDictionaryKeys) {
-            LOGGER.info("Turning on Debug Dictionary");
-            jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
-            jarvis.clickConfig(DICTIONARY_DEBUG_MODE.getText());
-            jarvis.clickBack();
-            Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
-        }
-
-        if (unpinDictionaries) {
-            LOGGER.info("Unpinning Dictionaries");
-            if (displayDictionaryKeys) {
-                jarvis.clickDown();
-                jarvis.clickSelect();
-            } else {
-                jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
-                jarvis.clickConfig(DICTIONARY_VERSIONS.getText());
-            }
-            jarvis.isAIDElementPresentWithScreenshot(DECORATIONS.getText());
-            jarvis.setDictionaryKey("0.0");
-            jarvis.keyPressTimes(IRemoteControllerAppleTV::clickMenu, 2, 1);
-            Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
-        }
+        Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
+        jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
 
         if (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null")) {
             LOGGER.info("Setting globalization version");
@@ -418,6 +398,27 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
             jarvis.clickConfig(EDIT_CONFIG.getText());
             jarvis.clickConfig(GLOBALIZATION_VERSION.getText());
             jarvis.setOverride(globalizationVersion);
+            jarvis.keyPressTimes(IRemoteControllerAppleTV::clickMenu, 3, 1);
+        }
+
+        jarvis.navigateToConfig(DICTIONARY_DEBUG_MODE.getText(), Direction.DOWN);
+        if (displayDictionaryKeys) {
+            LOGGER.info("Enabling Debug Dictionary display...");
+            while(!jarvis.getDebugDisplayOverrideValue().equals("key")) {
+                jarvis.clickConfig(DICTIONARY_DEBUG_MODE.getText());
+            }
+        } else {
+            LOGGER.info("Disabling Debug Dictionary display...");
+            while(!jarvis.getDebugDisplayOverrideValue().equals("off")) {
+                jarvis.clickConfig(DICTIONARY_DEBUG_MODE.getText());
+            }
+        }
+
+        if (unpinDictionaries) {
+            LOGGER.info("Unpinning Dictionaries");
+            jarvis.clickConfig(DICTIONARY_VERSIONS.getText());
+            jarvis.isAIDElementPresentWithScreenshot(DECORATIONS.getText());
+            jarvis.setDictionaryKey("0.0");
         }
     }
 

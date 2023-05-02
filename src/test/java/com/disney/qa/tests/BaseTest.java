@@ -23,8 +23,8 @@ public class BaseTest extends AbstractTest {
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
     private static final String ZEBRUNNER_XRAY_EXECUTION_KEY = "reporting.tcm.xray.test-execution-key";
 
-    protected String locale;
-    protected String language;
+    protected String locale = R.CONFIG.get("locale");
+    protected String language = R.CONFIG.get("language");;
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
