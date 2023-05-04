@@ -35,7 +35,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
@@ -125,7 +125,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
@@ -200,7 +200,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
 
         //install old app
         removeApp(buildType.getDisneyBundle());
