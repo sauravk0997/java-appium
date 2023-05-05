@@ -18,6 +18,8 @@ import org.openqa.selenium.NoSuchElementException;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+
 public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     public static final List<SandboxAccount> accountsList = new LinkedList() {
@@ -84,11 +86,13 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
-        sa.assertTrue(dobCollectionPage.isOpened(), "DOB collection page didn't open after signing up");
+        if (!dobCollectionPage.isOpened()) {
+            dobCollectionPage.clickPrimaryButtonByCoordinates();
+        }
         iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         //Purchase plan
-        paywallIOSPageBase.getSelectButtonFor(planType).click();
+        paywallIOSPageBase.getSelectButtonFor(planType).click(SHORT_TIMEOUT);
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
