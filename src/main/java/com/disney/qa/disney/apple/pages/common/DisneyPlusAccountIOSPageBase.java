@@ -6,6 +6,7 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -14,6 +15,9 @@ import org.openqa.selenium.support.FindBy;
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
+
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='%s']/../following-sibling::*/XCUIElementTypeButton")
+    private ExtendedWebElement changeLink;
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
 
@@ -26,9 +30,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement switchToAnnualBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SWITCH_ANNUAL_CTA.getText()));
 
     private ExtendedWebElement directBillingPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
-
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='%s']/../following-sibling::*/XCUIElementTypeButton")
-    private ExtendedWebElement changeLink;
 
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
 
@@ -131,7 +132,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                             DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText());
 
-    private ExtendedWebElement vivoTelefonicaTitle = getStaticTextByLabel("Vivo");
 
     public DisneyPlusAccountIOSPageBase(WebDriver driver) {
         super(driver);
@@ -292,7 +292,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isTelefonicaAppPresentInAppStore() {
-        return vivoTelefonicaTitle.isElementPresent();
+        return getStaticTextByLabel("Vivo").isElementPresent();
     }
 
     public void openVivoWebview() {
@@ -473,5 +473,18 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void openBillingProvider(DisneySkuParameters sku) {
         getBillingProviderCell(sku).click();
+    }
+
+    public boolean isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        switch (planName) {
+            case BASIC:
+                LOGGER.info(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText()));
+                return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).isPresent();
+            case PREMIUM:
+                return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_APPLE.getText())).isPresent();
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' Plan type is not a valid option", planName));
+        }
     }
 }

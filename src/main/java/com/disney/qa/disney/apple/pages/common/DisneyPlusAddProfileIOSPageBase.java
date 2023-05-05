@@ -47,7 +47,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "editProfile")
     private ExtendedWebElement editProfile;
 
-    @ExtendedFindBy(accessibilityId = "saveProfileButton")
+    @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
@@ -102,6 +102,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         juniorModeToggle.click();
     }
 
+    public void tapSaveButton() {
+        saveButton.click();
+    }
+
     public void clickSkipBtn() {
         skipBtn.click();
     }
@@ -113,6 +117,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void createProfile(String name) {
         enterProfileName(name);
         saveBtn.click();
+    }
+
+    public void createProfileForNewUser(String profileName) {
+        enterProfileName(profileName);
+        chooseGender();
+        tapSaveButton();
     }
 
     public void createProfile(String profileName, DateHelper.Month month, String day, String year) {

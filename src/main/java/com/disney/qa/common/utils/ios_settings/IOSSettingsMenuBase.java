@@ -1,5 +1,7 @@
 package com.disney.qa.common.utils.ios_settings;
 
+import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
+import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
@@ -11,6 +13,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -33,6 +36,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='Manage']")
     private ExtendedWebElement manageButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Apple ID:\"`]")
+    private ExtendedWebElement appleIDCell;
 
     @FindBy(xpath = "//*[contains(@name, '%s')]/../following-sibling::*/*[contains(@name, 'Expired')]")
     private ExtendedWebElement appExpiredNotation;
@@ -86,6 +92,14 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
     }
 
+    public String getDeviceSandBoxAppleID() {
+        launchSettings();
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        appStoreTab.click();
+        utils.swipe(sandboxAccount);
+        return appleIDCell.getText().split(":")[1];
+    }
+
     public void cancelActiveEntitlement(String appName) {
         boolean waitForExpiryTime = false;
         int appSubButtonIndex = 9999;
@@ -106,7 +120,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
 
         if(waitForExpiryTime) {
-            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+           waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
         utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
@@ -135,6 +149,8 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         LOGGER.info("Refreshing page until expired indicator shows for up to 4 minutes...");
         Instant expireTime = Instant.now().plus(4, ChronoUnit.MINUTES);
         if(appSubButtons.isEmpty()) {
+            sandboxAccount.click();
+            manageButton.click();
             while (Instant.now().isBefore(expireTime) && !appExpiredNotation.format("Disney+").isElementPresent()) {
                 doneBtn.click();
                 manageSandboxAcct();
