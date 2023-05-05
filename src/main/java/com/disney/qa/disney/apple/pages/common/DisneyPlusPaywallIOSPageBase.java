@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -20,6 +21,27 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "restoreButton")
     public ExtendedWebElement restoreBtn;
 
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    private ExtendedWebElement chooseYourPlanHeader;
+
+    @ExtendedFindBy(accessibilityId = "subtitleLabel")
+    private ExtendedWebElement chooseYourPlanSubHeader;
+
+    @ExtendedFindBy(accessibilityId = "cardTitleLabel_%s")
+    private ExtendedWebElement planCardTitleLabel;
+
+    @ExtendedFindBy(accessibilityId = "cardSubTitleLabel_%s")
+    private ExtendedWebElement planCardSubTitleLabel;
+
+    @ExtendedFindBy(accessibilityId = "priceLabel_%s")
+    private ExtendedWebElement priceLabel;
+
+    @ExtendedFindBy(accessibilityId = "selectButton_%s")
+    public ExtendedWebElement selectBtn;
+
+    @ExtendedFindBy(accessibilityId = "upNextContentFooterLabel")
+    private ExtendedWebElement footerLabel;
+
     @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
     private ExtendedWebElement alertResumeBtn;
 
@@ -28,6 +50,18 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
+
+    @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
+    private ExtendedWebElement purchasePlanBtn;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
+    private ExtendedWebElement overlaySubscribeBtn;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    private ExtendedWebElement sandboxPasswordBox;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
+    protected ExtendedWebElement sandboxSigninButton;
 
     private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
 
@@ -45,17 +79,6 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement alertFinishLaterText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INTERRUPT_SUBSCRIPTION.getText()));
 
-    @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
-    private ExtendedWebElement purchasePlanBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
-    private ExtendedWebElement overlaySubscribeBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
-    private ExtendedWebElement sandboxPasswordBox;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
-    protected ExtendedWebElement sandboxSigninButton;
 
     public DisneyPlusPaywallIOSPageBase(WebDriver driver) {
         super(driver);
@@ -63,6 +86,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
+        UniversalUtils.captureAndUpload(getCastedDriver());
         return yearlySkuBtn.isElementPresent();
     }
 
@@ -72,7 +96,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSwitchToAnnualCopyDisplayed() {
         return staticTypeTextViewValue.format(getDictionary()
-                .replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_COPY.getText()), "---", "---"))
+                        .replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_COPY.getText()), "---", "---"))
                 .isElementPresent();
     }
 
@@ -125,6 +149,57 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         return alertFinishLaterBtn.isElementPresent();
     }
 
+    public enum PlanType {
+        BASIC,
+        PREMIUM;
+    }
+
+    public String getPlanName(PlanType planType) {
+        switch (planType) {
+            case BASIC:
+                return getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText());
+            case PREMIUM:
+                return getDictionary().
+                        getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText());
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' Plan type is not a valid option", planType));
+        }
+    }
+
+    public boolean verifyPlanCardFor(PlanType planType) {
+        return planCardTitleLabel.format(getPlanName(planType)).isElementPresent() &&
+                planCardSubTitleLabel.format(getPlanName(planType)).isElementPresent() &&
+                priceLabel.format(getPlanName(planType)).isElementPresent() &&
+                selectBtn.format(getPlanName(planType)).isElementPresent();
+    }
+
+    public ExtendedWebElement getSelectButtonFor(PlanType planName) {
+        return selectBtn.format(getPlanName(planName));
+    }
+
+    public boolean isChooseYourPlanHeaderPresent() {
+        waitForPresenceOfAnElement(chooseYourPlanHeader);
+        return chooseYourPlanHeader.getText()
+                .equalsIgnoreCase(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_TITLE.getText()));
+    }
+
+    public boolean isChooseYourPlanSubHeaderPresent() {
+        return chooseYourPlanSubHeader.getText()
+                .equalsIgnoreCase(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_SUBCOPY.getText()));
+    }
+
+    public boolean isFooterLabelPresent() {
+        return footerLabel.getText().equalsIgnoreCase(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText()));
+    }
+
+    public void tapFinishLaterButton() {
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        alertFinishLaterBtn.click();
+    }
+
     public void clickBasicPlan() {
         purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()),
                 DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()).click();
@@ -137,6 +212,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickPurchaseButton() {
         productPurchaseBtn.click();
+    }
+
+    public boolean isPurchaseButtonPresent() {
+        return productPurchaseBtn.isElementPresent();
     }
 
     public void waitForSubscribeOverlay() {
