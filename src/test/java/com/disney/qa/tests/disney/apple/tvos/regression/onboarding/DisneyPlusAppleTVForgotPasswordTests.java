@@ -735,14 +735,10 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     @Test(description = "Fresh login with newly created password takes user to home screen", groups = {"Onboarding"})
     public void newPasswordAllowsSuccessfulLogIn() {
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        SoftAssert sa = new SoftAssert();
         String updatedPassword = MICKEY_MOUSE_PW + "$";
         disneyAccountApi.resetUserPassword(disneyUser, updatedPassword);
         disneyUser.setUserPass(updatedPassword);
 
-        logInWithoutHomeCheck(disneyUser);
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after logging in with new password");
-        sa.assertAll();
+        logIn(disneyUser);
     }
 }

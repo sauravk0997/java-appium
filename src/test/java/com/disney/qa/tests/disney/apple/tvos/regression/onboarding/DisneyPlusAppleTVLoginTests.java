@@ -475,9 +475,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logInWithoutHomeCheck(entitledUser);
-
-        Assert.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page did not launch");
+        logIn(entitledUser);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90693"})
@@ -502,9 +500,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        logInWithoutHomeCheck(entitledUser);
-
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page did not launch");
+        logIn(entitledUser);
 
         disneyPlusAppleTVHomePage.clickMenu();
 
