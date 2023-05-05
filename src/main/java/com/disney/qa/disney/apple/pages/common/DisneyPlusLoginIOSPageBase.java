@@ -20,9 +20,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
-    @ExtendedFindBy(accessibilityId = "New to Disney+? SIGN UP")
-    private ExtendedWebElement newToDPlusText;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"We couldn't find an account for that email\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]")
     protected ExtendedWebElement noAccountAlert;
 
@@ -62,7 +59,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNewToDPlusTextDisplayed() {
-        return newToDPlusText.isPresent();
+        return getTextViewByName("signUpSwap").isElementPresent();
     }
 
     public String getEmailFieldText() {
