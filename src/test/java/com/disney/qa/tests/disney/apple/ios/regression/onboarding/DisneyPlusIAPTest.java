@@ -104,7 +104,9 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
-        new MobileUtilsExtended().clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        if (addProfilePage.getTypeButtonByLabel("CONTINUE").isPresent()) {
+            new MobileUtilsExtended().clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
         addProfilePage.clickPrimaryButton();
