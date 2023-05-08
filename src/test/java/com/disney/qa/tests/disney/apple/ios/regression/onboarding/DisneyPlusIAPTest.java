@@ -92,6 +92,7 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         //Purchase plan
+        paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(planType));
         paywallIOSPageBase.getSelectButtonFor(planType).click(SHORT_TIMEOUT);
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
