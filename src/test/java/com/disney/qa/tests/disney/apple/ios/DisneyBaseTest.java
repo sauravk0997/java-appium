@@ -9,6 +9,7 @@ import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 
 import java.util.Date;
@@ -333,5 +335,25 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
                 .build();
         return apiConfiguration;
+    }
+    protected boolean useMultiverse() {
+        return R.CONFIG.getBoolean("useMultiverse");
+    }
+    public DisneyAccountApi getAccountApi() {
+        if (disneyAccountApi.get() == null) {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).environment(DisneyParameters.getEnv())
+                    .partner(PARTNER).useMultiverse(useMultiverse()).build();
+            disneyAccountApi.set(new DisneyAccountApi(apiConfiguration));
+        }
+        return disneyAccountApi.get();
+    }
+    public void addHoraValidationSku(DisneyAccount accountToEntitle){
+        if (horaEnabled()) {
+            try {
+                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
