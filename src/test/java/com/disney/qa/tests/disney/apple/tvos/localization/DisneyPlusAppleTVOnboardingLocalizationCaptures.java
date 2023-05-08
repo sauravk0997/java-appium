@@ -2,34 +2,31 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.disney.qa.api.disney.DisneyApiProvider;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneyCountryData;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
-import com.qaprosoft.carina.core.foundation.utils.DateUtils;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.UUID;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
 
     private final ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     private final ThreadLocal<String> pathToZip = new ThreadLocal<>();
     private final DisneyContentApiChecker disneyContentApiChecker = new DisneyContentApiChecker();
-    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(DisneyPlusAppleTVBaseTest.PLATFORM, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
+    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(getApiConfiguration(DISNEY));
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
@@ -325,6 +322,164 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             LOGGER.info("derr");
         }
 
+    }
+
+    @Test(description = "Onboarding + Profile Setup screenshots", groups = "Ariel")
+    public void captureArielFlow() {
+        if(!languageUtils.get().getCountryName().equals("United States")) {
+            skipExecution("Country is not Ariel supported.");
+        }
+        baseDirectory.set("ArielCaptures/");
+        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
+
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
+                .country(languageUtils.get().getLocale())
+                .language(languageUtils.get().getUserLanguage())
+                .gender(null)
+                .build();
+        DisneyAccount account = disneyAccountApi.createAccount(request);
+
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVSignUpPage signUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVDOBCollectionPage dobCollectionPage = new DisneyPlusAppleTVDOBCollectionPage(getDriver());
+        DisneyPlusAppleTVPaywallPage paywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
+        DisneyPlusAppleTVCompleteSubscriptionPage completeSubscriptionPage = new DisneyPlusAppleTVCompleteSubscriptionPage(getDriver());
+        DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
+
+        //This is not related to Ariel
+        welcomeScreenPage.isOpened();
+        getScreenshots("1.1-1_WelcomePage", baseDirectory);
+
+        welcomeScreenPage.clickSignUpButton();
+        signUpPage.isOpened();
+        getScreenshots("1.2_EnterEmail", baseDirectory);
+
+        signUpPage.clickAgreeAndContinue();
+        pause(1);
+        getScreenshots("1.3_ErrorMessage", baseDirectory);
+
+        signUpPage.clickViewAgreementAndPolicies();
+        pause(1);
+        getScreenshots("1.4-1_1stItem", baseDirectory);
+        signUpPage.moveDown(1, 1);
+        pause(1);
+        getScreenshots("1.4-2_2ndItem", baseDirectory);
+        signUpPage.moveDown(1, 1);
+        pause(1);
+        getScreenshots("1.4-3_3rdItem", baseDirectory);
+        signUpPage.moveDown(1,1);
+        pause(1);
+        getScreenshots("1.4-4_4thItem", baseDirectory);
+        //TODO: Add a handler for 5+ on this page items
+
+        signUpPage.clickMenu();
+        signUpPage.clickEmailButton();
+        getScreenshots("1.5-1_PreviousEmails", baseDirectory);
+        loginPage.clickLocalizationEnterNewBtn();
+        getScreenshots("1.5-2_SubmitEmailText", baseDirectory);
+
+        loginPage.enterEmail(new DisneyApiProvider().getUniqueUserEmail());
+        loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        loginPage.clickSelect();
+        loginPage.clickContinueBtn();
+        passwordPage.isOpened();
+        getScreenshots("1.6_CreatePassword", baseDirectory);
+
+        passwordPage.clickPrimaryButton();
+        getScreenshots("1.7_EmptyPasswordError", baseDirectory);
+
+        passwordPage.clickPassword();
+        passwordPage.enterPassword("a");
+        passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        passwordPage.clickSelect();
+        passwordPage.clickPrimaryButton();
+        getScreenshots("1.8_ErrorMessage", baseDirectory);
+
+        passwordPage.clickPassword();
+        passwordPage.enterPassword("Local123");
+        getScreenshots("1.9_WeakPasswordStrength", baseDirectory);
+
+        passwordPage.enterPassword("Local123$");
+        getScreenshots("1.10_MediumPasswordStrength", baseDirectory);
+
+        passwordPage.enterPassword("Local123@!");
+        getScreenshots("1.11_StrongPasswordStrength", baseDirectory);
+
+        //Begin actual Ariel-related screens
+        passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        passwordPage.clickSelect();
+        passwordPage.clickPrimaryButton();
+        dobCollectionPage.isOpened();
+        getScreenshots("1.12-1_EnterBirthdate", baseDirectory);
+
+        dobCollectionPage.clickPrimaryButton();
+        getScreenshots("1.12-2_ErrorMessage", baseDirectory);
+
+        dobCollectionPage.enterDOB("05/02/2020");
+        dobCollectionPage.clickPrimaryButton();
+        pause(1);
+        getScreenshots("1.13_NotEligible", baseDirectory);
+
+        //Back to not-Ariel
+        dobCollectionPage.clickSelect();
+        welcomeScreenPage.clickSignUpButton();
+        signUpPage.clickEmailButton();
+        loginPage.clickLocalizationEnterNewBtn();
+        loginPage.enterEmail(new DisneyApiProvider().getUniqueUserEmail());
+        loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        loginPage.clickSelect();
+        loginPage.clickContinueBtn();
+        passwordPage.clickPassword();
+        passwordPage.enterPassword("Local123@!");
+        passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        passwordPage.clickSelect();
+        passwordPage.clickPrimaryButton();
+        dobCollectionPage.enterDOB("05/02/1985");
+        dobCollectionPage.clickPrimaryButton();
+        paywallPage.isOpened();
+        getScreenshots("1.14_ChooseYourPlan", baseDirectory);
+
+        paywallPage.clickBasicPlan();
+        completeSubscriptionPage.isOpened();
+        getScreenshots("1.15-1_PaywallBasic", baseDirectory);
+
+        completeSubscriptionPage.clickMenu();
+        paywallPage.clickPremiumPlan();
+        completeSubscriptionPage.isOpened();
+        getScreenshots("1.15-2_PaywallPremium", baseDirectory);
+
+        paywallPage.clickMenuTimes(2, 1);
+        pause(1);
+        getScreenshots("1.16_FinishLater", baseDirectory);
+
+        paywallPage.clickSelect();
+        pause(1);
+        getScreenshots("1.17_OneStepAway", baseDirectory);
+
+        paywallPage.moveDown(1,1);
+        paywallPage.clickSelect();
+        pause(1);
+        paywallPage.clickSelect();
+
+        //Actual Ariel screens again
+        logInWithoutHomeCheck(account);
+        Instant timeout = Instant.now().plus(1, ChronoUnit.MINUTES);
+        while(Instant.now().isBefore(timeout) && !updateProfilePage.isOpened()) {
+            updateProfilePage.isOpened();
+        }
+        getScreenshots("1.18-1_UpdateProfile", baseDirectory);
+
+        updateProfilePage.clickSaveProfileButton();
+        pause(1);
+        getScreenshots("1.18-2_ErrorMessage", baseDirectory);
+
+        updateProfilePage.clickGenderDropDown();
+        pause(1);
+        getScreenshots("1.18-3_GenderMenu", baseDirectory);
+
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
 

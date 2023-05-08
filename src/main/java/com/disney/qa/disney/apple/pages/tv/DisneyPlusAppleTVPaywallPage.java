@@ -35,6 +35,13 @@ public class DisneyPlusAppleTVPaywallPage extends DisneyPlusPaywallIOSPageBase {
     }
 
     @Override
+    public void clickPremiumPlan() {
+        clickRight();
+        pause(2);
+        clickSelect();
+    }
+
+    @Override
     public void submitSandboxPassword(String password) {
         sandboxPasswordBox.type(password);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
