@@ -50,6 +50,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickAgreeAndContinue() {
         primaryButton.click();
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 
     public void clickAgreeAndContinueIfPresent() {

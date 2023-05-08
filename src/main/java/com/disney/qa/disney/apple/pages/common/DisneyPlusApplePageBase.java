@@ -67,6 +67,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]")
     protected ExtendedWebElement textViewByLabel;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`name == \"%s\"`]")
+    protected ExtendedWebElement textViewByName;
     @ExtendedFindBy(accessibilityId = "logoImage")
     protected ExtendedWebElement titleImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell")
@@ -218,6 +221,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         super(driver);
     }
 
+    public void waitForPresenceOfAnElement(ExtendedWebElement element) {
+        fluentWait(getDriver(), DELAY, SHORT_TIMEOUT, "Element is not present").until(it -> element.isElementPresent(ONE_SEC_TIMEOUT));
+    }
+
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
         return dynamicIosClassChainElementTypeImage.format(label);
     }
@@ -311,6 +318,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTextViewByLabel(String label) {
         return textViewByLabel.format(label);
+    }
+
+    public ExtendedWebElement getTextViewByName(String name) {
+        return textViewByName.format(name);
     }
 
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
@@ -675,6 +686,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      */
     public void clickSecondaryButtonByCoordinates() {
         new MobileUtilsExtended().clickElementAtLocation(secondaryButton, 50, 50);
+    }
+
+    public void clickPrimaryButtonByCoordinates() {
+        new MobileUtilsExtended().clickElementAtLocation(primaryButton, 50, 50);
     }
 
     public boolean isAlertDefaultBtnPresent() {

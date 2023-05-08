@@ -29,6 +29,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NINETEEN_EIGHTY = "1980";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
+    @Maintainer("gkrishna1")
     @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu"})
     public void verifyExistingProfileMinorAuth() {
         initialSetup();

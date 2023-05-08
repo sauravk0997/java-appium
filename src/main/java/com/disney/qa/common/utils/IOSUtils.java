@@ -1037,11 +1037,13 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         List<WebElement> pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         Instant waitTimeout = Instant.now().plus(30, ChronoUnit.SECONDS);
         while (pickers.isEmpty() && Instant.now().isBefore(waitTimeout)) {
+            LOGGER.info("DOB picker is empty waiting for it to show on screen");
             pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         }
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 }
 

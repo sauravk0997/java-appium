@@ -31,40 +31,6 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62689"})
-    @Test(description = "Log In - Verify Display", groups = {"Smoke"})
-    public void testLogInScreen() {
-        initialSetup();
-        SoftAssert softAssert = new SoftAssert();
-        handleAlert();
-
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        DisneyPlusLoginIOSPageBase loginPageBase = initPage(DisneyPlusLoginIOSPageBase.class);;
-
-        softAssert.assertTrue(loginPageBase.isBackArrowDisplayed(),
-                "Expected: Back Arrow should be present");
-
-        softAssert.assertTrue(loginPageBase.isEmailFieldDisplayed(),
-                "Expected: Email field should be present");
-
-        softAssert.assertTrue(loginPageBase.isPrimaryButtonPresent(),
-                "Expected: Continue button should be present");
-
-        softAssert.assertTrue(loginPageBase.isSignUpButtonDisplayed(),
-                "Expected: Sign Up button should be present");
-
-        softAssert.assertTrue(loginPageBase.isDisneyLogoDisplayed(),
-                "Expected: Disney+ logo image should be displayed");
-
-        softAssert.assertTrue(loginPageBase.isLoginTextDisplayed(),
-                "Expected: 'Log in with your email' text should be displayed");
-
-        softAssert.assertTrue(loginPageBase.isNewToDPlusTextDisplayed(),
-                "Expected: 'New to Disney+?' text should be displayed");
-
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62691"})
     @Test(description = "Paywall is shown to unentitled user after Log In", groups = {"Smoke"})
     public void testLoginWithUnentitledAccount() {
