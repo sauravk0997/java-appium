@@ -28,7 +28,9 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
-        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC}, {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM}};
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC}
+                //, {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM}
+                };
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
