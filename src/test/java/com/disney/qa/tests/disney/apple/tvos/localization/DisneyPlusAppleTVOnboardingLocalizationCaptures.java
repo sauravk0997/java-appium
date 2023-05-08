@@ -12,6 +12,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
+import com.qaprosoft.carina.core.foundation.utils.Configuration;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
@@ -348,7 +349,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVCompleteSubscriptionPage completeSubscriptionPage = new DisneyPlusAppleTVCompleteSubscriptionPage(getDriver());
         DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
 
-        //This is not related to Ariel
         welcomeScreenPage.isOpened();
         getScreenshots("1.1-1_WelcomePage", baseDirectory);
 
@@ -407,7 +407,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         passwordPage.enterPassword("Local123@!");
         getScreenshots("1.11_StrongPasswordStrength", baseDirectory);
 
-        //Begin actual Ariel-related screens
         passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         passwordPage.clickSelect();
         passwordPage.clickPrimaryButton();
@@ -422,48 +421,49 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         pause(1);
         getScreenshots("1.13_NotEligible", baseDirectory);
 
-        //Back to not-Ariel
         dobCollectionPage.clickSelect();
-        welcomeScreenPage.clickSignUpButton();
-        signUpPage.clickEmailButton();
-        loginPage.clickLocalizationEnterNewBtn();
-        loginPage.enterEmail(new DisneyApiProvider().getUniqueUserEmail());
-        loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        loginPage.clickSelect();
-        loginPage.clickContinueBtn();
-        passwordPage.clickPassword();
-        passwordPage.enterPassword("Local123@!");
-        passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        passwordPage.clickSelect();
-        passwordPage.clickPrimaryButton();
-        dobCollectionPage.enterDOB("05/02/1985");
-        dobCollectionPage.clickPrimaryButton();
-        paywallPage.isOpened();
-        getScreenshots("1.14_ChooseYourPlan", baseDirectory);
+        if(Configuration.getMobileApp().toLowerCase().contains("adhoc")) {
+            welcomeScreenPage.clickSignUpButton();
+            signUpPage.clickEmailButton();
+            loginPage.clickLocalizationEnterNewBtn();
+            loginPage.enterEmail(new DisneyApiProvider().getUniqueUserEmail());
+            loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+            loginPage.clickSelect();
+            loginPage.clickContinueBtn();
+            passwordPage.clickPassword();
+            passwordPage.enterPassword("Local123@!");
+            passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+            passwordPage.clickSelect();
+            passwordPage.clickPrimaryButton();
+            dobCollectionPage.enterDOB("05/02/1985");
+            dobCollectionPage.clickPrimaryButton();
+            paywallPage.isOpened();
+            getScreenshots("1.14_ChooseYourPlan", baseDirectory);
 
-        paywallPage.clickBasicPlan();
-        completeSubscriptionPage.isOpened();
-        getScreenshots("1.15-1_PaywallBasic", baseDirectory);
+            paywallPage.clickBasicPlan();
+            completeSubscriptionPage.isOpened();
+            getScreenshots("1.15-1_PaywallBasic", baseDirectory);
 
-        completeSubscriptionPage.clickMenu();
-        paywallPage.clickPremiumPlan();
-        completeSubscriptionPage.isOpened();
-        getScreenshots("1.15-2_PaywallPremium", baseDirectory);
+            completeSubscriptionPage.clickMenu();
+            paywallPage.clickPremiumPlan();
+            completeSubscriptionPage.isOpened();
+            getScreenshots("1.15-2_PaywallPremium", baseDirectory);
 
-        paywallPage.clickMenuTimes(2, 1);
-        pause(1);
-        getScreenshots("1.16_FinishLater", baseDirectory);
+            paywallPage.clickMenuTimes(2, 1);
+            pause(1);
+            getScreenshots("1.16_FinishLater", baseDirectory);
 
-        paywallPage.clickSelect();
-        pause(1);
-        getScreenshots("1.17_OneStepAway", baseDirectory);
+            paywallPage.clickSelect();
+            pause(1);
+            getScreenshots("1.17_OneStepAway", baseDirectory);
 
-        paywallPage.moveDown(1,1);
-        paywallPage.clickSelect();
-        pause(1);
-        paywallPage.clickSelect();
-
-        //Actual Ariel screens again
+            paywallPage.moveDown(1, 1);
+            paywallPage.clickSelect();
+            pause(1);
+            paywallPage.clickSelect();
+        } else {
+            LOGGER.warn("Enterprise build detected. Skipping paywall items...");
+        }
         logInWithoutHomeCheck(account);
         Instant timeout = Instant.now().plus(1, ChronoUnit.MINUTES);
         while(Instant.now().isBefore(timeout) && !updateProfilePage.isOpened()) {
