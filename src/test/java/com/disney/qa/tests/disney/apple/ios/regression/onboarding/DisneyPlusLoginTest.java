@@ -15,7 +15,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62030", "XMOBQA-62032"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62030", "XMOBQA-62032", "XMOBQA-62689"})
     @Test(description = "Log In - Verify Login Screen UI", groups = {"Onboarding"})
     public void testLogInScreen() {
         initialSetup();
