@@ -28,8 +28,7 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
-        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC}
-                //, {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM}
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC}, {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM}
                 };
     }
 
@@ -123,7 +122,6 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
         sa.assertTrue(accountPage.isPlanNameDisplayed(planType), "plan name on account page is not displayed as expected");
-        // Try playback or downloading the content on ad tier user.
         sa.assertAll();
     }
 }

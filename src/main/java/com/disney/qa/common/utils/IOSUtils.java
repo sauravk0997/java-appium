@@ -1041,7 +1041,6 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param year
      */
     public void setBirthDate(String month, String day, String year) {
-        UniversalUtils.captureAndUpload(getCastedDriver());
         IOSDriver iosDriver = (IOSDriver) getCastedDriver();
         HashMap<String, Object> scrollObject = new HashMap<>();
         scrollObject.put(DIRECTION, Direction.DOWN.getDirection());
