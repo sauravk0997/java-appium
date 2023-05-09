@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.qoeplayback;
 
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
@@ -35,7 +36,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
     @Maintainer("isong1")
     public void testQoEStartupSequence(ITestContext context) {
-//      xaqa-1578;
         initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
@@ -50,29 +50,22 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         DisneyAccount account = disneyAccount.get();
         addHoraValidationSku(account);
-//        disneyAccount.set(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
 
         UniversalUtils.captureAndUpload(getCastedDriver());
         disneyPlusWelcomeIOSPAge.clickLogInButton();
-//        disneyPlusLoginIOSPageBase.submitEmail(account.getEmail());
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        disneyPlusLoginIOSPageBase.clickPrimaryButton();
-
-//        if(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent()){
-//            disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        }
+        new IOSUtils().hideKeyboard();
         pause(3);
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
-        pause(10);
+
         disneyPlusHomeIOSPagesBase.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), "Search screen not displayed");
         searchPage.clickMoviesTab();
         sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
 
         searchPage.getDisplayedTitles().get(0).click();
-
         detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
 
@@ -98,8 +91,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         EventChecklist item8 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item8.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item8);
-//        checkAssertions(sa);
-//        sa.assertAll();
+
         checkAssertions(sa,account.getAccountId(), checkList);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-11002"})
@@ -120,21 +112,18 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         handleAlert();
 
         DisneyAccount account = disneyAccount.get();
-              //  getAccountApi().createAccount("Yearly", locale, language, "V1");
         addHoraValidationSku(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
         UniversalUtils.captureAndUpload(getCastedDriver());
         disneyPlusWelcomeIOSPAge.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        disneyPlusLoginIOSPageBase.submitEmail(account.getEmail());
-//        if(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent()){
-//            disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        }
+        new IOSUtils().hideKeyboard();
         pause(3);
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
+
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         disneyPlusHomeIOSPagesBase.clickSearchIcon();
+
         sa.assertTrue(searchPage.isOpened(), "Search screen not displayed");
         searchPage.clickMoviesTab();
         sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
@@ -196,9 +185,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkAssertions(sa, account.getAccountId(), checkList);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-10324"})
-    @Test(description = "Test Pause/Resume QoE even")
+    @Test(description = "Test Pause/Resume QoE event")
     @Maintainer("isong1")
-    public void testQoeEPauseAndResume(ITestContext context) {
+    public void testQoEPauseAndResume(ITestContext context) {
 //       xaqa-1094;
         initialSetup();
         SoftAssert sa = new SoftAssert();
@@ -217,18 +206,14 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         DisneyAccount account = disneyAccount.get();
         addHoraValidationSku(account);
-//        disneyAccount.set();
         Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
 
         UniversalUtils.captureAndUpload(getCastedDriver());
         disneyPlusWelcomeIOSPAge.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
-//        if(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent()){
-//            disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        }
         pause(3);
+        new IOSUtils().hideKeyboard();
+
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         disneyPlusHomeIOSPagesBase.clickSearchIcon();
@@ -270,7 +255,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkAssertions(sa, account.getAccountId(), checkList_resumed);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-938"})
-    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
+    @Test(description = "Verify Hearbeat QoE Eent")
     @Maintainer("isong1")
     public void testQoEHeartBeat(ITestContext context) {
 //       XAQA-938;
@@ -294,12 +279,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         UniversalUtils.captureAndUpload(getCastedDriver());
         disneyPlusWelcomeIOSPAge.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        disneyPlusLoginIOSPageBase.submitEmail(account.getEmail());
-        //Safety for login process where it does not proceed to Passwordpage
-//        if(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent()){
-//            disneyPlusLoginIOSPageBase.clickPrimaryButton();
-//        }
+        new IOSUtils().hideKeyboard();
+
         pause(3);
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
