@@ -1,9 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSignUpIOSPageBase;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.appletv.IRemoteControllerAppleTV;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
@@ -14,10 +12,10 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusSignUpIOSPageBase.class)
 public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
 
-    private ExtendedWebElement viewAgreementAndPolicies = getTypeButtonByLabel(getDictionary().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_TERMS_BTN.getText()));
-    private ExtendedWebElement emailTextField = dynamicTextEntryFieldByLabel.format(getDictionary().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.ONBOARDING_ENTER_EMAIL.getText()));
+    @ExtendedFindBy(accessibilityId = "secondaryButton")
+    private ExtendedWebElement viewAgreementAndPolicies;
+    @ExtendedFindBy(accessibilityId = "textFieldEmail")
+    private ExtendedWebElement emailTextField;
     
     @ExtendedFindBy(accessibilityId = "legalDisclosureView")
     private ExtendedWebElement legalDisclosure;
