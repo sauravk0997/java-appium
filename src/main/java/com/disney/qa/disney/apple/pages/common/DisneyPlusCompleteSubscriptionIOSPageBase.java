@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -26,8 +27,8 @@ public class DisneyPlusCompleteSubscriptionIOSPageBase extends DisneyPlusApplePa
 
     private ExtendedWebElement primaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUB_TITLE);
     private ExtendedWebElement secondaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.COMPLETE_SUB_COPY);
-    private ExtendedWebElement restartSubscriptionButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUBSCRIPTION_BTN);
-
+    private ExtendedWebElement completeSubscriptionButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_SUBSCRIPTION_BTN);
+    //Logout button
     public ExtendedWebElement getDismissButton() {
         return dimissBtn;
     }
@@ -49,6 +50,7 @@ public class DisneyPlusCompleteSubscriptionIOSPageBase extends DisneyPlusApplePa
     }
 
     public ExtendedWebElement getCompleteSubscriptionButton() {
-        return restartSubscriptionButton;
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return completeSubscriptionButton;
     }
 }

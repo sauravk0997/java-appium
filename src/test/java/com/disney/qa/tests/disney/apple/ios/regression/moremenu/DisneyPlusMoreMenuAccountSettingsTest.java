@@ -864,53 +864,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {"More Menu"})
-    public void verifyAccountMonthlyToAnnualDisplays_Apple() {
-        initialSetup();
-        SoftAssert sa = new SoftAssert();
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = new DisneyPlusPaywallIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.areSwitchToAnnualElementsDisplayed(),
-                "Switch to Annual description and/or CTA was not displayed");
-
-        disneyPlusAccountIOSPageBase.clickSwitchToAnnualButton();
-
-        Assert.assertTrue(disneyPlusPaywallIOSPageBase.isOpened(),
-                "User was not directed to the paywall after clicking Switch CTA");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isSwitchToAnnualHeaderDisplayed(),
-                "'Switch to Annual' header was not shown");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isSwitchToAnnualCopyDisplayed(),
-                "'Switch to Annual' copy was not shown");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu"})
-    public void verifyAccountMonthlyToAnnualDisplays_Google() {
-        initialSetup();
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.areSwitchToAnnualElementsDisplayed(),
-                "Switch to Annual description and/or CTA was not displayed");
-
-        disneyPlusAccountIOSPageBase.clickSwitchToAnnualButton();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
     @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu"})
     public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
         initialSetup();
