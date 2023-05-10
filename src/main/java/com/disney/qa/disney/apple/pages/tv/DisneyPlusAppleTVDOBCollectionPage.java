@@ -5,6 +5,7 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import org.apache.commons.lang3.RegExUtils;
 import org.openqa.selenium.WebDriver;
 
+@SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusDOBCollectionPageBase.class)
 public class DisneyPlusAppleTVDOBCollectionPage extends DisneyPlusDOBCollectionPageBase {
     public DisneyPlusAppleTVDOBCollectionPage(WebDriver driver) {
