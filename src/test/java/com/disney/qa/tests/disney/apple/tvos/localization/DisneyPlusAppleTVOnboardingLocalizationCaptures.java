@@ -219,9 +219,8 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             updateProfilePage.clickGenderDropDown();
             pause(1);
             getScreenshots("18-3_GenderMenu", baseDirectory);
-
-            ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
         }
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = {"Onboarding"})
