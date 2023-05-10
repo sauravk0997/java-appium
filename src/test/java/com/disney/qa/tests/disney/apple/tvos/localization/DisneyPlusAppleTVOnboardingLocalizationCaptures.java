@@ -163,7 +163,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 passwordPage.clickPrimaryButton();
                 dobCollectionPage.enterDOB("05/02/1985");
                 dobCollectionPage.clickPrimaryButton();
-
+                pause(3);
                 getScreenshots("14_ChooseYourPlan", baseDirectory);
 
                 paywallPage.clickBasicPlan();
