@@ -91,6 +91,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
         signUpPage.clickMenu();
         signUpPage.clickEmailButton();
+        pause(1);
         getScreenshots("5-1_PreviousEmails", baseDirectory);
         loginPage.clickLocalizationEnterNewBtn();
         getScreenshots("5-2_SubmitEmailText", baseDirectory);
