@@ -79,7 +79,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
         signUpPage.selectCheckBoxesForKr(korea);
         signUpPage.clickAgreeAndContinue();
-        pause(1);
+        signUpPage.isOpened();
         getScreenshots("3_ErrorMessage", baseDirectory);
 
         signUpPage.clickViewAgreementAndPolicies();
@@ -116,6 +116,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         passwordPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         passwordPage.clickSelect();
         passwordPage.clickPrimaryButton();
+        passwordPage.isOpened();
         getScreenshots("8_ErrorMessage", baseDirectory);
 
         passwordPage.clickPassword();
@@ -163,7 +164,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 passwordPage.clickPrimaryButton();
                 dobCollectionPage.enterDOB("05/02/1985");
                 dobCollectionPage.clickPrimaryButton();
-                pause(3);
+                paywallPage.isOpened();
                 getScreenshots("14_ChooseYourPlan", baseDirectory);
 
                 paywallPage.clickBasicPlan();
