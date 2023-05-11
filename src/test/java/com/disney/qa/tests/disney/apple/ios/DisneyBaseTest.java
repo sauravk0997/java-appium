@@ -17,15 +17,18 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import io.appium.java_client.ios.IOSDriver;
+import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
@@ -354,6 +357,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             } catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
+        if (horaEnabled()) {
+            HoraValidator hv = new HoraValidator(accountId);
+            hv.assertValidation(softAssert);
+            hv.checkListForPQOE(softAssert, checkList);
         }
     }
 }
