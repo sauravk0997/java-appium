@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
@@ -476,11 +477,12 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        UniversalUtils.captureAndUpload(getCastedDriver());
         switch (planName) {
             case BASIC:
-                LOGGER.info(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText()));
                 return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).isPresent();
-            case PREMIUM:
+            case PREMIUM_MONTHLY:
+            case PREMIUM_YEARLY:
                 return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_APPLE.getText())).isPresent();
             default:
                 throw new IllegalArgumentException(

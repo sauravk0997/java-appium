@@ -55,7 +55,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     public void submitPasswordValue(String value) {
         enterPasswordValue(value);
         new IOSUtils().clickElementAtLocation(passwordEntryField, 0, 50);
-        getTypeButtonByLabel("done").click();
         tapSignUpButton();
     }
 

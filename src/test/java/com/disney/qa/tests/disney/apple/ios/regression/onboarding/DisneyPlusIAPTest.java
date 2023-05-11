@@ -28,7 +28,9 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
-        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC}, {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM}
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY}
                 };
     }
 
@@ -88,7 +90,8 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
         if (!dobCollectionPage.isOpened()) {
-            dobCollectionPage.clickPrimaryButtonByCoordinates();
+            dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
+            initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
         }
         iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
@@ -96,7 +99,7 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(planType));
         paywallIOSPageBase.getSelectButtonFor(planType).click(SHORT_TIMEOUT);
         paywallIOSPageBase.isOpened();
-        paywallIOSPageBase.clickPurchaseButton();
+        paywallIOSPageBase.clickPurchaseButton(planType);
         paywallIOSPageBase.waitForSubscribeOverlay();
         paywallIOSPageBase.clickOverlaySubscribeButton();
         try {
