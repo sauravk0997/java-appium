@@ -9,13 +9,13 @@
     <parameter name="jenkinsEnvironments" value="PROD,QA"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_6,ATV_4_Gen_7,ATV_4_Gen_8,ATV_4_Gen_9,ATV_4K_1,ATV_4K_2,ATV_2_Gen_4K;platformName=iOS;deviceType=tvOS"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Disney-Non-IAP-QA-Enterprise-tvOS"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Disney-Non-IAP-QA-Enterprise-tvOS,Disney-IAP-Prod-Ad-Hoc,Disney-IAP-QA-Ad-Hoc"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="choiceParam::locale::Locale to run"
                value="AD,AL,AR,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
     <parameter name="choiceParam::language::Language to run"
                value="cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",BGImage,Onboarding,SusbscriberLoginFlow,SubscriberFlowAccountSettings,SubscriberFlowNavSearchWatchlist,SubscriberFlowProfiles,SubscriberFlowSettings,SubscriberFlowSettingsPCON"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,BGImage,Onboarding,SusbscriberLoginFlow,SubscriberFlowAccountSettings,SubscriberFlowNavSearchWatchlist,SubscriberFlowProfiles,SubscriberFlowSettings,SubscriberFlowSettingsPCON"/>
     <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
     <parameter name="booleanParam::debugDictionary::Select to enable dictionary keys" value="false"/>
     <parameter name="stringParam::globalization::Set Globalization API version" value=""/>
