@@ -11,8 +11,6 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;

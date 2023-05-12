@@ -179,9 +179,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
-            String appleID = initPage(IOSSettingsMenuBase.class).getDeviceSandBoxAppleID();
             initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-            clearDSSSandboxAccountFor(appleID);
             relaunch();
         }
 

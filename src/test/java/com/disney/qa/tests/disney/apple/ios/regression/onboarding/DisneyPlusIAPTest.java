@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
 import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.utils.MobileUtilsExtended;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
@@ -77,7 +78,8 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
-
+        String appleID = initPage(IOSSettingsMenuBase.class).getDeviceSandBoxAppleID();
+        clearDSSSandboxAccountFor(appleID);
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
