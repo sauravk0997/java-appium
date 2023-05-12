@@ -10,8 +10,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <carina-core_version>1.0.1.P7-SNAPSHOT</carina-core_version>
-        <zebrunner-agent.version>1.9.3</zebrunner-agent.version>
+        <carina-core_version>1.0.1.P9-SNAPSHOT</carina-core_version>
+        <zebrunner-agent.version>1.9.5.388-SNAPSHOT</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
         <javax-mail.verison>1.6.2</javax-mail.verison>
@@ -126,7 +126,7 @@
             <!-- to use zebrunner testng agent for webdriver sesssion(s) declaration KEEP THIS-->
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.12.10</version>
+            <version>1.12.18</version>
             <scope>test</scope>
         </dependency>
         <!-- needed for spring RestTemplate stuff -->
