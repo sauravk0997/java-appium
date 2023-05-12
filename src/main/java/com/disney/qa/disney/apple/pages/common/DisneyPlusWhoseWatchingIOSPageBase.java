@@ -87,8 +87,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickPinProtectedProfile(String name) {
         dynamicAccessProfileIcon.format(
-                    getDictionary().replaceValuePlaceholders(
-                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), name))
+                        getDictionary().replaceValuePlaceholders(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), name))
                 .click();
     }
 
