@@ -725,7 +725,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.enterNewPassword(MICKEY_MOUSE_PW);
         passwordPage.selectContinueBtnOnKeyboardEntry();
         passwordPage.clickContinueBtn();
-
         whoIsWatchingPage.waitForProfileButton(DEFAULT_PROFILE);
         whoIsWatchingPage.clickProfile(DEFAULT_PROFILE);
 
