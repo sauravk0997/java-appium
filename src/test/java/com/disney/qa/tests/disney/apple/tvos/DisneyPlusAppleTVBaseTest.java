@@ -309,8 +309,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(user.getEmail());
-        disneyPlusAppleTVPasswordPage.logInWithPassword(user.getUserPass());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
     public void logIn(DisneyAccount user) {
