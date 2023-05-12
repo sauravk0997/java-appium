@@ -106,6 +106,5 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                 .until(it -> dynamicAccessProfileIcon.format(
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username))).isElementPresent());
-        LOGGER.info("Profile button is present");
     }
 }
