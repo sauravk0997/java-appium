@@ -13,6 +13,7 @@ public class DisneyPlusAppleTVUpdateProfilePage extends DisneyPlusUpdateProfileI
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement saveProfileBtn;
+
     @FindBy(xpath = "//*[@name='changeAvatarSelectorCell']/following-sibling::*[2]")
     ExtendedWebElement genderBtn;
 

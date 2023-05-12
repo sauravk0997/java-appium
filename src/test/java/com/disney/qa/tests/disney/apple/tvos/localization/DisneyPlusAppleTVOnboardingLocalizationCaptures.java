@@ -46,7 +46,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
     @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding","Ariel"})
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
         baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
-        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
 
         boolean ariel = languageUtils.get().getCountryName().equals("United States");
         boolean korea = languageUtils.get().getCountryName().equals("Korea");
@@ -222,6 +221,8 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             pause(1);
             getScreenshots("18-3_GenderMenu", baseDirectory);
         }
+
+        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
