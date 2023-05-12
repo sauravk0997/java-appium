@@ -1,7 +1,5 @@
 package com.disney.qa.common.utils.ios_settings;
 
-import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
-import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
@@ -13,7 +11,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
+
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
