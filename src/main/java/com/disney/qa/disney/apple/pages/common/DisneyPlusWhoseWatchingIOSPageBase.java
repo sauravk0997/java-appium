@@ -72,11 +72,13 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                     getDictionary().formatPlaceholderString(
                             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of("user_profile", name)));
             profileIcon.click();
+            UniversalUtils.captureAndUpload(getCastedDriver());
         } else {
             profileIcon = dynamicAccessProfileIcon.format(
                     getDictionary().formatPlaceholderString(
                             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", name)));
             profileIcon.click();
+            UniversalUtils.captureAndUpload(getCastedDriver());
         }
     }
 
