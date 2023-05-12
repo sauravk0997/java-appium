@@ -99,4 +99,13 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username)))
                 .isElementPresent();
     }
+
+    public void waitForProfileButton(String username) {
+        LOGGER.info("Waiting for loading of profile button");
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Profile button is not present")
+                .until(it -> dynamicAccessProfileIcon.format(
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username))).isElementPresent());
+        LOGGER.info("Profile button is present");
+    }
 }
