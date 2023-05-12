@@ -7,6 +7,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 /*
  * Who's Watching Page
  */
@@ -67,13 +69,13 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         ExtendedWebElement profileIcon;
         if(onboarding) {
             profileIcon = dynamicAccessProfileIcon.format(
-                    getDictionary().replaceValuePlaceholders(
-                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), name));
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of("user_profile", name)));
             profileIcon.click();
         } else {
             profileIcon = dynamicAccessProfileIcon.format(
-                    getDictionary().replaceValuePlaceholders(
-                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), name));
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", name)));
             profileIcon.click();
         }
     }
@@ -84,16 +86,16 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickPinProtectedProfile(String name) {
         dynamicAccessProfileIcon.format(
-                        getDictionary().replaceValuePlaceholders(
-                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), name))
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of("user_profile", name)))
                 .click();
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
         UniversalUtils.captureAndUpload(getCastedDriver());
         return dynamicAccessProfileIcon.format(
-                getDictionary().replaceValuePlaceholders(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), username))
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username)))
                 .isElementPresent();
     }
 }
