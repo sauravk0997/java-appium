@@ -31,7 +31,7 @@ import static com.disney.qa.tests.disney.apple.ios.DisneyBaseTest.DEFAULT_PROFIL
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final String MICKEY_MOUSE_PW = "M1ck3yM0us3#";
+    private static final String MICKEY_MOUSE_PW = "M1ck3yM0us3#$$";
     private static final String EMAIL_SUBJECT = "Your one-time passcode";
     private static final String DISNEY_USER = R.TESTDATA.get("disney_apple_tv_email");
 
