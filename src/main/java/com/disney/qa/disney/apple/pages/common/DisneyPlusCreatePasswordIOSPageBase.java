@@ -56,7 +56,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         enterPasswordValue(value);
         new IOSUtils().clickElementAtLocation(passwordEntryField, 0, 50);
         new IOSUtils().dismissKeyboardForPhone();
-        tapSignUpButton();
+        clickPrimaryButton();
     }
 
     public boolean isPasswordStrengthHeaderPresent() {
