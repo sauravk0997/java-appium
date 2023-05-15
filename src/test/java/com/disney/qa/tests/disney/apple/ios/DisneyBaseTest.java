@@ -47,8 +47,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
 
-    public static final String IOS_APP = "app";
-
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     protected ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
