@@ -745,6 +745,5 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         logInWithoutHomeCheck(disneyUser);
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after logging in with new password");
         sa.assertAll();
-        
     }
 }
