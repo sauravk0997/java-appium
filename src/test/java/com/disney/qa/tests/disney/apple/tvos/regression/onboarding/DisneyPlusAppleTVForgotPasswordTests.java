@@ -31,7 +31,7 @@ import static com.disney.qa.tests.disney.apple.ios.DisneyBaseTest.DEFAULT_PROFIL
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final String MICKEY_MOUSE_PW = R.TESTDATA.get("disney_qa_web_generic_pass");
+    private static final String MICKEY_MOUSE_PW = "M1ck3yM0us3#$$";
     private static final String EMAIL_SUBJECT = "Your one-time passcode";
     private static final String DISNEY_USER = R.TESTDATA.get("disney_apple_tv_email");
 
@@ -722,9 +722,10 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
         passwordPage.clickPassword();
-        passwordPage.enterNewPassword(MICKEY_MOUSE_PW + "$");
+        passwordPage.enterNewPassword(MICKEY_MOUSE_PW);
         passwordPage.selectContinueBtnOnKeyboardEntry();
         passwordPage.clickContinueBtn();
+        whoIsWatchingPage.waitForProfileButton(DEFAULT_PROFILE);
         whoIsWatchingPage.clickProfile(DEFAULT_PROFILE);
 
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
@@ -737,7 +738,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String updatedPassword = MICKEY_MOUSE_PW + "$";
+        String updatedPassword = MICKEY_MOUSE_PW;
         disneyAccountApi.resetUserPassword(disneyUser, updatedPassword);
         disneyUser.setUserPass(updatedPassword);
 
