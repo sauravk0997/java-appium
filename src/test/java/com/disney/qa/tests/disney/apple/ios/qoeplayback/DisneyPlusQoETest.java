@@ -16,29 +16,25 @@ import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
-//    private static final ThreadLocal<DisneyAccount> disneyAccount = new ThreadLocal();
     private static final String MOVIES = "Movies";
-
-
-    private void loginAndStartPlayback(String content) {
-
-    }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-10318"})
-    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
-    @Maintainer("isong1")
-    public void testQoEStartupSequence(ITestContext context) {
-        initialSetup();
+    private DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase;
+    private DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase;
+    private DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase;
+    private DisneyPlusSearchIOSPageBase searchPage;
+    private DisneyPlusVideoPlayerIOSPageBase videoPlayerPage;
+    private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
+    private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPAge;
+    private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
+    private DisneyAccount loginAndStartPlayback() {
         SoftAssert sa = new SoftAssert();
-        JSONArray checkList = new JSONArray();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusSearchIOSPageBase searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        DisneyPlusDetailsIOSPageBase detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPAge = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        handleAlert();
-
+        disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
+        disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
+        disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
+        searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
+        videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
+        detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
+        subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
+        disneyPlusWelcomeIOSPAge = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyAccount account = disneyAccount.get();
         addHoraValidationSku(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
@@ -58,6 +54,18 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
+        return account;
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-10318"})
+    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
+    @Maintainer("isong1")
+    public void testQoEStartupSequence(ITestContext context) {
+        initialSetup();
+        SoftAssert sa = new SoftAssert();
+        JSONArray checkList = new JSONArray();
+
+        DisneyAccount account = loginAndStartPlayback();
 
         pause(20);
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:startup:v1");
@@ -92,33 +100,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusSearchIOSPageBase searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        DisneyPlusDetailsIOSPageBase detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPAge = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        handleAlert();
 
-        DisneyAccount account = disneyAccount.get();
-        addHoraValidationSku(account);
-        Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        //Login Steps
-        disneyPlusWelcomeIOSPAge.clickLogInButton();
-        disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        new IOSUtils().hideKeyboard();
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
-        Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
-        //Navigate to Movie Page
-        disneyPlusHomeIOSPagesBase.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search screen not displayed");
-        searchPage.clickMoviesTab();
-        sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
-        //Start first movie from the movie page
-        detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
-        Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
+        DisneyAccount account = loginAndStartPlayback();
 
         pause(10);
         videoPlayerPage.clickPauseButton();
@@ -167,8 +150,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         item4.addRequirement("exists", "videoBitrate");
         checkList.add(item4);
 
-//        checkAssertions(sa);
-//        sa.assertAll();
         checkAssertions(sa, account.getAccountId(), checkList);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-10324"})
@@ -179,36 +160,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         JSONArray checkList_resumed = new JSONArray();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusSearchIOSPageBase searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPAge = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        handleAlert();
-        DisneyAccount account = disneyAccount.get();
-        addHoraValidationSku(account);
-        Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        //Login Steps
-        disneyPlusWelcomeIOSPAge.clickLogInButton();
-        disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        new IOSUtils().hideKeyboard();
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
-        Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
-        //Navigate to Movie Page
-        disneyPlusHomeIOSPagesBase.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search screen not displayed");
-        searchPage.clickMoviesTab();
-        sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
-        //Start first movie from the movie page
-        searchPage.getDisplayedTitles().get(0).click();
 
-        detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
-        Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
+        DisneyAccount account = loginAndStartPlayback();
 
         pause(10);
         videoPlayerPage.clickPauseButton();
@@ -246,42 +199,17 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusSearchIOSPageBase searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        DisneyPlusDetailsIOSPageBase detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
-        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPAge = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        handleAlert();
+        //Log in and start a movie
+        DisneyAccount account = loginAndStartPlayback();
 
-        DisneyAccount account = disneyAccount.get();
-        addHoraValidationSku(account);
-        Assert.assertTrue(disneyPlusWelcomeIOSPAge.isOpened(), "Welcome screen did not launch");
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        //Login Steps
-        disneyPlusWelcomeIOSPAge.clickLogInButton();
-        disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        new IOSUtils().hideKeyboard();
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
-        Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
-        //Navigate to Movie Page
-        disneyPlusHomeIOSPagesBase.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search screen not displayed");
-        searchPage.clickMoviesTab();
-        sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
-        //Start first movie from the movie page
-        searchPage.getDisplayedTitles().get(0).click();
-
-        detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
-        Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
+        //Enable subtitle
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
         subtitlePage.tapCloseButton();
 
+        //Verify that subtitle is enabled
         videoPlayerPage.isOpened();
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "Checkmark was not present for the selected lang");
