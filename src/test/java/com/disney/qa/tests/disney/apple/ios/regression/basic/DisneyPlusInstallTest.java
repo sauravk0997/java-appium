@@ -238,7 +238,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         //install new app
         installLatestApp();
         relaunch();
-        details.dismissNotificationsPopUp(); //notifications pop-up appears after relaunch on Enterprise RC build
+        homePage.dismissNotificationsPopUp(); //notifications pop-up appears after relaunch
         homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

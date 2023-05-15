@@ -220,9 +220,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Want to stay in the loop?\"`]")
-    protected ExtendedWebElement notificationPopUpOther;
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
