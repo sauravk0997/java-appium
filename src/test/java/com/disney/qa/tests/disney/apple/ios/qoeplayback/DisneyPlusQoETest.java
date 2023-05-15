@@ -92,11 +92,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         checkAssertions(sa,account.getAccountId(), checkList);
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-11002"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1577"})
     @Test(description = "Smoke Test Playback QoE events")
     @Maintainer("isong1")
     public void testQoEPlayback(ITestContext context) {
-//      xaqa-1577;
         initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
@@ -152,7 +151,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         checkAssertions(sa, account.getAccountId(), checkList);
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"QAA-10324"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1094"})
     @Test(description = "Test Pause/Resume QoE event")
     @Maintainer("isong1")
     public void testQoEPauseAndResume(ITestContext context) {
@@ -166,7 +165,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         pause(10);
         videoPlayerPage.clickPauseButton();
         pause(10);
-
 
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item1.addRequirement("exact","playbackActivity", "started" );
@@ -195,20 +193,17 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     @Test(description = "Verify Hearbeat QoE Event")
     @Maintainer("isong1")
     public void testQoEHeartBeat(ITestContext context) {
-//       XAQA-938;
         initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         //Log in and start a movie
         DisneyAccount account = loginAndStartPlayback();
-
         //Enable subtitle
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
         subtitlePage.tapCloseButton();
-
         //Verify that subtitle is enabled
         videoPlayerPage.isOpened();
         videoPlayerPage.tapAudioSubTitleMenu();
@@ -221,7 +216,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         pause(10);
         videoPlayerPage.clickPlayButton();
         pause(10);
-
 
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item1.addRequirement("exact","playbackActivity", "started" );
@@ -266,6 +260,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         item3.addRequirement("exists", "videoBitrate");
         item3.addRequirement("exists", "videoStartTimestamp");
         checkList.add(item3);
+
         EventChecklist item4 = new EventChecklist("urn:dss:event:client:playback:heartbeat:v1");
         item4.addRequirement("exact","sampleType","periodic");
         item4.addRequirement("exists", "activitySessionId");
