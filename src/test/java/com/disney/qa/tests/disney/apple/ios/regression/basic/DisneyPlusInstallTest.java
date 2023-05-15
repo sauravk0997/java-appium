@@ -18,6 +18,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     private static final String SERIES = "Series";
     private static final String ORIGINALS = "Originals";
     private static final String KIDS_DOB = "2018-01-01";
+    private static final String LATEST = "latest";
 
     //TODO: Refactor this test to support AdHoc builds
     @Maintainer("csolmaz")
@@ -40,7 +41,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -55,7 +56,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
                 "Current app version found does not match expected old app version");
 
         //install new app
-        installLatestApp();
+        downloadApp(LATEST);
         relaunch();
         homePage.waitForHomePageToOpen();
 
@@ -130,7 +131,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -161,7 +162,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp();
+        downloadApp(LATEST);
         relaunch();
         homePage.waitForHomePageToOpen();
 
@@ -205,7 +206,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -236,7 +237,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp();
+        downloadApp(LATEST);
         relaunch();
         homePage.dismissNotificationsPopUp(); //notifications pop-up appears after relaunch
         homePage.waitForHomePageToOpen();
