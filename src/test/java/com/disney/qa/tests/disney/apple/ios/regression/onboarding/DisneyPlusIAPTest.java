@@ -80,6 +80,7 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         }
         String appleID = initPage(IOSSettingsMenuBase.class).getDeviceSandBoxAppleID();
         clearDSSSandboxAccountFor(appleID);
+        relaunch();
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
