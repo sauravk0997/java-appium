@@ -19,7 +19,6 @@ import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.disney.qa.tests.disney.apple.ios.localization.ClearSandboxAccountPurchaseHistory;
 import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
