@@ -46,7 +46,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
@@ -57,7 +57,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         //install new app
         installLatestApp();
         relaunch();
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
@@ -163,7 +163,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         //install new app
         installLatestApp();
         relaunch();
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         //do we need to click on kids profile before this - doesn't seem like we make the switch before
@@ -211,7 +211,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
@@ -239,7 +239,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         installLatestApp();
         relaunch();
         details.dismissNotificationsPopUp(); //notifications pop-up appears after relaunch on Enterprise RC build
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
@@ -260,7 +260,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
                 "Old app version and new app version are the same");
 
         whoIsWatching.clickProfile(KIDS);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Non-kids content found on kids downloads list");

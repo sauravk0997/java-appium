@@ -220,6 +220,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Want to stay in the loop?\"`]")
+    protected ExtendedWebElement notificationPopUpOther;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -823,7 +826,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissNotificationsPopUp() {
         if (notificationPopUp.isPresent()) {
-            dynamicTypeLinkRowLabel("Not Now", 1).click();
+            getStaticTextByLabel("Not Now").click();
         }
     }
 
