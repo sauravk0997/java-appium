@@ -26,7 +26,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         DisneyAccount account = loginAndStartPlayback();
 
-        pause(20);
+        pause(10);
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:startup:v1");
         item1.addRequirement("exact", "startupActivity", "requested");
         checkList.add(item1);
