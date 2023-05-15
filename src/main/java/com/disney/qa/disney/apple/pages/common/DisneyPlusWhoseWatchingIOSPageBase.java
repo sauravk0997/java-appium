@@ -7,6 +7,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 /*
  * Who's Watching Page
  */
@@ -95,5 +97,14 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                 getDictionary().replaceValuePlaceholders(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), username))
                 .isElementPresent();
+    }
+
+    public void waitForProfileButton(String username) {
+        LOGGER.info("Waiting for loading of profile button");
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Profile button is not present")
+                .until(it -> dynamicAccessProfileIcon.format(
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username))).isElementPresent());
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 }
