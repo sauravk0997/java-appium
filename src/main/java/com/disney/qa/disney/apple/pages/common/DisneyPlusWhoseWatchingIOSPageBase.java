@@ -66,7 +66,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickProfile(String name, boolean onboarding) {
         LOGGER.info("Clicking profile name '{}'...", name);
-        UniversalUtils.captureAndUpload(getCastedDriver());
         ExtendedWebElement profileIcon;
         if(onboarding) {
             profileIcon = dynamicAccessProfileIcon.format(
@@ -106,5 +105,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                 .until(it -> dynamicAccessProfileIcon.format(
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username))).isElementPresent());
+        UniversalUtils.captureAndUpload(getCastedDriver());
     }
 }
