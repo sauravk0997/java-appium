@@ -16,6 +16,15 @@ import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
+    private static final String MOVIES = "Movies";
+    private DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase;
+    private DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase;
+    private DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase;
+    private DisneyPlusSearchIOSPageBase searchPage;
+    private DisneyPlusVideoPlayerIOSPageBase videoPlayerPage;
+    private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
+    private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage;
+    private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1578"})
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
     @Maintainer("isong1")
@@ -253,15 +262,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         checkAssertions(sa, account.getAccountId(), checkList);
     }
-    private static final String MOVIES = "Movies";
-    private DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase;
-    private DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase;
-    private DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase;
-    private DisneyPlusSearchIOSPageBase searchPage;
-    private DisneyPlusVideoPlayerIOSPageBase videoPlayerPage;
-    private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
-    private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage;
-    private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
+
     private DisneyAccount loginAndStartPlayback() {
         SoftAssert sa = new SoftAssert();
         disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
