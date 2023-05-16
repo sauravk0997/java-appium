@@ -23,7 +23,7 @@
     <parameter name="choiceParam::language::Language to run"
                value="cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
     <parameter name="choiceParam::groups::Group"
-               value="Onboarding - Backgrounds,Onboarding - Full,Onboarding - IAP,Subscriber - UI,Subscriber - UI - S1,Subscriber - UI - S2,Subscriber - UI - S3,Subscriber - UI - S4,Subscriber - UI - S5,Subscriber - UI - S6,Subscriber - UI - S7,Subscriber - UI - S8,Subscriber - UI - S10,Subscriber - UI - S13"/>
+               value="Onboarding - Backgrounds,Onboarding - Full,Subscriber - UI,Subscriber - UI - S1,Subscriber - UI - S2,Subscriber - UI - S3,Subscriber - UI - S4,Subscriber - UI - S5,Subscriber - UI - S6,Subscriber - UI - S7,Subscriber - UI - S8,Subscriber - UI - S10,Subscriber - UI - S13"/>
     <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
     <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value=""/>
 
