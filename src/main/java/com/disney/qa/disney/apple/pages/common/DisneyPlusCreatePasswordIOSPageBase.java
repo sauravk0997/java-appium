@@ -44,6 +44,10 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return passwordEntryField.getText();
     }
 
+    public void tapSignUpButton() {
+        staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText())).click(SHORT_TIMEOUT);
+    }
+
     public void enterPasswordValue(String value) {
         passwordEntryField.type(value);
     }
@@ -51,6 +55,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     public void submitPasswordValue(String value) {
         enterPasswordValue(value);
         new IOSUtils().clickElementAtLocation(passwordEntryField, 0, 50);
+        new IOSUtils().dismissKeyboardForPhone();
         clickPrimaryButton();
     }
 

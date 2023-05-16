@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios;
 
 import com.disney.qa.api.account.DisneyAccountApi;
+import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
@@ -8,6 +9,7 @@ import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
@@ -17,6 +19,7 @@ import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
+import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import io.appium.java_client.ios.IOSDriver;
@@ -24,6 +27,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 
 import java.lang.invoke.MethodHandles;
@@ -40,6 +44,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
+    public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     //Keeping this not to a specific plan name to support localization tests
@@ -331,5 +336,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
                 .build();
         return apiConfiguration;
+    }
+
+    public void clearDSSSandboxAccountFor(String accountName) {
+        LOGGER.info("Clearing purchase history for '{}' account", accountName);
+        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
+        for (SandboxAccount account : DisneyPlusIAPTest.accountsList) {
+            if (account.getAttributes().getAcAccountName().contains(accountName)) {
+                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
+                                .is2xxSuccessful(),
+                        "Clear account purchase history for" + accountName + "was not successful!");
+            }
+        }
     }
 }

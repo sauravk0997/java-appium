@@ -94,16 +94,19 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     }
 
     private void removeEnterpriseApps() {
+        LOGGER.info("Removing Enterprise apps");
         iosUtils.get().removeApp(BuildType.ENTERPRISE.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.ENTERPRISE.getJarvisBundle());
     }
 
     private void removeAdHocApps() {
+        LOGGER.info("Removing AdHoc apps");
         iosUtils.get().removeApp(BuildType.AD_HOC.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.AD_HOC.getJarvisBundle());
     }
 
     private void removePurchaseApps() {
+        LOGGER.info("Removing Purchase apps");
         iosUtils.get().removeApp(BuildType.IAP.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.IAP.getJarvisBundle());
     }
