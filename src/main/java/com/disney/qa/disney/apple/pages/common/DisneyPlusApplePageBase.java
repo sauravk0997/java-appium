@@ -823,7 +823,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissNotificationsPopUp() {
         if (notificationPopUp.isPresent()) {
-            dynamicTypeLinkRowLabel("Not Now", 1).click();
+            getStaticTextByLabel("Not Now").click();
         }
     }
 
