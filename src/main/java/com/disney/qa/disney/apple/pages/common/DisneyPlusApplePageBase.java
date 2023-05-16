@@ -88,6 +88,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == \"%s\"`]")
+    protected ExtendedWebElement dynamicTextEntryFieldByLabel;
+
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
     protected ExtendedWebElement saveBtn = xpathNameOrName.format(getDictionary()
@@ -820,7 +823,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissNotificationsPopUp() {
         if (notificationPopUp.isPresent()) {
-            dynamicTypeLinkRowLabel("Not Now", 1).click();
+            getStaticTextByLabel("Not Now").click();
         }
     }
 

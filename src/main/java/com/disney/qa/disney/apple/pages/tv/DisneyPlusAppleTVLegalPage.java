@@ -119,11 +119,14 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     }
 
     public void getAllLegalSectionsScreenshot(String filename, ThreadLocal<String> directory) {
-        List<ExtendedWebElement> legalTitles = findExtendedWebElements(typeButtons.getBy());
-        legalTitles.forEach(legalTitle -> {
+        getLegalTabs().forEach(legalTitle -> {
             String sectionName = legalTitle.getAttribute("name");
             UniversalUtils.storeScreenshot(getCastedDriver(), filename + "_" + sectionName + "_tvOS", directory.get());
             moveDown(1, 1);
         });
+    }
+
+    public List<ExtendedWebElement> getLegalTabs() {
+        return findExtendedWebElements(typeButtons.getBy());
     }
 }

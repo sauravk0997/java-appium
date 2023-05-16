@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusInstallTest extends DisneyBaseTest {
-   ThreadLocal<String> oldAppVersion = new ThreadLocal<>();
+    ThreadLocal<String> oldAppVersion = new ThreadLocal<>();
     private static final String KIDS_SHORT_SERIES = "Bluey";
     private static final String ADULTS_SHORT_MOVIE = "Purl";
     private static final String KIDS = "KIDS";
@@ -18,6 +18,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     private static final String SERIES = "Series";
     private static final String ORIGINALS = "Originals";
     private static final String KIDS_DOB = "2018-01-01";
+    private static final String LATEST = "latest";
 
     //TODO: Refactor this test to support AdHoc builds
     @Maintainer("csolmaz")
@@ -35,22 +36,18 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
-
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
@@ -59,9 +56,9 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
                 "Current app version found does not match expected old app version");
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        downloadApp(LATEST);
         relaunch();
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
@@ -129,16 +126,12 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
-
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
@@ -169,11 +162,12 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        downloadApp(LATEST);
         relaunch();
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        //do we need to click on kids profile before this - doesn't seem like we make the switch before
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS), KIDS + " Profile not found on Profile Switch display.");
 
         homePage.clickDownloadsIcon();
@@ -207,22 +201,18 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-
-        oldAppVersion.set(R.CONFIG.get("custom_string2"));
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        boolean isEnterpriseBuild = appCenterAppName.contains("Enterprise");
+        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        installOldApp(isEnterpriseBuild, oldAppVersion.get());
+        downloadApp(oldAppVersion.get());
         relaunch();
         setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
@@ -247,9 +237,10 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //install new app
-        installLatestApp(isEnterpriseBuild);
+        downloadApp(LATEST);
         relaunch();
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.dismissNotificationsPopUp(); //notifications pop-up appears after relaunch
+        homePage.waitForHomePageToOpen();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
@@ -270,7 +261,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
                 "Old app version and new app version are the same");
 
         whoIsWatching.clickProfile(KIDS);
-        sa.assertTrue(homePage.isOpened(), "Home screen not displayed");
+        homePage.waitForHomePageToOpen();
 
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Non-kids content found on kids downloads list");
