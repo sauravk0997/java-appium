@@ -312,15 +312,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void installLatestApp(boolean isEnterpriseBuild) {
-        if (isEnterpriseBuild) {
-            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", "latest"));
-        }
-    }
-
-    public void installOldApp(boolean isEnterpriseBuild, String version) {
-        if (isEnterpriseBuild) {
+    public void downloadApp(String version) {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if(appCenterAppName.contains("for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
+        } else if (appCenterAppName.contains("Disney")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
         }
     }
 
