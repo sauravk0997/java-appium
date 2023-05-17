@@ -280,17 +280,16 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
 
-        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0), moreMenu.findSubtitleLabel(0));
-        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1), moreMenu.findSubtitleLabel(1));
-        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2), moreMenu.findSubtitleLabel(2));
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
-
         moreMenu.getDynamicXpathContainsName(cellOption).click();
         sa.assertTrue(moreMenu.getDynamicXpathContainsName(cellOption).isElementPresent(),
                 "XMOBQA-61217 - 'Video Quality' header was not present");
         sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
 
+        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0), moreMenu.findSubtitleLabel(0));
+        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1), moreMenu.findSubtitleLabel(1));
+        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2), moreMenu.findSubtitleLabel(2));
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
         options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));
