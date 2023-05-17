@@ -16,7 +16,7 @@ import java.util.*;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DELETE_ACCOUNT_MENU_ITEM;
 
-@SuppressWarnings("squid:MaximumInheritanceDepth")
+@SuppressWarnings({"squid:MaximumInheritanceDepth", "squid:CallToDeprecatedMethod"})
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	//LOCATORS
