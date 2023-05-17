@@ -11,6 +11,7 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.api.search.DisneySearchApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
@@ -18,19 +19,23 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import io.appium.java_client.ios.IOSDriver;
+import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 
 import java.util.Date;
@@ -337,7 +342,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .build();
         return apiConfiguration;
     }
-
+    protected boolean useMultiverse() {
+        return R.CONFIG.getBoolean("useMultiverse");
+    }
+    public DisneyAccountApi getAccountApi() {
+        if (disneyAccountApi.get() == null) {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).environment(DisneyParameters.getEnv())
+                    .partner(PARTNER).useMultiverse(useMultiverse()).build();
+            disneyAccountApi.set(new DisneyAccountApi(apiConfiguration));
+        }
+        return disneyAccountApi.get();
+    }
+    public void addHoraValidationSku(DisneyAccount accountToEntitle){
+        if (horaEnabled()) {
+            try {
+                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
+        if (horaEnabled()) {
+            HoraValidator hv = new HoraValidator(accountId);
+            hv.assertValidation(softAssert);
+            hv.checkListForPQOE(softAssert, checkList);
+        }
+    }
     public void clearDSSSandboxAccountFor(String accountName) {
         LOGGER.info("Clearing purchase history for '{}' account", accountName);
         AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
