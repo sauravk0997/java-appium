@@ -11,7 +11,6 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
@@ -33,6 +32,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='Manage']")
     private ExtendedWebElement manageButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Apple ID:\"`]")
+    private ExtendedWebElement appleIDCell;
 
     @FindBy(xpath = "//*[contains(@name, '%s')]/../following-sibling::*/*[contains(@name, 'Expired')]")
     private ExtendedWebElement appExpiredNotation;
@@ -86,6 +88,14 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
     }
 
+    public String getDeviceSandBoxAppleID() {
+        launchSettings();
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        appStoreTab.click();
+        utils.swipe(sandboxAccount);
+        return appleIDCell.getText().split(":")[1];
+    }
+
     public void cancelActiveEntitlement(String appName) {
         boolean waitForExpiryTime = false;
         int appSubButtonIndex = 9999;
@@ -106,7 +116,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
 
         if(waitForExpiryTime) {
-            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+           waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
         utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
@@ -135,6 +145,8 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         LOGGER.info("Refreshing page until expired indicator shows for up to 4 minutes...");
         Instant expireTime = Instant.now().plus(4, ChronoUnit.MINUTES);
         if(appSubButtons.isEmpty()) {
+            sandboxAccount.click();
+            manageButton.click();
             while (Instant.now().isBefore(expireTime) && !appExpiredNotation.format("Disney+").isElementPresent()) {
                 doneBtn.click();
                 manageSandboxAcct();
