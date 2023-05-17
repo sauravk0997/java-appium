@@ -12,13 +12,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DELETE_ACCOUNT_MENU_ITEM;
 
-@SuppressWarnings("squid:MaximumInheritanceDepth")
+@SuppressWarnings({"squid:MaximumInheritanceDepth", "squid:CallToDeprecatedMethod"})
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	//LOCATORS
@@ -300,5 +298,15 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void tapAccountTab(){
 		accountTab.click();
+	}
+
+	public ExtendedWebElement findSubtitleLabel(int num) {
+		List<ExtendedWebElement> subtitleLabel = findExtendedWebElements(getStaticTextLabelName("subtitleLabel").getBy());
+		return subtitleLabel.get(num);
+	}
+
+	public ExtendedWebElement findTitleLabel(int num) {
+		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextLabelName("titleLabel").getBy());
+		return titleLabel.get(num);
 	}
 }
