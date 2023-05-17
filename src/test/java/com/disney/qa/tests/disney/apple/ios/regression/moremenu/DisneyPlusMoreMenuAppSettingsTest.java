@@ -45,6 +45,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
                 "Back Arrow was not present");
 
+
         String automaticLabel = String.format(customAppSettingLabel
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText())
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC_BODY.getText()));
@@ -277,47 +278,35 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     public void verifyDownloadQualitySettingsUI() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
-        String highQuality = String.format(customAppSettingLabel
-                , languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_TITLE.getText())
-                , languageUtils.get().getValueBeforePlaceholder(languageUtils.get()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_BODY.getText())));
-        String mediumQuality = String.format(customAppSettingLabel
-                , languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_TITLE.getText())
-                , languageUtils.get().getValueBeforePlaceholder(languageUtils.get()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_BODY.getText())));
-        String lowQuality = String.format(customAppSettingLabel
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_TITLE.getText())
-                ,languageUtils.get().getValueBeforePlaceholder(languageUtils.get()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_BODY.getText())));
 
-        List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
+        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0), moreMenu.findSubtitleLabel(0));
+        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1), moreMenu.findSubtitleLabel(1));
+        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2), moreMenu.findSubtitleLabel(2));
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(cellOption).click();
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(cellOption).isElementPresent(),
+        moreMenu.getDynamicXpathContainsName(cellOption).click();
+        sa.assertTrue(moreMenu.getDynamicXpathContainsName(cellOption).isElementPresent(),
                 "XMOBQA-61217 - 'Video Quality' header was not present");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
+        sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
 
-        options.forEach(option -> sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(option).isElementPresent(),
+        List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
+        options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));
 
         options.forEach(optionEnabled -> {
             try {
                 String enabledShorthand = StringUtils.substringBefore(optionEnabled, ",");
                 LOGGER.info("Enabling: '{}'", enabledShorthand);
-                disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(optionEnabled).click();
-                sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
+                moreMenu.getDynamicXpathContainsName(optionEnabled).click();
+                sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
                         String.format("XMOBQA-61221 - '%s' was not enabled after selection", optionEnabled));
                 options.forEach(optionDisabled -> {
                     String disabledShorthand = StringUtils.substringBefore(optionDisabled, ",");
                     if (!disabledShorthand.equals(enabledShorthand)) {
-                        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
+                        sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
                                 String.format("XMOBQA-61221 - '%s' was not disabled after selection of '%s'", disabledShorthand, enabledShorthand));
                     }
                 });
@@ -326,10 +315,9 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             }
         });
 
-        disneyPlusMoreMenuIOSPageBase.getBackArrow().click();
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
+        moreMenu.getBackArrow().click();
+        sa.assertTrue(moreMenu.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
                 "User was not returned to the More Menu after closing Video Quality submenu");
-
         sa.assertAll();
     }
 
