@@ -249,4 +249,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
             alertFinishLaterBtn.click();
         }
     }
+
+    public boolean isStartStreamingTextPresent(){
+        return staticTextByLabel.format("Start streaming today").isPresent();
+
+    }
 }
