@@ -6,6 +6,7 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.simple.JSONArray;
@@ -14,6 +15,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
@@ -25,6 +27,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
     private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage;
     private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
+    private IOSUtils iosUtils;
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1578"})
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
     @Maintainer("isong1")
@@ -143,10 +147,12 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkList.add(item2);
         EventChecklist item3 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item3.addRequirement("notexact","playbackActivity","resumed");
-        HoraValidator hv = new HoraValidator(account.getAccountId());
+//        HoraValidator hv = new HoraValidator(account.getAccountId());
         checkList.add(item3);
         //Check Pause message exist and make sure resume message does not exists by getting qoe events before resuming the video
-        hv.checkListForPQOE(sa, checkList);
+//        hv.checkListForPQOE(sa, checkList);
+        checkAssertions(sa, account.getAccountId(), checkList);
+
 
         EventChecklist item4 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item4.addRequirement("exact","playbackActivity","resumed");
@@ -170,6 +176,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            iosUtils.scrollDown();
+        }
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
         subtitlePage.tapCloseButton();
         //Verify that subtitle is enabled
@@ -280,7 +290,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         //Login Steps
         disneyPlusWelcomeIOSPage.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        new IOSUtils().hideKeyboard();
+        iosUtils = new IOSUtils();
+        iosUtils.hideKeyboard();
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         //Navigate to Movie Page
