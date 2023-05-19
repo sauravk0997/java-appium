@@ -118,11 +118,8 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
     }
 
-    public void submitNewPwdAndClickLogoutAllCheckmark(String value) {
-        LOGGER.info("Entering new password and clicking log out of all devices checkmark");
-        enterNewPasswordValue(value);
-        logoutAllDevicesUnchecked.click();;
-        clickSaveBtn();
+    public void clickLogoutAllCheckmark() {
+        logoutAllDevicesUnchecked.click();
     }
 
     public boolean isLogOutOfThisDeviceMessagePresent() {

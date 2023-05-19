@@ -828,8 +828,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
 
-        changePasswordPage.submitNewPwdAndClickLogoutAllCheckmark(NEW_PASSWORD);
-        sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(), "`You're now being logged out of this device` message is not present");
+        changePasswordPage.enterNewPasswordValue(NEW_PASSWORD);
+        changePasswordPage.clickLogoutAllCheckmark();
+        changePasswordPage.clickSaveBtn();
+        sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(),
+                "`You're now being logged out of this device` message is not present");
         sa.assertTrue(welcomeScreenPage.isOpened(),
                 "User was not returned to the Welcome screen upon logout");
         sa.assertAll();
