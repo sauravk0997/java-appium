@@ -7,6 +7,7 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
+import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -126,11 +127,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                     getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VERIFY_ACCOUNT_HEADER.getText())));
 
     private ExtendedWebElement verifyAccountLink = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VERIFY_ACCOUNT_CTA.getText()));
-
-    private ExtendedWebElement logOutOfAllDevicesLink = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText());
 
 
     public DisneyPlusAccountIOSPageBase(WebDriver driver) {
@@ -372,14 +368,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void clickVerifyAccountLink() {
         verifyAccountLink.click();
-    }
-
-    public boolean isLogOutOfAllDevicesLinkPresent() {
-        return logOutOfAllDevicesLink.isElementPresent();
-    }
-
-    public void clickLogOutOfAllDevices() {
-        logOutOfAllDevicesLink.click();
     }
 
     public boolean isRestrictProfileCreationEnabled() {

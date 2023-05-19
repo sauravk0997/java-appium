@@ -183,7 +183,6 @@ public enum DictionaryKeys {
     LOGIN_NO_ACCOUNT("log_in_noaccount"),
     LOGIN_NO_ACCOUNT_SUB_COPY_LINK_1_TEXT("log_in_noaccount_subcopy_link_1_text"),
     LOGIN_NO_ACCOUNT_SUB_TEXT("log_in_noaccount_subcopy"),
-    LOGOUT_ALL_DEVICES_CTA("log_out_all_devices_cta"),
     LOGOUT_ALL_DEVICES_EMAIL_COPY("log_out_all_devices_change_email_copy"),
     LOGOUT_ALL_DEVICES_PASSWORD_COPY("log_out_all_devices_change_password_copy"),
     LOGOUT_ALL_DEVICES_TITLE("log_out_all_devices_confirmation_title"),
