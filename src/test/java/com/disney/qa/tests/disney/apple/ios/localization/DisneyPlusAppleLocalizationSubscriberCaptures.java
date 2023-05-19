@@ -307,8 +307,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         changePasswordPage.clickCancelBtn();
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 2, "Log out of all devices is not present")
-                .until(it -> accountPage.getDynamicCellByName("logOutAllDevicesCell").isElementPresent());
-        accountPage.getDynamicCellByName("logOutAllDevicesCell").click();
+                .until(it -> accountPage.isLogOutOfAllDevicesLinkPresent());
+        accountPage.clickLogOutOfAllDevices();
         pause(3);
         getScreenshots("LogoutAllDevicesPage");
 

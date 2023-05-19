@@ -370,6 +370,14 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         verifyAccountLink.click();
     }
 
+    public boolean isLogOutOfAllDevicesLinkPresent() {
+        return getDynamicCellByName("logOutAllDevicesCell").isElementPresent();
+    }
+
+    public void clickLogOutOfAllDevices() {
+        getDynamicCellByName("logOutAllDevicesCell").click();
+    }
+
     public boolean isRestrictProfileCreationEnabled() {
         return restrictProfileCreationContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
     }

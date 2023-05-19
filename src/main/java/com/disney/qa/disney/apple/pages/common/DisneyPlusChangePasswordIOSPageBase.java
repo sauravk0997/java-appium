@@ -36,6 +36,9 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
                             DictionaryKeys.BTN_SAVE.getText()),
             DictionaryKeys.BTN_SAVE.getText());
 
+    ExtendedWebElement logOutOfThisDeviceMessage = getStaticTextByLabel(getDictionary().
+            getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGOUT_OF_ALL_DEVICES_TITLE.getText()));
+
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidPassword;
 
@@ -113,5 +116,16 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
         String expectedString = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
         LOGGER.info("Expected auth headline: {}", expectedString);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
+    }
+
+    public void submitNewPwdAndClickLogoutAllCheckmark(String value) {
+        LOGGER.info("Entering new password and clicking log out of all devices checkmark");
+        enterNewPasswordValue(value);
+        logoutAllDevicesUnchecked.click();;
+        clickSaveBtn();
+    }
+
+    public boolean isLogOutOfThisDeviceMessagePresent() {
+        return logOutOfThisDeviceMessage.isElementPresent();
     }
 }

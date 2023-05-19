@@ -782,7 +782,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
-        accountPage.getDynamicCellByName("logOutAllDevicesCell").click();
+        accountPage.clickLogOutOfAllDevices();
 
         Assert.assertTrue(logOutOfDevicesPage.isOpened(),
                 "'Log out of all accounts' screen did not open");
@@ -807,6 +807,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         initialSetup();
+        SoftAssert sa = new SoftAssert();
         verifyEmail.set(new VerifyEmail());
         Date startTime = verifyEmail.get().getStartTime();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -817,27 +818,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
-        accountPage.getDynamicCellByName("logOutAllDevicesCell").click();
+        accountPage.clickLogOutOfAllDevices();
         logOutOfDevicePage.clickForgotPasswordLink();
-
-        Assert.assertTrue(oneTimePasscodePage.isOpened(),
+        sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP Page was not opened");
 
         String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
         oneTimePasscodePage.enterOtpValue(otp);
-
-        Assert.assertTrue(changePasswordPage.isOpened(),
+        sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
 
-        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-
-        Assert.assertTrue(logOutOfDevicePage.isOpened(),
-                "User was not returned to 'Log out of all devices' after submitting new password");
-
-        logOutOfDevicePage.submitPasswordAndLogout(NEW_PASSWORD);
-
-        Assert.assertTrue(welcomeScreenPage.isOpened(),
+        changePasswordPage.submitNewPwdAndClickLogoutAllCheckmark(NEW_PASSWORD);
+        sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(), "`You're now being logged out of this device` message is not present");
+        sa.assertTrue(welcomeScreenPage.isOpened(),
                 "User was not returned to the Welcome screen upon logout");
+        sa.assertAll();
     }
 
 
