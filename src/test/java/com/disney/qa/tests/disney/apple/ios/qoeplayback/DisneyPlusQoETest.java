@@ -15,6 +15,9 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
+
+import java.util.logging.Logger;
+
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
@@ -176,6 +179,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
+        LOGGER.info("Device Type is {}",R.CONFIG.get(DEVICE_TYPE).equals(PHONE));
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             iosUtils.scrollDown();
