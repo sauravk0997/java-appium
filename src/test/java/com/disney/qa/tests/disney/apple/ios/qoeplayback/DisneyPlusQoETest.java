@@ -181,7 +181,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
         LOGGER.info("Device Type is {}",R.CONFIG.get(DEVICE_TYPE).equals(PHONE));
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            LOGGER.info("Scrolling down to view all of 'Information and choices'");
             iosUtils.scrollDown();
         }
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
@@ -189,6 +189,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         //Verify that subtitle is enabled
         videoPlayerPage.isOpened();
         videoPlayerPage.tapAudioSubTitleMenu();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices'");
+            iosUtils.scrollDown();
+        }
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "Checkmark was not present for the selected lang");
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("English [CC]"), "Selected subtitle language is not as expected");
         subtitlePage.tapCloseButton();
