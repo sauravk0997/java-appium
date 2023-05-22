@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios;
 
 import com.disney.qa.api.account.DisneyAccountApi;
+import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
@@ -8,7 +9,9 @@ import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.api.search.DisneySearchApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
@@ -16,17 +19,23 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
+import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import io.appium.java_client.ios.IOSDriver;
+import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 
 import java.util.Date;
@@ -40,6 +49,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
+    public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     //Keeping this not to a specific plan name to support localization tests
@@ -312,15 +322,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void installLatestApp(boolean isEnterpriseBuild) {
-        if (isEnterpriseBuild) {
-            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", "latest"));
-        }
-    }
-
-    public void installOldApp(boolean isEnterpriseBuild, String version) {
-        if (isEnterpriseBuild) {
+    public void downloadApp(String version) {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if(appCenterAppName.contains("for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
+        } else if (appCenterAppName.contains("Disney")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
         }
     }
 
@@ -333,5 +341,43 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
                 .build();
         return apiConfiguration;
+    }
+    protected boolean useMultiverse() {
+        return R.CONFIG.getBoolean("useMultiverse");
+    }
+    public DisneyAccountApi getAccountApi() {
+        if (disneyAccountApi.get() == null) {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).environment(DisneyParameters.getEnv())
+                    .partner(PARTNER).useMultiverse(useMultiverse()).build();
+            disneyAccountApi.set(new DisneyAccountApi(apiConfiguration));
+        }
+        return disneyAccountApi.get();
+    }
+    public void addHoraValidationSku(DisneyAccount accountToEntitle){
+        if (horaEnabled()) {
+            try {
+                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
+        if (horaEnabled()) {
+            HoraValidator hv = new HoraValidator(accountId);
+            hv.assertValidation(softAssert);
+            hv.checkListForPQOE(softAssert, checkList);
+        }
+    }
+    public void clearDSSSandboxAccountFor(String accountName) {
+        LOGGER.info("Clearing purchase history for '{}' account", accountName);
+        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
+        for (SandboxAccount account : DisneyPlusIAPTest.accountsList) {
+            if (account.getAttributes().getAcAccountName().contains(accountName)) {
+                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
+                                .is2xxSuccessful(),
+                        "Clear account purchase history for" + accountName + "was not successful!");
+            }
+        }
     }
 }

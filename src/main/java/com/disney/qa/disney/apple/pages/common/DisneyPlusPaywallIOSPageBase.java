@@ -151,7 +151,8 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public enum PlanType {
         BASIC,
-        PREMIUM;
+        PREMIUM_MONTHLY,
+        PREMIUM_YEARLY;
     }
 
     public String getPlanName(PlanType planType) {
@@ -159,9 +160,11 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
             case BASIC:
                 return getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText());
-            case PREMIUM:
+            case PREMIUM_MONTHLY:
+            case PREMIUM_YEARLY:
                 return getDictionary().
                         getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText());
+
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Plan type is not a valid option", planType));
@@ -214,6 +217,16 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         productPurchaseBtn.click();
     }
 
+    public void clickPurchaseButton(PlanType planType) {
+        if (planType.equals(PlanType.PREMIUM_MONTHLY)) {
+            dynamicBtnFindByName.format("productButton-com.disney.monthly.dpluspremium22.apple").click();
+        } else if (planType.equals(PlanType.PREMIUM_YEARLY)) {
+            dynamicBtnFindByName.format("productButton-com.disney.yearly.dpluspremium22.apple").click();
+        } else {
+            productPurchaseBtn.click();
+        }
+    }
+
     public boolean isPurchaseButtonPresent() {
         return productPurchaseBtn.isElementPresent();
     }
@@ -235,5 +248,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         if (isViewAlertPresent()) {
             alertFinishLaterBtn.click();
         }
+    }
+
+    public boolean isStartStreamingTextPresent(){
+        return staticTextByLabel.format("Start streaming today").isPresent();
+
     }
 }
