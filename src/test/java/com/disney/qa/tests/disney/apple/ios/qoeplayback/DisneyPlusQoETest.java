@@ -7,6 +7,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.core.foundation.utils.R;
+import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.simple.JSONArray;
@@ -189,10 +190,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         //Verify that subtitle is enabled
         videoPlayerPage.isOpened();
         videoPlayerPage.tapAudioSubTitleMenu();
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices'");
-            iosUtils.scrollDown();
-        }
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "Checkmark was not present for the selected lang");
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("English [CC]"), "Selected subtitle language is not as expected");
         subtitlePage.tapCloseButton();
