@@ -127,11 +127,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private ExtendedWebElement verifyAccountLink = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VERIFY_ACCOUNT_CTA.getText()));
 
-    private ExtendedWebElement logOutOfAllDevicesLink = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_CTA.getText());
-
 
     public DisneyPlusAccountIOSPageBase(WebDriver driver) {
         super(driver);
@@ -375,11 +370,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isLogOutOfAllDevicesLinkPresent() {
-        return logOutOfAllDevicesLink.isElementPresent();
+        return getDynamicCellByName("logOutAllDevicesCell").isElementPresent();
     }
 
     public void clickLogOutOfAllDevices() {
-        logOutOfAllDevicesLink.click();
+        getDynamicCellByName("logOutAllDevicesCell").click();
     }
 
     public boolean isRestrictProfileCreationEnabled() {
