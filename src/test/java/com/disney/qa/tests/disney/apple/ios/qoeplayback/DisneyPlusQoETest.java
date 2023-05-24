@@ -151,7 +151,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         item3.addRequirement("notexact","playbackActivity","resumed");
         checkList.add(item3);
         //Check Pause message exist and make sure resume message does not exists by getting qoe events before resuming the video
-//        hv.checkListForPQOE(sa, checkList);
         checkAssertions(sa, account.getAccountId(), checkList);
 
 
