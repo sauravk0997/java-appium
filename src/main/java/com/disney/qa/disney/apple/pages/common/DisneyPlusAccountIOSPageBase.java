@@ -16,7 +16,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='%s']/../following-sibling::*/XCUIElementTypeButton")
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@label='%s']/../following-sibling::*/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
