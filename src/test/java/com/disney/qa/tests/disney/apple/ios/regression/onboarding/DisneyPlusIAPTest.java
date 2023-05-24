@@ -5,6 +5,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -46,6 +47,74 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
                 {"Disney+, Hulu No Ads, and ESPN+", DisneyPlusPaywallIOSPageBase.PlanType.BUNDLE_TRIO_PREMIUM},
                 {"Disney Bundle Duo Basic", DisneyPlusPaywallIOSPageBase.PlanType.LEGACY_BUNDLE}
         };
+    }
+
+    @DataProvider(name = "disneyPlanCards")
+    public Object[][] disneyPlanCards() {
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY}
+        };
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72339"})
+    @Maintainer("gkrishna1")
+    @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP"})
+    public void  verifyReturningUserCompletesSubscriptionAdsPlan(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        initialSetup();
+        DisneyAccount nonActiveAccount = disneyAccountApi.get().createAccount("US", "en");
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        welcomePage.dismissNotificationsPopUp();
+        welcomePage.clickLogInButton();
+        login(nonActiveAccount);
+
+        // Complete subscription page verification
+        sa.assertTrue(CompleteSubsPage.getHeroImage().isPresent(), "Hero image is not present");
+        sa.assertTrue(CompleteSubsPage.getPrimaryText().isPresent(), "Primary text not present");
+        sa.assertTrue(CompleteSubsPage.getSecondaryText().isPresent(), "Secondary text not present");
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete Subscription button is not present");
+        //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
+        sa.assertTrue(welcomePage.isLogOutButtonDisplayed(), "Expected: 'Log out' button should be present");
+        welcomePage.clickCompleteSubscriptionButton();
+
+        // Verify choose your plan page
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not present");
+        sa.assertTrue(paywallPage.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not present");
+        sa.assertTrue(paywallPage.isFooterLabelPresent(), "Choose your plan card 'footer label' is not present");
+        sa.assertTrue(paywallPage.verifyPlanCardFor(planName), "Plan card UI is not as expected");
+        sa.assertTrue(paywallPage.getSelectButtonFor(planName).isPresent(), "Select button is not present");
+
+        //Choose plan
+        paywallPage.getSelectButtonFor(planName).click();
+        paywallPage.isStartStreamingTextPresent();
+        //1. Test Resume and finish later actioned by Cancel button on billing cycle page
+        paywallPage.clickCancelBtn();
+        //Resume button on alert
+        paywallPage.clickSystemAlertSecondaryBtn();
+        pause(1);
+        sa.assertTrue(paywallPage.isStartStreamingTextPresent(), "After resuming, billing cycle screen is not displayed");
+        //Finish Later button on alert
+        paywallPage.clickCancelBtn();
+        paywallPage.clickDefaultAlertBtn();
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete subscription button not present after clicking 'finish later' on 'billing cycle screen'");
+        //2. verify navigation for back button on billing cycle screen
+        welcomePage.clickCompleteSubscriptionButton();
+        paywallPage.getSelectButtonFor(planName).click();
+        paywallPage.getBackArrow().click();
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        //3. Test Resume and finish later actioned by Cancel button on Choose your plan  page
+        paywallPage.getBackArrow().click();
+        //Resume button on alert
+        paywallPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        paywallPage.getBackArrow().click();
+        //Finish Later button on alert
+        paywallPage.clickDefaultAlertBtn();
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete subscription button not present after clicking 'finish later' on 'Choose Your Plan' screen");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
