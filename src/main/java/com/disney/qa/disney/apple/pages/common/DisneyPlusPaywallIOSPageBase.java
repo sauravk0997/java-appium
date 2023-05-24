@@ -151,6 +151,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public enum PlanType {
         BASIC,
+        BUNDLE_TRIO_BASIC,
+        BUNDLE_TRIO_PREMIUM,
+        LEGACY_BUNDLE,
         PREMIUM_MONTHLY,
         PREMIUM_YEARLY;
     }
@@ -160,6 +163,15 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
             case BASIC:
                 return getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText());
+            case BUNDLE_TRIO_BASIC:
+                return getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS_BUNDLE.getText());
+            case BUNDLE_TRIO_PREMIUM:
+                return getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_NOADS_BUNDLE.getText());
+            case LEGACY_BUNDLE:
+                return getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
             case PREMIUM_MONTHLY:
             case PREMIUM_YEARLY:
                 return getDictionary().
@@ -195,7 +207,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isFooterLabelPresent() {
         return footerLabel.getText().equalsIgnoreCase(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText()));
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText()));
     }
 
     public void tapFinishLaterButton() {

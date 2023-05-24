@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
 import com.qaprosoft.carina.core.foundation.utils.Configuration;
@@ -21,11 +23,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusIAPTest extends DisneyBaseTest {
 
     public static final List<SandboxAccount> accountsList = new LinkedList() {
-        { new AppStoreConnectApi().getSandboxAccounts(SANDBOX_ACCOUNT_PREFIX);}
+        {
+            new AppStoreConnectApi().getSandboxAccounts(SANDBOX_ACCOUNT_PREFIX);
+        }
     };
 
     @DataProvider(name = "disneyPlanTypes")
@@ -33,7 +38,15 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
                 {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY},
                 {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY}
-                };
+        };
+    }
+
+    @DataProvider(name = "disneyWebPlanTypes")
+    public Object[][] disneyWebPlanTypes() {
+        return new Object[][]{{"Disney+ With Ads, Hulu with Ads, and ESPN+", DisneyPlusPaywallIOSPageBase.PlanType.BUNDLE_TRIO_BASIC},
+                {"Disney+, Hulu No Ads, and ESPN+", DisneyPlusPaywallIOSPageBase.PlanType.BUNDLE_TRIO_PREMIUM},
+                {"Disney Bundle Duo Basic", DisneyPlusPaywallIOSPageBase.PlanType.LEGACY_BUNDLE}
+        };
     }
 
     @DataProvider(name = "disneyPlanCards")
@@ -197,6 +210,22 @@ public class DisneyPlusIAPTest extends DisneyBaseTest {
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
         sa.assertTrue(accountPage.isPlanNameDisplayed(planType), "plan name on account page is not displayed as expected");
+        sa.assertAll();
+    }
+
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73609"})
+    @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP"})
+    public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        initialSetup();
+        disneyAccount.set(disneyAccountApi.get().createAccount(offerName, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+        accountPage.isSingleSubHeaderPresent();
+        sa.assertTrue(accountPage.isWebPlanNameDisplayed(planName), "plan name on account page is not displayed as expected");
         sa.assertAll();
     }
 }
