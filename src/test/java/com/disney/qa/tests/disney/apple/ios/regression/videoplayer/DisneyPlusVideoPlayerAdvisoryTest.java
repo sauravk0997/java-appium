@@ -16,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 import java.util.Map;
 
 import static com.disney.qa.api.search.assets.DisneyMovies.CAPTAIN_MARVEL;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
 
@@ -34,7 +33,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
 
         //TODO: Add 'Who Framed Roger Rabbit' in DisneySeries.java
         ContentMovie series = searchApi.get().getMovie("20GDm8DYpIsC", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
-        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
+        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
                 Map.of("rating", series.getContentRatingsValue(), "rating_reasons", ""));
         String expectedSmokingDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.SMOKING_DISCLAIMER.getText());
         homePage.clickSearchIcon();
@@ -65,7 +64,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
 
         ContentMovie movie = searchApi.get().getMovie(CAPTAIN_MARVEL.getEncodedFamilyId(), languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
-        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
+        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
                 Map.of("rating", movie.getContentRatingsValue(), "rating_reasons", ""));
         String expectedPSEDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PSE_DISCLAIMER.getText());
 
