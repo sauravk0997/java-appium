@@ -180,11 +180,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         videoPlayerPage.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
-        LOGGER.info("Device Type is {}",R.CONFIG.get(DEVICE_TYPE).equals(PHONE));
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices'");
-            iosUtils.scrollDown();
-        }
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
         subtitlePage.tapCloseButton();
         //Verify that subtitle is enabled
@@ -295,8 +290,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         //Login Steps
         disneyPlusWelcomeIOSPage.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        iosUtils = new IOSUtils();
-        iosUtils.hideKeyboard();
+        new IOSUtils().hideKeyboard();
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         //Navigate to Movie Page
