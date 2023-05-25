@@ -70,7 +70,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         String expectedPSEDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PSE_DISCLAIMER.getText());
 
         //Bug:This is not currently shown on video player
-        String expectedProductPlacementDisclaimer = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PRODUCT_PLACEMENT_DISCLAIMER.getText());
+        String expectedProductPlacementDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PRODUCT_PLACEMENT_DISCLAIMER.getText());
 
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
