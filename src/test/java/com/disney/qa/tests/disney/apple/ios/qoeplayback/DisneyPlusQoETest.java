@@ -6,18 +6,14 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.simple.JSONArray;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.Test;
-import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
-import java.util.logging.Logger;
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
@@ -29,7 +25,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
     private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage;
     private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
-    private IOSUtils iosUtils;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1578"})
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
