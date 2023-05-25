@@ -65,7 +65,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
 
         ContentMovie movie = searchApi.get().getMovie(CAPTAIN_MARVEL.getEncodedFamilyId(), languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
-        String dictRatingVerbiageNew = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
+        String dictRatingVerbiage = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
                 Map.of("rating", movie.getContentRatingsValue(), "rating_reasons", ""));
         String expectedPSEDisclaimer = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PSE_DISCLAIMER.getText());
 
@@ -77,7 +77,7 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         searchPage.searchForMedia(CAPTAIN_MARVEL.getName());
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.getRatingLabelText().contains(dictRatingVerbiageNew.split("\\.")[0]), "Rating label displayed on player is not as expected");
+        sa.assertTrue(videoPlayer.getRatingLabelText().contains(dictRatingVerbiage.split("\\.")[0]), "Rating label displayed on player is not as expected");
         videoPlayer.clickBackButton();
         detailsPage.clickContinueButton();
         sa.assertEquals(videoPlayer.getRatingReasonText(), "for sequences of sci-fi violence and action, and brief suggestive language.");
