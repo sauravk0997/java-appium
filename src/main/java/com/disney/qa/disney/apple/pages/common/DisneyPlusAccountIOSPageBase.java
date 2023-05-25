@@ -483,4 +483,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                         String.format("'%s' Plan type is not a valid option", planName));
         }
     }
+
+    public boolean isWebPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        //Currently, all the web plans are monthly
+        String expectedPlanName = (paywallPage.getPlanName(planName) + " " + (getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.SUBSCRIPTION_MONTHLY.getText())));
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
+    }
 }
