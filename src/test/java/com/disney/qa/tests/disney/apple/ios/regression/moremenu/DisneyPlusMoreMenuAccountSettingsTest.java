@@ -777,26 +777,26 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
     public void testLogoutOfAllDevicesUI() {
         initialSetup();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusLogOutOfDevicesIOSPageBase disneyPlusLogOutOfDevicesIOSPageBase = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicesPage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
 
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
-        disneyPlusAccountIOSPageBase.clickLogOutOfAllDevices();
+        accountPage.clickLogOutOfAllDevices();
 
-        Assert.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isOpened(),
+        Assert.assertTrue(logOutOfDevicesPage.isOpened(),
                 "'Log out of all accounts' screen did not open");
 
-        sa.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isSubtitleDisplayed(),
+        sa.assertTrue(logOutOfDevicesPage.isSubtitleDisplayed(),
                 "Subtitle was not displayed");
 
-        sa.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isPasswordTextEntryPresent(),
+        sa.assertTrue(logOutOfDevicesPage.isPasswordTextEntryPresent(),
                 "Password entry field was not displayed");
 
-        sa.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isForgotPasswordLinkDisplayed(),
+        sa.assertTrue(logOutOfDevicesPage.isForgotPasswordLinkDisplayed(),
                 "'Forgot Password?' link was not displayed");
 
-        sa.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isPrimaryButtonPresent(),
+        sa.assertTrue(logOutOfDevicesPage.isPrimaryButtonPresent(),
                 "'Log Out' button was not displayed");
 
         sa.assertAll();
@@ -807,37 +807,35 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         initialSetup();
+        SoftAssert sa = new SoftAssert();
         verifyEmail.set(new VerifyEmail());
         Date startTime = verifyEmail.get().getStartTime();
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusLogOutOfDevicesIOSPageBase disneyPlusLogOutOfDevicesIOSPageBase = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicePage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
-        disneyPlusAccountIOSPageBase.clickLogOutOfAllDevices();
-        disneyPlusLogOutOfDevicesIOSPageBase.clickForgotPasswordLink();
-
-        Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
+        accountPage.clickLogOutOfAllDevices();
+        logOutOfDevicePage.clickForgotPasswordLink();
+        sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP Page was not opened");
 
         String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
-
-        Assert.assertTrue(disneyPlusChangePasswordIOSPageBase.isOpened(),
+        oneTimePasscodePage.enterOtpValue(otp);
+        sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
 
-        disneyPlusChangePasswordIOSPageBase.submitNewPasswordValue(NEW_PASSWORD);
-
-        Assert.assertTrue(disneyPlusLogOutOfDevicesIOSPageBase.isOpened(),
-                "User was not returned to 'Log out of all devices' after submitting new password");
-
-        disneyPlusLogOutOfDevicesIOSPageBase.submitPasswordAndLogout(NEW_PASSWORD);
-
-        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
+        changePasswordPage.enterNewPasswordValue(NEW_PASSWORD);
+        changePasswordPage.clickLogoutAllCheckmark();
+        changePasswordPage.clickSaveBtn();
+        sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(),
+                "`You're now being logged out of this device` message is not present");
+        sa.assertTrue(welcomeScreenPage.isOpened(),
                 "User was not returned to the Welcome screen upon logout");
+        sa.assertAll();
     }
 
 

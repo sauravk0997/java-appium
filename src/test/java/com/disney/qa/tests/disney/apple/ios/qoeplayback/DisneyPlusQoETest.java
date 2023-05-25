@@ -16,9 +16,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import org.testng.asserts.SoftAssert;
-
 import java.util.logging.Logger;
-
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
@@ -151,10 +149,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkList.add(item2);
         EventChecklist item3 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item3.addRequirement("notexact","playbackActivity","resumed");
-//        HoraValidator hv = new HoraValidator(account.getAccountId());
         checkList.add(item3);
         //Check Pause message exist and make sure resume message does not exists by getting qoe events before resuming the video
-//        hv.checkListForPQOE(sa, checkList);
         checkAssertions(sa, account.getAccountId(), checkList);
 
 
