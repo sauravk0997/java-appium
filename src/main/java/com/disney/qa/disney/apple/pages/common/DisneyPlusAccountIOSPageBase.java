@@ -16,7 +16,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='%s']/../following-sibling::*/XCUIElementTypeButton")
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@label='%s']/../following-sibling::*/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
@@ -482,5 +482,14 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 throw new IllegalArgumentException(
                         String.format("'%s' Plan type is not a valid option", planName));
         }
+    }
+
+    public boolean isWebPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        //Currently, all the web plans are monthly
+        String expectedPlanName = (paywallPage.getPlanName(planName) + " " + (getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.SUBSCRIPTION_MONTHLY.getText())));
+        UniversalUtils.captureAndUpload(getCastedDriver());
+        return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 }
