@@ -78,14 +78,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getDynamicAccessibilityId(disneyAccount.get().getEmail()).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(disneyAccount.get().getEmail()).isPresent(),
                 "User Email address was not displayed");
 
         sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(disneyAccount.get().getEmail())
                         && disneyPlusAccountIOSPageBase.isChangeLinkActive(disneyAccount.get().getEmail()),
                 "Change Email link was not displayed and enabled");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getDynamicAccessibilityId(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
                 "User Password (hidden) was not displayed");
 
         sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())),

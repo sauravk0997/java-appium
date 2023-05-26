@@ -369,6 +369,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             hv.checkListForPQOE(softAssert, checkList);
         }
     }
+
     public void clearDSSSandboxAccountFor(String accountName) {
         LOGGER.info("Clearing purchase history for '{}' account", accountName);
         AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();

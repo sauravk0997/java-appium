@@ -47,6 +47,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "editProfile")
     private ExtendedWebElement editProfile;
 
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    protected ExtendedWebElement titleLabel;
+
     @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
@@ -54,7 +57,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
-    private ExtendedWebElement addProfileHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
     private String genderMan = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
@@ -80,7 +82,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        return addProfileHeader.isPresent();
+        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
     public boolean isProfilePresent(String profileName) {
