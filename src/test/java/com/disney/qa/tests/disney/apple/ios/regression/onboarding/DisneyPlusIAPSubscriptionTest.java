@@ -1,0 +1,315 @@
+package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
+
+import com.disney.alice.AliceDriver;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
+
+    private static final String DOB_ADULT = "01/01/1983";
+    @DataProvider(name = "disneyPlanTypes")
+    public Object[][] disneyPlanTypes() {
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY}
+        };
+    }
+    @DataProvider(name = "disneyPlanCards")
+    public Object[][] disneyPlanCards() {
+        return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
+                {DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY}
+        };
+    }
+    @DataProvider(name = "disneyWebPlanTypes")
+    public Object[][] disneyWebPlanTypes() {
+        return new Object[][]{{"Disney+ With Ads, Hulu with Ads, and ESPN+", DisneyPlusPaywallIOSPageBase.PlanType.BUNDLE_TRIO_BASIC},
+                {"Disney+, Hulu No Ads, and ESPN+", DisneyPlusPaywallIOSPageBase.PlanType.BUNDLE_TRIO_PREMIUM},
+                {"Disney Bundle Duo Basic", DisneyPlusPaywallIOSPageBase.PlanType.LEGACY_BUNDLE}
+        };
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
+    @Maintainer("gkrishna1")
+    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-IAP"})
+    public void verifyIAPDisneyPlanCards(DisneyPlusPaywallIOSPageBase.PlanType planType) {
+        initialSetup();
+        if (buildType != BuildType.IAP) {
+            skipExecution("Test run is not against IAP compatible build.");
+        }
+
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        signUpIOSPageBase.clickAgreeAndContinueIfPresent();
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        sa.assertTrue(dobCollectionPage.isOpened(), "DOB collection page didn't open after signing up");
+        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        signUpIOSPageBase.clickAgreeAndContinue();
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.isFooterLabelPresent(), "Choose your plan card 'footer label' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.verifyPlanCardFor(planType), "Plan card UI is not as expected");
+        paywallIOSPageBase.getSelectButtonFor(planType).click();
+        paywallIOSPageBase.isOpened();
+        sa.assertTrue(paywallIOSPageBase.isPurchaseButtonPresent(), "user was not taken to the billing cycle screen");
+        paywallIOSPageBase.tapBackButton();
+        paywallIOSPageBase.tapBackButton();
+        paywallIOSPageBase.tapFinishLaterButton();
+        sa.assertTrue(initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class).getCompleteSubscriptionButton().isPresent(), "Complete subscription  page is not shown after clicking finish later alert");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
+    @Test(description = "Verify onboarding stepper for US based users", groups = {"Ariel-IAP"})
+    public void verifyOnboardingStepperUS() {
+        initialSetup();
+        handleAlert();
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen");
+
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+
+        Assert.assertTrue(createPasswordPage.isOpened(),
+                "User was not directed to 'Create Password'");
+
+        createPasswordPage.submitPasswordValue("abcd123!@");
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+        Assert.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isOpened(),
+                "User was not directed to the paywall");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
+    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"Ariel-IAP"})
+    public void verifyPaywallCancel() {
+        initialSetup();
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+
+        disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+
+        disneyPlusPaywallIOSPageBase.getBackArrow().click();
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterHeaderPresent(),
+                "Finish later header is not displayed.");
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterTextPresent(),
+                "Finish later text is not displayed.");
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isResumeButtonPresent(),
+                "RESUME button is not displayed.");
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterButtonPresent(),
+                "FINISH LATER button is not displayed.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
+    @Test(description = "Sign Up - Verify Paywall UI", groups = {"Ariel-IAP"})
+    public void verifyPaywallUI() {
+        initialSetup();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+
+        disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+        paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
+
+        sa.assertTrue(paywallIOSPageBase.isYearlySkuButtonPresent(),
+                "Yearly SKU button is not displayed.");
+        sa.assertTrue(paywallIOSPageBase.isMonthlySkuButtonPresent(),
+                "Monthly SKU button is not displayed.");
+        sa.assertTrue(paywallIOSPageBase.isPaywallCancelButtonDisplayed(),
+                "Cancel button is not displayed.");
+        sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
+
+        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+                "Cancel anytime text is not displayed.");
+        sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
+                "Restore Purchase button is not displayed.");
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
+    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Ariel-IAP"})
+    public void verifyRestartSubscriptionPaywallUI() {
+        initialSetup();
+        SoftAssert softAssert = new SoftAssert();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        handleAlert();
+
+        DisneyAccount expiredAccount = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
+        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
+        login(expiredAccount);
+
+        disneyPlusRestartSubscriptionIOSPageBase.clickRestartSubscriptionButton();
+        paywallPage.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
+        softAssert.assertTrue(paywallPage.isYearlySkuButtonPresent(),
+                "Yearly SKU button is not displayed.");
+        softAssert.assertTrue(paywallPage.isMonthlySkuButtonPresent(),
+                "Monthly SKU button is not displayed.");
+        softAssert.assertTrue(paywallPage.isPaywallCancelButtonDisplayed(),
+                "Cancel button is not displayed.");
+        softAssert.assertTrue(paywallPage.isRestartsSubscriptionHeaderDisplayed(),
+                "Restart Subscription header is not displayed.");
+        softAssert.assertTrue(paywallPage.isRestartsSubscriptionSubHeaderDisplayed(),
+                "'You will be billed immediately. Restart anytime.' is not displayed. ");
+        aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
+        softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72339"})
+    @Maintainer("gkrishna1")
+    @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP"})
+    public void verifyReturningUserCompletesSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        initialSetup();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        DisneyAccount nonActiveAccount = disneyAccountApi.get().createAccount("US", "en");
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        welcomePage.dismissNotificationsPopUp();
+        welcomePage.clickLogInButton();
+        login(nonActiveAccount);
+
+        // Complete subscription page verification
+        sa.assertTrue(CompleteSubsPage.getHeroImage().isPresent(), "Hero image is not present");
+        sa.assertTrue(CompleteSubsPage.getPrimaryText().isPresent(), "Primary text not present");
+        sa.assertTrue(CompleteSubsPage.getSecondaryText().isPresent(), "Secondary text not present");
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete Subscription button is not present");
+        //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
+        sa.assertTrue(welcomePage.isLogOutButtonDisplayed(), "Expected: 'Log out' button should be present");
+        welcomePage.clickCompleteSubscriptionButton();
+
+        // Verify choose your plan page
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not present");
+        sa.assertTrue(paywallPage.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not present");
+        sa.assertTrue(paywallPage.isFooterLabelPresent(), "Choose your plan card 'footer label' is not present");
+        sa.assertTrue(paywallPage.verifyPlanCardFor(planName), "Plan card UI is not as expected");
+        sa.assertTrue(paywallPage.getSelectButtonFor(planName).isPresent(), "Select button is not present");
+
+        //Choose plan
+        paywallPage.getSelectButtonFor(planName).click();
+        paywallPage.isStartStreamingTextPresent();
+        //1. Test Resume and finish later actioned by Cancel button on billing cycle page
+        paywallPage.clickCancelBtn();
+        //Resume button on alert
+        paywallPage.clickSystemAlertSecondaryBtn();
+        pause(1);
+        sa.assertTrue(paywallPage.isStartStreamingTextPresent(), "After resuming, billing cycle screen is not displayed");
+        //Finish Later button on alert
+        paywallPage.clickCancelBtn();
+        paywallPage.clickDefaultAlertBtn();
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete subscription button not present after clicking 'finish later' on 'billing cycle screen'");
+        //2. verify navigation for back button on billing cycle screen
+        welcomePage.clickCompleteSubscriptionButton();
+        paywallPage.getSelectButtonFor(planName).click();
+        paywallPage.getBackArrow().click();
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        //3. Test Resume and finish later actioned by Cancel button on Choose your plan  page
+        paywallPage.getBackArrow().click();
+        //Resume button on alert
+        paywallPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        paywallPage.getBackArrow().click();
+        //Finish Later button on alert
+        paywallPage.clickDefaultAlertBtn();
+        sa.assertTrue(CompleteSubsPage.getCompleteSubscriptionButton().isPresent(), "Complete subscription button not present after clicking 'finish later' on 'Choose Your Plan' screen");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
+    @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP"})
+    public void verifyValidPasswordSubmissions() {
+        initialSetup();
+        verifySignUpButtonNavigation();
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusCreatePasswordIOSPageBase.enterPasswordValue("1234AB!@");
+        disneyPlusCreatePasswordIOSPageBase.clickShowHidePassword();
+
+        sa.assertEquals(disneyPlusCreatePasswordIOSPageBase.getPasswordEntryText(), "1234AB!@",
+                "XMOBQA-62237 - Show/Hide Password did not un-hide the password value");
+
+        disneyPlusCreatePasswordIOSPageBase.clickShowHidePassword();
+
+        sa.assertEquals(disneyPlusCreatePasswordIOSPageBase.getPasswordEntryText(), "••••••••",
+                "XMOBQA-62237 - Show/Hide Password did not hide the password value");
+
+        disneyPlusApplePageBase.clickPrimaryButton();
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "XMOBQA-62241-Choose your plan card 'title' is not as expected");
+        sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "XMOBQA-62241-Choose your plan card 'subtitle' is not as expected");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73609"})
+    @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP"})
+    @Maintainer("gkrishna1")
+    public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        initialSetup();
+        disneyAccount.set(disneyAccountApi.get().createAccount(offerName, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+        accountPage.isSingleSubHeaderPresent();
+        sa.assertTrue(accountPage.isWebPlanNameDisplayed(planName), "plan name on account page is not displayed as expected");
+        sa.assertAll();
+    }
+
+    private void verifySignUpButtonNavigation() {
+        initialSetup();
+        handleAlert();
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
+    }
+}

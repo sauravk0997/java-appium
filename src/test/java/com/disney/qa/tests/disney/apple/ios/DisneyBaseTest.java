@@ -21,7 +21,7 @@ import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest;
+import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import io.appium.java_client.ios.IOSDriver;
@@ -202,7 +202,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
             restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
-
+            initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -373,7 +373,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void clearDSSSandboxAccountFor(String accountName) {
         LOGGER.info("Clearing purchase history for '{}' account", accountName);
         AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-        for (SandboxAccount account : DisneyPlusIAPTest.accountsList) {
+        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
             if (account.getAttributes().getAcAccountName().contains(accountName)) {
                 Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
                                 .is2xxSuccessful(),

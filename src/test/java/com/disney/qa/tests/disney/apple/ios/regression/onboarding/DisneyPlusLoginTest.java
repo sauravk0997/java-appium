@@ -399,44 +399,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @Maintainer("mboulogne1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
-    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Onboarding"})
-    public void verifyRestartSubscriptionPaywallUI() {
-        initialSetup();
-        SoftAssert softAssert = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        handleAlert();
-
-        DisneyAccount expired = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(expired);
-
-        disneyPlusRestartSubscriptionIOSPageBase.clickRestartSubscriptionButton();
-
-        softAssert.assertTrue(disneyPlusPaywallIOSPageBase.isYearlySkuButtonPresent(),
-                "Yearly SKU button is not displayed.");
-
-        softAssert.assertTrue(disneyPlusPaywallIOSPageBase.isMonthlySkuButtonPresent(),
-                "Monthly SKU button is not displayed.");
-
-        softAssert.assertTrue(disneyPlusPaywallIOSPageBase.isPaywallCancelButtonDisplayed(),
-                "Cancel button is not displayed.");
-
-        softAssert.assertTrue(disneyPlusPaywallIOSPageBase.isRestartsSubscriptionHeaderDisplayed(),
-                "Restart Subscription header is not displayed.");
-
-        softAssert.assertTrue(disneyPlusPaywallIOSPageBase.isRestartsSubscriptionSubHeaderDisplayed(),
-                "'You will be billed immediately. Restart anytime.' is not displayed. ");
-
-        aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
-
-        softAssert.assertAll();
-    }
-
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62679"})
     @Test(description = "Log in - Verify Account on Hold", groups = {"Onboarding"})
     public void verifyAccountOnHold() {
