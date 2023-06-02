@@ -23,11 +23,11 @@ import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
-    public static final List<SandboxAccount> accountsList = new LinkedList() {
-        {
-            new AppStoreConnectApi().getSandboxAccounts(SANDBOX_ACCOUNT_PREFIX);
-        }
-    };
+//    public static final List<SandboxAccount> accountsList = new LinkedList() {
+//        {
+//            new AppStoreConnectApi().getSandboxAccounts(SANDBOX_ACCOUNT_PREFIX);
+//        }
+//    };
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
@@ -45,8 +45,8 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
-        String appleID = initPage(IOSSettingsMenuBase.class).getDeviceSandBoxAppleID();
-        clearDSSSandboxAccountFor(appleID);
+        //String appleID = initPage(IOSSettingsMenuBase.class).getDeviceSandBoxAppleID();
+        //clearDSSSandboxAccountFor(appleID);
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);

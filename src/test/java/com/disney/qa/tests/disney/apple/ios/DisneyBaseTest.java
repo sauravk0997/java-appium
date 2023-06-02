@@ -370,15 +370,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void clearDSSSandboxAccountFor(String accountName) {
-        LOGGER.info("Clearing purchase history for '{}' account", accountName);
-        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
-            if (account.getAttributes().getAcAccountName().contains(accountName)) {
-                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
-                                .is2xxSuccessful(),
-                        "Clear account purchase history for" + accountName + "was not successful!");
-            }
-        }
-    }
+//    public void clearDSSSandboxAccountFor(String accountName) {
+//        LOGGER.info("Clearing purchase history for '{}' account", accountName);
+//        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
+//        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
+//            if (account.getAttributes().getAcAccountName().contains(accountName)) {
+//                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
+//                                .is2xxSuccessful(),
+//                        "Clear account purchase history for" + accountName + "was not successful!");
+//            }
+//        }
+//    }
 }
