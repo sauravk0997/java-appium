@@ -88,6 +88,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     public boolean verifySelectedSubtitleLangIs(String language) {
         LOGGER.info("verifying if selected subtitles language is: {}", language);
         ExtendedWebElement element = languageCellCheckmark.format(language);
+        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, IMobileUtils.Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
     }
 }
