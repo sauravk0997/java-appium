@@ -4,11 +4,11 @@
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Ad-Hoc"/>
+    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-IAP-Prod-AdHoc-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-IAP-Regression"/>
     <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com"/>
-    <parameter name="jenkinsEnvironments" value="ios"/>
+    <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11,iPhone_11_1,iPhone_12,iPhone_12_1,iPhone_12_Pro;deviceType=Phone;timeoutMs=120000"/>
@@ -22,7 +22,8 @@
 
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPSubscriptionTest"/>
         </classes>
     </test>
 </suite>
