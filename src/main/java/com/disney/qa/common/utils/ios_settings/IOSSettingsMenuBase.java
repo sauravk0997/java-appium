@@ -54,7 +54,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Back")
     protected ExtendedWebElement backBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Required'`]")
     private ExtendedWebElement sandboxPasswordBox;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
