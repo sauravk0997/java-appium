@@ -24,6 +24,7 @@ import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
+import com.sun.xml.bind.v2.TODO;
 import io.appium.java_client.ios.IOSDriver;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -369,6 +370,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             hv.checkListForPQOE(softAssert, checkList);
         }
     }
+    //TODO: uncomment it after moving the Subscription test to a separate XML
 
 //    public void clearDSSSandboxAccountFor(String accountName) {
 //        LOGGER.info("Clearing purchase history for '{}' account", accountName);
