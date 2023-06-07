@@ -1,11 +1,14 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("dconyers")
@@ -13,12 +16,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(description = "Search: Navigate to search page and verify search icon", groups = {"Search"})
     public void verifySearchTabIcon() {
         initialSetup();
+        SoftAssert sa = new SoftAssert();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
 
         homePage.clickSearchIcon();
-        System.out.println(getDriver().getPageSource());
-
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "search_button_selected");
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
     }
 }
