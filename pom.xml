@@ -96,6 +96,10 @@
                     <groupId>com.hulu.sidekick</groupId>
                     <artifactId>locksmith</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.hulu.authandpolicy</groupId>
+                    <artifactId>recognito-java</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
