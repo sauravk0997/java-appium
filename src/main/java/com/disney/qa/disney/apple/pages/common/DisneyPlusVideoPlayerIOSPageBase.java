@@ -193,7 +193,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
-        displayVideoController();
+        //TODO: work around due to bug IOS-6425
+       if(!playButton.isElementPresent()) {
+           displayVideoController();
+       }
         playButton.click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
