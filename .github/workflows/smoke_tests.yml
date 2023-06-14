@@ -70,7 +70,7 @@ jobs:
   pr_comment_failure:
     needs: [ios_handset_smoke_tests, tv_os_smoke_tests]
     runs-on: self-hosted
-    if: always()
+    if: success() || failure()
     steps:
       - name: Comment on Results
         id: pr_comment_fail_notifier
