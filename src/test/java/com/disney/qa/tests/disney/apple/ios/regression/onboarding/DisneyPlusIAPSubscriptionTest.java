@@ -342,11 +342,12 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywallPage.clickCancelBtn();
         //Resume button on alert
         paywallPage.clickSystemAlertSecondaryBtn();
-        pause(1);
+        pause(5);
         sa.assertTrue(paywallPage.isRestartsSubscriptionHeaderDisplayed(), "Restart Subscription header is not displayed after selecting Resume on alert");
         //Finish Later button on alert
         paywallPage.clickCancelBtn();
         paywallPage.clickDefaultAlertBtn();
+        pause(3);
         sa.assertTrue(restartSubs.getRestartSubscriptionButton().isPresent(), "Restart subscription button not present after clicking 'finish later' on 'billing cycle screen'");
         //2. verify navigation for back button on billing cycle screen
         welcomePage.clickCompleteSubscriptionButton();
