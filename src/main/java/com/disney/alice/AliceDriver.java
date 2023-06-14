@@ -1,6 +1,7 @@
 package com.disney.alice;
 
 import com.disney.qa.common.utils.UniversalUtils;
+import com.qaprosoft.carina.core.foundation.utils.R;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +15,7 @@ public class AliceDriver extends AliceClient {
     private WebDriver driver;
 
     public AliceDriver(WebDriver driver) {
+        super(R.CONFIG.get("sagemaker_endpoint"));
         this.driver = driver;
     }
 
