@@ -343,7 +343,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-907011"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-90711"})
     @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {"Smoke"})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();

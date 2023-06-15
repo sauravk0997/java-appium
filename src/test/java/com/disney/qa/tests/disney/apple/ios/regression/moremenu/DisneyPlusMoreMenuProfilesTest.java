@@ -125,4 +125,22 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
 
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61269"})
+    @Test(description = "Autoplay toggle is Saved if User saves", groups = {"More Menu"})
+    public void verifyAutoplayToggleIsSaved() {
+        initialSetup();
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        //Turn ON autoplay
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfile.toggleAutoplayButton("OFF");
+        sa.assertTrue(editProfile.isUpdatedTextPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
 }
