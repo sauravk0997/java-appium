@@ -23,7 +23,7 @@
     <parameter name="jenkinsRegressionScheduling" value="H 1 * * *"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player"/>
+               value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
         <classes>
@@ -68,6 +68,12 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdvisoryTest"/>
+        </classes>
+    </test>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Search" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
         </classes>
     </test>
 </suite>
