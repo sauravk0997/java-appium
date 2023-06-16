@@ -1,17 +1,14 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.alice.AliceDriver;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
 import com.qaprosoft.carina.core.foundation.utils.Configuration;
 import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -22,8 +19,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
-
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
@@ -382,7 +377,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72389"})
     @Maintainer("csolmaz")
     @Test(description = "Verify plan switch from basic monthly with ads to premium monthly with no ads", groups = {"Ariel-IAP"})
-    public void verifyPlanSwitchMonthlyWithAdsToMonthlyNoAds() {
+    public void verifyPlanSwitchBasicMonthlyToPremiumMonthly() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

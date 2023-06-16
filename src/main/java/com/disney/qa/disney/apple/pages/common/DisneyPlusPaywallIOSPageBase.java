@@ -9,10 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.util.Map;
-
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEXT;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
