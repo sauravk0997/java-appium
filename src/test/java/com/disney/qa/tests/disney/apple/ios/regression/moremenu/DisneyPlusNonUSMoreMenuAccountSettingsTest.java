@@ -61,14 +61,6 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
                 "Webview did not open to the expected url");
     }
 
-    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(sku);
-        request.setCountry(country);
-        request.setLanguage(language);
-        return disneyAccountApi.get().createAccount(request);
-    }
-
     public void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

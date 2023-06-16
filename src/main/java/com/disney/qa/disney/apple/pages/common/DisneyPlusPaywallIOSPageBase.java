@@ -9,6 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Map;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEXT;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -264,6 +268,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isStartStreamingTextPresent(){
         return staticTextByLabel.format("Start streaming today").isPresent();
+    }
 
+    public void clickBundleSelectButton() {
+        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_BUNDLE_NOADS_CTA.getText())).click();
     }
 }

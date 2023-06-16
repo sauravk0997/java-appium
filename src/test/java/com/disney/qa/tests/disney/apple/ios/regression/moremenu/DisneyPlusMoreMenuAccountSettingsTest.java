@@ -153,14 +153,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(sku);
-        request.setCountry(country);
-        request.setLanguage(language);
-        return disneyAccountApi.get().createAccount(request);
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu"})
     public void verifySubscriptionDetails_HuluBundle() {
