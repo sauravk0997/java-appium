@@ -37,7 +37,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         };
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376,XMOBQA-72741"})
     @Maintainer("gkrishna1")
     @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-Purchase"})
     public void verifyStandardPurchase(DisneyPlusPaywallIOSPageBase.PlanType planType) {

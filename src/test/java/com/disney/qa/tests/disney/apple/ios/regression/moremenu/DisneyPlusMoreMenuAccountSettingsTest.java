@@ -877,7 +877,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Switch to Annual description and/or CTA was displayed unexpectedly");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
     public void verifyPausedSubscription_VerizonStandalone() {
         initialSetup();
@@ -897,7 +897,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.get().assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
     public void verifyPausedSubscription_Canal() {
         initialSetup();
@@ -917,7 +917,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.get().assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
     public void verifyPausedSubscription_O2() {
         initialSetup();
