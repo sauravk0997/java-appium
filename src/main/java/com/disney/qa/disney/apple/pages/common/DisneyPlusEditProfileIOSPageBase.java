@@ -184,10 +184,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         isOpened();
         clickEditModeProfile(profileName);
         toggleAutoplayButton(requestedState);
+        pause(4);
         clickDoneBtn();
         if (!initPage(DisneyPlusHomeIOSPageBase.class).isOpened()) {
             clickBackBtn();
         }
+    }
+
+    public boolean isUpdatedTextPresent() {
+        return staticTextByLabel.format("Updated").isPresent();
     }
 
     public void toggleAutoplayButton(String newState) {
@@ -195,7 +200,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);
         if (!currentState.equalsIgnoreCase(newState)) {
             autoplayToggleCell.getElement().findElement(By.name("toggleView")).click();
-            pause(4);
         }
     }
 

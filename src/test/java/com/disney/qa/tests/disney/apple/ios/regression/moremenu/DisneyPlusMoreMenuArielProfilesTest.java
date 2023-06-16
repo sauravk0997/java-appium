@@ -87,6 +87,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfiles.clickEditModeProfile(KIDS_PROFILE);
         softAssert.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
         editProfiles.toggleAutoplayButton("On");
+        pause(4);
         changePassword.isHeadlineSubtitlePresent();
         softAssert.assertTrue(changePassword.isPasswordDescriptionPresent());
         changePassword.enterPassword(disneyAccount.get());
