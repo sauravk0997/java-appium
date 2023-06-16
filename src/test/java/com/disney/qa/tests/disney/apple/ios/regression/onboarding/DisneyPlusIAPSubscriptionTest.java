@@ -394,7 +394,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
 
-        //validate ads in video player
+        //Validate ads in video player
         home.clickSearchIcon();
         search.searchForMedia("Pretty Freekin Scary");
         List<ExtendedWebElement> results = search.getDisplayedTitles();
@@ -430,10 +430,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         video.clickBackButton();
         details.isOpened();
 
-        //FIXME: Bug - switch to Premium Monthly is not updated in Account Settings under Subscription.
+        //TODO: IOS-6598 - switch to Premium Monthly is not updated in Account Settings under Subscription.
 //        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY), "Premium Monthly plan type not displayed");
 
-        //validate in ios native settings the plan has been switched as alternative solution
+        //Validate in ios native settings the plan has been switched as alternative solution
         iosSettings.navigateToManageSubscription();
         sa.assertTrue(iosSettings.isPremiumMonthlyPriceCheckmarkPresent(), "Premium Monthly Price with checkmark not displayed.");
         sa.assertAll();
