@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneyCountryData;

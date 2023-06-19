@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios;
 
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
@@ -371,6 +372,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             hv.checkListForPQOE(softAssert, checkList);
         }
     }
+
+    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
+        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        request.addSku(sku);
+        request.setCountry(country);
+        request.setLanguage(language);
+        return disneyAccountApi.get().createAccount(request);
+    }
+
     //TODO: uncomment it after moving the Subscription test to a separate XML
 
 //    public void clearDSSSandboxAccountFor(String accountName) {

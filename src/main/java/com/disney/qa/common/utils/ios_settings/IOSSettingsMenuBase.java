@@ -63,6 +63,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Subscriptions")
     protected ExtendedWebElement subscriptionsButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$10.99 ✓\"`]")
+    private ExtendedWebElement premiumMonthlyPriceCheckmark;
+
     protected IOSUtils utils;
 
     public IOSSettingsMenuBase(WebDriver driver) {
@@ -122,6 +125,16 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
     }
 
+    public void navigateToManageSubscription() {
+        launchSettings();
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        appStoreTab.click();
+        manageSandboxAcct();
+        if(subscriptionsButton.isElementPresent()) {
+            subscriptionsButton.click();
+        }
+    }
+
     protected void manageSandboxAcct() {
         CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
 
@@ -162,5 +175,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
                 }
             }
         }
+    }
+
+    public boolean isPremiumMonthlyPriceCheckmarkPresent() {
+        return premiumMonthlyPriceCheckmark.isElementPresent();
     }
 }

@@ -484,6 +484,14 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         }
     }
 
+    public boolean isSubscriptionChangeFlashMessagePresent() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SWITCH_ANNUAL_FLASH_MESSAGE.getText())).isPresent();
+    }
+
+    public void clickChangeBamtechBasicPlan() {
+        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).click();
+    }
+
     public boolean isWebPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
         //Currently, all the web plans are monthly

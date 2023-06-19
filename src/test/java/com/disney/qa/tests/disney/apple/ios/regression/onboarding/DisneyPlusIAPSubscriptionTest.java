@@ -2,14 +2,23 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.alice.AliceDriver;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
+import com.qaprosoft.carina.core.foundation.utils.Configuration;
+import com.qaprosoft.carina.core.foundation.utils.R;
+import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
@@ -363,6 +372,70 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         //Finish Later button on alert
         paywallPage.clickDefaultAlertBtn();
         sa.assertTrue(restartSubs.getRestartSubscriptionButton().isPresent(), "Restart subscription button not present after clicking 'finish later' on 'Choose Your Plan' screen");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72389"})
+    @Maintainer("csolmaz")
+    @Test(description = "Verify plan switch from basic monthly with ads to premium monthly with no ads", groups = {"Ariel-IAP"})
+    public void verifyPlanSwitchBasicMonthlyToPremiumMonthly() {
+        initialSetup();
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase account = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywall = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase video = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
+                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+
+        //Validate ads in video player
+        home.clickSearchIcon();
+        search.searchForMedia("Pretty Freekin Scary");
+        List<ExtendedWebElement> results = search.getDisplayedTitles();
+        results.get(0).click();
+        details.clickPlayButton();
+        sa.assertTrue(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
+        video.clickBackButton();
+
+        //Account - Validate Basic Ads is displayed
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.BASIC), "Basic Plan not displayed");
+
+        //Switch to Premium Monthly
+        account.clickChangeBamtechBasicPlan();
+        paywall.clickBundleSelectButton();
+        paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY);
+        paywall.clickOverlaySubscribeButton();
+        try {
+            CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+            paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
+        iosUtils.get().acceptAlert();
+        sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
+        paywall.dismissNotificationsPopUp();
+
+        //Validate no ad badge in player after switch
+        home.clickSearchIcon();
+        details.clickPlayButton();
+        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
+        video.clickBackButton();
+        details.isOpened();
+
+        //TODO: IOS-5556 - switch to Premium Monthly is not updated in Account Settings under Subscription.
+//        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY), "Premium Monthly plan type not displayed");
+
+        //Validate in ios native settings the plan has been switched as alternative solution
+        iosSettings.navigateToManageSubscription();
+        sa.assertTrue(iosSettings.isPremiumMonthlyPriceCheckmarkPresent(), "Premium Monthly Price with checkmark not displayed.");
         sa.assertAll();
     }
 

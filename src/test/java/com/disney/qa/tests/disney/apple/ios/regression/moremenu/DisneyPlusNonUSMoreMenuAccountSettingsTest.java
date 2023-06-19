@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -59,14 +57,6 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
                 "Webview did not open to the expected url");
-    }
-
-    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(sku);
-        request.setCountry(country);
-        request.setLanguage(language);
-        return disneyAccountApi.get().createAccount(request);
     }
 
     public void setAppToAccountSettings() {

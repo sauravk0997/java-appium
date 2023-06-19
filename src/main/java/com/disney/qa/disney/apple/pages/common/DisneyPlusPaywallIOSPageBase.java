@@ -264,6 +264,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isStartStreamingTextPresent(){
         return staticTextByLabel.format("Start streaming today").isPresent();
+    }
 
+    public void clickBundleSelectButton() {
+        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_BUNDLE_NOADS_CTA.getText())).click();
     }
 }
