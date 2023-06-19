@@ -16,6 +16,9 @@ env:
 
 jobs:
   ios_handset_smoke_tests:
+    outputs:
+      handset_status_output: ${{ steps.build_ios_handset_smoke.outputs.result }}
+      handset_build_url_output: ${{ steps.build_ios_handset_smoke.outputs.build_url }}
     if: ${{ github.event.label.name == 'disney api utils update' }}
     runs-on: self-hosted
     steps:
@@ -37,10 +40,11 @@ jobs:
           start_timeout: 60
           build_timeout: 1500
           interval: 30
-      - run: |
-          echo -e "Job Status: ${{ steps.build_ios_handset_smoke.outputs.result }}"
 
   tv_os_smoke_tests:
+    outputs:
+      tv_os_status_output: ${{ steps.build_tv_os_smoke.outputs.result }}
+      tv_os_build_url_output: ${{ steps.build_tv_os_smoke.outputs.build_url }}
     if: ${{ github.event.label.name == 'disney api utils update' }}
     runs-on: self-hosted
     steps:
@@ -62,17 +66,20 @@ jobs:
           start_timeout: 60
           build_timeout: 1500
           interval: 30
-      - run: |
-          echo -e "Job Status: ${{ steps.build_tv_os_smoke.outputs.result }}"
 
   pr_comment_failure:
     needs: [ios_handset_smoke_tests, tv_os_smoke_tests]
     runs-on: self-hosted
-    if: failure()
+    if: success() || failure()
     steps:
       - name: Comment on Results
         id: pr_comment_fail_notifier
         uses: mshick/add-pr-comment@v2
         with:
           message: |
-            🚨 Smoke test failures. Please review results. 🚨
+            🚨 Api Smoke tests have been run.  
+            **Handset Status:** ${{ needs.ios_handset_smoke_tests.outputs.handset_status_output }}
+            **Handset Job Url:** ${{ needs.ios_handset_smoke_tests.outputs.handset_build_url_output }}
+            
+            **tvOS Status:** ${{ needs.tv_os_smoke_tests.outputs.tv_os_status_output }}
+            **tvOS Job Url:** ${{ needs.tv_os_smoke_tests.outputs.tv_os_handset_build_url_output }} 
