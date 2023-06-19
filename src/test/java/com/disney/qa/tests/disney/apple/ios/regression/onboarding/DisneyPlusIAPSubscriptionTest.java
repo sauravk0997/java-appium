@@ -403,7 +403,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertTrue(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
         video.clickBackButton();
 
-        //Account - Validate Basic Ads displayed
+        //Account - Validate Basic Ads is displayed
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.BASIC), "Basic Plan not displayed");
@@ -430,7 +430,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         video.clickBackButton();
         details.isOpened();
 
-        //TODO: IOS-6598 - switch to Premium Monthly is not updated in Account Settings under Subscription.
+        //TODO: IOS-5556 - switch to Premium Monthly is not updated in Account Settings under Subscription.
 //        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY), "Premium Monthly plan type not displayed");
 
         //Validate in ios native settings the plan has been switched as alternative solution
