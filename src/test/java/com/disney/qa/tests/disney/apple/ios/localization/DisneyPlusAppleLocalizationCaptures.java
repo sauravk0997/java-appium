@@ -381,6 +381,11 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(3);
         getScreenshots("profilePage");
 
+        swipe(addProfilePage.getSaveButton());
+        addProfilePage.tapSaveButton();
+        pause(2);
+        getScreenshots("genderError");
+
         addProfilePage.clickGenderDropDown();
         getScreenshots("genderOptions");
 
