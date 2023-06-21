@@ -29,7 +29,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73696"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Basic sku", groups = {"Ariel-Purchase"})
     public void verifyStandardPurchase_Basic() {
         initialSetup();
         if (buildType != BuildType.IAP) {
@@ -91,7 +91,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73697"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase"})
     public void verifyStandardPurchase_Premium_Monthly() {
         initialSetup();
         if (buildType != BuildType.IAP) {
@@ -151,7 +151,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72741"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Premium yearly sku", groups = {"Ariel-Purchase"})
     public void verifyStandardPurchase_Premium_Yearly() {
         initialSetup();
         if (buildType != BuildType.IAP) {
