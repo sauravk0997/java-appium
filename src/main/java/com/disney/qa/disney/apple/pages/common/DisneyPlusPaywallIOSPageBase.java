@@ -57,7 +57,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
     private ExtendedWebElement overlaySubscribeBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
     private ExtendedWebElement sandboxPasswordBox;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
