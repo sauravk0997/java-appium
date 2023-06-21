@@ -492,6 +492,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).click();
     }
 
+    public void clickChangePremiumMonthlyPlan() {
+        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_APPLE.getText())).click();
+    }
+
     public boolean isWebPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
         //Currently, all the web plans are monthly
