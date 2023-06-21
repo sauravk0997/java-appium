@@ -375,6 +375,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
+
         iosUtils.get().acceptAlert();
         iosUtils.get().acceptAlert();
 
