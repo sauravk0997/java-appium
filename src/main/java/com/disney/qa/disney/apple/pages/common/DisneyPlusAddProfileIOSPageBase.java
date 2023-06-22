@@ -109,6 +109,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         saveButton.click();
     }
 
+    public ExtendedWebElement getSaveButton() {
+        return saveButton;
+    }
+
     public void clickSkipBtn() {
         skipBtn.click();
     }
