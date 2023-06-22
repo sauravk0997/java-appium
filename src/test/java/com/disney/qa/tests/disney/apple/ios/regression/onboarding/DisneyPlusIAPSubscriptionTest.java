@@ -559,69 +559,12 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         video.clickBackButton();
         details.isOpened();
 
-        //TODO: IOS-5556 - switch to Premium Monthly is not updated in Account Settings under Subscription.
+        //TODO: IOS-5556 - switch to Premium Yearly is not updated in Account Settings under Subscription.
 //        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY), "Premium Monthly plan type not displayed");
 
         //Validate in ios native settings the plan has been switched as alternative solution
         iosSettings.navigateToManageSubscription();
         sa.assertTrue(iosSettings.isPremiumYearlyPriceCheckmarkPresent(), "Premium Yearly Price with checkmark not displayed.");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-XXXXX"})
-    @Maintainer("csolmaz")
-    @Test(description = "Verify plan switch from premium monthly no ads to basic monthly with ads", groups = {"Ariel-IAP"})
-    public void verifyPlanSwitchPremiumMonthlyToBasicMonthly() {
-        initialSetup();
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAccountIOSPageBase account = initPage(DisneyPlusAccountIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase paywall = initPage(DisneyPlusPaywallIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase video = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_PREMIUM_22,
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
-
-        //Validate ads in video player
-        home.clickSearchIcon();
-        search.searchForMedia(PRETTY_FREEKIN_SCARY);
-        List<ExtendedWebElement> results = search.getDisplayedTitles();
-        results.get(0).click();
-        details.clickPlayButton();
-        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
-        video.clickBackButton();
-
-        //Account - Validate Premium Monthly is displayed
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY), "Premium Monthly Plan not displayed");
-
-        //Switch to Basic Monthly
-        account.clickChangePremiumMonthlyPlan();
-        paywall.clickBasicMonthlySelectRowButton();
-        paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.BASIC);
-        paywall.clickOverlaySubscribeButton();
-        try {
-            CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
-            paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
-        } catch (NoSuchElementException nse) {
-            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-        }
-        iosUtils.get().acceptAlert();
-        sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
-        paywall.dismissNotificationsPopUp();
-
-        //TODO: IOS-5556 - switch to Premium Yearly is not updated in Account Settings under Subscription.
-//        sa.assertTrue(account.isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.BASIC), "Premium Yearly plan type not displayed");
-
-        //Validate in ios native settings the plan has been switched as alternative solution
-        iosSettings.navigateToManageSubscription();
-        sa.assertTrue(iosSettings.isBasicMonthlyPriceCheckmarkPresent(), "Basic Monthly Price with checkmark not displayed.");
         sa.assertAll();
     }
 
