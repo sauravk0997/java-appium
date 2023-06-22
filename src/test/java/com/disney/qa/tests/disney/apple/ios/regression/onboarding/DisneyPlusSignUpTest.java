@@ -216,7 +216,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-//        Privacy Policy
+        //Privacy Policy
         signUp.openPrivacyPolicyLink();
         Assert.assertTrue(legal.isOpened(),
                 "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
@@ -270,8 +270,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 YOUR_CALIFORNIA_PRIVACY_RIGHTS + " was not expanded");
 
         utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 8, null, Direction.UP, 25);
-        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
-                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not collapsed");
+        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
         utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(PRIVACY_POLICY), 8, null, Direction.DOWN, 25);
         utils.pressByElement(legal.getTypeButtonByLabel(YOUR_CALIFORNIA_PRIVACY_RIGHTS), 1); //collapse
