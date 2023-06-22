@@ -270,35 +270,8 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_BUNDLE_NOADS_CTA.getText())).click();
     }
 
-    public void clickPremiumYearlySelectButton() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText())).click();
-    }
-
-    public void clickBasicMonthlySelectRowButton() {
-        getDynamicRowButtonLabel(getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
-    }
-
     public void clickPremiumYearlyRowButton() {
             getDynamicRowButtonLabel(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText()),2).click();
     }
-
-
-
-//    public String getSingleSelectPlanName(PlanType singlePlanType) {
-//        switch (singlePlanType) {
-//            case BASIC:
-//                return getDictionary()
-//                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText());
-//            case PREMIUM_MONTHLY:
-//            case PREMIUM_YEARLY:
-//                return getDictionary().
-//                        getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText());
-//
-//            default:
-//                throw new IllegalArgumentException(
-//                        String.format("'%s' Plan type is not a valid option", singlePlanType));
-//        }
-//    }
 }
