@@ -69,7 +69,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertTrue(paywallIOSPageBase.isFooterLabelPresent(), "Choose your plan card 'footer label' is not as expected");
         sa.assertTrue(paywallIOSPageBase.verifyPlanCardFor(planType), "Plan card UI is not as expected");
         paywallIOSPageBase.getSelectButtonFor(planType).click();
-        paywallIOSPageBase.isOpened();
+        sa.assertTrue(paywallIOSPageBase.isOpened(), "paywall screen didn't load");
         sa.assertTrue(paywallIOSPageBase.isPurchaseButtonPresent(), "user was not taken to the billing cycle screen");
         paywallIOSPageBase.tapBackButton();
         paywallIOSPageBase.tapBackButton();
