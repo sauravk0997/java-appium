@@ -244,7 +244,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         //Do Not Sell My Personal Information - no scrolling needed
         utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //expand
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
-                DO_NOT_SELL_MY_PERSONAL_INFORMATION + "was not expanded.");
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not expanded.");
 
         utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //collapse
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
