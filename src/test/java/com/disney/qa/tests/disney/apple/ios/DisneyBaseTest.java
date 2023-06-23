@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios;
 
 import com.disney.qa.api.account.DisneyAccountApi;
-import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
@@ -10,7 +9,6 @@ import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
@@ -22,19 +20,15 @@ import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.sun.xml.bind.v2.TODO;
 import io.appium.java_client.ios.IOSDriver;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
