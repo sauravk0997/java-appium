@@ -979,7 +979,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      */
 
     public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, IMobileUtils.Direction direction, int duration) {
-        while (!element.isPresent() && swipes > 0) {
+        while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }

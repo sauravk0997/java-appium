@@ -66,6 +66,12 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$10.99 ✓\"`]")
     private ExtendedWebElement premiumMonthlyPriceCheckmark;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$109.99 ✓\"`]")
+    private ExtendedWebElement premiumYearlyPriceCheckmark;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$7.99 ✓\"`]")
+    private ExtendedWebElement basicMonthlyPriceCheckmark;
+
     protected IOSUtils utils;
 
     public IOSSettingsMenuBase(WebDriver driver) {
@@ -179,5 +185,13 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     public boolean isPremiumMonthlyPriceCheckmarkPresent() {
         return premiumMonthlyPriceCheckmark.isElementPresent();
+    }
+
+    public boolean isPremiumYearlyPriceCheckmarkPresent() {
+        return premiumYearlyPriceCheckmark.isElementPresent();
+    }
+
+    public boolean isBasicMonthlyPriceCheckmarkPresent() {
+        return basicMonthlyPriceCheckmark.isElementPresent();
     }
 }
