@@ -25,6 +25,7 @@ import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest;
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
+import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.sun.xml.bind.v2.TODO;
 import io.appium.java_client.ios.IOSDriver;
 import org.json.simple.JSONArray;
@@ -183,6 +184,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
         iosUtils.set(new IOSUtils());
         setBuildType();
+
+        new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
 
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
