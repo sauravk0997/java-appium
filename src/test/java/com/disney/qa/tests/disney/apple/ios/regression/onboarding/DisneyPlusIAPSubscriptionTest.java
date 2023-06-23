@@ -555,7 +555,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
         details.clickPlayButton();
-        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
+        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
 
