@@ -18,6 +18,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
+    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "Your California Privacy Rights";
+    static final String SUBSCRIBER_AGREEMENT = "Subscriber Agreement";
+    static final String PRIVACY_POLICY = "Privacy Policy";
+    static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell My Personal Information";
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
@@ -202,45 +206,105 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "User was not directed to the paywall");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
-    @Test(description = "Verify valid Privacy Policy and Subscriber Agreement links, and Legal UI", groups = {"Onboarding"})
-    public void verifyUSLegalHyperlinks() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375"})
+    @Test(description = "Verify valid Subscriber Agreement link, expand/collapse/scroll content", groups = {"Onboarding"})
+    public void verifyUSLegalHyperlinkSubscriberAgreement() {
         initialSetup();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-        disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
+        signUp.openSubscriberAgreement();
+        Assert.assertTrue(legal.isOpened(),
+                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
 
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
-                "XMOBQA-62375 - Legal page was not opened after 'Subscriber Agreement' hyperlink navigation");
+        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        Assert.assertTrue(signUp.isOpened(),
+                "'Back Button' navigation did not return the user to the Sign Up page");
+        sa.assertAll();
+    }
 
-        sa.assertTrue(disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Subscriber Agreement").getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
-                "XMOBQA-62375 - 'Subscriber Agreement' was not expanded on navigation");
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62377"})
+    @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding"})
+    public void verifyUSLegalHyperlinkPrivacyPolicy() {
+        initialSetup();
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        IOSUtils utils = new IOSUtils();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-        verifyLegalPageUI(sa, "US");
+        signUp.openPrivacyPolicyLink();
+        Assert.assertTrue(legal.isOpened(),
+                "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
+        validateUSLegalPageUI(sa, PRIVACY_POLICY);
 
-        disneyPlusLegalIOSPageBase.getBackArrow().click();
+        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        Assert.assertTrue(signUp.isOpened(),
+                "'Back Button' navigation did not return the user to the Sign Up page");
+        sa.assertAll();
+    }
 
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "XMOBQA-62389 - 'Back Button' navigation did not return the user to the Sign Up page");
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62385"})
+    @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding"})
+    public void verifyUSLegalCenterUI() {
+        initialSetup();
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        IOSUtils utils = new IOSUtils();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-        disneyPlusSignUpIOSPageBase.openPrivacyPolicyLink();
+        signUp.openSubscriberAgreement();
+        Assert.assertTrue(legal.isOpened(),
+                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        sa.assertTrue(legal.getTypeButtonByLabel(PRIVACY_POLICY).isPresent(),
+                PRIVACY_POLICY + " is not visible");
+        sa.assertTrue(legal.getTypeButtonByLabel(SUBSCRIBER_AGREEMENT).isPresent(),
+                SUBSCRIBER_AGREEMENT + " is not visible");
+        sa.assertTrue(legal.getTypeButtonByLabel(YOUR_CALIFORNIA_PRIVACY_RIGHTS).isPresent(),
+                YOUR_CALIFORNIA_PRIVACY_RIGHTS + " is not visible");
+        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
-                "XMOBQA-62375 - Legal page was not opened after 'Privacy Policy' hyperlink navigation");
+        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        Assert.assertTrue(signUp.isOpened(),
+                "'Back Button' navigation did not return the user to the Sign Up page");
+        sa.assertAll();
+    }
 
-        sa.assertTrue(disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Privacy Policy").getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
-                "XMOBQA-62377 - 'Privacy Policy' was not expanded on navigation");
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62387"})
+    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding"})
+    public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
+        initialSetup();
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        IOSUtils utils = new IOSUtils();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-        verifyLegalPageUI(sa, "US");
+        signUp.openSubscriberAgreement();
+        Assert.assertTrue(legal.isOpened(),
+                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
 
-        disneyPlusLegalIOSPageBase.getBackArrow().click();
+        //Do Not Sell My Personal Information - no scrolling needed
+        utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //expand
+        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not expanded.");
 
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "XMOBQA-62389 - 'Back Button' navigation did not return the user to the Sign Up page");
+        utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //collapse
+        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not collapsed");
 
+        //Your California Privacy Rights
+        validateUSLegalPageUI(sa, YOUR_CALIFORNIA_PRIVACY_RIGHTS);
+
+        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        Assert.assertTrue(signUp.isOpened(),
+                "'Back Button' navigation did not return the user to the Sign Up page");
         sa.assertAll();
     }
 
@@ -337,8 +401,9 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidEmailError, NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
-    
+
     private void verifyLegalPageUI(SoftAssert sa, String locale) {
+        //TODO: IOS-6072 & IOS-6073: alternative validation above
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
         languageUtils.get().getLegalHeaders().forEach(header ->
@@ -366,5 +431,24 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.getBackArrow().isElementPresent(),
                 "XMOBQA-62385 - Back Arrow was not displayed on Legal display as expected");
+    }
+
+    private void validateUSLegalPageUI(SoftAssert sa, String legalHeader) {
+        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
+        IOSUtils utils = new IOSUtils();
+
+        utils.pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //expand
+        sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
+                legalHeader + " was not expanded");
+
+        utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 8, null, Direction.UP, 25);
+        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
+                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
+
+        utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(PRIVACY_POLICY), 8, null, Direction.DOWN, 25);
+
+        utils.pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
+        sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
+                legalHeader + " was not collapsed");
     }
 }
