@@ -26,6 +26,7 @@ import com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPS
 import com.qaprosoft.appcenter.AppCenterManager;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
 import com.sun.xml.bind.v2.TODO;
 import io.appium.java_client.ios.IOSDriver;
 import org.json.simple.JSONArray;
@@ -42,6 +43,8 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 
 import java.util.Date;
+
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
@@ -174,6 +177,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void initialSetup() {
         new GeoedgeProxyServer().setProxyHostForSelenoid();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
     }
 
@@ -184,8 +190,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
         iosUtils.set(new IOSUtils());
         setBuildType();
-
-        new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
 
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
