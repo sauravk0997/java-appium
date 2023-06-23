@@ -57,6 +57,10 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         primaryButton.clickIfPresent(3);
     }
 
+    public String getStepperDictValue(String val1 , String val2) {
+        String text = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ONBOARDING_STEPPER.getText());
+        return getDictionary().replaceValuePlaceholders(text, val1, val2);
+    }
     public boolean isConsentFormPresent() {
         return optInCheckbox.isElementPresent();
     }

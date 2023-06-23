@@ -20,6 +20,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     private static final String DOB_ADULT = "01/01/1983";
@@ -86,21 +88,32 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen");
-
+        LOGGER.info(createPasswordPage.getStepTitleText());
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("1","5")), "Onboarding stepper title '1 OF 5' is not as expected");
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
 
-        Assert.assertTrue(createPasswordPage.isOpened(),
-                "User was not directed to 'Create Password'");
-
+        Assert.assertTrue(createPasswordPage.isOpened(), "User was not directed to 'Create Password'");
+        LOGGER.info(createPasswordPage.getStepTitleText());
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","5")), "Onboarding stepper title '2 OF 5'is not as expected");
         createPasswordPage.submitPasswordValue("abcd123!@");
-        dobCollectionPage.isOpened();
+        sa.assertTrue(dobCollectionPage.isOpened(), "enter your DOB title is not as expected");
+        LOGGER.info(createPasswordPage.getStepTitleText());
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("3","5")), "Onboarding stepper title '3 OF 5' is not as expected");
         dobCollectionPage.enterDOB(DOB_ADULT);
-        Assert.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isOpened(),
-                "User was not directed to the paywall");
+        sa.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isChooseYourPlanHeaderPresent(),
+                "User was not directed to the choose your plan page");
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("4","5")), "Onboarding stepper title '4 OF 5' is not as expected");
+        paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY));
+        paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY).click(SHORT_TIMEOUT);
+        sa.assertTrue(paywallIOSPageBase.isOpened(), "Paywall page did not open");
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("5","5")), "Onboarding stepper title '5 OF 5' is not as expected");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
