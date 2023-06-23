@@ -94,16 +94,13 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen");
-        LOGGER.info(createPasswordPage.getStepTitleText());
         sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("1","5")), "Onboarding stepper title '1 OF 5' is not as expected");
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
 
         Assert.assertTrue(createPasswordPage.isOpened(), "User was not directed to 'Create Password'");
-        LOGGER.info(createPasswordPage.getStepTitleText());
-        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","5")), "Onboarding stepper title '2 OF 5'is not as expected");
+        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","5")), "Onboarding stepper title '2 OF 5' is not as expected");
         createPasswordPage.submitPasswordValue("abcd123!@");
         sa.assertTrue(dobCollectionPage.isOpened(), "enter your DOB title is not as expected");
-        LOGGER.info(createPasswordPage.getStepTitleText());
         sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("3","5")), "Onboarding stepper title '3 OF 5' is not as expected");
         dobCollectionPage.enterDOB(DOB_ADULT);
         sa.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isChooseYourPlanHeaderPresent(),
