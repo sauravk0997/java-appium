@@ -269,4 +269,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void clickBundleSelectButton() {
         getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_BUNDLE_NOADS_CTA.getText())).click();
     }
+
+    public void clickPremiumYearlyRowButton() {
+            getDynamicRowButtonLabel(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText()),2).click();
+    }
 }
