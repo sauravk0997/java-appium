@@ -56,18 +56,14 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(3);
         if (isArielRegion) {
             iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
-            initPage(DisneyPlusSignUpIOSPageBase.class).clickAgreeAndContinue();
-            initPage(DisneyPlusPaywallIOSPageBase.class).clickBasicPlan();
+            initPage(DisneyPlusSignUpIOSPageBase.class).clickPrimaryButton();
+            passwordPage.clickAlertConfirm();
         }
+        pause(2);
+        getScreenshots("OneStepAway");
         completeSubscriptionIOSPageBase.clickCancelBtn();
         completeSubscriptionIOSPageBase.clickAlertConfirm();
-        pause(3);
-        completeSubscriptionIOSPageBase = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
-        getScreenshots("OneStepAway");
 
-        //Logout of new account, log in with expired account, and take WelcomeBack screenshot
-        completeSubscriptionIOSPageBase.getDismissButton().click();
-        completeSubscriptionIOSPageBase.clickAlertConfirm();
         loginDismiss(testAccount);
         pause(3);
         getScreenshots("WelcomeBack");
