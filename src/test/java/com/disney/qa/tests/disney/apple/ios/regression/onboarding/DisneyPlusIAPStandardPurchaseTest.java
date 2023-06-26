@@ -191,6 +191,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         iosUtils.get().acceptAlert();
         iosUtils.get().acceptAlert();
+        pause(3);
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
@@ -199,6 +200,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
+        pause(1);
         addProfilePage.clickPrimaryButton();
         pause(3);
         addProfilePage.clickPrimaryButton();
