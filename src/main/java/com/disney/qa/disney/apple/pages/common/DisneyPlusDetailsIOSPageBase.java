@@ -11,6 +11,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement detailsTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_DETAILS.getText()));
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
+
+private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
@@ -309,6 +312,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         detailsTab.click();
     }
 
+    public void clickSuggestedTab() {
+        suggestedTab.click();
+    }
+
     public boolean isContentDescriptionDisplayed() {
         return contentDescription.isPresent();
     }
@@ -486,5 +493,24 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isHeroImagePresent() {
         return getTypeOtherByName("heroImage").isPresent();
+    }
+
+    public List<String> getSuggestedCells() {
+        List<String> suggestedContent = getContentItems(6);
+        return suggestedContent;
+    }
+
+    public void clickFirstSuggestedCell() {
+        String firstSuggestContentCell = getSuggestedCells().get(0);
+        getDynamicCellByLabel(firstSuggestContentCell).click();
+    }
+
+    public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
+        Map<String, String> params = new HashMap<>();
+        clickSuggestedTab();
+        params.put("suggestedCellTitle", getSuggestedCells().get(0));
+        clickFirstSuggestedCell();
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        params.clear();
     }
 }

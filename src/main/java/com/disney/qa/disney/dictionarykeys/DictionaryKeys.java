@@ -239,6 +239,7 @@ public enum DictionaryKeys {
     NAV_SEARCH("nav_search"),
     NAV_SERIES_TITLE("nav_series_title"),
     NAV_SETTINGS_TITLE("cdnav_settings"),
+    NAV_SUGGESTED("nav_related"),
     NAV_WATCHLIST("nav_watchlist"),
     NAV_WATCHLIST_TITLE("nav_watchlist_title"),
     NETWORK_CONNECTION_ERROR("networkconnectionerror"),
