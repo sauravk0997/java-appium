@@ -53,7 +53,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
-private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
+    private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
@@ -312,9 +312,7 @@ private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictio
         detailsTab.click();
     }
 
-    public void clickSuggestedTab() {
-        suggestedTab.click();
-    }
+    public ExtendedWebElement getSuggestedTab() { return suggestedTab; }
 
     public boolean isContentDescriptionDisplayed() {
         return contentDescription.isPresent();
@@ -507,7 +505,7 @@ private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictio
 
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        clickSuggestedTab();
+        getSuggestedTab().click();
         params.put("suggestedCellTitle", getSuggestedCells().get(0));
         clickFirstSuggestedCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
