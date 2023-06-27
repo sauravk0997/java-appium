@@ -43,6 +43,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
     private ExtendedWebElement extrasButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SUGGESTED'`][1]")
+    private ExtendedWebElement suggestedButton;
+
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -503,9 +506,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getDynamicCellByLabel(firstSuggestContentCell).click();
     }
 
+    public boolean isSuggestTabPresent() {
+        if (!suggestedTab.isElementPresent()) {
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+        }
+        return suggestedTab.isElementPresent();
+    }
+
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        getSuggestedTab().click();
+        if (episodesTab.isElementPresent(SHORT_TIMEOUT)) {
+            suggestedTab.click();
+        }
         params.put("suggestedCellTitle", getSuggestedCells().get(0));
         clickFirstSuggestedCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");

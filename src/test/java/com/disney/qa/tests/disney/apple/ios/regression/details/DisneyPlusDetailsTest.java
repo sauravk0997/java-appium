@@ -70,16 +70,16 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(SECRET_INVASION);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.getSuggestedTab().isElementPresent(), "Suggested tab was not found on details page");
+        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
 
         //movie
         home.clickSearchIcon();
-        home.clickSearchIcon(); //clear text
+        search.clearText();
         search.searchForMedia(WORLDS_BEST);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.getSuggestedTab().isElementPresent(), "Suggested tab was not found on details page");
+        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }
