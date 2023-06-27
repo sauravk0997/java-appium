@@ -183,7 +183,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         }
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void uploadScreenshots(){
         LOGGER.info("Running after method upload screenshots");
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
