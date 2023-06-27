@@ -114,7 +114,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("TravellingMessage");
 
         setPathToZip("SubscriberUI_1_welcomePage");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2"})
@@ -172,7 +171,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("VideoQuality");
 
         setPathToZip("SubscriberUI_2_watchlist");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3"})
@@ -324,7 +322,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogoutAllDevicesWrongPassword");
 
         setPathToZip("SubscriberUI_3_accounts");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4"})
@@ -369,7 +366,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("HelpWebview");
 
         setPathToZip("SubscriberUI_4_legal");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5"})
@@ -507,7 +503,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("AfterDeleteWhoIsWatchingPage");
 
         setPathToZip("SubscriberUI_5_profileMenu");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6"})
@@ -735,7 +730,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("ExitKidsProfileWrongCodeError");
 
         setPathToZip("SubscriberUI_6_PCON");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7"})
@@ -989,7 +983,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogOut");
 
         setPathToZip("SubscriberUI_7_downloads");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8"})
@@ -1117,7 +1110,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
 
         setPathToZip("SubscriberUI_8_search");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10"})
@@ -1189,7 +1181,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("WelchLockedProfile");
 
         setPathToZip("SubscriberUI_10_welch");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
@@ -1302,7 +1293,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
 
         setPathToZip("SubscriberUI_13_editorial_contents");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
 }

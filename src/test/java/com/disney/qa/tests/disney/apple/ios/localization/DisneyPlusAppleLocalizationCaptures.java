@@ -73,7 +73,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         getScreenshots("WelcomeBack");
 
         setPathToZip("Onboarding_Backgrounds");
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Full"})
@@ -200,7 +199,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         }
 
         setPathToZip("Onboarding_Full");
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"}, enabled = false)
@@ -391,6 +389,5 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         getScreenshots("genderOptions");
 
         setPathToZip("Onboarding_Ariel");
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 }
