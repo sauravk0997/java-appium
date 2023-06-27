@@ -184,6 +184,11 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     }
 
     @AfterMethod
+    public void uploadScreenshots(){
+        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+    }
+
+    @AfterMethod
     public void cleanProxies() {
         ProxyPool.stopProxy();
         proxy.remove();
