@@ -43,9 +43,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
     private ExtendedWebElement extrasButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SUGGESTED'`][1]")
-    private ExtendedWebElement suggestedButton;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
