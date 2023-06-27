@@ -185,6 +185,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
     @AfterMethod
     public void uploadScreenshots(){
+        LOGGER.info("Running after method upload screenshots");
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
