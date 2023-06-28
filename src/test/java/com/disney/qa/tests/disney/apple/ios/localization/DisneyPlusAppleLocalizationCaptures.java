@@ -59,7 +59,11 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
             initPage(DisneyPlusSignUpIOSPageBase.class).clickPrimaryButton();
             passwordPage.clickAlertConfirm();
+        } else {
+            completeSubscriptionIOSPageBase.clickCancelBtn();
+            completeSubscriptionIOSPageBase.clickAlertConfirm();
         }
+
         pause(2);
         getScreenshots("OneStepAway");
         completeSubscriptionIOSPageBase.clickCancelBtn();
