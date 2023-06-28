@@ -312,8 +312,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         detailsTab.click();
     }
 
-    public ExtendedWebElement getSuggestedTab() { return suggestedTab; }
-
     public boolean isContentDescriptionDisplayed() {
         return contentDescription.isPresent();
     }
