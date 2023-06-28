@@ -492,8 +492,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public List<String> getSuggestedCells() {
-        List<String> suggestedContent = getContentItems(6);
-        return suggestedContent;
+        return getContentItems(6);
     }
 
     public void clickFirstSuggestedCell() {
