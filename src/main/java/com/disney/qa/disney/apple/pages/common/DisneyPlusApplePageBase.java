@@ -221,6 +221,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"labelStepTitle\"`]/XCUIElementTypeStaticText")
+    protected ExtendedWebElement stepTitle;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -237,6 +240,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         toggleView.click();
     }
 
+    public String getStepTitleText() {
+        return stepTitle.getText();
+    }
     public void tapBackButton() {
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Back button is not present").until(it -> backButton.isElementPresent(ONE_SEC_TIMEOUT));
         backButton.click();

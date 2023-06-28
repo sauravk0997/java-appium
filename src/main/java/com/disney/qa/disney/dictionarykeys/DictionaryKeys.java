@@ -245,6 +245,7 @@ public enum DictionaryKeys {
     NETWORK_CONNECTION_ERROR("networkconnectionerror"),
     NETWORK_EXCEPTION_ERROR("networkexception"),
     ONBOARDING_ENTER_EMAIL("onboardingemail_text_enteremail"),
+    ONBOARDING_STEPPER("onboarding_stepper"),
     OK_BTN("btn_ok"),
     ORIGINALS_PAGE_LOAD("originals_pageload"),
     OTP_PLACEHOLDER_SPACED("otp_placeholder_spaced"),

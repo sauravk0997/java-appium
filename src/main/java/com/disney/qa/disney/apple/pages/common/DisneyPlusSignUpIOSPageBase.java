@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -55,6 +57,11 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickAgreeAndContinueIfPresent() {
         primaryButton.clickIfPresent(3);
+    }
+
+    public String getStepperDictValue(String val1 , String val2) {
+        String text = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ONBOARDING_STEPPER.getText());
+        return getDictionary().formatPlaceholderString(text, Map.of("current_step", val1, "total_steps", val2));
     }
 
     public boolean isConsentFormPresent() {
