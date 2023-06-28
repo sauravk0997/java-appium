@@ -25,6 +25,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
     @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Backgrounds"})
     private void captureOnboardingBackgrounds(String TUID) {
         setup();
+        setZipTestName("Onboarding_Backgrounds");
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
         count.set(1);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -67,13 +68,12 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         loginDismiss(testAccount);
         pause(3);
         getScreenshots("WelcomeBack");
-
-        setPathToZip("Onboarding_Backgrounds");
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Full"})
     public void captureFullOnboardingFlow(String TUID) {
         setup();
+        setZipTestName("Onboarding_Full");
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
 
         DisneyPlusDOBCollectionPageBase dobPageBase = initPage(DisneyPlusDOBCollectionPageBase.class);
@@ -193,8 +193,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             addProfilePage.clickGenderDropDown();
             getScreenshots("GenderOptions", false);
         }
-
-        setPathToZip("Onboarding_Full");
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"}, enabled = false)
@@ -255,6 +253,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
     @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel"})
     public void captureArielOnboarding(String TUID) {
         setup();
+        setZipTestName("Onboarding_Ariel");
 
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -383,7 +382,5 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         addProfilePage.clickGenderDropDown();
         getScreenshots("genderOptions");
-
-        setPathToZip("Onboarding_Ariel");
     }
 }
