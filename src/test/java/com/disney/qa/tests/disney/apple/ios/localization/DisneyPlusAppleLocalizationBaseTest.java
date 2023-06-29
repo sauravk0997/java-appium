@@ -29,6 +29,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
     protected ThreadLocal<Integer> count = new ThreadLocal<>();
+    protected String zipTestName;
 
     protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
@@ -51,12 +52,16 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         count.set(0);
     }
 
-    protected void setPathToZip(String testName) {
+    protected void setPathToZip() {
         pathToZip.set(String.format("%s_%s_%s_%s.zip",
-                testName,
+                zipTestName,
                 R.CONFIG.get("locale"),
                 R.CONFIG.get("language"),
                 DateUtils.now()));
+    }
+
+    protected void setZipTestName(String testName) {
+        zipTestName = testName;
     }
 
     protected void loginDismiss(DisneyAccount testAccount) {
@@ -181,6 +186,13 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
                 jarvis.clickDebugDisplayOverride();
             }
         }
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void uploadScreenshots(){
+        LOGGER.info("Running after method upload screenshots");
+        setPathToZip();
+        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
     @AfterMethod

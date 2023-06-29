@@ -51,6 +51,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
     @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = {"Subscriber - UI", "Subscriber - UI - S1"})
     public void captureWelcomePageAndLoginFlow(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_1_welcomePage");
         String localeForTravelling;
 
         if (!R.CONFIG.get("locale").equals("US")) {
@@ -112,14 +113,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         setAppToHomeScreen(disneyAccount.get());
         pause(3);
         getScreenshots("TravellingMessage");
-
-        setPathToZip("SubscriberUI_1_welcomePage");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2"})
     public void watchlistAndAppSettings(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_2_watchlist");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -170,14 +169,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicXpathContainsName(videoQuality).click();
         pause(3);
         getScreenshots("VideoQuality");
-
-        setPathToZip("SubscriberUI_2_watchlist");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3"})
     public void AccountsAndHelp(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_3_accounts");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -322,14 +319,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         iosUtils.get().dismissKeyboardForPhone();
         pause(3);
         getScreenshots("LogoutAllDevicesWrongPassword");
-
-        setPathToZip("SubscriberUI_3_accounts");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4"})
     public void legal(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_4_legal");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -367,14 +362,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
         getScreenshots("HelpWebview");
-
-        setPathToZip("SubscriberUI_4_legal");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5"})
     public void profileMenu(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_5_profileMenu");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -505,14 +498,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         swipeInContainer(null, IMobileUtils.Direction.UP, 500);
         pause(2);
         getScreenshots("AfterDeleteWhoIsWatchingPage");
-
-        setPathToZip("SubscriberUI_5_profileMenu");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6"})
     public void PCON(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_6_PCON");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -733,14 +724,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         utils.dismissKeyboardForPhone();
         pause(2);
         getScreenshots("ExitKidsProfileWrongCodeError");
-
-        setPathToZip("SubscriberUI_6_PCON");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7"})
     public void downloadsAndSearch(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_7_downloads");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -987,14 +976,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         getScreenshots("LogOut");
-
-        setPathToZip("SubscriberUI_7_downloads");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8"})
     public void searchMoviesAndSeries(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_8_search");
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
@@ -1115,14 +1102,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             mediaCollectionPage.getSeriesHeader().isElementPresent();
             getScreenshotsNoCountUpdate("Series" + set.getContent());
         }
-
-        setPathToZip("SubscriberUI_8_search");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10"})
     public void welchOnboarding(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_10_welch");
         String locale = languageUtils.get().getLocale();
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).isStarOnboarded(false).build();
         DisneyOffer disneyOffer = disneyAccountApi.get().lookupOfferToUse(locale, "Yearly");
@@ -1187,14 +1172,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(2);
         getScreenshots("WelchLockedProfile");
-
-        setPathToZip("SubscriberUI_10_welch");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
     public void editorialContents(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_13_editorial_contents");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -1300,9 +1283,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             }
 
         }
-
-        setPathToZip("SubscriberUI_13_editorial_contents");
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
 }
