@@ -156,6 +156,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         isOpened();
+        moveDown(2,1);
         clickSelect();
     }
 
