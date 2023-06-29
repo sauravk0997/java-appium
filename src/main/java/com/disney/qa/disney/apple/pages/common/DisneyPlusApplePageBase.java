@@ -515,6 +515,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titles;
     }
 
+    public List<String> getTextViewItems(int startNum) {
+        List<ExtendedWebElement> titlesElements = findExtendedWebElements(typeTextView.getBy());
+        List<String> titles = new ArrayList<>();
+        IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
+        return titles;
+    }
+
     /**
      * Returns a list of all Cell element types that have a text value, not including those from the navigation
      * tray as they are a constant display with few exceptions.
