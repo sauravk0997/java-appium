@@ -49,6 +49,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     public void clickLogInButton() {
         loginButton.isElementPresent();
         fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 2, "Sign Up button was not focused")
+                //TODO: TVOS-3456 focus not found on sign up button, temp fix use of isElementPresent
                 .until(it -> signUpButton.isElementPresent());
         UniversalUtils.captureAndUpload(getCastedDriver());
 

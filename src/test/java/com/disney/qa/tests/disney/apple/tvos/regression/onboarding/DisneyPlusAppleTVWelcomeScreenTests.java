@@ -3,7 +3,9 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 import com.disney.alice.AliceAssertion;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
+import com.disney.qa.api.client.responses.graphql.login.DisneyPlus;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -23,8 +25,10 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
 
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome Screen did not launch");
+        applePageBase.moveDown(1,1);
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
                 "Sign up button is not focused post app launch");
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "SIGN UP NOW", AliceLabels.BUTTON_HOVERED.getText());
