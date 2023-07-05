@@ -11,6 +11,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement detailsTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_DETAILS.getText()));
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
+
+    private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
@@ -486,5 +489,32 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isHeroImagePresent() {
         return getTypeOtherByName("heroImage").isPresent();
+    }
+
+    public List<String> getSuggestedCells() {
+        return getContentItems(6);
+    }
+
+    public void clickFirstSuggestedCell() {
+        String firstSuggestContentCell = getSuggestedCells().get(0);
+        getDynamicCellByLabel(firstSuggestContentCell).click();
+    }
+
+    public boolean isSuggestTabPresent() {
+        if (!suggestedTab.isElementPresent()) {
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+        }
+        return suggestedTab.isElementPresent();
+    }
+
+    public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
+        Map<String, String> params = new HashMap<>();
+        if (episodesTab.isElementPresent(SHORT_TIMEOUT)) {
+            suggestedTab.click();
+        }
+        params.put("suggestedCellTitle", getSuggestedCells().get(0));
+        clickFirstSuggestedCell();
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        params.clear();
     }
 }
