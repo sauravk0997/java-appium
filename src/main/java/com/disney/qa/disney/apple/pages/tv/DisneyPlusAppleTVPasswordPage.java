@@ -74,7 +74,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isPasswordFieldFocused() {
-
         return isFocused(passwordEntryField);
     }
 
