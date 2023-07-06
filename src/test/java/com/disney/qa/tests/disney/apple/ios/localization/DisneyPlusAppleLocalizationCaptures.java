@@ -70,7 +70,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         completeSubscriptionIOSPageBase.clickAlertConfirm();
 
         loginDismiss(testAccount);
-        pause(3);
+        pause(5);
         getScreenshots("WelcomeBack");
     }
 
