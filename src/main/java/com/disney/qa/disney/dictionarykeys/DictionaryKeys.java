@@ -259,7 +259,6 @@ public enum DictionaryKeys {
     PASSWORD_REQUIRED("passwordrequired"),
     PAUSE("pause"),
     PAYWALL_CANCEL_ANYTIME("paywall_copy_2"),
-    PAYWALL_SWITCH_ANNUAL_COPY("switch_annual_confirmation_copy"),
     PAYWALL_SWITCH_ANNUAL_PRICE("switch_annual_confirmation_price"),
     PAYWALL_SWITCH_ANNUAL_TITLE("switch_annual_confirmation_title"),
     PLAY("play"),
