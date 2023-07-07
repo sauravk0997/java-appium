@@ -140,6 +140,8 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public boolean isContinueButtonFocused() {
+        //TODO: TVOS-3471 Continue button is not in focus.
+        moveDown(1,1);
         return isFocused(primaryButton);
     }
 

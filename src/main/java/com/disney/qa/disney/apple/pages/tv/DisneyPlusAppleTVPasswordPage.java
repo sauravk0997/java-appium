@@ -156,6 +156,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         isOpened();
+        //TODO: TVOS-3472 focus not found on login button after user enters password
+        moveDown(2,1);
         clickSelect();
     }
 
