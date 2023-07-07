@@ -20,8 +20,6 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final String SEASON_NUMBER = "seasonNumber";
-
     //LOCATORS
 
     @ExtendedFindBy(accessibilityId = "shareButton")

@@ -130,7 +130,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                                Map.of("user_profile", username)))
+                                Map.of(USER_PROFILE, username)))
                 .isElementPresent();
     }
 
@@ -139,7 +139,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                 DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                        Map.of("user_profile", profile)));
+                        Map.of(USER_PROFILE, profile)));
         profileIcon.click();
     }
 
