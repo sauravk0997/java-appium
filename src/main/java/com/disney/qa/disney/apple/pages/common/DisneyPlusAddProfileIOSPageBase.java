@@ -11,6 +11,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
@@ -88,8 +90,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
-                getDictionary().replaceValuePlaceholders(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), profileName));
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", profileName)));
         return profileSelectionBtn.isPresent();
     }
 
@@ -156,7 +158,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isJuniorModeTextPresent() {
         return staticTextByLabel.format("Junior Mode").isPresent();
     }
-    
+
     public void clickGenderDropDown() {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }

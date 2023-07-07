@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Map;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -125,19 +127,19 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isEditModeProfileIconPresent(String username) {
         return dynamicCellByLabel.format(
-                        getDictionary().replaceValuePlaceholders(
+                        getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                                username))
+                                Map.of("user_profile", username)))
                 .isElementPresent();
     }
 
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
-                getDictionary().replaceValuePlaceholders(
+                getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                 DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                        profile));
+                        Map.of("user_profile", profile)));
         profileIcon.click();
     }
 
