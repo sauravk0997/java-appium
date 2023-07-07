@@ -91,7 +91,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", profileName)));
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profileName)));
         return profileSelectionBtn.isPresent();
     }
 

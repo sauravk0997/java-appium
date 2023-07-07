@@ -15,8 +15,6 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final String USER_PROFILE = "user_profile";
-
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     private ExtendedWebElement whosWatchingTitle;
 

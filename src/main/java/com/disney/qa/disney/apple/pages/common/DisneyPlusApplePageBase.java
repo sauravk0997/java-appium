@@ -32,6 +32,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
+    protected static final String USER_PROFILE = "user_profile";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
