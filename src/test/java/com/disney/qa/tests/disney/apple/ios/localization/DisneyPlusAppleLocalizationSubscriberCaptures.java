@@ -870,7 +870,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of("seasonNumber", "6"));
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
         detailsPage.getDynamicAccessibilityId(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
