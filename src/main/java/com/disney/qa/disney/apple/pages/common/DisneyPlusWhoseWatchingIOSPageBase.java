@@ -15,6 +15,8 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String USER_PROFILE = "user_profile";
+
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     private ExtendedWebElement whosWatchingTitle;
 
@@ -70,12 +72,12 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         if(onboarding) {
             profileIcon = dynamicAccessProfileIcon.format(
                     getDictionary().formatPlaceholderString(
-                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of("user_profile", name)));
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, name)));
             profileIcon.click();
         } else {
             profileIcon = dynamicAccessProfileIcon.format(
                     getDictionary().formatPlaceholderString(
-                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", name)));
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
             profileIcon.click();
         }
     }
@@ -87,7 +89,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     public void clickPinProtectedProfile(String name) {
         dynamicAccessProfileIcon.format(
                         getDictionary().formatPlaceholderString(
-                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of("user_profile", name)))
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
                 .click();
     }
 
@@ -95,7 +97,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         UniversalUtils.captureAndUpload(getCastedDriver());
         return dynamicAccessProfileIcon.format(
                 getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username)))
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
                 .isElementPresent();
     }
 
@@ -104,7 +106,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Profile button is not present")
                 .until(it -> dynamicAccessProfileIcon.format(
                         getDictionary().formatPlaceholderString(
-                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of("user_profile", username))).isElementPresent());
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         UniversalUtils.captureAndUpload(getCastedDriver());
     }
 }
