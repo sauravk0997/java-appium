@@ -7,6 +7,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -69,7 +71,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     public boolean isSubCtaPresent() {
         String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.WELCOME_SUB_TEXT.getText());
-        subscribeText = getDictionary().replaceValuePlaceholders(subscribeText, "---");
+        subscribeText = getDictionary().formatPlaceholderString(subscribeText, Map.of("PRICE_0", "---", "TIME_UNIT_0", "---", "PRICE_1", "---", "TIME_UNIT_1", "---"));
         return staticTextByLabel.format(subscribeText).isElementPresent();
     }
 

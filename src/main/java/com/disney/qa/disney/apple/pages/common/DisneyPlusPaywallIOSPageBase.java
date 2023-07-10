@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -96,7 +98,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSwitchToAnnualCopyDisplayed() {
         return staticTypeTextViewValue.format(getDictionary()
-                        .replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_COPY.getText()), "---", "---"))
+                        .formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_PRICE.getText()), Map.of("PRICE", "---", "DURATION", "---")))
                 .isElementPresent();
     }
 

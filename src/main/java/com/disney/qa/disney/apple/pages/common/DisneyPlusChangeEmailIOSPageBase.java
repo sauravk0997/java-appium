@@ -7,6 +7,8 @@ import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
@@ -48,7 +50,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isCurrentEmailShown(String email) {
-        return getDynamicAccessibilityId(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_CURRENT.getText()), email)).isElementPresent();
+        return getDynamicAccessibilityId(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_CURRENT.getText()), Map.of("email", email))).isElementPresent();
     }
 
     public boolean isNewEmailHeaderPresent() {

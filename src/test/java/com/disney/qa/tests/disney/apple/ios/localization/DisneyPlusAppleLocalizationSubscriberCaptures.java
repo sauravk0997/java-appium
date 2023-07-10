@@ -16,7 +16,6 @@ import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.util.ZipUtils;
 import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
@@ -26,7 +25,9 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
@@ -848,7 +849,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         detailsPage.clickAlertDismissBtn();
 
         detailsPage.getSeasonSelectorButton().click();
-        String seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "3");
+        String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "3"));
         detailsPage.getDynamicAccessibilityId(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         pause(2);
@@ -857,19 +858,19 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //download a couple of seasons for download in progress button
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "4");
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "4"));
         detailsPage.getDynamicAccessibilityId(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "5");
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "5"));
         detailsPage.getDynamicAccessibilityId(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "6");
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
         detailsPage.getDynamicAccessibilityId(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
@@ -883,11 +884,11 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //S7.9
         downloadsPage
                 .getDynamicIosClassChainElementTypeImage(
-                        getDictionary().replaceValuePlaceholders(
+                        getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(
                                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.DOWNLOADS_DISCLOSURE_ACCESSIBILITY_TITLE.getText()),
-                                seriesTitle)).click();
+                                Map.of("content_title", seriesTitle))).click();
         pause(2);
         getScreenshots("SeriesDownloadPage");
 
