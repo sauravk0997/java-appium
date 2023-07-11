@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         clearAppCache();
     }
 
-    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding","Ariel"})
+    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding", "Ariel"})
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
         baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
 
@@ -83,7 +83,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         signUpPage.clickViewAgreementAndPolicies();
         for (int i = 0; i < legalPage.getLegalTabs().size(); i++) {
             pause(1);
-            getScreenshots(String.format("4-%s_LegalItem", i+1), baseDirectory);
+            getScreenshots(String.format("4-%s_LegalItem", i + 1), baseDirectory);
             legalPage.moveDown(1, 1);
         }
 
@@ -132,7 +132,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         passwordPage.clickPrimaryButton();
 
         //Part 2a: Ariel (DOB, Plan Selection)
-        if(ariel) {
+        if (ariel) {
             dobCollectionPage.isOpened();
             getScreenshots("12-1_EnterBirthdate", baseDirectory);
 
@@ -147,7 +147,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
             dobCollectionPage.clickSelect();
             String appName = Configuration.getMobileApp().toLowerCase();
-            if(appName.contains("adhoc") && !appName.contains("non-iap")) {
+            if (appName.contains("adhoc") && !appName.contains("non-iap")) {
                 welcomeScreenPage.clickSignUpButton();
                 signUpPage.clickEmailButton();
                 loginPage.clickLocalizationEnterNewBtn();
@@ -188,7 +188,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
 
         //Part 3: Post Paywall (Finish later, One Step Away, Logout)
-        if(logoutCheck) {
+        if (logoutCheck) {
             pause(1);
             getScreenshots("16_FinishLater", baseDirectory);
 
@@ -204,7 +204,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
 
         //Part 4: Ariel Continued (Post-Login profile settings)
-        if(ariel) {
+        if (ariel) {
             logInWithoutHomeCheck(account);
             Instant timeout = Instant.now().plus(1, ChronoUnit.MINUTES);
             while (Instant.now().isBefore(timeout) && !updateProfilePage.isOpened()) {
@@ -289,6 +289,8 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         baseDirectory.set("Screenshots-BGImage/");
         pathToZip.set(String.format("Onboarding_Background_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
 
+        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+
 //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
 
@@ -303,14 +305,25 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(account.getUserPass());
+        if (isArielRegion) {
+            StringBuilder dob = new StringBuilder()
+                    .append(DisneyBaseTest.Person.ADULT.getMonth().getNum())
+                    .append(DisneyBaseTest.Person.ADULT.getDay(true))
+                    .append(DisneyBaseTest.Person.ADULT.getYear());
+            disneyPlusAppleTVSignUpPage.enterDateOfBirth(dob.toString());
+            disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
+            disneyPlusAppleTVCompletePurchasePage.isOpened();
+            disneyPlusAppleTVCompletePurchasePage.clickSelect();
+        } else {
 //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
-        disneyPlusAppleTVCompletePurchasePage.isOpened();
-        disneyPlusAppleTVCompletePurchasePage.clickBack();
-        if (disneyPlusAppleTVCompletePurchasePage.isAlertDefaultBtnPresent()) {
-            disneyPlusAppleTVCompletePurchasePage.clickDefaultAlertBtn();
+            disneyPlusAppleTVCompletePurchasePage.isOpened();
+            disneyPlusAppleTVCompletePurchasePage.clickBack();
+            if (disneyPlusAppleTVCompletePurchasePage.isAlertDefaultBtnPresent()) {
+                disneyPlusAppleTVCompletePurchasePage.clickDefaultAlertBtn();
+            }
+//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+            disneyPlusAppleTVCompletePurchasePage.isCustomButtonPresent();
         }
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
-        disneyPlusAppleTVCompletePurchasePage.isCustomButtonPresent();
         pause(5);
         getScreenshots(count++ + "-OneStepAwayScreen", baseDirectory);
         disneyPlusAppleTVCompletePurchasePage.clickLogoutButton();
@@ -342,7 +355,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     @Test(description = "Basic IAP flow", enabled = false)
     public void capturePurchaseFlow() {
-        if(false) {
+        if (false) {
             skipExecution("Test run is not against IAP compatible build.");
         }
 
@@ -361,7 +374,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
-        if(languageUtils.get().getCountryName().equals("United States")) {
+        if (languageUtils.get().getCountryName().equals("United States")) {
             LOGGER.info("DOB entry required.");
             StringBuilder dob = new StringBuilder()
                     .append(DisneyBaseTest.Person.ADULT.getMonth().getNum())
