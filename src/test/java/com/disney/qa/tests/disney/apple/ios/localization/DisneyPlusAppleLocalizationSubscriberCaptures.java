@@ -38,9 +38,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
     public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
-    private void createProfile(String profileName) {
+    private void createProfile(String profileName, boolean isArielRegion) {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         moreMenuPage.clickAddProfile();
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Skip button is not present.")
@@ -48,6 +49,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSkipButton();
 
         avatarPage.typeProfileName(profileName);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
     }
 
@@ -440,7 +445,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSecondaryButton();
 
         //TODO: Replace this method call with call to createProfile in addProfilePage
-        createProfile("Test_b");
+        createProfile("Test_b", isArielRegion);
         avatarPage.clickSecondaryButton();
 
         moreMenuPage.getProfileAvatar("Test_b").click();
@@ -456,6 +461,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
         restart();
 
+        //TODO: I don't think login is required due to app having user cached :thinking:
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
