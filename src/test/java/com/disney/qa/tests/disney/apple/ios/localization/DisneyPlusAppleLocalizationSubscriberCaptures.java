@@ -33,6 +33,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
+    private static final String NINETEEN_EIGHTY = "1980";
+    private static final String FIRST = "01";
     public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
@@ -369,11 +371,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
     public void profileMenu(String TUID) {
         setup();
         setZipTestName("SubscriberUI_5_profileMenu");
+        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         IOSUtils utils = iosUtils.get();
@@ -410,6 +415,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmptyProfileName");
 
         avatarPage.typeProfileName(DEFAULT_PROFILE);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
         utils.hideKeyboard();
         pause(2);
