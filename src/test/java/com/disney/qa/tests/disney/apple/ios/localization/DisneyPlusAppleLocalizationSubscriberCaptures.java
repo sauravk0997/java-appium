@@ -461,14 +461,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
         restart();
 
-        //TODO: I don't think login is required due to app having user cached :thinking:
-        welcomePage.clickLogInButton();
-        loginPage.fillOutEmailField(testAccount.getEmail());
-        loginPage.clickPrimaryButton();
-        passwordPage.typePassword(testAccount.getUserPass());
-        utils.dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
-
         whoPage.clickProfile(DEFAULT_PROFILE);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
