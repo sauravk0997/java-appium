@@ -136,7 +136,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
-        passwordPage.submitPasswordForLogin(testAccount.getUserPass());
+        passwordPage.typePassword(testAccount.getUserPass());
+        iosUtils.get().dismissKeyboardForPhone();
+        passwordPage.clickPrimaryButton();
         pause(5);
         getScreenshots("WhoseWatchingPage");
 
