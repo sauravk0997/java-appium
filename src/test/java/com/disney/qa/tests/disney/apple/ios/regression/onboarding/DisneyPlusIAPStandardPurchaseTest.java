@@ -79,6 +79,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         addProfilePage.clickSecondaryButtonByCoordinates();
         addProfilePage.clickPrimaryButton();
         pause(3);
+        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
@@ -139,6 +140,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         addProfilePage.clickSecondaryButtonByCoordinates();
         addProfilePage.clickPrimaryButton();
         pause(3);
+        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
@@ -201,6 +203,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         pause(1);
         addProfilePage.clickPrimaryButton();
         pause(3);
+        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
