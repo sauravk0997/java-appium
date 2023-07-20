@@ -130,4 +130,8 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return signUpButton.getBy();
     }
 
+    public ExtendedWebElement getSignupButton() {
+        return signUpButton;
+    }
+
 }

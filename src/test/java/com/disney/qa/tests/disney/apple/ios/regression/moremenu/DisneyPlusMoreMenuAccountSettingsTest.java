@@ -964,12 +964,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
                 new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V2_ORDER),
                 new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        disneyPlusAccountIOSPageBase.keepSessionAlive(2, welcomePage.getSignupButton());
         setAppToAccountSettings();
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent()
