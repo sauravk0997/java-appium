@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
@@ -959,14 +960,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
     @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu"})
-    public void verifyUnpausedSubscription() {
+    public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
         initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
                 new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V2_ORDER),
-                new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V1));
+                new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
         setAppToAccountSettings();
@@ -977,7 +978,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         logout();
 
-        disneyAccountApi.get().revokeSku(disneyAccount.get(), disneyEntitlements.get(1).getOffer());
+        disneyAccountApi.get().revokeSkuV3(disneyAccount.get(), disneyEntitlements.get(1).getOffer());
 
         setAppToAccountSettings();
 
