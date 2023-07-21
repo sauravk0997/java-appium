@@ -780,7 +780,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         detailsPage.addToWatchlist();
         detailsPage.startDownload();
-        pause(2);
+        //Need to increase this time out because we need some time for the download to start.
+        // There's no ID to check against for a smarter wait.
+        pause(10);
 
         //S7.6
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
@@ -961,6 +963,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         movies = searchPage.getDisplayedTitles();
         movies.get(0).click();
         detailsPage.startDownload();
+        pause(10);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.waitForDownloadToComplete();
 
