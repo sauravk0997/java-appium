@@ -854,7 +854,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         detailsPage.getSeasonSelectorButton().click();
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "3"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         pause(2);
         getScreenshotsNoCountUpdate("DownloadSeasonMoreThan20");
@@ -863,19 +863,19 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //download a couple of seasons for download in progress button
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "4"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "5"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
