@@ -1,9 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.api.appstoreconnect.AppStoreConnectApi;
-import com.disney.qa.api.pojos.sandbox.SandboxAccount;
 import com.disney.qa.common.utils.MobileUtilsExtended;
-import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
@@ -71,6 +68,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         iosUtils.get().acceptAlert();
         iosUtils.get().acceptAlert();
+        paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
@@ -131,6 +129,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         iosUtils.get().acceptAlert();
         iosUtils.get().acceptAlert();
+        paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
@@ -192,6 +191,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         iosUtils.get().acceptAlert();
         iosUtils.get().acceptAlert();
         pause(3);
+        paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button

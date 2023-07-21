@@ -879,7 +879,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"})
     public void verifyPausedSubscription_VerizonStandalone() {
         initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
@@ -899,7 +899,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"})
     public void verifyPausedSubscription_Canal() {
         initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
@@ -919,7 +919,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"})
     public void verifyPausedSubscription_O2() {
         initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
@@ -939,7 +939,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"})
     public void verifyPausedSubscription_TelMex() {
         initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
