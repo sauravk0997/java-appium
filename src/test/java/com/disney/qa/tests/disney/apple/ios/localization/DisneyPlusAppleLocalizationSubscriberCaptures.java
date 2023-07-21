@@ -393,7 +393,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-
         utils.dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
@@ -455,11 +454,20 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickPrimaryButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
 
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
+
         for (int i = 0; i < 4; i++) {
             disneyAccountApi.get().addProfile(testAccount, "Test_" + i, language,
                     null, false);
         }
         restart();
+
+        welcomePage.clickLogInButton();
+        loginPage.fillOutEmailField(testAccount.getEmail());
+        loginPage.clickPrimaryButton();
+        passwordPage.typePassword(testAccount.getUserPass());
+        utils.dismissKeyboardForPhone();
+        passwordPage.clickPrimaryButton();
 
         whoPage.clickProfile(DEFAULT_PROFILE);
 
