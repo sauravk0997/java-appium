@@ -12,7 +12,7 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    private ExtendedWebElement deleteAllDownloadsButton = getDynamicAccessibilityId(
+    private ExtendedWebElement deleteAllDownloadsButton = getStaticTextByLabel(
             getDictionary()
                     .getDictionaryItem(
                             DisneyDictionaryApi.ResourceKeys.APPLICATION,
