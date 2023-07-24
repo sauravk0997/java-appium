@@ -963,6 +963,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         downloadsPage.waitForDownloadToComplete();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -974,6 +975,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.15
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         getScreenshots("LogOut");
