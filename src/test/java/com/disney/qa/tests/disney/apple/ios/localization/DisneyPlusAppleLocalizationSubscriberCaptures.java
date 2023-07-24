@@ -937,6 +937,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.14
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
