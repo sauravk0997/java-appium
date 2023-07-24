@@ -949,19 +949,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //Have to restart and relog here because when appium tells D+ to "restart"
         // IOS re-installs D+.
         restart();
-        welcomePage.clickLogInButton();
-        loginPage.fillOutEmailField(testAccount.getEmail());
-        loginPage.clickPrimaryButton();
-        passwordPage.typePassword(testAccount.getUserPass());
-
-        utils.dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
 
         movieTitle = searchApi.get().getMovie("5MpPFhS8FTXh", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()).getVideoTitle();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         searchPage.searchForMedia(movieTitle);
         movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
+        movies.get(1).click();
         detailsPage.startDownload();
         pause(10);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
