@@ -8,6 +8,7 @@ import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -114,6 +115,10 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@Override
 	public boolean isOpened() {
 		return editProfilesBtn.isPresent();
+	}
+
+	public By getEditProfilesBtnBy() {
+		return editProfilesBtn.getBy();
 	}
 
 	public ExtendedWebElement getProfileAvatar(String profile) {

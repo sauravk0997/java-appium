@@ -795,7 +795,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         detailsPage.addToWatchlist();
         detailsPage.startDownload();
-        pause(2);
+        //Need to increase this time out because we need some time for the download to start.
+        // There's no ID to check against for a smarter wait.
+        pause(10);
 
         //S7.6
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
@@ -867,7 +869,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         detailsPage.getSeasonSelectorButton().click();
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "3"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         pause(2);
         getScreenshotsNoCountUpdate("DownloadSeasonMoreThan20");
@@ -876,19 +878,19 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //download a couple of seasons for download in progress button
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "4"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "5"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
         seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
@@ -950,6 +952,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.14
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -962,24 +966,19 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //Have to restart and relog here because when appium tells D+ to "restart"
         // IOS re-installs D+.
         restart();
-        welcomePage.clickLogInButton();
-        loginPage.fillOutEmailField(testAccount.getEmail());
-        loginPage.clickPrimaryButton();
-        passwordPage.typePassword(testAccount.getUserPass());
-
-        utils.dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
 
         movieTitle = searchApi.get().getMovie("5MpPFhS8FTXh", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()).getVideoTitle();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         searchPage.searchForMedia(movieTitle);
         movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
+        movies.get(1).click();
         detailsPage.startDownload();
+        pause(10);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.waitForDownloadToComplete();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -991,6 +990,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.15
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         getScreenshots("LogOut");
