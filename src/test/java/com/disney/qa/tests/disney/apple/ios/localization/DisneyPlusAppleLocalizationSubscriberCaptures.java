@@ -33,12 +33,15 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
+    private static final String NINETEEN_EIGHTY = "1980";
+    private static final String FIRST = "01";
     public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
-    private void createProfile(String profileName) {
+    private void createProfile(String profileName, boolean isArielRegion) {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         moreMenuPage.clickAddProfile();
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Skip button is not present.")
@@ -46,6 +49,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSkipButton();
 
         avatarPage.typeProfileName(profileName);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
     }
 
@@ -371,11 +378,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
     public void profileMenu(String TUID) {
         setup();
         setZipTestName("SubscriberUI_5_profileMenu");
+        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         IOSUtils utils = iosUtils.get();
@@ -385,7 +395,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-
         utils.dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
@@ -412,6 +421,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmptyProfileName");
 
         avatarPage.typeProfileName(DEFAULT_PROFILE);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
         utils.hideKeyboard();
         pause(2);
@@ -433,7 +446,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSecondaryButton();
 
         //TODO: Replace this method call with call to createProfile in addProfilePage
-        createProfile("Test_b");
+        createProfile("Test_b", isArielRegion);
         avatarPage.clickSecondaryButton();
 
         moreMenuPage.getProfileAvatar("Test_b").click();
@@ -442,6 +455,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         moreMenuPage.clickPrimaryButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
             disneyAccountApi.get().addProfile(testAccount, "Test_" + i, language,
