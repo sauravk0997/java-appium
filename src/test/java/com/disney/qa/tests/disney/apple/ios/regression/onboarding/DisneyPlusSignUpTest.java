@@ -18,10 +18,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
-    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "Your California Privacy Rights";
+    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "Your US State Privacy Rights";
     static final String SUBSCRIBER_AGREEMENT = "Subscriber Agreement";
     static final String PRIVACY_POLICY = "Privacy Policy";
-    static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell My Personal Information";
+    static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
