@@ -52,6 +52,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String SUBSCRIPTION_V1 = "V1";
+    public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
