@@ -78,7 +78,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         getDriver();
         iosUtils.set(new IOSUtils());
         setBuildType();
-        languageUtils.set(new DisneyLocalizationUtils(country, language, "tvos", "prod", PARTNER));
+        languageUtils.set(new DisneyLocalizationUtils(country, language, "apple-tv", "prod", PARTNER));
         String version = iosUtils.get().getInstalledAppVersion();
         configApi.set(new DisneyMobileConfigApi("tvos", "prod", PARTNER, version));
         languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
