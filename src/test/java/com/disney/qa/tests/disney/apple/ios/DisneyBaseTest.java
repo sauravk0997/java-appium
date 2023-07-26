@@ -29,6 +29,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 
@@ -211,7 +212,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.info("API threads started.");
         } catch (Exception e) {
             e.printStackTrace();
-            skipExecution("There was a problem with the setup. See stack trace.");
+            throw new SkipException("There was a problem with the setup. See stack trace.");
         }
     }
 

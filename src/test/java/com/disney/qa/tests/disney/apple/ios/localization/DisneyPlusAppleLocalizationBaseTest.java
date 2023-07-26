@@ -46,7 +46,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         disneyAccountApi.get().addFlex(testAccount);
         disneyAccount.set(testAccount);
         baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
-        //setJarvisOverrides();
+        setJarvisOverrides();
         startProxyAndRestart(languageUtils.get().getCountryName());
 
         count.set(0);
