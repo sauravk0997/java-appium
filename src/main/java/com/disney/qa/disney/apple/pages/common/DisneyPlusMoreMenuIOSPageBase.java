@@ -15,7 +15,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.*;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DELETE_ACCOUNT_MENU_ITEM;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.COMMUNICATION_SETTINGS_LINK_1_TEXT;
 
 @SuppressWarnings({"squid:MaximumInheritanceDepth", "squid:CallToDeprecatedMethod"})
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
@@ -67,10 +67,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "accountTab")
 	private ExtendedWebElement accountTab;
 
-	private ExtendedWebElement deleteAccountButton = xpathNameOrName.format(getDictionary()
-					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DELETE_ACCOUNT_MENU_ITEM.getText()),
-			DELETE_ACCOUNT_MENU_ITEM.getText());
+	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
 
 
 	public ExtendedWebElement getExitKidsProfile() {
