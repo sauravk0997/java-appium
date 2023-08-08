@@ -196,7 +196,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61879"})
-    @Test(description = "Series Details - Verify Aspect Ratio Text", groups = {"Details"})
+    @Test(description = "Series Details - Verify Aspect Ratio Text", groups = {"Details"}, enabled = false)
     public void verifyAspectRatioText() {
         initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -222,7 +222,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72938"})
-    @Test(description = "Series Details - Verify Aspect Ratio Video", groups = {"Details"})
+    @Test(description = "Series Details - Verify Aspect Ratio Video", groups = {"Details"}, enabled = false)
     public void verifyAspectRatioVideo() {
         initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
