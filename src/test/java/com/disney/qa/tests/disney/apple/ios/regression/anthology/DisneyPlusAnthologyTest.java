@@ -34,7 +34,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
-            throw new SkipException("Skipping test "+ UPCOMING + " label not found" + e);
+            throw new SkipException("Skipping test "+ UPCOMING + " label not found. " + e);
         }
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(UPCOMING), 0.5, 30);
         String mediaTitle = detailsPage.getMediaTitle();
@@ -60,7 +60,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(LIVE));
         } catch (Exception e) {
-            throw new SkipException("Skipping test "+ LIVE + " label not found" + e);
+            throw new SkipException("Skipping test "+ LIVE + " label not found. " + e);
         }
         sa.assertTrue(homePage.doesAiringBadgeContainLive(), "Airing badge does not contain Live badge on Home");
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(LIVE), 0.5, 30);
@@ -85,7 +85,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(LIVE));
         } catch (Exception e) {
-            throw new SkipException("Skipping test "+ LIVE + " label not found" + e);
+            throw new SkipException("Skipping test "+ LIVE + " label not found. " + e);
         }
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(LIVE), 0.5, 30);
         homePage.getStaticTextByLabel(WATCH_LIVE).click();
@@ -110,7 +110,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
             fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> detailsPage.isWatchButtonPresent());
 
         } catch (Exception e) {
-            throw new SkipException("Skipping Ended Test - Watch button not found" + e);
+            throw new SkipException("Skipping Ended Test - Watch button not found. " + e);
         }
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
     }
