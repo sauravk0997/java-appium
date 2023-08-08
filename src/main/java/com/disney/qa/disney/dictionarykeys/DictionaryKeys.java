@@ -74,6 +74,7 @@ public enum DictionaryKeys {
     CHOOSE_AVATAR_TITLE("chooseprofileicon_title"),
     CHOOSE_PROFILE_ICON_SKIP("chooseprofileicon_skip"),
     CHOOSE_PROFILE_TITLE("choose_profile_title"),
+    COMMUNICATION_SETTINGS_LINK_1_TEXT("communication_settings_link_1_text"),
     COMPLETE_PROFILE_DESCRIPTION("complete_profile_description"),
     COMPLETE_PROFILE_TITLE("complete_profile_title"),
     COMPLETE_SUBSCRIPTION_BTN("btn_complete_subscription"),
