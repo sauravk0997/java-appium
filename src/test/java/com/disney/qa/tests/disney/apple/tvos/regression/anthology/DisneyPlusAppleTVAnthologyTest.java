@@ -107,7 +107,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
         searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
         try {
-            fluentWaitNoMessage(getCastedDriver(), 20, 20).until(it -> detailsPage.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> detailsPage.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }

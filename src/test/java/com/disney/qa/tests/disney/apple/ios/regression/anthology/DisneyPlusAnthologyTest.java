@@ -107,7 +107,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         searchPage.getDisplayedTitles().get(0).click();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> detailsPage.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> detailsPage.isWatchButtonPresent());
 
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
