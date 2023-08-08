@@ -10,7 +10,9 @@
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
                value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
-    <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
+    <parameter name="jenkinsEmail"
+               value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com"/>
+    <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS,Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-QA-Enterprise-for-Automation-tvOS,Disney-Non-IAP-QA-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="scheduling" value="55 12 * * 1::55 00,01 * * 2"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
