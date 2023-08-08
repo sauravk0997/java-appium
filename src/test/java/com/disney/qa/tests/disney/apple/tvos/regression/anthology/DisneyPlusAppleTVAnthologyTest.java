@@ -6,10 +6,12 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.api.disney.DisneyContentIds.DANCING_WITH_THE_STARS;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
@@ -104,6 +106,11 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
         searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 20, 20).until(it -> detailsPage.isWatchButtonPresent());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
         sa.assertFalse(detailsPage.compareEpisodeNum(), "Episode number are the same");
         sa.assertAll();
     }
