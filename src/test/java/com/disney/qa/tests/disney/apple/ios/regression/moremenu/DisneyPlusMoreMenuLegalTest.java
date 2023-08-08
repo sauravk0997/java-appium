@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -15,6 +16,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
+
+    private static String DO_NOT_SELL_OR_SHARE_MY_INFO_EN = "Do Not Sell or Share My Personal Information";
+    private static String DO_NOT_SELL_OR_SHARE_MY_INFO_ES = "No vender ni compartir mis datos personales";
 
     @DataProvider
     private Object[] fallbackLanguages() {
@@ -64,14 +68,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         onboard("US", lang);
         confirmLegalPageOpens();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         languageUtils.get().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
+            if (documentHeader.equalsIgnoreCase(DO_NOT_SELL_OR_SHARE_MY_INFO_EN) || documentHeader.equalsIgnoreCase(DO_NOT_SELL_OR_SHARE_MY_INFO_ES)) {
+                sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
+                oneTrustPage.tapCloseButton();
 
-            sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
-                    String.format("Document: '%s' did not match api response.", documentHeader));
-
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            } else {
+                sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
+                        String.format("Document: '%s' did not match api response.", documentHeader));
+                disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            }
         });
 
         sa.assertAll();
