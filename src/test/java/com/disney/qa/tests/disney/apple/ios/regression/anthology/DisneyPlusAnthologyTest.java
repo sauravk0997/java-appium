@@ -10,6 +10,8 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants
@@ -29,8 +31,10 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
-        if (!homePage.isElementFound(homePage.getStaticTextByLabelContains(UPCOMING), 20,10)) {
-            throw new SkipException("Skipping test "+ UPCOMING + " label not found");
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(UPCOMING));
+        } catch (Exception e) {
+            throw new SkipException("Skipping test "+ UPCOMING + " label not found" + e);
         }
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(UPCOMING), 0.5, 30);
         String mediaTitle = detailsPage.getMediaTitle();
@@ -53,8 +57,10 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
-        if (!homePage.isElementFound(homePage.getStaticTextByLabelContains(LIVE), 20,10)) {
-            throw new SkipException("Skipping test "+ LIVE + " label not found");
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(LIVE));
+        } catch (Exception e) {
+            throw new SkipException("Skipping test "+ LIVE + " label not found" + e);
         }
         sa.assertTrue(homePage.doesAiringBadgeContainLive(), "Airing badge does not contain Live badge on Home");
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(LIVE), 0.5, 30);
@@ -76,8 +82,10 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
         setAppToHomeScreen(disneyAccount.get());
-        if (!homePage.isElementFound(homePage.getStaticTextByLabelContains(LIVE),20,10)) {
-            throw new SkipException("Skipping test "+ LIVE + " label not found");
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(LIVE));
+        } catch (Exception e) {
+            throw new SkipException("Skipping test "+ LIVE + " label not found" + e);
         }
         new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(LIVE), 0.5, 30);
         homePage.getStaticTextByLabel(WATCH_LIVE).click();
@@ -98,8 +106,11 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         searchPage.getDisplayedTitles().get(0).click();
-        if (!detailsPage.isWatchButtonPresent()) {
-            throw new SkipException("Skipping Ended Test - Watch button not found");
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> detailsPage.isWatchButtonPresent());
+
+        } catch (Exception e) {
+            throw new SkipException("Skipping Ended Test - Watch button not found" + e);
         }
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
     }
