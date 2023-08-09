@@ -108,7 +108,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> detailsPage.isWatchButtonPresent());
-
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
