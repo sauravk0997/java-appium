@@ -3,12 +3,12 @@
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise,Dominguez-Non-IAP-QA-Enterprise-for-Automation,Disney-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-Anthology"/>
     <parameter name="jenkinsEmail"
-               value="mobileqa@disneystreaming.com,Lauren.Churus@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+               value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,nathan.lefler@disneystreaming.com,jennifer.yee@disneystreaming.com"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
