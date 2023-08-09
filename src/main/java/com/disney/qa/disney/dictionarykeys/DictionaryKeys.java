@@ -154,6 +154,7 @@ public enum DictionaryKeys {
     EPISODE_PLACEHOLDER("episode_placeholder"),
     EU_PRIVACY("footer_eup_login_eu_privacy_rights"),
     FAT_FINGER_EMAIL("fat_finger_email_copy"),
+    FOOTER_MANAGE_PREFERENCE("footer_manage_preferences"),
     FORGOT_PASSWORD("forgot_password"),
     GENDER_MAN("gender_man"),
     GENDER_NON_BINARY("gender_nonbinary"),

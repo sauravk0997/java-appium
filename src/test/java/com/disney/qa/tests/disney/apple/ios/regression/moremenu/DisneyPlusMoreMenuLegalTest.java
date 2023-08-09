@@ -17,9 +17,6 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
-    private static String DO_NOT_SELL_OR_SHARE_MY_INFO_EN = "Do Not Sell or Share My Personal Information";
-    private static String DO_NOT_SELL_OR_SHARE_MY_INFO_ES = "No vender ni compartir mis datos personales";
-
     @DataProvider
     private Object[] fallbackLanguages() {
         return new String[]{"TUID: en", "TUID: es", "TUID: fr"};
@@ -72,7 +69,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         languageUtils.get().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
-            if (documentHeader.equalsIgnoreCase(DO_NOT_SELL_OR_SHARE_MY_INFO_EN) || documentHeader.equalsIgnoreCase(DO_NOT_SELL_OR_SHARE_MY_INFO_ES)) {
+            if (documentHeader.equalsIgnoreCase(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();
 
