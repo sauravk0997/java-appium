@@ -121,4 +121,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getDisneyTile() {
         return disneyTile;
     }
+
+    public boolean isStaticTextLabelPresent(String label) {
+        return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
+    }
 }
