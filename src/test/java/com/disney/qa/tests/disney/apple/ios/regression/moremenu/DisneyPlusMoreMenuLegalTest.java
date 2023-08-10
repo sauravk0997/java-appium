@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -64,14 +65,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         onboard("US", lang);
         confirmLegalPageOpens();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         languageUtils.get().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
+            if (documentHeader.equalsIgnoreCase(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
+                sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
+                oneTrustPage.tapCloseButton();
 
-            sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
-                    String.format("Document: '%s' did not match api response.", documentHeader));
-
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            } else {
+                sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
+                        String.format("Document: '%s' did not match api response.", documentHeader));
+                disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            }
         });
 
         sa.assertAll();
