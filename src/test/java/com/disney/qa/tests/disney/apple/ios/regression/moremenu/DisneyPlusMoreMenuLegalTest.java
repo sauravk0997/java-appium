@@ -175,7 +175,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
         // Toggle switch to ON, and tap 'confirm your choice button
         oneTrustPage.tapConsentSwitch();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle didn't ON turn OFF after selecting");
         oneTrustPage.tapConfirmMyChoiceButton();
         sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
