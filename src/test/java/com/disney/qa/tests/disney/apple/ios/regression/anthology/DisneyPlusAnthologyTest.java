@@ -16,32 +16,58 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
-    private static final String DANCING_WITH_THE_STARS = "Dancing With The Stars";
+    private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
     private static final String LIVE = "LIVE";
     private static final String WATCH_LIVE = "Watch Live";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640", "XMOBQA-72646"})
     @Test(description = "Verify Anthology Series - Upcoming", groups = {"Anthology"})
-    public void verifyAnthologyUpcoming() {
+    public void verifyAnthologyUpcomingWatchlist() {
         initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(UPCOMING));
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
-        }
-        new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(UPCOMING), 0.5, 30);
+//        try {
+//            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> homePage.isStaticTextLabelPresent(UPCOMING));
+//        } catch (Exception e) {
+//            throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
+//        }
+//        new IOSUtils().clickNearElement(homePage.getStaticTextByLabelContains(UPCOMING), 0.5, 30);
+        homePage.clickSearchIcon();
+        search.searchForMedia(DANCING_WITH_THE_STARS);
+        search.getDisplayedTitles().get(0).click();
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added");
+        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
+        moreMenu.getDynamicCellByLabel(mediaTitle).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640"})
+    @Test(description = "Verify Anthology Series - Search", groups = {"Anthology"})
+    public void verifyAnthologySearch() {
+        initialSetup();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DANCING_WITH_THE_STARS);
+        String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), DANCING_WITH_THE_STARS + " details page did not open.");
+        sa.assertTrue(firstDisplayTitle[0].equalsIgnoreCase(detailsPage.getMediaTitle()), "Search result title does not match Details page media title.");
         sa.assertAll();
     }
 
@@ -94,7 +120,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72303"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73876"})
     @Test(description = "Verify Anthology Series - Ended", groups = {"Anthology"})
     public void verifyAnthologyEnded() {
         initialSetup();
