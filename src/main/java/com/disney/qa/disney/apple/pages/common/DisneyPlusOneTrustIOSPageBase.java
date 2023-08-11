@@ -37,5 +37,16 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
         closeButton.click();
     }
 
+    public void tapConsentSwitch() {
+        consentSwitch.click();
+    }
+
+    public void tapConfirmMyChoiceButton() {
+        confirmMyChoiceButton.click();
+    }
+
+    public String getValueOfConsentSwitch(){
+        return consentSwitch.getAttribute("value");
+    }
 
 }
