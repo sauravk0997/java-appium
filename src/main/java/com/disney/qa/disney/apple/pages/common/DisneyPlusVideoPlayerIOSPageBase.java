@@ -314,15 +314,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Waits for content to end in player until getRemainingTime and attempts isn't greater than 0
+     * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     * @param attempts
+     * @param timeOut
+     * @param polling
      */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int attempts) {
-        while (getRemainingTime() > 0 && attempts > 0) {
-            isOpened();
-            pause(30); //idle for 30 sec
-            attempts--;
+    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeOut, int polling) {
+        try {
+            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> getRemainingTime() == 0);
+        } catch (Exception e) {
+            new IllegalArgumentException(String.format("Content did not end."));
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }

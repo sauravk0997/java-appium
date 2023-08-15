@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -409,9 +412,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Retrieving current episode number..");
         String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, IMobileUtils.Direction.DOWN, 2000);
-        clickWatchButton();
+//        clickWatchButton();
+        getDynamicAccessibilityId("PLAY").click(); //temp for QA
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForContentToEnd(15);
+        pause(10); //to temporarily scrub player nearly to end
+        videoPlayer.waitForContentToEnd(450, 15);
         if (videoPlayer.isOpened()) {
             videoPlayer.clickBackButton();
         }
@@ -516,5 +521,23 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         clickFirstSuggestedCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         params.clear();
+    }
+
+    public boolean isStaticTextLabelPresent(String label) {
+        return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
+    }
+
+    public ExtendedWebElement getLiveProgress() {
+        String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started");
+        String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
+                Map.of("x", liveProgressMinutes[1]));
+        return getDynamicAccessibilityId(liveProgress);
+    }
+
+    public ExtendedWebElement getLiveProgressTime() {
+        String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
+        String liveStartedAt = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
+                Map.of("x", liveProgressTimeMinutes[1]));
+        return getDynamicAccessibilityId(liveStartedAt);
     }
 }
