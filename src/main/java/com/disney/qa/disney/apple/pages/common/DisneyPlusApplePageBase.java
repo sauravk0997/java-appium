@@ -818,14 +818,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return airingBadgeLabel.getText().contains("LIVE");
     }
 
-    public boolean isElementFound(ExtendedWebElement element, int attempts, int timeout) {
-        while (element.isElementNotPresent(timeout) && attempts > 0) {
-            LOGGER.info("Attempting to find {}", element);
-            attempts--;
-        }
-        return element.isElementPresent();
-    }
-
     public boolean doesAttributeEqualTrue(ExtendedWebElement element, String name) {
         return element.getAttribute(name).equalsIgnoreCase("true");
     }

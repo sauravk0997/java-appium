@@ -4,9 +4,11 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
@@ -64,14 +66,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         onboard("US", lang);
         confirmLegalPageOpens();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         languageUtils.get().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
+            if (documentHeader.equalsIgnoreCase(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
+                sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
+                oneTrustPage.tapCloseButton();
 
-            sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
-                    String.format("Document: '%s' did not match api response.", documentHeader));
-
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            } else {
+                sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
+                        String.format("Document: '%s' did not match api response.", documentHeader));
+                disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            }
         });
 
         sa.assertAll();
@@ -99,7 +106,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
             }
         }
 
-        if(!hyperlinkFound) {
+        if (!hyperlinkFound) {
             skipExecution("No legal options have a hyperlink at present. Skipping test.");
         }
 
@@ -131,5 +138,49 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 .replaceAll("\\n|\\r\\n", System.lineSeparator())
                 .replaceAll("[\n\r]$", "")
                 .strip();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73783"})
+    @Maintainer("gkrishna")
+    @Test(description = "One trust - 'opt-out module'", groups = {"More Menu"})
+    public void verifyOneTrustModal() {
+        initialSetup();
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+
+        confirmLegalPageOpens();
+        String doNotSellString = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
+        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        sa.assertTrue(oneTrustPage.isOpened(), "");
+        //Toggle switch but do not tap confirm your choice button
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
+        oneTrustPage.tapConsentSwitch();
+        oneTrustPage.tapCloseButton();
+        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
+        //Toggle switch to OFF, tap 'confirm your choice' button
+        oneTrustPage.tapConsentSwitch();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
+        oneTrustPage.tapConfirmMyChoiceButton();
+        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
+        //Verify that the choice is saved
+        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
+        // Toggle switch to ON, and tap 'confirm your choice button
+        oneTrustPage.tapConsentSwitch();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle didn't ON turn OFF after selecting");
+        oneTrustPage.tapConfirmMyChoiceButton();
+        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
+        //Verify that the choice is saved
+        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),"toggle didn't not turn ON after selecting");
+        sa.assertAll();
     }
 }

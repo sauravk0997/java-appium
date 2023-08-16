@@ -44,7 +44,6 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public void enterOtpValueDismissKeys(String value) {
         otpInputField.type(value);
-        primaryButton.click();
         new IOSUtils().dismissKeyboardForPhone();
         getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_CONTINUE.getText())).click();
     }

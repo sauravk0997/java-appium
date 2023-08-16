@@ -73,4 +73,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         return currentEpisodeNum.contains(recentlyPlayedEpisode);
     }
+
+    @Override
+    public boolean isWatchButtonPresent() {
+        return watchButton.isElementPresent();
+    }
 }
