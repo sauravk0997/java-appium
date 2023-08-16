@@ -29,8 +29,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private ExtendedWebElement switchToAnnualBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SWITCH_ANNUAL_CTA.getText()));
 
-    private ExtendedWebElement directBillingPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Premium Annual", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
-
+    private ExtendedWebElement directBillingYearlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Premium Annual", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
+    private ExtendedWebElement directBillingMonthlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Basic Monthly", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
 
     private ExtendedWebElement o2Subscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
@@ -387,12 +387,26 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         }
     }
 
-    public boolean isDirectBillingPausedSubscriptionDisplayed() {
-        return directBillingPausedContainer.isElementPresent();
+    public boolean isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        switch(planName) {
+            case PREMIUM_MONTHLY:
+                return directBillingMonthlyPausedContainer.isElementPresent();
+            case PREMIUM_YEARLY:
+                return directBillingYearlyPausedContainer.isElementPresent();
+            default:
+                return false;
+        }
     }
 
-    public void clickPausedDirectBillingContainer() {
-        directBillingPausedContainer.click();
+    public void clickPausedDirectBillingContainer(DisneyPlusPaywallIOSPageBase.PlanType planName) {
+        switch(planName) {
+            case PREMIUM_MONTHLY:
+                 directBillingMonthlyPausedContainer.click();
+                 break;
+            case PREMIUM_YEARLY:
+                 directBillingYearlyPausedContainer.click();
+                 break;
+        }
     }
 
     public ExtendedWebElement getBillingProviderCell(DisneySkuParameters sku) {
