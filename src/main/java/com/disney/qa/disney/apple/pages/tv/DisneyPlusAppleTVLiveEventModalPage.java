@@ -36,6 +36,10 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
         watchLiveButton.clickIfPresent();
     }
 
+    public void clickWatchFromStartButton() {
+        watchFromStartButton.click();
+    }
+
     public boolean isWatchLiveButtonPresent() {
         return watchLiveButton.isElementPresent();
     }
@@ -43,6 +47,8 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
     public boolean isWatchFromStartPresent() {
         return watchFromStartButton.isElementPresent();
     }
+
+    public boolean isDetailsButtonPresent() { return detailsButton.isElementPresent(); }
 
     public void clickDetailsButton() {
         detailsButton.click();

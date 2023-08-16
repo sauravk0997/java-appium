@@ -41,7 +41,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72646"})
-    @Test(description = "Verify Anthology Series - Upcoming", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Watchlist", groups = {"Anthology"})
     public void verifyAnthologyWatchlist() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -62,8 +62,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72301"})
-    @Test(description = "Verify Anthology Series - Upcoming", groups = {"Anthology"})
-    public void verifyAnthologyUpcomingBadge() {
+    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {"Anthology"})
+    public void verifyAnthologyUpcomingBadgeAndMetadata() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
@@ -92,7 +92,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72300"})
-    @Test(description = "Verify Anthology Live Badge and Airing Indicator", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
     public void verifyAnthologyLiveBadge() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -121,7 +121,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72299"})
-    @Test(description = "Verify Anthology Live Playback", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Playback", groups = {"Anthology"})
     public void verifyAnthologyLivePlayback() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -148,7 +148,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73876"})
-    @Test(description = "Verify Anthology Series - Ended, Episode number different", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology"})
     public void verifyAnthologyEnded() {
         initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
