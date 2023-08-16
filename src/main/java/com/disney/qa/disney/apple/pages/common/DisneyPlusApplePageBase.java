@@ -931,4 +931,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                     String.format("Element was not present after %d seconds elapsed.", count.get()));
         } );
     }
+
+    public ExtendedWebElement getAiringBadgeLabel() {
+        return airingBadgeLabel;
+    }
 }

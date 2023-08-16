@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
@@ -539,5 +538,30 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String liveStartedAt = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
                 Map.of("x", liveProgressTimeMinutes[1]));
         return getDynamicAccessibilityId(liveStartedAt);
+    }
+
+    public ExtendedWebElement getUpcomingDateTime() {
+        String[] upcomingDateTime = getAiringBadgeLabel().getText().split(" ");
+        String upcomingDate = upcomingDateTime[2] + " " + upcomingDateTime[3];
+        String upcomingTime = upcomingDateTime[0];
+        String upcomingDateAndTime = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        BADGE_TEXT_DATE_TIME.getText()),
+                Map.of("date", upcomingDate, "time", upcomingTime));
+        return getDynamicAccessibilityId(upcomingDateAndTime);
+    }
+
+    public ExtendedWebElement getUpcomingBadge() {
+        String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING.getText());
+        return getStaticTextByLabel(upcomingBadge);
+    }
+
+    public ExtendedWebElement getUpcomingTodayBadge() {
+        String upcomingTodayBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING_TODAY.getText());
+        return getStaticTextByLabel(upcomingTodayBadge);
+    }
+
+    public ExtendedWebElement getLiveNowBadge() {
+        String liveNowBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_LIVE.getText());;
+        return getStaticTextByLabel(liveNowBadge);
     }
 }
