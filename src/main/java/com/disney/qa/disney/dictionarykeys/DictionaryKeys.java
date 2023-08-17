@@ -49,7 +49,6 @@ public enum DictionaryKeys {
     BTN_REFRESH("btn_refresh"),
     BTN_RESUME_DOWNLOAD("btn_resume_2"),
     BTN_SAVE("btn_save"),
-    BTN_WATCH("btn_watch"),
     BTN_EDIT_PROFILE("btn_edit_profile"),
     BTN_GOT_IT("btn_got_it"),
     BTN_PLAYBACK_MODAL_BEGINNING("btn_playback_modal_beginning"),

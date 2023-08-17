@@ -411,10 +411,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Retrieving current episode number..");
         String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, IMobileUtils.Direction.DOWN, 2000);
-//        clickWatchButton();
-        getDynamicAccessibilityId("PLAY").click(); //temp for QA
+        clickWatchButton();
         videoPlayer.waitForVideoToStart();
-        pause(10); //to temporarily scrub player nearly to end
         videoPlayer.waitForContentToEnd(450, 15);
         if (videoPlayer.isOpened()) {
             videoPlayer.clickBackButton();

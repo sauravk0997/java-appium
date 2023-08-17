@@ -12,7 +12,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         super(driver);
     }
 
-    //BTN_PLAYBACK_MODAL_LIVE
     protected ExtendedWebElement watchLiveButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_PLAYBACK_MODAL_LIVE.getText()));
 
     protected ExtendedWebElement watchFromStartButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_PLAYBACK_MODAL_BEGINNING.getText()));

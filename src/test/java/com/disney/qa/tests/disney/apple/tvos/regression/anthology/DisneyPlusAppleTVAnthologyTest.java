@@ -35,7 +35,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
-        searchForDWTS();
+        searchAndOpenDWTSDetails();
         details.addToWatchlist();
         details.clickMenuTimes(1,1);
         pause(1); //from transition to search bar
@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
-        searchForDWTS();
+        searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
-        searchForDWTS();
+        searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
@@ -137,7 +137,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
-        searchForDWTS();
+        searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
@@ -162,7 +162,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
-        searchForDWTS();
+        searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
     }
 
-    private void searchForDWTS() {
+    private void searchAndOpenDWTSDetails() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
