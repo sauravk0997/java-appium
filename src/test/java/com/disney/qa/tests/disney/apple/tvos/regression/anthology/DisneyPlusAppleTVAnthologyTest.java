@@ -171,6 +171,39 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110034"})
+    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {"Anthology"})
+    public void verifyAnthologyTitleDescriptionDate() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+//        sa.assertTrue(details.);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110036"})
+    @Test(description = "Verify Anthology Series - VOD Progress", groups = {"Anthology"})
+    public void verifyAnthologyVODProgress() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        details.clickPlayButton();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        videoPlayer.clickMenuTimes(1,1);
+        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        System.out.println(getDriver().getPageSource());
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
