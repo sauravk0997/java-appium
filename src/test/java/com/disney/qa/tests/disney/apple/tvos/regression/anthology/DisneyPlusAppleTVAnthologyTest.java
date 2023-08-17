@@ -20,7 +20,6 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
-    private static final String LIVE = "LIVE";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
