@@ -200,7 +200,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
 
         //Wait for download to complete and validate titles same.
-        details.waitForLongSeriesDownloadToComplete(120, 6);
+        details.waitForLongSeriesDownloadToComplete(180, 9);
         details.clickDownloadsIcon();
         sa.assertTrue(downloads.isOpened(), "Downloads page was not opened.");
         sa.assertTrue(mediaTitle.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),

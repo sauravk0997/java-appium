@@ -37,7 +37,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "Checkbox. Unchecked.")
 	private ExtendedWebElement uncheckedCheckbox;
 
-	@ExtendedFindBy(accessibilityId = "downloadDelete24")
+	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
 
 	//FUNCTIONS
