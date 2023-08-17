@@ -151,9 +151,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology"})
     public void verifyAnthologyEnded() {
         initialSetup();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAppToHomeScreen(disneyAccount.get());
         try {
