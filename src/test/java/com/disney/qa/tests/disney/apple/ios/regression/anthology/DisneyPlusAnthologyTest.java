@@ -161,6 +161,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
+
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
     }
 

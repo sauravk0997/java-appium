@@ -17,6 +17,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
+    private ExtendedWebElement heroImage;
+
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
     }
@@ -78,4 +81,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public boolean isWatchButtonPresent() {
         return watchButton.isElementPresent();
     }
+
+    @Override
+    public boolean isHeroImagePresent() {return heroImage.isPresent(); }
 }

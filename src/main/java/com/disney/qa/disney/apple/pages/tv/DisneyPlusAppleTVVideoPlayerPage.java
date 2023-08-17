@@ -17,6 +17,9 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
     private ExtendedWebElement contentRatingInfoView;
 
+    @ExtendedFindBy(accessibilityId = "Watching live")
+    private ExtendedWebElement watchingLive;
+
     public void waitUntilDetailsPageIsLoadedFromTrailer(long timeout, int polling) {
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         fluentWait(getDriver(), timeout, polling, "Details page did not load after " + timeout)
@@ -26,5 +29,16 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     public DisneyPlusAppleTVVideoPlayerPage waitForContentToEnd(long timeout, int polling) {
         fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    public void pauseAndPlayVideo() {
+        LOGGER.info("Pause video..");
+        clickSelect();
+        pause(1);
+        LOGGER.info("Play video..");
+        clickSelect();
+    }
+    public boolean isWatchingLivePresent() {
+        return watchingLive.isPresent();
     }
 }
