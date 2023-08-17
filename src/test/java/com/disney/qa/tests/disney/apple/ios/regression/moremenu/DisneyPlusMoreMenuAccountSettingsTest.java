@@ -879,58 +879,56 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         initialSetup();
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
+        SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL, planName));
-        sa.get().assertAll();
+        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL, planName, sa);
+        sa.assertAll();
     }
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_Canal(String planType) {
         initialSetup();
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
+        SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
             List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
             CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlement).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
             disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
             DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-            sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL, planName));
-
-        sa.get().assertAll();
+            performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL, planName, sa);
+            sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_O2(String planType) {
         initialSetup();
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
+        SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
             List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
             CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
             disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL, planName));
-        sa.get().assertAll();
+        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL, planName, sa);
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_TelMex(String planType) {
         initialSetup();
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
+        SoftAssert sa = new SoftAssert();
         DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, TELMEX_URL, planName));
-        sa.get().assertAll();
+        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, TELMEX_URL, planName, sa);
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
@@ -1139,8 +1137,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
      * @param url - The expected URL (fragment, whole path is not required) when opening the webview
      * @return - The soft assertion in the test for which it was called.
      */
-    private SoftAssert performPausedEntitlementCheck(DisneySkuParameters sku, String url, DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        SoftAssert sa = new SoftAssert();
+    private SoftAssert performPausedEntitlementCheck(DisneySkuParameters sku, String url, DisneyPlusPaywallIOSPageBase.PlanType planName, SoftAssert sa) {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         setAppToAccountSettings();
         if (!disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent()) {
