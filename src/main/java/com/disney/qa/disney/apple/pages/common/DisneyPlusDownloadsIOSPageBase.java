@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.lang.management.GarbageCollectorMXBean;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	public DisneyPlusDownloadsIOSPageBase(WebDriver driver) {
@@ -28,6 +30,15 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
 
 	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
+
+	@ExtendedFindBy(accessibilityId = "Checkbox. Checked.")
+	private ExtendedWebElement checkedCheckbox;
+
+	@ExtendedFindBy(accessibilityId = "Checkbox. Unchecked.")
+	private ExtendedWebElement uncheckedCheckbox;
+
+	@ExtendedFindBy(accessibilityId = "downloadDelete24")
+	private ExtendedWebElement deleteDownloadButton;
 
 	//FUNCTIONS
 	@Override
@@ -73,5 +84,21 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getDownloadCompleteButton() {
 		return downloadCompleteButton;
+	}
+
+	public void clickEditButton() {
+		getTypeButtonContainsLabel("Edit").click();
+	}
+
+	public void clickUncheckedCheckbox() {
+		uncheckedCheckbox.click();
+	}
+
+	public boolean isCheckedCheckboxPresent() {
+		return checkedCheckbox.isElementPresent();
+	}
+
+	public void clickDeleteDownloadButton() {
+		deleteDownloadButton.click();
 	}
 }

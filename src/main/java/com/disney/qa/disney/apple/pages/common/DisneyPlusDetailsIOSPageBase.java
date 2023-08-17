@@ -163,6 +163,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public boolean isContinueButtonPresent() {
+        return getTypeButtonByName("bookmarked").isElementPresent();
+    }
+
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
         backButton.click();
         return initPage(DisneyPlusHomeIOSPageBase.class);
@@ -194,6 +198,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Download completed");
     }
 
+    public void waitForLongSeriesDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for series download to complete");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> downloadCompleteButton.isPresent());
+        LOGGER.info("Download completed");
+    }
+
     public void waitForMovieDownloadComplete() {
         LOGGER.info("Waiting for movie download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Downloaded button is not present")
@@ -207,6 +218,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void removeDownload(DisneyLocalizationUtils dictionary) {
         getDynamicXpathContainsName(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).click();
+    }
+
+    public boolean isSeriesDownloadButtonPresent() {
+        return downloadBtn.isElementPresent();
     }
 
     public boolean doesContinueButtonExist() {
