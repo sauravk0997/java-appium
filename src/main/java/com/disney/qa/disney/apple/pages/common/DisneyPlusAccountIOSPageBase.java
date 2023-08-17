@@ -406,6 +406,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
             case PREMIUM_YEARLY:
                  directBillingYearlyPausedContainer.click();
                  break;
+            default: throw new IllegalArgumentException(
+                    String.format("Invalid plan name '%s'", planName));
         }
     }
 
