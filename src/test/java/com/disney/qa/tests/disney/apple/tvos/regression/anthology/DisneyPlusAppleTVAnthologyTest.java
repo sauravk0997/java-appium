@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -19,99 +20,167 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
-    private static final String LIVE = "LIVE";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
-    @Test(description = "Verify Anthology Upcoming", groups = {"Anthology"})
-    public void verifyAnthologyUpcoming() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+    @Test(description = "Verify Anthology Series - Watchlist", groups = {"Anthology"})
+    public void verifyAnthologyWatchlist() {
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchList = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        logIn(entitledUser);
 
-        homePage.checkIfElementAttributeFound(homePage.getStaticTextByLabel(UPCOMING), "enabled");
-        homePage.clickAnthologyCarousel(UPCOMING);
-        detailsPage.isAnthologyTitlePresent();
-        detailsPage.addToWatchlist();
-        detailsPage.clickMenuTimes(1,1);
-        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
-        sa.assertTrue(watchListPage.areWatchlistTitlesDisplayed(DANCING_WITH_THE_STARS.getTitle()), "Dancing With The Stars was not added to watchlist.");
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+        details.addToWatchlist();
+        details.clickMenuTimes(1,1);
+        pause(1); //from transition to search bar
+        search.clickMenuTimes(1,1);
+        home.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        sa.assertTrue(watchList.areWatchlistTitlesDisplayed(DANCING_WITH_THE_STARS.getTitle()), "Dancing With The Stars was not added to watchlist.");
+
+        watchList.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).click();
+        sa.assertTrue(details.isOpened(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
         sa.assertAll();
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})
-    @Test(description = "Verify Anthology Live Playback", groups = {"Anthology"})
-    public void verifyAnthologyLiveModalAndPlayback() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModalPage = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106657"})
+    @Test(description = "Verify Anthology Series - Search", groups = {"Anthology"})
+    public void verifyAnthologySearch() {
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        logIn(entitledUser);
 
-        homePage.checkIfElementAttributeFound(homePage.getStaticTextByLabel(LIVE), "enabled");
-        homePage.clickAnthologyCarousel(LIVE);
-        liveEventModalPage.isOpened();
-        sa.assertTrue(liveEventModalPage.isWatchFromStartPresent(), "Watch from start is not present");
-        sa.assertTrue(liveEventModalPage.isWatchLiveButtonPresent(), "Watch Live button not present");
-        liveEventModalPage.clickDetailsButton();
-        sa.assertTrue(detailsPage.isWatchButtonPresent(), "Watch button is not present.");
-        detailsPage.clickWatchButton();
-        liveEventModalPage.clickWatchLiveButton();
-        videoPlayerPage.waitForVideoToStart();
-        sa.assertTrue(videoPlayerPage.isOpened(), "Live video is not playing");
+        logIn(entitledUser);
+        home.isOpened();
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        search.isOpened();
+        search.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
+        sa.assertTrue(search.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).isElementPresent(), "Dancing with the Stars title not found in search results.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105996"})
+    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {"Anthology"})
+    public void verifyAnthologyUpcomingBadgeAndMetadata() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isStaticTextLabelPresent(UPCOMING));
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
+
+        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.getAiringBadgeLabel().isElementPresent(), "Airing badge label is not displayed.");
+        sa.assertTrue(details.getUpcomingDateTime().isElementPresent(), "Upcoming Date and Time was not found.");
+        sa.assertTrue(details.getUpcomingTodayBadge().isElementPresent() || details.getUpcomingBadge().isElementPresent(),
+                "Upcoming Today / Upcoming badge is not present");
+        sa.assertTrue(details.getAiringBadgeLabel().isElementPresent(), "Upcoming airing Badge is not present.");
+        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
+        sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
+        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not displayed.");
+        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not displayed.");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105997"})
-    @Test(description = "Verify Anthology Live Badge", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
     public void verifyAnthologyLiveBadge() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModalPage = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
         logIn(entitledUser);
-
-        homePage.checkIfElementAttributeFound(homePage.getStaticTextByLabel(LIVE), "enabled");
-        sa.assertTrue(homePage.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Home");
-        homePage.clickAnthologyCarousel(LIVE);
-        sa.assertTrue(liveEventModalPage.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
-        liveEventModalPage.clickDetailsButton();
-        detailsPage.isOpened();
-        sa.assertTrue(detailsPage.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Details Page");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106680, XCDQA-105999"})
-    @Test(description = "Verify Anthology Ended", groups = {"Anthology"})
-    public void verifyAnthologyEnded() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        logIn(entitledUser);
-
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
-        searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
+        searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> detailsPage.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
-        sa.assertFalse(detailsPage.compareEpisodeNum(), "Episode number are the same");
+
+        sa.assertTrue(details.getLiveNowBadge().isElementPresent(), "Live Now badge was not found.");
+        sa.assertTrue(details.getLiveProgress().isElementPresent() || details.getLiveProgressTime().isElementPresent(),
+                "Live progress indicator not found.");
+        sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Details Page");
+
+        details.clickWatchButton();
+        sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
+        liveEventModal.clickDetailsButton();
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105997"})
+    @Test(description = "Verify Anthology Series - Live Playback", groups = {"Anthology"})
+    public void verifyAnthologyLivePlayback() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
+
+        details.clickWatchButton();
+        details.getStaticTextByLabelContains("WATCH").click();
+        liveEventModal.clickWatchLiveButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.pauseAndPlayVideo();
+        sa.assertTrue(videoPlayer.isWatchingLivePresent(), "Watching live lightning bolt is not present.");
+        sa.assertTrue(videoPlayer.isOpened(), "Live video is not playing");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110033"})
+    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology"})
+    public void verifyAnthologyEnded() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
+
+        Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
+    }
+
+    private void searchAndOpenDWTSDetails() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        homePage.isOpened();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        searchPage.isOpened();
+        searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
+        searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
+        detailsPage.isOpened();
     }
 }

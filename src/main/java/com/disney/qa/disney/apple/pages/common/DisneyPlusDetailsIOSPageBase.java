@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -411,7 +413,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, IMobileUtils.Direction.DOWN, 2000);
         clickWatchButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForContentToEnd(15);
+        videoPlayer.waitForContentToEnd(450, 15);
         if (videoPlayer.isOpened()) {
             videoPlayer.clickBackButton();
         }
@@ -516,5 +518,48 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         clickFirstSuggestedCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         params.clear();
+    }
+
+    public boolean isStaticTextLabelPresent(String label) {
+        return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
+    }
+
+    public ExtendedWebElement getLiveProgress() {
+        String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started");
+        String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
+                Map.of("x", liveProgressMinutes[1]));
+        return getDynamicAccessibilityId(liveProgress);
+    }
+
+    public ExtendedWebElement getLiveProgressTime() {
+        String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
+        String liveStartedAt = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
+                Map.of("x", liveProgressTimeMinutes[1]));
+        return getDynamicAccessibilityId(liveStartedAt);
+    }
+
+    public ExtendedWebElement getUpcomingDateTime() {
+        String[] upcomingDateTime = getAiringBadgeLabel().getText().split(" ");
+        String upcomingDate = upcomingDateTime[2] + " " + upcomingDateTime[3];
+        String upcomingTime = upcomingDateTime[0];
+        String upcomingDateAndTime = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        BADGE_TEXT_DATE_TIME.getText()),
+                Map.of("date", upcomingDate, "time", upcomingTime));
+        return getDynamicAccessibilityId(upcomingDateAndTime);
+    }
+
+    public ExtendedWebElement getUpcomingBadge() {
+        String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING.getText());
+        return getStaticTextByLabel(upcomingBadge);
+    }
+
+    public ExtendedWebElement getUpcomingTodayBadge() {
+        String upcomingTodayBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING_TODAY.getText());
+        return getStaticTextByLabel(upcomingTodayBadge);
+    }
+
+    public ExtendedWebElement getLiveNowBadge() {
+        String liveNowBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_LIVE.getText());
+        return getStaticTextByLabel(liveNowBadge);
     }
 }
