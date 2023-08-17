@@ -323,7 +323,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         try {
             fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> getRemainingTime() == 0);
         } catch (Exception e) {
-            throw new AssertionError(String.format("Content did not end.", e));
+            throw new AssertionError(String.format("Content did not end, Exception: %s", e));
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
