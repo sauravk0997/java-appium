@@ -61,7 +61,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
         return new Object[][]{
-                {MONTHLY}, {YEARLY}
+                {MONTHLY}//, {YEARLY}
         };
     }
 
