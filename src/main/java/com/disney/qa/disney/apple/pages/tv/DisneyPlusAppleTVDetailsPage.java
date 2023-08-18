@@ -20,6 +20,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"continue\"`]")
+    private ExtendedWebElement continueButton;
+
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
     }
@@ -51,6 +54,18 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public boolean isAnthologyTitlePresent() {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
+        getTypeButtonByName("play").click();
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickContinueButton() {
+        getTypeButtonByName("bookmarked").click();
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
     @Override

@@ -96,7 +96,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105997"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105994"})
     @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
     public void verifyAnthologyLiveBadge() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -183,6 +183,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
 //        sa.assertTrue(details.);
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110036"})
@@ -198,10 +199,14 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         details.clickPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
         videoPlayer.clickMenuTimes(1,1);
         sa.assertTrue(details.isOpened(), "Details page did not open.");
-        System.out.println(getDriver().getPageSource());
+        details.clickContinueButton();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking continue button.");
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {

@@ -31,7 +31,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement playButton;
 
     @ExtendedFindBy(accessibilityId = "bookmarked")
-    private ExtendedWebElement continueButton;
+    protected ExtendedWebElement continueButton;
 
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement watchlistButton;
