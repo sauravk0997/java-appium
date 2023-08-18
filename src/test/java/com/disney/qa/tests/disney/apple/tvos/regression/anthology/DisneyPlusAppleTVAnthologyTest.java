@@ -96,7 +96,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105997"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105994"})
     @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
     public void verifyAnthologyLiveBadge() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -169,6 +169,46 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         }
 
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110034"})
+    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {"Anthology"})
+    public void verifyAnthologyTitleDescriptionDate() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
+        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110036"})
+    @Test(description = "Verify Anthology Series - VOD Progress", groups = {"Anthology"})
+    public void verifyAnthologyVODProgress() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        details.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
+        videoPlayer.clickMenuTimes(1,1);
+        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        details.clickContinueButton();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking continue button.");
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {

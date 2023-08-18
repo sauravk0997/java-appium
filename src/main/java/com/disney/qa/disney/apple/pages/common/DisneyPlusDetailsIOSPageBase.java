@@ -33,7 +33,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement playButton;
 
     @ExtendedFindBy(accessibilityId = "bookmarked")
-    private ExtendedWebElement continueButton;
+    protected ExtendedWebElement continueButton;
 
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement watchlistButton;
@@ -243,6 +243,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      */
     public String getMediaTitle() {
         return titleImage.getText();
+    }
+
+    public ExtendedWebElement getLogoImage() {
+        return titleImage;
     }
 
     public String getEpisodeContentTitle() {
