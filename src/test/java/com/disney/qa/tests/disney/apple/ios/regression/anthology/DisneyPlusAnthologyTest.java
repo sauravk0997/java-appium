@@ -163,6 +163,90 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73873"})
+    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {"Anthology"})
+    public void verifyAnthologyTitleDescriptionDate() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS));
+        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73874"})
+    @Test(description = "Verify Anthology Series - Episode Download", groups = {"Anthology"})
+    public void verifyAnthologyEpisodeDownload() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        //Download episode
+        details.isOpened();
+        String mediaTitle = details.getMediaTitle();
+        details.startDownload();
+        sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
+
+        //Wait for download to complete and validate titles same.
+        details.waitForLongSeriesDownloadToComplete(180, 9);
+        details.clickDownloadsIcon();
+        sa.assertTrue(downloads.isOpened(), "Downloads page was not opened.");
+        sa.assertTrue(mediaTitle.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),
+                DANCING_WITH_THE_STARS + " titles are not the same.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
+
+        //Play downloaded episode
+        downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
+        downloads.getTypeButtonContainsLabel("Play").click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(downloads.getProgressBar().isPresent(), "Progress bar not found.");
+
+        //Remove Download
+        downloads.clickEditButton();
+        downloads.clickUncheckedCheckbox();
+        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
+        downloads.clickDeleteDownloadButton();
+        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73875"})
+    @Test(description = "Verify Anthology Series - VOD Progress", groups = {"Anthology"})
+    public void verifyAnthologyVODProgress() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        details.clickPlayButton();
+        sa.assertTrue(videoPlayer.isOpened(), "Video Player did not launch.");
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(details.isContinueButtonPresent(), "Continue button was not found.");
+        sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
+        sa.assertAll();
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);

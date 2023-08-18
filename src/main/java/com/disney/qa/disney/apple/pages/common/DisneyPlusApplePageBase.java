@@ -130,6 +130,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByName;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
+    private ExtendedWebElement dynamicOtherFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
@@ -226,6 +228,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"labelStepTitle\"`]/XCUIElementTypeStaticText")
     protected ExtendedWebElement stepTitle;
 
+    @ExtendedFindBy(accessibilityId = "progressBar")
+    private ExtendedWebElement progressBar;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -318,6 +323,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeOtherByName(String name) {
         return dynamicOtherFindByName.format(name);
+    }
+
+    public ExtendedWebElement getTypeOtherByLabel(String label) {
+        return dynamicOtherFindByLabel.format(label);
     }
 
     public ExtendedWebElement getTypeButtonContainsLabel(String label) {
@@ -935,4 +944,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getAiringBadgeLabel() {
         return airingBadgeLabel;
     }
+
+    public ExtendedWebElement getProgressBar() { return progressBar; }
 }
