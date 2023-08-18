@@ -25,9 +25,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"continue\"`]")
-    private ExtendedWebElement continueButton;
-
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
     }
