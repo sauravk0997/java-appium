@@ -174,7 +174,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
-        sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS));
+        sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
+                "Media title of logo image does not match " + DANCING_WITH_THE_STARS);
         sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertAll();

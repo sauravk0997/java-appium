@@ -7,9 +7,14 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusDetailsIOSPageBase.class)
 public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
+
+    private static final String DETAILS = "DETAILS";
 
     @ExtendedFindBy(accessibilityId = "trailerButton")
     private ExtendedWebElement trailerButton;
@@ -99,4 +104,21 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @Override
     public boolean isHeroImagePresent() {return heroImage.isPresent(); }
+
+    public ExtendedWebElement getMetadataLabel() {
+        return getStaticTextLabelName("metaDataLabel");
+    }
+
+    @Override
+    public boolean doesMetadataYearContainDetailsTabYear() {
+        LOGGER.info("verifying season year range");
+        Map<String, String> params = new HashMap<>();
+        String[] metadataLabelParts = getMetadataLabel().getText().split(",");
+        params.put("metaDataYear(s)", metadataLabelParts[0]);
+        moveDown(1,1);
+        moveRight(3, 1);
+        isFocused(getTypeButtonByLabel(DETAILS));
+        String[] detailsTabYear = releaseDate.getText().split(", ");
+        return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
+    }
 }

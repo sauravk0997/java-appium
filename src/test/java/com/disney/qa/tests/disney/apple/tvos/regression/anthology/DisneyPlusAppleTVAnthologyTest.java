@@ -182,7 +182,9 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
 
-//        sa.assertTrue(details.);
+        sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
+        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertAll();
     }
 

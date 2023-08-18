@@ -245,6 +245,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return titleImage.getText();
     }
 
+    public ExtendedWebElement getLogoImage() {
+        return titleImage;
+    }
+
     public String getEpisodeContentTitle() {
         //We want to remove the list numbering and duration from the episode's title label
         LOGGER.info("getting first episode title from Details page");
