@@ -524,10 +524,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByName("heroImage").isPresent();
     }
 
-    public List<String> getExtrasCells() {
-        return getContentItems(3);
-    }
-
     public List<String> getTabCells() {
         return getContentItems(6);
     }
