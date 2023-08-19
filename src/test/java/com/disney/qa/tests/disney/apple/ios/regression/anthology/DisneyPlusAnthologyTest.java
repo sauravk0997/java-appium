@@ -287,7 +287,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
-        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found.");
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }

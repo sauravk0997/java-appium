@@ -524,6 +524,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByName("heroImage").isPresent();
     }
 
+    /**
+     * This returns first tab cells in view. This can be used for Suggested tab, Episodes Tab or Extras tab.
+     * @return - Tab cells
+     */
     public List<String> getTabCells() {
         return getContentItems(6);
     }
@@ -533,7 +537,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getDynamicCellByLabel(firstTabCell).click();
     }
 
-    public boolean isSuggestTabPresent() {
+    public boolean isSuggestedTabPresent() {
         if (!suggestedTab.isElementPresent()) {
             new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
         }
