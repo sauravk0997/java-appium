@@ -172,7 +172,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
             sa.assertTrue(playerContentTitle.contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
             sa.assertTrue(videoPlayer.getSubTitleLabel().contains(content), "Content title doesn't match");
         } else if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.EXTRAS.toString())) {
-            detailsPage.clickExtrasButton();
+            detailsPage.clickExtrasTab();
             detailsPage.tapOnFirstContentTitle();
             playerContentTitle = videoPlayer.getTitleLabel();
             sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match, expected: " + content + " but found " + playerContentTitle);

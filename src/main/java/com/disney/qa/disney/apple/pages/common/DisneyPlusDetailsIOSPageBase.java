@@ -59,6 +59,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
 
+    private ExtendedWebElement extrasTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_EXTRAS.getText()));
+
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
 
@@ -133,6 +135,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement downloadBtn = dynamicBtnFindByLabel.format("downloadEpisodeList");
     private ExtendedWebElement downloadCompleteButton = dynamicBtnFindByLabelContains.format("downloadComplete");
+
+    @ExtendedFindBy(accessibilityId = "seasonRating")
+    private ExtendedWebElement seasonRating;
 
     //FUNCTIONS
 
@@ -281,11 +286,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         getDynamicAccessibilityId(seasonsButton).click();
     }
-    public void clickExtrasButton() {
-        if (!extrasButton.isElementPresent()) {
-            new IOSUtils().swipePageTillElementTappable(extrasButton, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+    public void clickExtrasTab() {
+        if (!extrasTab.isPresent()) {
+            new IOSUtils().swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
         }
-        extrasButton.click();
+        extrasTab.click();
+    }
+
+    public boolean isExtrasTabPresent() {
+        return extrasTab.isPresent();
     }
 
     public void tapOnFirstContentTitle() {
@@ -486,6 +495,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return actors;
     }
 
+    public ExtendedWebElement getContentDetailsPage() { return contentDetailsPage; }
+
+    public ExtendedWebElement getFormats() { return formats; }
+
     public ExtendedWebElement getEpisodesTab() {
         return episodesTab;
     }
@@ -514,13 +527,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByName("heroImage").isPresent();
     }
 
-    public List<String> getSuggestedCells() {
+    public List<String> getExtrasCells() {
+        return getContentItems(3);
+    }
+
+    public List<String> getTabCells() {
         return getContentItems(6);
     }
 
-    public void clickFirstSuggestedCell() {
-        String firstSuggestContentCell = getSuggestedCells().get(0);
-        getDynamicCellByLabel(firstSuggestContentCell).click();
+    public void clickFirstTabCell() {
+        String firstTabCell = getTabCells().get(0);
+        getDynamicCellByLabel(firstTabCell).click();
     }
 
     public boolean isSuggestTabPresent() {
@@ -535,10 +552,20 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (episodesTab.isElementPresent(SHORT_TIMEOUT)) {
             suggestedTab.click();
         }
-        params.put("suggestedCellTitle", getSuggestedCells().get(0));
-        clickFirstSuggestedCell();
+        params.put("suggestedCellTitle", getTabCells().get(0));
+        clickFirstTabCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         params.clear();
+    }
+
+    public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
+        Map<String, String> params = new HashMap<>();
+        clickExtrasTab();
+        String[] extrasCellTitle = getTabCells().get(0).split(",");
+        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        clickFirstTabCell();
+        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(initPage(DisneyPlusVideoPlayerIOSPageBase.class).getTitleLabel()),
+                "Extras title is not the same as video player title");
     }
 
     public boolean isStaticTextLabelPresent(String label) {
@@ -582,5 +609,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getLiveNowBadge() {
         String liveNowBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_LIVE.getText());
         return getStaticTextByLabel(liveNowBadge);
+    }
+
+    public String getDetailsTabTitle() {
+        String[] contentDesc = contentDescription.getText().split(" is");
+        return contentDesc[0];
+    }
+
+    public boolean isSeasonRatingPresent() {
+        return seasonRating.isPresent();
     }
 }

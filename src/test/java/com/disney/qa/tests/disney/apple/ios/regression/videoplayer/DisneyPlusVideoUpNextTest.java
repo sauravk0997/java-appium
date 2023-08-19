@@ -140,7 +140,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         searchPage.searchForMedia("The Biggest Little Farm");
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.clickExtrasButton();
+        detailsPage.clickExtrasTab();
 
         //Initiate playback for "Extra" content from details page
         detailsPage.tapOnFirstContentTitle();

@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -245,6 +247,70 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(details.isContinueButtonPresent(), "Continue button was not found.");
         sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73881", "XMOBQA-72290"})
+    @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
+    public void verifyAnthologyDetailsTab() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
+
+        String mediaTitle = details.getMediaTitle();
+        details.clickDetailsTab();
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
+
+        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title not present.");
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
+        sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
+        sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
+        sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
+        sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73872", "XMOBQA-72293"})
+    @Test(description = "Verify Anthology Series - Suggested Tab", groups = {"Anthology"})
+    public void verifyAnthologySuggestedTab() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found.");
+        details.compareSuggestedTitleToMediaTitle(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72291", "XMOBQA-73871"})
+    @Test(description = "Verify Anthology Series - Extras Tab", groups = {"Anthology"})
+    public void verifyAnthologyExtrasTab() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
+
+        details.clickExtrasTab();
+        details.clickFirstTabCell();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
     }
 
