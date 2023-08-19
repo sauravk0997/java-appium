@@ -267,7 +267,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         details.clickDetailsTab();
         new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
 
-        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title not present.");
+        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
         sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
@@ -305,11 +305,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
-
-        details.clickExtrasTab();
-        details.clickFirstTabCell();
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
     }
