@@ -525,7 +525,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * This returns first tab cells in view. This can be used for Suggested tab, Episodes Tab or Extras tab.
+     * This returns first tab cells in view. This can be used for Suggested or Extras tab.
      * @return - Tab cells
      */
     public List<String> getTabCells() {

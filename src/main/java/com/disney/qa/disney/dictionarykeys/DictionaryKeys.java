@@ -114,7 +114,6 @@ public enum DictionaryKeys {
     DETAILS_FULL_DETAILS("details_fulldetails"),
     DETAILS_HERITAGE_COUNTDOWN("details_heritage_countdown"),
     DETAILS_NEGATIVE_STEREOTYPE_ADVISORY("details_negative_stereotype_advisory_full"),
-    DETAILS_SEASON_RATING("details_season_rating"),
     DETAILS_TOTAL_SEASON("detail_total_season"),
     DETAILS_TOTAL_SEASONS("detail_total_seasons"),
     DETAILS_WATCHLIST_REMOVE_BTN("details_watchlist_remove"),
