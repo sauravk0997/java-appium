@@ -26,8 +26,17 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
                 .until(it -> disneyPlusAppleTVDetailsPage.isOpened());
     }
 
-    public DisneyPlusAppleTVVideoPlayerPage waitForContentToEnd(long timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
+    public DisneyPlusAppleTVVideoPlayerPage waitForTvosContentToEnd(long timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> !isOpened() || isUpNextHeaderPresent());
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    public DisneyPlusAppleTVVideoPlayerPage waitForTvosTrailerToEnd(long timeOut, int polling) {
+        try {
+            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> !isOpened());
+        } catch (Exception e) {
+            throw new AssertionError(String.format("Trailer did not end, Exception: %s", e));
+        }
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 

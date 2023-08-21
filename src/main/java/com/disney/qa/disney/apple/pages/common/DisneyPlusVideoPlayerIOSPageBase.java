@@ -328,6 +328,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public DisneyPlusVideoPlayerIOSPageBase waitForTrailerToEnd(int timeOut, int polling) {
+        try {
+            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> !isOpened());
+        } catch (Exception e) {
+            throw new AssertionError(String.format("Trailer did not end, Exception: %s", e));
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
     public String getSubTitleLabel() {
         displayVideoController();
         return subtitleLabel.getText();

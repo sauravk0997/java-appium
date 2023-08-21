@@ -400,6 +400,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return trailerButton.isElementPresent();
     }
 
+    public ExtendedWebElement getTrailerButton() {
+        return trailerButton;
+    }
+
     public boolean isDownloadButtonDisplayed() {
         return movieDownloadButton.isElementPresent();
     }
