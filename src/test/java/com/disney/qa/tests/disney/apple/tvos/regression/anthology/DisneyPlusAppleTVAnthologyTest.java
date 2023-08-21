@@ -215,13 +215,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
     public void verifyAnthologyNoGroupWatchLive() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
+
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
@@ -248,6 +247,66 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during VOD state.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105988", "XCDQA-110055"})
+    @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
+    public void verifyAnthologyDetailsTab() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        String mediaTitle = details.getMediaTitle();
+        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
+
+        details.moveDown(1,1);
+        details.moveRight(3,1);
+        details.isFocused(details.getDetailsTab());
+        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Details tab content description is not present.");
+        sa.assertTrue(details.isReleaseDateDisplayed(), "Release date is not present.");
+        sa.assertTrue(details.isGenreDisplayed(), "Genre is not present.");
+        sa.assertTrue(details.isSeasonRatingPresent(), "Season rating is not present.");
+        sa.assertTrue(details.areFormatsDisplayed(), "Formats are not present.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105998", "XCDQA-110054"})
+    @Test(description = "Verify Anthology Series - Suggested Tab", groups = {"Anthology"})
+    public void verifyAnthologySuggestedTab() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
+        details.compareSuggestedTitleToDetailsTabTitle(sa);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105989", "XCDQA-110046"})
+    @Test(description = "Verify Anthology Series - Extras Tab", groups = {"Anthology"})
+    public void verifyAnthologyExtrasTab() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
+        details.compareExtrasTabToPlayerTitle(sa);
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {
