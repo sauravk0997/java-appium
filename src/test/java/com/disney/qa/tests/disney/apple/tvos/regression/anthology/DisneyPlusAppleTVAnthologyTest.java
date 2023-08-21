@@ -98,7 +98,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105994"})
     @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
-    public void  verifyAnthologyLiveBadge() {
+    public void verifyAnthologyLiveBadge() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
