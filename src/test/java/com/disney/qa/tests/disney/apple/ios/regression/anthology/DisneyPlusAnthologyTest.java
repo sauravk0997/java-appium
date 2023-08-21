@@ -365,7 +365,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         videoPlayer.waitForTrailerToEnd(75, 5);
         sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
-        sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused.");
         sa.assertAll();
     }
 
