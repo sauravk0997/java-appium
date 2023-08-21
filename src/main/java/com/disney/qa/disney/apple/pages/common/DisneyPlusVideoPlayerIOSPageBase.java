@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
@@ -316,24 +317,22 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     * @param timeOut
+     * @param timeout
      * @param polling
      */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeOut, int polling) {
-        try {
-            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> getRemainingTime() == 0);
-        } catch (Exception e) {
-            throw new AssertionError(String.format("Content did not end, Exception: %s", e));
-        }
+    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it ->  getRemainingTime() == 0);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForTrailerToEnd(int timeOut, int polling) {
-        try {
-            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> !isOpened());
-        } catch (Exception e) {
-            throw new AssertionError(String.format("Trailer did not end, Exception: %s", e));
-        }
+    /**
+     * Waits for trailer to end in player until video player is not open.
+     * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
+     * @param timeout
+     * @param polling
+     */
+    public DisneyPlusVideoPlayerIOSPageBase waitForTrailerToEnd(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Trailer did not end after " + timeout).until(it -> !isOpened());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
