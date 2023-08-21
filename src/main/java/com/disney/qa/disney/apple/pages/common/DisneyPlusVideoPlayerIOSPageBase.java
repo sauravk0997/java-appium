@@ -82,7 +82,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement youAreLiveButton;
 
     @FindBy(name = "titleLabel")
-    private ExtendedWebElement titleLabel;
+    protected ExtendedWebElement titleLabel;
 
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;

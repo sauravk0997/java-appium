@@ -56,7 +56,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
 
-    private ExtendedWebElement extrasTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_EXTRAS.getText()));
+    protected ExtendedWebElement extrasTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_EXTRAS.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
@@ -621,5 +621,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSeasonRatingPresent() {
         return seasonRating.isPresent();
+    }
+
+    public ExtendedWebElement getSuggestedTab() {
+        return suggestedTab;
+    }
+
+    public ExtendedWebElement getExtrasTab() {
+        return extrasTab;
     }
 }
