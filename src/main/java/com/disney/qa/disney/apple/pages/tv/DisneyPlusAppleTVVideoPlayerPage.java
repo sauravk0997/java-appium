@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
 
     public DisneyPlusAppleTVVideoPlayerPage waitForTvosContentToEnd(long timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> !isOpened() || isUpNextHeaderPresent());
+        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
