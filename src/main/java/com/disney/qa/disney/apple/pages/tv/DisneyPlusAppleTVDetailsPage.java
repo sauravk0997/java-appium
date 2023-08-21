@@ -140,7 +140,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         moveDown(1,1);
         moveRight(2,1);
         isFocused(detailsTab);
-        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same media title.");
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same as details title.");
         params.clear();
     }
 
