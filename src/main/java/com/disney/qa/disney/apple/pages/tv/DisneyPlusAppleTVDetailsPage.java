@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -128,36 +129,27 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return title.getText();
     }
 
-    @Override
-    public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
+    public void compareSuggestedTitleToDetailsTabTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
         moveDown(1,1);
         moveRight(1,1);
         isFocused(getSuggestedTab());
-        System.out.println(getContentItems(0).get(0));
-        params.put("suggestedCellTitle", getContentItems(0).get(0));
+        params.put("suggestedCellTitle", getTabCells().get(0));
         clickFirstTabCell(getSuggestedTab());
-        System.out.println(getMediaTitle());
-        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        isOpened();
+        moveDown(1,1);
+        moveRight(2,1);
+        isFocused(detailsTab);
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same media title.");
         params.clear();
     }
 
-    public void clickFirstSuggestedCell() {
-        String firstSuggestContentCell = getContentItems(0).get(0);
-        isFocused(getSuggestedTab());
-        moveDown(1,1);
-        System.out.println(getDriver().getPageSource());
-        System.out.println(isFocused(getDynamicCellByLabel(firstSuggestContentCell)));
-        getDynamicCellByLabel(firstSuggestContentCell).click();
-    }
-
-    public void clickFirstTabCell(ExtendedWebElement element) {
-        String firstTabContentCell = getContentItems(0).get(0);
-        if (isFocused(element)) {
+    public void clickFirstTabCell(ExtendedWebElement tab) {
+        String firstTabContentCell = getTabCells().get(0);
+        if (isFocused(tab)) {
             moveDown(1,1);
-            System.out.println(getDriver().getPageSource());
-            System.out.println(isFocused(getDynamicCellByLabel(firstTabContentCell)));
         }
+        LOGGER.info("Getting first tab content cell title");
         if (isFocused(getDynamicCellByLabel(firstTabContentCell))) {
             getDynamicCellByLabel(firstTabContentCell).click();
         }
@@ -165,14 +157,25 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @Override
     public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = initPage(DisneyPlusAppleTVVideoPlayerPage.class);
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         Map<String, String> params = new HashMap<>();
-        clickExtrasTab();
-        String[] extrasCellTitle = getContentItems(0).get(0).split(",");
+        moveDown(1,1);
+        moveRight(2,1);
+        isFocused(extrasTab);
+        String[] extrasCellTitle = getTabCells().get(0).split(",");
         params.put("extrasCellTitle", extrasCellTitle[0].trim());
         clickFirstTabCell(getExtrasTab());
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
                 "Extras title is not the same as video player title");
+    }
+
+    /**
+     * This returns first tab cells in view. This can be used for Suggested or Extras tab.
+     * @return - Tab cells
+     */
+    @Override
+    public List<String> getTabCells() {
+        return getContentItems(0);
     }
 }

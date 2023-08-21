@@ -243,7 +243,6 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Suggested Tab", groups = {"Anthology"})
     public void verifyAnthologySuggestedTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
@@ -251,11 +250,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
 
-
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
-        details.moveDown(1,1);
-        details.moveRight(1,1);
-        details.compareSuggestedTitleToMediaTitle(sa);
+        details.compareSuggestedTitleToDetailsTabTitle(sa);
         sa.assertAll();
     }
 
