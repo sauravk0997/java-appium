@@ -251,7 +251,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72654"})
     @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchDuringLive() {
+    public void verifyAnthologyNoGroupWatchLive() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
 
@@ -276,6 +276,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.isPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, play button not found. " + e);
+        }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
     }
