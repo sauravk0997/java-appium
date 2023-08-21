@@ -231,6 +231,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
+    protected ExtendedWebElement staticTextNameContains;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -351,6 +354,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
         return staticTextLabelContains.format(label);
+    }
+
+    public ExtendedWebElement getStaticTextByNameContains(String name) {
+        return staticTextNameContains.format(name);
     }
 
     public ExtendedWebElement getTypeCellLabelContains(String label) {
