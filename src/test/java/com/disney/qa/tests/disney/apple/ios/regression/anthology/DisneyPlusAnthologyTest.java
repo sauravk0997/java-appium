@@ -319,7 +319,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
             throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
         }
