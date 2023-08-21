@@ -6,6 +6,7 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
+
+    @ExtendedFindBy(accessibilityId = "title")
+    private ExtendedWebElement title;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -117,5 +121,64 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         isFocused(getTypeButtonByLabel(DETAILS));
         String[] detailsTabYear = releaseDate.getText().split(", ");
         return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
+    }
+
+    @Override
+    public String getDetailsTabTitle() {
+        return title.getText();
+    }
+
+    @Override
+    public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
+        Map<String, String> params = new HashMap<>();
+        moveDown(1,1);
+        moveRight(1,1);
+        isFocused(getSuggestedTab());
+        System.out.println(getContentItems(0).get(0));
+        params.put("suggestedCellTitle", getContentItems(0).get(0));
+        clickFirstSuggestedCell();
+        System.out.println(getMediaTitle());
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        params.clear();
+    }
+
+    @Override
+    public void clickFirstSuggestedCell() {
+        String firstSuggestContentCell = getContentItems(0).get(0);
+        isFocused(getSuggestedTab());
+        moveDown(1,1);
+        System.out.println(getDriver().getPageSource());
+        System.out.println(isFocused(getDynamicCellByLabel(firstSuggestContentCell)));
+        getDynamicCellByLabel(firstSuggestContentCell).click();
+    }
+
+    public void clickFirstExtraCell() {
+        String firstExtrasContentCell = getContentItems(0).get(0);
+        if (isFocused(getSuggestedTab())) {
+            moveDown(1,1);
+            System.out.println(getDriver().getPageSource());
+            System.out.println(isFocused(getDynamicCellByLabel(firstExtrasContentCell)));
+        }
+        if (isFocused(getDynamicCellByLabel(firstExtrasContentCell))) {
+            getDynamicCellByLabel(firstExtrasContentCell).click();
+        }
+    }
+
+    public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = initPage(DisneyPlusAppleTVVideoPlayerPage.class);
+        Map<String, String> params = new HashMap<>();
+        clickExtrasTab();
+        String[] extrasCellTitle = getContentItems(0).get(0).split(",");
+        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        clickFirstExtraCell();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
+                "Extras title is not the same as video player title");
+    }
+
+    @Override
+    public void clickExtrasTab() {
+
+        extrasTab.click();
     }
 }
