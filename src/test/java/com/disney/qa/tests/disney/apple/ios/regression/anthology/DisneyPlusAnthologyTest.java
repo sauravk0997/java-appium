@@ -334,7 +334,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found. " + e);
         }
