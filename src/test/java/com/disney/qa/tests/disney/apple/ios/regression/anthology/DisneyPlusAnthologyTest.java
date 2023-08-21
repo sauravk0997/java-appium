@@ -250,12 +250,16 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73881", "XMOBQA-72290"})
     @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
     public void verifyAnthologyDetailsTab() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
 
