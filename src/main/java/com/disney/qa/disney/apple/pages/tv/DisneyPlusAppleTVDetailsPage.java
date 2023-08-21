@@ -142,7 +142,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         params.clear();
     }
 
-    @Override
     public void clickFirstSuggestedCell() {
         String firstSuggestContentCell = getContentItems(0).get(0);
         isFocused(getSuggestedTab());

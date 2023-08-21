@@ -44,9 +44,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "logoImage")
     protected ExtendedWebElement logoImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'EXTRAS'`][1]")
-    private ExtendedWebElement extrasButton;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -287,10 +284,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getDynamicAccessibilityId(seasonsButton).click();
     }
     public void clickExtrasTab() {
-        if (!extrasButton.isElementPresent()) {
-            new IOSUtils().swipePageTillElementTappable(extrasButton, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+        if (!extrasTab.isPresent()) {
+            new IOSUtils().swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
         }
-        extrasButton.click();
+        extrasTab.click();
     }
 
     public boolean isExtrasTabPresent() {
@@ -495,6 +492,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return actors;
     }
 
+    public ExtendedWebElement getContentDetailsPage() { return contentDetailsPage; }
+
+    public ExtendedWebElement getFormats() { return formats; }
+
     public ExtendedWebElement getEpisodesTab() {
         return episodesTab;
     }
@@ -523,13 +524,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByName("heroImage").isPresent();
     }
 
-    public List<String> getSuggestedCells() {
+    /**
+     * This returns first tab cells in view. This can be used for Suggested or Extras tab.
+     * @return - Tab cells
+     */
+    public List<String> getTabCells() {
         return getContentItems(6);
     }
 
-    public void clickFirstSuggestedCell() {
-        String firstSuggestContentCell = getSuggestedCells().get(0);
-        getDynamicCellByLabel(firstSuggestContentCell).click();
+    public void clickFirstTabCell() {
+        String firstTabCell = getTabCells().get(0);
+        getDynamicCellByLabel(firstTabCell).click();
     }
 
     public boolean isSuggestedTabPresent() {
@@ -544,10 +549,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (episodesTab.isElementPresent(SHORT_TIMEOUT)) {
             suggestedTab.click();
         }
-        params.put("suggestedCellTitle", getSuggestedCells().get(0));
-        clickFirstSuggestedCell();
+        params.put("suggestedCellTitle", getTabCells().get(0));
+        clickFirstTabCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         params.clear();
+    }
+
+    public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        Map<String, String> params = new HashMap<>();
+        clickExtrasTab();
+        String[] extrasCellTitle = getTabCells().get(0).split(",");
+        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        clickFirstTabCell();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
+                "Extras title is not the same as video player title");
     }
 
     public boolean isStaticTextLabelPresent(String label) {
