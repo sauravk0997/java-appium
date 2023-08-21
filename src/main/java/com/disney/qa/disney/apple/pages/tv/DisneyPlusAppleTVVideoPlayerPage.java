@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
 
     /**
-     * Waits for trailer to end in player until Up Next End Card present.
+     * Waits for content to end in player until Up Next End Card present.
      * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
      * @param timeout
      * @param polling
