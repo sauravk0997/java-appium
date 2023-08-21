@@ -298,7 +298,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void verifyAnthologyExtrasTab() {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
@@ -307,6 +306,44 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
         details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72654"})
+    @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchLive() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.doesAiringBadgeContainLive());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+        }
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73936"})
+    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchVOD() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, play button not found. " + e);
+        }
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
     }
 
     private void searchAndOpenDWTSDetails() {

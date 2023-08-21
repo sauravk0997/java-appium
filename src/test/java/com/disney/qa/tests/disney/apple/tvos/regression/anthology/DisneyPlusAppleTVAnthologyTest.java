@@ -211,6 +211,43 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106679"})
+    @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchLive() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, play button not found. " + e);
+        }
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during VOD state.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110153"})
+    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchVOD() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during live event.");
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105988", "XCDQA-110055"})
     @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
@@ -247,6 +284,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
 
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
