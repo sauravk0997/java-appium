@@ -41,4 +41,11 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     public boolean isWatchingLivePresent() {
         return watchingLive.isPresent();
     }
+
+    @Override
+    public String getTitleLabel() {
+        LOGGER.info("Pausing playback to see video player title..");
+        clickSelect();
+        return titleLabel.getText();
+    }
 }

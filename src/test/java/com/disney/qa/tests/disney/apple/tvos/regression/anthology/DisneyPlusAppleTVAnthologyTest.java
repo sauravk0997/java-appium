@@ -223,6 +223,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
+
         String mediaTitle = details.getMediaTitle();
         sa.assertTrue(details.isOpened(), "Details page did not open.");
         sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
@@ -266,6 +267,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
+
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
         details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();

@@ -165,8 +165,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         String[] extrasCellTitle = getTabCells().get(0).split(",");
         params.put("extrasCellTitle", extrasCellTitle[0].trim());
         clickFirstTabCell(getExtrasTab());
+        videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
+        String[] videoPlayerTitle = videoPlayer.getTitleLabel().split("32s");
+        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayerTitle[0].trim()),
                 "Extras title is not the same as video player title");
     }
 
