@@ -248,6 +248,38 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72654"})
+    @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchDuringLive() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.doesAiringBadgeContainLive());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+        }
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73936"})
+    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
+    public void verifyAnthologyNoGroupWatchVOD() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
