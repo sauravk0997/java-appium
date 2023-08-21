@@ -622,4 +622,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getSuggestedTab() {
         return suggestedTab;
     }
+
+    public ExtendedWebElement getExtrasTab() {
+        return extrasTab;
+    }
 }

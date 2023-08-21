@@ -136,7 +136,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         isFocused(getSuggestedTab());
         System.out.println(getContentItems(0).get(0));
         params.put("suggestedCellTitle", getContentItems(0).get(0));
-        clickFirstSuggestedCell();
+        clickFirstTabCell(getSuggestedTab());
         System.out.println(getMediaTitle());
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         params.clear();
@@ -151,33 +151,28 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         getDynamicCellByLabel(firstSuggestContentCell).click();
     }
 
-    public void clickFirstExtraCell() {
-        String firstExtrasContentCell = getContentItems(0).get(0);
-        if (isFocused(getSuggestedTab())) {
+    public void clickFirstTabCell(ExtendedWebElement element) {
+        String firstTabContentCell = getContentItems(0).get(0);
+        if (isFocused(element)) {
             moveDown(1,1);
             System.out.println(getDriver().getPageSource());
-            System.out.println(isFocused(getDynamicCellByLabel(firstExtrasContentCell)));
+            System.out.println(isFocused(getDynamicCellByLabel(firstTabContentCell)));
         }
-        if (isFocused(getDynamicCellByLabel(firstExtrasContentCell))) {
-            getDynamicCellByLabel(firstExtrasContentCell).click();
+        if (isFocused(getDynamicCellByLabel(firstTabContentCell))) {
+            getDynamicCellByLabel(firstTabContentCell).click();
         }
     }
 
+    @Override
     public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = initPage(DisneyPlusAppleTVVideoPlayerPage.class);
         Map<String, String> params = new HashMap<>();
         clickExtrasTab();
         String[] extrasCellTitle = getContentItems(0).get(0).split(",");
         params.put("extrasCellTitle", extrasCellTitle[0].trim());
-        clickFirstExtraCell();
+        clickFirstTabCell(getExtrasTab());
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
                 "Extras title is not the same as video player title");
-    }
-
-    @Override
-    public void clickExtrasTab() {
-
-        extrasTab.click();
     }
 }
