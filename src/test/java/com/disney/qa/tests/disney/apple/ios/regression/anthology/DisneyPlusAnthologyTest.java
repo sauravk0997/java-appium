@@ -346,6 +346,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
     }
 
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72298"})
     @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
     public void verifyAnthologyFeaturedVOD() {
