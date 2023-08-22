@@ -52,6 +52,7 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isChannelLogoPresent() { return channelLogo.isPresent(); }
 
+    @Override
     public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
 
 }
