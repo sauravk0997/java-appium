@@ -902,7 +902,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.9
         downloadsPage
-                .getDynamicIosClassChainElementTypeImage(
+                .typeImageLabelContains(
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(
                                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,

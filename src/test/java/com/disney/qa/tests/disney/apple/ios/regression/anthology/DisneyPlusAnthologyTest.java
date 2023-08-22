@@ -211,7 +211,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
 
         //Play downloaded episode
-        downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
+        downloads.typeImageLabelContains(DANCING_WITH_THE_STARS).click();
         downloads.getTypeButtonContainsLabel("Play").click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
@@ -345,6 +345,40 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
     }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72298"})
+    @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
+    public void verifyAnthologyFeaturedVOD() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        System.out.println(details.isAudioLabel51Present());
+        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
+        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
+        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "Subtitles advisory was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("Audio Descriptions").isPresent(), "Audio description advisory was not found.");
+        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
+        sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
+        sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
+
+        details.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback.");
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
+        sa.assertAll();
+    }
+
+
 
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
