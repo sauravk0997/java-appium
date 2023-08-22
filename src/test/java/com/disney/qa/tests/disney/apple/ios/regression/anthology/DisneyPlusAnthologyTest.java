@@ -377,8 +377,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
-
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
