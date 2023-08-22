@@ -60,7 +60,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
-    private ExtendedWebElement typeImageLabelContains;
+    private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
     protected ExtendedWebElement staticTypeTextViewValue;
 
@@ -242,8 +242,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), DELAY, SHORT_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
     }
 
-    public ExtendedWebElement typeImageLabelContains(String label) {
-        return typeImageLabelContains.format(label);
+    public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
+        return dynamicIosClassChainElementTypeImage.format(label);
     }
 
     public void clickToggleView() {

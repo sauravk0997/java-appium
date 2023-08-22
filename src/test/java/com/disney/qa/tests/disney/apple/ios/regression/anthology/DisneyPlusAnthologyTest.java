@@ -211,7 +211,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
 
         //Play downloaded episode
-        downloads.typeImageLabelContains(DANCING_WITH_THE_STARS).click();
+        downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
         downloads.getTypeButtonContainsLabel("Play").click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
