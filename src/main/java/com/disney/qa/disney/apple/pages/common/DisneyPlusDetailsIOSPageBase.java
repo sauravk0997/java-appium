@@ -136,6 +136,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "seasonRating")
     private ExtendedWebElement seasonRating;
 
+    @ExtendedFindBy(accessibilityId = "progressBar")
+    private ExtendedWebElement progressBar;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -379,7 +382,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPlayButtonDisplayed() {
-        return getPlayButton().isElementPresent();
+        return getPlayButton().isPresent();
     }
 
     public boolean isGroupWatchButtonDisplayed() {
@@ -387,7 +390,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isWatchlistButtonDisplayed() {
-        return watchlistButton.isElementPresent();
+        return watchlistButton.isPresent();
     }
 
     public void clickWatchlistButton() { watchlistButton.click(); }
@@ -625,5 +628,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getExtrasTab() {
         return extrasTab;
+    }
+
+    public boolean isProgressBarPresent() {
+        return progressBar.isPresent();
     }
 }
