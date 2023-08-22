@@ -4,7 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
-import kotlin.time.ExperimentalTime;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -53,5 +52,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isChannelLogoPresent() { return channelLogo.isPresent(); }
 
-    public boolean isThumbnnailViewPresent() { return thumbnailImageView.isPresent(); }
+    public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
+
 }

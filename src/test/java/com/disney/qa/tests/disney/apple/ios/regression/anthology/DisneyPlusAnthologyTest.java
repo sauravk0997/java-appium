@@ -399,7 +399,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         liveEventModal.isOpened();
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubtitleLabelPresent(), "Subtitle label is not present.");
-        sa.assertTrue(liveEventModal.isThumbnnailViewPresent(), "Thumbnail view is not present.");
+        sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
         sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
         sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
         sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");

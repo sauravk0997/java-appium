@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -314,7 +313,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
     public void verifyAnthologyFeaturedVOD() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
@@ -364,7 +363,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.clickWatchButton();
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubheadLineLabelPresent(), "Subhead line label is not present.");
-        sa.assertTrue(liveEventModal.isThumbnnailViewPresent(), "Thumbnail view is not present.");
+        sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
         sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
         sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
         sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
