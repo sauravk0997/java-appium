@@ -384,12 +384,30 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Watch button not found. " + e);
+        }
 
+        details.clickWatchButton();
+        liveEventModal.isOpened();
+        sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
+        sa.assertTrue(liveEventModal.isSubtitleLabelPresent(), "Subtitle label is not present.");
+        sa.assertTrue(liveEventModal.isThumbnnailViewPresent(), "Thumbnail view is not present.");
+        sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
+        sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
+        sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
+        sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
+        liveEventModal.getDetailsButton().click();
+        sa.assertTrue(details.isOpened(), "Details page was not opened.");
+        videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
 
