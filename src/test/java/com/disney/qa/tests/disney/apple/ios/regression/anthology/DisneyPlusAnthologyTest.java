@@ -346,6 +346,21 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72297"})
+    @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
+    public void verifyAnthologyLiveModal() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        
+
+        sa.assertAll();
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);

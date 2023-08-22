@@ -309,6 +309,20 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})
+    @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
+    public void verifyAnthologLiveModal() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertAll();
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
