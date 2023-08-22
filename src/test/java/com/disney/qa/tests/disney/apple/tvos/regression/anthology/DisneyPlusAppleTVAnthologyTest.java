@@ -309,6 +309,39 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105993"})
+    @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
+    public void verifyAnthologyFeaturedVOD() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
+        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
+        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "Subtitles advisory was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("Audio Descriptions").isPresent(), "Audio description advisory was not found.");
+        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
+        sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
+        sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
+
+        details.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        details.clickMenuTimes(1,1);
+        details.isOpened();
+        sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-109938"})
     @Test(description = "Verify Anthology Series - Trailer", groups = {"Anthology"})
     public void verifyAnthologyTrailer() {
