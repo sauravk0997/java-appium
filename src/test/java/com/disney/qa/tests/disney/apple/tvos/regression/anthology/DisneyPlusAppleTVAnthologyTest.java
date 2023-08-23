@@ -284,7 +284,6 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
 
@@ -340,6 +339,31 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-109938"})
+    @Test(description = "Verify Anthology Series - Trailer", groups = {"Anthology"})
+    public void verifyAnthologyTrailer() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        DisneyOffer offer = new DisneyOffer();
+        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+
+        logIn(entitledUser);
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
+
+        details.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+
+        videoPlayer.waitForTvosTrailerToEnd(75, 5);
+        sa.assertTrue(details.isOpened(), "After trailer completed, did not return to details page.");
+        sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused on.");
+        sa.assertAll();
+    }
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})
     @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
