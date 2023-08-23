@@ -377,6 +377,27 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73863"})
+    @Test(description = "Verify Anthology Series - Trailer", groups = {"Anthology"})
+    public void verifyAnthologyTrailer() {
+        initialSetup();
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        searchAndOpenDWTSDetails();
+
+        sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
+
+        details.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
+
+        videoPlayer.waitForTrailerToEnd(75, 5);
+        sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
