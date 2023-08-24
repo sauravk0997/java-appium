@@ -101,8 +101,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
+        setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
@@ -442,21 +441,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         search.searchForMedia(DANCING_WITH_THE_STARS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-    }
-
-    private void QALogin() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-
-        welcomePage.isOpened();
-        welcomePage.clickLogInButton();
-        loginPage.submitEmail("cristina.solmaz+4375@disneyplustesting.com");
-        passwordPage.submitPasswordForLogin("G0Disney!");
-        whoseWatchingPage.clickProfile("Test");
-        homePage.isOpened();
     }
 }
 
