@@ -26,7 +26,6 @@ public enum DictionaryKeys {
     BACK_BTN("btn_back"),
     BILLING_INFO_TITLE("billinginfo_title"),
     BADGE_TEXT_DATE_TIME("badge_text_date_time"),
-    BADGE_LABEL_EVENT_LIVE("badge_label_event_live"),
     BADGE_LABEL_EVENT_UPCOMING("badge_label_event_upcoming"),
     BADGE_LABEL_EVENT_UPCOMING_TODAY("badge_label_event_upcoming_today"),
     BTN_ACCOUNT_CREATE_PASSWORD_SAVE("button_account_create_password_save"),

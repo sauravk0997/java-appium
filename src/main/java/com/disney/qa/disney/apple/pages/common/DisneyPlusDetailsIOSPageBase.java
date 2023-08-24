@@ -607,11 +607,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(upcomingTodayBadge);
     }
 
-    public ExtendedWebElement getLiveNowBadge() {
-        String liveNowBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_LIVE.getText());
-        return getStaticTextByLabel(liveNowBadge);
-    }
-
     public String getDetailsTabTitle() {
         String[] contentDesc = contentDescription.getText().split(" is");
         return contentDesc[0];
