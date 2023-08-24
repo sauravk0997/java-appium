@@ -170,6 +170,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
+        if (getTypeButtonByName("WATCH").isPresent()) {
+            getTypeButtonByName("WATCH").click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
     public boolean isContinueButtonPresent() {
         return getTypeButtonByName("bookmarked").isElementPresent();
     }
@@ -578,18 +587,19 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
     }
 
-    public ExtendedWebElement getLiveProgress() {
-        String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started");
-        String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
-                Map.of("x", liveProgressMinutes[1]));
-        return getDynamicAccessibilityId(liveProgress);
-    }
-
-    public ExtendedWebElement getLiveProgressTime() {
-        String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
-        String liveStartedAt = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
-                Map.of("x", liveProgressTimeMinutes[1]));
-        return getDynamicAccessibilityId(liveStartedAt);
+    public void validateLiveProgress(SoftAssert sa) {
+        if (getStaticTextByLabelContains("Started").isPresent()) {
+            String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started ");
+            String[] minutes = liveProgressMinutes[1].split(" ");
+            String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
+                    Map.of("x", Integer.valueOf(minutes[0])));
+            sa.assertTrue(getDynamicAccessibilityId(liveProgress).isPresent(), "'Live Progress' was not present");
+        } else if (getStaticTextByLabelContains("Started at").isPresent()) {
+            String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
+            String liveProgressTime = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
+                    Map.of("x", Integer.valueOf(liveProgressTimeMinutes[1])));
+            sa.assertTrue(getDynamicAccessibilityId(liveProgressTime).isPresent(), "'Live Progress Time' was not present.");
+        }
     }
 
     public ExtendedWebElement getUpcomingDateTime() {

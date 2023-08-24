@@ -71,6 +71,16 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
+        if (getTypeButtonByName("WATCH").isPresent()) {
+            getTypeButtonByName("WATCH").click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
     public boolean compareEpisodeNum() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         isOpened();

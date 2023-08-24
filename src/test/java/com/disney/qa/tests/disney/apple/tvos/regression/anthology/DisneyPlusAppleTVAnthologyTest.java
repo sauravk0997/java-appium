@@ -113,12 +113,11 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
 
-        sa.assertTrue(details.getLiveNowBadge().isElementPresent(), "Live Now badge was not found.");
-        sa.assertTrue(details.getLiveProgress().isElementPresent() || details.getLiveProgressTime().isElementPresent(),
-                "Live progress indicator not found.");
+        details.validateLiveProgress(sa);
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Details Page");
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
         liveEventModal.clickDetailsButton();
         sa.assertAll();
