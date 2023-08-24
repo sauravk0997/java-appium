@@ -8,6 +8,7 @@
     <parameter name="jenkinsJobName" value="DisneyPlus-tvOS-Anthology-QA"/>
     <parameter name="jenkinsEnvironments" value="QA"/>
     <parameter name="provider" value="mcloud"/>
+    <parameter name="stringParam::branch::SCM repository branch to run against (use 'refs/tags/1.0' to clone by tag)" value="cs/qaDWTS"/>
     <parameter name="capabilities"
                value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
     <parameter name="jenkinsEmail"
