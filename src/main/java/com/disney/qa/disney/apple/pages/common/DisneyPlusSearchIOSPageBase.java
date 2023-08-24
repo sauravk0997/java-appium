@@ -16,20 +16,17 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
 	//LOCATORS
 
-	private ExtendedWebElement moviesTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_MOVIES_TITLE.getText()),
-			DictionaryKeys.NAV_MOVIES_TITLE.getText());
+							DictionaryKeys.NAV_MOVIES_TITLE.getText()));
 
-	private ExtendedWebElement originalsTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement originalsTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_ORIGINALS_TITLE.getText()),
-			DictionaryKeys.NAV_ORIGINALS_TITLE.getText());
+							DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
 
-	private ExtendedWebElement seriesTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement seriesTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_SERIES_TITLE.getText()),
-			DictionaryKeys.NAV_SERIES_TITLE.getText());
+							DictionaryKeys.NAV_SERIES_TITLE.getText()));
 
 	@FindBy(id = "Search")
 	private ExtendedWebElement keyboardSearchButton;
