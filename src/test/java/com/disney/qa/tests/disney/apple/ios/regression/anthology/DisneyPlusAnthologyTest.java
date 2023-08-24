@@ -113,7 +113,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain live badge on Details Page");
 
-        details.clickQAWatchButton();
+        details.clickWatchButton();
         liveEventModal.isOpened();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain Live badge on Live Event Modal");
         liveEventModal.validateLiveProgress(sa);

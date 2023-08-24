@@ -170,15 +170,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
-        if (getTypeButtonByName("WATCH").isPresent()) {
-            getTypeButtonByName("WATCH").click();
-        } else {
-            getTypeButtonByName("watch").click();
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public boolean isContinueButtonPresent() {
         return getTypeButtonByName("bookmarked").isElementPresent();
     }

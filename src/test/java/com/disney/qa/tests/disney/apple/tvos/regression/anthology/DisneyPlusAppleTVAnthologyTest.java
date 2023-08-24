@@ -118,7 +118,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Details Page");
 
-        details.clickQAWatchButton();
+        details.clickWatchButton();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
         liveEventModal.validateLiveProgress(sa);
         sa.assertAll();
