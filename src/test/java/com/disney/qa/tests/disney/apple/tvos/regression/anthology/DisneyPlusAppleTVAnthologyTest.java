@@ -106,7 +106,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
@@ -410,5 +411,19 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
         searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
         detailsPage.isOpened();
+    }
+
+    private void QALogin() {
+        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        welcomePage.isOpened();
+        welcomePage.clickLogInButton();
+        loginPage.isOpened();
+        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+4375@disneyplustesting.com");
+        passwordPage.logInWithPasswordLocalized("G0Disney!");
+        whoIsWatchingPage.getTypeCellLabelContains("Test").clickIfPresent();
     }
 }
