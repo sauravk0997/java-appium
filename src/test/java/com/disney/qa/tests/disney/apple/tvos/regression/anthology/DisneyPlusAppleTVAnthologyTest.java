@@ -20,6 +20,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
+    private static final String LIVE = "LIVE";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
@@ -108,9 +109,9 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
         }
 
         details.validateLiveProgress(sa);
@@ -119,7 +120,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         details.clickQAWatchButton();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
-        liveEventModal.clickDetailsButton();
+        liveEventModal.validateLiveProgress(sa);
         sa.assertAll();
     }
 
