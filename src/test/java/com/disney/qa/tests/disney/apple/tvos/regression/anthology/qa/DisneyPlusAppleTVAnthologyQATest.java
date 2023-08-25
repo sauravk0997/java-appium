@@ -423,7 +423,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         searchPage.isOpened();
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
         searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
-        detailsPage.isOpened();
+        detailsPage.isContentDetailsPagePresent();
     }
 
     private void QALogin() {

@@ -37,7 +37,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
         searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DANCING_WITH_THE_STARS + " details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS + " details page did not open.");
         sa.assertTrue(firstDisplayTitle[0].equalsIgnoreCase(detailsPage.getMediaTitle()), "Search result title does not match Details page media title.");
         sa.assertAll();
     }
@@ -60,7 +60,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
         moreMenu.getDynamicCellByLabel(mediaTitle).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertAll();
     }
 
@@ -82,7 +82,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
             throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
         }
 
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isElementPresent(), "Airing badge label is not displayed.");
         sa.assertTrue(detailsPage.getUpcomingDateTime().isElementPresent(), "Upcoming Date and Time was not found.");
         sa.assertTrue(detailsPage.getUpcomingTodayBadge().isElementPresent() || detailsPage.getUpcomingBadge().isElementPresent(),
