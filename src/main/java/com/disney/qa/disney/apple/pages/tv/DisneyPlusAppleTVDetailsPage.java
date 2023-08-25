@@ -170,4 +170,42 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public List<String> getTabCells() {
         return getContentItems(0);
     }
+
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
+    private static final String WATCH = "WATCH";
+    private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String PLAY = "PLAY";
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
+        if (getTypeButtonByName(WATCH).isPresent()) {
+            getTypeButtonByName(WATCH).click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
+        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
+            getTypeButtonByName(BOOKMARKED).click();
+        } else {
+            getTypeButtonByName("bookmarked").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
+        if (getTypeButtonByName(PLAY).isPresent()) {
+            getTypeButtonByName(PLAY).click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
 }

@@ -23,6 +23,11 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private static final String DOWNLOAD_COMPLETED = "Download completed";
+    private static final String WATCH = "WATCH";
+    private static final String LOWER_CASE_WATCH = "watch";
+    private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
+    private static final String PLAY = "PLAY";
 
     //LOCATORS
 
@@ -161,17 +166,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
-        getTypeButtonByName("watch").click();
+        getTypeButtonByName(LOWER_CASE_WATCH).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName("bookmarked").click();
+        getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public boolean isContinueButtonPresent() {
-        return getTypeButtonByName("bookmarked").isElementPresent();
+        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -617,5 +622,49 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isProgressBarPresent() {
         return progressBar.isPresent();
+    }
+
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
+        if (getTypeButtonByName(WATCH).isPresent()) {
+            getTypeButtonByName(WATCH).click();
+        } else {
+            getTypeButtonByName(LOWER_CASE_WATCH).click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAContinueButton() {
+        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
+            getTypeButtonByName(BOOKMARKED).click();
+        } else {
+            getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAPlayButton() {
+        if (getTypeButtonByName(PLAY).isPresent()) {
+            getTypeButtonByName(PLAY).click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public boolean isQAWatchButtonPresent() {
+        return getStaticTextByLabelContains(WATCH).isPresent() || getStaticTextByLabelContains(LOWER_CASE_WATCH).isPresent();
+    }
+
+    public boolean isQAContinueButtonPresent() {
+        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isPresent() || getTypeButtonByName(BOOKMARKED).isPresent();
+    }
+
+    public boolean isContentDetailsPagePresent() {
+        return getTypeOtherByName("contentDetailsPage").isPresent();
     }
 }

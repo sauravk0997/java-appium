@@ -11,7 +11,6 @@
     <parameter name="jenkinsEnvironments" value="QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="stringParam::branch::SCM repository branch to run against (use 'refs/tags/1.0' to clone by tag)" value="cs/qaDWTS"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
