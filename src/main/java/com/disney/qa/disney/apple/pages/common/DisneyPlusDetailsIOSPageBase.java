@@ -621,7 +621,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     /**
      * Below are QA env specific methods for DWTS Anthology.
-     *
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
      */
 
     public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {

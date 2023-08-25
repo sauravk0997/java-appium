@@ -171,7 +171,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getContentItems(0);
     }
 
-    //QA methods to be deprecated when DWTS Test Streams are not available any longer
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
 
     @Override
     public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
