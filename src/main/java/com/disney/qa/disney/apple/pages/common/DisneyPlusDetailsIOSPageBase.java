@@ -23,6 +23,11 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private static final String DOWNLOAD_COMPLETED = "Download completed";
+    private static final String WATCH = "WATCH";
+    private static final String LOWER_CASE_WATCH = "watch";
+    private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
+    private static final String PLAY = "PLAY";
 
     //LOCATORS
 
@@ -623,12 +628,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * Below are QA env specific methods for DWTS Anthology.
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
      */
-    private static final String WATCH = "WATCH";
-    private static final String LOWER_CASE_WATCH = "watch";
-    private static final String BOOKMARKED = "BOOKMARKED";
-    private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
-    private static final String PLAY = "PLAY";
-
 
     public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
         if (getTypeButtonByName(WATCH).isPresent()) {
