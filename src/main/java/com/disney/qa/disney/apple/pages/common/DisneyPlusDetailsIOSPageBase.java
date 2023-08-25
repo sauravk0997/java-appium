@@ -161,17 +161,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
-        getTypeButtonByName("watch").click();
+        getTypeButtonByName(lowercaseWatch).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName("bookmarked").click();
+        getTypeButtonByName(lowercaseBookmarked).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public boolean isContinueButtonPresent() {
-        return getTypeButtonByName("bookmarked").isElementPresent();
+        return getTypeButtonByName(lowercaseBookmarked).isElementPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -624,14 +624,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
      */
     private static final String WATCH = "WATCH";
+    private static final String lowercaseWatch = "watch";
     private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String lowercaseBookmarked = "bookmarked";
     private static final String PLAY = "PLAY";
+
 
     public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
         if (getTypeButtonByName(WATCH).isPresent()) {
             getTypeButtonByName(WATCH).click();
         } else {
-            getTypeButtonByName("watch").click();
+            getTypeButtonByName(lowercaseWatch).click();
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -640,7 +643,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (getTypeButtonByName(BOOKMARKED).isPresent()) {
             getTypeButtonByName(BOOKMARKED).click();
         } else {
-            getTypeButtonByName("bookmarked").click();
+            getTypeButtonByName(lowercaseBookmarked).click();
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -655,11 +658,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isQAWatchButtonPresent() {
-        return getStaticTextByLabelContains("WATCH").isPresent() || getStaticTextByLabelContains("watch").isPresent();
+        return getStaticTextByLabelContains(WATCH).isPresent() || getStaticTextByLabelContains(lowercaseWatch).isPresent();
     }
 
     public boolean isQAContinueButtonPresent() {
-        return getTypeButtonByName("bookmarked").isPresent() || getTypeButtonByName("BOOKMARKED").isPresent();
+        return getTypeButtonByName(lowercaseBookmarked).isPresent() || getTypeButtonByName(BOOKMARKED).isPresent();
     }
 
     public boolean isContentDetailsPagePresent() {
