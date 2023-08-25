@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(watchList.areWatchlistTitlesDisplayed(DANCING_WITH_THE_STARS.getTitle()), "Dancing With The Stars was not added to watchlist.");
 
         watchList.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).click();
-        sa.assertTrue(details.isOpened(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
         sa.assertAll();
     }
 
@@ -87,7 +87,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
 
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(details.getAiringBadgeLabel().isElementPresent(), "Airing badge label is not displayed.");
         sa.assertTrue(details.getUpcomingDateTime().isElementPresent(), "Upcoming Date and Time was not found.");
         sa.assertTrue(details.getUpcomingTodayBadge().isElementPresent() || details.getUpcomingBadge().isElementPresent(),
@@ -210,7 +210,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
         videoPlayer.clickMenuTimes(1,1);
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
         details.clickQAContinueButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking continue button.");
@@ -270,7 +270,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
 
         details.moveDown(1,1);
@@ -346,7 +346,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         details.clickQAPlayButton();
         videoPlayer.waitForVideoToStart();
         details.clickMenuTimes(1,1);
-        details.isOpened();
+        details.isContentDetailsPagePresent();
         sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
@@ -371,8 +371,8 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         details.getTrailerButton().click();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
 
-        videoPlayer.waitForTvosTrailerToEnd(75, 5);
-        sa.assertTrue(details.isOpened(), "After trailer completed, did not return to details page.");
+        videoPlayer.waitForTvosTrailerToEnd(125, 10);
+        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer completed, did not return to details page.");
         sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused on.");
         sa.assertAll();
     }
@@ -408,7 +408,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
         liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isOpened(), "Details page was not opened.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }

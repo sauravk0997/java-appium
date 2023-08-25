@@ -658,4 +658,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isQAContinueButtonPresent() {
         return getTypeButtonByName("bookmarked").isPresent() || getTypeButtonByName("BOOKMARKED").isPresent();
     }
+
+    public boolean isContentDetailsPagePresent() {
+        return getTypeOtherByName("contentDetailsPage").isPresent();
+    }
 }

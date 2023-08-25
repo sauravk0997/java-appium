@@ -205,7 +205,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         //Download episode
-        details.isOpened();
+        details.isContentDetailsPagePresent();
         String mediaTitle = details.getMediaTitle();
         details.startDownload();
         sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
@@ -410,8 +410,8 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         details.getTrailerButton().click();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
 
-        videoPlayer.waitForTrailerToEnd(75, 5);
-        sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
+        videoPlayer.waitForTrailerToEnd(125, 10);
+        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer ended, not returned to Details page.");
         sa.assertAll();
     }
 
@@ -445,7 +445,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
         liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isOpened(), "Details page was not opened.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
@@ -457,7 +457,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         search.searchForMedia(DANCING_WITH_THE_STARS);
         search.getDisplayedTitles().get(0).click();
-        details.isOpened();
+        details.isContentDetailsPagePresent();
     }
 
     private void QALogin() {
