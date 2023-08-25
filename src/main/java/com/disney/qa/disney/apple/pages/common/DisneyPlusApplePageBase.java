@@ -17,15 +17,20 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV {
@@ -953,4 +958,19 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getProgressBar() { return progressBar; }
+
+    public void validateLiveProgress(SoftAssert sa) {
+        if (getStaticTextByLabelContains("Started").isPresent()) {
+            String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started ");
+            String[] minutes = liveProgressMinutes[1].split(" ");
+            String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
+                    Map.of("x", Integer.valueOf(minutes[0])));
+            sa.assertTrue(getDynamicAccessibilityId(liveProgress).isPresent(), "'Live Progress' was not present");
+        } else if (getStaticTextByLabelContains("Started at").isPresent()) {
+            String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
+            String liveProgressTime = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
+                    Map.of("x", Integer.valueOf(liveProgressTimeMinutes[1])));
+            sa.assertTrue(getDynamicAccessibilityId(liveProgressTime).isPresent(), "'Live Progress Time' was not present.");
+        }
+    }
 }

@@ -578,20 +578,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
     }
 
-    public ExtendedWebElement getLiveProgress() {
-        String[] liveProgressMinutes = getStaticTextByLabelContains("Started").getText().split("Started");
-        String liveProgress = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS.getText()),
-                Map.of("x", liveProgressMinutes[1]));
-        return getDynamicAccessibilityId(liveProgress);
-    }
-
-    public ExtendedWebElement getLiveProgressTime() {
-        String[] liveProgressTimeMinutes = getStaticTextByLabelContains("Started at").getText().split("at");
-        String liveStartedAt = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LIVE_PROGRESS_TIME.getText()),
-                Map.of("x", liveProgressTimeMinutes[1]));
-        return getDynamicAccessibilityId(liveStartedAt);
-    }
-
     public ExtendedWebElement getUpcomingDateTime() {
         String[] upcomingDateTime = getAiringBadgeLabel().getText().split(" ");
         String upcomingDate = upcomingDateTime[2] + " " + upcomingDateTime[3];
@@ -610,11 +596,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getUpcomingTodayBadge() {
         String upcomingTodayBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING_TODAY.getText());
         return getStaticTextByLabel(upcomingTodayBadge);
-    }
-
-    public ExtendedWebElement getLiveNowBadge() {
-        String liveNowBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_LIVE.getText());
-        return getStaticTextByLabel(liveNowBadge);
     }
 
     public String getDetailsTabTitle() {
