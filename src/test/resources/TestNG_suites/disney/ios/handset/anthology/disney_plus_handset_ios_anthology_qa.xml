@@ -23,7 +23,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Handset Anthology QA" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.qa.DisneyPlusAnthologyQATest"/>
         </classes>
     </test>
 </suite>

@@ -22,7 +22,7 @@
 
     <test verbose="1" name="DisneyPlus tvOS Anthology QA" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.anthology.DisneyPlusAppleTVAnthologyTest">
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.anthology.qa.DisneyPlusAppleTVAnthologyQATest">
             </class>
         </classes>
     </test>
