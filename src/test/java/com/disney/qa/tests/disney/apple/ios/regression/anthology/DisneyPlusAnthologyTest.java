@@ -104,19 +104,19 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
             throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
         }
 
-        sa.assertTrue(details.getLiveNowBadge().isElementPresent(), "Live Now badge was not found.");
-        sa.assertTrue(details.getLiveProgress().isElementPresent() || details.getLiveProgressTime().isElementPresent(),
-                "Live progress indicator not found.");
+        details.validateLiveProgress(sa);
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain live badge on Details Page");
 
         details.clickWatchButton();
         liveEventModal.isOpened();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain Live badge on Live Event Modal");
+        liveEventModal.validateLiveProgress(sa);
         liveEventModal.clickThumbnailView();
         sa.assertAll();
     }
