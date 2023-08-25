@@ -170,4 +170,36 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public List<String> getTabCells() {
         return getContentItems(0);
     }
+
+    //QA methods to be deprecated when DWTS Test Streams are not available any longer
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
+        if (getTypeButtonByName("WATCH").isPresent()) {
+            getTypeButtonByName("WATCH").click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
+        if (getTypeButtonByName("BOOKMARKED").isPresent()) {
+            getTypeButtonByName("BOOKMARKED").click();
+        } else {
+            getTypeButtonByName("bookmarked").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
+        if (getTypeButtonByName("PLAY").isPresent()) {
+            getTypeButtonByName("PLAY").click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
 }

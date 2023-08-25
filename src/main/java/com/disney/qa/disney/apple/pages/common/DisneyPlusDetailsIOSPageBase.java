@@ -618,4 +618,44 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isProgressBarPresent() {
         return progressBar.isPresent();
     }
+
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     *
+     */
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
+        if (getTypeButtonByName("WATCH").isPresent()) {
+            getTypeButtonByName("WATCH").click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAContinueButton() {
+        if (getTypeButtonByName("BOOKMARKED").isPresent()) {
+            getTypeButtonByName("BOOKMARKED").click();
+        } else {
+            getTypeButtonByName("bookmarked").click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickQAPlayButton() {
+        if (getTypeButtonByName("PLAY").isPresent()) {
+            getTypeButtonByName("PLAY").click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public boolean isQAWatchButtonPresent() {
+        return getStaticTextByLabelContains("WATCH").isPresent() || getStaticTextByLabelContains("watch").isPresent();
+    }
+
+    public boolean isQAContinueButtonPresent() {
+        return getTypeButtonByName("bookmarked").isPresent() || getTypeButtonByName("BOOKMARKED").isPresent();
+    }
 }
