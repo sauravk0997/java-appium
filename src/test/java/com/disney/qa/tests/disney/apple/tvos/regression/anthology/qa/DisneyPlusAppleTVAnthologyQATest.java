@@ -143,7 +143,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
@@ -168,7 +168,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
@@ -256,7 +256,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isQAPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found. " + e);
         }

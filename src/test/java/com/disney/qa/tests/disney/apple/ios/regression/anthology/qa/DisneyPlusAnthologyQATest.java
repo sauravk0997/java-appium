@@ -140,7 +140,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
             throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
         }
@@ -164,7 +164,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 //        setAppToHomeScreen(disneyAccount.get());
         QALogin();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> detailsPage.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
