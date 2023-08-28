@@ -107,7 +107,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content airing. " + e);
         }
 
         details.validateLiveProgress(sa);
@@ -137,7 +137,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing. " + e);
         }
 
         details.clickWatchButton();
@@ -160,7 +160,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing." + e);
         }
 
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
@@ -245,7 +245,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ PLAY + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing. " + e);
         }
 
         details.clickPlayButton();
@@ -272,11 +272,13 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
         details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, null, IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipeUp(2, 1);
 
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
+        System.out.println(details.isSeasonRatingPresent());
         sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
         sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
         sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
@@ -328,7 +330,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
@@ -347,7 +349,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found. " + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
@@ -368,7 +370,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found. " + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
         }
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
@@ -427,7 +429,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         details.clickWatchButton();

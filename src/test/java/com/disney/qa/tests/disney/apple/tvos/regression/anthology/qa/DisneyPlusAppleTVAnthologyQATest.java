@@ -115,7 +115,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content airing. " + e);
         }
 
         details.validateLiveProgress(sa);
@@ -145,7 +145,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         details.clickQAWatchButton();
@@ -170,7 +170,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
@@ -210,7 +210,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ PLAY + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing. " + e);
         }
 
         details.clickQAPlayButton();
@@ -238,7 +238,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during live event.");
@@ -258,7 +258,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found. " + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during VOD state.");
@@ -342,7 +342,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found. " + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
@@ -408,7 +408,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
         details.clickQAWatchButton();
