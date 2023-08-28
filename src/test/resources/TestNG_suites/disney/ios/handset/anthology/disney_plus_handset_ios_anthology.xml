@@ -7,7 +7,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-Anthology"/>
     <parameter name="jenkinsEmail"
-               value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,jennifer.yee@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com"/>
+               value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com"/>
     <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -20,6 +20,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Anthology"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
         <classes>

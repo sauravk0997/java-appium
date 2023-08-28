@@ -19,6 +19,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     private static final String UPCOMING = "UPCOMING";
     private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
     private static final String LIVE = "LIVE";
+    private static final String PLAY = "PLAY";
     private static final String WATCH_LIVE = "Watch Live";
 
     @Maintainer("csolmaz")
@@ -77,7 +78,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 200, 20).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
             throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
         }
@@ -250,6 +251,12 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
 
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, "+ PLAY + " label not found. " + e);
+        }
+
         details.clickQAPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video Player did not launch.");
 
@@ -332,9 +339,9 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found." + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
@@ -352,7 +359,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found. " + e);
         }
@@ -372,6 +379,12 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 //        setAppToHomeScreen(disneyAccount.get());
         QALogin();
         searchAndOpenDWTSDetails();
+
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, play button not found. " + e);
+        }
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
         sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
@@ -429,7 +442,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }

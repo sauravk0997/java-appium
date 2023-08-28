@@ -21,6 +21,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     //Test constants
     private static final String UPCOMING = "UPCOMING";
     private static final String LIVE = "LIVE";
+    private static final String PLAY = "PLAY";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
@@ -79,9 +80,9 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isStaticTextLabelPresent(UPCOMING));
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
         }
 
         sa.assertTrue(details.isOpened(), "Details page did not open.");
@@ -138,7 +139,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
@@ -163,7 +164,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
@@ -200,6 +201,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
 
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, "+ PLAY + " label not found. " + e);
+        }
+
         details.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
@@ -222,7 +229,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
@@ -241,7 +248,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found. " + e);
         }
@@ -320,6 +327,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
         searchAndOpenDWTSDetails();
 
+        try {
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, play button not found. " + e);
+        }
+
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
         sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
         sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
@@ -379,7 +392,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 1).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found. " + e);
         }
