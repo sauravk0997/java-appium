@@ -272,13 +272,11 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
         details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, null, IMobileUtils.Direction.UP, 500);
-        new IOSUtils().swipeUp(2, 1);
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
 
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
-        System.out.println(details.isSeasonRatingPresent());
         sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
         sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
         sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
