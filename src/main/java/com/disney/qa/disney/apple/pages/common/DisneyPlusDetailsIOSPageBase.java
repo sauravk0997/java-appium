@@ -27,6 +27,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASE_WATCH = "watch";
     private static final String BOOKMARKED = "BOOKMARKED";
     private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
+    private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
 
     //LOCATORS
@@ -666,5 +667,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContentDetailsPagePresent() {
         return getTypeOtherByName("contentDetailsPage").isPresent();
+    }
+
+    public boolean isQAPlayButtonDisplayed() {
+        return getStaticTextByLabelContains(PLAY).isPresent() || getStaticTextByLabelContains(LOWER_CASED_PLAY).isPresent();
     }
 }
