@@ -91,6 +91,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return deleteProfileButton;
     }
 
+    @ExtendedFindBy(accessibilityId = "Gender")
+    private ExtendedWebElement genderButton;
+
     //FUNCTIONS
 
     public DisneyPlusEditProfileIOSPageBase(WebDriver driver) {
@@ -268,4 +271,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public ExtendedWebElement getKidProofExitLabel() {
         return kidProofExitLabel;
     }
+
+    public void clickGenderButton() { genderButton.click(); }
 }

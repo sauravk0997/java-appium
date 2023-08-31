@@ -550,6 +550,40 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickDoneBtn();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72365"})
+    @Test(description = "Profiles > Existing Sub->edit gender", groups = {"Ariel-More Menu"})
+    public void verifyEditGender() {
+        initialSetup();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.clickGenderButton();
+
+        sa.assertTrue(editGenderPage.isOpened(), "Expected: Select Gender page should be opened");
+
+        editGenderPage.clickGenderDropDown();
+
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
+            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+                    "Expected: " + genderItem + " option should be present");
+        }
+
+        editGenderPage.selectGender();
+        editGenderPage.clickSaveBtn();
+        editProfilePage.isUpdatedTextPresent();
+
+        sa.assertTrue(editProfilePage.isUpdatedTextPresent(), "Gender is not updated for user");
+
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
