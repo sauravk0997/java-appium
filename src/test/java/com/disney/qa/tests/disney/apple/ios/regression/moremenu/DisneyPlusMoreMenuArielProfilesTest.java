@@ -607,6 +607,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveBtn();
+        addProfile.clickSaveProfileButton();
     }
 }

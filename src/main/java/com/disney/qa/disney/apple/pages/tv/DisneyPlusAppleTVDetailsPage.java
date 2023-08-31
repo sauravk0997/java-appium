@@ -18,9 +18,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     private static final String DETAILS = "DETAILS";
 
-    @ExtendedFindBy(accessibilityId = "trailerButton")
-    private ExtendedWebElement trailerButton;
-
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
@@ -45,18 +42,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return logoImage.isElementPresent();
     }
 
-    public boolean isTrailerButtonPresent() {
-        return trailerButton.isElementPresent();
-    }
-
     public boolean isContentSummaryView() { return contentSummaryView.isElementPresent(); }
     public boolean isBriefDescriptionPresent(String text) {
         ExtendedWebElement briefDesc = getDynamicAccessibilityId(text);
         return briefDesc.isElementPresent() && briefDesc.getText().chars().count() <= 120;
-    }
-
-    public void clickTrailerButton() {
-        trailerButton.click();
     }
 
     public boolean isAnthologyTitlePresent() {
@@ -91,7 +80,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         clickWatchButton();
         new DisneyPlusAppleTVLiveEventModalPage(getDriver()).clickWatchLiveButton();
         videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.waitForContentToEnd(350, 20); //Enters playback ~5 min till end
+        videoPlayerPage.waitForTvosContentToEnd(350, 20); //Enters playback ~5 min till end
         clickMenuTimes(1,1);
         isOpened();
         moveDown(2,1);
@@ -180,5 +169,43 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public List<String> getTabCells() {
         return getContentItems(0);
+    }
+
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
+    private static final String WATCH = "WATCH";
+    private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String PLAY = "PLAY";
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
+        if (getTypeButtonByName(WATCH).isPresent()) {
+            getTypeButtonByName(WATCH).click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
+        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
+            getTypeButtonByName(BOOKMARKED).click();
+        } else {
+            getTypeButtonByName("bookmarked").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
+        if (getTypeButtonByName(PLAY).isPresent()) {
+            getTypeButtonByName(PLAY).click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 }

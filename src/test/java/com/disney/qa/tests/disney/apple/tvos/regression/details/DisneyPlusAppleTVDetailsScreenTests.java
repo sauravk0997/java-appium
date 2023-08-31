@@ -57,7 +57,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isBriefDescriptionPresent(briefDescription), "Brief description is not present");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isPlayButtonDisplayed(), "Play button isn't present in its expected position");
-        sa.assertTrue(disneyPlusAppleTVDetailsPage.isTrailerButtonPresent(), "Trailer button isn't present in its expected position");
+        sa.assertTrue(disneyPlusAppleTVDetailsPage.isTrailerButtonDisplayed(), "Trailer button isn't present in its expected position");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isWatchlistButtonDisplayed(), "Watchlist button isn't present in its expected position");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isGroupWatchButtonDisplayed(), "Groupwatch button is not displayed.");
 
@@ -137,7 +137,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
 
-        disneyPlusAppleTVDetailsPage.clickTrailerButton();
+        disneyPlusAppleTVDetailsPage.getTrailerButton().click();
         sa.assertTrue(disneyPlusAppleTVVideoPlayerPage.isOpened(), "Video player page did not launch");
 
         disneyPlusAppleTVVideoPlayerPage.waitUntilDetailsPageIsLoadedFromTrailer(200, 20);

@@ -1,4 +1,4 @@
-package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
+package com.disney.qa.tests.disney.apple.tvos.regression.anthology.qa;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -16,7 +16,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
-public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
+public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
@@ -35,7 +35,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
         details.addToWatchlist();
         details.clickMenuTimes(1,1);
@@ -45,7 +46,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(watchList.areWatchlistTitlesDisplayed(DANCING_WITH_THE_STARS.getTitle()), "Dancing With The Stars was not added to watchlist.");
 
         watchList.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).click();
-        sa.assertTrue(details.isOpened(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
         sa.assertAll();
     }
 
@@ -59,7 +60,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         home.isOpened();
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -77,15 +79,16 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
+            throw new SkipException("Skipping test, Watch button not found. " + e);
         }
 
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(details.getAiringBadgeLabel().isElementPresent(), "Airing badge label is not displayed.");
         sa.assertTrue(details.getUpcomingDateTime().isElementPresent(), "Upcoming Date and Time was not found.");
         sa.assertTrue(details.getUpcomingTodayBadge().isElementPresent() || details.getUpcomingBadge().isElementPresent(),
@@ -119,7 +122,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Details Page");
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain 'live' on Live Event Modal");
         liveEventModal.validateLiveProgress(sa);
         sa.assertAll();
@@ -136,16 +139,16 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
-        details.clickWatchButton();
-        details.getStaticTextByLabelContains("WATCH").click();
+        details.clickQAWatchButton();
         liveEventModal.clickWatchLiveButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.pauseAndPlayVideo();
@@ -161,10 +164,11 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
@@ -180,7 +184,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
@@ -198,21 +203,22 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing. " + e);
         }
 
-        details.clickPlayButton();
+        details.clickQAPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
         videoPlayer.clickMenuTimes(1,1);
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
-        details.clickContinueButton();
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
+        details.clickQAContinueButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking continue button.");
         sa.assertAll();
@@ -225,11 +231,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
@@ -244,11 +251,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
@@ -264,11 +272,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
 
         details.moveDown(1,1);
@@ -291,7 +300,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -307,7 +317,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -324,11 +335,12 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
             throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
@@ -344,10 +356,10 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
 
-        details.clickPlayButton();
+        details.clickQAPlayButton();
         videoPlayer.waitForVideoToStart();
         details.clickMenuTimes(1,1);
-        details.isOpened();
+        details.isContentDetailsPagePresent();
         sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
@@ -363,7 +375,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
@@ -371,8 +384,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.getTrailerButton().click();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
 
-        videoPlayer.waitForTvosTrailerToEnd(75, 5);
-        sa.assertTrue(details.isOpened(), "After trailer completed, did not return to details page.");
+        videoPlayer.waitForTvosTrailerToEnd(125, 10);
+        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer completed, did not return to details page.");
         sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused on.");
         sa.assertAll();
     }
@@ -388,16 +401,17 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+//        logIn(entitledUser);
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubheadLineLabelPresent(), "Subhead line label is not present.");
         sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
@@ -407,7 +421,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
         liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isOpened(), "Details page was not opened.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
@@ -422,6 +436,20 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchPage.isOpened();
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
         searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
-        detailsPage.isOpened();
+        detailsPage.isContentDetailsPagePresent();
+    }
+
+    private void QALogin() {
+        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        welcomePage.isOpened();
+        welcomePage.clickLogInButton();
+        loginPage.isOpened();
+        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+4375@disneyplustesting.com");
+        passwordPage.logInWithPasswordLocalized("G0Disney!");
+        whoIsWatchingPage.getTypeCellLabelContains("Test").clickIfPresent();
     }
 }

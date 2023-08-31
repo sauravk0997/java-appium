@@ -18,8 +18,10 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
 
     protected static final String  SHORT_SERIES = "Bluey";
 
+    //Disabling these tests since we are not able to verify that thumbnail is present on screen as we seek along
+    //These tests were working before, we will evaluate after the carina upgrade again.
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61937"})
-    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player"})
+    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player"}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeek() {
         initialSetup();
@@ -41,7 +43,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61939"})
-    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player"})
+    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player"}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeekForDownloadedAsset() {
         initialSetup();

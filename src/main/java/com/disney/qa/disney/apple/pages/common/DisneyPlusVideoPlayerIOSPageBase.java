@@ -10,6 +10,10 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.asserts.SoftAssert;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -316,15 +320,22 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     * @param timeOut
+     * @param timeout
      * @param polling
      */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeOut, int polling) {
-        try {
-            fluentWaitNoMessage(getCastedDriver(), timeOut, polling).until(it -> getRemainingTime() == 0);
-        } catch (Exception e) {
-            throw new AssertionError(String.format("Content did not end, Exception: %s", e));
-        }
+    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it ->  getRemainingTime() == 0);
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    /**
+     * Waits for trailer to end in player until video player is not open.
+     * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
+     * @param timeout
+     * @param polling
+     */
+    public DisneyPlusVideoPlayerIOSPageBase waitForTrailerToEnd(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Trailer did not end after " + timeout).until(it -> !isOpened());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -362,5 +373,27 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAdBadgeLabelPresent() {
         return adBadgeLabel.isElementPresent();
+    }
+
+    public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
+        Map<String, Integer> params = new HashMap<>();
+
+        detailsPage.clickWatchButton();
+        liveEventModalPage.getWatchLiveButton().click();
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchLiveTimeRemaining", getRemainingTime());
+        clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+
+        clickBackButton();
+        detailsPage.isOpened();
+        detailsPage.clickWatchButton();
+        liveEventModalPage.getWatchFromStartButton().click();
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        params.clear();
     }
 }
