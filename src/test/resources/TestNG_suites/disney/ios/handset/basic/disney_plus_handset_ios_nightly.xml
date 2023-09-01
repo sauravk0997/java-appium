@@ -7,7 +7,7 @@
                value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="Disney-Plus-iOS-Handset-Dev-Build-Nightly"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com"/>
+    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
