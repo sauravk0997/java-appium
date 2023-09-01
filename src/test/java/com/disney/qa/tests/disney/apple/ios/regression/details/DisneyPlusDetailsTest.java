@@ -70,7 +70,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(SECRET_INVASION);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found on details page");
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
 
         //movie
@@ -79,7 +79,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(WORLDS_BEST);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isSuggestTabPresent(), "Suggested tab was not found on details page");
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }

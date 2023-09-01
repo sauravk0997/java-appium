@@ -1,4 +1,4 @@
-package com.disney.qa.tests.disney.apple.ios.regression.anthology;
+package com.disney.qa.tests.disney.apple.ios.regression.anthology.qa;
 
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -13,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
-public class DisneyPlusAnthologyTest extends DisneyBaseTest {
+public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
@@ -32,12 +32,13 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
         searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DANCING_WITH_THE_STARS + " details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS + " details page did not open.");
         sa.assertTrue(firstDisplayTitle[0].equalsIgnoreCase(detailsPage.getMediaTitle()), "Search result title does not match Details page media title.");
         sa.assertAll();
     }
@@ -51,7 +52,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
@@ -59,7 +61,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
         moreMenu.getDynamicCellByLabel(mediaTitle).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertAll();
     }
 
@@ -72,15 +74,16 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ UPCOMING + " label not found. " + e);
+            throw new SkipException("Skipping test, "+ UPCOMING + " label not found." + e);
         }
 
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isElementPresent(), "Airing badge label is not displayed.");
         sa.assertTrue(detailsPage.getUpcomingDateTime().isElementPresent(), "Upcoming Date and Time was not found.");
         sa.assertTrue(detailsPage.getUpcomingTodayBadge().isElementPresent() || detailsPage.getUpcomingBadge().isElementPresent(),
@@ -102,19 +105,20 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content airing. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing." + e);
         }
 
         details.validateLiveProgress(sa);
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not found.");
         sa.assertTrue(details.doesAiringBadgeContainLive(), "Airing badge does not contain live badge on Details Page");
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         liveEventModal.isOpened();
         sa.assertTrue(liveEventModal.doesAiringBadgeContainLive(), "Airing badge does not contain Live badge on Live Event Modal");
         liveEventModal.validateLiveProgress(sa);
@@ -132,15 +136,16 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing. " + e);
+            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing." + e);
         }
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         liveEventModal.isOpened();
         liveEventModal.getWatchLiveButton().click();
         videoPlayer.waitForVideoToStart();
@@ -156,11 +161,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing." + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content airing." + e);
         }
 
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
@@ -174,7 +180,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
@@ -194,11 +201,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         //Download episode
-        details.isOpened();
+        details.isContentDetailsPagePresent();
         String mediaTitle = details.getMediaTitle();
         details.startDownload();
         sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
@@ -239,20 +247,21 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing. " + e);
+            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing." + e);
         }
 
-        details.clickPlayButton();
+        details.clickQAPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video Player did not launch.");
 
         videoPlayer.clickBackButton();
-        sa.assertTrue(details.isContinueButtonPresent(), "Continue button was not found.");
+        sa.assertTrue(details.isQAContinueButtonPresent(), "Continue button was not found.");
         sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
         sa.assertAll();
     }
@@ -265,7 +274,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
@@ -291,7 +301,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -307,7 +318,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -322,13 +334,14 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
+            throw new SkipException("Skipping test, Watch button not found, no live content playing." + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
@@ -341,13 +354,14 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
@@ -362,13 +376,14 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
         }
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
@@ -382,7 +397,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
 
-        details.clickPlayButton();
+        details.clickQAPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback.");
@@ -399,7 +414,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
@@ -407,8 +423,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         details.getTrailerButton().click();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
 
-        videoPlayer.waitForTrailerToEnd(75, 5);
-        sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
+        videoPlayer.waitForTrailerToEnd(125, 10);
+        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer ended, not returned to Details page.");
         sa.assertAll();
     }
 
@@ -421,16 +437,17 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(disneyAccount.get());
+        QALogin();
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
+            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
+            throw new SkipException("Skipping test, Watch button not found. " + e);
         }
 
-        details.clickWatchButton();
+        details.clickQAWatchButton();
         liveEventModal.isOpened();
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubtitleLabelPresent(), "Subtitle label is not present.");
@@ -441,7 +458,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
         liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isOpened(), "Details page was not opened.");
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
@@ -453,7 +470,22 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         search.searchForMedia(DANCING_WITH_THE_STARS);
         search.getDisplayedTitles().get(0).click();
-        details.isOpened();
+        details.isContentDetailsPagePresent();
+    }
+
+    private void QALogin() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        welcomePage.isOpened();
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail("cristina.solmaz+4375@disneyplustesting.com");
+        passwordPage.submitPasswordForLogin("G0Disney!");
+        whoseWatchingPage.clickProfile("Test");
+        homePage.isOpened();
     }
 }
 

@@ -5,6 +5,10 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusVideoPlayerIOSPageBase.class)
@@ -26,8 +30,25 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
                 .until(it -> disneyPlusAppleTVDetailsPage.isOpened());
     }
 
-    public DisneyPlusAppleTVVideoPlayerPage waitForContentToEnd(long timeout, int polling) {
+    /**
+     * Waits for content to end in player until Up Next End Card present.
+     * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
+     * @param timeout
+     * @param polling
+     */
+    public DisneyPlusAppleTVVideoPlayerPage waitForTvosContentToEnd(long timeout, int polling) {
         fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    /**
+     * Waits for trailer to end in player until video player is not open.
+     * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
+     * @param timeout
+     * @param polling
+     */
+    public DisneyPlusAppleTVVideoPlayerPage waitForTvosTrailerToEnd(long timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Trailer did not end after " + timeout).until(it -> !isOpened());
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
@@ -40,5 +61,35 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
     public boolean isWatchingLivePresent() {
         return watchingLive.isPresent();
+    }
+
+    @Override
+    public String getTitleLabel() {
+        LOGGER.info("Pause/play player to see title..");
+        clickSelect();
+        return titleLabel.getText();
+    }
+
+    @Override
+    public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        Map<String, Integer> params = new HashMap<>();
+
+        details.clickWatchButton();
+        liveEventModal.getWatchLiveButton().click();
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchLiveTimeRemaining", getRemainingTime());
+        clickBackButton();
+        sa.assertTrue(details.isOpened(), "Details page did not open");
+
+        clickBackButton();
+        details.isOpened();
+        details.clickWatchButton();
+        liveEventModal.getWatchFromStartButton().click();
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        params.clear();
     }
 }

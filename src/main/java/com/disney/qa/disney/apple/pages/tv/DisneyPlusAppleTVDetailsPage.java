@@ -6,8 +6,10 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -16,14 +18,14 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     private static final String DETAILS = "DETAILS";
 
-    @ExtendedFindBy(accessibilityId = "trailerButton")
-    private ExtendedWebElement trailerButton;
-
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
+
+    @ExtendedFindBy(accessibilityId = "title")
+    private ExtendedWebElement title;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -40,18 +42,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return logoImage.isElementPresent();
     }
 
-    public boolean isTrailerButtonPresent() {
-        return trailerButton.isElementPresent();
-    }
-
     public boolean isContentSummaryView() { return contentSummaryView.isElementPresent(); }
     public boolean isBriefDescriptionPresent(String text) {
         ExtendedWebElement briefDesc = getDynamicAccessibilityId(text);
         return briefDesc.isElementPresent() && briefDesc.getText().chars().count() <= 120;
-    }
-
-    public void clickTrailerButton() {
-        trailerButton.click();
     }
 
     public boolean isAnthologyTitlePresent() {
@@ -86,7 +80,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         clickWatchButton();
         new DisneyPlusAppleTVLiveEventModalPage(getDriver()).clickWatchLiveButton();
         videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.waitForContentToEnd(350, 20); //Enters playback ~5 min till end
+        videoPlayerPage.waitForTvosContentToEnd(350, 20); //Enters playback ~5 min till end
         clickMenuTimes(1,1);
         isOpened();
         moveDown(2,1);
@@ -117,5 +111,101 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         isFocused(getTypeButtonByLabel(DETAILS));
         String[] detailsTabYear = releaseDate.getText().split(", ");
         return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
+    }
+
+    @Override
+    public String getDetailsTabTitle() {
+        return title.getText();
+    }
+
+    public void compareSuggestedTitleToDetailsTabTitle(SoftAssert sa) {
+        Map<String, String> params = new HashMap<>();
+        moveDown(1,1);
+        moveRight(1,1);
+        isFocused(getSuggestedTab());
+        params.put("suggestedCellTitle", getTabCells().get(0));
+        clickFirstTabCell(getSuggestedTab());
+        isOpened();
+        moveDown(1,1);
+        moveRight(2,1);
+        isFocused(detailsTab);
+        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same as details title.");
+        params.clear();
+    }
+
+    public void clickFirstTabCell(ExtendedWebElement tab) {
+        String firstTabContentCell = getTabCells().get(0);
+        if (isFocused(tab)) {
+            moveDown(1,1);
+        }
+        LOGGER.info("Getting first tab content cell title");
+        if (isFocused(getDynamicCellByLabel(firstTabContentCell))) {
+            getDynamicCellByLabel(firstTabContentCell).click();
+        }
+    }
+
+    @Override
+    public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        Map<String, String> params = new HashMap<>();
+        moveDown(1,1);
+        moveRight(2,1);
+        isFocused(extrasTab);
+        String[] extrasCellTitle = getTabCells().get(0).split(",");
+        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        clickFirstTabCell(getExtrasTab());
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        String[] videoPlayerTitle = videoPlayer.getTitleLabel().split("32s");
+        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayerTitle[0].trim()),
+                "Extras title is not the same as video player title");
+        params.clear();
+    }
+
+    /**
+     * This returns first tab cells in view. This can be used for Suggested or Extras tab.
+     * @return - Tab cells
+     */
+    @Override
+    public List<String> getTabCells() {
+        return getContentItems(0);
+    }
+
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
+    private static final String WATCH = "WATCH";
+    private static final String BOOKMARKED = "BOOKMARKED";
+    private static final String PLAY = "PLAY";
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
+        if (getTypeButtonByName(WATCH).isPresent()) {
+            getTypeButtonByName(WATCH).click();
+        } else {
+            getTypeButtonByName("watch").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
+        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
+            getTypeButtonByName(BOOKMARKED).click();
+        } else {
+            getTypeButtonByName("bookmarked").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
+        if (getTypeButtonByName(PLAY).isPresent()) {
+            getTypeButtonByName(PLAY).click();
+        } else {
+            getTypeButtonByName("play").click();
+        }
+        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 }
