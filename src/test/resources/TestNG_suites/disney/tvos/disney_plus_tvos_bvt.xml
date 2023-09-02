@@ -17,6 +17,7 @@
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="choiceParam::groups::Test Group selection. Only BVT to run." value="BVT"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus tvOS BVT" parallel="methods">
         <classes>

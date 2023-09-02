@@ -4,7 +4,7 @@
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Install"/>
+    <parameter name="jenkinsJobName" value="iOS_tablet_install"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
