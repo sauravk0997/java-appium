@@ -5,7 +5,7 @@
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="disney"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="iOS_handset_regression_rc_2.23.0"/>
+    <parameter name="jenkinsJobName" value="iOS_handset_regression"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
