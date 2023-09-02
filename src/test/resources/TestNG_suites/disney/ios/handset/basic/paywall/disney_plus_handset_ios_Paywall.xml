@@ -1,12 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="5" name="iOS_handset_iap" annotations="JDK">
+<suite verbose="1" thread-count="5" name="iOS_handset_paywall_prod" annotations="JDK">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-IAP-Prod-AdHoc-for-Automation,Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="iOS_handset_iap"/>
+    <parameter name="jenkinsJobName" value="iOS_handset_paywall_prod"/>
     <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
@@ -18,11 +17,11 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value=""/>
-    <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
+    <parameter name="choiceParam::groups::Group" value="Ariel-IAP"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPSubscriptionTest"/>
         </classes>
     </test>
 </suite>
