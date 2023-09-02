@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="7" name="iOS-Disney-Plus-Tablet-Dev-Build-Nightly" annotations="JDK">
+<suite verbose="1" thread-count="7" name="iOS_tablet_nightly_dev" annotations="JDK">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>

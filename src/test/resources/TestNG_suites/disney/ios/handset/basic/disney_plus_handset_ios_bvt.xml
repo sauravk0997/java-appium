@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="iOS - Disney+ - Handset BVT" annotations="JDK">
+<suite verbose="1" thread-count="8" name="iOS_handset_bvt" annotations="JDK">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Handset-BVT"/>
+    <parameter name="jenkinsJobName" value="iOS_handset_bvt"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>

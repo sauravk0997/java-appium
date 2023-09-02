@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="iOS-Disney-Plus-Tablet-RC-Build-Regression" annotations="JDK">
+<suite verbose="1" thread-count="8" name="iOS_tablet_rc" annotations="JDK">
 
     <parameter name="suiteOwner" value="bsuscavage"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="disney"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="Disney-Plus-iOS-Tablet-RC-Build-Regression"/>
+    <parameter name="jenkinsJobName" value="iOS_tablet_rc"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
