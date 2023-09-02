@@ -5,7 +5,7 @@
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Enterprise,Dominguez-Non-IAP-QA-Enterprise-for-Automation,"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Tablet-Anthology-QA"/>
+    <parameter name="jenkinsJobName" value="iOS_tablet_anthology_qa"/>
     <parameter name="jenkinsEmail"
                value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="QA"/>
