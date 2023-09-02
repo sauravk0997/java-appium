@@ -17,6 +17,7 @@
     <parameter name="scheduling" value="55 12 * * 1,2::55 00,01 * * 2,3"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection." value=",Anthology"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <parameter name="overrideFields" value=""/>
 

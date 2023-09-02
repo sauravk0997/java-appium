@@ -18,6 +18,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>

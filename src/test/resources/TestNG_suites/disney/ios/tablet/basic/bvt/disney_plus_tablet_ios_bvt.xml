@@ -18,6 +18,7 @@
     <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="choiceParam::groups::Test Group selection. Only BVT to run" value="BVT"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
         <classes>

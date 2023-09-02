@@ -20,6 +20,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Anthology"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Anthology QA" parallel="methods">
         <classes>

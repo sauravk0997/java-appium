@@ -19,6 +19,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Group" value="Ariel-IAP"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet IAP" parallel="methods">
         <classes>
