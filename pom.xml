@@ -236,7 +236,7 @@
             <groupId>com.disney</groupId>
             <artifactId>Google-sheets-wrapper</artifactId>
             <version>1.0.7</version>
-            <!--classifier>jar-with-dependencies</classifier-->
+            <classifier>jar-with-dependencies</classifier>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
