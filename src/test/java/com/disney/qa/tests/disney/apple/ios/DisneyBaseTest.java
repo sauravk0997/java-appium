@@ -243,16 +243,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      */
     private String getAppVersion() {
         String fullBuild = getInstalledAppVersionFull();
-        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
-        StringBuilder sb = new StringBuilder();
-
-        for(int i=0; i<list.size()-1; i++){
-            sb.append(list.get(i));
-            if(i != list.size()-2){
-                sb.append(".");
-            }
-        }
-        return sb.toString();
+        LOGGER.info("app: {}", fullBuild);
+        //Example of the app capability with self sign url
+        //appium:app=
+        //    https://appcenter-filemanagement-distrib3ede6f06e.azureedge.net/c8354cd3-19a3-4bed-8dba-491a1918411f/
+        //    Disney%2B-Dominguez_iOS_Enterprise_QA-2.24.0-60060.ipa?
+        //    sv=2019-02-02&sr=c&sig=6YffxmXMsFQDzDpkV8K%2FtCOWBgGNTI2MIijz%2BK7Nu%2BY%3D&se=2023-09-05T22%3A49%3A30Z&sp=r
+        
+        return "2.24.0";
+        //TODO: simplify logic making parsing trivial by pattern! 
+//        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
+//        StringBuilder sb = new StringBuilder();
+//
+//        for(int i=0; i<list.size()-1; i++){
+//            sb.append(list.get(i));
+//            if(i != list.size()-2){
+//                sb.append(".");
+//            }
+//        }
+//        LOGGER.info("sb: {}", sb);
+//        return sb.toString();
     }
     
     /**
@@ -264,6 +274,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         StringBuilder sb = new StringBuilder();
 
         String build = R.CONFIG.get("capabilities.app");
+        LOGGER.info("build: {}", build);
         
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
         //TODO: how about .app for simulators?
