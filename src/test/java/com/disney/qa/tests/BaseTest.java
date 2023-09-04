@@ -6,12 +6,12 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
+import com.zebrunner.carina.core.AbstractTest;
+import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeSuite;
 
-import com.qaprosoft.carina.core.foundation.AbstractTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
 import com.zebrunner.agent.core.registrar.Xray;
 
 

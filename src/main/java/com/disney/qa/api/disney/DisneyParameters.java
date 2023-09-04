@@ -2,11 +2,11 @@ package com.disney.qa.api.disney;
 
 import com.disney.qa.star.StarPlusParameters;
 import com.disney.util.disney.DisneyGlobalUtils;
-import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
+import com.zebrunner.carina.crypto.CryptoTool;
+import com.zebrunner.carina.crypto.CryptoToolBuilder;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.IDriverPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 public enum DisneyParameters {
     API_PROD_ENVIRONMENT("disney_api_prod_service"),
@@ -95,7 +97,7 @@ public enum DisneyParameters {
     // ****** DO NOT MODIFY THE LIST OF IPs BELOW ******
     protected static ArrayList<String> elasticIpAddresses = new ArrayList<>(Arrays.asList("52.202.75.170", "52.203.210.143", "52.203.219.69","52.203.238.163","52.203.238.174","52.203.238.166"));
     protected static final String INVALID_ENVIRONMENT = "is an invalid environment parameter for available";
-    private CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+    private CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
 
     DisneyParameters(String key) {
         this.key = key;

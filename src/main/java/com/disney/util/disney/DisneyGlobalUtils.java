@@ -2,7 +2,7 @@ package com.disney.util.disney;
 
 import com.disney.qa.api.disney.DisneyApiCommon;
 import com.disney.qa.api.utils.DisneyCountryData;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.config.ConfigurationHolder;
 import org.joda.time.DateTime;
 

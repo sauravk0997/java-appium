@@ -1,10 +1,10 @@
 package com.disney.util;
 
+import com.browserup.bup.BrowserUpProxy;
+import com.browserup.harreader.model.HarEntry;
 import com.disney.exceptions.HARException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zebrunner.agent.core.registrar.Artifact;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.core.har.HarEntry;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +34,9 @@ public class HARUtils {
         URL
     }
 
-    private BrowserMobProxy proxy;
+    private BrowserUpProxy proxy;
 
-    public HARUtils(BrowserMobProxy proxy) {
+    public HARUtils(BrowserUpProxy proxy) {
         this.proxy = proxy;
     }
 
@@ -228,7 +228,7 @@ public class HARUtils {
      * @param proxy    - proxy instance
      * @param fileName - name of the har file
      */
-    public static void generateValidHarForCharles(BrowserMobProxy proxy, String fileName) {
+    public static void generateValidHarForCharles(BrowserUpProxy proxy, String fileName) {
         try (PrintWriter printWriter = new PrintWriter(fileName.concat(".har"))) {
             StringWriter stringWriter = new StringWriter();
             proxy.getHar().writeTo(stringWriter);
@@ -240,7 +240,7 @@ public class HARUtils {
         }
     }
 
-    public static void attachHarAsArtifact(BrowserMobProxy proxy, String fileName) {
+    public static void attachHarAsArtifact(BrowserUpProxy proxy, String fileName) {
         File harFileForCharles = new File(fileName.concat(".har"));
         generateValidHarForCharles(proxy, fileName);
         Artifact.attachToTest(fileName.concat(".har"), harFileForCharles);
@@ -250,7 +250,7 @@ public class HARUtils {
      * Basic version of harContainsValues which does not filter by host URL. See main method for
      * more details.
      */
-    public static boolean harContainsValue(BrowserMobProxy proxy, RequestDataType dataType, String value) {
+    public static boolean harContainsValue(BrowserUpProxy proxy, RequestDataType dataType, String value) {
         return harContainsValue(proxy, "", dataType, value);
     }
 
@@ -266,7 +266,7 @@ public class HARUtils {
      *              necessary at this point. Only returns false if it iterates through the entire session
      *              without finding the desired value.
      */
-    public static boolean harContainsValue(BrowserMobProxy proxy, String url, RequestDataType dataType, String value){
+    public static boolean harContainsValue(BrowserUpProxy proxy, String url, RequestDataType dataType, String value){
         String entry = "";
         for (HarEntry harEntry : proxy.getHar().getLog().getEntries()) {
             try {
@@ -284,7 +284,7 @@ public class HARUtils {
     }
     /**As above, but for an array of strings rather than a singular one.
      */
-    public static boolean harContainsValue(BrowserMobProxy proxy, String url, RequestDataType dataType, String[] values) {
+    public static boolean harContainsValue(BrowserUpProxy proxy, String url, RequestDataType dataType, String[] values) {
         String entry = "";
         boolean hasAll = false;
         for (HarEntry harEntry : proxy.getHar().getLog().getEntries()) {
@@ -308,7 +308,7 @@ public class HARUtils {
         }
         return false;
     }
-    public static boolean harContainsValue(BrowserMobProxy proxy, RequestDataType dataType, String[] values){
+    public static boolean harContainsValue(BrowserUpProxy proxy, RequestDataType dataType, String[] values){
         return harContainsValue(proxy, "", dataType, values);
     }
 
@@ -320,7 +320,7 @@ public class HARUtils {
                 entry = harEntry.getRequest().getUrl();
                 break;
             case METHOD:
-                entry = harEntry.getRequest().getMethod();
+                entry = harEntry.getRequest().getMethod().toString();
                 break;
             case COMMENT:
                 entry = harEntry.getRequest().getComment();

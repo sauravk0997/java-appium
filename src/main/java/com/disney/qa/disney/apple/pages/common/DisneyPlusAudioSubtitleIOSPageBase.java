@@ -1,11 +1,12 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.disney.qa.common.utils.IOSUtils;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+
+import com.disney.qa.common.utils.IOSUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase {
@@ -63,14 +64,14 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     public boolean verifySelectedAudioIs(String language) {
         LOGGER.info("verifying if selected audio language is: {}", language);
         ExtendedWebElement element = audioSubtitleCheckBox.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, IMobileUtils.Direction.UP);
+        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
     }
 
     public void chooseAudioLanguage(String language) {
         LOGGER.info("selecting audio language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, IMobileUtils.Direction.UP);
+        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
         element.click();
     }
 
@@ -81,14 +82,14 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     public void chooseSubtitlesLanguage(String language) {
         ExtendedWebElement element = languageCell.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, IMobileUtils.Direction.UP);
+        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         element.click();
     }
 
     public boolean verifySelectedSubtitleLangIs(String language) {
         LOGGER.info("verifying if selected subtitles language is: {}", language);
         ExtendedWebElement element = languageCellCheckmark.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, IMobileUtils.Direction.UP);
+        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
     }
 }

@@ -1,6 +1,6 @@
 package com.disney.qa.tests;
 
-import com.qaprosoft.carina.core.foundation.AbstractTest;
+import com.zebrunner.carina.core.AbstractTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;

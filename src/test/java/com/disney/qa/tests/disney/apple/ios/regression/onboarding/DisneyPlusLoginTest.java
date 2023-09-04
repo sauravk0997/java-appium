@@ -1,19 +1,29 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import com.disney.alice.AliceDriver;
 import com.disney.qa.api.account.AccountBlockReasons;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIsMinorIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountOnHoldIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusCompleteSubscriptionIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusRestartSubscriptionIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSignUpIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+import com.zebrunner.carina.utils.R;
 
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";

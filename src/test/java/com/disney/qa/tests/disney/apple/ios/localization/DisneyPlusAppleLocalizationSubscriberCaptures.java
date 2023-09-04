@@ -1,5 +1,15 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.Test;
+
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
@@ -14,21 +24,35 @@ import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.web.VerifyEmail;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAppSettingsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangeEmailIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangePasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusContentRatingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMediaCollectionIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPinIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.Test;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
@@ -218,7 +242,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         while (!moreMenuPage.getDeleteAccountButton().isElementPresent()) {
             accountPageShotCount += 1;
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             pause(2);
             getScreenshotsNoCountUpdate("AccountPagePart" + accountPageShotCount);
         }
@@ -486,7 +510,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         while (!editProfilePage.getDeleteProfileButton().isElementPresent()) {
             profilePageShotCount += 1;
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             pause(2);
             getScreenshotsNoCountUpdate("EditProfilePagePart" + profilePageShotCount);
         }
@@ -501,7 +525,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getBackArrow().click();
 
         while (!editProfilePage.getDeleteProfileButton().isElementPresent()) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
         }
 
         editProfilePage.getDeleteProfileButton().click();
@@ -513,7 +537,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 3, "Who is Watching Page never appeared.")
                 .until(it -> whoPage.isHeaderTextPresent());
 
-        swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+        swipeInContainer(null, Direction.UP, 500);
         pause(2);
         getScreenshots("AfterDeleteWhoIsWatchingPage");
     }
@@ -1221,7 +1245,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("HomeLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("Home" + i);
         }
 
@@ -1234,7 +1258,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("DisneyLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("DisneyBrand" + i);
         }
 
@@ -1246,7 +1270,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("PixarLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("PixarBrand" + i);
         }
 
@@ -1258,7 +1282,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("MarvelLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("MarvelBrand" + i);
         }
 
@@ -1270,7 +1294,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("StarWarsLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("StarWarsBrand" + i);
         }
 
@@ -1282,7 +1306,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("NatGeoLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("NatGeoBrand" + i);
         }
 
@@ -1296,7 +1320,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             getScreenshots("StarLandingPage");
 
             for (int i = 0; i < SWIPE_COUNTER; i++) {
-                swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+                swipeInContainer(null, Direction.UP, 500);
                 getScreenshotsNoCountUpdate("StarBrand" + i);
             }
 

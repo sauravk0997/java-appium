@@ -1,12 +1,12 @@
 package com.disney.qa.common.utils;
 
 import com.disney.util.ZipUtils;
-import com.qaprosoft.carina.core.foundation.report.ReportContext;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.registrar.Artifact;
 import com.zebrunner.agent.core.registrar.Screenshot;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.report.ReportContext;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.Range;
 import org.imgscalr.Scalr;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -49,7 +50,7 @@ public class UniversalUtils implements IDriverPool {
         WebDriver driver = getDriver();
         BufferedImage fullImage = null;
 
-        new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(element.getBy()));
+        new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(element.getBy()));
         File srcFile = element.getElement().getScreenshotAs(OutputType.FILE);
         try {
             fullImage = ImageIO.read(srcFile);

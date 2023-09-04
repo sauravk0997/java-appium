@@ -1,16 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.disney.util.HARUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.utils.resources.L10N;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import io.appium.java_client.ios.IOSDriver;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.annotations.DataProvider;
@@ -18,8 +14,18 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
-import java.util.*;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.HARUtils;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.resources.L10N;
+import com.zebrunner.carina.webdriver.IDriverPool;
+
+import io.appium.java_client.ios.IOSDriver;
 
 public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
 

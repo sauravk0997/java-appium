@@ -10,14 +10,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <carina-core_version>7.4.28</carina-core_version>
-        <zebrunner-agent.version>1.7.4</zebrunner-agent.version>
+        <hatter.version>PR-169-3-SNAPSHOT</hatter.version>
+        <zebrunner-agent.version>1.9.7</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
         <javax-mail.verison>1.6.2</javax-mail.verison>
-        <guava.version>30.0-jre</guava.version>
-        <alice-client-version>1.0.56</alice-client-version>
-        <jarvis-utils-version>1.0.7.1</jarvis-utils-version>
+        <alice-client.version>1.0.56</alice-client.version>
+        <jarvis-utils-version>1.0.13-SNAPSHOT</jarvis-utils-version>
         <hora-validator-version>1.0.16</hora-validator-version>
         <disney-api-utils-version>2.3.441</disney-api-utils-version>
         <suite>helloDisney</suite>
@@ -33,11 +32,6 @@
             <id>bamtech_snapshots</id>
             <name>Bamtech Snapshots</name>
             <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-snapshots</url>
-        </repository>
-        <repository>
-            <id>qaprosoft_3rdparty</id>
-            <name>Qaprosoft Thirdparty</name>
-            <url>https://ci.qaprosoft.com/nexus/content/repositories/thirdparty/</url>
         </repository>
         <repository>
             <id>qait_releases</id>
@@ -72,9 +66,36 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.disney</groupId>
+            <artifactId>hatter-core</artifactId>
+            <version>${hatter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hulu.sidekick</groupId>
+                    <artifactId>locksmith</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.squareup.okhttp3</groupId>
+                    <artifactId>okhttp</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>agent-testng</artifactId>
+                </exclusion>
+                <!--exclusion>
+                    <groupId>io.rest-assured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                </exclusion-->
+            </exclusions>
+        </dependency>
 
-        <!-- Browsermob and Guava dependencies were added at the beginning since
-            https traffic couldn't be sniffed -->
+        <dependency>
+            <groupId>com.zebrunner</groupId>
+            <artifactId>carina-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
         <dependency>
             <groupId>com.disney</groupId>
             <artifactId>disney-api-utils</artifactId>
@@ -92,6 +113,18 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.qaprosoft</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>                
             </exclusions>
         </dependency>
 
@@ -106,22 +139,7 @@
             <artifactId>javax.mail</artifactId>
             <version>${javax-mail.verison}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.qaprosoft</groupId>
-            <artifactId>carina-core</artifactId>
-            <version>${carina-core_version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.azure</groupId>
-                    <artifactId>azure-storage-blob</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-text</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+       
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -136,20 +154,24 @@
         <dependency>
             <groupId>com.disney.alice</groupId>
             <artifactId>alice-client</artifactId>
-            <version>${alice-client-version}</version>
+            <version>${alice-client.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.qaprosoft</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
         <dependency>
             <!-- to use zebrunner testng agent for webdriver sesssion(s) declaration KEEP THIS-->
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.18</version>
+            <version>1.12.18</version>
             <scope>test</scope>
         </dependency>
         <!-- needed for spring RestTemplate stuff -->
@@ -203,6 +225,10 @@
                     <groupId>com.qaprosoft</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -216,6 +242,14 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.qaprosoft</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>                
             </exclusions>
         </dependency>
 
@@ -226,40 +260,17 @@
         </dependency>
 
         <dependency>
-            <groupId>com.disney</groupId>
-            <artifactId>hatter-core</artifactId>
-            <version>1.1.7</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.hulu.sidekick</groupId>
-                    <artifactId>locksmith</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.qaprosoft</groupId>
-                    <artifactId>carina-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.zebrunner</groupId>
-                    <artifactId>agent-testng</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.disney.jarvisutils</groupId>
             <artifactId>jarvis-utils</artifactId>
             <version>${jarvis-utils-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.qaprosoft</groupId>
-                    <artifactId>carina-core</artifactId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

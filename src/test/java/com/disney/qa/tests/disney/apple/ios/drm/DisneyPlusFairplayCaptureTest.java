@@ -1,5 +1,26 @@
 package com.disney.qa.tests.disney.apple.ios.drm;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.content.SetRequest;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
@@ -22,30 +43,11 @@ import com.disney.qa.tests.BaseMobileTest;
 import com.disney.util.HARUtils;
 import com.disney.util.ZipUtils;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.qaprosoft.carina.browsermobproxy.ProxyPool;
-import com.qaprosoft.carina.core.foundation.utils.R;
 import com.zebrunner.agent.core.registrar.Artifact;
-import io.appium.java_client.ios.IOSDriver;
-import net.lightbody.bmp.proxy.CaptureType;
-import org.apache.commons.io.FileUtils;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import com.zebrunner.carina.proxy.browserup.ProxyPool;
+import com.zebrunner.carina.utils.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import io.appium.java_client.ios.IOSDriver;
 
 public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 
@@ -85,7 +87,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
         var getSetAssets = apiProvider.queryResponse(set, CONTENT_TITLES);
 
         proxy.get().newHar();
-        ((IOSDriver<?>) getCastedDriver()).resetApp();
+        ((IOSDriver) getCastedDriver()).resetApp();
         new IOSUtils().handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
         disneyPlusWelcomeScreenIOSPage.clickLogInButton();
         disneyPlusLoginIOSPage.submitEmail(disneyAccount.getEmail());
@@ -113,7 +115,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
     public void initiateProxy(String country, String devicePort, CaptureType... captureTypes) {
         GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
         geoedgeProxyFreshInstance.setProxyHostForSelenoid();
-        R.CONFIG.put("browsermob_proxy", "true");
+        R.CONFIG.put("browserup_proxy", "true");
         getDriver();
 
         Map<String, String> headers = new HashMap<>();

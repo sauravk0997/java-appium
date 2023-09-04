@@ -1,27 +1,28 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import java.util.TreeMap;
+
+import org.openqa.selenium.ScreenOrientation;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.browsermobproxy.ProxyPool;
-import com.qaprosoft.carina.core.foundation.utils.DateUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import org.openqa.selenium.ScreenOrientation;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.DataProvider;
-
-import java.util.TreeMap;
+import com.zebrunner.carina.proxy.browserup.ProxyPool;
+import com.zebrunner.carina.utils.DateUtils;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {

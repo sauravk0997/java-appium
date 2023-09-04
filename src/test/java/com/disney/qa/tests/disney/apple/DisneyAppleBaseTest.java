@@ -1,22 +1,22 @@
 package com.disney.qa.tests.disney.apple;
 
+import java.lang.invoke.MethodHandles;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.appcenter.AppCenterManager;
-import com.qaprosoft.carina.core.foundation.utils.DateUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
-import java.util.Map;
+import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.DateUtils;
+import com.zebrunner.carina.utils.R;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends BaseMobileTest {
@@ -28,7 +28,7 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     public static final String IOS = "ios";
     protected static final boolean USE_MULTIVERSE = R.CONFIG.getBoolean("useMultiverse");
 
-    protected DisneyBaseTest.BuildType buildType;
+    protected BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();
 
     //API Threads

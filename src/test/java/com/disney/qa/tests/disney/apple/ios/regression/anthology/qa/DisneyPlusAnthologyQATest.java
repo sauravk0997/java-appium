@@ -1,17 +1,28 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology.qa;
 
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.zebrunner.agent.core.annotation.Maintainer;
-import com.zebrunner.agent.core.annotation.TestLabel;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLiveEventModalIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
 
 public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
@@ -282,7 +293,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
         details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), Direction.UP, 500);
 
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");

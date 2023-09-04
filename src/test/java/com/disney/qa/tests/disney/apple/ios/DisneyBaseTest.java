@@ -1,5 +1,22 @@
 package com.disney.qa.tests.disney.apple.ios;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+
+import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.Date;
+
+import org.json.simple.JSONArray;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebDriverException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.asserts.SoftAssert;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
@@ -12,34 +29,26 @@ import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.qaprosoft.appcenter.AppCenterManager;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
+import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+
 import io.appium.java_client.ios.IOSDriver;
-import org.json.simple.JSONArray;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebDriverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.SkipException;
-import org.testng.annotations.AfterMethod;
-import org.testng.asserts.SoftAssert;
-
-import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-
-import java.util.Date;
-
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
