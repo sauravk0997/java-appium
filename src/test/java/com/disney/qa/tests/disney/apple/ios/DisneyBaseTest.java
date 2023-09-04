@@ -220,8 +220,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SkipException("There was a problem with the setup. See stack trace.");
+            LOGGER.error(e.getStackTrace().toString());
+            throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
     }
 

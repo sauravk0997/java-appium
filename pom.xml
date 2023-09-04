@@ -94,6 +94,13 @@
             <groupId>com.zebrunner</groupId>
             <artifactId>carina-api</artifactId>
             <version>1.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-all</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
 
         <dependency>
