@@ -23,7 +23,7 @@
                value="cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
     <parameter name="choiceParam::groups::Group" value="Onboarding - Ariel"/>
     <parameter name="booleanParam::unpinDictionaries::Set unpin dictionaries via jarvis" value="false"/>
-    <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value=""/>
+    <parameter name="stringParam::globalizationApiVer::Specify Globalization API Version" value="1.x.x"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Localization IAP Captures" parallel="methods">
         <parameter name="{ds_custom_provider}" value="true"/>

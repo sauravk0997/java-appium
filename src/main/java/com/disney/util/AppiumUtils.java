@@ -1,18 +1,20 @@
 package com.disney.util;
 
-import com.disney.qa.common.DisneyAbstractPage;
-import com.zebrunner.carina.utils.android.IAndroidUtils;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.ios.IOSDriver;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import com.disney.qa.common.DisneyAbstractPage;
+import com.zebrunner.carina.utils.android.IAndroidUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.ios.IOSDriver;
 
 /**
  * Created by bogdan.zayats on 01/10/18.
@@ -61,7 +63,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
         for (int i = 0; i < MAX_SEARCH_SWIPES; i++) {
 
             try {
-                WebElement ele = getDriver().findElement(MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                WebElement ele = getDriver().findElement(AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType) +
                         ".instance(" + containerInstance + "))"+
                         ".setMaxSearchSwipes(" + MAX_SEARCH_SWIPES + ")" + ".scrollIntoView(" +
@@ -78,7 +80,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
             for (int j = 0; j < i; j++) {
                 checkTimeout(startTime);
 
-                MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType)
                         + ".instance("+ containerInstance + ")).scrollForward()");
                 LOGGER.info("Scroller got stuck on a page, scrolling forward to next page of elements..");
@@ -111,7 +113,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
         for (int i = 0; i < MAX_SEARCH_SWIPES; i++) {
 
             try {
-                WebElement ele = getDriver().findElement(MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                WebElement ele = getDriver().findElement(AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType) +
                         ".instance(" + containerInstance + "))" +
                         ".setMaxSearchSwipes(" + MAX_SEARCH_SWIPES + ")" + ".scrollIntoView(" +
@@ -128,7 +130,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
             for (int j = 0; j < i; j++) {
                 checkTimeout(startTime);
 
-                MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType)
                         + ".instance("+ containerInstance + ")).scrollForward()");
                 LOGGER.info("Scroller got stuck on a page, scrolling forward to next page of elements..");
@@ -159,7 +161,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
         for (int i = 0; i < MAX_SEARCH_SWIPES; i++) {
 
             try {
-                WebElement ele = getDriver().findElement(MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                WebElement ele = getDriver().findElement(AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType) + ")" +
                         ".setMaxSearchSwipes(" + MAX_SEARCH_SWIPES + ")" + ".scrollIntoView(" +
                         getScrollToElementSelector(scrollToEle, eleSelectorType) + ")"));
@@ -175,7 +177,7 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
             for (int j = 0; j < i; j++) {
                 checkTimeout(startTime);
 
-                MobileBy.AndroidUIAutomator("new UiScrollable(" +
+                AppiumBy.androidUIAutomator("new UiScrollable(" +
                         getScrollContainerSelector(scrollableContainer, containerSelectorType) + ").scrollForward()");
                 LOGGER.info("Scroller got stuck on a page, scrolling forward to next page of elements..");
             }

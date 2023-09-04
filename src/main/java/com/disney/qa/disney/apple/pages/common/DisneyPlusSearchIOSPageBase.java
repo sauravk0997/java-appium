@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -15,20 +16,17 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
 	//LOCATORS
 
-	private ExtendedWebElement moviesTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_MOVIES_TITLE.getText()),
-			DictionaryKeys.NAV_MOVIES_TITLE.getText());
+							DictionaryKeys.NAV_MOVIES_TITLE.getText()));
 
-	private ExtendedWebElement originalsTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement originalsTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_ORIGINALS_TITLE.getText()),
-			DictionaryKeys.NAV_ORIGINALS_TITLE.getText());
+							DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
 
-	private ExtendedWebElement seriesTile = xpathNameOrName.format(getDictionary()
+	private ExtendedWebElement seriesTile = staticCellByLabel.format(getDictionary()
 					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DictionaryKeys.NAV_SERIES_TITLE.getText()),
-			DictionaryKeys.NAV_SERIES_TITLE.getText());
+							DictionaryKeys.NAV_SERIES_TITLE.getText()));
 
 	@FindBy(id = "Search")
 	private ExtendedWebElement keyboardSearchButton;
@@ -38,6 +36,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
 	@ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
 	private ExtendedWebElement searchBar;
+
+	@ExtendedFindBy(accessibilityId = "Clear text")
+	private ExtendedWebElement clearText;
 
 	private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -103,5 +104,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getOriginalsTile() {
 		return originalsTile;
+	}
+
+	public void clearText() {
+		LOGGER.info("Clearing text in search bar");
+		new IOSUtils().pressByElement(clearText, 1);
 	}
 }

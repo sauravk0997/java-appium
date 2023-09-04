@@ -1,26 +1,6 @@
 package com.disney.qa.common.utils;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.DriverHelper;
-import com.zebrunner.carina.webdriver.IDriverPool;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
@@ -30,7 +10,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchSessionException;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.DriverHelper;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.touch.TapOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
 public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
@@ -84,7 +98,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         }
     }
 
-    public enum Direction {
+    public enum Direction2 {
         UP("up"),
         DOWN("down"),
         LEFT("left"),
@@ -92,7 +106,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
 
         private String dir;
 
-        Direction(String dir) {
+        Direction2(String dir) {
             this.dir = dir;
         }
 
@@ -405,7 +419,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
         LOGGER.info("Scrolling down..");
-        scrollObject.put(DIRECTION, Direction.DOWN.getDirection());
+        scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
 
@@ -416,7 +430,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
         LOGGER.info("Scrolling up..");
-        scrollObject.put(DIRECTION, Direction.UP.getDirection());
+        scrollObject.put(DIRECTION, Direction2.UP.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
 
@@ -470,7 +484,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         swipeObject.put("startY", starty);
         swipeObject.put("endX", endx);
         swipeObject.put("endY", endy);
-        swipeObject.put(DIRECTION, Direction.LEFT.getDirection());
+        swipeObject.put(DIRECTION, Direction2.LEFT.getDirection());
         swipeObject.put(DURATION, duration);
         js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
     }
@@ -481,7 +495,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipe(Direction direction, int duration, WebElement element) {
+    public void swipe(Direction2 direction, int duration, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, Object> swipeObject = new HashMap<>();
         LOGGER.info("Scrolling {}...", direction);
@@ -501,7 +515,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      */
 
-    public void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, IMobileUtils.Direction direction) {
+    public void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
         while (element.isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
             new MobileUtilsExtended().swipeInContainer(container, direction, 1, 900);
             count--;
@@ -966,8 +980,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param duration
      */
 
-    public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, IMobileUtils.Direction direction, int duration) {
-        while (!element.isPresent() && swipes > 0) {
+    public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
+        while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }
@@ -982,7 +996,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, IMobileUtils.Direction direction, int duration) {
+    public void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isElementPresent() && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
@@ -1031,7 +1045,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     public void setBirthDate(String month, String day, String year) {
         IOSDriver iosDriver = (IOSDriver) getCastedDriver();
         HashMap<String, Object> scrollObject = new HashMap<>();
-        scrollObject.put(DIRECTION, Direction.DOWN.getDirection());
+        scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
         iosDriver.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
 
         List<WebElement> pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));

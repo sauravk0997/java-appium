@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Map;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -125,19 +127,19 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isEditModeProfileIconPresent(String username) {
         return dynamicCellByLabel.format(
-                        getDictionary().replaceValuePlaceholders(
+                        getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                                username))
+                                Map.of(USER_PROFILE, username)))
                 .isElementPresent();
     }
 
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
-                getDictionary().replaceValuePlaceholders(
+                getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                 DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
-                        profile));
+                        Map.of(USER_PROFILE, profile)));
         profileIcon.click();
     }
 
@@ -184,10 +186,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         isOpened();
         clickEditModeProfile(profileName);
         toggleAutoplayButton(requestedState);
+        pause(4);
         clickDoneBtn();
         if (!initPage(DisneyPlusHomeIOSPageBase.class).isOpened()) {
             clickBackBtn();
         }
+    }
+
+    public boolean isUpdatedTextPresent() {
+        return staticTextByLabel.format("Updated").isPresent();
     }
 
     public void toggleAutoplayButton(String newState) {
@@ -195,7 +202,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);
         if (!currentState.equalsIgnoreCase(newState)) {
             autoplayToggleCell.getElement().findElement(By.name("toggleView")).click();
-            pause(4);
         }
     }
 

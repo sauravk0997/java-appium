@@ -1,15 +1,17 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.*;
-
-import java.security.SecureRandom;
-import java.util.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
@@ -114,7 +116,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void initiatePlaybackFromContinueWatching() {
         ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
-        new IOSUtils().swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, IMobileUtils.Direction.UP);
+        new IOSUtils().swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
         continueWatchingContentView.click();
     }
 

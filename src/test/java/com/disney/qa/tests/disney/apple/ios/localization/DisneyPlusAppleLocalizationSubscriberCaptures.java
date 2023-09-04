@@ -1,5 +1,15 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.Test;
+
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
@@ -14,30 +24,48 @@ import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.web.VerifyEmail;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAppSettingsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangeEmailIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangePasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusContentRatingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMediaCollectionIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPinIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.util.ZipUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.Test;
-
-import java.util.Date;
-import java.util.List;
-
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
 
     private static final String SECONDARY_PROFILE = "Test_2";
+    private static final String NINETEEN_EIGHTY = "1980";
+    private static final String FIRST = "01";
     public static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
-    private void createProfile(String profileName) {
+    private void createProfile(String profileName, boolean isArielRegion) {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         moreMenuPage.clickAddProfile();
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Skip button is not present.")
@@ -45,14 +73,18 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSkipButton();
 
         avatarPage.typeProfileName(profileName);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
     }
 
     @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = {"Subscriber - UI", "Subscriber - UI - S1"})
     public void captureWelcomePageAndLoginFlow(String TUID) {
         setup();
+        setZipTestName("SubscriberUI_1_welcomePage");
         String localeForTravelling;
-        setPathToZip("SubscriberUI_1_welcomePage");
 
         if (!R.CONFIG.get("locale").equals("US")) {
             localeForTravelling = "US";
@@ -113,14 +145,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         setAppToHomeScreen(disneyAccount.get());
         pause(3);
         getScreenshots("TravellingMessage");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2"})
     public void watchlistAndAppSettings(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_2_watchlist");
+        setZipTestName("SubscriberUI_2_watchlist");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -137,7 +167,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
-        passwordPage.submitPasswordForLogin(testAccount.getUserPass());
+        passwordPage.typePassword(testAccount.getUserPass());
+        iosUtils.get().dismissKeyboardForPhone();
+        passwordPage.clickPrimaryButton();
         pause(5);
         getScreenshots("WhoseWatchingPage");
 
@@ -171,14 +203,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicXpathContainsName(videoQuality).click();
         pause(3);
         getScreenshots("VideoQuality");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3"})
     public void AccountsAndHelp(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_3_accounts");
+        setZipTestName("SubscriberUI_3_accounts");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -212,7 +242,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         while (!moreMenuPage.getDeleteAccountButton().isElementPresent()) {
             accountPageShotCount += 1;
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             pause(2);
             getScreenshotsNoCountUpdate("AccountPagePart" + accountPageShotCount);
         }
@@ -323,14 +353,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         iosUtils.get().dismissKeyboardForPhone();
         pause(3);
         getScreenshots("LogoutAllDevicesWrongPassword");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4"})
     public void legal(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_4_legal");
+        setZipTestName("SubscriberUI_4_legal");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -368,19 +396,20 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
         getScreenshots("HelpWebview");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5"})
     public void profileMenu(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_5_profileMenu");
+        setZipTestName("SubscriberUI_5_profileMenu");
+        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         IOSUtils utils = iosUtils.get();
@@ -390,7 +419,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-
         utils.dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
@@ -417,6 +445,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmptyProfileName");
 
         avatarPage.typeProfileName(DEFAULT_PROFILE);
+        if(isArielRegion) {
+            addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            addProfilePage.chooseGender();
+        }
         avatarPage.clickSaveBtn();
         utils.hideKeyboard();
         pause(2);
@@ -438,7 +470,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSecondaryButton();
 
         //TODO: Replace this method call with call to createProfile in addProfilePage
-        createProfile("Test_b");
+        createProfile("Test_b", isArielRegion);
         avatarPage.clickSecondaryButton();
 
         moreMenuPage.getProfileAvatar("Test_b").click();
@@ -447,6 +479,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         moreMenuPage.clickPrimaryButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
             disneyAccountApi.get().addProfile(testAccount, "Test_" + i, language,
@@ -476,7 +510,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         while (!editProfilePage.getDeleteProfileButton().isElementPresent()) {
             profilePageShotCount += 1;
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             pause(2);
             getScreenshotsNoCountUpdate("EditProfilePagePart" + profilePageShotCount);
         }
@@ -491,7 +525,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getBackArrow().click();
 
         while (!editProfilePage.getDeleteProfileButton().isElementPresent()) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
         }
 
         editProfilePage.getDeleteProfileButton().click();
@@ -503,17 +537,15 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 3, "Who is Watching Page never appeared.")
                 .until(it -> whoPage.isHeaderTextPresent());
 
-        swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+        swipeInContainer(null, Direction.UP, 500);
         pause(2);
         getScreenshots("AfterDeleteWhoIsWatchingPage");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6"})
     public void PCON(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_6_PCON");
+        setZipTestName("SubscriberUI_6_PCON");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -734,14 +766,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         utils.dismissKeyboardForPhone();
         pause(2);
         getScreenshots("ExitKidsProfileWrongCodeError");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7"})
     public void downloadsAndSearch(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_7_downloads");
+        setZipTestName("SubscriberUI_7_downloads");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -789,7 +819,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         detailsPage.addToWatchlist();
         detailsPage.startDownload();
-        pause(2);
+        //Need to increase this time out because we need some time for the download to start.
+        // There's no ID to check against for a smarter wait.
+        pause(10);
 
         //S7.6
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
@@ -860,8 +892,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         detailsPage.clickAlertDismissBtn();
 
         detailsPage.getSeasonSelectorButton().click();
-        String seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "3");
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "3"));
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         pause(2);
         getScreenshotsNoCountUpdate("DownloadSeasonMoreThan20");
@@ -869,20 +901,20 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //download a couple of seasons for download in progress button
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "4");
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "4"));
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "5");
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "5"));
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), "6");
-        detailsPage.getDynamicAccessibilityId(seasonsButton).click();
+        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
+        detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
@@ -895,11 +927,11 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //S7.9
         downloadsPage
                 .getDynamicIosClassChainElementTypeImage(
-                        getDictionary().replaceValuePlaceholders(
+                        getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(
                                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.DOWNLOADS_DISCLOSURE_ACCESSIBILITY_TITLE.getText()),
-                                seriesTitle)).click();
+                                Map.of("content_title", seriesTitle))).click();
         pause(2);
         getScreenshots("SeriesDownloadPage");
 
@@ -944,6 +976,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.14
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -956,24 +990,19 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         //Have to restart and relog here because when appium tells D+ to "restart"
         // IOS re-installs D+.
         restart();
-        welcomePage.clickLogInButton();
-        loginPage.fillOutEmailField(testAccount.getEmail());
-        loginPage.clickPrimaryButton();
-        passwordPage.typePassword(testAccount.getUserPass());
-
-        utils.dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
 
         movieTitle = searchApi.get().getMovie("5MpPFhS8FTXh", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()).getVideoTitle();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         searchPage.searchForMedia(movieTitle);
         movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
+        movies.get(1).click();
         detailsPage.startDownload();
+        pause(10);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.waitForDownloadToComplete();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -985,18 +1014,16 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //S7.15
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
+        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         getScreenshots("LogOut");
-
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8"})
     public void searchMoviesAndSeries(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_8_search");
+        setZipTestName("SubscriberUI_8_search");
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
@@ -1117,14 +1144,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             mediaCollectionPage.getSeriesHeader().isElementPresent();
             getScreenshotsNoCountUpdate("Series" + set.getContent());
         }
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10"})
     public void welchOnboarding(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_10_welch");
+        setZipTestName("SubscriberUI_10_welch");
         String locale = languageUtils.get().getLocale();
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).isStarOnboarded(false).build();
         DisneyOffer disneyOffer = disneyAccountApi.get().lookupOfferToUse(locale, "Yearly");
@@ -1189,14 +1214,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(2);
         getScreenshots("WelchLockedProfile");
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
     public void editorialContents(String TUID) {
         setup();
-        setPathToZip("SubscriberUI_13_editorial_contents");
+        setZipTestName("SubscriberUI_13_editorial_contents");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -1222,7 +1245,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("HomeLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("Home" + i);
         }
 
@@ -1235,7 +1258,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("DisneyLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("DisneyBrand" + i);
         }
 
@@ -1247,7 +1270,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("PixarLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("PixarBrand" + i);
         }
 
@@ -1259,7 +1282,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("MarvelLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("MarvelBrand" + i);
         }
 
@@ -1271,7 +1294,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("StarWarsLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("StarWarsBrand" + i);
         }
 
@@ -1283,7 +1306,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("NatGeoLandingPage");
 
         for (int i = 0; i < SWIPE_COUNTER; i++) {
-            swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+            swipeInContainer(null, Direction.UP, 500);
             getScreenshotsNoCountUpdate("NatGeoBrand" + i);
         }
 
@@ -1297,13 +1320,11 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             getScreenshots("StarLandingPage");
 
             for (int i = 0; i < SWIPE_COUNTER; i++) {
-                swipeInContainer(null, IMobileUtils.Direction.UP, 500);
+                swipeInContainer(null, Direction.UP, 500);
                 getScreenshotsNoCountUpdate("StarBrand" + i);
             }
 
         }
-
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
 }

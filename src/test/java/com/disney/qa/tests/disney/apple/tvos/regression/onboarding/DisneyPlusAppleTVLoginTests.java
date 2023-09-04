@@ -343,7 +343,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-907011"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-90711"})
     @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {"Smoke"})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();
@@ -473,11 +473,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     public void singleProfileAccountIsTakenToHomePage() {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logInWithoutHomeCheck(entitledUser);
-
-        Assert.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page did not launch");
+        logIn(entitledUser);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90693"})
@@ -502,9 +499,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        logInWithoutHomeCheck(entitledUser);
-
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page did not launch");
+        logIn(entitledUser);
 
         disneyPlusAppleTVHomePage.clickMenu();
 

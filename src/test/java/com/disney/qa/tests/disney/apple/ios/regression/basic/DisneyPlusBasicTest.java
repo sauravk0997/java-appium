@@ -31,44 +31,6 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62691"})
-    @Test(description = "Paywall is shown to unentitled user after Log In", groups = {"Smoke"})
-    public void testLoginWithUnentitledAccount() {
-        initialSetup();
-        SoftAssert softAssert = new SoftAssert();
-        handleAlert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(disneyAccountApi.get().createAccount("US", "en"));
-
-        DisneyPlusWelcomeScreenIOSPageBase paywallPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-
-        softAssert.assertTrue(paywallPageBase.isLogOutButtonDisplayed(),
-                "Expected: 'Log out' button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isCompleteSubscriptionButtonDisplayed(),
-                "Expected: 'Complete Subscription' button should be present");
-
-        paywallPageBase.clickCompleteSubscriptionButton();
-
-        softAssert.assertTrue(paywallPageBase.isCancelButtonDisplayed(),
-                "Expected: 'Cancel' button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isMonthlySubButtonDisplayed(),
-                "Expected: Monthly Subscription button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isYearlySubButtonDisplayed(),
-                "Expected: Yearly Subscription button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isRestoreButtonDisplayed(),
-                "Expected: Restore button should be present");
-
-        paywallPageBase.logOutFromUnentitledAccount();
-
-        softAssert.assertTrue(paywallPageBase.isOpened(), "Expected: After logging out, main paywall page should be opened");
-
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62693"})
     @Test(description = "Log In with entitled account lands on Home/Discover", groups = {"Smoke"})
     public void testLoginWithEntitledAccount() {

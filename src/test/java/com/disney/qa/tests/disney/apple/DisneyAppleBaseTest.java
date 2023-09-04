@@ -1,24 +1,23 @@
 package com.disney.qa.tests.disney.apple;
 
+import java.lang.invoke.MethodHandles;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.zebrunner.carina.utils.common.CommonUtils.pause;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends BaseMobileTest {
@@ -96,16 +95,19 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     }
 
     private void removeEnterpriseApps() {
+        LOGGER.info("Removing Enterprise apps");
         iosUtils.get().removeApp(BuildType.ENTERPRISE.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.ENTERPRISE.getJarvisBundle());
     }
 
     private void removeAdHocApps() {
+        LOGGER.info("Removing AdHoc apps");
         iosUtils.get().removeApp(BuildType.AD_HOC.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.AD_HOC.getJarvisBundle());
     }
 
     private void removePurchaseApps() {
+        LOGGER.info("Removing Purchase apps");
         iosUtils.get().removeApp(BuildType.IAP.getDisneyBundle());
         iosUtils.get().removeApp(BuildType.IAP.getJarvisBundle());
     }

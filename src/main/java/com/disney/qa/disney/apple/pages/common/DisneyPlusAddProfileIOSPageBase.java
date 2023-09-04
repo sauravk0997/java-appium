@@ -11,6 +11,8 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
@@ -47,14 +49,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "editProfile")
     private ExtendedWebElement editProfile;
 
-    @ExtendedFindBy(accessibilityId = "saveProfileButton")
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    protected ExtendedWebElement titleLabel;
+
+    @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
-    private ExtendedWebElement addProfileHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
     private String genderMan = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
@@ -80,13 +84,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        return addProfileHeader.isPresent();
+        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
-                getDictionary().replaceValuePlaceholders(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), profileName));
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profileName)));
         return profileSelectionBtn.isPresent();
     }
 
@@ -102,6 +107,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         juniorModeToggle.click();
     }
 
+    public void tapSaveButton() {
+        saveButton.click();
+    }
+
+    public ExtendedWebElement getSaveButton() {
+        return saveButton;
+    }
+
     public void clickSkipBtn() {
         skipBtn.click();
     }
@@ -113,6 +126,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void createProfile(String name) {
         enterProfileName(name);
         saveBtn.click();
+    }
+
+    public void createProfileForNewUser(String profileName) {
+        enterProfileName(profileName);
+        chooseGender();
+        tapSaveButton();
     }
 
     public void createProfile(String profileName, DateHelper.Month month, String day, String year) {
@@ -139,7 +158,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isJuniorModeTextPresent() {
         return staticTextByLabel.format("Junior Mode").isPresent();
     }
-    
+
     public void clickGenderDropDown() {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }

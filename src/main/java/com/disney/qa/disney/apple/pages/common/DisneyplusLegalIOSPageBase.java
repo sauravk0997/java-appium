@@ -1,12 +1,13 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
@@ -48,7 +49,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         var maxSwipes = 20;
         while(hyperlink.getLocation().getY() > containerDepth && maxSwipes > 0) {
             LOGGER.info("Hyperlink is not within visible range. Swiping container up. Attempts remaining {}/20", maxSwipes);
-            new MobileUtilsExtended().swipeInContainer(cell, IMobileUtils.Direction.UP, 1, 500);
+            new MobileUtilsExtended().swipeInContainer(cell, Direction.UP, 1, 500);
             maxSwipes--;
         }
         hyperlink.click();

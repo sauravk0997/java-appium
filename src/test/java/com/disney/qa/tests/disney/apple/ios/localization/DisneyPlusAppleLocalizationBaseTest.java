@@ -1,12 +1,18 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import java.util.TreeMap;
+
+import org.openqa.selenium.ScreenOrientation;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
@@ -17,11 +23,6 @@ import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import org.openqa.selenium.ScreenOrientation;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.DataProvider;
-
-import java.util.TreeMap;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
@@ -29,6 +30,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
     protected ThreadLocal<Integer> count = new ThreadLocal<>();
+    protected String zipTestName;
 
     protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
@@ -51,12 +53,16 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         count.set(0);
     }
 
-    protected void setPathToZip(String testName) {
+    protected void setPathToZip() {
         pathToZip.set(String.format("%s_%s_%s_%s.zip",
-                testName,
+                zipTestName,
                 R.CONFIG.get("locale"),
                 R.CONFIG.get("language"),
                 DateUtils.now()));
+    }
+
+    protected void setZipTestName(String testName) {
+        zipTestName = testName;
     }
 
     protected void loginDismiss(DisneyAccount testAccount) {
@@ -181,6 +187,13 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
                 jarvis.clickDebugDisplayOverride();
             }
         }
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void uploadScreenshots(){
+        LOGGER.info("Running after method upload screenshots");
+        setPathToZip();
+        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
     @AfterMethod

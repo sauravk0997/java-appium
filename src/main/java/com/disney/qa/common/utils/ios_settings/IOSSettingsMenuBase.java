@@ -1,23 +1,24 @@
 package com.disney.qa.common.utils.ios_settings;
 
-import com.disney.qa.common.DisneyAbstractPage;
-import com.disney.qa.common.utils.IOSUtils;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
+import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.common.utils.IOSUtils;
+import com.zebrunner.carina.crypto.CryptoTool;
+import com.zebrunner.carina.crypto.CryptoToolBuilder;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
 public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
@@ -35,6 +36,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='Manage']")
     private ExtendedWebElement manageButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Apple ID:\"`]")
+    private ExtendedWebElement appleIDCell;
 
     @FindBy(xpath = "//*[contains(@name, '%s')]/../following-sibling::*/*[contains(@name, 'Expired')]")
     private ExtendedWebElement appExpiredNotation;
@@ -54,7 +58,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Back")
     protected ExtendedWebElement backBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`value == 'Password'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
     private ExtendedWebElement sandboxPasswordBox;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
@@ -62,6 +66,15 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     @FindBy(id = "Subscriptions")
     protected ExtendedWebElement subscriptionsButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$10.99 ✓\"`]")
+    private ExtendedWebElement premiumMonthlyPriceCheckmark;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$109.99 ✓\"`]")
+    private ExtendedWebElement premiumYearlyPriceCheckmark;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$7.99 ✓\"`]")
+    private ExtendedWebElement basicMonthlyPriceCheckmark;
 
     protected IOSUtils utils;
 
@@ -88,12 +101,20 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
     }
 
+    public String getDeviceSandBoxAppleID() {
+        launchSettings();
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+        appStoreTab.click();
+        utils.swipe(sandboxAccount);
+        return appleIDCell.getText().split(":")[1];
+    }
+
     public void cancelActiveEntitlement(String appName) {
         boolean waitForExpiryTime = false;
         int appSubButtonIndex = 9999;
         List<ExtendedWebElement> appSubButtons = new LinkedList<>();
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
 
@@ -108,10 +129,20 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
 
         if(waitForExpiryTime) {
-            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+           waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
         utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+    }
+
+    public void navigateToManageSubscription() {
+        launchSettings();
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+        appStoreTab.click();
+        manageSandboxAcct();
+        if(subscriptionsButton.isElementPresent()) {
+            subscriptionsButton.click();
+        }
     }
 
     protected void manageSandboxAcct() {
@@ -137,6 +168,8 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         LOGGER.info("Refreshing page until expired indicator shows for up to 4 minutes...");
         Instant expireTime = Instant.now().plus(4, ChronoUnit.MINUTES);
         if(appSubButtons.isEmpty()) {
+            sandboxAccount.click();
+            manageButton.click();
             while (Instant.now().isBefore(expireTime) && !appExpiredNotation.format("Disney+").isElementPresent()) {
                 doneBtn.click();
                 manageSandboxAcct();
@@ -152,5 +185,17 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
                 }
             }
         }
+    }
+
+    public boolean isPremiumMonthlyPriceCheckmarkPresent() {
+        return premiumMonthlyPriceCheckmark.isElementPresent();
+    }
+
+    public boolean isPremiumYearlyPriceCheckmarkPresent() {
+        return premiumYearlyPriceCheckmark.isElementPresent();
+    }
+
+    public boolean isBasicMonthlyPriceCheckmarkPresent() {
+        return basicMonthlyPriceCheckmark.isElementPresent();
     }
 }

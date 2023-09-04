@@ -12,10 +12,9 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusSignUpIOSPageBase.class)
 public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"VIEW AGREEMENT & POLICIES\"`]")
+    @ExtendedFindBy(accessibilityId = "secondaryButton")
     private ExtendedWebElement viewAgreementAndPolicies;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == \"Email\"`]")
+    @ExtendedFindBy(accessibilityId = "textFieldEmail")
     private ExtendedWebElement emailTextField;
     
     @ExtendedFindBy(accessibilityId = "legalDisclosureView")
@@ -99,5 +98,9 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
             clickSelect();
             keyPressTimes(IRemoteControllerAppleTV::clickUp, 3, 1);
         }
+    }
+
+    public void clickEmailButton() {
+        emailTextField.click();
     }
 }

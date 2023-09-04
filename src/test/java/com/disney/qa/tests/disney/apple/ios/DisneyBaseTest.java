@@ -1,6 +1,24 @@
 package com.disney.qa.tests.disney.apple.ios;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+
+import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.Date;
+
+import org.json.simple.JSONArray;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebDriverException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
+import org.testng.asserts.SoftAssert;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.account.DisneyAccountApi;
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
@@ -9,27 +27,28 @@ import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebDriverException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-
-import java.lang.invoke.MethodHandles;
-import java.time.LocalDate;
-
-import java.util.Date;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
@@ -37,10 +56,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String KIDS_PROFILE = "KIDS";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String PHONE = "Phone";
+    public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
+    public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String SUBSCRIPTION_V1 = "V1";
+    public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
@@ -160,6 +182,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void initialSetup() {
         new GeoedgeProxyServer().setProxyHostForSelenoid();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
     }
 
@@ -192,11 +217,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
             restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
-
+            initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
             e.printStackTrace();
-            skipExecution("There was a problem with the setup. See stack trace.");
+            throw new SkipException("There was a problem with the setup. See stack trace.");
         }
     }
 
@@ -312,15 +337,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void installLatestApp(boolean isEnterpriseBuild) {
-        if (isEnterpriseBuild) {
-            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", "latest"));
-        }
-    }
-
-    public void installOldApp(boolean isEnterpriseBuild, String version) {
-        if (isEnterpriseBuild) {
+    public void downloadApp(String version) {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if(appCenterAppName.contains("for_Automation")) {
             iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
+        } else if (appCenterAppName.contains("Disney")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
         }
     }
 
@@ -334,4 +357,53 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .build();
         return apiConfiguration;
     }
+    protected boolean useMultiverse() {
+        return R.CONFIG.getBoolean("useMultiverse");
+    }
+    public DisneyAccountApi getAccountApi() {
+        if (disneyAccountApi.get() == null) {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).environment(DisneyParameters.getEnv())
+                    .partner(PARTNER).useMultiverse(useMultiverse()).build();
+            disneyAccountApi.set(new DisneyAccountApi(apiConfiguration));
+        }
+        return disneyAccountApi.get();
+    }
+    public void addHoraValidationSku(DisneyAccount accountToEntitle){
+        if (horaEnabled()) {
+            try {
+                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
+        if (horaEnabled()) {
+            HoraValidator hv = new HoraValidator(accountId);
+            hv.assertValidation(softAssert);
+            hv.checkListForPQOE(softAssert, checkList);
+        }
+    }
+
+    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
+        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        request.addSku(sku);
+        request.setCountry(country);
+        request.setLanguage(language);
+        return disneyAccountApi.get().createAccount(request);
+    }
+
+    //TODO: uncomment it after moving the Subscription test to a separate XML
+
+//    public void clearDSSSandboxAccountFor(String accountName) {
+//        LOGGER.info("Clearing purchase history for '{}' account", accountName);
+//        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
+//        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
+//            if (account.getAttributes().getAcAccountName().contains(accountName)) {
+//                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
+//                                .is2xxSuccessful(),
+//                        "Clear account purchase history for" + accountName + "was not successful!");
+//            }
+//        }
+//    }
 }

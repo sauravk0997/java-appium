@@ -1,24 +1,27 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.COMMUNICATION_SETTINGS_LINK_1_TEXT;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DELETE_ACCOUNT_MENU_ITEM;
-
-@SuppressWarnings("squid:MaximumInheritanceDepth")
+@SuppressWarnings({"squid:MaximumInheritanceDepth", "squid:CallToDeprecatedMethod"})
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	//LOCATORS
@@ -68,10 +71,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "accountTab")
 	private ExtendedWebElement accountTab;
 
-	private ExtendedWebElement deleteAccountButton = xpathNameOrName.format(getDictionary()
-					.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-							DELETE_ACCOUNT_MENU_ITEM.getText()),
-			DELETE_ACCOUNT_MENU_ITEM.getText());
+	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
 
 
 	public ExtendedWebElement getExitKidsProfile() {
@@ -118,6 +120,10 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return editProfilesBtn.isPresent();
 	}
 
+	public By getEditProfilesBtnBy() {
+		return editProfilesBtn.getBy();
+	}
+
 	public ExtendedWebElement getProfileAvatar(String profile) {
 		return profileAvatar.format(profile);
 	}
@@ -154,9 +160,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	private ExtendedWebElement getProfileCell(String profile, boolean secured) {
 		if(secured) {
-			return getDynamicCellByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), profile));
+			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		} else {
-			return getDynamicCellByLabel(getDictionary().replaceValuePlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), profile));
+			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		}
 	}
 
@@ -168,7 +174,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return getProfileCell(profileName, true).isElementPresent();
 	}
 
-	public void swipeCells(String profile, int swipes, IMobileUtils.Direction direction) {
+	public void swipeCells(String profile, int swipes, Direction direction) {
 		new MobileUtilsExtended().swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
 	}
 
@@ -300,5 +306,15 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void tapAccountTab(){
 		accountTab.click();
+	}
+
+	public ExtendedWebElement findSubtitleLabel(int num) {
+		List<ExtendedWebElement> subtitleLabel = findExtendedWebElements(getStaticTextLabelName("subtitleLabel").getBy());
+		return subtitleLabel.get(num);
+	}
+
+	public ExtendedWebElement findTitleLabel(int num) {
+		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextLabelName("titleLabel").getBy());
+		return titleLabel.get(num);
 	}
 }

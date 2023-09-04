@@ -44,6 +44,10 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return passwordEntryField.getText();
     }
 
+    public void tapSignUpButton() {
+        staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText())).click(SHORT_TIMEOUT);
+    }
+
     public void enterPasswordValue(String value) {
         passwordEntryField.type(value);
     }
@@ -51,6 +55,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     public void submitPasswordValue(String value) {
         enterPasswordValue(value);
         new IOSUtils().clickElementAtLocation(passwordEntryField, 0, 50);
+        new IOSUtils().dismissKeyboardForPhone();
         clickPrimaryButton();
     }
 
@@ -64,7 +69,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isInvalidPasswordErrorDisplayed() {
-        ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
+        ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
         return passwordLengthError.isElementPresent();
     }
 

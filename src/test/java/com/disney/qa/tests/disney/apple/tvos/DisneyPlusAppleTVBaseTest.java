@@ -1,46 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos;
 
-import com.disney.qa.api.account.DisneyAccountApi;
-import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.search.DisneySearchApi;
-import com.disney.qa.api.tvos.*;
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
-import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.UniversalUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
-import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.zebrunner.carina.api.http.HttpResponseStatusType;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import io.appium.java_client.ComparesImages;
-import io.appium.java_client.imagecomparison.*;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
-import io.appium.java_client.ios.IOSStartScreenRecordingOptions.VideoQuality;
-import io.restassured.path.json.JsonPath;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.decorators.Decorated;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import static org.testng.Assert.fail;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -51,11 +12,60 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
-import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.JARVIS;
-import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
-import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.DECORATIONS;
-import static com.disney.qa.disney.apple.pages.tv.AppleTVConstants.*;
-import static org.testng.Assert.fail;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
+import com.disney.qa.api.account.DisneyAccountApi;
+import com.disney.qa.api.config.DisneyMobileConfigApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.disney.qa.api.disney.DisneyContentApiChecker;
+import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.qa.api.pojos.ApiConfiguration;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.search.DisneySearchApi;
+import com.disney.qa.api.tvos.GetScreenshotMethod;
+import com.disney.qa.api.tvos.GetSessionWDAMethod;
+import com.disney.qa.api.tvos.GetStatusWDAMethod;
+import com.disney.qa.api.tvos.PostActivateAppMethod;
+import com.disney.qa.api.tvos.PostQueryAppStateMethod;
+import com.disney.qa.api.tvos.PostTerminateAppMethod;
+import com.disney.qa.api.tvos.PostUnlockMethod;
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.IOSUtils.Direction2;
+import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
+import com.zebrunner.carina.api.http.HttpResponseStatusType;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
+
+import io.appium.java_client.ComparesImages;
+import io.appium.java_client.imagecomparison.FeatureDetector;
+import io.appium.java_client.imagecomparison.FeaturesMatchingOptions;
+import io.appium.java_client.imagecomparison.FeaturesMatchingResult;
+import io.appium.java_client.imagecomparison.MatchingFunction;
+import io.appium.java_client.imagecomparison.OccurrenceMatchingOptions;
+import io.appium.java_client.imagecomparison.OccurrenceMatchingResult;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
+import io.appium.java_client.ios.IOSStartScreenRecordingOptions.VideoQuality;
+import io.restassured.path.json.JsonPath;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
@@ -79,7 +89,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         getCastedDriver();
         iosUtils.set(new IOSUtils());
         setBuildType();
-        languageUtils.set(new DisneyLocalizationUtils(country, language, "tvos", "prod", PARTNER));
+        languageUtils.set(new DisneyLocalizationUtils(country, language, "apple-tv", "prod", PARTNER));
         String version = iosUtils.get().getInstalledAppVersion();
         configApi.set(new DisneyMobileConfigApi("tvos", "prod", PARTNER, version));
         languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
@@ -142,14 +152,14 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     public void startScreenRecording() {
         IOSStartScreenRecordingOptions options = new IOSStartScreenRecordingOptions()
                 .withVideoQuality(VideoQuality.MEDIUM).withVideoType("libx264").withTimeLimit(Duration.ofSeconds(600));
-        IOSDriver driver = (IOSDriver) ((EventFiringWebDriver) getCastedDriver()).getWrappedDriver();
+        IOSDriver driver = (IOSDriver) getCastedDriver();
         driver.startRecordingScreen(options);
         LOGGER.info("Starting screen capture ...");
     }
 
     //TODO This is used to upload a video to your local computer. Use Carina to upload data to a remote server
     public void stopScreenRecording() {
-        IOSDriver driver = (IOSDriver) ((EventFiringWebDriver) getCastedDriver()).getWrappedDriver();
+        IOSDriver driver = (IOSDriver) getCastedDriver();
         String videoBase64 = driver.stopRecordingScreen();
         String pathToSaved = String.format(DEFAULT_VIDEO_PATH, "VideoRecording" + new Date().getTime());
         decodeBase64StringToVideo(videoBase64, pathToSaved);
@@ -253,9 +263,9 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         } catch (IOException e) {
             LOGGER.info("Couldn't encode a file", e);
         }
+        //TODO: [VD] refactor using interfaces!
         byte[] expectedScreenshot = Base64.getEncoder()
-                .encode(((RemoteWebDriver) ((EventFiringWebDriver) getCastedDriver()).getWrappedDriver())
-                        .getScreenshotAs(OutputType.BYTES));
+                .encode(((RemoteWebDriver) getCastedDriver()).getScreenshotAs(OutputType.BYTES));
         LOGGER.info("Screenshot is taken ...");
         FeaturesMatchingResult result = ((ComparesImages) getCastedDriver()).matchImagesFeatures(expectedScreenshot,
                 originalScreenshot,
@@ -273,9 +283,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         } catch (IOException e) {
             LOGGER.info("Couldn't encode a file", e);
         }
-        byte[] screenshot = Base64.getEncoder()
-                .encode(((RemoteWebDriver) ((EventFiringWebDriver) getCastedDriver()).getWrappedDriver())
-                        .getScreenshotAs(OutputType.BYTES));
+        byte[] expectedScreenshot = Base64.getEncoder()
+                .encode(((RemoteWebDriver) getCastedDriver()).getScreenshotAs(OutputType.BYTES));
         LOGGER.info("Screenshot is taken ...");
         OccurrenceMatchingResult result = ((ComparesImages) getCastedDriver()).findImageOccurrence(screenshot,
                 partialImage, new OccurrenceMatchingOptions().withEnabledVisualization());
@@ -309,8 +318,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getCastedDriver());
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(user.getEmail());
-        disneyPlusAppleTVPasswordPage.logInWithPassword(user.getUserPass());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
     public void logIn(DisneyAccount user) {

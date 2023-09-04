@@ -12,14 +12,8 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
 public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModalIOSPageBase {
 
-    @ExtendedFindBy(accessibilityId = "watchLiveButton")
-    private ExtendedWebElement watchLiveButton;
-
-    @ExtendedFindBy(accessibilityId = "watchFromStartButton")
-    private ExtendedWebElement watchFromStartButton;
-
-    @ExtendedFindBy(accessibilityId = "detailsButton")
-    private ExtendedWebElement detailsButton;
+    @ExtendedFindBy(accessibilityId = "subheadlineLabel")
+    private ExtendedWebElement subheadLineLabel;
 
     public DisneyPlusAppleTVLiveEventModalPage(WebDriver driver) {
         super(driver);
@@ -36,13 +30,7 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
         watchLiveButton.clickIfPresent();
     }
 
-    public boolean isWatchLiveButtonPresent() {
-        return watchLiveButton.isElementPresent();
-    }
-
-    public boolean isWatchFromStartPresent() {
-        return watchFromStartButton.isElementPresent();
-    }
+    public boolean isSubheadLineLabelPresent() { return subheadLineLabel.isPresent(); }
 
     public void clickDetailsButton() {
         detailsButton.click();

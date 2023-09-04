@@ -29,7 +29,14 @@ public class DisneyPlusAppleTVPaywallPage extends DisneyPlusPaywallIOSPageBase {
 
     @Override
     public void clickBasicPlan() {
-        clickLeft();
+        moveLeft(1,1);
+        pause(2);
+        clickSelect();
+    }
+
+    @Override
+    public void clickPremiumPlan() {
+        moveRight(1,1);
         pause(2);
         clickSelect();
     }

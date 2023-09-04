@@ -34,7 +34,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
     private static final String WINNIE_THE_POOH = "Winnie the Pooh";
     private final ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     private final ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(DisneyPlusAppleTVBaseTest.PLATFORM, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
+    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(getApiConfiguration(DISNEY));
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {

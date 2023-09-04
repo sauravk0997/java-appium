@@ -138,6 +138,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' webview was not opened");
         moreMenu.goBackToDisneyAppFromSafari();
+        moreMenu.dismissNotificationsPopUp();
         Assert.assertTrue(moreMenu.isOpened(), "User was not returned to the More Menu after navigating back from safari");
         //Scenario: Verify Info hyperlink
         moreMenu.clickEditProfilesBtn();
@@ -146,6 +147,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
         sa.assertTrue(editProfilePage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"User was not navigated to Disney plus help center");
         moreMenu.goBackToDisneyAppFromSafari();
+        moreMenu.dismissNotificationsPopUp();
         editProfilePage.clickDoneBtn();
         //Scenario: Verify Learn More on Kids profile
         moreMenu.clickMoreTab();

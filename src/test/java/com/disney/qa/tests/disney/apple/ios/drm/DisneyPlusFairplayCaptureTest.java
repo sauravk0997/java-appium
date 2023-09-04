@@ -1,5 +1,25 @@
 package com.disney.qa.tests.disney.apple.ios.drm;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.content.SetRequest;
@@ -23,23 +43,11 @@ import com.disney.qa.tests.BaseMobileTest;
 import com.disney.util.HARUtils;
 import com.disney.util.ZipUtils;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.zebrunner.agent.core.registrar.Artifact;
 import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.agent.core.registrar.Artifact;
-import io.appium.java_client.ios.IOSDriver;
-import org.apache.commons.io.FileUtils;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import io.appium.java_client.ios.IOSDriver;
 
 public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 

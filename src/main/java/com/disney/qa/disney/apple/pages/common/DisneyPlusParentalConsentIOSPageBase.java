@@ -6,6 +6,8 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
+import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -26,9 +28,6 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement consentMinorHeader;
 
-    @ExtendedFindBy(accessibilityId = "contentTextView")
-    protected ExtendedWebElement contentTextView;
-
     @ExtendedFindBy(accessibilityId = "declineButton")
     protected ExtendedWebElement declineButton;
 
@@ -42,10 +41,6 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
 
     public boolean isConsentHeaderPresent() {
         return consentMinorHeader.isPresent(SHORT_TIMEOUT);
-    }
-
-    public boolean isContentTextViewPresent() {
-        return contentTextView.isPresent(SHORT_TIMEOUT);
     }
 
     public void tapDeclineButton() {
@@ -62,9 +57,22 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public boolean validateConsentText() {
-        return contentTextView.getText().equalsIgnoreCase(consentText);
+        SoftAssert sa = new SoftAssert();
+        List<String> consentTextList = getTextViewItems(0);
+        String modifiedString = consentTextList.get(0).split("policy")[0];
+        consentTextList.set(0, modifiedString);
+        consentTextList.forEach(item -> sa.assertTrue(consentText.contains(item), "Consent didn't match for" + item));
+        return true;
     }
 
+    public boolean verifyPrivacyPolicyLink() {
+        return customHyperlinkByLabel.format("privacy policy").isPresent();
+    }
+
+    public boolean verifyChildrenPrivacyPolicyLink() {
+        return customHyperlinkByLabel.format("Children\\'s Privacy Policy").isPresent();
+    }
+    
     public boolean validateConsentHeader() {
         return consentMinorHeader.getText().equalsIgnoreCase(consentHeaderText);
     }

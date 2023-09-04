@@ -1,5 +1,16 @@
 package com.disney.qa.tests;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.IntStream;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
+import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
+
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.disney.DisneyHttpHeaders;
@@ -12,16 +23,7 @@ import com.disney.util.disney.DisneyGlobalUtils;
 import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.decorators.Decorated;
-import org.testng.Assert;
-import org.testng.annotations.BeforeSuite;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.IntStream;
 
 
 @SuppressWarnings("squid:S2187")

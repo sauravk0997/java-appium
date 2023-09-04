@@ -13,6 +13,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Map;
+
 import static com.disney.qa.api.search.assets.DisneyMovies.CAPTAIN_MARVEL;
 
 public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
@@ -31,8 +33,8 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
 
         //TODO: Add 'Who Framed Roger Rabbit' in DisneySeries.java
         ContentMovie series = searchApi.get().getMovie("20GDm8DYpIsC", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
-        String dictRatingVerbiage = detailsPage.getDictionary().replaceValuePlaceholders(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
-                series.getContentRatingsValue(), "");
+        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
+                Map.of("rating", series.getContentRatingsValue(), "rating_reasons", ""));
         String expectedSmokingDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.SMOKING_DISCLAIMER.getText());
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -41,6 +43,8 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
 
         sa.assertTrue(videoPlayer.getAdvisoryLabelText().contains(expectedSmokingDisclaimer), "Smoking disclaimer warning not found on video player");
+        videoPlayer.clickBackButton();
+        detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayer.getRatingLabelText().contains(dictRatingVerbiage.split("\\.")[0]), "Rating label displayed on player is not as expected");
         sa.assertAll();
     }
@@ -60,9 +64,8 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
 
         ContentMovie movie = searchApi.get().getMovie(CAPTAIN_MARVEL.getEncodedFamilyId(), languageUtils.get().getLocale(), languageUtils.get().getUserLanguage());
-        String dictRatingVerbiage = detailsPage.getDictionary().replaceValuePlaceholders(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
-                movie.getContentRatingsValue(), "");
-
+        String dictRatingVerbiage = detailsPage.getDictionary().formatPlaceholderString(detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.VIDEO_PLAYER_RATING.getText()),
+                Map.of("rating", movie.getContentRatingsValue(), "rating_reasons", ""));
         String expectedPSEDisclaimer = detailsPage.getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, DictionaryKeys.PSE_DISCLAIMER.getText());
 
         //Bug:This is not currently shown on video player
@@ -73,9 +76,11 @@ public class DisneyPlusVideoPlayerAdvisoryTest extends DisneyBaseTest {
         searchPage.searchForMedia(CAPTAIN_MARVEL.getName());
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton();
-        String advisoryText = videoPlayer.getAdvisoryLabelText();
         sa.assertTrue(videoPlayer.getRatingLabelText().contains(dictRatingVerbiage.split("\\.")[0]), "Rating label displayed on player is not as expected");
+        videoPlayer.clickBackButton();
+        detailsPage.clickContinueButton();
         sa.assertEquals(videoPlayer.getRatingReasonText(), "for sequences of sci-fi violence and action, and brief suggestive language.");
+        String advisoryText = videoPlayer.getAdvisoryLabelText();
         sa.assertEquals(advisoryText, expectedPSEDisclaimer);
         sa.assertAll();
     }

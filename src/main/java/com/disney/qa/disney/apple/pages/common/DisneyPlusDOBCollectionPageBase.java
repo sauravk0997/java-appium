@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -39,6 +40,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
+        UniversalUtils.captureAndUpload(getCastedDriver());
         return dateOfBirthHeader.isPresent();
     }
 
