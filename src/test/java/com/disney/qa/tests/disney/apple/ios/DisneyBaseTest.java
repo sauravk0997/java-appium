@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
@@ -220,7 +221,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
-            LOGGER.error(e.getStackTrace().toString());
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
     }
