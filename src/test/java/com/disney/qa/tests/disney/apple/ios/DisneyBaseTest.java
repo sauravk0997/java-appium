@@ -36,7 +36,6 @@ import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -53,7 +52,6 @@ import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.factory.DeviceType.Type;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -266,19 +264,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         StringBuilder sb = new StringBuilder();
 
         String build = R.CONFIG.get("capabilities.app");
-
+        
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
-        Type deviceType = Type.valueOf(R.CONFIG.get("capabilities.deviceType"));
-        switch (deviceType) {
-            case APPLE_TV:
-            case IOS_PHONE:
-            case IOS_TABLET:
-                raw.removeIf(entry -> !entry.contains(".ipa"));
-                break;
-            default:
-                raw.removeIf(entry -> !entry.contains(".apk"));
-        }
-
+        //TODO: how about .app for simulators?
+        //remove .ipa or .apk
+        raw.removeIf(entry -> !entry.contains(".ipa"));
+        raw.removeIf(entry -> !entry.contains(".apk"));
+        
         String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
 
         List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
