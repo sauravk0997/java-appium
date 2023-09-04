@@ -1,5 +1,9 @@
 package com.disney.qa.tests.disney.apple.tvos;
 
+import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.*;
+import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
+import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.*;
+import static com.disney.qa.disney.apple.pages.tv.AppleTVConstants.*;
 import static org.testng.Assert.fail;
 
 import java.awt.image.BufferedImage;
@@ -66,6 +70,7 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions.VideoQuality;
 import io.restassured.path.json.JsonPath;
+import com.disney.qa.disney.apple.pages.tv.AppleTVConstants;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
@@ -286,7 +291,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         byte[] expectedScreenshot = Base64.getEncoder()
                 .encode(((RemoteWebDriver) getCastedDriver()).getScreenshotAs(OutputType.BYTES));
         LOGGER.info("Screenshot is taken ...");
-        OccurrenceMatchingResult result = ((ComparesImages) getCastedDriver()).findImageOccurrence(screenshot,
+        OccurrenceMatchingResult result = ((ComparesImages) getCastedDriver()).findImageOccurrence(expectedScreenshot,
                 partialImage, new OccurrenceMatchingOptions().withEnabledVisualization());
         decodeBase64StringToImage(result.getVisualization(), "result/ResultScreehshot");
         return !result.getRect().equals(null);
