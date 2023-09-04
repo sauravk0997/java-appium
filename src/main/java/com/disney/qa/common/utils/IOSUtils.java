@@ -561,8 +561,6 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     public void appReinstall(String appName, String bundleId) {
         LOGGER.info("Reinstalling {} app ", appName);
         ((IOSDriver) getCastedDriver()).terminateApp(bundleId);
-        // obligatory close current session before reinstall otherwise session is closed by timeout
-        ((IOSDriver) getCastedDriver()).quit(); 
         installApp(appName);
         launchApp(bundleId);
     }

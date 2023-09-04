@@ -5,8 +5,13 @@ import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -48,6 +53,7 @@ import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.factory.DeviceType.Type;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -190,11 +196,28 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void initialSetup(String locale, String language, String... planType) {
-        // Call getDriver to set platform variables
+        disneyApiHandler.set(new DisneyContentApiChecker());
+        disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
+
+        // redesigned app version detection to make it without device/driver 
+        // String version = new MobileUtilsExtended().getInstalledAppVersion();
+        String version = getAppVersion();
+        LOGGER.info("version: {}", version);
+        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version));
+        languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
+        languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
+        languageUtils.get().setLegalDocuments();
+        searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
+        String accountPlan = planType.length > 0 ? planType[0] : BUNDLE_PREMIUM;
+        DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
+        disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
+
+
         LOGGER.info("Starting API threads");
+        iosUtils.set(new IOSUtils());
+        // Call getDriver to set platform variables
         getDriver();
         handleAlert();
-        iosUtils.set(new IOSUtils());
         setBuildType();
 
         if (buildType == BuildType.IAP) {
@@ -204,19 +227,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            disneyApiHandler.set(new DisneyContentApiChecker());
-            disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
-            String version = new MobileUtilsExtended().getInstalledAppVersion();
-            configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version));
-            languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
-            languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
-            languageUtils.get().setLegalDocuments();
-            searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
-            String accountPlan = planType.length > 0 ? planType[0] : BUNDLE_PREMIUM;
-            DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
-            disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
-
-            restart();
+            LOGGER.warn("[VD] test if relaunch really needed!");
+            //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
@@ -225,6 +237,61 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
     }
+
+    /**
+     * Returns installed app version based on the filename pulled from AppCenter when the test started.
+     * Similar to getInstalledAppVersionFull() except it does not include the build number
+     * @return The app version number used in config calls and other displays (ex. 1.16.0)
+     */
+    private String getAppVersion() {
+        String fullBuild = getInstalledAppVersionFull();
+        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0; i<list.size()-1; i++){
+            sb.append(list.get(i));
+            if(i != list.size()-2){
+                sb.append(".");
+            }
+        }
+        return sb.toString();
+    }
+    
+    /**
+     * Returns the full version number of the installed APK or IPA file, depending on if the platform
+     * is Apple based or Android based
+     * @return - The full build of the installed app version (ex. 1.16.0.12345)
+     */
+    private String getInstalledAppVersionFull() {
+        StringBuilder sb = new StringBuilder();
+
+        String build = R.CONFIG.get("capabilities.app");
+
+        List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
+        Type deviceType = Type.valueOf(R.CONFIG.get("capabilities.deviceType"));
+        switch (deviceType) {
+            case APPLE_TV:
+            case IOS_PHONE:
+            case IOS_TABLET:
+                raw.removeIf(entry -> !entry.contains(".ipa"));
+                break;
+            default:
+                raw.removeIf(entry -> !entry.contains(".apk"));
+        }
+
+        String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
+
+        List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
+        list.removeAll(Collections.singleton(""));
+
+        for(int i=0; i<list.size()-1; i++){
+            sb.append(list.get(i)).append(".");
+        }
+        sb.append(list.get(list.size()-1));
+
+        return sb.toString();
+    }
+
 
     @AfterMethod(alwaysRun = true)
     public void cleanThreads() {
