@@ -14,7 +14,6 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.tests.BaseMobileTest;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
@@ -29,7 +28,7 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
     public static final String IOS = "ios";
     protected static final boolean USE_MULTIVERSE = R.CONFIG.getBoolean("useMultiverse");
 
-    protected DisneyBaseTest.BuildType buildType;
+    protected BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();
 
     //API Threads
