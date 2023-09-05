@@ -6,6 +6,8 @@ import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
@@ -46,6 +48,7 @@ import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.commons.artifact.IArtifactManager;
+import com.zebrunner.carina.utils.Configuration.Parameter;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.ArtifactProvider;
@@ -244,33 +247,29 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-        String build = R.CONFIG.get("capabilities.app");
-        LOGGER.info("capabilities.app: {}", build);
+        String appLink = R.CONFIG.get("capabilities.app");
+        LOGGER.info("capabilities.app: {}", appLink);
         
         IArtifactManager artifactProvider = ArtifactProvider.getInstance();
-        build = artifactProvider.getDirectLink(build);
+        appLink = artifactProvider.getDirectLink(appLink);
         
-        LOGGER.info("app: {}", build);
-        //Example of the app capability with self sign url
-        //appium:app=
-        //    https://appcenter-filemanagement-distrib3ede6f06e.azureedge.net/c8354cd3-19a3-4bed-8dba-491a1918411f/
-        //    Disney%2B-Dominguez_iOS_Enterprise_QA-2.24.0-60060.ipa?
-        //    sv=2019-02-02&sr=c&sig=6YffxmXMsFQDzDpkV8K%2FtCOWBgGNTI2MIijz%2BK7Nu%2BY%3D&se=2023-09-05T22%3A49%3A30Z&sp=r
+        LOGGER.info("app: {}", appLink);
         
-        return "2.24.0";
+        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.name()));
+       
+        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+        final Matcher matcher = pattern.matcher(appLink);
         
-        //TODO: implement simple parse using pattern like: "QA-.*.ipa"
-//        List<String> list = new ArrayList<>(Arrays.asList(build.split("\\.")));
-//        StringBuilder sb = new StringBuilder();
-//
-//        for(int i=0; i<list.size()-1; i++){
-//            sb.append(list.get(i));
-//            if(i != list.size()-2){
-//                sb.append(".");
-//            }
-//        }
-//        LOGGER.info("sb: {}", sb);
-//        return sb.toString();
+        String version = "2.24.0"; // hardcode to have as minimal workable api calls using this version
+        if (matcher.find()) {
+            version = matcher.group(1);
+        } else {
+            LOGGER.error("Unable to detect version via regex patterm from presign url: " + appLink);
+        }
+        
+        LOGGER.info("version: ", version);
+        
+        return version;
     }
 
     @AfterMethod(alwaysRun = true)
