@@ -239,12 +239,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      */
     private synchronized String getAppVersion() {
         String appLink = R.CONFIG.get("capabilities.app");
-        LOGGER.info("capabilities.app: {}", appLink);
+        LOGGER.debug("capabilities.app: {}", appLink);
         
         IArtifactManager artifactProvider = ArtifactProvider.getInstance();
         appLink = artifactProvider.getDirectLink(appLink);
         
-        LOGGER.info("app: {}", appLink);
+        LOGGER.debug("app: {}", appLink);
         // override capabilities.app by presign url to avoid multiply calls to appcenter
         R.CONFIG.put("capabilities.app", appLink);
         
@@ -260,7 +260,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.error("Unable to detect version via regex: {} patterm from presign url: {}", regex, appLink);
         }
         
-        LOGGER.info("version: ", version);
+        LOGGER.info("version: {}", version);
         
         return version;
     }
