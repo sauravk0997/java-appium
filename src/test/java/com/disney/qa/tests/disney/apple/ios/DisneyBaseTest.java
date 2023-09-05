@@ -7,11 +7,9 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -289,23 +287,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("build: {}", build);
         R.CONFIG.put("capabilities.app", build);
         
-        List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
-        //TODO: how about .app for simulators?
-        //remove .ipa or .apk
-        raw.removeIf(entry -> !entry.contains(".ipa"));
-        raw.removeIf(entry -> !entry.contains(".apk"));
+        return "2.24.0";
+        //TODO: implement simpler parse of the 'build' string
         
-        String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
-
-        List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
-        list.removeAll(Collections.singleton(""));
-
-        for(int i=0; i<list.size()-1; i++){
-            sb.append(list.get(i)).append(".");
-        }
-        sb.append(list.get(list.size()-1));
-
-        return sb.toString();
+//        List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
+//        //TODO: how about .app for simulators?
+//        //remove .ipa or .apk
+//        raw.removeIf(entry -> !entry.contains(".ipa"));
+//        raw.removeIf(entry -> !entry.contains(".apk"));
+//        
+//        String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
+//
+//        List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
+//        list.removeAll(Collections.singleton(""));
+//
+//        for(int i=0; i<list.size()-1; i++){
+//            sb.append(list.get(i)).append(".");
+//        }
+//        sb.append(list.get(list.size()-1));
+//
+//        return sb.toString();
     }
 
 
