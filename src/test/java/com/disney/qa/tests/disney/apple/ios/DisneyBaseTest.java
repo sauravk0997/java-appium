@@ -82,8 +82,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
     
-    private String version = "";
-
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
@@ -199,14 +197,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         disneyApiHandler.set(new DisneyContentApiChecker());
         disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
 
-        // redesigned app version detection to make it without device/driver 
-        // String version = new MobileUtilsExtended().getInstalledAppVersion();
-        if (this.version.isEmpty()) {
-            this.version = getAppVersion();
-        }
-        
-        LOGGER.info("this.version: {}", this.version);
-        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, this.version));
+        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, getAppVersion()));
         languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
         languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
         languageUtils.get().setLegalDocuments();
@@ -230,7 +221,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            LOGGER.warn("[VD] test if relaunch really needed!");
+            LOGGER.warn("Commented restart as it seems useless after version detection refactoring");
             //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
@@ -248,26 +239,28 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      */
     private synchronized String getAppVersion() {
         String appLink = R.CONFIG.get("capabilities.app");
-        LOGGER.info("capabilities.app: {}", appLink);
+        LOGGER.debug("capabilities.app: {}", appLink);
         
         IArtifactManager artifactProvider = ArtifactProvider.getInstance();
         appLink = artifactProvider.getDirectLink(appLink);
         
-        LOGGER.info("app: {}", appLink);
+        LOGGER.debug("app: {}", appLink);
+        // override capabilities.app by presign url to avoid multiply calls to appcenter
+        R.CONFIG.put("capabilities.app", appLink);
         
-        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.name()));
+        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.getKey()));
        
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(appLink);
         
-        String version = "2.24.0"; // hardcode to have as minimal workable api calls using this version
+        String version = "2.24.0"; // hardcode to have api calls workable even with old version.
         if (matcher.find()) {
             version = matcher.group(1);
         } else {
-            LOGGER.error("Unable to detect version via regex patterm from presign url: " + appLink);
+            LOGGER.error("Unable to detect version via regex: {} patterm from presign url: {}", regex, appLink);
         }
         
-        LOGGER.info("version: ", version);
+        LOGGER.info("version: {}", version);
         
         return version;
     }
