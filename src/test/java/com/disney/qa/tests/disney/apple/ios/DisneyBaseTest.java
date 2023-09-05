@@ -230,7 +230,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            restart();
+            LOGGER.warn("Commented restart as it seems useless after version detection refactring");
+            //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
