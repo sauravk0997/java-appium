@@ -177,7 +177,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content airing." + e);
+            skipExecution("Skipping test, Watch button not found, no live content airing." + e.getMessage());
         }
 
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
