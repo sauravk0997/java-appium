@@ -221,7 +221,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            LOGGER.warn("Commented restart as it seems useless after version detection refactring");
+            LOGGER.warn("Commented restart as it seems useless after version detection refactoring");
             //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
