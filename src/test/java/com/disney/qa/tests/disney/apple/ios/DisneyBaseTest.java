@@ -50,8 +50,10 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBas
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.commons.artifact.IArtifactManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.ArtifactProvider;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -81,6 +83,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
+    
+    private String version = "";
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -199,9 +203,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         // redesigned app version detection to make it without device/driver 
         // String version = new MobileUtilsExtended().getInstalledAppVersion();
-        String version = getAppVersion();
-        LOGGER.info("version: {}", version);
-        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version));
+        if (this.version.isEmpty()) {
+            this.version = getAppVersion();
+        }
+        
+        LOGGER.info("this.version: {}", this.version);
+        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, this.version));
         languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
         languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
         languageUtils.get().setLegalDocuments();
@@ -241,7 +248,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Similar to getInstalledAppVersionFull() except it does not include the build number
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
-    private String getAppVersion() {
+    private synchronized String getAppVersion() {
         String fullBuild = getInstalledAppVersionFull();
         LOGGER.info("app: {}", fullBuild);
         //Example of the app capability with self sign url
@@ -250,19 +257,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //    Disney%2B-Dominguez_iOS_Enterprise_QA-2.24.0-60060.ipa?
         //    sv=2019-02-02&sr=c&sig=6YffxmXMsFQDzDpkV8K%2FtCOWBgGNTI2MIijz%2BK7Nu%2BY%3D&se=2023-09-05T22%3A49%3A30Z&sp=r
         
-        return "2.24.0";
-        //TODO: simplify logic making parsing trivial by pattern! 
-//        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
-//        StringBuilder sb = new StringBuilder();
-//
-//        for(int i=0; i<list.size()-1; i++){
-//            sb.append(list.get(i));
-//            if(i != list.size()-2){
-//                sb.append(".");
-//            }
-//        }
-//        LOGGER.info("sb: {}", sb);
-//        return sb.toString();
+        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0; i<list.size()-1; i++){
+            sb.append(list.get(i));
+            if(i != list.size()-2){
+                sb.append(".");
+            }
+        }
+        LOGGER.info("sb: {}", sb);
+        return sb.toString();
     }
     
     /**
@@ -274,7 +279,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         StringBuilder sb = new StringBuilder();
 
         String build = R.CONFIG.get("capabilities.app");
+        LOGGER.info("capabilities.app: {}", build);
+        
+        
+        IArtifactManager artifactProvider = ArtifactProvider.getInstance();
+        build = artifactProvider.getDirectLink(build);
+
+        // override capabilities.app to speedup startup of the other threads
         LOGGER.info("build: {}", build);
+        R.CONFIG.put("capabilities.app", build);
         
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
         //TODO: how about .app for simulators?
