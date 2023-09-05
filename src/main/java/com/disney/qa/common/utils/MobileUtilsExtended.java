@@ -158,6 +158,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * Similar to getInstalledAppVersionFull() except it does not include the build number
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
+    @Deprecated
     public String getInstalledAppVersion() {
         String fullBuild = getInstalledAppVersionFull();
         List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));

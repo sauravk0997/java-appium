@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
@@ -30,7 +31,6 @@ import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -45,8 +45,10 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBas
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.commons.artifact.IArtifactManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.ArtifactProvider;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -76,6 +78,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
+    
+    private String version = "";
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -189,11 +193,31 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void initialSetup(String locale, String language, String... planType) {
-        // Call getDriver to set platform variables
+        disneyApiHandler.set(new DisneyContentApiChecker());
+        disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
+
+        // redesigned app version detection to make it without device/driver 
+        // String version = new MobileUtilsExtended().getInstalledAppVersion();
+        if (this.version.isEmpty()) {
+            this.version = getAppVersion();
+        }
+        
+        LOGGER.info("this.version: {}", this.version);
+        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, this.version));
+        languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
+        languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
+        languageUtils.get().setLegalDocuments();
+        searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
+        String accountPlan = planType.length > 0 ? planType[0] : BUNDLE_PREMIUM;
+        DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
+        disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
+
+
         LOGGER.info("Starting API threads");
+        iosUtils.set(new IOSUtils());
+        // Call getDriver to set platform variables
         getDriver();
         handleAlert();
-        iosUtils.set(new IOSUtils());
         setBuildType();
 
         if (buildType == BuildType.IAP) {
@@ -203,26 +227,50 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            disneyApiHandler.set(new DisneyContentApiChecker());
-            disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
-            String version = new MobileUtilsExtended().getInstalledAppVersion();
-            configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version));
-            languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
-            languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
-            languageUtils.get().setLegalDocuments();
-            searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
-            String accountPlan = planType.length > 0 ? planType[0] : BUNDLE_PREMIUM;
-            DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
-            disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
-
-            restart();
+            LOGGER.warn("[VD] test if relaunch really needed!");
+            //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
-            LOGGER.error(e.getStackTrace().toString());
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
+    }
+
+    /**
+     * Returns installed app version based on the filename pulled from AppCenter when the test started.
+     * Similar to getInstalledAppVersionFull() except it does not include the build number
+     * @return The app version number used in config calls and other displays (ex. 1.16.0)
+     */
+    private synchronized String getAppVersion() {
+        String build = R.CONFIG.get("capabilities.app");
+        LOGGER.info("capabilities.app: {}", build);
+        
+        IArtifactManager artifactProvider = ArtifactProvider.getInstance();
+        build = artifactProvider.getDirectLink(build);
+        
+        LOGGER.info("app: {}", build);
+        //Example of the app capability with self sign url
+        //appium:app=
+        //    https://appcenter-filemanagement-distrib3ede6f06e.azureedge.net/c8354cd3-19a3-4bed-8dba-491a1918411f/
+        //    Disney%2B-Dominguez_iOS_Enterprise_QA-2.24.0-60060.ipa?
+        //    sv=2019-02-02&sr=c&sig=6YffxmXMsFQDzDpkV8K%2FtCOWBgGNTI2MIijz%2BK7Nu%2BY%3D&se=2023-09-05T22%3A49%3A30Z&sp=r
+        
+        return "2.24.0";
+        
+        //TODO: implement simple parse using pattern like: "QA-.*.ipa"
+//        List<String> list = new ArrayList<>(Arrays.asList(build.split("\\.")));
+//        StringBuilder sb = new StringBuilder();
+//
+//        for(int i=0; i<list.size()-1; i++){
+//            sb.append(list.get(i));
+//            if(i != list.size()-2){
+//                sb.append(".");
+//            }
+//        }
+//        LOGGER.info("sb: {}", sb);
+//        return sb.toString();
     }
 
     @AfterMethod(alwaysRun = true)
