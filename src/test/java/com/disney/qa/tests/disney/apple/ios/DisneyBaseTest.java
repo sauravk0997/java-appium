@@ -5,10 +5,7 @@ import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
@@ -247,68 +244,34 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-        String fullBuild = getInstalledAppVersionFull();
-        LOGGER.info("app: {}", fullBuild);
+        String build = R.CONFIG.get("capabilities.app");
+        LOGGER.info("capabilities.app: {}", build);
+        
+        IArtifactManager artifactProvider = ArtifactProvider.getInstance();
+        build = artifactProvider.getDirectLink(build);
+        
+        LOGGER.info("app: {}", build);
         //Example of the app capability with self sign url
         //appium:app=
         //    https://appcenter-filemanagement-distrib3ede6f06e.azureedge.net/c8354cd3-19a3-4bed-8dba-491a1918411f/
         //    Disney%2B-Dominguez_iOS_Enterprise_QA-2.24.0-60060.ipa?
         //    sv=2019-02-02&sr=c&sig=6YffxmXMsFQDzDpkV8K%2FtCOWBgGNTI2MIijz%2BK7Nu%2BY%3D&se=2023-09-05T22%3A49%3A30Z&sp=r
         
-        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
-        StringBuilder sb = new StringBuilder();
-
-        for(int i=0; i<list.size()-1; i++){
-            sb.append(list.get(i));
-            if(i != list.size()-2){
-                sb.append(".");
-            }
-        }
-        LOGGER.info("sb: {}", sb);
-        return sb.toString();
-    }
-    
-    /**
-     * Returns the full version number of the installed APK or IPA file, depending on if the platform
-     * is Apple based or Android based
-     * @return - The full build of the installed app version (ex. 1.16.0.12345)
-     */
-    private String getInstalledAppVersionFull() {
-        StringBuilder sb = new StringBuilder();
-
-        String build = R.CONFIG.get("capabilities.app");
-        LOGGER.info("capabilities.app: {}", build);
-        
-        
-        IArtifactManager artifactProvider = ArtifactProvider.getInstance();
-        build = artifactProvider.getDirectLink(build);
-
-        // override capabilities.app to speedup startup of the other threads
-        LOGGER.info("build: {}", build);
-        R.CONFIG.put("capabilities.app", build);
-        
         return "2.24.0";
-        //TODO: implement simpler parse of the 'build' string
         
-//        List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
-//        //TODO: how about .app for simulators?
-//        //remove .ipa or .apk
-//        raw.removeIf(entry -> !entry.contains(".ipa"));
-//        raw.removeIf(entry -> !entry.contains(".apk"));
-//        
-//        String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
-//
-//        List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
-//        list.removeAll(Collections.singleton(""));
+        //TODO: implement simple parse using pattern like: "QA-.*.ipa"
+//        List<String> list = new ArrayList<>(Arrays.asList(build.split("\\.")));
+//        StringBuilder sb = new StringBuilder();
 //
 //        for(int i=0; i<list.size()-1; i++){
-//            sb.append(list.get(i)).append(".");
+//            sb.append(list.get(i));
+//            if(i != list.size()-2){
+//                sb.append(".");
+//            }
 //        }
-//        sb.append(list.get(list.size()-1));
-//
+//        LOGGER.info("sb: {}", sb);
 //        return sb.toString();
     }
-
 
     @AfterMethod(alwaysRun = true)
     public void cleanThreads() {
