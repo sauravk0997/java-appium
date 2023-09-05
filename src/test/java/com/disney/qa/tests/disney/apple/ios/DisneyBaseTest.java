@@ -230,8 +230,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            LOGGER.warn("[VD] test if relaunch really needed!");
-            //restart();
+            restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
