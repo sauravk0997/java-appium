@@ -254,7 +254,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         
         LOGGER.info("app: {}", appLink);
         
-        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.name()));
+        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.getKey()));
+        LOGGER.info("regex: {}", regex);
        
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(appLink);
