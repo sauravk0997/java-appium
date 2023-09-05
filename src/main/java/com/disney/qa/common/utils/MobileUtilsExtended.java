@@ -178,6 +178,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * is Apple based or Android based
      * @return - The full build of the installed app version (ex. 1.16.0.12345)
      */
+    @Deprecated
     public String getInstalledAppVersionFull() {
         StringBuilder sb = new StringBuilder();
 
