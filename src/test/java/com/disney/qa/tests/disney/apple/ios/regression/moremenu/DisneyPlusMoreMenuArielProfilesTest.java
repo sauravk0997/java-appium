@@ -571,7 +571,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
-        pause(30);
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
