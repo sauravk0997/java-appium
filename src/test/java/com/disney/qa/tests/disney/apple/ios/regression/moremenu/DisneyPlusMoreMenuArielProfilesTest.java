@@ -11,8 +11,10 @@ import com.qaprosoft.carina.core.foundation.utils.R;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -26,7 +28,12 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String TWO_THOUSAND_EIGHT = "2008";
     private static final String NINETEEN_EIGHTY = "1980";
+    @DataProvider
+    private Object[] dateofbirth() {
+        return new String[]{"dob: " + TWENTY_EIGHTEEN, "dob: " + TWO_THOUSAND_EIGHT};
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
     @Maintainer("gkrishna1")
@@ -552,25 +559,24 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72482"})
-    @Test(description = "Profiles > Add profile, No Gender for U13 Profiles", groups = {"Ariel-More Menu"})
-    public void verifyNoGenderForU13Profiles() {
+    @Test(dataProvider = "dateofbirth", description = "Profiles > Add profile, No Gender for U13 and U18 Profiles", groups = {"Ariel-More Menu"})
+    public void verifyNoGenderForU13andU18Profiles(String dob) {
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
-        //navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         pause(30);
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        String birthDate = StringUtils.substringAfter(dob, "dob: ");
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, birthDate);
 
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
                 "Gender field is enabled for U13 profile");
