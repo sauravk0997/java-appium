@@ -1,23 +1,27 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_LABEL_EVENT_UPCOMING;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_LABEL_EVENT_UPCOMING_TODAY;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_TEXT_DATE_TIME;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_EXTRAS;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+import org.testng.asserts.SoftAssert;
+
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.testng.asserts.SoftAssert;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
@@ -294,7 +298,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
     public void clickExtrasTab() {
         if (!extrasTab.isPresent()) {
-            new IOSUtils().swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+            new IOSUtils().swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, Direction.UP, 900);
         }
         extrasTab.click();
     }
@@ -339,13 +343,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
 
-    public void swipeTabBar (IMobileUtils.Direction direction, int duration) {
+    public void swipeTabBar (Direction direction, int duration) {
         new IOSUtils().swipeInContainer(tabBar, direction, duration);
     }
 
     public void clickDetailsTab() {
         if (!detailsTab.isElementPresent()) {
-            swipeTabBar(IMobileUtils.Direction.LEFT, 1000);
+            swipeTabBar(Direction.LEFT, 1000);
         }
         detailsTab.click();
     }
@@ -440,17 +444,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String[] metadataLabelParts = metaDataLabel.getText().split(",");
         params.put("metaDataYear(s)", metadataLabelParts[0]);
         clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(releaseDate, 3, contentDetailsPage, IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipePageTillElementPresent(releaseDate, 3, contentDetailsPage, Direction.UP, 500);
         String[] detailsTabYear = releaseDate.getText().split(", ");
         return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
     }
 
     public boolean compareEpisodeNum() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        new IOSUtils().swipePageTillElementPresent( getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, IMobileUtils.Direction.UP, 2000);
+        new IOSUtils().swipePageTillElementPresent( getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
         LOGGER.info("Retrieving current episode number..");
         String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, IMobileUtils.Direction.DOWN, 2000);
+        new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, Direction.DOWN, 2000);
         clickWatchButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForContentToEnd(450, 15);
@@ -458,7 +462,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             videoPlayer.clickBackButton();
         }
         isOpened();
-        new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()),1, contentDetailsPage, IMobileUtils.Direction.UP, 2000);
+        new IOSUtils().swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()),1, contentDetailsPage, Direction.UP, 2000);
         LOGGER.info("Retrieving recently played episode number..");
         String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         LOGGER.info("Comparing current episode number with recently played episode number..");
@@ -494,7 +498,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeTillActorsElementPresent() {
-        new IOSUtils().swipePageTillElementPresent(getActors(), 3, contentDetailsPage, IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipePageTillElementPresent(getActors(), 3, contentDetailsPage, Direction.UP, 500);
     }
 
     public ExtendedWebElement getDetailsTab() {
@@ -552,7 +556,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSuggestedTabPresent() {
         if (!suggestedTab.isElementPresent()) {
-            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, Direction.UP, 900);
         }
         return suggestedTab.isElementPresent();
     }

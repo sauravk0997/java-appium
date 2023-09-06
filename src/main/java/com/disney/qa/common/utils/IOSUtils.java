@@ -1,25 +1,6 @@
 package com.disney.qa.common.utils;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.DriverHelper;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.*;
-import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
@@ -29,7 +10,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchSessionException;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.DriverHelper;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.touch.TapOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
 public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
@@ -83,7 +98,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         }
     }
 
-    public enum Direction {
+    public enum Direction2 {
         UP("up"),
         DOWN("down"),
         LEFT("left"),
@@ -91,7 +106,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
 
         private String dir;
 
-        Direction(String dir) {
+        Direction2(String dir) {
             this.dir = dir;
         }
 
@@ -246,7 +261,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param y y-coordinate
      */
     public void press(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver<?>) getDriver());
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
         touchAction.press(new PointOption<>().withCoordinates(x, y)).release().perform();
     }
 
@@ -257,7 +272,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param y y-coordinate
      */
     public void longPress(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver<?>) getDriver());
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
         touchAction.longPress(new PointOption<>().withCoordinates(x, y)).release().perform();
     }
 
@@ -284,7 +299,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         Dimension scrSize = getDriver().manage().window().getSize();
         int a = (int) (scrSize.width / x);
         int b = (int) (scrSize.height / y);
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver<?>) getDriver());
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
         LOGGER.info("Tapping on co-ordinates: [{}, {}]", a, b);
         touchAction.press(new PointOption<>().withCoordinates(a, b)).release().perform();
     }
@@ -321,7 +336,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param numOfTaps tap count
      */
     public void tapAtCoordinateNoOfTimes(int xOffset, int yOffset, int numOfTaps) {
-        IOSDriver<?> iosDriver = (IOSDriver<?>) getCastedDriver();
+        IOSDriver iosDriver = (IOSDriver) getCastedDriver();
         TouchAction<?> touchActions = new TouchAction<>(iosDriver);
         touchActions.tap(TapOptions.tapOptions().withPosition(PointOption.point(xOffset, yOffset))
                 .withTapsCount(numOfTaps)).perform();
@@ -361,7 +376,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
             return false;
         }
         boolean foundAlert = false;
-        WebDriverWait wait = new WebDriverWait(getDriver(), 5);
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             foundAlert = true;
@@ -404,7 +419,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
         LOGGER.info("Scrolling down..");
-        scrollObject.put(DIRECTION, Direction.DOWN.getDirection());
+        scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
 
@@ -415,7 +430,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
         LOGGER.info("Scrolling up..");
-        scrollObject.put(DIRECTION, Direction.UP.getDirection());
+        scrollObject.put(DIRECTION, Direction2.UP.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
 
@@ -469,7 +484,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         swipeObject.put("startY", starty);
         swipeObject.put("endX", endx);
         swipeObject.put("endY", endy);
-        swipeObject.put(DIRECTION, Direction.LEFT.getDirection());
+        swipeObject.put(DIRECTION, Direction2.LEFT.getDirection());
         swipeObject.put(DURATION, duration);
         js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
     }
@@ -480,7 +495,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipe(Direction direction, int duration, WebElement element) {
+    public void swipe(Direction2 direction, int duration, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, Object> swipeObject = new HashMap<>();
         LOGGER.info("Scrolling {}...", direction);
@@ -500,7 +515,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      */
 
-    public void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, IMobileUtils.Direction direction) {
+    public void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
         while (element.isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
             new MobileUtilsExtended().swipeInContainer(container, direction, 1, 900);
             count--;
@@ -529,8 +544,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      */
     public void appRestart(String appName) {
         LOGGER.info("Restarting {} app", appName);
-        ((IOSDriver<?>) getDriver()).closeApp();
-        ((IOSDriver<?>) getDriver()).launchApp();
+        ((IOSDriver) getDriver()).closeApp();
+        ((IOSDriver) getDriver()).launchApp();
     }
 
     /**
@@ -545,7 +560,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      */
     public void appReinstall(String appName, String bundleId) {
         LOGGER.info("Reinstalling {} app ", appName);
-        ((IOSDriver<?>) getCastedDriver()).terminateApp(bundleId);
+        ((IOSDriver) getCastedDriver()).terminateApp(bundleId);
         installApp(appName);
         launchApp(bundleId);
     }
@@ -635,19 +650,6 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     }
 
     /**
-     * Terminates an existing application on the device.
-     *
-     * @param bundleId
-     */
-    @Override
-    public void terminateApp(String bundleId) {
-        Map<String, Object> params = new HashMap<>();
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        params.put(BUNDLE_ID, bundleId);
-        js.executeScript(Gestures.TERMINATE_APP.getGesture(), params);
-    }
-
-    /**
      * Activates an existing application on the device under test and moves it to the foreground.
      * The application should be already running in order to activate it.
      * The call is ignored if the application is already in foreground.
@@ -715,7 +717,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      */
     @Deprecated(forRemoval = true)
     public void handleAlert(AlertButtonCommand alertButtonCommand) {
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), 5).ignoring(WebDriverException.class).ignoring(NoSuchSessionException.class)
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5)).ignoring(WebDriverException.class).ignoring(NoSuchSessionException.class)
                 .ignoring(TimeoutException.class);
         try {
             do {
@@ -754,7 +756,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     @Deprecated(forRemoval = true)
     public void handleAlert(AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlert, int timeOutInSeconds, int maxAttempts) {
 
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), timeOutInSeconds)
+        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds))
                 .ignoring(WebDriverException.class)
                 .ignoring(NoSuchSessionException.class)
                 .ignoring(TimeoutException.class);
@@ -836,7 +838,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
             js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
-            WebDriverWait wait = new WebDriverWait(getDriver(), explicitWait);
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
             wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
@@ -876,7 +878,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         }
 
         public boolean checkIfWiFiSelected(String wifiName, int maxAttempts, int explicitWait) {
-            WebDriverWait wait = new WebDriverWait(getDriver(), explicitWait);
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             do {
                 try {
                     if ("checkmark".equalsIgnoreCase(wait.until(ExpectedConditions.presenceOfElementLocated(
@@ -931,7 +933,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
             while (!checkIfWiFiSelected(wifiName, maxAttempts, 10) && maxAttempts-- > 0) {
                 LOGGER.info("{} is not set as current wifi/locator not found", wifiName);
                 try {
-                    WebDriverWait wait = new WebDriverWait(getDriver(), explicitWait);
+                    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
                     wait.until(ExpectedConditions.presenceOfElementLocated(By.id(wifiName))).click();
                     break; //TODO may need to replace with a check
                 } catch (Exception e) {
@@ -978,7 +980,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param duration
      */
 
-    public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, IMobileUtils.Direction direction, int duration) {
+    public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
@@ -994,7 +996,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, IMobileUtils.Direction direction, int duration) {
+    public void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isElementPresent() && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
@@ -1043,13 +1045,14 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     public void setBirthDate(String month, String day, String year) {
         IOSDriver iosDriver = (IOSDriver) getCastedDriver();
         HashMap<String, Object> scrollObject = new HashMap<>();
-        scrollObject.put(DIRECTION, Direction.DOWN.getDirection());
+        scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
         iosDriver.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
-        List<RemoteWebElement> pickers = iosDriver.findElementsByIosNsPredicate(PICKER_WHEEL_PREDICATE);
+
+        List<WebElement> pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         Instant waitTimeout = Instant.now().plus(30, ChronoUnit.SECONDS);
         while (pickers.isEmpty() && Instant.now().isBefore(waitTimeout)) {
             LOGGER.info("DOB picker is empty waiting for it to show on screen");
-            pickers = iosDriver.findElementsByIosNsPredicate(PICKER_WHEEL_PREDICATE);
+            pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         }
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);

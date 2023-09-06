@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.playback;
 
+import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
@@ -8,9 +9,8 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.HARUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.registrar.Artifact;
-import net.lightbody.bmp.proxy.CaptureType;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

@@ -1,24 +1,35 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCompletePurchasePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCompleteSubscriptionPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDOBCollectionPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLegalPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPaywallPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVRestartSubscriptionPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSignUpPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVUpdateProfilePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import org.openqa.selenium.NoSuchElementException;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import com.zebrunner.carina.utils.Configuration;
+import com.zebrunner.carina.utils.R;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
 

@@ -1,20 +1,24 @@
 package com.disney.qa.common.utils.ios_settings;
 
-import com.disney.qa.common.DisneyAbstractPage;
-import com.disney.qa.common.utils.IOSUtils;
-import com.qaprosoft.carina.core.foundation.crypto.CryptoTool;
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
+import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.common.utils.IOSUtils;
+import com.zebrunner.carina.crypto.CryptoTool;
+import com.zebrunner.carina.crypto.CryptoToolBuilder;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
 public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
@@ -99,7 +103,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     public String getDeviceSandBoxAppleID() {
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         utils.swipe(sandboxAccount);
         return appleIDCell.getText().split(":")[1];
@@ -110,7 +114,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         int appSubButtonIndex = 9999;
         List<ExtendedWebElement> appSubButtons = new LinkedList<>();
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
 
@@ -133,7 +137,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     public void navigateToManageSubscription() {
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, IMobileUtils.Direction.UP);
+        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
         if(subscriptionsButton.isElementPresent()) {
@@ -142,7 +146,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
-        CryptoTool cryptoTool = new CryptoTool(Configuration.get(Configuration.Parameter.CRYPTO_KEY_PATH));
+        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
 
         utils.swipe(sandboxAccount);
         sandboxAccount.click();
