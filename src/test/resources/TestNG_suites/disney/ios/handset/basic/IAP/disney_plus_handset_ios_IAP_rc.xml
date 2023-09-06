@@ -3,8 +3,7 @@
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Ad-Hoc"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-IAP-Prod-AdHoc-for-Automation,Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="iOS_handset_iap_rc_2.23.0"/>
     <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
@@ -19,6 +18,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value=""/>
     <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>

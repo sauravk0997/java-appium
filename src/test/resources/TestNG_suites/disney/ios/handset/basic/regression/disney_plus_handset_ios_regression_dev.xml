@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="ios_handset_nightly_dev" annotations="JDK">
+<suite verbose="1" thread-count="8" name="ios_handset_regression_dev" annotations="JDK">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name"
                value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_nightly_dev"/>
+    <parameter name="jenkinsJobName" value="ios_handset_regression_dev"/>
     <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
