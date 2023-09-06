@@ -1,7 +1,6 @@
 package com.disney.qa.common.constant;
 
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.Configuration.Parameter;
+import com.zebrunner.carina.utils.Configuration;
 
 public class TimeConstant {
     
@@ -18,6 +17,6 @@ public class TimeConstant {
 	
 	public static final int DEFAULT_SWIPE_TIMEOUT = 1000;
 	
-	public static final int IMPLICIT_TIMEOUT = Configuration.getInt(Parameter.EXPLICIT_TIMEOUT) / 3;
+	public static final int IMPLICIT_TIMEOUT = Configuration.getInt(Configuration.Parameter.EXPLICIT_TIMEOUT) / 3;
 
 }

@@ -1,13 +1,5 @@
 package com.disney.alice;
 
-import com.disney.alice.model.RecognitionMetaType;
-import com.disney.qa.common.utils.UniversalUtils;
-import com.qaprosoft.carina.core.foundation.utils.R;
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +7,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+
+import com.disney.alice.model.RecognitionMetaType;
+import com.disney.qa.common.utils.UniversalUtils;
+import com.zebrunner.carina.utils.R;
 
 public class AliceDriver extends AliceClient {
 

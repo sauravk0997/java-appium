@@ -1,8 +1,9 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import com.qaprosoft.carina.core.foundation.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
 

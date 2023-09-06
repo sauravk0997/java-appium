@@ -1,17 +1,27 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology.qa;
 
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.zebrunner.agent.core.annotation.Maintainer;
-import com.zebrunner.agent.core.annotation.TestLabel;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLiveEventModalIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
 
 public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
@@ -20,7 +30,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
     private static final String LIVE = "LIVE";
     private static final String PLAY = "PLAY";
-    private static final String WATCH_LIVE = "Watch Live";
+    //private static final String WATCH_LIVE = "Watch Live";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640"})
@@ -80,7 +90,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ UPCOMING + " label not found." + e);
+            skipExecution("Skipping test, "+ UPCOMING + " label not found." + e.getMessage());
         }
 
         sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
@@ -111,7 +121,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing." + e);
+            skipExecution("Skipping test, "+ LIVE + " label not found, no live content playing." + e.getMessage());
         }
 
         details.validateLiveProgress(sa);
@@ -142,7 +152,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ LIVE + " label not found, no live content playing." + e);
+            skipExecution("Skipping test, "+ LIVE + " label not found, no live content playing." + e.getMessage());
         }
 
         details.clickQAWatchButton();
@@ -166,7 +176,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content airing." + e);
+            skipExecution("Skipping test, Watch button not found, no live content airing." + e.getMessage());
         }
 
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
@@ -254,7 +264,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing." + e);
+            skipExecution("Skipping test, "+ PLAY + " label not found, currently live content playing." + e.getMessage());
         }
 
         details.clickQAPlayButton();
@@ -282,7 +292,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
         details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), IMobileUtils.Direction.UP, 500);
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), Direction.UP, 500);
 
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
@@ -341,7 +351,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing." + e);
+            skipExecution("Skipping test, Watch button not found, no live content playing." + e.getMessage());
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
@@ -361,7 +371,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
+            skipExecution("Skipping test, play button not found, currently live content playing. " + e.getMessage());
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
@@ -383,7 +393,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
+            skipExecution("Skipping test, play button not found, currently live content playing. " + e.getMessage());
         }
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
@@ -444,7 +454,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found. " + e);
+            skipExecution("Skipping test, Watch button not found. " + e.getMessage());
         }
 
         details.clickQAWatchButton();

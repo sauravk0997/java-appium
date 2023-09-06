@@ -1,6 +1,6 @@
 package com.disney.qa.api.tvos;
 
-import com.qaprosoft.carina.core.foundation.api.AbstractApiMethodV2;
+import com.zebrunner.carina.api.AbstractApiMethodV2;
 
 import java.util.Properties;
 

@@ -1,32 +1,31 @@
 package com.disney.qa.common.utils;
 
-import com.qaprosoft.carina.core.foundation.utils.Configuration;
-import com.qaprosoft.carina.core.foundation.utils.mobile.IMobileUtils;
-import com.qaprosoft.carina.core.foundation.utils.resources.L10N;
-import com.qaprosoft.carina.core.foundation.webdriver.IDriverPool;
-import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.AppiumDriver;
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.decorators.Decorated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.utils.resources.L10N;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 /**
  * Keep this file for possible future extending Android and iOS universal utils creation.
@@ -48,8 +47,8 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         BufferedImage image;
         File srcFile;
 
-        AppiumDriver castedDriver = (AppiumDriver) getDriver();
-        String app = castedDriver.getCapabilities().getCapability("app").toString();
+
+        String app = ((HasCapabilities) getDriver()).getCapabilities().getCapability("app").toString();
 
         for(String val : app.split("/")){
             if(val.contains(".")){
@@ -59,7 +58,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
 
         String lang = "";
         try{
-             lang = castedDriver.getCapabilities().getCapability("language").toString().toUpperCase();
+             lang = ((HasCapabilities) getDriver()).getCapabilities().getCapability("language").toString().toUpperCase();
         } catch (NullPointerException e){
             LOGGER.info("No language set in capabilities. Defaulting to ENGLISH.");
             lang = "EN";
@@ -159,6 +158,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * Similar to getInstalledAppVersionFull() except it does not include the build number
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
+    @Deprecated
     public String getInstalledAppVersion() {
         String fullBuild = getInstalledAppVersionFull();
         List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
@@ -178,9 +178,11 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * is Apple based or Android based
      * @return - The full build of the installed app version (ex. 1.16.0.12345)
      */
+    @Deprecated
     public String getInstalledAppVersionFull() {
         StringBuilder sb = new StringBuilder();
-        String build = URLDecoder.decode(Configuration.getMobileApp(), StandardCharsets.UTF_8);
+
+        String build = getDevice().getCapabilities().getCapability("app").toString();
 
         List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
         var deviceType = IDriverPool.currentDevice.get().getDeviceType();
@@ -234,11 +236,9 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
 
     public WebDriver getCastedDriver() {
         WebDriver drv = getDriver();
-
-        if (drv instanceof EventFiringWebDriver) {
-            return ((EventFiringWebDriver) drv).getWrappedDriver();
-        } else {
-            return drv;
+        if (drv instanceof Decorated<?>) {
+            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
         }
+        return drv;
     }
 }

@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
-import com.zebrunner.agent.core.annotation.TestLabel;
-import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
+import com.zebrunner.agent.core.annotation.TestLabel;
+
+import io.appium.java_client.ios.IOSDriver;
 
 public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTest {
 

@@ -9,7 +9,7 @@
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_12;newCommandTimeout=120"/>
-    <parameter name="overrideFields" value="browsermob_proxy=true"/>
+    <parameter name="overrideFields" value="browserup_proxy=true"/>
 
     <test verbose="1" name="DisneyPlus iOS EDS Handset Captures Test">
         <classes>
