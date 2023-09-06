@@ -163,6 +163,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }
 
+    public boolean isGenderFieldEnabled() {
+        return dynamicBtnFindByLabel.format(genderPlaceholder).getAttribute("enabled").equals("true");
+    }
+
     public void tapCancelButton() {
         cancelButton.click();
     }
