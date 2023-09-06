@@ -249,6 +249,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         R.CONFIG.put("capabilities.app", appLink);
         
         String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.getKey()));
+        
+        if ("prod".equalsIgnoreCase(R.CONFIG.get(Parameter.ENV.getKey()))) {
+            // Unable to detect version via regex: _Prod-(.+?)- patterm from presign url: 
+            // https://appcenter-filemanagement-distrib2ede6f06e.azureedge.net/6de8d71f-8948-4bf9-a9e5-38498f8cc606/Disney%2B-Dominguez_Non-IAP_Prod_Enterprise_for_Automation-2.24.0-59964.ipa?sv=2019-02-02&sr=c&sig=4p%2FWYUDPoTrJCrziq0wIrd7KI3ocVeSlipOuaz2hyW0%3D&se=2023-09-06T05%3A06%3A04Z&sp=r
+            regex = "_Prod_Enterprise_for_Automation-(.+?)-";
+        }
        
         final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
         final Matcher matcher = pattern.matcher(appLink);
