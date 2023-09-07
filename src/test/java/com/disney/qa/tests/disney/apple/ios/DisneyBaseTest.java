@@ -464,6 +464,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             jarvis.openAppConfigOverrides();
             jarvis.openOverrideSection("flexEnabledScreens");
             applePageBase.scrollToItem("welcome").click();
+            LOGGER.info("fetching disableFlexWelcomeConfig value from config file:" + R.CONFIG.get("disableFlexWelcomeConfig"));
             boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
             if (disableFlexWelcomeConfig) {
                 applePageBase.disableFlexWelcomeConfig();
