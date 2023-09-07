@@ -595,6 +595,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(disneyAccount.get());
         passwordPage.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        sa.assertAll();
     }
 
     private void setAppToAccountSettings() {
