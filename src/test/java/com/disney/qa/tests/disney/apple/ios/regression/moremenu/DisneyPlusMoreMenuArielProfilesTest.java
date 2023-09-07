@@ -566,7 +566,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
 
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
@@ -574,7 +574,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         addProfile.tapCancelButton();
         avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.chooseGender();
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
 

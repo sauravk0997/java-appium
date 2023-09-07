@@ -59,6 +59,7 @@ import io.appium.java_client.ios.IOSDriver;
 public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
+    public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
