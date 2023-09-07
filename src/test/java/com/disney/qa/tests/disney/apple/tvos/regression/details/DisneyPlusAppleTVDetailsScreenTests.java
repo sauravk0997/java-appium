@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             tabs.remove("EXTRAS");
         }
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page did not launch");
 
@@ -79,7 +79,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 
@@ -126,7 +126,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 

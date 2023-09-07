@@ -38,7 +38,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         DisneyAccount user = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         disneyAccountApi.addProfile(user, KIDS, KIDS_DOB, user.getProfileLang(), null, true, true);
         SoftAssert sa = new SoftAssert();
-
+        setFlexWelcomeConfig();
         sa.assertTrue(welcome.isOpened(), "Welcome screen did not launch");
 
         logInWithoutHomeCheck(user);

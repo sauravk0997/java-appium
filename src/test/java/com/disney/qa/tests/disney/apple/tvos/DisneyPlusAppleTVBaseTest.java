@@ -446,4 +446,69 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                 .build();
         return apiConfiguration;
     }
+
+
+    /**
+     * Below are methods to support temp setup of tvOS tests by disabling flexWelcomeConfig
+     * To be deprecated when IOS-7629 is fixed
+     */
+
+    public void logInTemp(DisneyAccount user) {
+        setFlexWelcomeConfig();
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        logInWithoutHomeCheck(user);
+
+        if (homePage.isGlobalNavExpanded()) {
+            LOGGER.warn("Menu was opened before landing. Closing menu.");
+            homePage.clickSelect();
+        }
+
+        Assert.assertTrue(homePage.isOpened(),
+                "Home page did not launch for single profile user after logging in");
+    }
+
+    public void setFlexWelcomeConfig() {
+        String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
+            LOGGER.info("{} found, setting flex welcome config..", priceTimeUnit);
+            JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
+            boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
+            installJarvisForFlexWelcome();
+            launchJarvis();
+            Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
+            jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
+            applePageBase.clickConfig(APP_CONFIG.getText());
+            applePageBase.clickConfig(EDIT_CONFIG.getText());
+            applePageBase.clickConfig("flexEnabledScreens");
+            applePageBase.clickConfig("welcome");
+            if (disableFlexWelcomeConfig) {
+                applePageBase.disableFlexWelcomeConfig();
+            } else {
+                applePageBase.enableFlexWelcomeConfig();
+            }
+            startApp(sessionBundles.get(DISNEY));
+        } else {
+            LOGGER.info("{} not found, not setting flex welcome config..", priceTimeUnit);
+        }
+    }
+
+    public void launchJarvis() {
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        applePageBase.fluentWait(getDriver(), 30, 0, "Unable to launch Jarvis")
+                .until(it -> {
+                    LOGGER.info("Jarvis is not launched, launching jarvis...");
+                    startApp(sessionBundles.get(JARVIS));
+                    pause(1);
+                    boolean isRunning = isAppRunning(sessionBundles.get(JARVIS));
+                    LOGGER.info("Is app running: {}", isRunning);
+                    return isRunning;
+                });
+    }
+
+    public void installJarvisForFlexWelcome() {
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        welcomeScreen.isOpened();
+        super.installJarvis();
+    }
 }

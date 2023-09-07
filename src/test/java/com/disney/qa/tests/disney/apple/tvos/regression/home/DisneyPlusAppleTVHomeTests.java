@@ -29,7 +29,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         //stop hero carousel
         disneyPlusAppleTVHomePage.moveRight(2, 2);

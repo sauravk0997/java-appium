@@ -35,7 +35,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
         details.addToWatchlist();
         details.clickMenuTimes(1,1);
@@ -59,7 +59,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         home.isOpened();
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isStaticTextLabelPresent(UPCOMING));
@@ -107,7 +107,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
@@ -136,7 +136,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
@@ -161,7 +161,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
         try {
             fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
@@ -180,7 +180,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
@@ -198,7 +198,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         try {
@@ -225,7 +225,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         try {
@@ -244,7 +244,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         try {
@@ -264,7 +264,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
@@ -291,7 +291,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -307,7 +307,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -324,7 +324,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         try {
@@ -363,7 +363,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
@@ -388,7 +388,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
         searchAndOpenDWTSDetails();
 
         try {

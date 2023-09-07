@@ -126,7 +126,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicCellByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`][%s]")
     protected ExtendedWebElement dynamicRowButtonLabel;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
+    protected ExtendedWebElement dynamicBtnFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\" or label == \"%s\"`][%s]")
     protected ExtendedWebElement dynamicRowOtherLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`]")
@@ -135,6 +136,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByName;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label CONTAINS \"%s\"`]")
+    private ExtendedWebElement dynamicOtherFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
@@ -339,6 +342,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeButtonContainsLabel(String label) {
         return dynamicBtnFindByLabelContains.format(label);
+    }
+    public ExtendedWebElement getTypeOtherContainsLabel(String label) {
+        return dynamicOtherFindByLabelContains.format(label);
     }
 
     public ExtendedWebElement getStaticTextByLabel(String label) {
@@ -974,4 +980,57 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             sa.assertTrue(getDynamicAccessibilityId(liveProgressTime).isPresent(), "'Live Progress Time' was not present.");
         }
     }
+
+    /**
+     * Below are identifiers / methods to support temp setup of iOS/tvOS tests by disabling flexWelcomeConfig
+     * To be deprecated when IOS-7629 is fixed
+     */
+    private static final String COMPATIBLE_DISNEY = "Compatible Disney+";
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@label=\"%s\"]/ancestor::XCUIElementTypeCell")
+    private ExtendedWebElement config;
+
+    public boolean isCompatibleDisneyTextPresent() {
+        return staticTextLabelContains.format(COMPATIBLE_DISNEY).isElementPresent();
+    }
+
+    public ExtendedWebElement scrollToItem(String item) {
+        ExtendedWebElement override = getStaticTextByLabel(item);
+        new IOSUtils().swipe(override);
+        return override;
+    }
+
+    public void disableFlexWelcomeConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains("welcome is using its default value of true").isPresent()) {
+            LOGGER.info("Disabling flex welcome config..");
+            clickToggleView();
+            Assert.assertTrue(getStaticTextByLabelContains("Set to: false").isPresent());
+        }
+    }
+
+    public void enableFlexWelcomeConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
+            LOGGER.info("Enabling flex welcome config..");
+            getTypeButtonByLabel("REMOVE OVERRIDE").click();
+            Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
+        }
+    }
+
+    public void clickConfig(String appConfig) {
+        clickItemWhileMovingDown(config.format(appConfig));
+    }
+
+    public void clickItemWhileMovingDown(ExtendedWebElement element) {
+        fluentWait(getDriver(), 300L, 0, "Unable to find Config ").until(it-> {
+            if (element.isVisible(1L)) {
+                return true;
+            } else {
+                moveDown(5, 0);
+                return false;
+            }
+        });
+        element.click();
+    }
+}
 }
