@@ -18,7 +18,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="choiceParam::groups::Test Group selection. Only BVT to run." value="BVT"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
     <test verbose="1" name="DisneyPlus tvOS BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVBVT">
