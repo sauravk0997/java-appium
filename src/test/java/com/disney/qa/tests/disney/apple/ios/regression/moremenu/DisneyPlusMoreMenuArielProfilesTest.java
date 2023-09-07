@@ -553,7 +553,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72365"})
     @Test(description = "Profiles > Existing Sub->edit gender", groups = {"Ariel-More Menu"})
-    public void verifyEditGender() {
+    public void verifyEditGenderPageUI() {
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -575,7 +575,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                     "Expected: " + genderItem + " option should be present");
         }
 
-        editGenderPage.selectGender();
+        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN.getGenderOption());
         editGenderPage.clickSaveBtn();
         editProfilePage.isUpdatedTextPresent();
 

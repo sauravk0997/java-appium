@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -12,11 +13,9 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
 
-    private String genderWomen = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
-
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='GENDER']//following-sibling:: XCUIElementTypeButton /XCUIElementTypeStaticText")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Prefer not to say'`]")
     protected ExtendedWebElement genderPlaceholder;
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name='SAVE']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SAVE'`]")
     protected ExtendedWebElement saveBtn;
 
     @FindBy(xpath = "//*[@name='alertAction:defaultButton' and @label='%s']")
@@ -63,8 +62,8 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         genderPlaceholder.click();
     }
 
-    public void selectGender(){
-        dynamicBtnFindByLabel.format(genderWomen).click();
+    public void selectGender(String gender){
+        dynamicBtnFindByLabel.format(gender).click();
     }
 
     public void clickSaveBtn() { saveBtn.click(); }
