@@ -587,7 +587,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             new IOSUtils().scrollDown();
         }
 
-        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
