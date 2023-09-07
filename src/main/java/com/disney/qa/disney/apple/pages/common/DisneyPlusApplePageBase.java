@@ -1033,4 +1033,3 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         element.click();
     }
 }
-}
