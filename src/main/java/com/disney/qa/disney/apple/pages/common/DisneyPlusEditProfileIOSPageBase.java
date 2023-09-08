@@ -91,7 +91,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return deleteProfileButton;
     }
 
-    @ExtendedFindBy(accessibilityId = "Gender")
+    @FindBy(name = "Gender Selection")
     private ExtendedWebElement genderButton;
 
     //FUNCTIONS
@@ -273,7 +273,5 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void clickGenderButton() {
-        LOGGER.info("--------------");
-        LOGGER.info("Edit Page DOM " + getDriver().getPageSource());
         genderButton.click(); }
 }
