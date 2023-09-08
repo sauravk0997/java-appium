@@ -23,7 +23,7 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOriginalsPage disneyPlusAppleTVOriginalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText());
 

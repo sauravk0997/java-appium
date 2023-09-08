@@ -11,6 +11,7 @@ public class DisneyPlusAppleTVAppLaunchTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89335"})
     @Test(groups = {"Smoke"})
     public void launchApp() {
+        setFlexWelcomeConfig();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
