@@ -272,5 +272,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return kidProofExitLabel;
     }
 
-    public void clickGenderButton() { genderButton.click(); }
+    public void clickGenderButton() {
+        LOGGER.info("--------------");
+        LOGGER.info("Edit Page DOM " + getDriver().getPageSource());
+        genderButton.click(); }
 }
