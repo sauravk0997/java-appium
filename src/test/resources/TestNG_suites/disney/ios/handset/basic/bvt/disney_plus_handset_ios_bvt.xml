@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="iOS_handset_bvt_prod" annotations="JDK">
+<suite verbose="1" thread-count="8" name="ios_handset_bvt_prod" annotations="JDK">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="iOS_handset_bvt_prod"/>
+    <parameter name="jenkinsJobName" value="ios_handset_bvt_prod"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
@@ -19,7 +19,8 @@
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="choiceParam::groups::Test Group selection. Only to run BVT" value="BVT"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-
+    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true,false"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
     <test verbose="1" name="DisneyPlus iOS Handset BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>

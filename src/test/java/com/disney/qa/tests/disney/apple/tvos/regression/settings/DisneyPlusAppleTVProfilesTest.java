@@ -30,7 +30,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -66,7 +66,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -94,7 +94,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -123,7 +123,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
