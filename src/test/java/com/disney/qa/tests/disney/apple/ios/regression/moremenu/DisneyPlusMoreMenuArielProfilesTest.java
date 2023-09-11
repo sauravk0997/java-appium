@@ -62,7 +62,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            pause(3);
             new IOSUtils().scrollDown();
+            pause(3);
         }
         whoIsWatching.getTypeButtonByLabel("AGREE").click();
         softAssert.assertTrue(whoIsWatching.isOpened(), "Who is watching page didn't open after clicking on agree button");
@@ -376,7 +378,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     public void verifyAdTierUserCoViewing() {
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
         setAppToHomeScreen(disneyAccount.get());
-
+        setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
