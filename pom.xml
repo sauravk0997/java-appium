@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hatter.version>PR-169-3-SNAPSHOT</hatter.version>
+        <hatter.version>2.0.9</hatter.version>
         <zebrunner-agent.version>1.9.7</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
@@ -38,7 +38,7 @@
             <name>QAIT Releases</name>
             <url>https://artifactory.us-east-1.bamgrid.net/qait-maven</url>
         </repository>
-        <repository>
+        <!--repository>
             <id>zebrunner_snapshots</id>
             <name>zebrunner Snapshots</name>
             <url>https://nexus.zebrunner.dev/repository/ce-snapshots/</url>
@@ -48,7 +48,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
+        </repository-->
         <repository>
             <snapshots>
                 <enabled>false</enabled>
