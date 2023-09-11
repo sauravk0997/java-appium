@@ -193,6 +193,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
+        setFlexWelcomeConfig();
     }
 
     public void initialSetup(String locale, String language, String... planType) {
@@ -439,6 +440,71 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         request.setCountry(country);
         request.setLanguage(language);
         return disneyAccountApi.get().createAccount(request);
+    }
+
+    /**
+     * Below are methods to support temp setup of iOS tests by disabling flexWelcomeConfig
+     * To be deprecated when IOS-7629 is fixed
+     */
+
+    public void initialTempSetup() {
+        new GeoedgeProxyServer().setProxyHostForSelenoid();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
+        setFlexWelcomeConfig();
+    }
+
+    public void setFlexWelcomeConfig() {
+        String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
+            LOGGER.info("{} found, setting Flex Welcome Config..", priceTimeUnit);
+            launchJarvisOrInstall();
+            jarvis.openAppConfigOverrides();
+            jarvis.openOverrideSection("flexEnabledScreens");
+            applePageBase.scrollToItem("welcome").click();
+            LOGGER.info("fetching disableFlexWelcomeConfig value from config file:" + R.CONFIG.get("disableFlexWelcomeConfig"));
+            boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
+            if (disableFlexWelcomeConfig) {
+                applePageBase.disableFlexWelcomeConfig();
+            } else {
+                applePageBase.enableFlexWelcomeConfig();
+            }
+            LOGGER.info("Restarting Disney app..");
+            restart();
+        } else {
+            LOGGER.info("Resuming with test, not setting flex welcome config..");
+        }
+    }
+
+    public void launchJarvisOrInstall() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        boolean isInstalled = iosUtils.get().isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Attempting to launch Jarvis app...");
+        if (isInstalled) {
+            launchJarvisNoInstall();
+            System.out.println(applePageBase.isCompatibleDisneyTextPresent());
+            if (!applePageBase.isCompatibleDisneyTextPresent()) {
+                launchJarvis(true);
+            }
+        } else {
+            launchJarvis(true);
+        }
+    }
+
+    public void launchJarvisNoInstall() {
+        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
+                .until(it -> {
+                    LOGGER.info("Jarvis is not launched, launching jarvis...");
+                    pause(1);
+                    boolean isRunning = isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS));
+                    LOGGER.info("Is app running: {}", isRunning);
+                    return isRunning;
+                });
     }
 
     //TODO: uncomment it after moving the Subscription test to a separate XML

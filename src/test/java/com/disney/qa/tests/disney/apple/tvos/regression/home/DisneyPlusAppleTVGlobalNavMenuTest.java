@@ -53,7 +53,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         // move down to focus on brand tile
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
@@ -116,7 +116,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         SoftAssert sa = new SoftAssert();
 
         disneyAccountApi.addProfile(entitledUser, KIDS, KIDS_DOB, entitledUser.getProfileLang(), null, true, true);
-
+        setFlexWelcomeConfig();
         logInWithoutHomeCheck(entitledUser);
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(), "Who's watching page did not launch");
@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS.getText())
                 .collect(Collectors.toList());
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickRandomBrandTile();
@@ -238,7 +238,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        logIn(entitledUser);
+        logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.moveRight(1, 1);
 

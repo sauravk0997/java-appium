@@ -27,6 +27,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
 
+        setFlexWelcomeConfig();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome Screen did not launch");
         applePageBase.moveDown(1,1);
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
@@ -51,6 +52,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         var labelList = Stream.of(AliceLabels.DISNEY_LOGO, AliceLabels.NAT_GEO_LOGO, AliceLabels.MARVEL_LOGO,
                 AliceLabels.PIXAR_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.CELL_PHONE_IMAGE).collect(Collectors.toList());
 
+        setFlexWelcomeConfig();
         sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
 
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
