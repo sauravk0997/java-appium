@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -275,18 +276,26 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
+        String mediaTitle = details.getMediaTitle();
+
+//        new IOSUtils().swipePageTillElementPresent(details.getEpisodesTab(), 2,  null, IMobileUtils.Direction.UP, 600);
+        new IOSUtils().swipeInContainer(null, Direction.UP, 900);
         sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
 
-        String mediaTitle = details.getMediaTitle();
+        String selectorSeason = details.getSeasonSelector();
         details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), Direction.UP, 500);
-
+//        new IOSUtils().swipeInContainer(null, Direction.UP, 900);
+        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, null, IMobileUtils.Direction.UP, 600);
+        pause(3);
+        System.out.println(getDriver().getPageSource());
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
-        sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
+        sa.assertTrue(details.getDetailsTabSeasonRating().contains(selectorSeason),
+                "Details Tab season rating does not contain season selector text.");
         sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
         sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
+        sa.assertTrue(details.areActorsDisplayed(), "Details tab starring actors not present.");
         sa.assertAll();
     }
 

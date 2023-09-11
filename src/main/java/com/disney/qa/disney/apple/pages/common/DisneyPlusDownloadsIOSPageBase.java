@@ -63,7 +63,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isDownloadsEmptyHeaderPresent() {
-		return downloadsEmptyHeader.isElementPresent();
+		return downloadsEmptyHeader.isPresent();
 	}
 
 	public boolean isContentHeaderPresent(String downloadedAsset) {

@@ -1,14 +1,10 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_LABEL_EVENT_UPCOMING;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_LABEL_EVENT_UPCOMING_TODAY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BADGE_TEXT_DATE_TIME;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_EXTRAS;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.testng.asserts.SoftAssert;
@@ -22,6 +18,8 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
@@ -304,6 +302,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isExtrasTabPresent() {
+        if (!extrasTab.isPresent(SHORT_TIMEOUT)) {
+            new IOSUtils().swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
+        }
         return extrasTab.isPresent();
     }
 
@@ -561,10 +562,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return suggestedTab.isElementPresent();
     }
 
+    public void clickSuggestedTab() {
+        if (!suggestedTab.isElementPresent()) {
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, Direction.UP, 900);
+        }
+        suggestedTab.click();
+    }
+
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        if (episodesTab.isElementPresent(SHORT_TIMEOUT)) {
-            suggestedTab.click();
+        if (episodesTab.isPresent(SHORT_TIMEOUT)) {
+            clickSuggestedTab();
         }
         params.put("suggestedCellTitle", getTabCells().get(0));
         clickFirstTabCell();
@@ -675,5 +683,20 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isQAPlayButtonDisplayed() {
         return getStaticTextByLabelContains(PLAY).isPresent() || getStaticTextByLabelContains(LOWER_CASED_PLAY).isPresent();
+    }
+
+
+    public String getDetailsTabSeasonRating() {
+        String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
+        String[] seasonNumber = seasonNumberRating[0].split(" ");
+        String number = seasonNumber[1];
+        String seasonNumberRatingKey = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(number)));
+        return seasonNumberRatingKey;
+    }
+
+    public String getSeasonSelector() {
+        String[] seasonSelector = seasonSelectorButton.getText().split(" ");
+        return seasonSelector[1];
     }
 }
