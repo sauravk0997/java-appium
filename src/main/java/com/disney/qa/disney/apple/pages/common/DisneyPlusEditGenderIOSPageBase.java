@@ -17,8 +17,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement genderPlaceholder;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SAVE'`]")
     protected ExtendedWebElement saveBtn;
-
-    @FindBy(xpath = "//*[@name='alertAction:defaultButton' and @label='%s']")
+    @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     protected ExtendedWebElement genderOptionValue;
 
     //FUNCTIONS
