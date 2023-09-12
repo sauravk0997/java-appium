@@ -20,8 +20,6 @@
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true,false"/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
 
-    <parameter name="overrideFields" value=""/>
-
     <test verbose="1" name="DisneyPlus tvOS Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.anthology.DisneyPlusAppleTVAnthologyTest">
