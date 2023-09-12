@@ -58,13 +58,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "downloadSeasonButton")
     protected ExtendedWebElement downloadSeasonButton;
 
-    protected ExtendedWebElement detailsTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_DETAILS.getText()));
+    @ExtendedFindBy(accessibilityId = "DETAILS")
+    protected ExtendedWebElement detailsTab;
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
-    private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_SUGGESTED.getText()));
+    @ExtendedFindBy(accessibilityId = "SUGGESTED")
+    private ExtendedWebElement suggestedTab;
 
-    protected ExtendedWebElement extrasTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_EXTRAS.getText()));
+    @ExtendedFindBy(accessibilityId = "EXTRAS")
+    protected ExtendedWebElement extrasTab;
 
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
@@ -349,7 +352,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickDetailsTab() {
-        if (!detailsTab.isElementPresent()) {
+        if (!detailsTab.isPresent()) {
             swipeTabBar(Direction.LEFT, 1000);
         }
         detailsTab.click();
@@ -556,10 +559,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSuggestedTabPresent() {
-        if (!suggestedTab.isElementPresent()) {
-            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, Direction.UP, 900);
+        if (!suggestedTab.isPresent()) {
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1000);
         }
-        return suggestedTab.isElementPresent();
+        return suggestedTab.isPresent();
     }
 
     public void clickSuggestedTab() {

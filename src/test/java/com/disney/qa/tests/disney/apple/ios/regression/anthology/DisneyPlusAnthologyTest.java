@@ -278,16 +278,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
 
-//        new IOSUtils().swipePageTillElementPresent(details.getEpisodesTab(), 2,  null, IMobileUtils.Direction.UP, 600);
-        new IOSUtils().swipeInContainer(null, Direction.UP, 900);
+        new IOSUtils().swipeInContainer(null, Direction.UP, 1000);
         sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
 
         String selectorSeason = details.getSeasonSelector();
         details.clickDetailsTab();
-//        new IOSUtils().swipeInContainer(null, Direction.UP, 900);
         new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, null, IMobileUtils.Direction.UP, 600);
-        pause(3);
-        System.out.println(getDriver().getPageSource());
         sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
@@ -310,6 +306,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
+        new IOSUtils().swipeInContainer(null, Direction.UP, 1000);
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
