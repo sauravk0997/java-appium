@@ -96,6 +96,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusSearchIOSPageBase.clickSeriesTab();
         disneyPlusSearchIOSPageBase.selectRandomTitle();
+        //waiting for group watch pop-up to dismiss
+        pause(3);
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Play button doesn't exist on details page.");
         disneyPlusDetailsIOSPageBase.clickPlayButton();
         sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video player was not opened.");
