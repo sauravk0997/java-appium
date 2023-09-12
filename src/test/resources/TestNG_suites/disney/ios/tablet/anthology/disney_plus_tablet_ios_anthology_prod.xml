@@ -21,7 +21,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Anthology"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
-    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value=""/>
+    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
         <classes>
