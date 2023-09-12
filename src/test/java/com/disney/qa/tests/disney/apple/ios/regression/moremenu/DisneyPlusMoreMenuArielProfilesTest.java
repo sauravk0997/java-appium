@@ -556,6 +556,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72817"})
     @Test(description = "Profiles > Add profile, No Gender for U18 Profiles", groups = {"Ariel-More Menu"})
     public void verifyNoGenderForU18Profiles() {
+        //Arrange
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -563,6 +564,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
+        //Act
         setAppToHomeScreen(disneyAccount.get());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -571,6 +573,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
 
+        //Assert
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
                 "Gender field is enabled for U13 profile");
 
