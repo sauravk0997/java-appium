@@ -255,11 +255,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * @return - Media title
      */
     public String getMediaTitle() {
-        return this.logoImage.getText();
+        return logoImage.getText();
     }
 
     public ExtendedWebElement getLogoImage() {
-        return this.logoImage;
+        return logoImage;
     }
 
     public String getEpisodeContentTitle() {
