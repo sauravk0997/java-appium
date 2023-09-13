@@ -5,7 +5,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
@@ -15,8 +14,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Prefer not to say'`]")
     protected ExtendedWebElement genderPlaceholder;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SAVE'`]")
-    protected ExtendedWebElement saveBtn;
+
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     protected ExtendedWebElement genderOptionValue;
 
@@ -35,16 +33,16 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         GENDER_NOBINARY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText()), 3),
         GENDER_PREFERNOTTOSAY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText()), 4);
 
-        String genderOption;
+        String genderValue;
         int index;
 
-        GenderOption(String genderOption, int index) {
-            this.genderOption = genderOption;
+        GenderOption(String genderValue, int index) {
+            this.genderValue = genderValue;
             this.index = index;
         }
 
         public String getGenderOption() {
-            return genderOption;
+            return genderValue;
         }
 
         public int getIndex() {
@@ -63,6 +61,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * @return - true/false, to verify gender page opened
      */
+    @Override
     public boolean isOpened() {
         return genderPlaceholder.isPresent();
     }
@@ -79,12 +78,5 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      */
     public void selectGender(String gender) {
         dynamicBtnFindByLabel.format(gender).click();
-    }
-
-    /**
-     * Click save button to update
-     */
-    public void clickSaveBtn() {
-        saveBtn.click();
     }
 }
