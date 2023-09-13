@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -48,6 +49,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public void tapAgreeButton() {
+        new IOSUtils().scrollDown();
         agreeButton.click();
     }
 
@@ -72,7 +74,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     public boolean verifyChildrenPrivacyPolicyLink() {
         return customHyperlinkByLabel.format("Children\\'s Privacy Policy").isPresent();
     }
-    
+
     public boolean validateConsentHeader() {
         return consentMinorHeader.getText().equalsIgnoreCase(consentHeaderText);
     }

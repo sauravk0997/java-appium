@@ -78,10 +78,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "alertAction:destructiveButton")
     private ExtendedWebElement confirmProfileDeleteButton;
 
-    private ExtendedWebElement pinSettingsCell = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement pinSettingsCell = getDynamicXpath(String.format("//*[@name=\"%s\" or @name=\"%s\"]",
+            getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
-            DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
+            DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
 
     private ExtendedWebElement contentRatingHeader = getDynamicXpath(String.format("//*[@name=\"%s\" or @name=\"%s\"]",
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, MATURITY_RATING_SETTINGS_LABEL.getText()),

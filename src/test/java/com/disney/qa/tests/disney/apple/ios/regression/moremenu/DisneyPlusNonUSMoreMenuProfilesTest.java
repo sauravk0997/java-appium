@@ -1,16 +1,25 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.MobileUtilsExtended;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
+
+
+    private static final String FIRST = "01";
+    private static final String TWENTY_EIGHTEEN = "2018";
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
@@ -23,6 +32,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+
 
         disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
 
@@ -43,16 +54,16 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
         disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
 
-        try {
-            disneyPlusEditProfileIOSPageBase.clickSkipBtn();
-            disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
-            disneyPlusEditProfileIOSPageBase.clickSaveBtn();
-            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
-                    "Profile created after submitting credentials was not saved");
-        } catch (NoSuchElementException e) {
-            sa.fail("Could not create a profile after submitting user credentials.");
-        }
 
+        disneyPlusEditProfileIOSPageBase.clickSkipBtn();
+        disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
+        disneyPlusEditProfileIOSPageBase.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        disneyPlusEditProfileIOSPageBase.tapJuniorModeToggle();
+        disneyPlusEditProfileIOSPageBase.clickSaveBtn();
+        sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+        parentalConsent.tapAgreeButton();
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
+                "Profile created after submitting credentials was not saved");
         sa.assertAll();
     }
 
