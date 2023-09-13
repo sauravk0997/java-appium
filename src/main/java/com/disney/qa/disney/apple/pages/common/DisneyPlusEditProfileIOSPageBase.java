@@ -272,6 +272,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return kidProofExitLabel;
     }
 
+    /**
+     * click gender button to select gender value
+     */
     public void clickGenderButton() {
         genderButton.click(); }
 }

@@ -26,6 +26,9 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    /**
+     * For gender option validation
+     */
     public enum GenderOption {
         GENDER_WOMEN(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText()), 1),
         GENDER_MEN(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText()), 2),
@@ -49,21 +52,39 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    /**
+     * @param option - gender value Men, Woman, NoBinary, preferNotToSay
+     * @return - true/false
+     */
     public boolean isGenderOptionPresent(GenderOption option) {
         return genderOptionValue.format(option.getGenderOption()).isElementPresent();
     }
 
+    /**
+     * @return - true/false, to verify gender page opened
+     */
     public boolean isOpened() {
         return genderPlaceholder.isPresent();
     }
 
+    /**
+     * click on gender dropdown to select gender value
+     */
     public void clickGenderDropDown() {
         genderPlaceholder.click();
     }
 
-    public void selectGender(String gender){
+    /**
+     * @param gender - Pass the value which need to select
+     */
+    public void selectGender(String gender) {
         dynamicBtnFindByLabel.format(gender).click();
     }
 
-    public void clickSaveBtn() { saveBtn.click(); }
+    /**
+     * Click save button to update
+     */
+    public void clickSaveBtn() {
+        saveBtn.click();
+    }
 }
