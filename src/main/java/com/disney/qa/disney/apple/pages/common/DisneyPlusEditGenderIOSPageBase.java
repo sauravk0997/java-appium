@@ -14,7 +14,8 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Prefer not to say'`]")
     protected ExtendedWebElement genderPlaceholder;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SAVE'`]")
+    private ExtendedWebElement saveButton;
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     protected ExtendedWebElement genderOptionValue;
 
@@ -78,5 +79,12 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      */
     public void selectGender(String gender) {
         dynamicBtnFindByLabel.format(gender).click();
+    }
+
+    /**
+     * Click save button to update
+     */
+    public void tapSaveButton() {
+        saveButton.click();
     }
 }

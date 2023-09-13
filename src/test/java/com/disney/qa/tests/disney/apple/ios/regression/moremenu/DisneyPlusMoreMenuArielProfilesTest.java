@@ -581,7 +581,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
 
         editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN.getGenderOption());
-        editGenderPage.clickSaveBtn();
+        editGenderPage.tapSaveButton();
         editProfilePage.isUpdatedTextPresent();
 
         sa.assertTrue(editProfilePage.isUpdatedTextPresent(), "Gender is not updated for user");
