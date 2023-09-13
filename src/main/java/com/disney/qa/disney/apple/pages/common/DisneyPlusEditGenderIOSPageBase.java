@@ -9,7 +9,6 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
-    //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Prefer not to say'`]")
