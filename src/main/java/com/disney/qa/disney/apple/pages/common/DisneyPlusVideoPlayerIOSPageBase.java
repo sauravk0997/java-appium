@@ -44,8 +44,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[@name='ucp.playerView']/following-sibling::*//XCUIElementTypeImage")
     private ExtendedWebElement ucpLoadSpinner;
 
-
-
     @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
     private ExtendedWebElement audioSubtitleMenuButton;
 
@@ -93,12 +91,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement backButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BACK_BTN.getText()));
 
-    private ExtendedWebElement pauseButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
-
-    private ExtendedWebElement playButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAY.getText()));
-
-    private ExtendedWebElement adBadgeLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText()));
-
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -122,6 +114,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         REWIND
     }
 
+    public ExtendedWebElement getPlayButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAY.getText()));
+    }
+
+    public ExtendedWebElement getPauseButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
+    }
+
     public ExtendedWebElement getElementFor(PlayerControl control) {
         switch (control) {
             case AIRPLAY:
@@ -135,9 +135,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             case FAST_FORWARD:
                 return forwardButton;
             case PLAY:
-                return playButton;
+                return getPlayButton();
             case PAUSE:
-                return pauseButton;
+                return getPauseButton();
             case RESTART:
                 return restartButton;
             case REWIND:
@@ -169,7 +169,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean verifyVideoPaused() {
         displayVideoController();
-        return playButton.isElementPresent();
+        return getPlayButton().isElementPresent();
     }
 
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
@@ -193,17 +193,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
         displayVideoController();
-        pauseButton.click();
+        getPauseButton().click();
         LOGGER.info("Pause button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         //TODO: work around due to bug IOS-6425
-       if(!playButton.isElementPresent()) {
+       if(!getPlayButton().isElementPresent()) {
            displayVideoController();
        }
-        playButton.click();
+        getPlayButton().click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -372,7 +372,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAdBadgeLabelPresent() {
-        return adBadgeLabel.isElementPresent();
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {

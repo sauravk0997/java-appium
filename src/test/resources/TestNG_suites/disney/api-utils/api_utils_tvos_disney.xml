@@ -15,7 +15,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist"/>
     <parameter name="reporting.notification.slack-channels" value="qte-release-tests"/>
     <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
-    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true,false"/>
+    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details Api Utils tests" parallel="methods">
