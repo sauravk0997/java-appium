@@ -37,7 +37,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
         disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
 
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        sa.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
 
         disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
@@ -49,11 +49,10 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.getBackArrow().click();
         disneyPlusMoreMenuIOSPageBase.clickAddProfile();
 
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        sa.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon clicking 'Add Profile'");
 
         disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
-
 
         disneyPlusEditProfileIOSPageBase.clickSkipBtn();
         disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
@@ -61,6 +60,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         disneyPlusEditProfileIOSPageBase.tapJuniorModeToggle();
         disneyPlusEditProfileIOSPageBase.clickSaveBtn();
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+        parentalConsent.scrollConsentContent(2);
         parentalConsent.tapAgreeButton();
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
                 "Profile created after submitting credentials was not saved");

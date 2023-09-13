@@ -696,7 +696,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveBtn() {
-        saveBtn.click();
+        xpathNameOrName.format(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
+                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()).click();
     }
 
     public boolean isCancelBtnPresent() {
