@@ -49,9 +49,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "groupwatchButton")
     private ExtendedWebElement groupWatchBtn;
 
-    @ExtendedFindBy(accessibilityId = "logoImage")
-    protected ExtendedWebElement logoImage;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -254,15 +251,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * This returns the media title of the given Details page by means of referencing the images that are on display.
      * The images are added to a list, which are then purged if their .getText() return is empty, as the only image
      * with a text value on display is the details page's title graphic. This will eventually be replaced
-     * when the iOS dev team adds static accesiibility IDs to the elements on the page.
+     * when the iOS dev team adds static accessibility IDs to the elements on the page.
      * @return - Media title
      */
     public String getMediaTitle() {
-        return titleImage.getText();
+        return this.logoImage.getText();
     }
 
     public ExtendedWebElement getLogoImage() {
-        return titleImage;
+        return this.logoImage;
     }
 
     public String getEpisodeContentTitle() {

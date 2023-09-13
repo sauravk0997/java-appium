@@ -1,8 +1,10 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -207,5 +209,15 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
             getTypeButtonByName("play").click();
         }
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    }
+
+    @Override
+    public void clickExtrasTab() {
+        extrasTab.click();
+    }
+
+    @Override
+    public boolean isExtrasTabPresent() {
+        return extrasTab.isPresent();
     }
 }
