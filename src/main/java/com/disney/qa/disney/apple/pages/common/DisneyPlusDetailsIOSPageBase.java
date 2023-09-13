@@ -138,9 +138,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(id = "seasonSelectorButton")
     private ExtendedWebElement seasonSelectorButton;
 
-    private ExtendedWebElement downloadBtn = dynamicBtnFindByLabel.format("downloadEpisodeList");
-    private ExtendedWebElement downloadCompleteButton = dynamicBtnFindByLabelContains.format("downloadComplete");
-
     @ExtendedFindBy(accessibilityId = "seasonRating")
     private ExtendedWebElement seasonRating;
 
@@ -178,6 +175,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public ExtendedWebElement getDownloadButton() {
+        return getTypeButtonByLabel("downloadEpisodeList");
+    }
+
+    public ExtendedWebElement getDownloadCompleteButton() {
+        return getTypeButtonByLabel("downloadComplete");
+    }
+
     public boolean isContinueButtonPresent() {
         return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
     }
@@ -190,8 +195,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     //TODO Should discuss setting up Series vs. Movies page factories due to differences like this
     public void startDownload() {
         if (!movieDownloadButton.isElementPresent(DELAY)) {
-            new MobileUtilsExtended().swipe(downloadBtn);
-            downloadBtn.click();
+            new MobileUtilsExtended().swipe(getDownloadButton());
+            getDownloadButton().click();
         } else {
             movieDownloadButton.click();
         }
@@ -199,8 +204,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void pauseDownload() {
         if (!movieDownloadButton.isElementPresent(DELAY)) {
-            new MobileUtilsExtended().swipe(downloadBtn);
-            downloadBtn.click();
+            new MobileUtilsExtended().swipe(getDownloadButton());
+            getDownloadButton().click();
         } else {
             movieDownloadButton.click();
         }
@@ -209,14 +214,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForSeriesDownloadToComplete() {
         LOGGER.info("Waiting for series download to complete");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
-                .until(it -> downloadCompleteButton.isPresent());
+                .until(it -> getDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
     public void waitForLongSeriesDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for long series download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
-                .until(it -> downloadCompleteButton.isPresent());
+                .until(it -> getDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -236,7 +241,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSeriesDownloadButtonPresent() {
-        return downloadBtn.isElementPresent();
+        return getDownloadButton().isElementPresent();
     }
 
     public boolean doesContinueButtonExist() {
@@ -350,6 +355,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickDetailsTab() {
         if (!detailsTab.isPresent()) {
+            new IOSUtils().swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
             swipeTabBar(Direction.LEFT, 1000);
         }
         detailsTab.click();
