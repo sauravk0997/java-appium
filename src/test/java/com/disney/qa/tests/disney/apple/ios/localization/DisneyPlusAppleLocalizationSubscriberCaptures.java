@@ -23,7 +23,6 @@ import com.disney.qa.api.search.assets.DisneyStandardCollection;
 import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAppSettingsIOSPageBase;
@@ -217,7 +216,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        VerifyEmail verifyEmail = new VerifyEmail();
+        EmailApi verifyEmail = new EmailApi();
 
         String locale = languageUtils.get().getLocale();
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).build();
