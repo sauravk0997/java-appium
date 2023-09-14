@@ -102,9 +102,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void clickDeleteDownloadButton() {
-		//FIXME: Temp fix to accomodate for both deleteButton accessibility IDs - QAA-12365
-		System.out.println(deleteDownloadButton.isPresent());
-		System.out.println(downloadDelete24Button.isPresent());
+		//TODO: Temp fix to accomodate for both deleteButton accessibility IDs - QAA-12365
 		if (deleteDownloadButton.isPresent()) {
 			deleteDownloadButton.click();
 		} else {

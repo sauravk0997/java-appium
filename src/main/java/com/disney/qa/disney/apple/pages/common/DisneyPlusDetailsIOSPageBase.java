@@ -645,6 +645,19 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return progressBar.isPresent();
     }
 
+    public String getDetailsTabSeasonRating() {
+        String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
+        String[] seasonNumber = seasonNumberRating[0].split(" ");
+        String number = seasonNumber[1];
+        return getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(number)));
+    }
+
+    public String getSeasonSelector() {
+        String[] seasonSelector = seasonSelectorButton.getText().split(" ");
+        return seasonSelector[1];
+    }
+
     /**
      * Below are QA env specific methods for DWTS Anthology.
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
@@ -659,52 +672,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase clickQAContinueButton() {
-        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
-            getTypeButtonByName(BOOKMARKED).click();
-        } else {
-            getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    public DisneyPlusVideoPlayerIOSPageBase clickQAPlayButton() {
-        if (getTypeButtonByName(PLAY).isPresent()) {
-            getTypeButtonByName(PLAY).click();
-        } else {
-            getTypeButtonByName("play").click();
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public boolean isQAWatchButtonPresent() {
         return getStaticTextByLabelContains(WATCH).isPresent() || getStaticTextByLabelContains(LOWER_CASE_WATCH).isPresent();
     }
 
-    public boolean isQAContinueButtonPresent() {
-        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isPresent() || getTypeButtonByName(BOOKMARKED).isPresent();
-    }
-
     public boolean isContentDetailsPagePresent() {
         return getTypeOtherByName("contentDetailsPage").isPresent();
-    }
-
-    public boolean isQAPlayButtonDisplayed() {
-        return getStaticTextByLabelContains(PLAY).isPresent() || getStaticTextByLabelContains(LOWER_CASED_PLAY).isPresent();
-    }
-
-
-    public String getDetailsTabSeasonRating() {
-        String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
-        String[] seasonNumber = seasonNumberRating[0].split(" ");
-        String number = seasonNumber[1];
-        String seasonNumberRatingKey = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(number)));
-        return seasonNumberRatingKey;
-    }
-
-    public String getSeasonSelector() {
-        String[] seasonSelector = seasonSelectorButton.getText().split(" ");
-        return seasonSelector[1];
     }
 }

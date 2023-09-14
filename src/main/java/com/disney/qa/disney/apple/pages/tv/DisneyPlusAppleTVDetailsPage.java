@@ -1,10 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -187,26 +185,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
             getTypeButtonByName(WATCH).click();
         } else {
             getTypeButtonByName("watch").click();
-        }
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-    }
-
-    @Override
-    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
-        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
-            getTypeButtonByName(BOOKMARKED).click();
-        } else {
-            getTypeButtonByName("bookmarked").click();
-        }
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-    }
-
-    @Override
-    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
-        if (getTypeButtonByName(PLAY).isPresent()) {
-            getTypeButtonByName(PLAY).click();
-        } else {
-            getTypeButtonByName("play").click();
         }
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
