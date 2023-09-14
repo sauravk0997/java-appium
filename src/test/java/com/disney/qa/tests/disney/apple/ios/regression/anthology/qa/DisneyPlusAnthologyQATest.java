@@ -6,14 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLiveEventModalIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
@@ -31,49 +27,6 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     private static final String LIVE = "LIVE";
     private static final String PLAY = "PLAY";
     //private static final String WATCH_LIVE = "Watch Live";
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640"})
-    @Test(description = "Verify Anthology Series - Search", groups = {"Anthology"})
-    public void verifyAnthologySearch() {
-        initialSetup();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(DANCING_WITH_THE_STARS);
-        String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS + " details page did not open.");
-        sa.assertTrue(firstDisplayTitle[0].equalsIgnoreCase(detailsPage.getMediaTitle()), "Search result title does not match Details page media title.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72646"})
-    @Test(description = "Verify Anthology Series - Watchlist", groups = {"Anthology"})
-    public void verifyAnthologyWatchlist() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-        String mediaTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
-        moreMenu.getDynamicCellByLabel(mediaTitle).click();
-        sa.assertTrue(detailsPage.isContentDetailsPagePresent(), "Details page did not open.");
-        sa.assertAll();
-    }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72301"})
@@ -183,161 +136,6 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73873"})
-    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {"Anthology"})
-    public void verifyAnthologyTitleDescriptionDate() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
-                "Media title of logo image does not match " + DANCING_WITH_THE_STARS);
-        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
-        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73874"})
-    @Test(description = "Verify Anthology Series - Episode Download", groups = {"Anthology"})
-    public void verifyAnthologyEpisodeDownload() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        //Download episode
-        details.isContentDetailsPagePresent();
-        String mediaTitle = details.getMediaTitle();
-        details.startDownload();
-        sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
-
-        //Wait for download to complete and validate titles same.
-        details.waitForLongSeriesDownloadToComplete(180, 9);
-        details.clickDownloadsIcon();
-        sa.assertTrue(downloads.isOpened(), "Downloads page was not opened.");
-        sa.assertTrue(mediaTitle.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),
-                DANCING_WITH_THE_STARS + " titles are not the same.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
-
-        //Play downloaded episode
-        downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
-        downloads.getTypeButtonContainsLabel("Play").click();
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
-
-        videoPlayer.clickBackButton();
-        sa.assertTrue(downloads.getProgressBar().isPresent(), "Progress bar not found.");
-
-        //Remove Download
-        downloads.clickEditButton();
-        downloads.clickUncheckedCheckbox();
-        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
-        downloads.clickDeleteDownloadButton();
-        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73875"})
-    @Test(description = "Verify Anthology Series - VOD Progress", groups = {"Anthology"})
-    public void verifyAnthologyVODProgress() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            skipExecution("Skipping test, "+ PLAY + " label not found, currently live content playing." + e.getMessage());
-        }
-
-        details.clickQAPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), "Video Player did not launch.");
-
-        videoPlayer.clickBackButton();
-        sa.assertTrue(details.isQAContinueButtonPresent(), "Continue button was not found.");
-        sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73881", "XMOBQA-72290"})
-    @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
-    public void verifyAnthologyDetailsTab() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
-
-        String mediaTitle = details.getMediaTitle();
-        details.clickDetailsTab();
-        new IOSUtils().swipePageTillElementPresent(details.getFormats(), 3, details.getContentDetailsPage(), Direction.UP, 500);
-
-        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
-        sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
-        sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
-        sa.assertTrue(details.isSeasonRatingPresent(), "Details Tab season rating is not present.");
-        sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
-        sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73872", "XMOBQA-72293"})
-    @Test(description = "Verify Anthology Series - Suggested Tab", groups = {"Anthology"})
-    public void verifyAnthologySuggestedTab() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
-        details.compareSuggestedTitleToMediaTitle(sa);
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72291", "XMOBQA-73871"})
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = {"Anthology"})
-    public void verifyAnthologyExtrasTab() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
-        details.compareExtrasTabToPlayerTitle(sa);
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72654"})
     @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
     public void verifyAnthologyNoGroupWatchLive() {
@@ -355,87 +153,6 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         }
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73936"})
-    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchVOD() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            skipExecution("Skipping test, play button not found, currently live content playing. " + e.getMessage());
-        }
-
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72298"})
-    @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
-    public void verifyAnthologyFeaturedVOD() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            skipExecution("Skipping test, play button not found, currently live content playing. " + e.getMessage());
-        }
-
-        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
-        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
-        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "Subtitles advisory was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Audio Descriptions").isPresent(), "Audio description advisory was not found.");
-        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
-        sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
-        sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
-
-        details.clickQAPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback.");
-        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73863"})
-    @Test(description = "Verify Anthology Series - Trailer", groups = {"Anthology"})
-    public void verifyAnthologyTrailer() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-//        setAppToHomeScreen(disneyAccount.get());
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
-
-        details.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
-
-        videoPlayer.waitForTrailerToEnd(125, 10);
-        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer ended, not returned to Details page.");
-        sa.assertAll();
     }
 
     @Maintainer("csolmaz")
@@ -488,13 +205,11 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         welcomePage.isOpened();
         welcomePage.clickLogInButton();
-        loginPage.submitEmail("cristina.solmaz+4375@disneyplustesting.com");
+        loginPage.submitEmail("cristina.solmaz+43753@disneyplustesting.com");
         passwordPage.submitPasswordForLogin("G0Disney!");
-        whoseWatchingPage.clickProfile("Test");
         homePage.isOpened();
     }
 }

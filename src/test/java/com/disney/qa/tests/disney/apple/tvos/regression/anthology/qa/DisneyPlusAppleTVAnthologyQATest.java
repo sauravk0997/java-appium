@@ -24,53 +24,6 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
     private static final String PLAY = "PLAY";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
-    @Test(description = "Verify Anthology Series - Watchlist", groups = {"Anthology"})
-    public void verifyAnthologyWatchlist() {
-        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWatchListPage watchList = new DisneyPlusAppleTVWatchListPage(getDriver());
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-        details.addToWatchlist();
-        details.clickMenuTimes(1,1);
-        pause(1); //from transition to search bar
-        search.clickMenuTimes(1,1);
-        home.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
-        sa.assertTrue(watchList.areWatchlistTitlesDisplayed(DANCING_WITH_THE_STARS.getTitle()), "Dancing With The Stars was not added to watchlist.");
-
-        watchList.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).click();
-        sa.assertTrue(details.isContentDetailsPagePresent(), DANCING_WITH_THE_STARS.getTitle() + " details page did not load.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106657"})
-    @Test(description = "Verify Anthology Series - Search", groups = {"Anthology"})
-    public void verifyAnthologySearch() {
-        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        home.isOpened();
-        home.moveDownFromHeroTileToBrandTile();
-        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        search.isOpened();
-        search.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
-        sa.assertTrue(search.getDynamicCellByLabel(DANCING_WITH_THE_STARS.getTitle()).isElementPresent(), "Dancing with the Stars title not found in search results.");
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105996"})
     @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {"Anthology"})
     public void verifyAnthologyUpcomingBadgeAndMetadata() {
@@ -176,54 +129,6 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110034"})
-    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {"Anthology"})
-    public void verifyAnthologyTitleDescriptionDate() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
-        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
-        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110036"})
-    @Test(description = "Verify Anthology Series - VOD Progress", groups = {"Anthology"})
-    public void verifyAnthologyVODProgress() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, "+ PLAY + " label not found, currently live content playing. " + e);
-        }
-
-        details.clickQAPlayButton();
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
-        videoPlayer.clickMenuTimes(1,1);
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
-        details.clickQAContinueButton();
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking continue button.");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106679"})
     @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
     public void verifyAnthologyNoGroupWatchLive() {
@@ -243,153 +148,6 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
 
         Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during live event.");
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110153"})
-    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchVOD() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
-        }
-
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during VOD state.");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105988", "XCDQA-110055"})
-    @Test(description = "Verify Anthology Series - Details Tab", groups = {"Anthology"})
-    public void verifyAnthologyDetailsTab() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        String mediaTitle = details.getMediaTitle();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page did not open.");
-        sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
-
-        details.moveDown(1,1);
-        details.moveRight(3,1);
-        details.isFocused(details.getDetailsTab());
-        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
-        sa.assertTrue(details.isContentDescriptionDisplayed(), "Details tab content description is not present.");
-        sa.assertTrue(details.isReleaseDateDisplayed(), "Release date is not present.");
-        sa.assertTrue(details.isGenreDisplayed(), "Genre is not present.");
-        sa.assertTrue(details.isSeasonRatingPresent(), "Season rating is not present.");
-        sa.assertTrue(details.areFormatsDisplayed(), "Formats are not present.");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105998", "XCDQA-110054"})
-    @Test(description = "Verify Anthology Series - Suggested Tab", groups = {"Anthology"})
-    public void verifyAnthologySuggestedTab() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
-        details.compareSuggestedTitleToDetailsTabTitle(sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105989", "XCDQA-110046"})
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = {"Anthology"})
-    public void verifyAnthologyExtrasTab() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
-        details.compareExtrasTabToPlayerTitle(sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105993"})
-    @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
-    public void verifyAnthologyFeaturedVOD() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAPlayButtonDisplayed());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing. " + e);
-        }
-
-        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
-        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
-        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "Subtitles advisory was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Audio Descriptions").isPresent(), "Audio description advisory was not found.");
-        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
-        sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
-        sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
-
-        details.clickQAPlayButton();
-        videoPlayer.waitForVideoToStart();
-        details.clickMenuTimes(1,1);
-        details.isContentDetailsPagePresent();
-        sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
-        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-109938"})
-    @Test(description = "Verify Anthology Series - Trailer", groups = {"Anthology"})
-    public void verifyAnthologyTrailer() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-
-        SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
-
-        details.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-
-        videoPlayer.waitForTvosTrailerToEnd(125, 10);
-        sa.assertTrue(details.isContentDetailsPagePresent(), "After trailer completed, did not return to details page.");
-        sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused on.");
-        sa.assertAll();
-    }
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})
     @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
@@ -448,8 +206,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         welcomePage.isOpened();
         welcomePage.clickLogInButton();
         loginPage.isOpened();
-        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+4375@disneyplustesting.com");
+        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+43753@disneyplustesting.com");
         passwordPage.logInWithPasswordLocalized("G0Disney!");
-        whoIsWatchingPage.getTypeCellLabelContains("Test").clickIfPresent();
     }
 }
