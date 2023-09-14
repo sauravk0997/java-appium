@@ -190,22 +190,12 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     @Override
-    public DisneyPlusAppleTVVideoPlayerPage clickQAContinueButton() {
-        if (getTypeButtonByName(BOOKMARKED).isPresent()) {
-            getTypeButtonByName(BOOKMARKED).click();
-        } else {
-            getTypeButtonByName("bookmarked").click();
-        }
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    public void clickExtrasTab() {
+        extrasTab.click();
     }
 
     @Override
-    public DisneyPlusAppleTVVideoPlayerPage clickQAPlayButton() {
-        if (getTypeButtonByName(PLAY).isPresent()) {
-            getTypeButtonByName(PLAY).click();
-        } else {
-            getTypeButtonByName("play").click();
-        }
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+    public boolean isExtrasTabPresent() {
+        return extrasTab.isPresent();
     }
 }
