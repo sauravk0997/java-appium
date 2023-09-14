@@ -879,7 +879,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -907,7 +907,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_O2(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
             List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
             CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
             disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -921,7 +921,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_TelMex(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -938,7 +938,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
-                new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V2_ORDER),
+                new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V1),
                 new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));

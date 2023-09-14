@@ -62,8 +62,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
-    private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
+    private ExtendedWebElement suggestedTab;
     @ExtendedFindBy(accessibilityId = "EXTRAS")
     protected ExtendedWebElement extrasTab;
 
@@ -576,12 +576,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        if (episodesTab.isPresent(SHORT_TIMEOUT)) {
-            if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-                new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1200);
-            }
-            clickSuggestedTab();
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().swipeInContainer(null, Direction.UP, 1200);
         }
+        clickSuggestedTab();
         params.put("suggestedCellTitle", getTabCells().get(0));
         clickFirstTabCell();
         sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
