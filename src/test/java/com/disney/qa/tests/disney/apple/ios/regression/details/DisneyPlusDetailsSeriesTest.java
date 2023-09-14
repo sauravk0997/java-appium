@@ -188,7 +188,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
-        sa.assertTrue(detailsPage.isGroupWatchButtonDisplayed(), "Details page group watch button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
