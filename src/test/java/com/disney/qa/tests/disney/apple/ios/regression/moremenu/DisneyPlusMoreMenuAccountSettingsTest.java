@@ -266,7 +266,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
-        disneyPlusAccountIOSPageBase.openO2SubcriptionWebview();
+        disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
                 "Browser webview did not open");
@@ -894,7 +894,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_Canal(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
             List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
             CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlement).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
             disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
