@@ -1,8 +1,10 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +36,9 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     @ExtendedFindBy(accessibilityId = "agreeButton")
     protected ExtendedWebElement agreeButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView")
+    private ExtendedWebElement consentScrollView;
+
     //Functions
     public DisneyPlusParentalConsentIOSPageBase(WebDriver driver) {
         super(driver);
@@ -49,6 +54,14 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
 
     public void tapAgreeButton() {
         agreeButton.click();
+    }
+
+    /**
+     * Scroll the text of the Consent for Child
+     * @param times
+     */
+    public void scrollConsentContent(int times){
+        new IOSUtils().swipeInContainer(consentScrollView, IMobileUtils.Direction.UP,times,500);
     }
 
     public boolean validateScrollPopup() {
@@ -72,7 +85,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     public boolean verifyChildrenPrivacyPolicyLink() {
         return customHyperlinkByLabel.format("Children\\'s Privacy Policy").isPresent();
     }
-    
+
     public boolean validateConsentHeader() {
         return consentMinorHeader.getText().equalsIgnoreCase(consentHeaderText);
     }
