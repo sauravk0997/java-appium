@@ -23,11 +23,11 @@ public class DisneyPlusForgotPasswordTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         EmailApi verifyEmail = new EmailApi();
-        Date startTime = verifyEmail.getStartTime();
         String subject = "Your one-time passcode";
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(disneyAccount.get().getEmail());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Forgot password link not displayed");
+        Date startTime = verifyEmail.getStartTime();
         disneyPlusPasswordIOSPageBase.clickForgotPasswordLink();
         softAssert.assertTrue(initPage(DisneyPlusOneTimePasscodeIOSPageBase.class).isOpened(), "Forgot password page not opened");
         String otp = verifyEmail.getDisneyOTP(disneyAccount.get().getEmail(), startTime);
