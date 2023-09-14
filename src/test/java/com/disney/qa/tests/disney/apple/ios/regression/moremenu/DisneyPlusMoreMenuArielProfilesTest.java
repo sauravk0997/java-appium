@@ -556,7 +556,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72482"})
     @Test(description = "Profiles > Add profile, No Gender for U13 Profiles", groups = {"Ariel-More Menu"})
     public void verifyNoGenderForU13Profiles() {
-        //Arrange
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
