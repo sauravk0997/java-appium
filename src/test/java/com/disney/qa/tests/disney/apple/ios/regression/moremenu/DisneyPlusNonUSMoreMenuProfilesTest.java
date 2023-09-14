@@ -37,7 +37,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
         disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
 
-        sa.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
 
         disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
@@ -49,7 +49,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.getBackArrow().click();
         disneyPlusMoreMenuIOSPageBase.clickAddProfile();
 
-        sa.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon clicking 'Add Profile'");
 
         disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
