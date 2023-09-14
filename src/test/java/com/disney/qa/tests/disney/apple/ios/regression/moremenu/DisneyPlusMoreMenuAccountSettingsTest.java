@@ -614,9 +614,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         verifyEmail.set(new EmailApi());
-        Date startTime = verifyEmail.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
+        Date startTime = verifyEmail.get().getStartTime();
         disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
         String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
