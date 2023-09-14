@@ -564,7 +564,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        //Act
         setAppToHomeScreen(disneyAccount.get());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -573,7 +572,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
-        //Assert
+        // verify gender field is disabled when you select U13 DOB
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
                 "Gender field is enabled for U13 profile");
 
@@ -583,10 +582,12 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.chooseGender();
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
+        // verify gender field is disabled when you selected Gender first then choose the U13 DOB
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
                 "Gender field is enabled for U13 profile");
 
         addProfile.clickSaveBtn();
+        //minor consent is shown
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             new IOSUtils().scrollDown();
@@ -596,6 +597,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         //Welch Full catalog access
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        //minor authentication is prompted
         Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
         passwordPage.enterPassword(disneyAccount.get());
         passwordPage.clickSecondaryButtonByCoordinates();
