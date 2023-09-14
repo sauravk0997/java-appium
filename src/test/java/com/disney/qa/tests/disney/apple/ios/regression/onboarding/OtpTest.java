@@ -26,11 +26,11 @@ public class OtpTest {
         DisneyAccountApi api = new DisneyAccountApi(apiConfiguration);
 
         DisneyAccount account = api.createAccountForOTP("US", "en");
-        EmailApi verifyEmail = new EmailApi();
-        Date startTime = verifyEmail.getStartTime();
+        EmailApi emailApi = new EmailApi();
+        Date startTime = emailApi.getStartTime();
         api.requestOtp(account);
 
-        String code = verifyEmail.getDisneyOTP(account.getEmail(), startTime);
+        String code = emailApi.getDisneyOTP(account.getEmail(), startTime);
         System.out.println(code);
     }
 }
