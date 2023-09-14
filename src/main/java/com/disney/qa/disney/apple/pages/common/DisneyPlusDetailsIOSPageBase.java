@@ -577,6 +577,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
         if (episodesTab.isPresent(SHORT_TIMEOUT)) {
+            if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+                new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1200);
+            }
             clickSuggestedTab();
         }
         params.put("suggestedCellTitle", getTabCells().get(0));
