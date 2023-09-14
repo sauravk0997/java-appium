@@ -92,7 +92,10 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     @Override
     public void clickCancelBtn() {
-        changePasswordCancelBtn.click();
+        xpathNameOrName.format(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
+                                DictionaryKeys.CANCEL_LABEL.getText()),
+                DictionaryKeys.CANCEL_LABEL.getText()).click();
     }
 
     public boolean isInvalidPasswordErrorDisplayed() {

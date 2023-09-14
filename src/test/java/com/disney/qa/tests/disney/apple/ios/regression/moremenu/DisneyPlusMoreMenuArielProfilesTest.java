@@ -40,6 +40,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase password = initPage(DisneyPlusChangePasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         String incorrectPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         onboard();
@@ -62,11 +63,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            pause(3);
-            new IOSUtils().scrollDown();
-            pause(3);
+            softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+            parentalConsent.scrollConsentContent(2);
         }
-        whoIsWatching.getTypeButtonByLabel("AGREE").click();
+        parentalConsent.tapAgreeButton();
         softAssert.assertTrue(whoIsWatching.isOpened(), "Who is watching page didn't open after clicking on agree button");
         whoIsWatching.clickProfile(KIDS_PROFILE);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isElementPresent(), "Kids Home page is not open after login");
