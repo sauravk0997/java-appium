@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +20,7 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -60,8 +62,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
-    @ExtendedFindBy(accessibilityId = "SUGGESTED")
-    private ExtendedWebElement suggestedTab;
+    private ExtendedWebElement suggestedTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
     @ExtendedFindBy(accessibilityId = "EXTRAS")
     protected ExtendedWebElement extrasTab;
@@ -563,16 +564,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSuggestedTabPresent() {
-        if (!suggestedTab.isPresent()) {
-            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1000);
+        if (!suggestedTab.isPresent() && "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1200);
         }
         return suggestedTab.isPresent();
     }
 
     public void clickSuggestedTab() {
-        if (!suggestedTab.isElementPresent()) {
-            new IOSUtils().swipePageTillElementTappable(suggestedTab, 1, contentDetailsPage, Direction.UP, 900);
-        }
         suggestedTab.click();
     }
 

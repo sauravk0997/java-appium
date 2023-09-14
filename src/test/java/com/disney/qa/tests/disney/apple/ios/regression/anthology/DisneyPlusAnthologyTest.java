@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
+import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -278,7 +280,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         String mediaTitle = details.getMediaTitle();
 
-        new IOSUtils().swipeInContainer(null, Direction.UP, 1000);
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            new IOSUtils().swipeInContainer(null, Direction.UP, 1000);
+        }
         sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
 
         String selectorSeason = details.getSeasonSelector();
@@ -306,7 +310,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         searchAndOpenDWTSDetails();
 
-        new IOSUtils().swipeInContainer(null, Direction.UP, 1000);
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
