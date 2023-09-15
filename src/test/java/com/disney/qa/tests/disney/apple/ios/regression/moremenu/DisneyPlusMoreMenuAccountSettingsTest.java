@@ -8,7 +8,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -52,7 +51,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String BRADESCO_URL = "banco.bradesco";
     private static final String BRADESCO_NEXT_URL = "next.me";
     private static final String DETELEKOM_URL = "telekom.de";
-    ThreadLocal<VerifyEmail> verifyEmail = new ThreadLocal<>();
+    ThreadLocal<EmailApi> emailApi = new ThreadLocal<>();
 
     @BeforeMethod
     public void handleAlert() {
@@ -551,8 +550,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void testChangePasswordUI() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
+        Date startTime = emailApi.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -560,7 +559,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
                 "XMOBQA-61559 - OTP entry page was not opened");
@@ -614,12 +613,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
+        Date startTime = emailApi.get().getStartTime();
         disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
         disneyPlusChangePasswordIOSPageBase.submitNewPasswordValue(NEW_PASSWORD);
 
@@ -636,12 +635,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
+        Date startTime = emailApi.get().getStartTime();
         disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
         disneyPlusChangePasswordIOSPageBase.clickLogoutAllDevices();
 
@@ -659,12 +658,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
+        Date startTime = emailApi.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
                 "XMOBQA-61553 - OTP entry page was not opened");
@@ -715,12 +714,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
 
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
+        Date startTime = emailApi.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
         String newEmail = generateGmailAccount();
 
@@ -743,12 +742,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = new DisneyPlusHomeIOSPageBase(getDriver());
 
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
+        Date startTime = emailApi.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
         disneyPlusChangeEmailIOSPageBase.clickLogoutAllDevices();
         String newEmail = generateGmailAccount();
@@ -800,8 +799,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        verifyEmail.set(new VerifyEmail());
-        Date startTime = verifyEmail.get().getStartTime();
+        emailApi.set(new EmailApi());
+        Date startTime = emailApi.get().getStartTime();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -815,7 +814,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP Page was not opened");
 
-        String otp = verifyEmail.get().getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), EMAIL_SUBJECT, startTime);
+        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
@@ -880,7 +879,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -908,7 +907,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_O2(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
             List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
             CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
             disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -922,7 +921,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyPausedSubscription_TelMex(String planType) {
         initialSetup();
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V2_ORDER);
+        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
@@ -939,7 +938,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
-                new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V2_ORDER),
+                new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V1),
                 new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
         CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));

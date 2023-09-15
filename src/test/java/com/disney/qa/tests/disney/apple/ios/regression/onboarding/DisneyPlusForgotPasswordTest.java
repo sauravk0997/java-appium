@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.email.EmailApi;
-import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
@@ -23,15 +22,15 @@ public class DisneyPlusForgotPasswordTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
-        VerifyEmail verifyEmail = new VerifyEmail();
-        Date startTime = verifyEmail.getStartTime();
+        EmailApi emailApi = new EmailApi();
         String subject = "Your one-time passcode";
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(disneyAccount.get().getEmail());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Forgot password link not displayed");
+        Date startTime = emailApi.getStartTime();
         disneyPlusPasswordIOSPageBase.clickForgotPasswordLink();
         softAssert.assertTrue(initPage(DisneyPlusOneTimePasscodeIOSPageBase.class).isOpened(), "Forgot password page not opened");
-        String otp = verifyEmail.getDisneyOTP(disneyAccount.get().getEmail(), EmailApi.getOtpAccountPassword(), subject, startTime);
+        String otp = emailApi.getDisneyOTP(disneyAccount.get().getEmail(), startTime);
         softAssert.assertTrue(otp.length() > 0);
         softAssert.assertAll();
     }
