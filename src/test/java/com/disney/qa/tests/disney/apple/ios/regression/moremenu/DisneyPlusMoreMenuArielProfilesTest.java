@@ -556,25 +556,23 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72365"})
     @Test(description = "Profiles > Existing Sub->edit gender", groups = {"Ariel-More Menu"})
     public void verifyEditGenderPageUI() {
-        //Arrange
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        //Act
         setAppToHomeScreen(disneyAccount.get());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
         editProfilePage.clickGenderButton();
 
-        //Assert
-        sa.assertTrue(editGenderPage.isOpened(), "Expected: Select Gender page should be opened");
+        sa.assertTrue(editGenderPage.isOpened(), "Expected: 'Select Gender' page should be opened");
 
         editGenderPage.clickGenderDropDown();
 
+        // verify all gender option
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
             sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
                     "Expected: " + genderItem + " option should be present");
@@ -582,9 +580,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN.getGenderOption());
         editGenderPage.tapSaveButton();
-        editProfilePage.isUpdatedTextPresent();
 
-        sa.assertTrue(editProfilePage.isUpdatedTextPresent(), "Gender is not updated for user");
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Gender is not updated for user");
         sa.assertAll();
     }
 

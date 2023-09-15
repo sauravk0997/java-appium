@@ -288,6 +288,7 @@ public enum DictionaryKeys {
     PROFILE_ENTRY_PIN_FORGOT_PIN("profile_entry_pin_forgot_pin"),
     PROFILE_PIN_MISSING("profilepinmissing"),
     PROFILE_SETTINGS_ENTRY_PIN_LABEL("profile_settings_entry_pin_label"),
+    PROFILE_SETTINGS_GENERIC_TOAST("profile_settings_generic_toast"),
     RATED("rated"),
     REMOVE_DOWNLOAD_BTN("btn_remove_download"),
     RESEND_EMAIL_COPY("resend_email_copy"),

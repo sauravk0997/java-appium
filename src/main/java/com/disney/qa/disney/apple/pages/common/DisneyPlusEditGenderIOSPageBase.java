@@ -11,10 +11,9 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Prefer not to say'`]")
-    protected ExtendedWebElement genderPlaceholder;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'SAVE'`]")
-    private ExtendedWebElement saveButton;
+    private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
+    protected ExtendedWebElement genderPreferNotToSay = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText()));
+    private ExtendedWebElement saveButton = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SAVE.getText()));;
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     protected ExtendedWebElement genderOptionValue;
 
@@ -63,18 +62,18 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      */
     @Override
     public boolean isOpened() {
-        return genderPlaceholder.isPresent();
+        return dynamicBtnFindByLabel.format(genderPlaceholder).isPresent();
     }
 
     /**
      * click on gender dropdown to select gender value
      */
     public void clickGenderDropDown() {
-        genderPlaceholder.click();
+        genderPreferNotToSay.click();
     }
 
     /**
-     * @param gender - Pass the value which need to select
+     * @param gender - Pass the value which need to be selected
      */
     public void selectGender(String gender) {
         dynamicBtnFindByLabel.format(gender).click();
