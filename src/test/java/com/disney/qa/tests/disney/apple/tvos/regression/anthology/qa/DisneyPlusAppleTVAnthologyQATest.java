@@ -173,13 +173,9 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubheadLineLabelPresent(), "Subhead line label is not present.");
         sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
-        sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
-        sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
         sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
-        liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }

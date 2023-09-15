@@ -18,8 +18,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
 
     protected ExtendedWebElement watchFromStartButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_BEGINNING.getText()));
 
-    protected ExtendedWebElement detailsButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_DETAILS.getText()));
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     private ExtendedWebElement titleLabel;
 
@@ -45,15 +43,17 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         return watchFromStartButton;
     }
 
-    public ExtendedWebElement getDetailsButton() { return detailsButton; }
-
     public boolean isTitleLabelPresent() { return titleLabel.isPresent(); }
 
-    public boolean isSubtitleLabelPresent() { return subtitleLabel.isPresent(); }
-
-    public boolean isChannelLogoPresent() { return channelLogo.isPresent(); }
+    public boolean isSubtitleLabelPresent() { return getStaticTextByNameContains("subtitleLabel").isPresent(); }
 
     @Override
-    public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
+    public boolean isThumbnailViewPresent() { return getTypeOtherContainsName("thumbnailView").isPresent(); }
+
+    //QA
+
+    public ExtendedWebElement getQAWatchLiveButton() { return getTypeButtonContainsLabel("WATCH LIVE"); }
+
+    public ExtendedWebElement getQAWatchFromStartButton() { return getTypeButtonContainsLabel("WATCH FROM START"); }
 
 }

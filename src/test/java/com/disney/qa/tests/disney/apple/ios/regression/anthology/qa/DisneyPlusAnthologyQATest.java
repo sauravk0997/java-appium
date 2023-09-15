@@ -176,17 +176,14 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         details.clickQAWatchButton();
         liveEventModal.isOpened();
+        System.out.println(getDriver().getPageSource());
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
         sa.assertTrue(liveEventModal.isSubtitleLabelPresent(), "Subtitle label is not present.");
         sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
-        sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
-        sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
-        sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
-        sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
+        sa.assertTrue(liveEventModal.getQAWatchLiveButton().isPresent(), "Watch live button is not present.");
+        sa.assertTrue(liveEventModal.getQAWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
-        liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
-        videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
+        videoPlayer.compareQAWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
 

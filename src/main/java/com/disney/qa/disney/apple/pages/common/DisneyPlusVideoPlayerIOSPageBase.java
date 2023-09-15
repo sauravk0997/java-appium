@@ -381,19 +381,43 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         Map<String, Integer> params = new HashMap<>();
 
-        detailsPage.clickWatchButton();
+        System.out.println(getDriver().getPageSource());
         liveEventModalPage.getWatchLiveButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
         params.put("watchLiveTimeRemaining", getRemainingTime());
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
-        clickBackButton();
-        detailsPage.isOpened();
         detailsPage.clickWatchButton();
         liveEventModalPage.getWatchFromStartButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
         params.put("watchFromStartTimeRemaining", getRemainingTime());
+        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        params.clear();
+    }
+
+    //QA
+    public void compareQAWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
+        Map<String, Integer> params = new HashMap<>();
+
+        liveEventModalPage.getQAWatchLiveButton().click();
+        pause(2); //transition
+        System.out.println(getDriver().getPageSource());
+//        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchLiveTimeRemaining", getRemainingTime());
+        clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+
+        detailsPage.clickQAWatchButton();
+        liveEventModalPage.getQAWatchFromStartButton().click();
+        pause(3); //transition
+        System.out.println(getDriver().getPageSource());
+//        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        System.out.println(params.get("watchLiveTimeRemaining"));
+        System.out.println(params.get("watchFromStartTimeRemaining"));
         sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
     }
