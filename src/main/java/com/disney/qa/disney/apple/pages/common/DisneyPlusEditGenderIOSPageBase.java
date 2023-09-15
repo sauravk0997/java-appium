@@ -62,7 +62,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      */
     @Override
     public boolean isOpened() {
-        return dynamicBtnFindByLabel.format(genderPlaceholder).isPresent();
+        return staticTextByLabel.format(genderPlaceholder).isPresent();
     }
 
     /**
