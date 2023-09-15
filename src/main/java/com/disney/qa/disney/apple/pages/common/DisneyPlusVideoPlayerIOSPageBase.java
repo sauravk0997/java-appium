@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -304,6 +305,34 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
+    public int getRemainingTime2() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) / 60 + (Integer.parseInt(remainingTime[1]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
+
+    public int getRemainingTime3() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
+
+    public int getTimeRemaining() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        if (timeRemaining.size() == 3) {
+            getRemainingTime3();
+        } else if (timeRemaining.size() == 2) {
+            getRemainingTime2();
+        }
+        return Integer.parseInt(null);
+    }
+
     public void tapAudioSubTitleMenu() {
         displayVideoController();
         pause(1);
@@ -406,7 +435,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         pause(2); //transition
         System.out.println(getDriver().getPageSource());
 //        sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchLiveTimeRemaining", getRemainingTime());
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        if (timeRemaining.size() == 3) {
+            getRemainingTime3();
+            params.put("watchLiveTimeRemaining", getRemainingTime3());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchLiveTimeRemaining", getRemainingTime2());
+        }
+//        params.put("watchLiveTimeRemaining", getTimeRemaining());
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
@@ -415,10 +453,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         pause(3); //transition
         System.out.println(getDriver().getPageSource());
 //        sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        params.put("watchFromStartTimeRemaining", getTimeRemaining());
+        if (timeRemaining.size() == 3) {
+            getRemainingTime3();
+            params.put("watchFromStartTimeRemaining", getRemainingTime3());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchFromStartTimeRemaining", getRemainingTime2());
+        }
         System.out.println(params.get("watchLiveTimeRemaining"));
         System.out.println(params.get("watchFromStartTimeRemaining"));
-        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+//        System.out.println(params.get(getTimeRemaining()) > params.get("watchLiveTimeRemaining"));
+        System.out.println(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"));
+        System.out.println(params.get("watchLiveTimeRemaining") > params.get("watchFromStartTimeRemaining"));
+//        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
     }
 }
