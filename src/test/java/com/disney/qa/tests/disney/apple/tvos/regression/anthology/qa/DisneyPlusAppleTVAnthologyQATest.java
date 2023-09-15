@@ -176,7 +176,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
-        videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
+        videoPlayer.compareQAWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
 

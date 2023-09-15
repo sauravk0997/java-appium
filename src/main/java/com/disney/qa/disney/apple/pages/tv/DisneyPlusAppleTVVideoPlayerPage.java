@@ -92,4 +92,26 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
     }
+
+    @Override
+    public void compareQAWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        Map<String, Integer> params = new HashMap<>();
+
+        liveEventModal.getQAWatchLiveButton().click();
+        pause(2); //transition
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchLiveTimeRemaining", getRemainingTime());
+        clickMenuTimes(1,1);
+        sa.assertTrue(details.isOpened(), "Details page did not open");
+
+        details.clickQAWatchButton();
+        liveEventModal.getQAWatchFromStartButton().click();
+        pause(3); //transition
+        sa.assertTrue(isOpened(), "Live video is not playing");
+        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        params.clear();
+    }
 }
