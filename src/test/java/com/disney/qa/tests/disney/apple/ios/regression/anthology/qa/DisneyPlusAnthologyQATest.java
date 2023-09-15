@@ -110,7 +110,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         details.clickQAWatchButton();
         liveEventModal.isOpened();
-        liveEventModal.getWatchLiveButton().click();
+        liveEventModal.getQAWatchLiveButton().click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isYouAreLiveButtonPresent(), "'You are live' button was not found");
@@ -205,7 +205,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         welcomePage.isOpened();
         welcomePage.clickLogInButton();
-        loginPage.submitEmail("cristina.solmaz+437522@disneyplustesting.com");
+        loginPage.submitEmail("cristina.solmaz+43755@disneyplustesting.com");
         passwordPage.submitPasswordForLogin("G0Disney!");
         homePage.isOpened();
     }

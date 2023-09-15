@@ -321,17 +321,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public int getTimeRemaining() {
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
-        if (timeRemaining.size() == 3) {
-            getRemainingTime3();
-        } else if (timeRemaining.size() == 2) {
-            getRemainingTime2();
-        }
-        return Integer.parseInt(null);
-    }
+//    public int getTimeRemaining() {
+//        displayVideoController();
+//        String[] remainingTime = timeRemainingLabel.getText().split(":");
+//        List<String> timeRemaining = List.of(remainingTime);
+//        if (timeRemaining.size() == 3) {
+//            getRemainingTime3();
+//        } else if (timeRemaining.size() == 2) {
+//            getRemainingTime2();
+//        }
+//        return Integer.parseInt(null);
+//    }
 
     public void tapAudioSubTitleMenu() {
         displayVideoController();
@@ -432,12 +432,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         Map<String, Integer> params = new HashMap<>();
 
         liveEventModalPage.getQAWatchLiveButton().click();
-        pause(2); //transition
+        pause(10); //transition
         System.out.println(getDriver().getPageSource());
 //        sa.assertTrue(isOpened(), "Live video is not playing");
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
+        System.out.println(timeRemaining.size());
         if (timeRemaining.size() == 3) {
             getRemainingTime3();
             params.put("watchLiveTimeRemaining", getRemainingTime3());
@@ -445,21 +446,22 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             params.put("watchLiveTimeRemaining", getRemainingTime2());
         }
 //        params.put("watchLiveTimeRemaining", getTimeRemaining());
+        System.out.println(params.get("watchLiveTimeRemaining"));
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
         detailsPage.clickQAWatchButton();
         liveEventModalPage.getQAWatchFromStartButton().click();
-        pause(3); //transition
+        pause(10); //transition
         System.out.println(getDriver().getPageSource());
 //        sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchFromStartTimeRemaining", getTimeRemaining());
         if (timeRemaining.size() == 3) {
             getRemainingTime3();
             params.put("watchFromStartTimeRemaining", getRemainingTime3());
         } else if (timeRemaining.size() == 2) {
             params.put("watchFromStartTimeRemaining", getRemainingTime2());
         }
+        System.out.println(timeRemaining.size());
         System.out.println(params.get("watchLiveTimeRemaining"));
         System.out.println(params.get("watchFromStartTimeRemaining"));
 //        System.out.println(params.get(getTimeRemaining()) > params.get("watchLiveTimeRemaining"));
