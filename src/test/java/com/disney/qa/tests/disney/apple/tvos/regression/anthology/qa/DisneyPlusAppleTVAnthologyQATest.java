@@ -102,7 +102,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         }
 
         details.clickQAWatchButton();
-        liveEventModal.clickWatchLiveButton();
+        liveEventModal.getQAWatchLiveButton().click();
         videoPlayer.waitForVideoToStart();
         videoPlayer.pauseAndPlayVideo();
         sa.assertTrue(videoPlayer.isWatchingLivePresent(), "Watching live lightning bolt is not present.");
