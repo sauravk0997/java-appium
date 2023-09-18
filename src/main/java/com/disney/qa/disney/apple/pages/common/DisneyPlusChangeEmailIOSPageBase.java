@@ -32,11 +32,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
                             DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText());
 
-    private ExtendedWebElement changeEmailCancelBtn = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                            DictionaryKeys.CANCEL_LABEL.getText()),
-            DictionaryKeys.CANCEL_LABEL.getText());
-
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidEmail;
 
@@ -96,6 +91,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public void clickCancelBtn() {
-        changeEmailCancelBtn.click();
+        String cancelButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.CANCEL_LABEL.getText());
+        dynamicBtnFindByLabel.format(cancelButton).click();
     }
 }
