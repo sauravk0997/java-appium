@@ -59,6 +59,7 @@ public enum DictionaryKeys {
     BTN_SEASON_NUMBER("button_season_number"),
     BTN_SEE_ALL_EP("btn_see_all_ep"),
     BTN_SET_PROFILE_PIN("btn_set_profile_pin"),
+    BTN_SETTINGS_GENDER_SAVE("btn_settings_gender_save"),
     BTN_SIGN_UP("btn_signup"),
     BTN_TRAVEL_MESSAGE_OK("btn_travel_message_ok"),
     CANCEL("cancel"),

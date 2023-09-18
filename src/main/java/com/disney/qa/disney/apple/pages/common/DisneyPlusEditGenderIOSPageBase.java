@@ -12,10 +12,10 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     //LOCATORS
 
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    protected ExtendedWebElement genderPreferNotToSay = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText()));
-    private ExtendedWebElement saveButton = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SAVE.getText()));
+    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
+    private String saveButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
-    protected ExtendedWebElement genderOptionValue;
+    private ExtendedWebElement genderOptionValue;
 
     //FUNCTIONS
 
@@ -69,7 +69,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * click on gender dropdown to select gender value
      */
     public void clickGenderDropDown() {
-        genderPreferNotToSay.click();
+        dynamicBtnFindByLabel.format(genderPreferNotToSay).click();
     }
 
     /**
@@ -83,6 +83,6 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * Click save button to update
      */
     public void tapSaveButton() {
-        saveButton.click();
+        dynamicBtnFindByLabel.format(saveButton).click();
     }
 }
