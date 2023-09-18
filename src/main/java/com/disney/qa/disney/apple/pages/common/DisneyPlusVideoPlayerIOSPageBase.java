@@ -31,7 +31,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement currentTimeMarker;
 
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
-    private ExtendedWebElement timeRemainingLabel;
+    protected ExtendedWebElement timeRemainingLabel;
 
     @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
     private ExtendedWebElement currentTimeLabel;
@@ -299,16 +299,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      */
     public int getRemainingTime() {
         displayVideoController();
+        System.out.println(timeRemainingLabel);
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
-        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
-        return remainingTimeInSec;
-    }
-
-    public int getRemainingTime2() {
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) / 60 + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -316,22 +309,22 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTime3() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        System.out.println(timeRemainingLabel.getText());
+        System.out.println(remainingTime[0]);
+        System.out.println(remainingTime[1]);
+        System.out.println(remainingTime[2]);
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60 + Integer.parseInt(remainingTime[1]) * 60 + (Integer.parseInt(remainingTime[2]));
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
 
-//    public int getTimeRemaining() {
-//        displayVideoController();
-//        String[] remainingTime = timeRemainingLabel.getText().split(":");
-//        List<String> timeRemaining = List.of(remainingTime);
-//        if (timeRemaining.size() == 3) {
-//            getRemainingTime3();
-//        } else if (timeRemaining.size() == 2) {
-//            getRemainingTime2();
-//        }
-//        return Integer.parseInt(null);
-//    }
+    public int getRemainingTime2() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
 
     public void tapAudioSubTitleMenu() {
         displayVideoController();
@@ -455,19 +448,37 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         pause(10); //transition
         System.out.println(getDriver().getPageSource());
 //        sa.assertTrue(isOpened(), "Live video is not playing");
-        if (timeRemaining.size() == 3) {
-            getRemainingTime3();
-            params.put("watchFromStartTimeRemaining", getRemainingTime3());
-        } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartTimeRemaining", getRemainingTime2());
-        }
+//        if (timeRemaining.size() == 3) {
+//            getRemainingTime3();
+//            params.put("watchFromStartTimeRemaining", getRemainingTime3());
+//        } else if (timeRemaining.size() == 2) {
+//            params.put("watchFromStartTimeRemaining", getRemainingTime2());
+//        }
+        params.put("watchFromStartTimeRemaining", getRemainingTime3());
         System.out.println(timeRemaining.size());
         System.out.println(params.get("watchLiveTimeRemaining"));
         System.out.println(params.get("watchFromStartTimeRemaining"));
 //        System.out.println(params.get(getTimeRemaining()) > params.get("watchLiveTimeRemaining"));
         System.out.println(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"));
         System.out.println(params.get("watchLiveTimeRemaining") > params.get("watchFromStartTimeRemaining"));
-//        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
+    }
+
+    public void timeRemainingValidation() {
+//        Map<String, Integer> params = new HashMap<>();
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        System.out.println(timeRemaining.size());
+        if (timeRemaining.size() == 3) {
+//            getRemainingTime3();
+            System.out.println(getRemainingTime3());
+//            params.put("watchFromStartTimeRemaining", getRemainingTime3());
+        } else if (timeRemaining.size() == 2) {
+            System.out.println(getRemainingTime2());
+//            getRemainingTime2();
+//            params.put("watchFromStartTimeRemaining", getRemainingTime2());
+        }
     }
 }
