@@ -391,6 +391,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
+    public void watchLiveTimeRemaining() {
+        Map<String, Integer> params = new HashMap<>();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        if (timeRemaining.size() == 3) {
+            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchLiveTimeRemaining", getRemainingTime());
+        }
+    }
+
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
@@ -437,9 +448,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put("watchLiveQATimeRemaining", getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveTimeRemaining", getRemainingTime());
+            params.put("watchLiveQATimeRemaining", getRemainingTime());
         }
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
@@ -448,11 +459,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         liveEventModalPage.getQAWatchFromStartButton().click();
         pause(10); //transition
         if (timeRemaining.size() == 3) {
-            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put("watchFromStartQATimeRemaining", getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartTimeRemaining", getRemainingTime());
+            params.put("watchFromStartQATimeRemaining", getRemainingTime());
         }
-        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"),
+        sa.assertTrue(params.get("watchFromStartQATimeRemaining") > params.get("watchLiveQATimeRemaining"),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
     }
