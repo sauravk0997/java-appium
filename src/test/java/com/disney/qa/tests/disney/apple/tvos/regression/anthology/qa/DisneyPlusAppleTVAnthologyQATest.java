@@ -14,14 +14,12 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.api.disney.DisneyContentIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
 public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
     private static final String LIVE = "LIVE";
-    private static final String PLAY = "PLAY";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105996"})

@@ -24,8 +24,6 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     private static final String UPCOMING = "UPCOMING";
     private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
     private static final String LIVE = "LIVE";
-    private static final String PLAY = "PLAY";
-    //private static final String WATCH_LIVE = "Watch Live";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72301"})
