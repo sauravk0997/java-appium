@@ -19,6 +19,10 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
+    protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
+    protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
+    protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
+
     //LOCATORS
 
     @ExtendedFindBy(accessibilityId = "ucp.playerView")
@@ -408,27 +412,27 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         Map<String, Integer> params = new HashMap<>();
 
         liveEventModalPage.getWatchLiveButton().click();
-        sa.assertTrue(isOpened(), "Live video is not playing");
+        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveTimeRemaining", getRemainingTime());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
         }
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
         detailsPage.clickWatchButton();
         liveEventModalPage.getWatchFromStartButton().click();
-        sa.assertTrue(isOpened(), "Live video is not playing");
+        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
         if (timeRemaining.size() == 3) {
-            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartTimeRemaining", getRemainingTime());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
         }
-        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"),
+        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
     }
@@ -448,9 +452,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            params.put("watchLiveQATimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveQATimeRemaining", getRemainingTime());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
         }
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
@@ -459,11 +463,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         liveEventModalPage.getQAWatchFromStartButton().click();
         pause(10); //transition
         if (timeRemaining.size() == 3) {
-            params.put("watchFromStartQATimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartQATimeRemaining", getRemainingTime());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
         }
-        sa.assertTrue(params.get("watchFromStartQATimeRemaining") > params.get("watchLiveQATimeRemaining"),
+        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
     }

@@ -79,16 +79,15 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
 
         details.clickWatchButton();
         liveEventModal.getWatchLiveButton().click();
-        sa.assertTrue(isOpened(), "Live video is not playing");
+        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
         pauseAndPlayVideo();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveTimeRemaining", getRemainingTime());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
         }
-        params.put("watchLiveTimeRemaining", getRemainingTime());
         clickBackButton();
         sa.assertTrue(details.isOpened(), "Details page did not open");
 
@@ -96,15 +95,15 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         details.isOpened();
         details.clickWatchButton();
         liveEventModal.getWatchFromStartButton().click();
-        sa.assertTrue(isOpened(), "Live video is not playing");
+        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
         pauseAndPlayVideo();
         if (timeRemaining.size() == 3) {
             getRemainingTimeThreeIntegers();
-            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartTimeRemaining", getRemainingTime());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
         }
-        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"),
+        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
     }
@@ -122,9 +121,9 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            params.put("watchLiveQATimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveQATimeRemaining", getRemainingTime());
+            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
         }
         clickMenuTimes(1,1);
         sa.assertTrue(details.isOpened(), "Details page did not open");
@@ -136,11 +135,11 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         pauseAndPlayVideo();
         if (timeRemaining.size() == 3) {
             getRemainingTimeThreeIntegers();
-            params.put("watchFromStartQATimeRemaining", getRemainingTimeThreeIntegers());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchFromStartQATimeRemaining", getRemainingTime());
+            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
         }
-        sa.assertTrue(params.get("watchFromStartQATimeRemaining") > params.get("watchLiveQATimeRemaining"),
+        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
     }
