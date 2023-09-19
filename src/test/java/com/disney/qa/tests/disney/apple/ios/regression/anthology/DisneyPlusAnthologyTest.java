@@ -455,7 +455,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
         videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
-
         sa.assertAll();
     }
 

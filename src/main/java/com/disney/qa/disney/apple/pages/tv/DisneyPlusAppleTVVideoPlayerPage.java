@@ -80,6 +80,14 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         details.clickWatchButton();
         liveEventModal.getWatchLiveButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
+        pauseAndPlayVideo();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        if (timeRemaining.size() == 3) {
+            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchLiveTimeRemaining", getRemainingTime());
+        }
         params.put("watchLiveTimeRemaining", getRemainingTime());
         clickBackButton();
         sa.assertTrue(details.isOpened(), "Details page did not open");
@@ -89,7 +97,13 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         details.clickWatchButton();
         liveEventModal.getWatchFromStartButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        pauseAndPlayVideo();
+        if (timeRemaining.size() == 3) {
+            getRemainingTimeThreeIntegers();
+            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchFromStartTimeRemaining", getRemainingTime());
+        }
         sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
     }
@@ -100,14 +114,13 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         Map<String, Integer> params = new HashMap<>();
 
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
         liveEventModal.getQAWatchLiveButton().click();
         pause(2); //transition
         sa.assertTrue(isOpened(), "Live video is not playing");
         pauseAndPlayVideo();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
         if (timeRemaining.size() == 3) {
-            getRemainingTimeThreeIntegers();
             params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
             params.put("watchLiveTimeRemaining", getRemainingTime());

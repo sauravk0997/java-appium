@@ -24,9 +24,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    @ExtendedFindBy(accessibilityId = "channelLogo")
-    private ExtendedWebElement channelLogo;
-
     @ExtendedFindBy(accessibilityId = "thumbnailImageView")
     private ExtendedWebElement thumbnailImageView;
 
@@ -48,7 +45,7 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     public boolean isSubtitleLabelPresent() { return subtitleLabel.isPresent(); }
 
     @Override
-    public boolean isThumbnailViewPresent() { return getTypeOtherContainsName("thumbnailView").isPresent(); }
+    public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
 
     /**
      * Below are QA env specific methods for DWTS Anthology.
@@ -59,4 +56,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     public ExtendedWebElement getQAWatchFromStartButton() { return getTypeButtonContainsLabel("WATCH FROM START"); }
 
     public boolean isQASubtitleLabelPresent() { return getStaticTextByNameContains("subtitleLabel").isPresent(); }
+
+    public boolean isQAThumbnailViewPresent() { return getTypeOtherContainsName("thumbnailView").isPresent(); }
 }
