@@ -160,36 +160,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72299"})
-    @Test(description = "Verify Anthology Series - Live Playback", groups = {"Anthology"})
-    public void verifyTimeRemaining() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
-//        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAppToHomeScreen(disneyAccount.get());
-        searchAndOpenDWTSDetails();
-        homePage.clickSearchIcon();
-        search.searchForMedia("The Little Mermaid");
-        search.getDisplayedTitles().get(0).click();
-        details.isOpened();
-
-
-        details.clickPlayButton();
-        videoPlayer.isOpened();
-        videoPlayer.getRemainingTime();
-        videoPlayer.timeRemainingValidation();
-
-        pause(15);
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73876"})
     @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology"})
     public void verifyAnthologyEnded() {

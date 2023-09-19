@@ -295,30 +295,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      * Opens the player overlay, reads remaining time on the seekbar
      * and converts it to seconds
      *
-     * @return Play back remaining time in seconds
+     * @return Playback remaining time in seconds
      */
     public int getRemainingTime() {
-        displayVideoController();
-        System.out.println(timeRemainingLabel);
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
-        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
-        return remainingTimeInSec;
-    }
-
-    public int getRemainingTime3() {
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        System.out.println(timeRemainingLabel.getText());
-        System.out.println(remainingTime[0]);
-        System.out.println(remainingTime[1]);
-        System.out.println(remainingTime[2]);
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60 + Integer.parseInt(remainingTime[1]) * 60 + (Integer.parseInt(remainingTime[2]));
-        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
-        return remainingTimeInSec;
-    }
-
-    public int getRemainingTime2() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
@@ -398,27 +377,54 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
+    /**
+     * Opens the player overlay, reads remaining time that has 3 integers
+     * (hours, minutes, seconds) on the seekbar and converts it to seconds
+     * @return Playback remaining time in seconds
+     */
+
+    public int getRemainingTimeThreeIntegers() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60 + Integer.parseInt(remainingTime[1]) * 60 + (Integer.parseInt(remainingTime[2]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
+
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         Map<String, Integer> params = new HashMap<>();
 
-        System.out.println(getDriver().getPageSource());
         liveEventModalPage.getWatchLiveButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchLiveTimeRemaining", getRemainingTime());
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        List<String> timeRemaining = List.of(remainingTime);
+        if (timeRemaining.size() == 3) {
+            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchLiveTimeRemaining", getRemainingTime());
+        }
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
         detailsPage.clickWatchButton();
         liveEventModalPage.getWatchFromStartButton().click();
         sa.assertTrue(isOpened(), "Live video is not playing");
-        params.put("watchFromStartTimeRemaining", getRemainingTime());
+        if (timeRemaining.size() == 3) {
+            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchFromStartTimeRemaining", getRemainingTime());
+        }
         sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
     }
 
-    //QA
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
     public void compareQAWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
@@ -426,59 +432,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
         liveEventModalPage.getQAWatchLiveButton().click();
         pause(10); //transition
-        System.out.println(getDriver().getPageSource());
-//        sa.assertTrue(isOpened(), "Live video is not playing");
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         List<String> timeRemaining = List.of(remainingTime);
-        System.out.println(timeRemaining.size());
         if (timeRemaining.size() == 3) {
-            getRemainingTime3();
-            params.put("watchLiveTimeRemaining", getRemainingTime3());
+            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
         } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveTimeRemaining", getRemainingTime2());
+            params.put("watchLiveTimeRemaining", getRemainingTime());
         }
-//        params.put("watchLiveTimeRemaining", getTimeRemaining());
-        System.out.println(params.get("watchLiveTimeRemaining"));
         clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
 
         detailsPage.clickQAWatchButton();
         liveEventModalPage.getQAWatchFromStartButton().click();
         pause(10); //transition
-        System.out.println(getDriver().getPageSource());
-//        sa.assertTrue(isOpened(), "Live video is not playing");
-//        if (timeRemaining.size() == 3) {
-//            getRemainingTime3();
-//            params.put("watchFromStartTimeRemaining", getRemainingTime3());
-//        } else if (timeRemaining.size() == 2) {
-//            params.put("watchFromStartTimeRemaining", getRemainingTime2());
-//        }
-        params.put("watchFromStartTimeRemaining", getRemainingTime3());
-        System.out.println(timeRemaining.size());
-        System.out.println(params.get("watchLiveTimeRemaining"));
-        System.out.println(params.get("watchFromStartTimeRemaining"));
-//        System.out.println(params.get(getTimeRemaining()) > params.get("watchLiveTimeRemaining"));
-        System.out.println(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"));
-        System.out.println(params.get("watchLiveTimeRemaining") > params.get("watchFromStartTimeRemaining"));
+        if (timeRemaining.size() == 3) {
+            params.put("watchFromStartTimeRemaining", getRemainingTimeThreeIntegers());
+        } else if (timeRemaining.size() == 2) {
+            params.put("watchFromStartTimeRemaining", getRemainingTime());
+        }
         sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"), "Watch from start did not return to beginning of live content.");
         params.clear();
-    }
-
-    public void timeRemainingValidation() {
-//        Map<String, Integer> params = new HashMap<>();
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
-        System.out.println(timeRemaining.size());
-        if (timeRemaining.size() == 3) {
-//            getRemainingTime3();
-            System.out.println(getRemainingTime3());
-//            params.put("watchFromStartTimeRemaining", getRemainingTime3());
-        } else if (timeRemaining.size() == 2) {
-            System.out.println(getRemainingTime2());
-//            getRemainingTime2();
-//            params.put("watchFromStartTimeRemaining", getRemainingTime2());
-        }
     }
 }

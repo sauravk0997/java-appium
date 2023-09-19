@@ -79,7 +79,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
-    
+
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
@@ -237,11 +237,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-        String version = AppCenterManager.getInstance()
-                .getAppInfo(R.CONFIG.get("capabilities.app"))
-                .getVersion();
-        LOGGER.info("version:{}", version);
-        return version;
+        try {
+            String version = AppCenterManager.getInstance()
+                    .getAppInfo(R.CONFIG.get("capabilities.app"))
+                    .getVersion();
+            LOGGER.info("version:{}", version);
+            return version;
+        } catch (Exception e) {
+            LOGGER.warn("Unable to detect app version for url: {}", R.CONFIG.get("capabilities.app"));
+            return "2.23.0.59750"; // hardcode to have api calls workable even with local app.
+        }
     }
 
     @AfterMethod(alwaysRun = true)
