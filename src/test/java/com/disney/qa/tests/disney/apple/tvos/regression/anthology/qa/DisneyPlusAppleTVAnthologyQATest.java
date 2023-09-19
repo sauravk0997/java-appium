@@ -202,7 +202,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         welcomePage.isOpened();
         welcomePage.clickLogInButton();
         loginPage.isOpened();
-        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+43755@disneyplustesting.com");
+        loginPage.proceedToLocalizedPasswordScreen("cristina.solmaz+43753@disneyplustesting.com");
         passwordPage.logInWithPasswordLocalized("G0Disney!");
     }
 }
