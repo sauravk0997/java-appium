@@ -395,17 +395,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public void watchLiveTimeRemaining() {
-        Map<String, Integer> params = new HashMap<>();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
-        if (timeRemaining.size() == 3) {
-            params.put("watchLiveTimeRemaining", getRemainingTimeThreeIntegers());
-        } else if (timeRemaining.size() == 2) {
-            params.put("watchLiveTimeRemaining", getRemainingTime());
-        }
-    }
-
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
