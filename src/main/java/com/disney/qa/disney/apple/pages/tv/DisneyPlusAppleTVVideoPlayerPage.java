@@ -104,7 +104,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         } else if (timeRemaining.size() == 2) {
             params.put("watchFromStartTimeRemaining", getRemainingTime());
         }
-        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"),
+                "Watch from start did not return to beginning of live content.");
         params.clear();
     }
 
@@ -140,7 +141,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         } else if (timeRemaining.size() == 2) {
             params.put("watchFromStartTimeRemaining", getRemainingTime());
         }
-        sa.assertTrue(params.get("watchLiveTimeRemaining") < params.get("watchFromStartTimeRemaining"), "Watch from start did not return to beginning of live content.");
+        sa.assertTrue(params.get("watchFromStartTimeRemaining") > params.get("watchLiveTimeRemaining"),
+                "Watch from start did not return to beginning of live content.");
         params.clear();
     }
 }
