@@ -18,16 +18,11 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
 
     protected ExtendedWebElement watchFromStartButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_BEGINNING.getText()));
 
-    protected ExtendedWebElement detailsButton = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_DETAILS.getText()));
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     private ExtendedWebElement titleLabel;
 
     @ExtendedFindBy(accessibilityId = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
-
-    @ExtendedFindBy(accessibilityId = "channelLogo")
-    private ExtendedWebElement channelLogo;
 
     @ExtendedFindBy(accessibilityId = "thumbnailImageView")
     private ExtendedWebElement thumbnailImageView;
@@ -45,15 +40,22 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         return watchFromStartButton;
     }
 
-    public ExtendedWebElement getDetailsButton() { return detailsButton; }
-
     public boolean isTitleLabelPresent() { return titleLabel.isPresent(); }
 
     public boolean isSubtitleLabelPresent() { return subtitleLabel.isPresent(); }
 
-    public boolean isChannelLogoPresent() { return channelLogo.isPresent(); }
-
     @Override
     public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
 
+    /**
+     * Below are QA env specific methods for DWTS Anthology.
+     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
+     */
+    public ExtendedWebElement getQAWatchLiveButton() { return getTypeButtonContainsLabel("WATCH LIVE"); }
+
+    public ExtendedWebElement getQAWatchFromStartButton() { return getTypeButtonContainsLabel("WATCH FROM START"); }
+
+    public boolean isQASubtitleLabelPresent() { return getStaticTextByNameContains("subtitleLabel").isPresent(); }
+
+    public boolean isQAThumbnailViewPresent() { return getTypeOtherContainsName("thumbnailView").isPresent(); }
 }

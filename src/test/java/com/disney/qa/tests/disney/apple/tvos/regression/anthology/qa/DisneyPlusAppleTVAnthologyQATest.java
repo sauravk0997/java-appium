@@ -14,14 +14,12 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.api.disney.DisneyContentIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
 public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String UPCOMING = "UPCOMING";
     private static final String LIVE = "LIVE";
-    private static final String PLAY = "PLAY";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105996"})
@@ -102,7 +100,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         }
 
         details.clickQAWatchButton();
-        liveEventModal.clickWatchLiveButton();
+        liveEventModal.getQAWatchLiveButton().click();
         videoPlayer.waitForVideoToStart();
         videoPlayer.pauseAndPlayVideo();
         sa.assertTrue(videoPlayer.isWatchingLivePresent(), "Watching live lightning bolt is not present.");
@@ -171,16 +169,12 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
 
         details.clickQAWatchButton();
         sa.assertTrue(liveEventModal.isTitleLabelPresent(), "Title label not found.");
-        sa.assertTrue(liveEventModal.isSubheadLineLabelPresent(), "Subhead line label is not present.");
-        sa.assertTrue(liveEventModal.isThumbnailViewPresent(), "Thumbnail view is not present.");
-        sa.assertTrue(liveEventModal.isChannelLogoPresent(), "Channel logo not found.");
-        sa.assertTrue(liveEventModal.getDetailsButton().isPresent(), "Details button is not present.");
-        sa.assertTrue(liveEventModal.getWatchLiveButton().isPresent(), "Watch live button is not present.");
-        sa.assertTrue(liveEventModal.getWatchFromStartButton().isPresent(), "Watch from start button is not present.");
+        sa.assertTrue(liveEventModal.isQASubtitleLabelPresent(), "Subhead line label is not present.");
+        sa.assertTrue(liveEventModal.isQAThumbnailViewPresent(), "Thumbnail view is not present.");
+        sa.assertTrue(liveEventModal.getQAWatchLiveButton().isPresent(), "Watch live button is not present.");
+        sa.assertTrue(liveEventModal.getQAWatchFromStartButton().isPresent(), "Watch from start button is not present.");
 
-        liveEventModal.getDetailsButton().click();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details page was not opened.");
-        videoPlayer.compareWatchLiveToWatchFromStartTimeRemaining(sa);
+        videoPlayer.compareQAWatchLiveToWatchFromStartTimeRemaining(sa);
         sa.assertAll();
     }
 
