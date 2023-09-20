@@ -71,6 +71,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "accountTab")
 	private ExtendedWebElement accountTab;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Automatic, Reduce buffering, variable quality \"`]")
+	private ExtendedWebElement cellDataUsageAutomaticCell;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Save Data, Stream at a lower quality and use less data \"`]")
+	private ExtendedWebElement cellDataUsageSaveDataCell;
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
@@ -316,5 +322,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public ExtendedWebElement findTitleLabel(int num) {
 		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextLabelName("titleLabel").getBy());
 		return titleLabel.get(num);
+	}
+
+	public ExtendedWebElement getCellDataUsageAutomaticCell(){
+		return cellDataUsageAutomaticCell;
+	}
+
+	public ExtendedWebElement getCellDataUsageSaveDataCellCell(){
+		return cellDataUsageSaveDataCell;
 	}
 }
