@@ -51,11 +51,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE.getText())));
     }
 
-    public ExtendedWebElement getBamtechBundleSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_TITLE_BAMTECH_BUNDLE.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText())));
+    public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText()));
     }
+
     public ExtendedWebElement getGoogleSubscription() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText()),
@@ -231,11 +230,16 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isBamtechBundleSubscriptionMessagePresent() {
-        return getBamtechBundleSubscription().isPresent();
+        return getBamtechBundleSubscriptionMessage().isPresent();
+    }
+
+    public boolean isBamtechBundleMonthlySubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
+        return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
     }
 
     public void openBamtechBundleWebview() {
-        getBamtechBundleSubscription().click();
+        getBamtechBundleSubscriptionMessage().click();
     }
 
     public ExtendedWebElement getHuluBundleSubscription() {
@@ -502,7 +506,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
             case DISNEY_EXTERNAL_CANAL_BUNDLE:
                 return getCanalSubscription();
             default:
-                return getBamtechBundleSubscription();
+                return getBamtechBundleSubscriptionMessage();
         }
     }
 

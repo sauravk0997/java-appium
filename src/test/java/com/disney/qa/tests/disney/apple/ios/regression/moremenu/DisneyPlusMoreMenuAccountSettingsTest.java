@@ -134,22 +134,25 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {"More Menu"})
     public void verifySubscriptionDetails_DisneyBundle() {
         initialSetup();
-        disneyAccount.set(disneyAccountApi.get().createAccount("Disney+, Hulu, and ESPN+", languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
-
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         setAppToAccountSettings();
+            SoftAssert sa  = new SoftAssert();
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleMonthlySubscriptionTitlePresent(),
+                "D+ Bundle Subscription title was not displayed");
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
                 "D+ Bundle Subscription message was not displayed");
 
         disneyPlusAccountIOSPageBase.openBamtechBundleWebview();
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
                 "Browser webview did not open");
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
                 "Webview did not open to the expected url");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
