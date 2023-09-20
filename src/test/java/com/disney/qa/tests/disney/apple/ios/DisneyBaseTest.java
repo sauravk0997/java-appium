@@ -82,7 +82,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
-        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
+        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5)),
+        U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12));
 
         DateHelper.Month month;
         String day;
