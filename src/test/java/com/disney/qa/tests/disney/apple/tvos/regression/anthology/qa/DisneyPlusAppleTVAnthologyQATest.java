@@ -146,7 +146,7 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during live event.");
+        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group watch was found during live event.");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})

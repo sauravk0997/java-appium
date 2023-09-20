@@ -347,7 +347,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
         }
 
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
+        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group Watch was found during live event.");
     }
 
     @Maintainer("csolmaz")
@@ -366,7 +366,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
         }
 
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during VOD state.");
+        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group Watch was found during VOD state.");
     }
 
     @Maintainer("csolmaz")

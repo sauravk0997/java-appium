@@ -152,7 +152,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
             skipExecution("Skipping test, Watch button not found, no live content playing." + e.getMessage());
         }
 
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group Watch was found during live event.");
+        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group Watch was found during live event.");
     }
 
     @Maintainer("csolmaz")

@@ -102,20 +102,12 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return editProfileTitle.isPresent(SHORT_TIMEOUT);
     }
 
-    public ExtendedWebElement getGroupWatchAndShareplay() {
+    public ExtendedWebElement getSharePlay() {
         return xpathNameOrName.format(getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText()),
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText());
     }
-
-    public ExtendedWebElement getGroupWatchAndShareplayTooltip() {
-        String toastText = getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.COVIEWING_ADS_TOOLTIP.getText());
-        return getDynamicAccessibilityId(toastText);
-    }
-
 
     public boolean isEditProfilesTitlePresent() {
         return collectionHeadlineTitle.isElementPresent();
@@ -152,10 +144,19 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
+    public boolean isInfoHyperlinkPresent() {
+        return groupWatchHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).isPresent();
+    }
+
     public void clickJuniorModeLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
         ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
-        new IOSUtils().swipe(learnMoreLink);
+        System.out.println(learnMoreLink.isPresent());
+        System.out.println(learnMoreLink.isClickable());
+        if (!learnMoreLink.isClickable()) {
+            new IOSUtils().swipe(learnMoreLink);
+        }
         learnMoreLink.click(SHORT_TIMEOUT);
     }
 
