@@ -12,7 +12,6 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     //LOCATORS
 
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String saveButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     private ExtendedWebElement genderOptionValue;
@@ -69,7 +68,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * click on gender dropdown to select gender value
      */
     public void clickGenderDropDown() {
-        dynamicBtnFindByLabel.format(genderPreferNotToSay).click();
+        dynamicBtnFindByLabel.format(GenderOption.GENDER_PREFERNOTTOSAY.getGenderOption()).click();
     }
 
     /**
