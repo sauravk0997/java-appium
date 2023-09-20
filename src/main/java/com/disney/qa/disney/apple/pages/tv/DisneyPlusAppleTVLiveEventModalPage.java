@@ -31,8 +31,4 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
     }
 
     public boolean isSubheadLineLabelPresent() { return subheadLineLabel.isPresent(); }
-
-    public void clickDetailsButton() {
-        detailsButton.click();
-    }
 }
