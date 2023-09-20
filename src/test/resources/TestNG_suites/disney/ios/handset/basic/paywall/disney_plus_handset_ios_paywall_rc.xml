@@ -7,7 +7,7 @@
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_paywall_rc_2.23.0"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsEmail" value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>

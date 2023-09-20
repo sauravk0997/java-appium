@@ -7,7 +7,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_anthology_qa_rc_2.23.0"/>
     <parameter name="jenkinsEmail"
-               value="mobileqa@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com,Lauren.Churus@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com"/>
+               value="mobileqa@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com,Lauren.Churus@disney.com,katie.hampton@disney.com,sydnee.stanley@disney.com,bryce.horwood@disney.com"/>
     <parameter name="jenkinsEnvironments" value="QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
