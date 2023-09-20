@@ -668,10 +668,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getKidsProfileToggleSwitch().click();
 
         //S6.15
-        utils.swipePageTillElementTappable(editProfilePage.getSharePlay(), 3, null, Direction.DOWN, 1000);
-        editProfilePage.getSharePlay().click();
+        utils.swipePageTillElementTappable(editProfilePage.getGroupWatchAndShareplay(), 3, null, Direction.DOWN, 1000);
+        editProfilePage.getGroupWatchAndShareplay().click();
         pause(2);
-        getScreenshots("SharePlayKidsModeError");
+        getScreenshots("GroupWatchKidsModeError");
         editProfilePage.getTypeCellLabelContains("");
 
         //S6.16

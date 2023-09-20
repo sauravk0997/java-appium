@@ -102,7 +102,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return editProfileTitle.isPresent(SHORT_TIMEOUT);
     }
 
-    public ExtendedWebElement getSharePlay() {
+    public ExtendedWebElement getGroupWatchAndShareplay() {
         return xpathNameOrName.format(getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText()),
