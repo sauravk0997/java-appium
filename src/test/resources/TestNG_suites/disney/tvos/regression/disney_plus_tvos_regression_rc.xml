@@ -9,7 +9,7 @@
     <parameter name="jenkinsJobName" value="tvos_regression_rc_2.23.0"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsEmail"
-               value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
                value="deviceName=ANY;platformName=iOS;deviceType=tvOS;newCommandTimeout=180"/>

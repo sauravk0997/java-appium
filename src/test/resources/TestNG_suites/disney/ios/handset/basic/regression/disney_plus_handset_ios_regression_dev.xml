@@ -7,7 +7,7 @@
                value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_regression_dev"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
