@@ -122,13 +122,19 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
 
         switch (buildType) {
             case ENTERPRISE:
-                iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Jarvis-Enterprise", platformName, "enterprise", "latest"));
+                iosUtils.get().installApp(AppCenterManager.getInstance()
+                                .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
+                                .getDirectLink());
                 break;
             case AD_HOC:
-                iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Jarvis", platformName, "adhoc", "latest"));
+                iosUtils.get().installApp(AppCenterManager.getInstance()
+                                .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
+                                .getDirectLink());
                 break;
             case IAP:
-                iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Jarvis", platformName, "adhoc", "latest"));
+                iosUtils.get().installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
         }
     }
 

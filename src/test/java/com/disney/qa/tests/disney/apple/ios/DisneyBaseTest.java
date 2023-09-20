@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.zebrunner.carina.appcenter.AppInfo;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -47,11 +48,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBas
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
-import com.zebrunner.carina.commons.artifact.IArtifactManager;
-import com.zebrunner.carina.utils.Configuration.Parameter;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.ArtifactProvider;
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -81,10 +79,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
-    
+
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
-        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5));
+        MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5)),
+        U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12));
 
         DateHelper.Month month;
         String day;
@@ -239,36 +238,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-        String appLink = R.CONFIG.get("capabilities.app");
-        LOGGER.debug("capabilities.app: {}", appLink);
-        
-        IArtifactManager artifactProvider = ArtifactProvider.getInstance();
-        appLink = artifactProvider.getDirectLink(appLink);
-        
-        LOGGER.debug("app: {}", appLink);
-        // override capabilities.app by presign url to avoid multiply calls to appcenter
-        R.CONFIG.put("capabilities.app", appLink);
-        
-        String regex = String.format("_%s-(.+?)-", R.CONFIG.get(Parameter.ENV.getKey()));
-        
-        if ("prod".equalsIgnoreCase(R.CONFIG.get(Parameter.ENV.getKey()))) {
-            // Unable to detect version via regex: _Prod-(.+?)- patterm from presign url: 
-            // https://appcenter-filemanagement-distrib2ede6f06e.azureedge.net/6de8d71f-8948-4bf9-a9e5-38498f8cc606/Disney%2B-Dominguez_Non-IAP_Prod_Enterprise_for_Automation-2.24.0-59964.ipa?sv=2019-02-02&sr=c&sig=4p%2FWYUDPoTrJCrziq0wIrd7KI3ocVeSlipOuaz2hyW0%3D&se=2023-09-06T05%3A06%3A04Z&sp=r
-            regex = "_Prod_Enterprise_for_Automation-(.+?)-";
-        }
-       
-        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-        final Matcher matcher = pattern.matcher(appLink);
-        
-        String version = "2.24.0"; // hardcode to have api calls workable even with old version.
-        if (matcher.find()) {
-            version = matcher.group(1);
-        } else {
-            LOGGER.error("Unable to detect version via regex: {} patterm from presign url: {}", regex, appLink);
-        }
-        
-        LOGGER.info("version: {}", version);
-        
+        String version = AppCenterManager.getInstance()
+                .getAppInfo(R.CONFIG.get("capabilities.app"))
+                .getVersion();
+        LOGGER.info("version:{}", version);
         return version;
     }
 
@@ -387,10 +360,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void downloadApp(String version) {
         String appCenterAppName = R.CONFIG.get("capabilities.app");
         LOGGER.info("App Download: {}", appCenterAppName);
-        if(appCenterAppName.contains("for_Automation")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Dominguez-Non-IAP-Prod-Enterprise-for-Automation", "ios", "enterprise", version));
+        if (appCenterAppName.contains("for_Automation")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", version))
+                    .getDirectLink());
         } else if (appCenterAppName.contains("Disney")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance().getDownloadUrl("Disney-Prod-Enterprise", "ios", "enterprise", version));
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", version))
+                    .getDirectLink());
         }
     }
 

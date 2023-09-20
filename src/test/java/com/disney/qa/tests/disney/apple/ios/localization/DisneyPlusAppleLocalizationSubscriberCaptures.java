@@ -23,7 +23,6 @@ import com.disney.qa.api.search.assets.DisneyStandardCollection;
 import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.common.web.VerifyEmail;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAppSettingsIOSPageBase;
@@ -217,7 +216,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        VerifyEmail verifyEmail = new VerifyEmail();
+        EmailApi emailApi = new EmailApi();
 
         String locale = languageUtils.get().getLocale();
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).build();
@@ -253,7 +252,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> accountPage.isChangeLinkPresent(testAccount.getEmail()));
-        Date startTime = verifyEmail.getStartTime();
+        Date startTime = emailApi.getStartTime();
         accountPage.clickChangeLink(testAccount.getEmail());
         pause(2);
         getScreenshots("ChangeEmailPage");
@@ -267,7 +266,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         getScreenshots("ChangeEmailPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(verifyEmail.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
         iosUtils.get().dismissKeyboardForPhone();
         getScreenshots("ChangeEmailPageAfterOtp");
@@ -297,14 +296,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                         return accountPage.isChangeLinkPresent(DictionaryKeys.HIDDEN_PASSWORD.getText());
                     }
                 });
-        startTime = verifyEmail.getStartTime();
+        startTime = emailApi.getStartTime();
         if (!debugMode) {
             accountPage.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
         } else {
             accountPage.clickChangeLink(DictionaryKeys.HIDDEN_PASSWORD.getText());
         }
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(verifyEmail.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
         iosUtils.get().dismissKeyboardForPhone();
         getScreenshots("ChangePasswordPage");

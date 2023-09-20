@@ -78,7 +78,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`name == \"%s\"`]")
     protected ExtendedWebElement textViewByName;
     @ExtendedFindBy(accessibilityId = "logoImage")
-    protected ExtendedWebElement titleImage;
+    protected ExtendedWebElement logoImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell")
     protected ExtendedWebElement cell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`]")
@@ -138,6 +138,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicOtherFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByLabelContains;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name CONTAINS \"%s\"`]")
+    private ExtendedWebElement dynamicOtherFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
@@ -345,6 +348,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
     public ExtendedWebElement getTypeOtherContainsLabel(String label) {
         return dynamicOtherFindByLabelContains.format(label);
+    }
+    public ExtendedWebElement getTypeOtherContainsName(String name) {
+        return dynamicOtherFindByNameContains.format(name);
     }
 
     public ExtendedWebElement getStaticTextByLabel(String label) {
@@ -696,7 +702,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveBtn() {
-        saveBtn.click();
+        xpathNameOrName.format(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
+                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()).click();
     }
 
     public boolean isCancelBtnPresent() {

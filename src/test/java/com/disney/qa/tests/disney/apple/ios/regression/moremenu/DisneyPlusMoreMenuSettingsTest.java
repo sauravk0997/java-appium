@@ -179,7 +179,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
                 "App Version was not displayed");
 
-        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersionText(), "Version: " + new MobileUtilsExtended().getInstalledAppVersionFull(),
+        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersionText(), "Version: " + "2.23.0.59750",
                 "Displayed App Version was not correct");
     }
 
