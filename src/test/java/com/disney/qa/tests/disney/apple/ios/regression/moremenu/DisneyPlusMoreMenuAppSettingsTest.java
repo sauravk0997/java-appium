@@ -52,20 +52,20 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA.getText())
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
 
-        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(automaticLabel);
+        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
                 "XMOBQA-61201 - Automatic selection was not displayed or is not checked by default");
 
-        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(saveDataLabel);
+        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(saveDataLabel);
         sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61201 - Save Data selection was not displayed or is checked by default");
 
         disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(saveDataLabel).click();
-        automatic = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(automaticLabel);
+        automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
 
-        saveData = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(saveDataLabel);
+        saveData = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(saveDataLabel);
         sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(CHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not update its checked value");
 
