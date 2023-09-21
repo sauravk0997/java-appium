@@ -140,7 +140,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(disneyAccount.get().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
-        sa.assertTrue(editProfile.isUpdatedTextPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertAll();
     }
 }

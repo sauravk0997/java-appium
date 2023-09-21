@@ -553,6 +553,39 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72365"})
+    @Test(description = "Profiles > Existing Sub->edit gender", groups = {"Ariel-More Menu"})
+    public void verifyEditGenderPageUI() {
+        initialSetup();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.clickGenderButton();
+
+        sa.assertTrue(editGenderPage.isOpened(), "Expected: 'Select Gender' page should be opened");
+
+        editGenderPage.clickGenderDropDown();
+
+        // verify all gender option
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
+            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+                    "Expected: " + genderItem + " option should be present");
+        }
+
+        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN.getGenderOption());
+        editGenderPage.tapSaveButton();
+
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Gender is not updated for user");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72482"})
     @Test(description = "Profiles > Add profile, No Gender for U13 Profiles", groups = {"Ariel-More Menu"})
     public void verifyNoGenderForU13Profiles() {
