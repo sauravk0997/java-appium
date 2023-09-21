@@ -671,15 +671,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 "Gender field is enabled for U18 profile");
 
         addProfile.clickSaveBtn();
-        //minor consent is shown
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            new IOSUtils().scrollDown();
-        }
 
         //Welch Full catalog access
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        //minor authentication is prompted
         sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
