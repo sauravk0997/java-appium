@@ -61,11 +61,9 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61201 - Save Data selection was not displayed or is checked by default");
 
         disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel).click();
-        automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
 
-        saveData = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel);
         sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(CHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not update its checked value");
 
