@@ -641,7 +641,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72817"})
     @Test(description = "Profiles > Add profile, No Gender for U18 Profiles", groups = {"Ariel-More Menu"})
     public void verifyNoGenderForU18Profiles() {
-        //Arrange
         initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -649,7 +648,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        //Act
         setAppToHomeScreen(disneyAccount.get());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -658,9 +656,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
 
-        //Assert
+        // verify gender field is disabled when you select U18 DOB
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+                "Gender field is enabled for U18 profile");
 
         addProfile.tapCancelButton();
         avatars[0].click();
@@ -668,16 +666,20 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.chooseGender();
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
 
+        // verify gender field is disabled when you selected Gender first then choose the U18 DOB
         sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+                "Gender field is enabled for U18 profile");
 
         addProfile.clickSaveBtn();
+        //minor consent is shown
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             new IOSUtils().scrollDown();
         }
 
+        //Welch Full catalog access
         new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        //minor authentication is prompted
         sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
