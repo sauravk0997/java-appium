@@ -169,7 +169,6 @@ public enum DictionaryKeys {
     GENDER_PREFER_TO_NOT_SAY("gender_prefernottosay"),
     GENDER_WOMAN("gender_woman"),
     GENERIC_PLAYBACK_ERROR("error_genericplaybackfailure"),
-    GROUPWATCH_SETTINGS_HEADER("groupwatch_settings_header"),
     GROUPWATCH_SHAREPLAY_SETTINGS_HEADER("groupwatch_shareplay_settings_header"),
     GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER("groupwatch_shareplay_settings_subheader"),
     HIDDEN_PASSWORD("login_hide_password_asterisk"),

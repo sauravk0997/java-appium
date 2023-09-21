@@ -41,7 +41,6 @@ public final class TestGroup {
     public static final String SEARCH = "search";
     public static final String ARIEL_DOB_COMMERCE = "ariel_dob_commerce";
     public static final String HUBS = "hubs";
-    public static final String GROUPWATCH = "groupwatch";
     public static final String LIONSGATE_APPEX = "lionsgate";
 
     //Analytics Groups

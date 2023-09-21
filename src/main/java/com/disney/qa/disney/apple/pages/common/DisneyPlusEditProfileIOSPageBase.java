@@ -29,9 +29,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
 
-    @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
-    private ExtendedWebElement groupWatchTooggleCell;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     private ExtendedWebElement addProfileBtn;
 
@@ -55,7 +52,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     private ExtendedWebElement profileNameTextField;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
-    protected ExtendedWebElement groupWatchHyperLink;
+    protected ExtendedWebElement sharePlayHyperLink;
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
@@ -140,20 +137,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-        groupWatchHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        sharePlayHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
-    }
-
-    public boolean isInfoHyperlinkPresent() {
-        return groupWatchHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).isPresent();
     }
 
     public void clickJuniorModeLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
         ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
-        System.out.println(learnMoreLink.isPresent());
-        System.out.println(learnMoreLink.isClickable());
         if (!learnMoreLink.isClickable()) {
             new IOSUtils().swipe(learnMoreLink);
         }
