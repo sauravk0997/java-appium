@@ -33,93 +33,108 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement directBillingMonthlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Basic Monthly", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
 
-    private ExtendedWebElement o2Subscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_O2.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_O2.getText())));
-
-    private ExtendedWebElement timSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELECOM_TIM.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELECOM_TIM.getText())));
-
-    private ExtendedWebElement movistarSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
+    public ExtendedWebElement getMovistarSubscription() {
+    return getDynamicAccessibilityId((String.format(CONTAINER_TEXT,
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MOVISTAR.getText())));
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MOVISTAR.getText()))));
+    }
 
-    private ExtendedWebElement deTelekomSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_DEUTSCHE_TELEKOM.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_DEUTSCHE_TELEKOM.getText())));
+    public ExtendedWebElement getDeTelekomSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_DEUTSCHE_TELEKOM.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_DEUTSCHE_TELEKOM.getText())));
+    }
 
-    private ExtendedWebElement bamtechSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BAMTECH.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE.getText())));
+    public ExtendedWebElement getBamtechSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BAMTECH.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE.getText())));
+    }
 
-    private ExtendedWebElement bamtechBundleSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_TITLE_BAMTECH_BUNDLE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText())));
+    public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText()));
+    }
 
-    private ExtendedWebElement huluBundleSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_HULU_BUNDLE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_HULU_BUNDLE.getText())));
+    public ExtendedWebElement getGoogleSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_GOOGLE.getText())));
+    }
+    public ExtendedWebElement getRokuSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_ROKU.getText())));
+    }
+    public ExtendedWebElement getAmazonSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_AMAZON.getText())));
+    }
+    public ExtendedWebElement getVerizonSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON.getText())));
+    }
+    public ExtendedWebElement getVerizonBundleSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON_BUNDLE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON_BUNDLE.getText())));
+    }
+    public ExtendedWebElement getSkySubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_SKY.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_SKY.getText())));
+    }
 
-    private ExtendedWebElement googleSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_GOOGLE.getText())));
+    public ExtendedWebElement getTelmexSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELMEX.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELMEX.getText())));
+    }
 
-    private ExtendedWebElement rokuSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_ROKU.getText())));
+    public ExtendedWebElement getBradescoSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO.getText())));
+    }
+    public ExtendedWebElement getBradescoNextSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO_NEXT.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO_NEXT.getText())));
+    }
+    public ExtendedWebElement getTelefonicaVivoSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELEFONICA_VIVO.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELEFONICA_VIVO.getText())));
+    }
+    public ExtendedWebElement getMercadolibreSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE.getText())));
+    }
 
-    private ExtendedWebElement amazonSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_AMAZON.getText())));
+    public ExtendedWebElement getCablevisionSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CABLEVISION.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CABLEVISION.getText())));
+    }
 
-    private ExtendedWebElement verizonSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON.getText())));
+    public ExtendedWebElement getMercardoLibreBrazilSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE_BR.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE_BR.getText())));
+    }
+    public ExtendedWebElement getCanalSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CANAL.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CANAL.getText())));
+    }
 
-    private ExtendedWebElement verizonBundleSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON_BUNDLE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON_BUNDLE.getText())));
-
-    private ExtendedWebElement skySubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_SKY.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_SKY.getText())));
-
-    private ExtendedWebElement telmexSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELMEX.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELMEX.getText())));
-
-    private ExtendedWebElement bradescoSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO.getText())));
-
-    private ExtendedWebElement bradescoNextSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO_NEXT.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO_NEXT.getText())));
-
-    private ExtendedWebElement telefonicaVivoSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,DictionaryKeys.SUBSCRIPTIONS_TITLE_TELEFONICA_VIVO.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELEFONICA_VIVO.getText())));
-
-    private ExtendedWebElement mercadolibreSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE.getText())));
-
-    private ExtendedWebElement cablevisionSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CABLEVISION.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CABLEVISION.getText())));
-
-    private ExtendedWebElement mercardoLibreBrazilSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE_BR.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE_BR.getText())));
-
-    private ExtendedWebElement canalSubscription = getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CANAL.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CANAL.getText())));
-
-    private ExtendedWebElement restrictProfileCreationContainer = getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+    public ExtendedWebElement getRestrictProfileCreationContainer() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+    }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
             String.format("//XCUIElementTypeStaticText[@name='%s']/../preceding-sibling::XCUIElementTypeImage",
@@ -162,128 +177,149 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void openDisneyPlusPremiumWebView() { disneyPlusPremiumSubscription.click(); }
 
-    public boolean isO2SubscriptionMessagePresent() {
-        return o2Subscription.isPresent();
+    public ExtendedWebElement getO2Subscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_O2.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_O2.getText())));
     }
 
-    public void openO2SubcriptionWebview() {
-        o2Subscription.click();
+    public boolean isO2SubscriptionMessagePresent() {
+        return getO2Subscription().isPresent();
+    }
+
+    public void openO2SubscriptionWebview() {
+        getO2Subscription().click();
+    }
+
+    public ExtendedWebElement getTimSubscription() {
+        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELECOM_TIM.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELECOM_TIM.getText())));
     }
 
     public boolean isTelecomTIMSubscriptionMessagePresent() {
-        return timSubscription.isPresent();
+        return getTimSubscription().isPresent();
     }
 
     public void openTIMWebview() {
-        timSubscription.click();
+        getTimSubscription().click();
     }
 
     public boolean isMovistarSubscriptionMessagePresent() {
-        return movistarSubscription.isPresent();
+        return  getMovistarSubscription().isPresent();
     }
 
     public void openMovistarWebview() {
-        movistarSubscription.click();
+        getMovistarSubscription().click();
     }
 
     public boolean isDeutscheTelekomSubscriptionMessagePresent() {
-        return deTelekomSubscription.isPresent();
+        return getDeTelekomSubscription().isPresent();
     }
 
     public void openDeTelekomWebview() {
-        deTelekomSubscription.click();
+        getDeTelekomSubscription().click();
     }
 
     public boolean isBamtechSubscriptionMessagePresent() {
-        return bamtechSubscription.isPresent();
+        return getBamtechSubscription().isPresent();
     }
 
     public void openBamtechWebview() {
-        bamtechSubscription.click();
+        getBamtechSubscription().click();
     }
 
     public boolean isBamtechBundleSubscriptionMessagePresent() {
-        return bamtechBundleSubscription.isPresent();
+        return getBamtechBundleSubscriptionMessage().isPresent();
+    }
+
+    public boolean isBamtechBundleMonthlySubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
+        return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
     }
 
     public void openBamtechBundleWebview() {
-        bamtechBundleSubscription.click();
+        getBamtechBundleSubscriptionMessage().click();
+    }
+
+    public ExtendedWebElement getHuluBundleSubscription() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_HULU_BUNDLE.getText()));
     }
 
     public boolean isHuluBundleSubscriptionMessagePresent() {
-        return huluBundleSubscription.isPresent();
+        return getHuluBundleSubscription().isPresent();
     }
 
     public void openHuluBundleWebview() {
-        huluBundleSubscription.click();
+        getHuluBundleSubscription().click();
     }
 
     public boolean isGoogleSubscriptionMessagePresent() {
-        return googleSubscription.isPresent();
+        return getGoogleSubscription().isPresent();
     }
 
     public void openGoogleWebview() {
-        googleSubscription.click();
+        getGoogleSubscription().click();
     }
 
     public boolean isRokuSubscriptionMessagePresent() {
-        return rokuSubscription.isPresent();
+        return getRokuSubscription().isPresent();
     }
 
     public void openRokuWebview() {
-        rokuSubscription.click();
+        getRokuSubscription().click();
     }
 
     public boolean isAmazonSubscriptionMessagePresent() {
-        return amazonSubscription.isPresent();
+        return getAmazonSubscription().isPresent();
     }
 
     public void openAmazonWebview() {
-        amazonSubscription.click();
+        getAmazonSubscription().click();
     }
 
     public boolean isVerizonSubscriptionMessagePresent() {
-        return verizonSubscription.isPresent();
+        return getVerizonSubscription().isPresent();
     }
 
     public void openVerizonWebview() {
-        verizonSubscription.click();
+        getVerizonSubscription().click();
     }
 
     public boolean isSkySubscriptionMessagePresent() {
-        return skySubscription.isPresent();
+        return getSkySubscription().isPresent();
     }
 
     public void openSkyWebview() {
-        skySubscription.click();
+        getSkySubscription().click();
     }
 
     public boolean isTelmexSubscriptionMessagePresent() {
-        return telmexSubscription.isPresent();
+        return getTelmexSubscription().isPresent();
     }
 
     public void openTelmexWebview() {
-        telmexSubscription.click();
+        getTelmexSubscription().click();
     }
 
     public boolean isBradescoSubscriptionMessagePresent() {
-        return bradescoSubscription.isPresent();
+        return getBradescoSubscription().isPresent();
     }
 
     public void openBradescoWebview() {
-        bradescoSubscription.click();
+        getBradescoSubscription().click();
     }
 
     public boolean isBradescoNextSubscriptionMessagePresent() {
-        return bradescoNextSubscription.isPresent();
+        return getBradescoNextSubscription().isPresent();
     }
 
     public void openBradescoNextWebview() {
-        bradescoNextSubscription.click();
+        getBradescoNextSubscription().click();
     }
 
     public boolean isTelefonicaVivoSubscriptionMessagePresent() {
-        return telefonicaVivoSubscription.isPresent();
+        return getTelefonicaVivoSubscription().isPresent();
     }
 
     public boolean isTelefonicaAppPresentInAppStore() {
@@ -291,39 +327,39 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void openVivoWebview() {
-        telefonicaVivoSubscription.click();
+        getTelefonicaVivoSubscription().click();
     }
 
     public boolean isMercadoLibreSubscriptionMessagePresent() {
-        return mercadolibreSubscription.isPresent();
+        return getMercadolibreSubscription().isPresent();
     }
 
     public void openMercadoLibreWebview() {
-        mercadolibreSubscription.click();
+        getMercadolibreSubscription().click();
     }
 
     public boolean isCablevisionSubscriptionMessagePresent() {
-        return cablevisionSubscription.isPresent();
+        return getCablevisionSubscription().isPresent();
     }
 
     public void openCablevisionWebview() {
-        cablevisionSubscription.click();
+        getCablevisionSubscription().click();
     }
 
     public boolean isMercadoLibreBrazilSubscriptionMessagePresent() {
-        return mercardoLibreBrazilSubscription.isPresent();
+        return getMercardoLibreBrazilSubscription().isPresent();
     }
 
     public void openMercadoLibreBrazilWebview() {
-        mercardoLibreBrazilSubscription.click();
+        getMercardoLibreBrazilSubscription().click();
     }
 
     public boolean isCanalSubscriptionMessagePresent() {
-        return canalSubscription.isPresent();
+        return getCanalSubscription().isPresent();
     }
 
     public void openCanalWebview() {
-        canalSubscription.click();
+        getCanalSubscription().click();
     }
 
     public boolean areSwitchToAnnualElementsDisplayed() {
@@ -335,7 +371,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfilesContainerPresent() {
-        return restrictProfileCreationContainer.isElementPresent();
+        return getRestrictProfileCreationContainer().isElementPresent();
     }
 
     public boolean isEditProfilesLinkPresent() {
@@ -378,12 +414,12 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfileCreationEnabled() {
-        return restrictProfileCreationContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
+        return getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
     }
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
-        if(!restrictProfileCreationContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            new IOSUtils().clickElementAtLocation(restrictProfileCreationContainer, 35, 90);
+        if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
+            new IOSUtils().clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
         }
     }
 
@@ -414,63 +450,63 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public ExtendedWebElement getBillingProviderCell(DisneySkuParameters sku) {
         switch (sku) {
             case DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE:
-                return verizonSubscription;
+                return getVerizonSubscription();
             case DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE:
             case DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH:
             case DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE_PROMO:
             case DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE_UPGRADE:
-                return verizonBundleSubscription;
+                return getVerizonBundleSubscription();
             case DISNEY_IAP_GOOGLE_MONTHLY:
             case DISNEY_IAP_GOOGLE_YEARLY:
-                return googleSubscription;
+                return getGoogleSubscription();
             case DISNEY_IAP_APPLE_MONTHLY:
             case DISNEY_IAP_APPLE_YEARLY:
-                return bamtechSubscription;
+                return getBamtechSubscription();
             case DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE:
-                return bradescoSubscription;
+                return getBradescoSubscription();
             case DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE:
-                return bradescoNextSubscription;
+                return getBradescoNextSubscription();
             case DISNEY_EXTERNAL_DETELEKOM_STANDALONE:
-                return deTelekomSubscription;
+                return getDeTelekomSubscription();
             case DISNEY_PARTNER_TELECOM_AR_STANDAONE:
-                return cablevisionSubscription;
+                return getCablevisionSubscription();
             case DISNEY_PARTNER_TIM_IT_STANDALONE:
-                return timSubscription;
+                return getTimSubscription();
             case DISNEY_PARTNER_TELMEX_MX_STANDALONE:
-                return telmexSubscription;
+                return getTelmexSubscription();
             case DISNEY_PARTNER_VIVO_BR_BUNDLE:
             case DISNEY_PARTNER_VIVO_BR_STANDALONE:
             case DISNEY_PARTNER_VIVO_BR_3MONTH_INTRO_PROMO:
             case DISNEY_PARTNER_VIVO_BR_3MONTH_PROMO:
             case DISNEY_PARTNER_VIVO_BR_BUNDLE_3MONTH_PROMO:
-                return telefonicaVivoSubscription;
+                return getTelefonicaVivoSubscription();
             case DISNEY_IAP_ROKU_YEARLY:
             case DISNEY_IAP_ROKU_MONTHLY:
-                return rokuSubscription;
+                return getRokuSubscription();
             case HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH:
             case HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_SASH:
             case HULU_EXTERNAL_HULU_SUPER_BUNDLE_NOAH:
             case HULU_EXTERNAL_HULU_SUPER_BUNDLE_SASH:
-                return huluBundleSubscription;
+                return getHuluBundleSubscription();
             case DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE:
-                return mercadolibreSubscription;
+                return getMercadolibreSubscription();
             case DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE:
-                return mercardoLibreBrazilSubscription;
+                return getMercardoLibreBrazilSubscription();
             case DISNEY_IAP_AMAZON_MONTHLY:
             case DISNEY_IAP_AMAZON_YEARLY:
-                return amazonSubscription;
+                return getAmazonSubscription();
             case DISNEY_EXTERNAL_O2_BUNDLE:
             case DISNEY_EXTERNAL_O2_PROMO_BUNDLE_3MONTH:
             case DISNEY_PARTNER_O2_DE_STANDALONE:
-                return o2Subscription;
+                return getO2Subscription();
             case DISNEY_EXTERNAL_MOVISTAR_STANDALONE:
-                return movistarSubscription;
+                return getMovistarSubscription();
             case DISNEY_EXTERNAL_SKYUK_STANDALONE:
-                return skySubscription;
+                return getSkySubscription();
             case DISNEY_EXTERNAL_CANAL_BUNDLE:
-                return canalSubscription;
+                return getCanalSubscription();
             default:
-                return bamtechBundleSubscription;
+                return getBamtechBundleSubscriptionMessage();
         }
     }
 

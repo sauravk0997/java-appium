@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="ios_handset_anthology_prod_dev" annotations="JDK">
+<suite verbose="1" thread-count="8" name="ios_handset_anthology_prod" annotations="JDK">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_anthology_prod_dev"/>
+    <parameter name="jenkinsJobName" value="ios_handset_anthology_prod"/>
     <parameter name="jenkinsEmail"
                value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
@@ -18,9 +18,11 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Anthology"/>
     <parameter name="jenkinsRegressionScheduling" value="55 12 * * 1,2::55 00,01 * * 2,3"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
-    <parameter name="overrideFields" value=""/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
+    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Anthology"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="jenkinsBuild" value="2.23.0.59750"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
         <classes>

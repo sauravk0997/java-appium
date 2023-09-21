@@ -40,6 +40,9 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
 
+	@ExtendedFindBy(accessibilityId = "downloadDelete24")
+	private ExtendedWebElement downloadDelete24Button;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -63,7 +66,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isDownloadsEmptyHeaderPresent() {
-		return downloadsEmptyHeader.isElementPresent();
+		return downloadsEmptyHeader.isPresent();
 	}
 
 	public boolean isContentHeaderPresent(String downloadedAsset) {
@@ -99,6 +102,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void clickDeleteDownloadButton() {
-		deleteDownloadButton.click();
+		//TODO: Temp fix to accomodate for both deleteButton accessibility IDs - QAA-12365
+		if (deleteDownloadButton.isPresent()) {
+			deleteDownloadButton.click();
+		} else {
+			downloadDelete24Button.click();
+		}
 	}
 }
