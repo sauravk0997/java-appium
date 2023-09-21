@@ -13,6 +13,7 @@ import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -1040,5 +1041,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         });
         element.click();
+    }
+
+    public ExtendedWebElement getElementTypeCellByLabel(String labelText) {
+        String cellFormatLocator = "type == 'XCUIElementTypeCell' and label contains '%s'";
+        return findExtendedWebElement(AppiumBy.iOSNsPredicateString(String.format(cellFormatLocator, labelText)));
     }
 }

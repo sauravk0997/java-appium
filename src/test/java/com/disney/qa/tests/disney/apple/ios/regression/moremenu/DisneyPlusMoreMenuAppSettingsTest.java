@@ -52,15 +52,15 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA.getText())
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
 
-        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
+        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
                 "XMOBQA-61201 - Automatic selection was not displayed or is not checked by default");
 
-        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(saveDataLabel);
+        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel);
         sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61201 - Save Data selection was not displayed or is checked by default");
 
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(saveDataLabel).click();
+        disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel).click();
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
 
