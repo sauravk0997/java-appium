@@ -32,7 +32,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         LOGGER.info("Language in test: " + language);
         LOGGER.info("Country in test: " + locale);
         initialSetup(locale, language);
-        setFlexWelcomeConfig();
+        //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         setAppToHomeScreen(disneyAccount.get());
