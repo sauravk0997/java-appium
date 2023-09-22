@@ -287,9 +287,12 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
 
-        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0), moreMenu.findSubtitleLabel(0));
-        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1), moreMenu.findSubtitleLabel(1));
-        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2), moreMenu.findSubtitleLabel(2));
+        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0).getText(),
+                moreMenu.findSubtitleLabel(0).getText());
+        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1).getText(),
+                moreMenu.findSubtitleLabel(1).getText());
+        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2).getText(),
+                moreMenu.findSubtitleLabel(2).getText());
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
         options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));
