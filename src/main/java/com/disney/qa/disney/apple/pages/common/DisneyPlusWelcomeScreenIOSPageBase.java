@@ -55,7 +55,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @Override
     public boolean isOpened() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP_BTN.getText())).isElementPresent();
-        //return signUpButton.isElementPresent();
     }
 
     public boolean isBackgroundDisplayed() {
@@ -110,7 +109,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickLogInButton() {
         getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).click();
-       // loginButton.click();
     }
 
     public void clickSignUpButton() {
