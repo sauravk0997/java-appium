@@ -57,6 +57,7 @@ import io.appium.java_client.ios.IOSDriver;
 public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
+    public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
@@ -83,7 +84,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5)),
-        U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12));
+        U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12)),
+        U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16));
 
         DateHelper.Month month;
         String day;
