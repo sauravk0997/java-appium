@@ -144,9 +144,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public void clickJuniorModeLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
         ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
-        if (!learnMoreLink.isClickable()) {
-            new IOSUtils().swipe(learnMoreLink);
-        }
+        new IOSUtils().swipe(learnMoreLink);
         learnMoreLink.click(SHORT_TIMEOUT);
     }
 
