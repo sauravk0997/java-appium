@@ -373,6 +373,25 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
+    @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {"Ariel-More Menu"})
+    public void verifyAdTierUserCoViewing() {
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
+        setAppToHomeScreen(disneyAccount.get());
+//        setFlexWelcomeConfig();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        pause(2);
+        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        new IOSUtils().swipePageTillElementPresent(editProfilePage.getSharePlay(), 2, null, Direction.UP, 600);
+        editProfilePage.getSharePlay().click();
+        Assert.assertTrue(editProfilePage.getSharePlayTooltip().isPresent(), "SharePlay tooltip is not shown on tapping on SharePlay cell");
+    }
+
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72869"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {"Ariel-More Menu"})
     public void verifyU13PasswordGrantForWelch() {
