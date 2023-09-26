@@ -192,7 +192,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
-        setFlexWelcomeConfig();
+        //setFlexWelcomeConfig();
     }
 
     public void initialSetup(String locale, String language, String... planType) {
@@ -430,7 +430,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
-        setFlexWelcomeConfig();
+        //setFlexWelcomeConfig();
     }
 
     public void setFlexWelcomeConfig() {
