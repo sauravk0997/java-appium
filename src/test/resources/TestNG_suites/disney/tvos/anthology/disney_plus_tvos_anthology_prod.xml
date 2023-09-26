@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="tvos_anthology_prod" annotations="JDK" thread-count="5" configfailurepolicy="continue">
+<suite verbose="1" name="tvos_anthology_prod" annotations="JDK" thread-count="4" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
