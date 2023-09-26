@@ -20,7 +20,7 @@
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
     <parameter name="jenkinsBuild" value="2.24.0.60834"/>
-    <parameter name="scheduling" value="H 2 * * *"/>
+    <parameter name="scheduling" value="H 21 * * *"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
         <classes>

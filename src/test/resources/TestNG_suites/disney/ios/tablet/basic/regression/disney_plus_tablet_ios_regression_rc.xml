@@ -23,7 +23,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
     <parameter name="jenkinsBuild" value="2.24.0.60834"/>
-    <parameter name="scheduling" value="H 2 * * *"/>
+    <parameter name="scheduling" value="H 21 * * *"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
         <classes>
