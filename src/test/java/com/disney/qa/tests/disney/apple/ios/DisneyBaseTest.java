@@ -241,16 +241,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      */
 
     private synchronized String getAppVersion() {
-        try {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(R.CONFIG.get("capabilities.app"))
-                    .getVersion();
-            LOGGER.info("version:{}", version);
-            return version;
-        } catch (Exception e) {
-            LOGGER.warn("Unable to detect app version for url: {}", R.CONFIG.get("capabilities.app"));
-            return "2.24.0"; // hardcode to have api calls workable even with local app.
-        }
+        String version = AppCenterManager.getInstance()
+                .getAppInfo(R.CONFIG.get("capabilities.app"))
+                .getVersion();
+        LOGGER.info("version:{}", version);
+        return version;
     }
 
     @AfterMethod(alwaysRun = true)
