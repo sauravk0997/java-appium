@@ -702,7 +702,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
-        //verify help hyperlink on add profile page
+        //verify Learn More hyperlink on add profile page
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Kid Profile sub copy was not present");
         editProfilePage.clickJuniorModeLearnMoreLink();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
