@@ -332,44 +332,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72654"})
-    @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchLive() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-        setAppToHomeScreen(disneyAccount.get());
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isWatchButtonPresent());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
-        }
-
-        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group Watch was found during live event.");
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73936"})
-    @Test(description = "Verify Anthology Series - No Group Watch VOD", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchVOD() {
-        initialSetup();
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-        setAppToHomeScreen(disneyAccount.get());
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
-        }
-
-        Assert.assertTrue(details.isGroupWatchButtonNotDisplayed(), "Group Watch was found during VOD state.");
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72298"})
     @Test(description = "Verify Anthology Series - Featured VOD", groups = {"Anthology"})
     public void verifyAnthologyFeaturedVOD() {

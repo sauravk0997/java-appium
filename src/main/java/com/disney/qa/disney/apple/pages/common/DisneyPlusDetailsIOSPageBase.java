@@ -401,10 +401,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getPlayButton().isPresent();
     }
 
-    public boolean isGroupWatchButtonNotDisplayed() {
-        return getTypeButtonByLabel("groupwatchButton").isElementNotPresent(SHORT_TIMEOUT);
-    }
-
     public boolean isWatchlistButtonDisplayed() {
         return watchlistButton.isPresent();
     }
