@@ -88,6 +88,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return deleteProfileButton;
     }
 
+    private String genderButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
+
     //FUNCTIONS
 
     public DisneyPlusEditProfileIOSPageBase(WebDriver driver) {
@@ -189,8 +191,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         }
     }
 
-    public boolean isUpdatedTextPresent() {
-        return staticTextByLabel.format("Updated").isPresent();
+    public boolean isUpdatedToastPresent() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText())).isPresent();
     }
 
     public void toggleAutoplayButton(String newState) {
@@ -264,4 +266,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public ExtendedWebElement getKidProofExitLabel() {
         return kidProofExitLabel;
     }
+
+    /**
+     * click gender button to select gender value
+     */
+    public void clickGenderButton() {
+        staticTextByLabel.format(genderButton).click(); }
 }

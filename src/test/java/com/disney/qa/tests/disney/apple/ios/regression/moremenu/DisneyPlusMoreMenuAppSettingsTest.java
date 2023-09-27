@@ -52,15 +52,15 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA.getText())
                 ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
 
-        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
+        ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
                 "XMOBQA-61201 - Automatic selection was not displayed or is not checked by default");
 
-        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(saveDataLabel);
+        ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel);
         sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61201 - Save Data selection was not displayed or is checked by default");
 
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(saveDataLabel).click();
+        disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel).click();
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
                 "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
 
@@ -287,9 +287,12 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
 
-        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0), moreMenu.findSubtitleLabel(0));
-        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1), moreMenu.findSubtitleLabel(1));
-        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2), moreMenu.findSubtitleLabel(2));
+        String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0).getText(),
+                moreMenu.findSubtitleLabel(0).getText());
+        String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1).getText(),
+                moreMenu.findSubtitleLabel(1).getText());
+        String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2).getText(),
+                moreMenu.findSubtitleLabel(2).getText());
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
         options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));

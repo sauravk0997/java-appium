@@ -7,7 +7,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_anthology_prod"/>
     <parameter name="jenkinsEmail"
-               value="mobileqa@disneystreaming.com,eric.liao@disney.com,Lauren.Churus@disneystreaming.com,katie.hampton@disneystreaming.com,sydnee.stanley@disneystreaming.com,bryce.horwood@disneystreaming.com,jared.e.watterworth@disney.com"/>
+               value="mobileqa@disney.com,eric.liao@disney.com,Lauren.Churus@disney.com,katie.hampton@disney.com,sydnee.stanley@disney.com,bryce.horwood@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -16,7 +16,7 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Anthology"/>
-    <parameter name="jenkinsRegressionScheduling" value="55 12 * * 1,2::55 00,01 * * 2,3"/>
+    <parameter name="scheduling" value="H/55 12 * * 1,2::H/55 0,1 * * 2,3"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>

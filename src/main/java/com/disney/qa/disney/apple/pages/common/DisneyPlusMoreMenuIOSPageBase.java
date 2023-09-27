@@ -70,7 +70,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	@ExtendedFindBy(accessibilityId = "accountTab")
 	private ExtendedWebElement accountTab;
-
+	
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));

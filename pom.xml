@@ -10,14 +10,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hatter.version>PR-173-2-SNAPSHOT</hatter.version>
+        <hatter.version>2.0.12</hatter.version>
         <zebrunner-agent.version>1.9.7</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
         <alice-client.version>1.0.56</alice-client.version>
-        <jarvis-utils-version>1.0.13-SNAPSHOT</jarvis-utils-version>
+        <jarvis-utils-version>1.0.18</jarvis-utils-version>
         <hora-validator-version>1.0.16</hora-validator-version>
-        <disney-api-utils-version>2.3.441</disney-api-utils-version>
+        <disney-api-utils-version>2.3.455</disney-api-utils-version>
         <suite>helloDisney</suite>
     </properties>
 
@@ -37,7 +37,7 @@
             <name>QAIT Releases</name>
             <url>https://artifactory.us-east-1.bamgrid.net/qait-maven</url>
         </repository>
-        <repository>
+        <!--repository>
             <id>zebrunner_snapshots</id>
             <name>zebrunner Snapshots</name>
             <url>https://nexus.zebrunner.dev/repository/ce-snapshots/</url>
@@ -47,7 +47,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
+        </repository-->
         <repository>
             <snapshots>
                 <enabled>false</enabled>

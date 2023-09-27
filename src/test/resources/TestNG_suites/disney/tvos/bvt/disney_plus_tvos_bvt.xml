@@ -8,7 +8,7 @@
     <parameter name="jenkinsJobName" value="tvos_bvt_prod"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsEmail"
-               value="Lauren.Churus@disneystreaming.com,Katie.Hampton@disneystreaming.com,Sydnee.Stanley@disneystreaming.com,Eric.Appel@disneystreaming.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="stringParam::githubPath::Github project path" value=""/>
     <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
     <parameter name="provider" value="mcloud"/>
