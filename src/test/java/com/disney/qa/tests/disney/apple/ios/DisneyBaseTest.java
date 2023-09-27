@@ -239,7 +239,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Similar to getInstalledAppVersionFull() except it does not include the build number
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
-
     private synchronized String getAppVersion() {
         String version = AppCenterManager.getInstance()
                 .getAppInfo(R.CONFIG.get("capabilities.app"))
