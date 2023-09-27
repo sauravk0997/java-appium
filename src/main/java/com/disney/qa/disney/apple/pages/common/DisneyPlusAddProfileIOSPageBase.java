@@ -66,7 +66,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
     private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
-    private String kidProfileSubCopy = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
 
     //Functions
     public DisneyPlusAddProfileIOSPageBase(WebDriver driver) {
@@ -181,6 +180,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isKidProfileSubCopyPresent() {
+        String kidProfileSubCopy = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
         return textViewByLabel.format(kidProfileSubCopy).isPresent();
     }
 }
