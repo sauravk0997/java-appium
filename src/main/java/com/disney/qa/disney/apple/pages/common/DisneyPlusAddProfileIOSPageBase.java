@@ -174,4 +174,13 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void tapCancelButton() {
         cancelButton.click();
     }
+
+    /**
+     * checks if Kid Profile sub copy present or not
+     * @return true/false
+     */
+    public boolean isKidProfileSubCopyPresent() {
+        String kidProfileSubCopy = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
+        return textViewByLabel.format(kidProfileSubCopy).isPresent();
+    }
 }

@@ -681,6 +681,63 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72664"})
+    @Test(description = " Profiles > Kids Profile new copy", groups = {"Ariel-More Menu"})
+    public void verifyLearnMoreLinkForKidsProfile() {
+        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
+        setAppToHomeScreen(disneyAccount.get());
+        setFlexWelcomeConfig();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+
+        //verify Learn More hyperlink on add profile page
+        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Kid Profile sub copy was not present");
+        editProfilePage.clickJuniorModeLearnMoreLink();
+        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
+        Assert.assertTrue(addProfile.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
+        moreMenu.goBackToDisneyAppFromSafari();
+        moreMenu.dismissNotificationsPopUp();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not returned to the add profile page after navigating back from safari");
+        addProfile.clickSaveBtn();
+        //minor consent is shown
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            new IOSUtils().scrollDown();
+        }
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        //Welch Full catalog access
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        //minor authentication is prompted
+        Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
+        passwordPage.enterPassword(disneyAccount.get());
+        passwordPage.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+
+        //verify learn more hyperlink on edit profile page
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickJuniorModeLearnMoreLink();
+        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
+        Assert.assertTrue(editProfilePage.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
+        moreMenu.goBackToDisneyAppFromSafari();
+        moreMenu.dismissNotificationsPopUp();
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
