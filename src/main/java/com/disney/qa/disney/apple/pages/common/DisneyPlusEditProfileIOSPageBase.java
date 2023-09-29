@@ -108,16 +108,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText());
     }
 
-    public boolean isEditProfilesTitlePresent() {
-        return collectionHeadlineTitle.isElementPresent();
-    }
-
     public ExtendedWebElement getSharePlayTooltip() {
         String toastText = getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.COVIEWING_ADS_TOOLTIP.getText());
         return getDynamicAccessibilityId(toastText);
     }
+
+    public boolean isEditProfilesTitlePresent() {return collectionHeadlineTitle.isElementPresent();}
 
     public boolean isBackBtnPresent() {
         return getBackArrow().isElementPresent();
