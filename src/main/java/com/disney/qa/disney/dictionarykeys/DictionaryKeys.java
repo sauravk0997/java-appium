@@ -186,6 +186,7 @@ public enum DictionaryKeys {
     INVALID_REQUEST("invalidrequest"),
     JUNIOR_MODE_LEARN_MORE("btn_junior_mode_learn_more_link_1_text"),
     KEYBOARD_CONTINUE("keyboard_continue"),
+    KIDS_PROFILE_SUBCOPY("kidsprofile_subcopy"),
     LEGAL_TITLE("legalcenter_title"),
     LIVE_PROGRESS("live_progress"),
     LIVE_PROGRESS_TIME("live_progress_time"),
