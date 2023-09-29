@@ -378,7 +378,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     public void verifyAdTierUserCoViewing() {
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
         setAppToHomeScreen(disneyAccount.get());
-//        setFlexWelcomeConfig();
+        //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
