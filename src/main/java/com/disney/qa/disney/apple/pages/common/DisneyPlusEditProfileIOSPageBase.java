@@ -201,10 +201,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         }
     }
 
-    public void tapGroupWatchCell() {
-        autoplayToggleCell.click();
-    }
-
     public String getAutoplayState(){
         return autoplayToggleCell.getText();
     }
