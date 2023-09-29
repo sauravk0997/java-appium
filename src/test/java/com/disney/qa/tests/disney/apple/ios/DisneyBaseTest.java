@@ -85,7 +85,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 5)),
         U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12)),
-        U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16));
+        U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
+        OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130));
 
         DateHelper.Month month;
         String day;
