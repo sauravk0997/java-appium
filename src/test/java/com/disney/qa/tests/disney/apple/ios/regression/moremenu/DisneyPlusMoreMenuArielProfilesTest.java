@@ -379,7 +379,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"), BUNDLE_BASIC);
         setAppToHomeScreen(disneyAccount.get());
 //        setFlexWelcomeConfig();
-        IOSUtils utils = new IOSUtils();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
@@ -387,9 +386,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         pause(2);
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
-        utils.swipePageTillElementPresent(editProfilePage.getSharePlay(), 2, null, Direction.UP, 600);
-//        editProfilePage.getSharePlay().click();
-        utils.clickNearElement(editProfilePage.getSharePlay(), .5, 30);
+        editProfilePage.getSharePlay().click();
         Assert.assertTrue(editProfilePage.getSharePlayTooltip().isPresent(), "SharePlay tooltip is not shown on tapping on SharePlay cell");
     }
 
