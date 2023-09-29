@@ -183,4 +183,31 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         String kidProfileSubCopy = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
         return textViewByLabel.format(kidProfileSubCopy).isPresent();
     }
+
+    /**
+     * checks inline error for profile field if profile field is empty
+     * @return true/false
+     */
+    public boolean isInlineErrorForProfileFieldPresent() {
+        String inlineErrorForProfileField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_NAME.getText());
+        return staticTextByLabel.format(inlineErrorForProfileField).isPresent();
+    }
+
+    /**
+     * checks inline error for DOB field if DOB field is empty
+     * @return true/false
+     */
+    public boolean isInlineErrorForDOBFieldPresent() {
+        String inlineErrorForDOBField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_DOB.getText());
+        return staticTextByLabel.format(inlineErrorForDOBField).isPresent();
+    }
+
+    /**
+     * checks inline error for Gender field if Gender field is empty
+     * @return true/false
+     */
+    public boolean isInlineErrorForGenderFieldPresent() {
+        String inlineErrorForGenderField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
+        return staticTextByLabel.format(inlineErrorForGenderField).isPresent();
+    }
 }

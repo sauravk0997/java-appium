@@ -738,6 +738,69 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72311"})
+    @Test(description = "Profiles > Add profile, DOB and gender AAW", groups = {"Ariel-More Menu"})
+    public void verifyAddProfilePageInlineError() {
+        initialSetup();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(disneyAccount.get());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+
+        //Verify inline error for add profile page field if any field is empty
+        addProfile.clickSaveBtn();
+        sa.assertTrue(addProfile.isInlineErrorForProfileFieldPresent(), "Inline error for Profile field if profile field is empty is not present");
+        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), "Inline error for DOB field if DOB field is empty is not present");
+
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+
+        //Verify inline error if user add DOB that is older than 125 year old
+        addProfile.enterDOB(Person.OLDERTHAN125.getMonth(), Person.OLDERTHAN125.getDay(), Person.OLDERTHAN125.getYear());
+        addProfile.clickSaveBtn();
+        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), "Inline error for DOB field if DOB is older than 125 year old is not present");
+
+        //Verify inline error for gender field if gender field is empty
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.clickSaveBtn();
+        sa.assertTrue(addProfile.isInlineErrorForGenderFieldPresent(), "Inline error for Gender field if Gender field is empty is not present");
+
+        // verify all gender option and user able to select gender value from dropdown
+        addProfile.clickGenderDropDown();
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
+            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+                    "Expected: " + genderItem + " option should be present");
+        }
+
+        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN.getGenderOption());
+
+        addProfile.clickSaveBtn();
+        //minor consent is shown
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            new IOSUtils().scrollDown();
+        }
+
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        //Welch Full catalog access
+        new MobileUtilsExtended().clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        //minor authentication is prompted
+        Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
+        passwordPage.enterPassword(disneyAccount.get());
+        passwordPage.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
