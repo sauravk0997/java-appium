@@ -536,9 +536,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerifyAccountLinkPresent(),
                 "XMOBQA-62566 - Verify Account link was not present");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(disneyAccount.get().getEmail())
-                        && !disneyPlusAccountIOSPageBase.isChangeLinkActive(disneyAccount.get().getEmail()),
-                "XMOBQA-62570 - Change Email link was not displayed and disabled");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(disneyAccount.get().getEmail()),
+                "XMOBQA-62570 - Change Email link was not displayed");
+
+        sa.assertFalse(disneyPlusAccountIOSPageBase.isChangeLinkActive(disneyAccount.get().getEmail()),
+                "XMOBQA-62570 - Change Email link was not disabled");
 
         disneyPlusAccountIOSPageBase.clickVerifyAccountLink();
 
