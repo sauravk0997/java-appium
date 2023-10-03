@@ -386,8 +386,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         pause(2);
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
-        editProfilePage.getGroupWatchAndShareplay().click();
-        Assert.assertTrue(editProfilePage.getGroupWatchAndShareplayTooltip().isPresent(), "GroupWatch and Shareplay tooltip is not shown on tapping groupwatch cell");
+        editProfilePage.getSharePlay().click();
+        Assert.assertTrue(editProfilePage.getSharePlayTooltip().isPresent(), "SharePlay tooltip is not shown on tapping on SharePlay cell");
     }
 
     @Maintainer("gkrishna1")

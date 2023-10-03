@@ -59,7 +59,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isPlayButtonDisplayed(), "Play button isn't present in its expected position");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isTrailerButtonDisplayed(), "Trailer button isn't present in its expected position");
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isWatchlistButtonDisplayed(), "Watchlist button isn't present in its expected position");
-        sa.assertTrue(disneyPlusAppleTVDetailsPage.isGroupWatchButtonDisplayed(), "Groupwatch button is not displayed.");
 
         new AliceUtilities(getDriver()).isUltronTextPresent("HD 5.1 CC", DESCRIPTION.getText());
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
