@@ -67,18 +67,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "advisoryLabel")
     private ExtendedWebElement advisoryLabel;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='ratingLabel']/XCUIElementTypeStaticText")
-    private ExtendedWebElement ratingLabelText;
-
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='advisoryLabel']/XCUIElementTypeStaticText")
-    private ExtendedWebElement advisoryLabelText;
-
-    @ExtendedFindBy(accessibilityId = "ratingLabel")
-    private ExtendedWebElement ratingLabel;
-
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='reasonLabel']/XCUIElementTypeStaticText")
-    private ExtendedWebElement reasonLabelText;
-
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
 
@@ -362,18 +350,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getY() {
         Dimension dimension = playerView.getSize();
         return dimension.getHeight();
-    }
-
-    public String getAdvisoryLabelText() {
-        return advisoryLabelText.getText();
-    }
-
-    public String getRatingLabelText() {
-        return ratingLabelText.getText();
-    }
-
-    public String getRatingReasonText() {
-        return reasonLabelText.getText();
     }
 
     public boolean isAdBadgeLabelPresent() {
