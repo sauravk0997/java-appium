@@ -36,15 +36,12 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
     public ExtendedWebElement getDismissButton() { return dismissButton; }
-    SoftAssert softAssert = new SoftAssert();
 
     public void clickHelpCenterButton() {
-        softAssert.assertTrue(helpCenterButton.isPresent(), "Help Center Button not present");
         helpCenterButton.click();
     }
 
     public void clickDismissButton() {
-        softAssert.assertTrue(dismissButton.isPresent(), "Dismiss Button not present");
         dismissButton.click();
     }
 }
