@@ -48,9 +48,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement watchlistButton;
 
-    @ExtendedFindBy(accessibilityId = "groupwatchButton")
-    private ExtendedWebElement groupWatchBtn;
-
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
@@ -402,10 +399,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPlayButtonDisplayed() {
         return getPlayButton().isPresent();
-    }
-
-    public boolean isGroupWatchButtonDisplayed() {
-        return groupWatchBtn.isElementPresent();
     }
 
     public boolean isWatchlistButtonDisplayed() {
