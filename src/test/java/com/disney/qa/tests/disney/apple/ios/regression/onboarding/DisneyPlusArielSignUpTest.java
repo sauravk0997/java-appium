@@ -5,6 +5,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -88,6 +89,50 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         disneyPlusDOBCollectionPageBase.enterDOB(DOB_ADULT);
         //Dismiss error message for paywall - QAA-11256
         disneyPlusPaywallIOSPageBase.dismissPaywallErrorAlert();
+        softAssert.assertAll();
+    }
+
+    @Maintainer("acadavidcorrea")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
+    @Test(description = "Log in - Verify login - DOB under 18", groups = {"Onboarding"})
+    public void testLoginDoBUnder18() {
+        initialSetup();
+        SoftAssert softAssert = new SoftAssert();
+        handleAlert();
+        DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+
+        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
+        disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
+        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
+
+        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
+
+        disneyPlusDOBCollectionPageBase.isOpened();
+        disneyPlusDOBCollectionPageBase.enterDOB(DOB_MINOR);
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
+                "Contact CS screen did not appear.");
+        disneyPlusAccountIsMinorIOSPageBase.clickHelpCenterButton();
+        moreMenu.goBackToDisneyAppFromSafari();
+
+        disneyPlusAccountIsMinorIOSPageBase.clickDismissButton();
+        Assert.assertTrue(new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).isOpened(),
+                "User was not logged out and returned to the Welcome screen");
         softAssert.assertAll();
     }
 

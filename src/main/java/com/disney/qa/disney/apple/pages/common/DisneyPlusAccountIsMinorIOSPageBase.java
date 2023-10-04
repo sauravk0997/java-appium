@@ -5,6 +5,7 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
@@ -35,4 +36,15 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
     public ExtendedWebElement getDismissButton() { return dismissButton; }
+    SoftAssert softAssert = new SoftAssert();
+
+    public void clickHelpCenterButton() {
+        softAssert.assertTrue(helpCenterButton.isPresent(), "Help Center Button not present");
+        helpCenterButton.click();
+    }
+
+    public void clickDismissButton() {
+        softAssert.assertTrue(dismissButton.isPresent(), "Dismiss Button not present");
+        dismissButton.click();
+    }
 }
