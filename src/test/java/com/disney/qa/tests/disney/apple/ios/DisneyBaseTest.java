@@ -6,10 +6,8 @@ import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.zebrunner.carina.appcenter.AppInfo;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -259,11 +257,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     /**
-     * Performs an app reinstall/relaunch without terminating the Appium session.
+     * Performs an app relaunch without terminating the Appium session.
      * Also gets rid of Network Visibility alert.
      */
     public void restart() {
-        iosUtils.get().appReinstall(sessionBundles.get(APP), sessionBundles.get(DISNEY));
+        terminateApp(sessionBundles.get(APP));
+        startApp(sessionBundles.get(DISNEY));
         handleAlert();
     }
 
