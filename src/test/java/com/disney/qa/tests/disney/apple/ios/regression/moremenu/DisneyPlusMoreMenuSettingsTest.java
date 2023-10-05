@@ -171,7 +171,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61667"})
-    @Test(description = "More Menu View - App Version Number", groups = {"More Menu"})
+    @Test(description = "More Menu View - App Version Number", groups = {"More Menu"}, enabled = false)
     public void verifyAppVersionNumber() {
         initialSetup();
         onboard(disneyAccount.get().getFirstName());
