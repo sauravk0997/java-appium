@@ -29,9 +29,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
 
-    @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
-    private ExtendedWebElement groupWatchTooggleCell;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     private ExtendedWebElement addProfileBtn;
 
@@ -55,7 +52,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     private ExtendedWebElement profileNameTextField;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
-    protected ExtendedWebElement groupWatchHyperLink;
+    protected ExtendedWebElement sharePlayHyperLink;
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
@@ -104,24 +101,21 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return editProfileTitle.isPresent(SHORT_TIMEOUT);
     }
 
-    public ExtendedWebElement getGroupWatchAndShareplay() {
+    public ExtendedWebElement getSharePlay() {
         return xpathNameOrName.format(getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText()),
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText());
     }
 
-    public ExtendedWebElement getGroupWatchAndShareplayTooltip() {
+    public ExtendedWebElement getSharePlayTooltip() {
         String toastText = getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.COVIEWING_ADS_TOOLTIP.getText());
         return getDynamicAccessibilityId(toastText);
     }
 
-
-    public boolean isEditProfilesTitlePresent() {
-        return collectionHeadlineTitle.isElementPresent();
-    }
+    public boolean isEditProfilesTitlePresent() {return collectionHeadlineTitle.isElementPresent();}
 
     public boolean isBackBtnPresent() {
         return getBackArrow().isElementPresent();
@@ -150,7 +144,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-        groupWatchHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        sharePlayHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
@@ -205,10 +199,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         if (!currentState.equalsIgnoreCase(newState)) {
             autoplayToggleCell.getElement().findElement(By.name("toggleView")).click();
         }
-    }
-
-    public void tapGroupWatchCell() {
-        autoplayToggleCell.click();
     }
 
     public String getAutoplayState(){

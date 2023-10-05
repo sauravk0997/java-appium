@@ -127,26 +127,6 @@ public class DisneyPlusAppleTVAnthologyQATest extends DisneyPlusAppleTVBaseTest 
         Assert.assertFalse(details.compareEpisodeNum(), "Episode number are the same");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106679"})
-    @Test(description = "Verify Anthology Series - No Group Watch During Live Event", groups = {"Anthology"})
-    public void verifyAnthologyNoGroupWatchLive() {
-        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-
-//        logIn(entitledUser);
-        QALogin();
-        searchAndOpenDWTSDetails();
-
-        try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing. " + e);
-        }
-
-        Assert.assertFalse(details.isGroupWatchButtonDisplayed(), "Group watch was found during live event.");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106001"})
     @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
     public void verifyAnthologyLiveModal() {
