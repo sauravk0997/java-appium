@@ -14,18 +14,18 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     private static final String DOB_ADULT = "01/01/1983";
     private static final String DOB_INVALID = "01/01/1766";
 
-    @Maintainer("mboulogne1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Onboarding"})
     public void testSignUpDoBUnder18() {
         initialSetup();
-        SoftAssert softAssert = new SoftAssert();
+        SoftAssert sa = new SoftAssert();
         handleAlert();
-        DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
         createDisneyAccountRequest
@@ -36,34 +36,33 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
 
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
 
-        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
-        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
+        welcomeScreen.clickCompleteSubscriptionButton();
 
-        disneyPlusDOBCollectionPageBase.isOpened();
-        disneyPlusDOBCollectionPageBase.enterDOB(DOB_MINOR);
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_MINOR);
+        sa.assertTrue(accountIsMinorPage.isOpened(),
                 "Contact CS screen did not appear.");
-
-        softAssert.assertAll();
+        sa.assertAll();
     }
 
-    @Maintainer("mboulogne1")
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
     @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Onboarding"})
     public void testSignUpDOBOver18() {
         initialSetup();
-        SoftAssert softAssert = new SoftAssert();
+        SoftAssert sa = new SoftAssert();
         handleAlert();
-        DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = new DisneyPlusPaywallIOSPageBase(getDriver());
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusPaywallIOSPageBase paywallPage = new DisneyPlusPaywallIOSPageBase(getDriver());
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
         createDisneyAccountRequest
@@ -74,21 +73,53 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
         disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
 
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
-        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
-        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
+        welcomeScreen.clickCompleteSubscriptionButton();
 
-        disneyPlusDOBCollectionPageBase.isOpened();
-        disneyPlusDOBCollectionPageBase.enterDOB(DOB_INVALID);
-        softAssert.assertTrue(disneyPlusDOBCollectionPageBase.isInvalidDOBMessageDisplayed(),
-                "Invalid DOB Message did not appear.");
-        disneyPlusDOBCollectionPageBase.enterDOB(DOB_ADULT);
-        //Dismiss error message for paywall - QAA-11256
-        disneyPlusPaywallIOSPageBase.dismissPaywallErrorAlert();
-        softAssert.assertAll();
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+        sa.assertFalse(dobCollectionPage.isInvalidDOBMessageDisplayed(), "Adult DOB was not accepted.");
+        //Dismiss error message for paywall - QAA-12552
+        paywallPage.dismissNotificationsPopUp();
+        sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
+    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {"Onboarding"})
+    public void testSignUpDOBInvalid() {
+        initialSetup();
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        welcomeScreen.clickCompleteSubscriptionButton();
+
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_INVALID);
+        sa.assertTrue(dobCollectionPage.isInvalidDOBMessageDisplayed(),
+                "Invalid DOB Message did not appear.");
+        sa.assertAll();
+    }
 }
