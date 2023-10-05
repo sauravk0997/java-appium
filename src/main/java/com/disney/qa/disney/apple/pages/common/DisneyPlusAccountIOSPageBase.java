@@ -390,6 +390,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isPrivacyChoicesLinkPresent() {
+        new IOSUtils().scrollDown();
         return customHyperlinkByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_CHOICES_LINK.getText())).isElementPresent();
     }
 
