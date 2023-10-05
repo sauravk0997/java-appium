@@ -65,4 +65,15 @@
             </class>
         </classes>
     </test>
+
+
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player Api Utils tests" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdvisoryTest">
+                <methods>
+                    <include name="verifyAdditionalAdvisorySmokingDisclaimer"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
