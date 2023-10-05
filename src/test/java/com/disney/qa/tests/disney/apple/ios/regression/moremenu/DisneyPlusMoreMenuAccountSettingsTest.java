@@ -76,7 +76,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         initialSetup();
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
+        pause(3);
         sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(disneyAccount.get().getEmail()).isPresent(),
                 "User Email address was not displayed");
 
