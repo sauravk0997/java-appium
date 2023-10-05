@@ -5,7 +5,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.testng.asserts.SoftAssert;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
