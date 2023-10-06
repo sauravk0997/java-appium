@@ -1,10 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
+import java.util.Collections;
 import java.util.List;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -15,20 +22,6 @@ import com.disney.alice.AliceDriver;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusCompleteSubscriptionIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusCreatePasswordIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDOBCollectionPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusPaywallIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusRestartSubscriptionIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSignUpIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -41,6 +34,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     private static final String DOB_ADULT = "01/01/1983";
     private static final String PRETTY_FREEKIN_SCARY = "Pretty Freekin Scary";
+//    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
         return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
@@ -440,7 +434,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywall.clickBundleSelectButton();
         paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY);
         paywall.clickOverlaySubscribeButton();
-        
+
         try {
             CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
             paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
@@ -592,6 +586,44 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         //Validate in ios native settings the plan has been switched as alternative solution
         iosSettings.navigateToManageSubscription();
         sa.assertTrue(iosSettings.isPremiumYearlyPriceCheckmarkPresent(), "Premium Yearly Price with checkmark not displayed.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
+    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Onboarding"})
+    public void testSignUpDOBOver18() {
+        initialSetup();
+        if (buildType != BuildType.IAP) {
+            skipExecution("Test run is not against IAP compatible build.");
+        }
+        SoftAssert sa = new SoftAssert();
+        handleAlert();
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusPaywallIOSPageBase paywallPage = new DisneyPlusPaywallIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setLanguage(languageUtils.get().getUserLanguage());
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        welcomeScreen.clickCompleteSubscriptionButton();
+
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+        pause(5);
+        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
+        sa.assertTrue(paywallPage.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not as expected");
         sa.assertAll();
     }
 
