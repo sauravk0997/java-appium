@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="QA,PROD"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
+               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-QA-Enterprise-tvOS,Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::contentType::Content type (for example: programId)" value=""/>

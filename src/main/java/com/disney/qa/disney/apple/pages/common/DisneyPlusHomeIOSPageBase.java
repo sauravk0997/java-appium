@@ -58,7 +58,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return homeContentView.isElementPresent(SHORT_TIMEOUT);
+        return homeContentView.isElementPresent();
     }
 
     public void waitForHomePageToOpen() {
