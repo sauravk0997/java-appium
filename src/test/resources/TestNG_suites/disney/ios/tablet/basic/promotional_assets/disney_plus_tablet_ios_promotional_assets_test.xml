@@ -9,7 +9,7 @@
     <parameter name="jenkinsEmail" value="Lauren.Churus@disneystreaming.com"/>
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000;wdaStartupRetries=6"/>
     <parameter name="jenkinsDefaultRetryCount" value="3"/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="overrideFields" value="custom_string=${custom_country}"/>

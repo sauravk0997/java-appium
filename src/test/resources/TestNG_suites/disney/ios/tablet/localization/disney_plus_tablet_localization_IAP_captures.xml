@@ -13,7 +13,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceType=Tablet;deviceName=iPad_8_Gen,iPad_8_Gen_1,iPad_Air_4_Gen,iPad_Gen_9,iPad_Mini_5_Gen;timeoutMs=120000"/>
+               value="platformName=iOS;deviceType=Tablet;deviceName=iPad_8_Gen,iPad_8_Gen_1,iPad_Air_4_Gen,iPad_Gen_9,iPad_Mini_5_Gen;timeoutMs=120000;wdaStartupRetries=6"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="overrideFields"
                value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer}"/>
