@@ -10,7 +10,7 @@
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000;wdaStartupRetries=6"/>
     <parameter name="jenkinsDefaultRetryCount" value="3"/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="overrideFields" value="browserup_proxy=true,custom_string=${custom_country}"/>

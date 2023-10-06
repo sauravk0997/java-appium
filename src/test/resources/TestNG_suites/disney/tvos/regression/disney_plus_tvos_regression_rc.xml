@@ -12,7 +12,7 @@
                value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;newCommandTimeout=180"/>
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;newCommandTimeout=180;wdaStartupRetries=6"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
