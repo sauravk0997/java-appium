@@ -88,7 +88,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return deleteProfileButton;
     }
 
-    private String genderButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
+    private String genderTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
 
     //FUNCTIONS
 
@@ -265,5 +265,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
      * click gender button to select gender value
      */
     public void clickGenderButton() {
-        staticTextByLabel.format(genderButton).click(); }
+        staticTextByLabel.format(genderTitle).click(); }
+
+    public boolean isGenderButtonPresent() {
+        return staticTextByLabel.format(genderTitle).isElementPresent();
+    }
 }
