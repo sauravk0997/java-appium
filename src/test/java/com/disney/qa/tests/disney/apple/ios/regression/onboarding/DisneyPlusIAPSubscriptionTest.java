@@ -591,7 +591,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
-    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Ariel-IAP"})
     public void testSignUpDOBOver18() {
         initialSetup();
         if (buildType != BuildType.IAP) {
