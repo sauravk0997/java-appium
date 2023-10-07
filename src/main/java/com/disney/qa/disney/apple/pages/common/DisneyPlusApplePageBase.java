@@ -1009,6 +1009,38 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return override;
     }
 
+    public void saveDomainIdentifier(String value) {
+        pause(5);
+        textEntryField.type(value);
+        getTypeButtonByLabel("SAVE OVERRIDE").click();
+        Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
+    }
+
+    public void removeDomainIdentifier() {
+        pause(5);
+        getTypeButtonByLabel("REMOVE OVERRIDE").click();
+        System.out.println(getDriver().getPageSource());
+        Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
+    }
+
+    public void enableOneTrustConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains("isEnabledV2 is using its default value of false").isPresent()) {
+            LOGGER.info("Enabling oneTrustConfig isEnableV2 config..");
+            clickToggleView();
+            Assert.assertTrue(getStaticTextByLabelContains("Set to: true").isPresent());
+        }
+    }
+
+    public void disableOneTrustConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
+            LOGGER.info("Disabling oneTrustConfig isEnableV2 config..");
+            getTypeButtonByLabel("REMOVE OVERRIDE").click();
+            Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
+        }
+    }
+
     public void disableFlexWelcomeConfig() {
         pause(5);
         if (getStaticTextByLabelContains("welcome is using its default value of true").isPresent()) {
