@@ -9,7 +9,7 @@
     <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
     <parameter name="jenkinsEmail"
                value="mobileqa@disney.com,eric.liao@disney.com,Lauren.Churus@disney.com,katie.hampton@disney.com,sydnee.stanley@disney.com,bryce.horwood@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>

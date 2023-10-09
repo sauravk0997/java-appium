@@ -17,7 +17,7 @@ public enum DictionaryKeys {
     ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_NOADS_BUNDLE("account_subscription_title_bamtech_noads_bundle"),
     AD_BADGE_LABEL("ad_badge_label"),
     ADD_PROFILE_HEADER("add_profile_header"),
-    ADD_PRPFILE_SUB("add_profile_subcopy"),
+    ADD_PROFILE_SUB("add_profile_subcopy"),
     AGREE_AND_CONTINUE_BTN("btn_agree_continue"),
     AUTH_INVALID_CREDENTIALS("auth_invalidcredentials"),
     AUTH_MINOR_PASSWORD("auth_minor_password_body"),
