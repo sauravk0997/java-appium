@@ -40,6 +40,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String TABLET = "Tablet";
     protected static final String USER_PROFILE = "user_profile";
     public static final String SEASON_NUMBER = "seasonNumber";
+    private static final String SAVE_OVERRIDE = "SAVE OVERRIDE";
+    private static final String REMOVE_OVERRIDE = "REMOVE OVERRIDE";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1012,14 +1014,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void saveDomainIdentifier(String value) {
         pause(5);
         textEntryField.type(value);
-        getTypeButtonByLabel("SAVE OVERRIDE").click();
+        getTypeButtonByLabel(SAVE_OVERRIDE).click();
         Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
     }
 
     public void removeDomainIdentifier() {
         pause(5);
-        getTypeButtonByLabel("REMOVE OVERRIDE").click();
-        System.out.println(getDriver().getPageSource());
+        getTypeButtonByLabel(REMOVE_OVERRIDE).click();
         Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
     }
 
@@ -1036,7 +1037,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         pause(5);
         if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
             LOGGER.info("Disabling oneTrustConfig isEnableV2 config..");
-            getTypeButtonByLabel("REMOVE OVERRIDE").click();
+            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
             Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
         }
     }
@@ -1054,7 +1055,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         pause(5);
         if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
             LOGGER.info("Enabling flex welcome config..");
-            getTypeButtonByLabel("REMOVE OVERRIDE").click();
+            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
             Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
         }
     }
