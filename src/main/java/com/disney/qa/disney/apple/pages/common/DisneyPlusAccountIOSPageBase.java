@@ -7,6 +7,7 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -16,7 +17,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@label='%s']/../following-sibling::*/XCUIElementTypeButton")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
@@ -153,11 +154,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isChangeLinkPresent(String text) {
-        return changeLink.format(text).isPresent();
+        return changeLink.isPresent();
     }
 
     public boolean isChangeLinkActive(String text) {
-        return changeLink.format(text).getAttribute("enabled").equals("true");
+        return changeLink.getAttribute("enabled").equals("true");
     }
 
     public boolean isSingleSubHeaderPresent() {
@@ -170,7 +171,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void clickChangeLink(String text) {
         pause(1);
-        changeLink.format(text).click();
+        changeLink.click();
     }
 
     public boolean isDisneyPlusPremiumSubscriptionPresent() { return disneyPlusPremiumSubscription.isPresent(); }
@@ -390,7 +391,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isPrivacyChoicesLinkPresent() {
-        new IOSUtils().scrollDown();
         return customHyperlinkByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_CHOICES_LINK.getText())).isElementPresent();
     }
 
