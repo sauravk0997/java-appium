@@ -206,7 +206,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isDeviceStorageCorrectlyDisplayed() {
-		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPhone %s", getDictionary().getValueAfterPlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
+		ExtendedWebElement storageText = getTypeCellLabelContains(String.format("iPhone %s", getDictionary().getValueAfterPlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
 		if(storageText.isElementPresent()) {
 			return storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
 					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
