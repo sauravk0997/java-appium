@@ -6,6 +6,7 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -108,7 +109,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapSaveButton() {
-        saveButton.click();
+        if (!saveButton.isPresent()) {
+            new IOSUtils().swipeInContainer(null, IMobileUtils.Direction.UP, 1200);
+            saveButton.click();
+        }
     }
 
     public ExtendedWebElement getSaveButton() {
