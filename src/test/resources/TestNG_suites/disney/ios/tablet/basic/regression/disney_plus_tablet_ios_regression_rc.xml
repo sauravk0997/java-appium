@@ -19,7 +19,8 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},JOB_MAX_RUN_TIME=360"/>
+    <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},JOB_MAX_RUN_TIME=360,enableOneTrustConfig=${enableOneTrustConfig}"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
     <parameter name="jenkinsBuild" value="2.24.0.60880"/>
