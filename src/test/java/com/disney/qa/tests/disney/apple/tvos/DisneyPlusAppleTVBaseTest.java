@@ -47,7 +47,6 @@ import com.disney.qa.api.tvos.PostQueryAppStateMethod;
 import com.disney.qa.api.tvos.PostTerminateAppMethod;
 import com.disney.qa.api.tvos.PostUnlockMethod;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.IOSUtils.Direction2;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
@@ -70,7 +69,6 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions;
 import io.appium.java_client.ios.IOSStartScreenRecordingOptions.VideoQuality;
 import io.restassured.path.json.JsonPath;
-import com.disney.qa.disney.apple.pages.tv.AppleTVConstants;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
@@ -466,7 +464,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }
-
     public void setFlexWelcomeConfig() {
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
@@ -474,7 +471,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
             LOGGER.info("{} found, setting flex welcome config..", priceTimeUnit);
             JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
             boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
-            installJarvisForFlexWelcome();
+            installJarvisForConfig();
             launchJarvis();
             Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
             jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
@@ -506,7 +503,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
-    public void installJarvisForFlexWelcome() {
+    public void installJarvisForConfig() {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         welcomeScreen.isOpened();
         super.installJarvis();
