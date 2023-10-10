@@ -490,33 +490,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void setOneTrustConfig() {
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
-        JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
-        boolean enableOneTrustConfig = Boolean.parseBoolean(R.CONFIG.get("enableOneTrustConfig"));
-        installJarvisForConfig();
-        launchJarvis();
-        Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
-        jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
-        applePageBase.clickConfig(APP_CONFIG.getText());
-        applePageBase.clickConfig(EDIT_CONFIG.getText());
-        applePageBase.clickConfig("platformConfig");
-        applePageBase.clickConfig("oneTrustConfig");
-        if (enableOneTrustConfig) {
-            LOGGER.info("Navigating to domainIdentifier..");
-            applePageBase.scrollToItem("domainIdentifier").click();
-            applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
-            applePageBase.clickMenuTimes(1,1);
-
-            LOGGER.info("Navigating to isEnabledV2..");
-            applePageBase.scrollToItem("isEnabledV2").click();
-            applePageBase.enableOneTrustConfig();
-        } else {
-            applePageBase.enableFlexWelcomeConfig();
-        }
-        startApp(sessionBundles.get(DISNEY));
-    }
-
     public void launchJarvis() {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         applePageBase.fluentWait(getDriver(), 30, 0, "Unable to launch Jarvis")
