@@ -19,13 +19,9 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
 
-    private static final String KIDS_DOB = "2018-01-01";
-    private static final String WRONG_PASSWORD = "local123b456@";
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
-    private static final String NINETEEN_EIGHTY = "1980";
-
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
