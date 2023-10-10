@@ -146,6 +146,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(description = "One trust - 'opt-out module'", groups = {"More Menu"})
     public void verifyOneTrustModal() {
         initialSetup();
+        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);

@@ -457,6 +457,35 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void setOneTrustConfig() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection("platformConfig");
+        applePageBase.scrollToItem("oneTrustConfig").click();
+        LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
+        boolean enableOneTrustConfig = Boolean.parseBoolean(R.CONFIG.get("enableOneTrustConfig"));
+        if (enableOneTrustConfig) {
+            LOGGER.info("Navigating to domainIdentifier..");
+            applePageBase.scrollToItem("domainIdentifier").click();
+            applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
+            applePageBase.navigateBack();
+
+            LOGGER.info("Navigating to isEnabledV2..");
+            applePageBase.scrollToItem("isEnabledV2").click();
+            applePageBase.enableOneTrustConfig();
+        } else {
+            applePageBase.removeDomainIdentifier();
+            applePageBase.navigateBack();
+            applePageBase.disableOneTrustConfig();
+        }
+        LOGGER.info("Reinstalling Disney app..");
+        new IOSUtils().appReinstall(R.CONFIG.get("capabilities.app"), sessionBundles.get(DISNEY));
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
+    }
+
     public void launchJarvisOrInstall() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         boolean isInstalled = iosUtils.get().isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
