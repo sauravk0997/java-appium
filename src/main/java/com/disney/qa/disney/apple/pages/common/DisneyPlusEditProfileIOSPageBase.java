@@ -54,6 +54,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
     protected ExtendedWebElement sharePlayHyperLink;
 
+    @ExtendedFindBy(iosClassChain = "SharePlay")
+    private  ExtendedWebElement sharePlay;
+
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
 
@@ -102,10 +105,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getSharePlay() {
-        return xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText()),
-                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText());
+        return sharePlay;
     }
 
     public ExtendedWebElement getSharePlayTooltip() {
