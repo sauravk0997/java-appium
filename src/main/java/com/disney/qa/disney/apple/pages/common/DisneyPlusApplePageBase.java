@@ -1013,15 +1013,23 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void saveDomainIdentifier(String value) {
         pause(5);
-        textEntryField.type(value);
-        getTypeButtonByLabel(SAVE_OVERRIDE).click();
-        Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
+        if (getStaticTextByLabelContains("Current override set to: ").isPresent()) {
+            LOGGER.info("Domain identifier override is already set..");
+        } else {
+            textEntryField.type(value);
+            getTypeButtonByLabel(SAVE_OVERRIDE).click();
+            Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
+        }
     }
 
     public void removeDomainIdentifier() {
         pause(5);
-        getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-        Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
+        if (getStaticTextByLabelContains("No override set").isPresent()) {
+            LOGGER.info("Domain identifier override is already removed..");
+        } else {
+            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
+            Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
+        }
     }
 
     public void enableOneTrustConfig() {
