@@ -280,7 +280,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         pause(2);
         editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
-        new IOSUtils().swipeUp(400);
+        if (R.CONFIG.get("capabilities.deviceType").equals("Phone")) {
+            new IOSUtils().swipeUp(400);
+        }
+        editProfilePage.waitForPresenceOfAnElement(editProfilePage.getSharePlay());
         editProfilePage.getSharePlay().click();
         Assert.assertTrue(editProfilePage.getSharePlayTooltip().isPresent(), "SharePlay tooltip is not shown on tapping on SharePlay cell");
     }

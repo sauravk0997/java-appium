@@ -54,7 +54,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
     protected ExtendedWebElement sharePlayHyperLink;
 
-    @ExtendedFindBy(iosClassChain = "SharePlay")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"SharePlay\"`]")
     private  ExtendedWebElement sharePlay;
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
