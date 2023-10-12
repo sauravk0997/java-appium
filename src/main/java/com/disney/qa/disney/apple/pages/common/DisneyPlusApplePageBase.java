@@ -1034,7 +1034,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void enableOneTrustConfig() {
         pause(5);
-        if (getStaticTextByLabelContains("isEnabledV2 is using its default value of false").isPresent()) {
+        if (getStaticTextByLabelContains("default value of true").isPresent() //to accommodate jarvis bug
+                || getStaticTextByLabelContains("Set to: true").isPresent()) {
+            LOGGER.info("isEnabledV2 is already enabled to true..");
+        } else {
             LOGGER.info("Enabling oneTrustConfig isEnableV2 config..");
             clickToggleView();
             Assert.assertTrue(getStaticTextByLabelContains("Set to: true").isPresent());
@@ -1043,7 +1046,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void disableOneTrustConfig() {
         pause(5);
-        if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
+        if (getStaticTextByLabelContains("NO override in use!").isPresent()) {
+            LOGGER.info("oneTrustConfig isEnabledV2 config does not have any override in use..");
+        } else {
             LOGGER.info("Disabling oneTrustConfig isEnableV2 config..");
             getTypeButtonByLabel(REMOVE_OVERRIDE).click();
             Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());

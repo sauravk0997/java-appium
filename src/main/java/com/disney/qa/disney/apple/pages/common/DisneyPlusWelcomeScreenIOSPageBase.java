@@ -14,10 +14,10 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     //LOCATORS
 
-    @ExtendedFindBy(accessibilityId = "buttonSignUp")
+    @ExtendedFindBy(accessibilityId = "SIGN UP NOW")
     protected ExtendedWebElement signUpButton;
 
-    @ExtendedFindBy(accessibilityId = "loginButton")
+    @ExtendedFindBy(accessibilityId = "LOG IN")
     protected ExtendedWebElement loginButton;
 
     @ExtendedFindBy(accessibilityId = "dismissButton")
@@ -108,7 +108,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).click();
+        loginButton.click();
     }
 
     public void clickSignUpButton() {
