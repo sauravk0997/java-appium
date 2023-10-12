@@ -198,13 +198,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Roku() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionTitlePresent(),
+                "Roku Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionMessagePresent(),
                 "Roku Subscription message was not displayed");
 
@@ -218,13 +220,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Amazon() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionTitlePresent(),
+                "Amazon Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionMessagePresent(),
                 "Amazon Subscription message was not displayed");
 
@@ -238,13 +242,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Verizon() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionTitlePresent(),
+                "Verizon Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionMessagePresent(),
                 "Verizon Subscription message was not displayed");
 
@@ -258,7 +264,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_O2() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
@@ -266,6 +272,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionTitlePresent(),
+                "O2 Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
@@ -279,13 +287,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_TelecomTIM() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionTitlePresent(),
+                "Telecom TIM Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionMessagePresent(),
                 "Telecom TIM Subscription message was not displayed");
 
@@ -299,13 +309,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Movistar() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionTitlePresent(),
+                "Moviestar Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionMessagePresent(),
                 "Moviestar Subscription message was not displayed");
 
@@ -319,13 +331,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_DeutscheTelekom() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionTitlePresent(),
+                "Deutsche Telekom Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionMessagePresent(),
                 "Deutsche Telekom Subscription message was not displayed");
 
@@ -339,13 +353,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Sky() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionTitlePresent(),
+                "Sky Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionMessagePresent(),
                 "Sky Subscription message was not displayed");
 
@@ -359,7 +375,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Telmex() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
@@ -367,6 +383,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionTitlePresent(),
+                "Telmex Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionMessagePresent(),
                 "Telmex Subscription message was not displayed");
 
@@ -380,13 +398,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Bradesco() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionTitlePresent(),
+                "Bradesco Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionMessagePresent(),
                 "Bradesco Subscription message was not displayed");
 
@@ -400,13 +420,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_BradescoNext() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionTitlePresent(),
+                "Bradesco NEXT Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionMessagePresent(),
                 "Bradesco NEXT Subscription message was not displayed");
 
@@ -443,13 +465,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_MercadoLibre() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreSubscriptionTitlePresent(),
+                "Mercado Libre Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadoLibreSubscriptionMessagePresent(),
                 "Mercado Libre Subscription message was not displayed");
 
@@ -463,13 +487,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_Cablevision() {
         initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionTitlePresent(),
+                "Cablevision/Telecom Argentina SA Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionMessagePresent(),
                 "Cablevision/Telecom Argentina SA Subscription message was not displayed");
 
@@ -483,7 +509,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", "fix message"})
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
