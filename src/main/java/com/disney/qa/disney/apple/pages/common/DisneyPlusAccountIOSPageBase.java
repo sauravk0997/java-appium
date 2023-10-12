@@ -56,6 +56,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText()));
     }
 
+    public ExtendedWebElement getMercardoLibreBrazilSubscription() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE_BR.getText()));
+    }
+
+    public boolean isMercadolibreMonthlySubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE_BR.getText());
+        return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
+    }
+
     public ExtendedWebElement getGoogleSubscription() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText()),
@@ -120,11 +129,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CABLEVISION.getText())));
     }
 
-    public ExtendedWebElement getMercardoLibreBrazilSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE_BR.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE_BR.getText())));
-    }
     public ExtendedWebElement getCanalSubscription() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CANAL.getText()),
@@ -234,6 +238,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getBamtechBundleSubscriptionMessage().isPresent();
     }
 
+    public boolean isMercadoLibreSubscriptionMessagePresent() {
+        return getMercadolibreSubscription().isPresent();
+    }
+
     public boolean isBamtechBundleMonthlySubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
         return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
@@ -331,9 +339,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getTelefonicaVivoSubscription().click();
     }
 
-    public boolean isMercadoLibreSubscriptionMessagePresent() {
-        return getMercadolibreSubscription().isPresent();
-    }
 
     public void openMercadoLibreWebview() {
         getMercadolibreSubscription().click();
