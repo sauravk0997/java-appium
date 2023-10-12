@@ -235,11 +235,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-        String version = AppCenterManager.getInstance()
-                .getAppInfo(R.CONFIG.get("capabilities.app"))
-                .getVersion();
-        LOGGER.info("version:{}", version);
-        return version;
+
+        return "2.24.0";
     }
 
     @AfterMethod(alwaysRun = true)
