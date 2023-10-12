@@ -70,6 +70,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
+    private static final String TVOS = "tvOS";
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -78,6 +79,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
+    ThreadLocal<String> appVersion = new ThreadLocal<>();
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -373,6 +375,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void downloadDisneyApp() {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        String appVersion = R.CONFIG.get("appVersion");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if (appCenterAppName.contains("for_Automation")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", appVersion))
+                    .getDirectLink());
+        } else if (appCenterAppName.contains("Disney")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
+                    .getDirectLink());
+        }
+    }
+
     public ApiConfiguration getApiConfiguration(String partner) {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
@@ -471,7 +488,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             applePageBase.scrollToItem("domainIdentifier").click();
             applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
             applePageBase.navigateBack();
-
             LOGGER.info("Navigating to isEnabledV2..");
             applePageBase.scrollToItem("isEnabledV2").click();
             applePageBase.enableOneTrustConfig();
@@ -480,8 +496,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             applePageBase.navigateBack();
             applePageBase.disableOneTrustConfig();
         }
-        LOGGER.info("Reinstalling Disney app..");
-        new IOSUtils().appReinstall(R.CONFIG.get("capabilities.app"), sessionBundles.get(DISNEY));
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        downloadDisneyApp();
+        startApp(sessionBundles.get(DISNEY));
         LOGGER.info("Click allow to track your activity..");
         handleAlert();
     }
@@ -492,7 +510,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Attempting to launch Jarvis app...");
         if (isInstalled) {
             launchJarvisNoInstall();
-            System.out.println(applePageBase.isCompatibleDisneyTextPresent());
             if (!applePageBase.isCompatibleDisneyTextPresent()) {
                 launchJarvis(true);
             }
