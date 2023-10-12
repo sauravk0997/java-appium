@@ -486,10 +486,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu"})
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         initialSetup();
+        SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreMonthlySubscriptionTitlePresent(),
+                "Mercado Libre Brazil Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadoLibreBrazilSubscriptionMessagePresent(),
                 "Mercado Libre Brazil Subscription message was not displayed");
 
