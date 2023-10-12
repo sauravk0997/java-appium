@@ -104,6 +104,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void submitPasswordForLogin(String userPassword) {
         typePassword(userPassword);
         UniversalUtils.captureAndUpload(getCastedDriver());
+        clickPrimaryButtonByCoordinates();
         new IOSUtils().hideKeyboard();
     }
 
