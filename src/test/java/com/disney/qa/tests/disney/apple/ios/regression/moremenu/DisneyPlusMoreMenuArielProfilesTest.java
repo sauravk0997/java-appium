@@ -825,18 +825,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         loginPage.submitEmail(disneyAccount.get().getEmail());
         passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
 
-        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after signing up");
+        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
 
         //Verify if user terminate app without saving DOB, app will keep showcasing Enforce DOB screen
         iosUtils.get().terminateApp(buildType.getDisneyBundle());
         iosUtils.get().launchApp(buildType.getDisneyBundle());
-        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after signing up");
+        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
         sa.assertTrue(enforceDOBCollectionPage.isDateOfBirthDescriptionPresent(), "Enforce DOB Description is not displayed");
 
         //Verify Gender collection screen is displayed or not, after DOB collection page if existing account without DOb and Gender
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
-        sa.assertTrue(updateProfilePage.isOpened(), "Enforce Gender collection page is not displayed");
+        sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
         sa.assertAll();
     }
 

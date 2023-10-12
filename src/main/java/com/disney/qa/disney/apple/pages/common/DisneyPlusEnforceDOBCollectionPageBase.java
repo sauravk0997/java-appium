@@ -10,9 +10,6 @@ import org.openqa.selenium.WebDriver;
 public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
-    private String enforceDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
-    private String enforceDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
-    private String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DATE_OF_BIRTH_LOG_OUT.getText());
 
     //FUNCTIONS
     public DisneyPlusEnforceDOBCollectionPageBase(WebDriver driver) {
@@ -24,6 +21,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      */
     @Override
     public boolean isOpened() {
+        String enforceDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
         return staticTextByLabel.format(enforceDateOfBirthPageTitle).isPresent();
     }
 
@@ -31,6 +29,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      * @return - true/false, to verify Enforce DOB Description is displayed or not
      */
     public boolean isDateOfBirthDescriptionPresent() {
+        String enforceDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
         return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
     }
 
@@ -44,6 +43,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      * Click Log Out button
      */
     public void tapLogOutButton() {
+        String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DATE_OF_BIRTH_LOG_OUT.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
 }
