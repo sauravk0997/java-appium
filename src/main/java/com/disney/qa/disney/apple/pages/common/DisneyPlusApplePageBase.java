@@ -239,6 +239,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Ask App Not to Track\"`]")
+    protected ExtendedWebElement trackingPopUp;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"labelStepTitle\"`]/XCUIElementTypeStaticText")
     protected ExtendedWebElement stepTitle;
 
@@ -877,6 +880,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (notificationPopUp.isPresent()) {
             getStaticTextByLabel("Not Now").click();
         }
+    }
+
+    public void dismissAppTrackingPopUp() {
+        trackingPopUp.clickIfPresent();
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
