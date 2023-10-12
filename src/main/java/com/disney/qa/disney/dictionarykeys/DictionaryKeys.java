@@ -405,7 +405,6 @@ public enum DictionaryKeys {
     WATCHLIST_TITLE("watchlist_title"),
     WELCOME_BASE_TEXT("welcome_tagline_copy"),
     WELCOME_SUB_TEXT("welcome_subcta_copy"),
-    WELCOME_SUB_TEXT2("welcome_subcta_copy_23a23eedb524254f9d3bc7502010f162"),
     WELCOME_UNAUTHENTICATED_TITLE("welcome_unauthenticated_title"),
     WELCOME_UNAUTHENTICATED_SUBCOPY("welcome_unauthenticated_subcopy"),
     WHOS_WATCHING_ADD_PROFILE("whoswatching_addprofile"),

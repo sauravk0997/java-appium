@@ -63,7 +63,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
-    private static final String TVOS = "tvOS";
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

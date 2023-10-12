@@ -67,7 +67,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
-    //TODO: Investigate why this dictionary key is n
+    //TODO: Investigate why this dictionary key is not found QAA-12657
     public boolean isSubCopyPresent() {
         String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         String subscribeText2 = getDictionary().formatPlaceholderString(subscribeText, Map.of("PRICE_0", "---", "TIME_UNIT_0", "---"));
@@ -80,7 +80,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     public boolean isSignUpButtonDisplayed() {
         return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).isPresent();
-//        return signUpButton.isElementPresent();
     }
 
     public boolean isLogInButtonDisplayed() {

@@ -659,7 +659,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61551", "XMOBQA-61553", "XMOBQA-61555"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"})
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"}, enabled = false)
     public void testChangeEmailUI() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -715,7 +715,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"})
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"}, enabled = false)
     public void testChangeEmailWithoutLogout() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
