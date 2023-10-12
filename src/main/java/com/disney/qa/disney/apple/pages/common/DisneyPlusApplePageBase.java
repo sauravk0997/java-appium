@@ -42,6 +42,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String SEASON_NUMBER = "seasonNumber";
     private static final String SAVE_OVERRIDE = "SAVE OVERRIDE";
     private static final String REMOVE_OVERRIDE = "REMOVE OVERRIDE";
+    private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1020,20 +1021,31 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void saveDomainIdentifier(String value) {
         pause(5);
-        textEntryField.type(value);
-        getTypeButtonByLabel(SAVE_OVERRIDE).click();
-        Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
+        if (getStaticTextByLabelContains("Current override set to: ").isPresent()) {
+            LOGGER.info("Domain identifier override is already set..");
+        } else {
+            textEntryField.type(value);
+            getTypeButtonByLabel(SAVE_OVERRIDE).click();
+            Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
+        }
     }
 
     public void removeDomainIdentifier() {
         pause(5);
-        getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-        Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
+        if (getStaticTextByLabelContains("No override set").isPresent()) {
+            LOGGER.info("Domain identifier override is already removed..");
+        } else {
+            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
+            Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
+        }
     }
 
     public void enableOneTrustConfig() {
         pause(5);
-        if (getStaticTextByLabelContains("isEnabledV2 is using its default value of false").isPresent()) {
+        if (getStaticTextByLabelContains("default value of true").isPresent() //to accommodate jarvis bug
+                || getStaticTextByLabelContains("Set to: true").isPresent()) {
+            LOGGER.info("isEnabledV2 is already enabled to true..");
+        } else {
             LOGGER.info("Enabling oneTrustConfig isEnableV2 config..");
             clickToggleView();
             Assert.assertTrue(getStaticTextByLabelContains("Set to: true").isPresent());
@@ -1042,10 +1054,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void disableOneTrustConfig() {
         pause(5);
-        if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
+        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent()) {
+            LOGGER.info("oneTrustConfig isEnabledV2 config does not have any override in use..");
+        } else {
             LOGGER.info("Disabling oneTrustConfig isEnableV2 config..");
             getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-            Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
+            Assert.assertTrue(getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent());
         }
     }
 
@@ -1063,7 +1077,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
             LOGGER.info("Enabling flex welcome config..");
             getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-            Assert.assertTrue(getStaticTextByLabelContains("NO override in use!").isPresent());
+            Assert.assertTrue(getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent());
         }
     }
 
