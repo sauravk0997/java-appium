@@ -73,7 +73,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmail(String userEmailAddress) {
         fillOutEmailField(userEmailAddress);
         UniversalUtils.captureAndUpload(getCastedDriver());
-        clickPrimaryButton();
+        clickPrimaryButtonByCoordinates();
+        pause(3);
     }
 
     public String getErrorMessageString() {

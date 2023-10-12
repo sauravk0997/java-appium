@@ -106,7 +106,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "'Sign Up' did not open the email submission screen as expected");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-
+        disneyPlusSignUpIOSPageBase.clickPrimaryButtonByCoordinates();
         Assert.assertTrue(initPage(DisneyPlusCreatePasswordIOSPageBase.class).isOpened(),
                 "User was not directed to Create Password as expected");
     }
