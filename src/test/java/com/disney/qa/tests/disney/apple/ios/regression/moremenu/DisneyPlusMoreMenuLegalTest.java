@@ -119,6 +119,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu"})
     public void verifyImpressumTab(String TUID) {
         initialSetup();
+        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         onboard(country, "en");
