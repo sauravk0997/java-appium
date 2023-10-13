@@ -554,7 +554,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61557", "XMOBQA-61559", "XMOBQA-61565", "XMOBQA-61561"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"})
     public void testChangePasswordUI() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
@@ -573,7 +573,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61559 - OTP entry page was not opened");
 
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
-
+        System.out.println(getDriver().getPageSource());
         Assert.assertTrue(disneyPlusChangePasswordIOSPageBase.isOpened(),
                 "XMOBQA-61559 - 'Change Password' screen was not opened");
 
@@ -614,7 +614,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61563"})
-    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu"})
     public void testChangePasswordWithoutLogout() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -635,7 +635,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu"})
     public void testChangePasswordWithLogout() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -715,7 +715,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"})
     public void testChangeEmailWithoutLogout() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -741,7 +741,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61601", "XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"})
     public void testChangeEmailWithLogout() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -803,7 +803,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     //TODO: Refactor to use 2 drivers to cover XMOBQA-61603
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         initialSetup();
         SoftAssert sa = new SoftAssert();
