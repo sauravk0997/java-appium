@@ -9,7 +9,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -33,6 +32,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement directBillingYearlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Premium Annual", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement directBillingMonthlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Basic Monthly", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
+
+    @ExtendedFindBy(accessibilityId = "changePasswordCell")
+    private ExtendedWebElement changePasswordCell;
 
     public ExtendedWebElement getMovistarSubscription() {
     return getDynamicAccessibilityId((String.format(CONTAINER_TEXT,
@@ -561,5 +563,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 DictionaryKeys.SUBSCRIPTION_MONTHLY.getText())));
         UniversalUtils.captureAndUpload(getCastedDriver());
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
+    }
+
+    public void clickChangePasswordCell() {
+        changePasswordCell.click();
     }
 }

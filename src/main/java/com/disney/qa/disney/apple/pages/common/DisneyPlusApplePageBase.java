@@ -438,7 +438,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isHeadlineSubtitlePresent() {
-        return headlineSubtitle.isElementPresent();
+        return headlineSubtitle.isPresent();
     }
 
     public String getActionableAlertMessage() {
