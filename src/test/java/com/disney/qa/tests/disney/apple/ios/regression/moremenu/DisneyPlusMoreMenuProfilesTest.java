@@ -4,16 +4,20 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.lang.invoke.MethodHandles;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String ADULT_DOB = "1923-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
@@ -23,15 +27,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62628", "XMOBQA-62630"})
-    @Test(description = "verify Avatar Selection UI & user's selected Avatar appears", groups = {"More Menu"})
+    @Test(description = "verify Avatar Selection UI & user's selected Avatar appears", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAvatarSelection() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase MoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase EditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        MobileUtilsExtended utils = new MobileUtilsExtended();
         onboard();
         MoreMenuIOSPageBase.clickAddProfile();
 
@@ -42,15 +44,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Choose avatar
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        BufferedImage selectedAvatar = utils.getElementImage(avatars[0]);
+        BufferedImage selectedAvatar = getElementImage(avatars[0]);
         avatars[0].click();
 
         //Verify that selected avatar appears on Add profile page
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "XMOBQA-62630 - User was not taken to the 'Add Profiles' page as expected");
-        BufferedImage addProfileAvatar = utils.getElementImage(addProfile.getAddProfileAvatar());
-        selectedAvatar = utils.getScaledImage(selectedAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
+        BufferedImage addProfileAvatar = getElementImage(addProfile.getAddProfileAvatar());
+        selectedAvatar = getScaledImage(selectedAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
 
-        sa.assertTrue(utils.areImagesTheSame(addProfileAvatar, selectedAvatar, 10),
+        sa.assertTrue(areImagesTheSame(addProfileAvatar, selectedAvatar, 10),
                 "XMOBQA-62630 - Avatar Selected was either not displayed or was altered beyond the accepted margin of error");
         //Finish creating profile
         if (disneyAccount.get().getProfileLang().equalsIgnoreCase("en")) {
@@ -60,30 +62,28 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         addProfile.clickSecondaryButtonByCoordinates();
         //Verify that selected avatar appears on More menu page
-        BufferedImage moreMenuAvatar = utils.getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
-        BufferedImage selectedAvatarCopy = utils.getScaledImage(utils.cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
+        BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
+        BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
 
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
-        sa.assertTrue(utils.areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
+        sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
                 "XMOBQA-62630 - Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
         sa.assertAll();
 
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62638"})
-    @Test(description = "Verify: Edit Profile User can change Avatar", groups = {"More Menu"})
+    @Test(description = "Verify: Edit Profile User can change Avatar", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileUserCanChangeAvatar() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         ExtendedWebElement[] avatars;
-        MobileUtilsExtended utils = new MobileUtilsExtended();
 
         setAppToHomeScreen(disneyAccount.get());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
-        BufferedImage moreMenuAvatar = utils.getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
+        BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
 
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
         disneyPlusEditProfileIOSPageBase.clickEditModeProfile(DEFAULT_PROFILE);
@@ -92,11 +92,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         chooseAvatarPage.verifyChooseAvatarPage();
         avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[3].click();
-        BufferedImage addProfileAvatar = utils.getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
-        BufferedImage moreMenuAvatarCopy = utils.getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
+        BufferedImage addProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
+        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
 
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
-        sa.assertFalse(utils.areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
+        sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
                 "XMOBQA-62630 - Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
         disneyPlusEditProfileIOSPageBase.clickSaveProfileButton();
 
@@ -105,9 +105,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62634"})
-    @Test(description = "Verify: User cannot select the same avatar for multiple profiles", groups = {"More Menu"})
+    @Test(description = "Verify: User cannot select the same avatar for multiple profiles", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUserCanNotSelectTheSameAvatarForMultipleProfiles() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -127,9 +126,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61269"})
-    @Test(description = "Autoplay toggle is Saved if User saves", groups = {"More Menu"})
+    @Test(description = "Autoplay toggle is Saved if User saves", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAutoplayToggleIsSaved() {
-        initialSetup();
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

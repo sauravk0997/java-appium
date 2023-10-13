@@ -8,15 +8,21 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
+
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @DataProvider
     private Object[] fallbackLanguages() {
@@ -58,9 +64,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62263"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu"})
+    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
 
@@ -86,9 +91,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62265"})
-    @Test(description = "Verify hyperlink functionality opens into browser", groups = {"More Menu"})
+    @Test(description = "Verify hyperlink functionality opens into browser", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUserTapsOnLink() {
-        initialSetup();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = new DisneyplusLegalIOSPageBase(getDriver());
 
         onboard("US", "en");
@@ -116,9 +120,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu"})
+    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyImpressumTab(String TUID) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         onboard(country, "en");
@@ -143,9 +146,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73783"})
     @Maintainer("gkrishna")
-    @Test(description = "One trust - 'opt-out module'", groups = {"More Menu"})
+    @Test(description = "One trust - 'opt-out module'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustModal() {
-        initialSetup();
         setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);

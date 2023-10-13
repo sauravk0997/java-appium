@@ -1,23 +1,22 @@
 package com.disney.qa.tests.disney.apple.ios;
 
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
-
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
-
 import com.disney.qa.disney.apple.pages.common.*;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.disney.util.TestGroup;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
@@ -32,7 +31,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
@@ -42,10 +40,9 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
-import io.appium.java_client.ios.IOSDriver;
-
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
@@ -64,14 +61,137 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
+    protected static final ThreadLocal<DisneyAccount> disneyAccount = new ThreadLocal<>();
+    protected static final ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
+    protected static final ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
+    protected static final ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
+    static final ThreadLocal<String> appVersion = new ThreadLocal<>();
 
-    protected ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
-    protected ThreadLocal<DisneyAccount> disneyAccount = new ThreadLocal<>();
-    protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
-    protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
-    protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
-    ThreadLocal<String> appVersion = new ThreadLocal<>();
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
+    public void preConfiguration(ITestResult testResult) {
+        String locale = R.CONFIG.get("locale");
+        String language =  R.CONFIG.get("language");
+        disneyApiHandler.set(new DisneyContentApiChecker());
+        disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
+        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, getAppVersion()));
+        languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
+        languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
+        languageUtils.get().setLegalDocuments();
+        searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
+        String accountPlan = Arrays.asList(testResult.getMethod().getGroups()).contains(TestGroup.BUNDLE_BASIC) ? BUNDLE_BASIC : BUNDLE_PREMIUM;
+        DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
+        disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
+        DisneyPlusApplePageBase.setDictionary(languageUtils.get());
+    }
+
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY, dependsOnMethods = "preConfiguration")
+    public void initProxy() {
+        LOGGER.warn("Proxy logic disabled.");
+        /*
+        new GeoedgeProxyServer().setProxyHostForSelenoid();
+        String country = languageUtils.get().getCountryName();
+        GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
+        geoedgeProxyFreshInstance.setProxyHostForSelenoid();
+        Map<String, String> headers = new HashMap<>();
+
+        String countryCode = new DisneyCountryData()
+                .searchAndReturnCountryData(country, "country", "code");
+        R.CONFIG.put("browserup_proxy", "true");
+        getDriver();
+        DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
+        DisneyProductData productData = new DisneyProductData();
+        boolean productHasLaunched = productData.searchAndReturnProductData("hasLaunched").equalsIgnoreCase("true");
+        boolean countryHasNotLaunched = disneyGlobalUtils.getBooleanFromCountries(countryCode, "hasNotLaunched");
+
+        if (DisneyParameters.getEnv().equalsIgnoreCase("prod")) {
+            headers.put(DisneyHttpHeaders.DISNEY_STAGING, TRUE);
+            if ((countryHasNotLaunched || !productHasLaunched)) {
+                headers.put(DisneyHttpHeaders.BAMTECH_CDN_BYPASS, BAMTECH_CDN_BYPASS_VALUE);
+            }
+        }
+
+        headers.put(DisneyHttpHeaders.BAMTECH_IS_TEST, "true");
+
+        boolean isStar = PARTNER.equalsIgnoreCase("star");
+
+        if (!isStar) {
+            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY);
+        } else  {
+            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY_STAR);
+        }
+
+        if ((countryHasNotLaunched || !productHasLaunched)) {
+            if (!isStar) {
+                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
+            } else {
+                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
+            }
+            headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
+            headers.put(DisneyHttpHeaders.BAMTECH_CANONBALL_PREVIEW, BAMTECH_CANONBALL_PREVIEW_VALUE);
+        }
+
+        boolean isGeoEdgeUnsupportedRegion = disneyGlobalUtils.getBooleanFromCountries(countryCode, IS_GEOEDGE_UNSUPPORTED_REGION)
+                || disneyGlobalUtils.getBooleanFromCountries(countryCode, IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES);
+        if (isGeoEdgeUnsupportedRegion) {
+            headers.put(DisneyHttpHeaders.BAMTECH_DSS_PHYSICAL_COUNTRY_OVERRIDE, countryCode);
+            if (isStar) {
+                headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
+                headers.put(DisneyHttpHeaders.BAMTECH_GEO_OVERRIDE, countryCode);
+                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
+                headers.put(DisneyHttpHeaders.BAMTECH_AKA_USER_GEO_OVERRIDE, countryCode);
+                headers.put(DisneyHttpHeaders.BAMTECH_PARTNER, PARTNER);
+            }
+        } else if (!countryCode.equals("US")) {
+            headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
+        }
+
+        try {
+            ProxyPool.registerProxy(geoedgeProxyFreshInstance.getGeoedgeProxy(country));
+            proxy.set(ProxyPool.getProxy());
+            //            Set<CaptureType> captureTypeSet = new HashSet<>();
+            //            if(captureTypes != null) {
+            //                IntStream.range(0, captureTypes.length - 1).forEach(type -> captureTypeSet.add(captureTypes[type]));
+            //            } else {
+            //                proxy.get().setMitmDisabled(true);
+            //            }
+            proxy.get().addHeaders(headers);
+            proxy.get();
+            proxy.get().start(Integer.parseInt(getDevice().getProxyPort()));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Assert.fail(String.format("Proxy Cannot be started for country '%s'. Manual validation is required.", country));
+        }
+         */
+    }
+
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "initProxy")
+    public void beforeAnyAppActions() {
+        getDriver();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
+        LOGGER.info("Starting API threads");
+        // Call getDriver to set platform variables
+        setBuildType();
+        handleAlert();
+
+        if (buildType == BuildType.IAP) {
+            LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
+            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+            relaunch();
+            handleAlert();
+        }
+
+        try {
+            initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
+            LOGGER.info("API threads started.");
+        } catch (Exception e) {
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
+            throw new SkipException("There was a problem with the setup: " + e.getMessage());
+        }
+//        clearAppCache();
+    }
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -109,18 +229,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         public String getYear() {
             return this.year;
         }
-    }
-
-    /**
-     * Dismisses system alert popups
-     */
-    public void handleAlert() {
-        handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
-    }
-
-    public void handleAlert(IOSUtils.AlertButtonCommand command) {
-        LOGGER.info("Checking for system alert to {}...", command);
-        new IOSUtils().handleSystemAlert(command, 10);
     }
 
     /**
@@ -173,7 +281,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         } else if (!homePage.isOpened()) {
             restart();
-            initialSetup();
+            handleAlert();
+            //initialSetup();
             loginToHome(account, profileName);
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
@@ -181,12 +290,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         pause(3);
     }
 
-    public void initialSetup() {
-        new GeoedgeProxyServer().setProxyHostForSelenoid();
-        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        }
-        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
+    /**
+     * Dismisses system alert popups
+     */
+    public void handleAlert() {
+        handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
+    }
+
+    @Override
+    public void handleAlert(IOSUtils.AlertButtonCommand command) {
+        LOGGER.info("Checking for system alert to {}...", command);
+        handleSystemAlert(command, 10);
     }
 
     public void initialSetup(String locale, String language, String... planType) {
@@ -204,7 +318,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
 
         LOGGER.info("Starting API threads");
-        iosUtils.set(new IOSUtils());
         // Call getDriver to set platform variables
         getDriver();
         handleAlert();
@@ -217,8 +330,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            LOGGER.warn("Commented restart as it seems useless after version detection refactoring");
-            //restart();
             DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
@@ -249,6 +360,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         disneyAccount.remove();
         disneyAccountApi.remove();
         LOGGER.info("Threads cleaned");
+        DisneyPlusApplePageBase.cleanLanguageUtils();
     }
 
     /**
@@ -306,11 +418,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void launchJarvis(boolean freshInstall) {
-        boolean isInstalled = iosUtils.get().isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         if (isInstalled) {
             if (freshInstall) {
-                iosUtils.get().terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-                iosUtils.get().removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
                 installJarvis();
             }
         } else {
@@ -330,39 +442,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void rotateScreen(ScreenOrientation orientation) {
         try {
-            IOSDriver driver = (IOSDriver) getCastedDriver();
-            driver.rotate(orientation);
+            rotate(orientation);
         } catch (WebDriverException wde) {
             LOGGER.error("Error rotating screen. Device may already be oriented.");
         }
-    }
-
-    public void startProxyAndRestart(String country) {
-        startProxyAndRestart(country, true);
-    }
-
-    public void startProxyAndRestart(String country, boolean withDataCapture) {
-        if (withDataCapture) {
-            initiateProxy(country);
-        } else {
-            LOGGER.warn("MITM Capturing set to false. No HAR data will be available!");
-            initiateProxy(country, null);
-        }
-        proxy.get().newHar();
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        driver.resetApp();
-        handleAlert();
     }
 
     public void downloadApp(String version) {
         String appCenterAppName = R.CONFIG.get("capabilities.app");
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance()
+            installApp(AppCenterManager.getInstance()
                     .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", version))
                     .getDirectLink());
         } else if (appCenterAppName.contains("Disney")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance()
+            installApp(AppCenterManager.getInstance()
                     .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", version))
                     .getDirectLink());
         }
@@ -373,11 +467,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         String appVersion = R.CONFIG.get("appVersion");
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance()
+            installApp(AppCenterManager.getInstance()
                     .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", appVersion))
                     .getDirectLink());
         } else if (appCenterAppName.contains("Disney")) {
-            iosUtils.get().installApp(AppCenterManager.getInstance()
+            installApp(AppCenterManager.getInstance()
                     .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
                     .getDirectLink());
         }
@@ -429,20 +523,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return disneyAccountApi.get().createAccount(request);
     }
 
-    /**
-     * Below are methods to support temp setup of iOS tests by disabling flexWelcomeConfig
-     * To be deprecated when IOS-7629 is fixed
-     */
-
-    public void initialTempSetup() {
-        new GeoedgeProxyServer().setProxyHostForSelenoid();
-        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        }
-        initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
-        //setFlexWelcomeConfig();
-    }
-
     public void setFlexWelcomeConfig() {
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
@@ -491,15 +571,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
         LOGGER.info("Terminating Jarvis app..");
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        downloadDisneyApp();
-        startApp(sessionBundles.get(DISNEY));
+        LOGGER.info("Restart Disney app..");
+        restart();
         LOGGER.info("Click allow to track your activity..");
         handleAlert();
     }
 
     public void launchJarvisOrInstall() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        boolean isInstalled = iosUtils.get().isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         LOGGER.info("Attempting to launch Jarvis app...");
         if (isInstalled) {
             launchJarvisNoInstall();

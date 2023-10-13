@@ -6,10 +6,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.decorators.Decorated;
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.util.TestGroup;
 import org.testng.Assert;
-import org.testng.annotations.BeforeSuite;
 
 import com.browserup.bup.BrowserUpProxy;
 import com.browserup.bup.proxy.CaptureType;
@@ -22,48 +21,21 @@ import com.disney.qa.disney.DisneyProductData;
 import com.disney.util.disney.DisneyGlobalUtils;
 import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-
-
+import org.testng.annotations.BeforeMethod;
 
 @SuppressWarnings("squid:S2187")
-public class BaseMobileTest extends BaseTest implements IMobileUtils {
+public class BaseMobileTest extends BaseTest implements IOSUtils {
     protected ThreadLocal<BrowserUpProxy> proxy = new ThreadLocal<>();
 
     protected static final String PARTNER = R.CONFIG.get("partner");
     protected static final String CHECKED = "Checked";
     protected static final String UNCHECKED = "Unchecked";
-    private static final String BAMTECH_CDN_BYPASS_VALUE = "21ea40fe-bdb5-4426-b134-66f98acb2b68";
-    private static final String BAMTECH_CANONBALL_PREVIEW_VALUE = "3Br5QesdzePvQEH";
-    private static final String IS_GEOEDGE_UNSUPPORTED_REGION = "isGeoEdgeUnsupportedRegion";
-    private static final String IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES = "isGeoEdgeSupportedRegionWithIssues";
+    protected static final String BAMTECH_CDN_BYPASS_VALUE = "21ea40fe-bdb5-4426-b134-66f98acb2b68";
+    protected static final String BAMTECH_CANONBALL_PREVIEW_VALUE = "3Br5QesdzePvQEH";
+    protected static final String IS_GEOEDGE_UNSUPPORTED_REGION = "isGeoEdgeUnsupportedRegion";
+    protected static final String IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES = "isGeoEdgeSupportedRegionWithIssues";
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
-
-    public WebDriver getCastedDriver() {
-        WebDriver drv = getDriver();
-        if (drv instanceof Decorated<?>) {
-            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
-        }
-        return drv;
-    }
-
-    /**
-     * Searches the config at runtime for the platform being run before applying fullReset=true
-     * due to issues with its use on iOS.
-     */
-    @BeforeSuite
-    public void androidMobileCleanInstall() {
-        if (R.CONFIG.get("capabilities.platformName").equalsIgnoreCase("ANDROID")) {
-            R.CONFIG.put("capabilities.fullReset", "false");
-            R.CONFIG.put("capabilities.enforceAppInstall", "true");
-        }
-    }
-
-    //Starts a BrowserUp proxy session for the United States with Basic Request and Response captures
-    public void initiateProxy() {
-        initiateProxy("United States");
-    }
 
     /**
      * Starts a BrowserUp proxy session for the designated country with Basic Request and Response captures

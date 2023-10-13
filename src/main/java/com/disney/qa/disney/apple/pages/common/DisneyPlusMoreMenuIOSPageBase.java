@@ -154,7 +154,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public DisneyPlusEditProfileIOSPageBase clickEditProfilesBtn() {
-		new MobileUtilsExtended().clickElementAtLocation(editProfilesBtn, 50, 50);
+		clickElementAtLocation(editProfilesBtn, 50, 50);
 		return initPage(DisneyPlusEditProfileIOSPageBase.class);
 	}
 
@@ -175,7 +175,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void swipeCells(String profile, int swipes, Direction direction) {
-		new MobileUtilsExtended().swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
+		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
 	}
 
 	public boolean isHelpWebviewOpen() {
@@ -194,14 +194,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
 		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-			new IOSUtils().clickElementAtLocation(wifiContainer, 50, 90);
+			clickElementAtLocation(wifiContainer, 50, 90);
 		}
 	}
 
 	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
 		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-			new IOSUtils().clickElementAtLocation(downloadContainer, 50, 90);
+			clickElementAtLocation(downloadContainer, 50, 90);
 		}
 	}
 

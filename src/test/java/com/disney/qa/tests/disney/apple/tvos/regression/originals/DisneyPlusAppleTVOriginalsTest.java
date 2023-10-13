@@ -7,6 +7,8 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOriginalsPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -32,16 +34,16 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         List<String> originalContent = disneyPlusAppleTVOriginalsPage.getContentItems(3); //Originals begins at 3
 
         disneyPlusAppleTVOriginalsPage.moveRight(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(1))), "Moving right did not focus the 2nd item in the list");
         disneyPlusAppleTVOriginalsPage.moveLeft(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(0))), "Moving left did not focus the 1st item in the list");
         disneyPlusAppleTVOriginalsPage.moveDown(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(5))), "Moving down did not focus the 5th item in the list");
         disneyPlusAppleTVOriginalsPage.moveUp(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(0))), "Moving up did not focus the 5th item in the list");
 
         sa.assertAll();

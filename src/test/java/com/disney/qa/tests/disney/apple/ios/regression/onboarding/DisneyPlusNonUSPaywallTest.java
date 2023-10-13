@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusPaywallIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusRestartSubscriptionIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
@@ -13,11 +14,9 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusNonUSPaywallTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62691"})
-    @Test(description = "Paywall is shown to unentitled user after Log In", groups = {"Smoke"})
+    @Test(description = "Paywall is shown to unentitled user after Log In", groups = {"Smoke", TestGroup.PRE_CONFIGURATION })
     public void testLoginWithUnentitledAccount() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
-        handleAlert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(disneyAccountApi.get().createAccount("US", "en"));
 
@@ -52,15 +51,13 @@ public class DisneyPlusNonUSPaywallTest extends DisneyBaseTest {
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
-    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyRestartSubscriptionPaywallUI() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        handleAlert();
 
         DisneyAccount expired = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();

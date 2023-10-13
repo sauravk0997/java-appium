@@ -64,14 +64,14 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     public boolean verifySelectedAudioIs(String language) {
         LOGGER.info("verifying if selected audio language is: {}", language);
         ExtendedWebElement element = audioSubtitleCheckBox.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
+        swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
     }
 
     public void chooseAudioLanguage(String language) {
         LOGGER.info("selecting audio language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
+        swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
         element.click();
     }
 
@@ -82,14 +82,14 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     public void chooseSubtitlesLanguage(String language) {
         ExtendedWebElement element = languageCell.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
+        swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         element.click();
     }
 
     public boolean verifySelectedSubtitleLangIs(String language) {
         LOGGER.info("verifying if selected subtitles language is: {}", language);
         ExtendedWebElement element = languageCellCheckmark.format(language);
-        new IOSUtils().swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
+        swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
     }
 }

@@ -3,15 +3,18 @@ package com.disney.qa.tests.disney.apple.ios.playback;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.HARUtils;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
+
+import java.lang.invoke.MethodHandles;
 
 public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
 
-    @Test(description = "Capture playback requests in har file.")
+    @Test(description = "Capture playback requests in har file.", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void capturePlaybackHar() {
-        initialSetup();
-        startProxyAndRestart(languageUtils.get().getCountryName());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);

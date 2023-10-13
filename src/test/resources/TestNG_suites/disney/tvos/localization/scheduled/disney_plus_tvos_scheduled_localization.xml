@@ -8,7 +8,7 @@
     <parameter name="jenkinsJobName" value="DisneyPlus-AppleTV-Localization-Scheduled"/>
     <parameter name="jenkinsEnvironments" value="PROD,QA"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="deviceName=ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_6,ATV_4_Gen_7,ATV_4_Gen_8,ATV_4_Gen_9,ATV_4K_1,ATV_4K_2,ATV_2_Gen_4K;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_6,ATV_4_Gen_7,ATV_4_Gen_8,ATV_4_Gen_9,ATV_4K_1,ATV_4K_2,ATV_2_Gen_4K;platformName=iOS;deviceType=tvOS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::groups::Test Group selection. Leave blank to run full regression." value="SubUI,BGImage,Onboarding"/>
@@ -34,7 +34,7 @@
                value="locale:DK, language:da; locale:DK, language:en; locale:SE, language:sv; locale:SE, language:en; locale:PT, language:pt; locale:PT, language:en; locale:FI, language:fi; locale:FI, language:en; locale:RO, language:ro; locale:RO, language:en; locale:CZ, language:cs; locale:CZ, language:en; locale:HU, language:hu; locale:HU, language:en; locale:HK, language:zh; locale:HK, language:en; locale:TW, language:zh; locale:TW, language:en; locale:SK, language:sk; locale:SK, language:en"/>
 
     <parameter name="overrideFields"
-               value="proxy_server_geoedge=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string4=${globalization},custom_string5={debugDictionary},browserup_proxy=true"/>
+               value="proxy_server_geoedge=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string4=${globalization},custom_string5={debugDictionary},browserup_proxy=true,init_retry_count=2,init_retry_interval=15,retry_count=1"/>
 
     <test verbose="1" name="Disney Plus Onboarding Scheduled Localization Screenshots">
         <classes>

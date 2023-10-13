@@ -76,11 +76,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$7.99 ✓\"`]")
     private ExtendedWebElement basicMonthlyPriceCheckmark;
 
-    protected IOSUtils utils;
 
     public IOSSettingsMenuBase(WebDriver driver) {
         super(driver);
-        utils = new IOSUtils();
     }
 
     public void submitSandboxPassword(String password) {
@@ -94,18 +92,18 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     public void launchSettings() {
-        utils.launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         if(!isOpened()) {
-            utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-            utils.launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+            terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+            launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         }
     }
 
     public String getDeviceSandBoxAppleID() {
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
-        utils.swipe(sandboxAccount);
+        swipe(sandboxAccount);
         return appleIDCell.getText().split(":")[1];
     }
 
@@ -114,7 +112,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         int appSubButtonIndex = 9999;
         List<ExtendedWebElement> appSubButtons = new LinkedList<>();
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
 
@@ -132,12 +130,12 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
-        utils.terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
     }
 
     public void navigateToManageSubscription() {
         launchSettings();
-        utils.swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
         manageSandboxAcct();
         if(subscriptionsButton.isElementPresent()) {
@@ -148,7 +146,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     protected void manageSandboxAcct() {
         CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
 
-        utils.swipe(sandboxAccount);
+        swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
         try {
@@ -160,7 +158,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     protected void cancelActiveSubscription() {
         cancelSubscriptionBtn.click();
-        utils.acceptAlert();
+        acceptAlert();
         LOGGER.info("Active Subscription cancelled.");
     }
 

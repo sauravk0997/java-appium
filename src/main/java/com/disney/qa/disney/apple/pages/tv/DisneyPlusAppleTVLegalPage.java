@@ -6,6 +6,8 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -47,7 +49,7 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = legalCenterTitle.isPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -82,21 +84,21 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                 switch (labels.get(i)) {
                     case "Privacy Policy":
                         sa.assertFalse(isFocused(privacyPolicy), String.format(assertionMessage, labels.get(i)));
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         moveDown(30, 1);
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
                     case "Subscriber Agreement":
                         sa.assertFalse(isFocused(subscriberAgreement), String.format(assertionMessage, labels.get(i)));
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         moveDown(45, 1);
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
                     case "Your California Privacy Rights":
                         sa.assertFalse(isFocused(yourCAPrivacyRights), String.format(assertionMessage, labels.get(i)));
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         moveDown(10, 1);
-                        UniversalUtils.captureAndUpload(getCastedDriver());
+                        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
                     default:
                         LOGGER.info(String.format("'%s' is not a valid Legal page selection", labels.get(i)));
@@ -104,14 +106,14 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
                 sa.assertTrue(isDynamicAccessibilityIDElementPresent(documentArray[documentArray.length - 1]), String.format(errorMessage, documentArray[documentArray.length - 1]));
                 moveLeft(1, 1);
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             } else {
                 clickSelect();
                 sa.assertFalse(isFocused(doNotSellMyPersonalInfo), String.format(assertionMessage, labels.get(i)));
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 documentArray = documents.get(i).split(lineFeed);
                 IntStream.range(0, documentArray.length).forEach(j -> sa.assertTrue(isDynamicAccessibilityIDElementPresent(documentArray[j]), String.format(errorMessage, documentArray[j])));
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             }
             moveDown(1, 1);
         });
@@ -121,7 +123,7 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     public void getAllLegalSectionsScreenshot(String filename, ThreadLocal<String> directory) {
         getLegalTabs().forEach(legalTitle -> {
             String sectionName = legalTitle.getAttribute("name");
-            UniversalUtils.storeScreenshot(getCastedDriver(), filename + "_" + sectionName + "_tvOS", directory.get());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, filename + "_" + sectionName + "_tvOS");
             moveDown(1, 1);
         });
     }

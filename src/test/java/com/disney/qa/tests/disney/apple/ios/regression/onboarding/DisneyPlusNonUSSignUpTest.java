@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -12,10 +13,8 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for US based users", groups = {"NonUS-Onboarding"})
+    @Test(description = "Verify onboarding stepper for US based users", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyOnboardingStepperUS() {
-        initialSetup();
-        handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
@@ -31,16 +30,14 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
-    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"NonUS-Onboarding"})
+    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallCancel() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        handleAlert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
@@ -64,9 +61,8 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
-    @Test(description = "Sign Up - Verify Paywall UI", groups = {"NonUS-Onboarding"})
+    @Test(description = "Sign Up - Verify Paywall UI", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallUI() {
-        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -74,7 +70,6 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        handleAlert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
@@ -103,9 +98,8 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
-    @Test(description = "Verify valid password submissions and hide/show button", groups = {"NonUS-Onboarding"})
+    @Test(description = "Verify valid password submissions and hide/show button", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
-        initialSetup();
         verifySignUpButtonNavigation();
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -133,7 +127,6 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
     }
 
     private void verifySignUpButtonNavigation() {
-        handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),

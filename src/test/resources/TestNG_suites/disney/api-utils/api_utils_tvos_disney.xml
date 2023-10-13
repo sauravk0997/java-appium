@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="PROD,QA"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
@@ -16,7 +16,7 @@
     <parameter name="reporting.notification.slack-channels" value="qte-release-tests"/>
     <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details Api Utils tests" parallel="methods">
         <classes>

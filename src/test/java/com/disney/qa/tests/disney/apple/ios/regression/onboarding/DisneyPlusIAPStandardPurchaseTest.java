@@ -3,7 +3,10 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
+import com.disney.util.TestGroup;
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,20 +26,15 @@ import com.zebrunner.carina.crypto.CryptoTool;
 import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 
+import java.lang.invoke.MethodHandles;
+
 public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
-
-//    public static final List<SandboxAccount> accountsList = new LinkedList() {
-//        {
-//            new AppStoreConnectApi().getSandboxAccounts(SANDBOX_ACCOUNT_PREFIX);
-//        }
-//    };
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73696"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Basic sku", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Basic sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void verifyStandardPurchase_Basic() {
-        initialSetup();
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
@@ -59,7 +57,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
         }
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         //Purchase plan
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.BASIC));
@@ -74,14 +72,14 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
+        acceptAlert();
+        acceptAlert();
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
         if (addProfilePage.getTypeButtonByLabel("CONTINUE").isPresent()) {
-            new MobileUtilsExtended().clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
+            clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
@@ -97,9 +95,8 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73697"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void verifyStandardPurchase_Premium_Monthly() {
-        initialSetup();
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
@@ -120,7 +117,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
         }
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         //Purchase plan
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY));
@@ -135,14 +132,14 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
+        acceptAlert();
+        acceptAlert();
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
         if (addProfilePage.getTypeButtonByLabel("CONTINUE").isPresent()) {
-            new MobileUtilsExtended().clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
+            clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
@@ -158,9 +155,8 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72741"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Premium yearly sku", groups = {"Ariel-Purchase"})
+    @Test(description = "Standard purchase with a new account for Premium yearly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void verifyStandardPurchase_Premium_Yearly() {
-        initialSetup();
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
@@ -181,7 +177,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
         }
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         //Purchase plan
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY));
@@ -196,15 +192,15 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
+        acceptAlert();
+        acceptAlert();
         pause(3);
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
         //More thrills and drama continue button
         if (addProfilePage.getTypeButtonByLabel("CONTINUE").isPresent()) {
-            new MobileUtilsExtended().clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
+            clickElementAtLocation(addProfilePage.getTypeButtonByLabel("CONTINUE"), 50, 50);
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();

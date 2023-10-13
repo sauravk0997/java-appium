@@ -3,6 +3,7 @@ package com.disney.qa.api.disney;
 import com.disney.exceptions.ApiDetectiveUnblockException;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.http.resttemplate.RestTemplateBuilder;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.util.disney.DisneyGlobalUtils;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -50,7 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DisneyApiProvider {
+public class DisneyApiProvider implements IOSUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -658,12 +659,12 @@ public class DisneyApiProvider {
 
         switch (platform) {
             case "ios":
-                version = new MobileUtilsExtended().getInstalledAppVersion();
+                version = getInstalledAppVersion();
                 platform = "/" + platform + "/";
                 apiPath = DisneyParameters.getAppConfigsHost() + env + platform + version + File.separator + path;
                 break;
             case "apple-tv":
-                version = new MobileUtilsExtended().getInstalledAppVersion();
+                version = getInstalledAppVersion();
                 platform = "/tvos/";
                 apiPath = DisneyParameters.getAppConfigsHost() + env + platform + version + File.separator + path;
                 break;
