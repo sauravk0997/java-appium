@@ -69,7 +69,7 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
         String deviceType = IDriverPool.getDefaultDevice().getDeviceType().toString();
         File directory = new File("SCREENSHOTS" + File.separator + lang + deviceType + File.separator + deviceName + app);
         directory.mkdirs();
-        MOBILE_UTILS_EXTENDED_LOGGER.info("Files being written to: " + directory.toString());
+        MOBILE_UTILS_EXTENDED_LOGGER.info("Files being written to: {}", directory);
 
         try {
             File screenshotTest = File.createTempFile(deviceType + "_", ".png", directory);
@@ -77,7 +77,7 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
             image = ImageIO.read(srcFile);
             ImageIO.write(image, "png", screenshotTest);
         } catch (IOException e) {
-            MOBILE_UTILS_EXTENDED_LOGGER.info("Something went wrong. See log:\n" + e);
+            MOBILE_UTILS_EXTENDED_LOGGER.info("Something went wrong. See log:\n{}", e, e);
         }
     }
 

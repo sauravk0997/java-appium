@@ -294,7 +294,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return disneyLanguageUtils.get();
     }
 
-    public static synchronized void setDictionary(DisneyLocalizationUtils dictionary) {
+    public static void setDictionary(DisneyLocalizationUtils dictionary) {
         disneyLanguageUtils.set(dictionary);
     }
 
