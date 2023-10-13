@@ -103,7 +103,7 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
         String language = getData(country, "language").toString();
         initiateProxy(StringUtils.substringBefore(country, "-"));
         localLanguageUtils.setDictionaries(configApi.get().getDictionaryVersions());
-        handleAlert();
+//        handleAlert();
 
         R.CONFIG.put("capabilities.language", language, true);
         R.CONFIG.put("capabilities.locale", getData(country, "code").toString(), true);
@@ -111,7 +111,7 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
 
         proxy.get().newHar();
         restartDriver(true);
-        handleAlert();
+//        handleAlert();
     }
 
     @Test(dataProvider = "dataProvider", groups = TestGroup.PRE_CONFIGURATION)

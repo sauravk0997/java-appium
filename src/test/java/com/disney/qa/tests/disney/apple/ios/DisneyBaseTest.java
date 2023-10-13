@@ -174,13 +174,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         setBuildType();
-        handleAlert();
+        //handleAlert();
 
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
             initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
             relaunch();
-            handleAlert();
+//            handleAlert();
         }
 
         try {
@@ -274,14 +274,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        handleAlert();
+//        handleAlert();
         initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
 
         } else if (!homePage.isOpened()) {
             restart();
-            handleAlert();
+//            handleAlert();
             //initialSetup();
             loginToHome(account, profileName);
         } else {
@@ -320,7 +320,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         getDriver();
-        handleAlert();
+//        handleAlert();
         setBuildType();
 
         if (buildType == BuildType.IAP) {
@@ -370,7 +370,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void restart() {
         terminateApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
-        handleAlert();
+//        handleAlert();
     }
 
     /**
@@ -574,7 +574,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-        handleAlert();
+//        handleAlert();
     }
 
     public void launchJarvisOrInstall() {

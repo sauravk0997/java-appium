@@ -175,7 +175,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("WhoseWatchingPage");
 
         whoseWatchingPage.clickProfile("Test");
-        handleAlert();
+//        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(3);
         getScreenshots("ProfilePage");
