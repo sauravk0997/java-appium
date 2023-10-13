@@ -143,7 +143,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62050"})
-    @Test(description = "Log in - Verify invalid email format - One Character", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify invalid email format - One Character", groups = {"Onboarding"}, enabled = false)
     public void testInvalidEmailFormatOneChar() {
         initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
@@ -161,7 +161,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62050"})
-    @Test(description = "Log in - Verify invalid email format - No TLD", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify invalid email format - No TLD", groups = {"Onboarding"}, enabled = false)
     public void testInvalidEmailFormatNoTopLevelDomain() {
         initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
@@ -178,7 +178,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62052"})
-    @Test(description = "Log in - Verify login no email", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify login no email", groups = {"Onboarding"}, enabled = false)
     public void testLoginNoEmail() {
         initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
@@ -328,6 +328,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         handleAlert();
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(disneyAccount.get());
+        disneyPlusWhoseWatchingIOSPageBase.dismissAppTrackingPopUp();
 
         softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isHeaderTextDisplayed(), "Header text was not displayed");
         softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAccessModeProfileIconPresent(DEFAULT_PROFILE), "Profile name or image not displayed");

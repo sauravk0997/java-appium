@@ -44,8 +44,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "Disney Plus Logo")
     private ExtendedWebElement disneyPlusLogo;
 
-    private ExtendedWebElement welcomeTagline = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.WELCOME_BASE_TEXT);
-
     //FUNCTIONS
 
     public DisneyPlusWelcomeScreenIOSPageBase(WebDriver driver) {
@@ -54,7 +52,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP_BTN.getText())).isElementPresent();
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).isPresent();
     }
 
     public boolean isBackgroundDisplayed() {
@@ -62,25 +60,30 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isDisneyPlusLogoDisplayed() {
-        return disneyPlusLogo.isElementPresent();
+        return disneyPlusLogo.isPresent();
     }
 
     public boolean isMainTextDisplayed() {
-        return welcomeTagline.isElementPresent();
+        return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
-    public boolean isSubCtaPresent() {
-        String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.WELCOME_SUB_TEXT.getText());
-        subscribeText = getDictionary().formatPlaceholderString(subscribeText, Map.of("PRICE_0", "---", "TIME_UNIT_0", "---", "PRICE_1", "---", "TIME_UNIT_1", "---"));
-        return staticTextByLabel.format(subscribeText).isElementPresent();
+    //TODO: Investigate why this dictionary key is not found QAA-12657
+    public boolean isSubCopyPresent() {
+        String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        String subscribeText2 = getDictionary().formatPlaceholderString(subscribeText, Map.of("PRICE_0", "---", "TIME_UNIT_0", "---"));
+        return staticTextByLabel.format(subscribeText2).isPresent();
+    }
+
+    public boolean isSubCopyDirectTextPresent() {
+        return staticTextLabelContains.format("Start streaming Disney+ starting from --/--.").isPresent();
     }
 
     public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isElementPresent();
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).isPresent();
     }
 
     public boolean isLogInButtonDisplayed() {
-        return loginButton.isElementPresent();
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).isPresent();
     }
 
     public boolean isLogOutButtonDisplayed() {
@@ -108,11 +111,11 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).click();
     }
 
     public void clickSignUpButton() {
-        signUpButton.click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).click();
     }
 
     public void clickCompleteSubscriptionButton() {

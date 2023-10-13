@@ -106,7 +106,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "'Sign Up' did not open the email submission screen as expected");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-
+        disneyPlusSignUpIOSPageBase.clickPrimaryButtonByCoordinates();
         Assert.assertTrue(initPage(DisneyPlusCreatePasswordIOSPageBase.class).isOpened(),
                 "User was not directed to Create Password as expected");
     }
@@ -210,6 +210,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify valid Subscriber Agreement link, expand/collapse/scroll content", groups = {"Onboarding"})
     public void verifyUSLegalHyperlinkSubscriberAgreement() {
         initialSetup();
+        setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -231,6 +232,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding"})
     public void verifyUSLegalHyperlinkPrivacyPolicy() {
         initialSetup();
+        setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -252,6 +254,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding"})
     public void verifyUSLegalCenterUI() {
         initialSetup();
+        setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -280,6 +283,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding"})
     public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
         initialSetup();
+        setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

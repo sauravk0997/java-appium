@@ -6,6 +6,8 @@ import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
+
+import com.disney.qa.disney.apple.pages.common.*;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -34,15 +36,6 @@ import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
@@ -78,6 +71,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     protected ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
     protected ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
     protected ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
+    ThreadLocal<String> appVersion = new ThreadLocal<>();
 
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -150,6 +144,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         pause(5);
+        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
@@ -172,6 +167,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         handleAlert();
+        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
 
@@ -191,7 +187,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             new IOSUtils().setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }
         initialSetup(R.CONFIG.get("locale"), R.CONFIG.get("language"));
-        //setFlexWelcomeConfig();
     }
 
     public void initialSetup(String locale, String language, String... planType) {
@@ -373,6 +368,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void downloadDisneyApp() {
+        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        String appVersion = R.CONFIG.get("appVersion");
+        LOGGER.info("App Download: {}", appCenterAppName);
+        if (appCenterAppName.contains("for_Automation")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", appVersion))
+                    .getDirectLink());
+        } else if (appCenterAppName.contains("Disney")) {
+            iosUtils.get().installApp(AppCenterManager.getInstance()
+                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
+                    .getDirectLink());
+        }
+    }
+
     public ApiConfiguration getApiConfiguration(String partner) {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
@@ -457,13 +467,42 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void setOneTrustConfig() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection("platformConfig");
+        applePageBase.scrollToItem("oneTrustConfig").click();
+        LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
+        boolean enableOneTrustConfig = Boolean.parseBoolean(R.CONFIG.get("enableOneTrustConfig"));
+        if (enableOneTrustConfig) {
+            LOGGER.info("Navigating to domainIdentifier..");
+            applePageBase.scrollToItem("domainIdentifier").click();
+            applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
+            applePageBase.navigateBack();
+            LOGGER.info("Navigating to isEnabledV2..");
+            applePageBase.scrollToItem("isEnabledV2").click();
+            applePageBase.enableOneTrustConfig();
+        } else {
+            applePageBase.removeDomainIdentifier();
+            applePageBase.navigateBack();
+            applePageBase.disableOneTrustConfig();
+        }
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        downloadDisneyApp();
+        startApp(sessionBundles.get(DISNEY));
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
+    }
+
     public void launchJarvisOrInstall() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         boolean isInstalled = iosUtils.get().isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         LOGGER.info("Attempting to launch Jarvis app...");
         if (isInstalled) {
             launchJarvisNoInstall();
-            System.out.println(applePageBase.isCompatibleDisneyTextPresent());
             if (!applePageBase.isCompatibleDisneyTextPresent()) {
                 launchJarvis(true);
             }
