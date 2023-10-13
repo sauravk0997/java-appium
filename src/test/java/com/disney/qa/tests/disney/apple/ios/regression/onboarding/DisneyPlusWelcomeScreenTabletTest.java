@@ -9,8 +9,6 @@ import org.testng.asserts.SoftAssert;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
-import io.appium.java_client.ios.IOSDriver;
-
 public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62330", "XMOBQA-62333"})
