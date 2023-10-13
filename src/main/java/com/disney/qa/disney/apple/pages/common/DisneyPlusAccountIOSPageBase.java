@@ -534,10 +534,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         UniversalUtils.captureAndUpload(getCastedDriver());
         switch (planName) {
             case BASIC:
-                return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).isPresent();
+                return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).isPresent();
             case PREMIUM_MONTHLY:
             case PREMIUM_YEARLY:
-                return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_APPLE.getText())).isPresent();
+                return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_APPLE.getText())).isPresent();
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Plan type is not a valid option", planName));
