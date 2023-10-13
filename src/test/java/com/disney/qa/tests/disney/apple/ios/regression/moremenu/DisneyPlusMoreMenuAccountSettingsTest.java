@@ -573,7 +573,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61559 - OTP entry page was not opened");
 
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
-        System.out.println(getDriver().getPageSource());
+
         Assert.assertTrue(disneyPlusChangePasswordIOSPageBase.isOpened(),
                 "XMOBQA-61559 - 'Change Password' screen was not opened");
 
@@ -659,7 +659,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61551", "XMOBQA-61553", "XMOBQA-61555"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"}, enabled = false)
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"})
     public void testChangeEmailUI() {
         initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
