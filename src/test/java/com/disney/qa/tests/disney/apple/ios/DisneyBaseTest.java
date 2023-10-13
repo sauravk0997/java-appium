@@ -63,7 +63,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
-    private static final String TVOS = "tvOS";
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -235,8 +234,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-
-        return "2.24.0";
+        String version = AppCenterManager.getInstance()
+                .getAppInfo(R.CONFIG.get("capabilities.app"))
+                .getVersion();
+        LOGGER.info("version:{}", version);
+        return version;
     }
 
     @AfterMethod(alwaysRun = true)
