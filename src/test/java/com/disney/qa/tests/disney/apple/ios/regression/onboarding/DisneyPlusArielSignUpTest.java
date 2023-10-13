@@ -126,7 +126,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         moreMenu.goBackToDisneyAppFromSafari();
 
         disneyPlusAccountIsMinorIOSPageBase.clickDismissButton();
-        Assert.assertTrue(new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).isOpened(),
+        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isSignUpButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
         softAssert.assertAll();
     }
