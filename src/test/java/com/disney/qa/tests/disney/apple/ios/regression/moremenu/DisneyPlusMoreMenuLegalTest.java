@@ -61,6 +61,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu"})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         initialSetup();
+        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
 
