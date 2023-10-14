@@ -465,6 +465,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
     public void setFlexWelcomeConfig() {
+        pause(5);
+        detectAppleUpdateAndClickUpdateLater();
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
@@ -507,5 +509,16 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         welcomeScreen.isOpened();
         super.installJarvis();
+    }
+
+    public void detectAppleUpdateAndClickUpdateLater() {
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        if (applePageBase.getStaticTextByLabelContains("An update is available").isPresent()) {
+            LOGGER.info("Dismissing Apple Update alert by clicking 'Update Later'..");
+            applePageBase.moveDown(2,1);
+            LOGGER.info("Is 'Update later' in focus?");
+            System.out.println(applePageBase.isFocused(applePageBase.getTypeButtonContainsLabel("Update Later")));
+            applePageBase.clickSelect();
+        }
     }
 }
