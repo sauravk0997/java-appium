@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBas
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
@@ -17,15 +18,21 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEX
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusWelcomeScreenIOSPageBase.class)
 public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenIOSPageBase {
 
+    @ExtendedFindBy(accessibilityId = "Sign Up Now")
+    protected ExtendedWebElement signUpButton;
+
+    @ExtendedFindBy(accessibilityId = "Login")
+    protected ExtendedWebElement loginButton;
+
     public DisneyPlusAppleTVWelcomeScreenPage(WebDriver driver) {
         super(driver);
     }
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = loginButton.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        return isPresent;
+        System.out.println(getDriver().getPageSource());
+        System.out.println(signUpButton.isPresent());
+        return signUpButton.isPresent();
     }
 
     public void waitForWelcomePageToLoad() {
@@ -34,23 +41,19 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public boolean isSignUpFocused() {
-        boolean isFocused = isFocused(signUpButton);
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        return isFocused;
+        return isFocused(signUpButton);
     }
 
     public boolean isLoginBtnFocused() {
-        boolean isFocused = isFocused(loginButton);
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        return isFocused;
+        return isFocused(loginButton);
     }
 
     @Override
     public void clickLogInButton() {
-        loginButton.isElementPresent();
+        loginButton.isPresent();
         fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 2, "Sign Up button was not focused")
                 //TODO: TVOS-3456 focus not found on sign up button, temp fix use of isElementPresent
-                .until(it -> signUpButton.isElementPresent());
+                .until(it -> signUpButton.isPresent());
         UniversalUtils.captureAndUpload(getCastedDriver());
 
         fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 1, "Login Button was not focused")
@@ -68,22 +71,16 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public ExtendedWebElement getSignUpButton() {
-        return xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                                DictionaryKeys.SIGN_UP_BTN.getText()),
-                DictionaryKeys.SIGN_UP_BTN.getText());
+        return signUpButton;
     }
 
     public ExtendedWebElement getLoginButton() {
-        return xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                                LOGIN_BTN.getText()),
-                DictionaryKeys.LOGIN_BTN.getText());
+        return loginButton;
     }
 
     public boolean isWelcomeSubTextPresent() {
         String subTextLabel = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, WELCOME_SUB_TEXT.getText()),
                 Map.of("PRICE_0", "---", "TIME_UNIT_0", "---", "PRICE_1", "---", "TIME_UNIT_1", "---"));
-        return getDynamicAccessibilityId(subTextLabel).isElementPresent();
+        return getDynamicAccessibilityId(subTextLabel).isPresent();
     }
 }

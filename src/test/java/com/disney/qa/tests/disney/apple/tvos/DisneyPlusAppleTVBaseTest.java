@@ -465,10 +465,11 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
     public void setFlexWelcomeConfig() {
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         pause(5);
         detectAppleUpdateAndClickUpdateLater();
+        applePageBase.dismissAppTrackingPopUp();
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
             LOGGER.info("{} found, setting flex welcome config..", priceTimeUnit);
             JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
@@ -520,5 +521,9 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
             System.out.println(applePageBase.isFocused(applePageBase.getTypeButtonContainsLabel("Update Later")));
             applePageBase.clickSelect();
         }
+    }
+
+    public void dismissAlertPop() {
+
     }
 }
