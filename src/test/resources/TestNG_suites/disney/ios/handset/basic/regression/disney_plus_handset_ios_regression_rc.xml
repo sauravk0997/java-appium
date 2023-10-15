@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="ios_handset_regression_rc_2.24.0" annotations="JDK" configfailurepolicy="continue" parallel="tests">
+<suite verbose="1" thread-count="12" name="ios_handset_regression_rc_2.24.0" annotations="JDK" configfailurepolicy="continue" parallel="tests">
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
@@ -37,6 +37,10 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Onboarding2">
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusForgotPasswordTest"/>
         </classes>
@@ -46,8 +50,16 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuSettingsTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAppSettingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset More Menu2">
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuWatchlistTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAccountSettingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset More Menu3">
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuProfilesTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuLegalTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuArielProfilesTest"/>
@@ -72,6 +84,10 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerThumbnailSeekTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player2">
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
