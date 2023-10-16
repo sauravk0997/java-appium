@@ -10,24 +10,29 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.util.TestGroup;
 import com.disney.util.disney.DisneyGlobalUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
+import java.lang.invoke.MethodHandles;
 import java.util.LinkedList;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocalizationBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Backgrounds"})
+    @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Backgrounds",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     private void captureOnboardingBackgrounds(String TUID) {
         setup();
         setZipTestName("Onboarding_Backgrounds");
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
-        count.set(1);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase completeSubscriptionIOSPageBase = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
@@ -52,11 +57,11 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(5);
         initPage(DisneyPlusSignUpIOSPageBase.class).clickAgreeAndContinueIfPresent();
         passwordPage.typePassword("1234AB!@");
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
         pause(3);
         if (isArielRegion) {
-            iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+            setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
             initPage(DisneyPlusSignUpIOSPageBase.class).clickPrimaryButton();
             passwordPage.clickAlertConfirm();
         } else {
@@ -74,7 +79,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         getScreenshots("WelcomeBack");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Full"})
+    @Test(dataProvider = "tuidGenerator", description = "Capture Welcome, One Step Away, and Welcome Back screens", groups = {"Onboarding - Full", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void captureFullOnboardingFlow(String TUID) {
         setup();
         setZipTestName("Onboarding_Full");
@@ -113,7 +118,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             getScreenshots("SubscriberAgreement");
             legalPage.getBackArrow().click();
         } else {
-            count.set(count.get() + 1);
         }
 
         if (checkboxRequired) {
@@ -132,7 +136,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
          */
         if (languageUtils.get().isSubscriberAgreementRequired()) {
             getScreenshots("1SubscriberAgreement");
-            count.set(5);
             signUpPage.clickAgreeAndContinue();
             pause(3);
         }
@@ -154,7 +157,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(1);
         getScreenshots("Great");
         createPasswordPage.enterPasswordValue(disneyAccount.get().getUserPass());
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         createPasswordPage.clickPrimaryButton();
         pause(3);
 
@@ -167,7 +170,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             welcomePage.clickSignUpButton();
             signUpPage.submitEmailAddress(generateGmailAccount());
             createPasswordPage.enterPasswordValue(disneyAccount.get().getUserPass());
-            iosUtils.get().dismissKeyboardForPhone();
+            dismissKeyboardForPhone();
             createPasswordPage.clickPrimaryButton();
             dobPageBase.enterDOB("01/01/1980");
             paywallPage.isOpened();
@@ -188,7 +191,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickAddProfile();
         avatarPage.clickSkipButton();
-        iosUtils.get().hideKeyboard();
+        hideKeyboard();
         pause(2);
         getScreenshots("AddProfilePage");
 
@@ -199,7 +202,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         }
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP"}, enabled = false)
+    @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY}, enabled = false)
     public void capturePurchaseFlow(String TUID) {
         setup();
         boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
@@ -222,7 +225,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
 
         if(isArielRegion) {
-            iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+            setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
             signUpIOSPageBase.clickAgreeAndContinue();
         }
 
@@ -246,15 +249,15 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
+        acceptAlert();
+        acceptAlert();
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
         getScreenshots("ProfileSelect");
         UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel"})
+    @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void captureArielOnboarding(String TUID) {
         setup();
         setZipTestName("Onboarding_Ariel");
@@ -313,7 +316,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         signUpIOSPageBase.clickPrimaryButton();
         getScreenshots("birthdatePageEmptyError");
 
-        iosUtils.get().setBirthDate(Person.MINOR.getMonth().getText(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        setBirthDate(Person.MINOR.getMonth().getText(), Person.MINOR.getDay(), Person.MINOR.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         pause(2);
         getScreenshots("minorError");
@@ -324,7 +327,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         welcomePage.clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         pause(2);
         getScreenshots("chooseYourPlanPage");
@@ -356,7 +359,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
 
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
 
         paywallPage.getDynamicRowButtonLabel(getDictionary()
@@ -373,8 +376,8 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
 
-        iosUtils.get().acceptAlert();
-        iosUtils.get().acceptAlert();
+        acceptAlert();
+        acceptAlert();
 
         pause(3);
         getScreenshots("profilePage");

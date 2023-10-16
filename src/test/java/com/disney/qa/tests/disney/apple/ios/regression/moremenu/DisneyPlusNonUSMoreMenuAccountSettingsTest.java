@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,9 +14,8 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
     private static final String GOOGLE_URL = "accounts.google.com";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {"More Menu"})
+    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Apple() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
@@ -40,9 +40,8 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu"})
+    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Google() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());

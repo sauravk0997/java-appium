@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -21,10 +22,9 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     //Disabling these tests since we are not able to verify that thumbnail is present on screen as we seek along
     //These tests were working before, we will evaluate after the carina upgrade again.
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61937"})
-    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player"}, enabled = false)
+    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeek() {
-        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -43,10 +43,9 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61939"})
-    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player"}, enabled = false)
+    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeekForDownloadedAsset() {
-        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);

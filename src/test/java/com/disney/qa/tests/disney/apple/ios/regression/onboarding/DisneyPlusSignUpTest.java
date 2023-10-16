@@ -5,6 +5,7 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -25,10 +26,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
+    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifySignUpPageUI() {
-        initialSetup();
-
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
@@ -62,9 +61,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62225", "XMOBQA-62227", "XMOBQA-62229"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding"})
+    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyInvalidEmailSubmissions() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -97,9 +95,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62231"})
-    @Test(description = "Verify signup with new account", groups = {"Onboarding"})
+    @Test(description = "Verify signup with new account", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyNewEmailSubmission() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -112,9 +109,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
-    @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding"})
+    @Test(description = "Verify signup with pre-existing account", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyExistingEmailSubmission() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -127,9 +123,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
-    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding"})
+    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifySubmitPasswordPageUI() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -162,9 +157,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62235"})
-    @Test(description = "Verify invalid password submissions", groups = {"Onboarding"})
+    @Test(description = "Verify invalid password submissions", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyInvalidPasswordSubmissions() {
-        initialSetup();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -177,11 +171,9 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for EU based users", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify onboarding stepper for EU based users", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyOnboardingStepperEU() {
-        initialSetup();
         initiateProxy("Germany");
-        handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
@@ -207,14 +199,12 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375"})
-    @Test(description = "Verify valid Subscriber Agreement link, expand/collapse/scroll content", groups = {"Onboarding"})
+    @Test(description = "Verify valid Subscriber Agreement link, expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalHyperlinkSubscriberAgreement() {
-        initialSetup();
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         signUp.openSubscriberAgreement();
@@ -222,21 +212,19 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
         validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
 
-        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(signUp.isOpened(),
                 "'Back Button' navigation did not return the user to the Sign Up page");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62377"})
-    @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding"})
+    @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalHyperlinkPrivacyPolicy() {
-        initialSetup();
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         signUp.openPrivacyPolicyLink();
@@ -244,21 +232,19 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
         validateUSLegalPageUI(sa, PRIVACY_POLICY);
 
-        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(signUp.isOpened(),
                 "'Back Button' navigation did not return the user to the Sign Up page");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62385"})
-    @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding"})
+    @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalCenterUI() {
-        initialSetup();
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         signUp.openSubscriberAgreement();
@@ -273,21 +259,19 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(signUp.isOpened(),
                 "'Back Button' navigation did not return the user to the Sign Up page");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62387"})
-    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding"})
+    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
-        initialSetup();
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        IOSUtils utils = new IOSUtils();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         signUp.openSubscriberAgreement();
@@ -295,29 +279,29 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
 
         //Do Not Sell My Personal Information - no scrolling needed
-        utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //expand
+        pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //expand
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not expanded.");
 
-        utils.pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //collapse
+        pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //collapse
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not collapsed");
 
         //Your California Privacy Rights
         validateUSLegalPageUI(sa, YOUR_CALIFORNIA_PRIVACY_RIGHTS);
 
-        utils.pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(signUp.isOpened(),
                 "'Back Button' navigation did not return the user to the Sign Up page");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62379", "XMOBQA-62381", "XMOBQA-62383", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
-    @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyEULegalHyperlinks() {
-        initialSetup();
         initiateProxy("Netherlands");
-        initialSetup("NL", "en");
+        Assert.fail("Disabled initial setup and reused default PRE_CONFIGURATION. Please check, why we need NL here.");
+//        initialSetup("NL", "en");
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
@@ -390,15 +374,13 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62054"})
-    @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding"})
+    @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyInvalidEmailError() {
-        initialSetup();
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
 
-        handleAlert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress("abc");
 
@@ -439,19 +421,18 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
     private void validateUSLegalPageUI(SoftAssert sa, String legalHeader) {
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
-        IOSUtils utils = new IOSUtils();
 
-        utils.pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //expand
+        pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //expand
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalHeader + " was not expanded");
 
-        utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 8, null, Direction.UP, 25);
+        swipePageTillElementPresent(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 8, null, Direction.UP, 25);
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        utils.swipePageTillElementPresent(legal.getTypeButtonByLabel(PRIVACY_POLICY), 8, null, Direction.DOWN, 25);
+        swipePageTillElementPresent(legal.getTypeButtonByLabel(PRIVACY_POLICY), 8, null, Direction.DOWN, 25);
 
-        utils.pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
+        pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalHeader + " was not collapsed");
     }

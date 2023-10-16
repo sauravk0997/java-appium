@@ -7,6 +7,8 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +79,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ? disneyBrandTile.isElementPresent() : homeContentView.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -205,12 +207,12 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     }
 
     public boolean isProfileBtnFocused() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused(profileBtnGlobalNav);
     }
 
     public boolean isProfileBtnPresent() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return profileBtnGlobalNav.isElementPresent();
     }
 
@@ -252,16 +254,16 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void openGlobalNavAndSelectOneMenu(String menu) {
         clickMenuTimes(1,1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         navigateToOneGlobalNavMenu(menu);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
     }
 
     public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {
         brands.forEach(item -> {
             sa.assertTrue(isFocused(getDynamicCellByLabel(item)), "The following brand tile was not focused: " + item);
-            UniversalUtils.captureAndUpload(getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             moveRight(1, 1);
         });
 
@@ -278,13 +280,13 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
             boolean isPresent = dynamicCellByLabel.format(item).isElementPresent();
             boolean isFocused = isFocused(dynamicCellByLabel.format(item));
-            UniversalUtils.captureAndUpload(getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
             if(!isFocused){
                 moveLeft(1,1);
                 isFocused = isFocused(dynamicCellByLabel.format(getSetAssets.get(3)));
                 moveRight(1,1);
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             }
             sa.assertTrue(isPresent, "The following content was not found " + item);
             sa.assertTrue(isFocused, "The following content was not focused " + item);
@@ -296,7 +298,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public DisneyPlusAppleTVHomePage checkIfElementAttributeFound(ExtendedWebElement element, String name) {
         try {
             LOGGER.info("Looking for {}'s {} attribute", element, name);
-            fluentWaitNoMessage(getCastedDriver(), 250, 25).until(it -> doesAttributeEqualTrue(element, name));
+            fluentWaitNoMessage(getDriver(), 250, 25).until(it -> doesAttributeEqualTrue(element, name));
         } catch (Exception e) {
             throw new SkipException(element + "'s " + name + " attribute not found");
         }

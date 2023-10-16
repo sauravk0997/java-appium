@@ -5,6 +5,8 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -47,12 +49,12 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = emailField.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
     public void clickEnterNewBtn() {
-        UniversalUtils.captureAndUpload(getDriver(), "Email_Input_Screen");
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         if (enterNewBtn.isPresent()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i -> {
                 clickDown();
@@ -63,7 +65,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickLocalizationEnterNewBtn() {
-        UniversalUtils.captureAndUpload(getDriver(), "Email_Input_Screen");
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeOtherElements.getBy());
         if (listOfOtherElements.get(listOfOtherElements.size() - 1).isPresent()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i ->
@@ -74,7 +76,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public boolean isEnterNewEmailBtnPresent() {
         boolean isPresent = enterNewBtn.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -87,7 +89,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickEmailField() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         emailField.click();
     }
 
@@ -102,7 +104,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     // To enter a temp string "bcd" into the email field
     // also clicks on continue button, using select here because element.click was not working
     public void enterTempEmailTextAndClickContinue() {
-        UniversalUtils.captureAndUpload(getDriver(), "Enter_New_Email_Screen");
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Enter_New_Email_Screen");
         keyboard.isPresent();
         IntStream.range(0, 3).forEach(i -> {
             clickRight();
@@ -124,7 +126,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public boolean isKeyboardPresent() {
         boolean isPresent = keyboard.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -151,17 +153,17 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void enterEmail(String email) {
         emailField.type(email);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickContinueBtn() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         primaryButton.click();
     }
 
     public void clickTryAgainBtn() {
         tryAgainBtn.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         tryAgainBtn.click();
     }
 
@@ -173,7 +175,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickSignUpButtonUnknownEmailScreen() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         unknownScreenSignUpBtn.click();
     }
 
