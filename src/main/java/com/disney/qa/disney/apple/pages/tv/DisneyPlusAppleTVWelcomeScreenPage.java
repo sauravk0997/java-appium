@@ -24,10 +24,11 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getSignUpButton().isPresent();
+        return getSignupButton().isPresent();
     }
 
-    public ExtendedWebElement getSignUpButton() {
+    @Override
+    public ExtendedWebElement getSignupButton() {
         return dynamicBtnFindByName.format("buttonSignUp");
     }
 
@@ -41,19 +42,19 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public boolean isSignUpFocused() {
-        return isFocused(getSignUpButton());
+        return isFocused(getSignupButton());
     }
 
     public boolean isLoginBtnFocused() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused(getSignUpButton());
+        return isFocused(getSignupButton());
     }
 
     @Override
     public void clickLogInButton() {
         fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 2, "Sign Up button was not focused")
                 //TODO: TVOS-3456 focus not found on sign up button, temp fix use of isElementPresent
-                .until(it -> getSignUpButton().isPresent());
+                .until(it -> getSignupButton().isPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 1, "Login Button was not focused")
@@ -67,7 +68,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
 
     @Override
     public void clickSignUpButton() {
-        getSignUpButton().click();
+        getSignupButton().click();
     }
 
     public boolean isWelcomeSubTextPresent() {
