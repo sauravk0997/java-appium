@@ -10,14 +10,14 @@
                value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="scheduling" value="H 12 * * *"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist"/>
 
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">

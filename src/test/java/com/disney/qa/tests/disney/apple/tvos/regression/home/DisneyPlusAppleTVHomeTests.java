@@ -36,7 +36,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         aliceDriver.screenshotAndRecognize().isLabelNotPresent(sa, AliceLabels.HOME_BUTTON_IS_SELECTED.getText())
                 .isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
-        aliceDriver.uploadAliceScreenshots();
         disneyPlusAppleTVHomePage.clickDown();
         List<ContentSet> allSets = searchApi.getAllSetsInHomeCollection(entitledUser, country, language, PERSONALIZED_COLLECTION);
         CollectionRequest collectionRequest = CollectionRequest.builder().region(country).collectionType(PERSONALIZED_COLLECTION).account(entitledUser).language(language).slug(DisneyStandardCollection.HOME.getSlug()).contentClass(DisneyStandardCollection.HOME.getSlug()).build();

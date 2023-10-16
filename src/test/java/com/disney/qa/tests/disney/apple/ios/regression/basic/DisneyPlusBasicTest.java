@@ -3,22 +3,25 @@ package com.disney.qa.tests.disney.apple.ios.regression.basic;
 import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class DisneyPlusBasicTest extends DisneyBaseTest {
+import java.lang.invoke.MethodHandles;
 
+public class DisneyPlusBasicTest extends DisneyBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String TEST_USER = "test_user";
     private static final String ADULT_DOB = "1988-1-1";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62687"})
-    @Test(description = "App Opens to Welcome Screen", groups = {"Smoke"})
+    @Test(description = "App Opens to Welcome Screen", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testAppLaunch() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
-        handleAlert();
 
         DisneyPlusWelcomeScreenIOSPageBase paywallPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
@@ -32,9 +35,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62693"})
-    @Test(description = "Log In with entitled account lands on Home/Discover", groups = {"Smoke"})
+    @Test(description = "Log In with entitled account lands on Home/Discover", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testLoginWithEntitledAccount() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
 
         setAppToHomeScreen(disneyAccount.get());
@@ -46,9 +48,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62695"})
-    @Test(description = "Verify Home/Discover", groups = {"Smoke"})
+    @Test(description = "Verify Home/Discover", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testHome() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
 
@@ -66,9 +67,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62697"})
-    @Test(description = "Verify Search", groups = {"Smoke"})
+    @Test(description = "Verify Search", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testSearch() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
 
@@ -84,9 +84,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62699"})
-    @Test(description = "Verify Downloads", groups = {"Smoke"})
+    @Test(description = "Verify Downloads", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testDownloads() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
 
@@ -102,9 +101,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62701"})
-    @Test(description = "Verify More Menu", groups = {"Smoke"})
+    @Test(description = "Verify More Menu", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testMoreMenu() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
 
@@ -125,9 +123,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62703"})
-    @Test(description = "Verify Edit Profile Page", groups = {"Smoke"})
+    @Test(description = "Verify Edit Profile Page", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testEditProfile() {
-        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(disneyAccount.get());
@@ -159,9 +156,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62705"})
-    @Test(description = "Verify Changing Profiles", groups = {"Smoke"})
+    @Test(description = "Verify Changing Profiles", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testChangingProfiles() {
-        initialSetup();
         disneyAccountApi.get().addProfile(disneyAccount.get(), TEST_USER, ADULT_DOB, disneyAccount.get().getProfileLang(), null, false, true);
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -176,9 +172,8 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62707"})
-    @Test(description = "Verify Video Playback", groups = {"Smoke"})
+    @Test(description = "Verify Video Playback", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testVideoPlayback() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);

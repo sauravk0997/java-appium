@@ -4,6 +4,7 @@ import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +13,10 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
+import com.disney.util.TestGroup;
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,7 +35,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DOB_ADULT = "01/01/1983";
     private static final String PRETTY_FREEKIN_SCARY = "Pretty Freekin Scary";
 //    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
@@ -58,9 +62,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-IAP"})
+    @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyIAPDisneyPlanCards(DisneyPlusPaywallIOSPageBase.PlanType planType) {
-        initialSetup();
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
@@ -74,7 +77,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
         initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
         sa.assertTrue(dobCollectionPage.isOpened(), "DOB collection page didn't open after signing up");
-        iosUtils.get().setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not as expected");
@@ -91,10 +94,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for US based users", groups = {"Ariel-IAP"})
+    @Test(description = "Verify onboarding stepper for US based users", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyOnboardingStepperUS() {
-        initialSetup();
-        handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
@@ -125,9 +126,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
-    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"Ariel-IAP"})
+    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallCancel() {
-        initialSetup();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -135,7 +135,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        handleAlert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
@@ -156,9 +155,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
-    @Test(description = "Sign Up - Verify Paywall UI", groups = {"Ariel-IAP"})
+    @Test(description = "Sign Up - Verify Paywall UI", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallUI() {
-        initialSetup();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -166,7 +164,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
-        handleAlert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
@@ -192,15 +189,13 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
-    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Ariel-IAP"})
+    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyRestartSubscriptionPaywallUI() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
-        handleAlert();
 
         DisneyAccount expiredAccount = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
@@ -224,13 +219,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72339","XMOBQA-73539"})
     @Maintainer("gkrishna1")
-    @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP"})
+    @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyReturningUserCompletesSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        initialSetup();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyAccount nonActiveAccount = disneyAccountApi.get().createAccount("US", "en");
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
@@ -285,9 +277,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
-    @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP"})
+    @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
-        initialSetup();
         verifySignUpButtonNavigation();
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -319,10 +310,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73609"})
-    @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP"})
+    @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        initialSetup();
         disneyAccount.set(disneyAccountApi.get().createAccount(offerName, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -336,12 +326,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73647","XMOBQA-73648"})
     @Maintainer("gkrishna1")
-    @Test(description = "When the returning user with expired subscription authenticates via login flow or sign up flow, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP"})
+    @Test(description = "When the returning user with expired subscription authenticates via login flow or sign up flow, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyExpiredAccountSelectsSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        initialSetup();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusRestartSubscriptionIOSPageBase restartSubs = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
@@ -398,9 +385,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72389"})
     @Maintainer("csolmaz")
-    @Test(description = "Verify plan switch from basic monthly with ads to premium monthly with no ads", groups = {"Ariel-IAP"})
+    @Test(description = "Verify plan switch from basic monthly with ads to premium monthly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyPlanSwitchBasicMonthlyToPremiumMonthly() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAccountIOSPageBase account = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -441,7 +427,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
+        acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
 
@@ -463,9 +449,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72782"})
     @Maintainer("csolmaz")
-    @Test(description = "Verify plan switch from premium monthly no ads to premium yearly with no ads", groups = {"Ariel-IAP"})
+    @Test(description = "Verify plan switch from premium monthly no ads to premium yearly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyPlanSwitchPremiumMonthlyToPremiumYearly() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAccountIOSPageBase account = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -505,7 +490,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
+        acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
 
@@ -527,9 +512,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72362"})
     @Maintainer("csolmaz")
-    @Test(description = "Verify plan switch from basic monthly with ads to premium yearly with no ads", groups = {"Ariel-IAP"})
+    @Test(description = "Verify plan switch from basic monthly with ads to premium yearly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyPlanSwitchBasicMonthlyToPremiumYearly() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAccountIOSPageBase account = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -569,7 +553,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        iosUtils.get().acceptAlert();
+        acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
 
@@ -591,14 +575,12 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
-    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Ariel-IAP"})
+    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void testSignUpDOBOver18() {
-        initialSetup();
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
         }
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -628,8 +610,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     private void verifySignUpButtonNavigation() {
-        initialSetup();
-        handleAlert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),

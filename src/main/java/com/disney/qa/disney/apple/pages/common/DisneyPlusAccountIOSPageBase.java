@@ -6,6 +6,8 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -472,7 +474,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
         if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            new IOSUtils().clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
+            clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
         }
     }
 
@@ -576,7 +578,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         switch (planName) {
             case BASIC:
                 return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS.getText())).isPresent();
@@ -606,7 +608,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         //Currently, all the web plans are monthly
         String expectedPlanName = (paywallPage.getPlanName(planName) + " " + (getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.SUBSCRIPTION_MONTHLY.getText())));
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 

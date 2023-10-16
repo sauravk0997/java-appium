@@ -4,6 +4,8 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -46,13 +48,13 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = signUpHeader.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
     public void clickAgreeAndContinue() {
         primaryButton.click();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickAgreeAndContinueIfPresent() {
@@ -136,7 +138,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     //Clicks at 0,0 location due to iOS whole element not being clickable area for response
     public void clickUncheckedBoxes() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(checkBoxItem.getBy()), 30);
-        findExtendedWebElements(checkBoxItem.getBy()).forEach(checkBox -> new IOSUtils().clickElementAtLocation(checkBox, 0, 0));
+        findExtendedWebElements(checkBoxItem.getBy()).forEach(checkBox -> clickElementAtLocation(checkBox, 0, 0));
     }
 
     private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
@@ -146,7 +148,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     
     private void openHyperlink(ExtendedWebElement link) {
         if (link.getSize().getWidth() > 150) {
-            new IOSUtils().clickElementAtLocation(link, 10, 80);
+            clickElementAtLocation(link, 10, 80);
         } else {
             link.click();
         }

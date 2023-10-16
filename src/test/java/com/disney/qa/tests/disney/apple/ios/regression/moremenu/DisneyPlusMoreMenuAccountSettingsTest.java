@@ -11,15 +11,19 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,7 +32,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String EMAIL_SUBJECT = "Your one-time passcode";
     private static final String NEW_PASSWORD = "TestPass1234!";
     private static final String MONTHLY = "Monthly";
@@ -71,9 +75,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61547"})
-    @Test(description = "Verify the Account submenu display elements are present", groups = {"More Menu"})
+    @Test(description = "Verify the Account submenu display elements are present", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
-        initialSetup();
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -113,9 +116,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
-        initialSetup();
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -132,9 +134,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyBundle() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -157,9 +158,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_HuluBundle() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -178,9 +178,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_GooglePlay() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -198,9 +197,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Roku() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -220,9 +218,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Amazon() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -242,9 +239,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Verizon() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -264,9 +260,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_O2() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -287,9 +282,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_TelecomTIM() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -309,9 +303,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Movistar() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -331,9 +324,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DeutscheTelekom() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -353,9 +345,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Sky() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -375,9 +366,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Telmex() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -398,9 +388,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Bradesco() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -420,9 +409,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_BradescoNext() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -442,9 +430,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_TelefonicaVivo() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -465,9 +452,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_MercadoLibre() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -487,9 +473,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Cablevision() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -509,9 +494,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu"})
+    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
@@ -531,9 +515,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62564", "XMOBQA-62566", "XMOBQA-62568", "XMOBQA-62570"})
-    @Test(description = "Verify the 'Unverified email badge is displayed in the More Menu and Account submenu", groups = {"More Menu"})
+    @Test(description = "Verify the 'Unverified email badge is displayed in the More Menu and Account submenu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUnverifiedAccountFunctions() throws URISyntaxException {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         //Builds a DisneyAccount object with existing credentials that are already configured for test needs
         DisneyProfile profile = new DisneyProfile();
@@ -580,9 +563,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61557", "XMOBQA-61559", "XMOBQA-61565", "XMOBQA-61561"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"})
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordUI() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
@@ -641,9 +623,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61563"})
-    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu"})
+    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordWithoutLogout() {
-        initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
@@ -662,9 +643,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu"})
+    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordWithLogout() {
-        initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
@@ -685,9 +665,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61551", "XMOBQA-61553", "XMOBQA-61555"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu"})
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangeEmailUI() {
-        initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
@@ -741,9 +720,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"})
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangeEmailWithoutLogout() {
-        initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
@@ -767,9 +745,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61601", "XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu"})
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangeEmailWithLogout() {
-        initialSetup();
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
@@ -799,9 +776,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61597"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
+    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testLogoutOfAllDevicesUI() {
-        initialSetup();
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicesPage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
 
@@ -829,9 +805,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     //TODO: Refactor to use 2 drivers to cover XMOBQA-61603
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu"})
+    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
@@ -864,9 +839,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
-    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu"})
+    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -885,9 +859,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu"})
+    @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -897,9 +870,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {"More Menu"})
+    @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Roku() {
-        initialSetup();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -909,9 +881,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
@@ -923,9 +894,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_Canal(String planType) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
             List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
@@ -937,9 +907,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_O2(String planType) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
             List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
@@ -951,9 +920,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu"}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
     public void verifyPausedSubscription_TelMex(String planType) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
@@ -965,9 +933,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
-    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu"})
+    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -1007,9 +974,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu"}, enabled = false)
+    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyIAPBillingHoldWithPartnerSub() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         String firstName = "Test";
         String lastName = "User";
@@ -1052,9 +1018,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu"}, enabled = false)
+    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_VerizonStandalone() throws JSONException, URISyntaxException {
-        initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
@@ -1079,9 +1044,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu"}, enabled = false)
+    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_VerizonBundle() throws JSONException, URISyntaxException {
-        initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
@@ -1106,9 +1070,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu"}, enabled = false)
+    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException {
-        initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
         List<DisneyOrder> billingOrder = new LinkedList<>();
         billingOrder.add(DisneyOrder.SET_BILLING_HOLD);
@@ -1134,9 +1097,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu"}, enabled = false)
+    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_O2() throws JSONException, URISyntaxException {
-        initialSetup();
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(

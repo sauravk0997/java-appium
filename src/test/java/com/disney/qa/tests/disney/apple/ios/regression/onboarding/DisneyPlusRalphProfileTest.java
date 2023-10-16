@@ -7,6 +7,7 @@ import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -17,7 +18,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74136"})
-    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions ", groups = {"Ralph-Onboarding"})
+    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions ", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileForSingleProfile() {
         setupForRalph();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -40,7 +41,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74136"})
-    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding"})
+    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileOnSecondaryProfile() {
         setupForRalph();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -78,7 +79,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     private void  setupForRalph(String... DOB) {
-        initialSetup();
         String locale = languageUtils.get().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 

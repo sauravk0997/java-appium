@@ -1,7 +1,7 @@
 package com.disney.qa.tests.common.ios.networkhandler;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.IOSUtils.SystemBundles;
+import com.disney.qa.common.utils.ios_settings.NetworkHandler;
 import com.disney.qa.tests.BaseMobileTest;
 import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -37,7 +37,7 @@ public class WifiHandler extends BaseMobileTest {
     @Test
     public void revertWifiNetwork() {
         SoftAssert softAssert = new SoftAssert();
-        IOSUtils.NetworkHandler networkHandler = new IOSUtils().new NetworkHandler();
+        NetworkHandler networkHandler = new NetworkHandler();
         networkHandler.getWifiPage();
         if (networkHandler.checkIfWiFiSelected(WIFI_NETWORK, 2, 10)) {
             skipExecution(WIFI_NETWORK + " is preset network, no need to execute script");

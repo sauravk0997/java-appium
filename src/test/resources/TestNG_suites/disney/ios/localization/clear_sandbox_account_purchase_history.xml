@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="iOS Clear Sandbox Account Purchase History" annotations="JDK">
+<suite verbose="1" name="iOS Clear Sandbox Account Purchase History" annotations="JDK" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="jsilveti"/>
     <parameter name="jenkinsJobName" value="iOS-Clear-Sandbox-Account-Purchase-History"/>

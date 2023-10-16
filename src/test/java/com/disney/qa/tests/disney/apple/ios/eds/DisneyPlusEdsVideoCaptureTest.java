@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.HARUtils;
+import com.disney.util.TestGroup;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -15,9 +16,8 @@ import java.util.*;
 
 public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back")
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back", groups = TestGroup.PRE_CONFIGURATION)
     public void capturePauseResume() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
         videoPlayerIOSPageBase
@@ -29,9 +29,8 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
         harValidation();
     }
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back")
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back", groups = TestGroup.PRE_CONFIGURATION)
     public void capturePauseResumeScrub() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
@@ -44,9 +43,8 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
         harValidation();
     }
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back")
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void capturePauseScrubResume() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
@@ -59,8 +57,6 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
     }
 
     private DisneyPlusDetailsIOSPageBase onboardAndOpenMedia() {
-        //Dismiss wifi visibility alert and login
-        initiateProxy();
         proxy.get().newHar();
         restartDriver(true);
         setAppToHomeScreen(disneyAccount.get());

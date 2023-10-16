@@ -6,16 +6,23 @@ import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.json.simple.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 
 public class DisneyPlusQoETest extends DisneyBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String MOVIES = "Movies";
     private DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase;
     private DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase;
@@ -27,10 +34,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1578"})
-    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method")
+    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEStartupSequence(ITestContext context) {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
 
@@ -62,10 +68,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkAssertions(sa,account.getAccountId(), checkList);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1577"})
-    @Test(description = "Smoke Test Playback QoE events")
+    @Test(description = "Smoke Test Playback QoE events", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
-    public void testQoEPlayback(ITestContext context) {
-        initialSetup();
+    public void testQoEPlayback() {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
 
@@ -121,10 +126,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkAssertions(sa, account.getAccountId(), checkList);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1094"})
-    @Test(description = "Test Pause/Resume QoE event")
+    @Test(description = "Test Pause/Resume QoE event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
-    public void testQoEPauseAndResume(ITestContext context) {
-        initialSetup();
+    public void testQoEPauseAndResume() {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         JSONArray checkList_resumed = new JSONArray();
@@ -159,10 +163,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkAssertions(sa, account.getAccountId(), checkList_resumed);
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-938"})
-    @Test(description = "Verify Hearbeat QoE Event")
+    @Test(description = "Verify Hearbeat QoE Event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
-    public void testQoEHeartBeat(ITestContext context) {
-        initialSetup();
+    public void testQoEHeartBeat() {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         //Log in and start a movie
@@ -277,11 +280,11 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         DisneyAccount account = disneyAccount.get();
         addHoraValidationSku(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPage.isOpened(), "Welcome screen did not launch");
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         //Login Steps
         disneyPlusWelcomeIOSPage.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
-        new IOSUtils().hideKeyboard();
+        hideKeyboard();
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         //Navigate to Movie Page
