@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.client.responses.graphql.login.DisneyPlus;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.email.EmailApi;
@@ -203,6 +204,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionTitlePresent(),
+                "Roku Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionMessagePresent(),
                 "Roku Subscription message was not displayed");
 
@@ -222,6 +225,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionTitlePresent(),
+                "Amazon Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionMessagePresent(),
                 "Amazon Subscription message was not displayed");
 
@@ -241,6 +246,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionTitlePresent(),
+                "Verizon Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionMessagePresent(),
                 "Verizon Subscription message was not displayed");
 
@@ -261,6 +268,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionTitlePresent(),
+                "O2 Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
@@ -280,6 +289,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionTitlePresent(),
+                "Telecom TIM Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionMessagePresent(),
                 "Telecom TIM Subscription message was not displayed");
 
@@ -299,6 +310,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionTitlePresent(),
+                "Moviestar Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionMessagePresent(),
                 "Moviestar Subscription message was not displayed");
 
@@ -318,6 +331,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionTitlePresent(),
+                "Deutsche Telekom Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionMessagePresent(),
                 "Deutsche Telekom Subscription message was not displayed");
 
@@ -337,6 +352,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionTitlePresent(),
+                "Sky Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionMessagePresent(),
                 "Sky Subscription message was not displayed");
 
@@ -357,6 +374,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionTitlePresent(),
+                "Telmex Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionMessagePresent(),
                 "Telmex Subscription message was not displayed");
 
@@ -376,6 +395,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionTitlePresent(),
+                "Bradesco Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionMessagePresent(),
                 "Bradesco Subscription message was not displayed");
 
@@ -395,6 +416,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionTitlePresent(),
+                "Bradesco NEXT Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionMessagePresent(),
                 "Bradesco NEXT Subscription message was not displayed");
 
@@ -436,6 +459,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreSubscriptionTitlePresent(),
+                "Mercado Libre Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadoLibreSubscriptionMessagePresent(),
                 "Mercado Libre Subscription message was not displayed");
 
@@ -455,6 +480,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionTitlePresent(),
+                "Cablevision/Telecom Argentina SA Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionMessagePresent(),
                 "Cablevision/Telecom Argentina SA Subscription message was not displayed");
 
@@ -507,8 +534,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
 
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        if (homePage.getStaticTextByLabelContains(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText())).isPresent()) {
+            sa.assertTrue(oneTrustPage.isOpened(), "One trust page did not open.");
+            oneTrustPage.tapCloseButton();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isAccountUnverifiedBadgeDisplayed(),

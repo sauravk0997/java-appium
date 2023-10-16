@@ -17,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
+    private static final String MONTHLY = "Monthly";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
@@ -38,16 +39,22 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "changePasswordCell")
     private ExtendedWebElement changePasswordCell;
 
+    public boolean isMovistarSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
+        return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getMovistarSubscription() {
-    return getDynamicAccessibilityId((String.format(CONTAINER_TEXT,
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText()),
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MOVISTAR.getText()))));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MOVISTAR.getText()));
+    }
+
+    public boolean isDeutscheTelekomSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_DEUTSCHE_TELEKOM.getText());
+        return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
     }
 
     public ExtendedWebElement getDeTelekomSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_DEUTSCHE_TELEKOM.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_DEUTSCHE_TELEKOM.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_DEUTSCHE_TELEKOM.getText()));
     }
 
     public ExtendedWebElement getBamtechSubscription() {
@@ -66,7 +73,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isMercadolibreMonthlySubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE_BR.getText());
-        return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
+        return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
     }
 
     public ExtendedWebElement getGoogleSubscription() {
@@ -74,63 +81,95 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText()),
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_GOOGLE.getText())));
     }
+
+    public boolean isRokuSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText());
+        return getStaticTextByLabel(title.concat(" Annual")).isPresent();
+    }
+
     public ExtendedWebElement getRokuSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_ROKU.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_ROKU.getText()));
     }
+
+    public boolean isAmazonSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText());
+        return getStaticTextByLabel(title.concat(" Annual")).isPresent();
+    }
+
     public ExtendedWebElement getAmazonSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_AMAZON.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_AMAZON.getText()));
     }
+
+    public boolean isVerizonSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON.getText());
+        return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getVerizonSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON.getText()));
     }
     public ExtendedWebElement getVerizonBundleSubscription() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_VERIZON_BUNDLE.getText()),
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_VERIZON_BUNDLE.getText())));
     }
+
+    public boolean isSkySubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_SKY.getText());
+        return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getSkySubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_SKY.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_SKY.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_SKY.getText()));
+    }
+
+    public boolean isTelmexSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELMEX.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
     }
 
     public ExtendedWebElement getTelmexSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELMEX.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELMEX.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELMEX.getText()));
     }
 
-    public ExtendedWebElement getBradescoSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO.getText())));
+    public boolean isBradescoSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
     }
+    public ExtendedWebElement getBradescoSubscription() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO.getText()));
+    }
+
+    public boolean isBradescoNextSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO_NEXT.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getBradescoNextSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_BRADESCO_NEXT.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO_NEXT.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BRADESCO_NEXT.getText()));
     }
     public ExtendedWebElement getTelefonicaVivoSubscription() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELEFONICA_VIVO.getText()),
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELEFONICA_VIVO.getText())));
     }
+
+    public boolean isMercadolibreSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getMercadolibreSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MERCADOLIBRE.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_MERCADOLIBRE.getText()));
+    }
+
+    public boolean isCablevisionSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CABLEVISION.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
     }
 
     public ExtendedWebElement getCablevisionSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_CABLEVISION.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CABLEVISION.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_CABLEVISION.getText()));
     }
 
     public ExtendedWebElement getCanalSubscription() {
@@ -186,10 +225,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void openDisneyPlusPremiumWebView() { disneyPlusPremiumSubscription.click(); }
 
+    public boolean isO2SubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_O2.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getO2Subscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_O2.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_O2.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_O2.getText()));
     }
 
     public boolean isO2SubscriptionMessagePresent() {
@@ -200,10 +242,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getO2Subscription().click();
     }
 
+    public boolean isTelecomTIMSubscriptionTitlePresent() {
+        String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELECOM_TIM.getText());
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
+    }
+
     public ExtendedWebElement getTimSubscription() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_TELECOM_TIM.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELECOM_TIM.getText())));
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_TELECOM_TIM.getText()));
     }
 
     public boolean isTelecomTIMSubscriptionMessagePresent() {
@@ -248,7 +293,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isBamtechBundleMonthlySubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
-        return getStaticTextByLabel(title.concat(" Monthly")).isPresent();
+        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
     }
 
     public void openBamtechBundleWebview() {
