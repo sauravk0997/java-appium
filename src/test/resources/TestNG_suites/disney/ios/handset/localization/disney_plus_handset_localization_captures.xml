@@ -16,7 +16,7 @@
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="booleanParam::enableDebugDisplay::Toggle to enable display dictionary keys in the app" value="false"/>
     <parameter name="overrideFields"
-               value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},custom_string5=${enableDebugDisplay},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+               value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},custom_string5=${enableDebugDisplay},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::locale::Locale to run"
                value="AD,AL,AR,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
     <parameter name="choiceParam::language::Language to run"

@@ -13,7 +13,7 @@
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="3"/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
-    <parameter name="overrideFields" value="browserup_proxy=true,custom_string=${custom_country},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+    <parameter name="overrideFields" value="browserup_proxy=true,custom_string=${custom_country},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::custom_country::Country" value="All,Austria,Belgium,Belgium-Dutch,Belgium-French,Denmark,
     Finland,France,Germany,Greenland,Guernsey,Iceland,Ireland,Isle of Man,Italy,Jersey,Luxembourg,Mauritius,Monaco,
     Netherlands,Norway,Portugal,Singapore,Spain,Sweden,Switzerland,Switzerland-French,Switzerland-Italian,United Kingdom"/>
