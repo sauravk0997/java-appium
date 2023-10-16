@@ -19,15 +19,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEX
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusWelcomeScreenIOSPageBase.class)
 public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenIOSPageBase {
 
-    @ExtendedFindBy(accessibilityId = "Sign Up Now")
-    protected ExtendedWebElement signUpButton;
-
-    @ExtendedFindBy(accessibilityId = "Login")
-    protected ExtendedWebElement loginButton;
-
-    @ExtendedFindBy(accessibilityId = "paywallLandingWelcome")
-    private ExtendedWebElement paywallLandingWelcome;
-
     public DisneyPlusAppleTVWelcomeScreenPage(WebDriver driver) {
         super(driver);
     }
@@ -41,12 +32,14 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     public ExtendedWebElement getSignUpButton() {
         return dynamicBtnFindByName.format("buttonSignUp");
     }
+
     public ExtendedWebElement getLoginButton() {
         return dynamicBtnFindByName.format("loginButton");
     }
+
     public void waitForWelcomePageToLoad() {
         fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 2, "Welcome Screen was not loaded")
-                .until(it -> loginButton.isElementPresent());
+                .until(it -> getLoginButton().isPresent());
     }
 
     public boolean isSignUpFocused() {
