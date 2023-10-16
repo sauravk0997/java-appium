@@ -513,7 +513,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         if (homePage.getStaticTextByLabelContains(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText())).isPresent()) {
-            oneTrustPage.isOpened();
+            sa.assertTrue(oneTrustPage.isOpened(), "One trust page did not open.");
             oneTrustPage.tapCloseButton();
         }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
