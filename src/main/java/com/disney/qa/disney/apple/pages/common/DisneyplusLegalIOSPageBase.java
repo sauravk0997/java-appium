@@ -49,7 +49,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         var maxSwipes = 20;
         while(hyperlink.getLocation().getY() > containerDepth && maxSwipes > 0) {
             LOGGER.info("Hyperlink is not within visible range. Swiping container up. Attempts remaining {}/20", maxSwipes);
-            new MobileUtilsExtended().swipeInContainer(cell, Direction.UP, 1, 500);
+            swipeInContainer(cell, Direction.UP, 1, 500);
             maxSwipes--;
         }
         hyperlink.click();

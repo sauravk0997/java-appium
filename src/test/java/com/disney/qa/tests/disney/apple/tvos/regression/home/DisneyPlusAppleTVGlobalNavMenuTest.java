@@ -10,6 +10,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -63,11 +65,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
         sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()), "Home is not focused by default -1");
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME.getText().toUpperCase(), AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
-        aliceDriver.uploadLastScreenshot();
 
         disneyPlusAppleTVHomePage.clickSelect();
         LOGGER.info("Collapsing Global Nav menu by clicking select");
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after clicking select from expanded global nav");
 
         disneyPlusAppleTVHomePage.moveLeft(1, 1);
@@ -80,7 +81,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after moving right from expanded global nav");
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-        aliceDriver.uploadLastScreenshot();
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         IntStream.range(0, globalNavText.size()).forEach(i -> {
@@ -92,15 +92,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu)), String.format("%s is not focused on expanded global nav", menu));
                 sa.assertEquals(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu).getText().toUpperCase(), menuText.toUpperCase());
                 aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(), AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
-                aliceDriver.uploadLastScreenshot();
             } else {
                 LOGGER.info("Checking for profile button focus");
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnFocused());
             }
         });
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, globalNavAliceLabels.toArray(String[]::new));
-        aliceDriver.uploadLastScreenshot();
 
         sa.assertAll();
     }
@@ -131,7 +129,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu), String.format("%s is not found on expanded global nav", menu));
             } else {
                 LOGGER.info("Checking for profile button focus");
-                UniversalUtils.captureAndUpload(getCastedDriver());
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnPresent());
             }
         });
@@ -141,9 +139,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         disneyPlusAppleTVHomePage.clickSelect();
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after clicking select from expanded global nav");
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, globalNavAliceLabels.toArray(String[]::new));
-        aliceDriver.uploadAliceScreenshots();
         sa.assertAll();
     }
 
@@ -233,7 +230,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Hidden state - Hero Carousel", groups = {"Home"})
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getCastedDriver());
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
@@ -243,7 +240,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         disneyPlusAppleTVHomePage.moveRight(1, 1);
 
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
-        aliceDriver.uploadLastScreenshot();
         disneyPlusAppleTVHomePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
@@ -252,8 +248,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), "Global Nav menu is present");
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-        aliceDriver.uploadLastScreenshot();
-
         sa.assertAll();
     }
 }

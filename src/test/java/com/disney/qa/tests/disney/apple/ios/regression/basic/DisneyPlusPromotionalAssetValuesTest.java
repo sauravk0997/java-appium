@@ -1,14 +1,18 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
 import java.io.InputStream;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import com.disney.util.TestGroup;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.ScreenOrientation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -25,10 +29,8 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.resources.L10N;
 import com.zebrunner.carina.webdriver.IDriverPool;
 
-import io.appium.java_client.ios.IOSDriver;
-
 public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final Yaml yaml = new Yaml();
     private final InputStream countryStream = this.getClass()
             .getClassLoader()
@@ -101,20 +103,19 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
         String language = getData(country, "language").toString();
         initiateProxy(StringUtils.substringBefore(country, "-"));
         localLanguageUtils.setDictionaries(configApi.get().getDictionaryVersions());
-        handleAlert();
+//        handleAlert();
 
-        R.CONFIG.put("capabilities.language", language);
-        R.CONFIG.put("capabilities.locale", getData(country, "code").toString());
+        R.CONFIG.put("capabilities.language", language, true);
+        R.CONFIG.put("capabilities.locale", getData(country, "code").toString(), true);
         L10N.load();
 
         proxy.get().newHar();
         restartDriver(true);
-        handleAlert();
+//        handleAlert();
     }
 
-    @Test(dataProvider = "dataProvider")
+    @Test(dataProvider = "dataProvider", groups = TestGroup.PRE_CONFIGURATION)
     public void testPromotionalItems(String TUID) {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         testSetup(country);
@@ -141,14 +142,12 @@ public class DisneyPlusPromotionalAssetValuesTest extends DisneyBaseTest {
                 String.format("Expected - Ripcut image request for hash value '%s' to be made", portraitHash));
 
         if(IDriverPool.currentDevice.get().getDeviceType().equals(DeviceType.Type.IOS_TABLET)) {
-            IOSDriver driver = (IOSDriver) getCastedDriver();
-            driver.rotate(ScreenOrientation.LANDSCAPE);
+            rotate(ScreenOrientation.LANDSCAPE);
             initPage(DisneyPlusWelcomeScreenIOSPageBase.class).isOpened();
 
             softAssert.assertTrue(HARUtils.harContainsValue(proxy.get(), ripcutHost, HARUtils.RequestDataType.URL, landscapeHash),
                     String.format("Expected - Ripcut image request for hash value '%s' to be made", landscapeHash));
-
-            driver.rotate(ScreenOrientation.LANDSCAPE);
+            rotate(ScreenOrientation.LANDSCAPE);
         }
 
         new HARUtils(proxy.get()).printSpecificHarDetails(Collections.singletonList(HARUtils.RequestDataType.URL), Collections.singletonList(ripcutHost));

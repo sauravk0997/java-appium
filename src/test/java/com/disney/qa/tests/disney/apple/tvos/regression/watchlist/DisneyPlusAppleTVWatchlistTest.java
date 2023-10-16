@@ -10,6 +10,8 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.apache.commons.collections4.set.ListOrderedSet;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -75,7 +77,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
         String firstItem = disneyPlusAppleTVWatchListPage.getContentItems(0).get(0);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(firstItem.equals(DisneyContentIds.SOUL.getTitle()), String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
         sa.assertAll();
     }
@@ -100,12 +102,12 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
         disneyPlusAppleTVHomePage.getDynamicCellByLabel(titles.get(0).getTitle()).click();
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isRemoveWatchlistBtnOpen(), "remove watchlist button is not present");
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         disneyPlusAppleTVWatchListPage.clickRemoveWatchlistBtn();
         titles.remove(0);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         disneyPlusAppleTVWatchListPage.clickMenuTimes(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String firstItemAfterRemoval = disneyPlusAppleTVWatchListPage.getContentItems(0).get(0);
         sa.assertTrue(firstItemAfterRemoval.equals(titles.get(0).getTitle()), "Removed Luca content is present in Watchlist");
         sa.assertAll();

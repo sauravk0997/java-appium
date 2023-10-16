@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,10 +11,8 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62330", "XMOBQA-62332"})
-    @Test(description = "Verify the Welcome screen elements in Portrait mode", groups = {"Onboarding"})
+    @Test(description = "Verify the Welcome screen elements in Portrait mode", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyWelcomeScreenPortrait() {
-        initialSetup();
-        handleAlert();
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 

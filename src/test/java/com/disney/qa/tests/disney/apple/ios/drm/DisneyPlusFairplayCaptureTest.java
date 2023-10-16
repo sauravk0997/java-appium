@@ -47,8 +47,6 @@ import com.zebrunner.agent.core.registrar.Artifact;
 import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.R;
 
-import io.appium.java_client.ios.IOSDriver;
-
 public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 
     private static final String COUNTRY = R.CONFIG.get("locale");
@@ -68,7 +66,7 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
 
         DisneyAccount disneyAccount = accountApi.createAccount("Yearly", COUNTRY, LANGUAGE, "V1");
         DisneyLocalizationUtils disneyLanguageUtils = new DisneyLocalizationUtils(COUNTRY,LANGUAGE, "ios", DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), "disney");
-        DisneyMobileConfigApi configApi = new DisneyMobileConfigApi("ios", DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), "disney", new MobileUtilsExtended().getInstalledAppVersion());
+        DisneyMobileConfigApi configApi = new DisneyMobileConfigApi("ios", DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), "disney", getInstalledAppVersion());
         disneyLanguageUtils.setDictionaries(configApi.getDictionaryVersions());
         DisneyPlusApplePageBase.setDictionary(disneyLanguageUtils);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -87,8 +85,8 @@ public class DisneyPlusFairplayCaptureTest extends BaseMobileTest {
         var getSetAssets = apiProvider.queryResponse(set, CONTENT_TITLES);
 
         proxy.get().newHar();
-        ((IOSDriver) getCastedDriver()).resetApp();
-        new IOSUtils().handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
+        clearAppCache();
+        handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
         disneyPlusWelcomeScreenIOSPage.clickLogInButton();
         disneyPlusLoginIOSPage.submitEmail(disneyAccount.getEmail());
         disneyPlusPasswordIOSPage.submitPasswordForLogin(disneyAccount.getUserPass());

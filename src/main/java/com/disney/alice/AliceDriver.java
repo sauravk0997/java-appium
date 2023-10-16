@@ -1,25 +1,25 @@
 package com.disney.alice;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.zebrunner.carina.utils.report.ReportContext;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.alice.model.RecognitionMetaType;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.zebrunner.carina.utils.R;
 
 public class AliceDriver extends AliceClient {
 
-    private WebDriver driver;
+    private final WebDriver driver;
     private final String languageModel;
 
     public AliceDriver(WebDriver driver) {
@@ -37,25 +37,14 @@ public class AliceDriver extends AliceClient {
         this.driver = driver;
     }
 
-    List<File> screenshotsList = new LinkedList<>();
-
     @Override
     public AliceAssertion screenshotAndRecognize() {
-        var screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        screenshotsList.add(screenshotFile);
-        List<RecognitionMetaType> recognition = Stream.of(recognize(screenshotFile, languageModel)).collect(Collectors.toCollection(ArrayList::new));
-        return new AliceAssertion(recognition, screenshotFile.toString());
-    }
-
-    public void uploadAliceScreenshots() {
-        screenshotsList.forEach(UniversalUtils::uploadScreenshot);
-    }
-
-    public void uploadLastScreenshot() {
-        UniversalUtils.uploadScreenshot(screenshotsList.get(screenshotsList.size() - 1));
-    }
-
-    public List<File> getScreenshotsList() {
-        return screenshotsList;
+        //todo in the carina-webdriver: this method should return Path instead of just fileName
+        File screenshot = Path.of(ReportContext.getTestDir().getAbsolutePath())
+                .resolve(Screenshot.capture(driver, ScreenshotType.EXPLICIT_VISIBLE)
+                        .orElseThrow())
+                .toFile();
+        List<RecognitionMetaType> recognition = Stream.of(recognize(screenshot, languageModel)).collect(Collectors.toCollection(ArrayList::new));
+        return new AliceAssertion(recognition, screenshot.toString());
     }
 }

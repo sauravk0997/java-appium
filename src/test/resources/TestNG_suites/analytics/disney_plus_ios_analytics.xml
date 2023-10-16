@@ -10,13 +10,13 @@
     <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000;wdaStartupRetries=6"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="overrideFields" value=""/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Smoke PQoE" parallel="methods">
         <classes>

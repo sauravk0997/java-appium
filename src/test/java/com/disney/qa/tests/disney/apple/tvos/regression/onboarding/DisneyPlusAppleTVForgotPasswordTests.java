@@ -459,7 +459,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
-        new AliceDriver(getCastedDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
+        new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
 
         sa.assertTrue(forgotPasswordPage.isHeadlineHeaderPresent(), "Headline header 'Create new password' not present");
         sa.assertTrue(forgotPasswordPage.isHeadlineSubtitlePresent(), "Headline subtitle not present");
@@ -486,7 +486,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         EmailApi verifyEmail = new EmailApi();
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
         String createPasswordScreenFieldText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
-        AliceDriver aliceDriver = new AliceDriver(getCastedDriver());
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
 
         setFlexWelcomeConfig();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -517,7 +517,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVForgotPasswordPage.moveDown(1, 1);
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueBtnOnCreatePasswordPresent(), "Continue button was not focused after moving down from create new password field");
-        aliceDriver.uploadAliceScreenshots();
         sa.assertAll();
     }
 

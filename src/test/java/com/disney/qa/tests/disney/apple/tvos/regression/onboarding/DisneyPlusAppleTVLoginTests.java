@@ -480,7 +480,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         //TODO: Temp fix in place. After QCE-1333 is fixed, replace below lines with original Alice validation (QAA-11371).
         sa.assertTrue(applePageBase.doesAttributeEqualTrue(applePageBase.getStaticTextByLabelContains("Validating"), "enabled"));
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
-        aliceDriver.uploadAliceScreenshots();
 
         sa.assertAll();
     }
@@ -524,9 +523,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         aliceDriver.screenshotAndRecognize()
                 .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON.getText());
-
-        aliceDriver.uploadAliceScreenshots();
-
         sa.assertAll();
     }
 
@@ -596,7 +592,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {"Smoke"})
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getCastedDriver());
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
@@ -615,22 +611,18 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, testProfile, ROUND_TILE.getText())
                 .assertLabelContainsCaption(sa, entitledUser.getProfiles().get(0).getProfileName(), ROUND_TILE_HOVERED.getText())
                 .assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE.getText());
-        aliceDriver.uploadLastScreenshot();
 
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isDynamicAccessibilityIDElementPresent(editProfileBtn),
                 "The following button text was not found " + editProfileBtn);
 
         disneyPlusAppleTVWhoIsWatchingPage.clickRight();
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, testProfile, ROUND_TILE_HOVERED.getText());
-        aliceDriver.uploadLastScreenshot();
 
         disneyPlusAppleTVWhoIsWatchingPage.clickRight();
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE_HOVERED.getText());
-        aliceDriver.uploadLastScreenshot();
 
         disneyPlusAppleTVWhoIsWatchingPage.clickDown();
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, editProfileBtn, BUTTON_HOVERED.getText());
-        aliceDriver.uploadLastScreenshot();
 
         sa.assertAll();
     }

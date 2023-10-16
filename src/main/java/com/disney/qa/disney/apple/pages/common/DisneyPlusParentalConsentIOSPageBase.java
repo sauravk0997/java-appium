@@ -61,7 +61,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
      * @param times
      */
     public void scrollConsentContent(int times){
-        new IOSUtils().swipeInContainer(consentScrollView, IMobileUtils.Direction.UP,times,500);
+        swipeInContainer(consentScrollView, IMobileUtils.Direction.UP,times,500);
     }
 
     public boolean validateScrollPopup() {
