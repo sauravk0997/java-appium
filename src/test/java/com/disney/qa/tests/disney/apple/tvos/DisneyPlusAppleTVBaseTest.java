@@ -410,7 +410,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
      */
 
     public void logInTemp(DisneyAccount user) {
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
@@ -422,10 +422,17 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }
+
+    public void selectAppleUpdateLaterAndDismissAppTracking() {
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        pause(5);
+        applePageBase.detectAppleUpdateAndClickUpdateLater();
+        applePageBase.dismissAppTrackingPopUp();
+    }
+
     public void setFlexWelcomeConfig() {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         pause(5);
-        detectAppleUpdateAndClickUpdateLater();
         applePageBase.dismissAppTrackingPopUp();
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
         if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
@@ -470,18 +477,5 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         super.installJarvis();
     }
 
-    public void detectAppleUpdateAndClickUpdateLater() {
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
-        if (applePageBase.getStaticTextByLabelContains("An update is available").isPresent()) {
-            LOGGER.info("Dismissing Apple Update alert by clicking 'Update Later'..");
-            applePageBase.moveDown(2,1);
-            LOGGER.info("Is 'Update later' in focus?");
-            System.out.println(applePageBase.isFocused(applePageBase.getTypeButtonContainsLabel("Update Later")));
-            applePageBase.clickSelect();
-        }
-    }
 
-    public void dismissAlertPop() {
-
-    }
 }

@@ -1099,4 +1099,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         String cellFormatLocator = "type == 'XCUIElementTypeCell' and label contains '%s'";
         return findExtendedWebElement(AppiumBy.iOSNsPredicateString(String.format(cellFormatLocator, labelText)));
     }
+
+    public void detectAppleUpdateAndClickUpdateLater() {
+        if (staticTextLabelContains.format("An update is available").isPresent()) {
+            LOGGER.info("Dismissing Apple Update alert by clicking 'Update Later'..");
+            moveDown(2,1);
+            if (isFocused(dynamicBtnFindByLabelContains.format("Update Later"))) {
+                LOGGER.info("Clicking 'Update Later'..");
+                clickSelect();
+            }
+        }
+    }
 }

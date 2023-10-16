@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 import com.disney.alice.AliceAssertion;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.client.responses.graphql.login.DisneyPlus;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
@@ -27,7 +26,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome Screen did not launch");
         applePageBase.moveDown(1,1);
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
@@ -52,7 +51,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         var labelList = Stream.of(AliceLabels.DISNEY_LOGO, AliceLabels.NAT_GEO_LOGO, AliceLabels.MARVEL_LOGO,
                 AliceLabels.PIXAR_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.CELL_PHONE_IMAGE).collect(Collectors.toList());
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
 
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
