@@ -235,9 +235,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickPurchaseButton(PlanType planType) {
         if (planType.equals(PlanType.PREMIUM_MONTHLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.monthly.dpluspremium22.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.monthly.premium.apple").click();
         } else if (planType.equals(PlanType.PREMIUM_YEARLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.yearly.dpluspremium22.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.yearly.premium.apple").click();
         } else {
             productPurchaseBtn.click();
         }

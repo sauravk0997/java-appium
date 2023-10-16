@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusCreatePasswordIOSPageBase;
@@ -119,6 +118,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
+        pause(3);
         //Purchase plan
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY));
         paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY).click(SHORT_TIMEOUT);

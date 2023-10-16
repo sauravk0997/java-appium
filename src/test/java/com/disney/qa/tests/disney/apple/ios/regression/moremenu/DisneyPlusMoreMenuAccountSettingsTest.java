@@ -544,52 +544,53 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = emailApi.get().getStartTime();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
-        disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
+        accountPage.clickChangePasswordCell();
         String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
 
-        Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
+        sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "XMOBQA-61559 - OTP entry page was not opened");
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
+        oneTimePasscodePage.enterOtpValue(otp);
 
-        Assert.assertTrue(disneyPlusChangePasswordIOSPageBase.isOpened(),
+        sa.assertTrue(changePasswordPage.isOpened(),
                 "XMOBQA-61559 - 'Change Password' screen was not opened");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isHeadlineSubtitlePresent(),
+        sa.assertTrue(changePasswordPage.isHeadlineSubtitlePresent(),
                 "XMOBQA-61559 - 'Change Password' subtitle was not displayed");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isLogoutAllDevicesTitlePresent(),
+        sa.assertTrue(changePasswordPage.isLogoutAllDevicesTitlePresent(),
                 "XMOBQA-61559 - 'Logout All Devices' title was not displayed");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isSaveBtnPresent(),
+        sa.assertTrue(changePasswordPage.isSaveBtnPresent(),
                 "XMOBQA-61559 - 'Save' button was not displayed");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isCancelBtnPresent(),
+        sa.assertTrue(changePasswordPage.isCancelBtnPresent(),
                 "XMOBQA-61559 - 'Cancel' button was not displayed");
 
-        Assert.assertTrue(disneyPlusChangePasswordIOSPageBase.isLogoutAllDevicesUnchecked(),
+        System.out.println(changePasswordPage.isLogoutAllDevicesUnchecked());
+        sa.assertTrue(changePasswordPage.isLogoutAllDevicesUnchecked(),
                 "XMOBQA-61559 - 'Logout All Devices' was not unchecked by default");
 
-        disneyPlusChangePasswordIOSPageBase.clickLogoutAllDevices();
+        changePasswordPage.clickLogoutAllDevices();
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isLogoutAllDevicesChecked(),
+        sa.assertTrue(changePasswordPage.isLogoutAllDevicesChecked(),
                 "XMOBQA-61559 - 'Logout All Devices' was not checked");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isLogoutAllDevicesPasswordCopyDisplayed(),
+        sa.assertTrue(changePasswordPage.isLogoutAllDevicesPasswordCopyDisplayed(),
                 "XMOBQA-61559 - 'Logout All Devices' password text was not displayed");
 
-        disneyPlusChangePasswordIOSPageBase.submitNewPasswordValue("invalid");
+        changePasswordPage.submitNewPasswordValue("invalid");
 
-        sa.assertTrue(disneyPlusChangePasswordIOSPageBase.isInvalidPasswordErrorDisplayed(),
+        sa.assertTrue(changePasswordPage.isInvalidPasswordErrorDisplayed(),
                 "XMOBQA-61565 - 'Invalid Password' error was not displayed");
 
-        disneyPlusChangePasswordIOSPageBase.clickCancelBtn();
+        changePasswordPage.clickCancelBtn();
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
+        sa.assertTrue(accountPage.isOpened(),
                 "XMOBQA-61561 - User was not directed back to 'Account Settings' after cancelling the password change");
 
         sa.assertAll();
@@ -598,43 +599,42 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61563"})
     @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordWithoutLogout() {
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         emailApi.set(new EmailApi());
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         Date startTime = emailApi.get().getStartTime();
-        disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
+        accountPage.clickChangePasswordCell();
         String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
-        disneyPlusChangePasswordIOSPageBase.submitNewPasswordValue(NEW_PASSWORD);
+        oneTimePasscodePage.enterOtpValue(otp);
+        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
+        Assert.assertTrue(accountPage.isOpened(),
                 "User was not directed back to 'Account Settings' after changing their password");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
     @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordWithLogout() {
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase disneyPlusChangePasswordIOSPageBase = new DisneyPlusChangePasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
         emailApi.set(new EmailApi());
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToAccountSettings();
         Date startTime = emailApi.get().getStartTime();
-        disneyPlusAccountIOSPageBase.clickChangeLink(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
+        accountPage.clickChangePasswordCell();
         String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
-        disneyPlusChangePasswordIOSPageBase.clickLogoutAllDevices();
+        oneTimePasscodePage.enterOtpValue(otp);
+        changePasswordPage.clickLogoutAllDevices();
+        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
 
-        disneyPlusChangePasswordIOSPageBase.submitNewPasswordValue(NEW_PASSWORD);
-
-        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
+        Assert.assertTrue(welcomeScreen.isOpened(),
                 "User was logged out after changing their password");
     }
 
@@ -803,7 +803,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Change Password screen did not open after submitting OTP");
 
         changePasswordPage.enterNewPasswordValue(NEW_PASSWORD);
-        changePasswordPage.clickLogoutAllCheckmark();
+        changePasswordPage.clickLogoutAllDevices();
         changePasswordPage.clickSaveBtn();
         sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(),
                 "`You're now being logged out of this device` message is not present");

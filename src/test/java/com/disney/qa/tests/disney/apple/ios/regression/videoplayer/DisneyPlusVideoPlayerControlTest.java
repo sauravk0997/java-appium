@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -164,8 +163,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
             String episodeTitle = detailsPage.getEpisodeContentTitle();
             detailsPage.clickPlayButton().isOpened();
             playerContentTitle = videoPlayer.getTitleLabel();
-            sa.assertTrue(playerContentTitle.contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
-            sa.assertTrue(videoPlayer.getSubTitleLabel().contains(content), "Content title doesn't match");
+            sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
+            sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match");
         } else if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.EXTRAS.toString())) {
             detailsPage.clickExtrasTab();
             detailsPage.tapOnFirstContentTitle();

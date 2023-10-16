@@ -335,26 +335,26 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SETTINGS_TITLE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Downloads' section header was not displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Stream over Wi-Fi only' cell was not properly displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Wi-Fi Data Usage' cell was not properly displayed");
 
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(cellOption).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
                 "XMOBQA-61223 - 'Cellular Data Usage' cell was not properly displayed");
 
-        String[] usage = disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(cellOption).getText().split(",");
+        String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
 
         sa.assertEquals(usage[1].trim(),  languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText()),
                 "XMOBQA-61205 - Cellular data default was not set to 'Automatic'");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Download Over Wi-Fi Only' cell was not properly displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Video Quality' cell was not properly displayed");
 
         sa.assertFalse(disneyPlusMoreMenuIOSPageBase.isDeleteDownloadsEnabled(),

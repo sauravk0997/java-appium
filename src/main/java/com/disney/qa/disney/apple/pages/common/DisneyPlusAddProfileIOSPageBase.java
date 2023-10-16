@@ -111,8 +111,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void tapSaveButton() {
         if (!saveButton.isPresent()) {
             swipeInContainer(null, IMobileUtils.Direction.UP, 1200);
-            saveButton.click();
         }
+        saveButton.click();
     }
 
     public ExtendedWebElement getSaveButton() {
