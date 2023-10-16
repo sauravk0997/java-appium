@@ -15,21 +15,24 @@ public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         SoftAssert sa = new SoftAssert();
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
+        Assert.assertTrue(welcomeScreen.isOpened(),
                 "XMOBQA-62330/62332 - 'Welcome' screen was not displayed on launch/Sign Up button was not displayed as expected");
 
-        sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isDisneyPlusLogoDisplayed(),
-                "XMOBQA-62332 - Disney+ Logo was not displayed as expected");
+//        sa.assertTrue(welcomeScreen.isDisneyPlusLogoDisplayed(), //Disney image logo identifier is missing
+//                "XMOBQA-62332 - Disney+ Logo was not displayed as expected");
 
-        sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isMainTextDisplayed(),
+        sa.assertTrue(welcomeScreen.isMainTextDisplayed(),
                 "XMOBQA-62332 - 'Marketing Copy' was not displayed as expected");
+        System.out.println(welcomeScreen.isMainTextDisplayed());
 
-        sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isSubCtaPresent(),
+        sa.assertTrue(welcomeScreen.isSignUpButtonDisplayed(),
                 "XMOBQA-62332 - 'Sign Up CTA' text was not displayed as expected");
+        sa.assertTrue(welcomeScreen.isSubCopyDirectTextPresent(),
+                "XMOBQA-62332 - Sub copy is not displayed as expected");
 
-        sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isLogInButtonDisplayed(),
+        sa.assertTrue(welcomeScreen.isLogInButtonDisplayed(),
                 "XMOBQA-62332 - 'Log In' button was not displayed as expected");
 
         sa.assertAll();

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
@@ -658,6 +659,47 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
         sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72366"})
+    @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {"Ariel-More Menu"})
+    public void verifyEnforceDOBAndGenderAccountHolderCollectionScreen() {
+        initialSetup();
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        //Create Disney account without DOB and Gender
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+
+        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
+
+        //Verify if user terminate app without saving DOB, app will keep showcasing Enforce DOB screen
+        iosUtils.get().terminateApp(buildType.getDisneyBundle());
+        iosUtils.get().launchApp(buildType.getDisneyBundle());
+        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
+        sa.assertTrue(enforceDOBCollectionPage.isDateOfBirthDescriptionPresent(), "Enforce DOB Description is not displayed");
+
+        //Verify Gender collection screen is displayed or not, after DOB collection page if existing account without DOb and Gender
+        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        enforceDOBCollectionPage.clickPrimaryButton();
+        sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
         sa.assertAll();
     }
 
