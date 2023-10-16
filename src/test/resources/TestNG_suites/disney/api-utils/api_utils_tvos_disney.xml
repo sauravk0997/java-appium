@@ -11,12 +11,13 @@
                value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist"/>
     <parameter name="reporting.notification.slack-channels" value="qte-release-tests"/>
     <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details Api Utils tests">
         <classes>

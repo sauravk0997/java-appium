@@ -13,7 +13,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
 
-    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
         <classes>

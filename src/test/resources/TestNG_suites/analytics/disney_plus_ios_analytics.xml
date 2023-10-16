@@ -16,7 +16,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Smoke PQoE" parallel="methods">
         <classes>

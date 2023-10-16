@@ -17,7 +17,7 @@
                value="platformName=iOS;deviceType=Tablet;deviceName=iPad_8_Gen,iPad_8_Gen_1,iPad_Air_4_Gen,iPad_Gen_9,iPad_Mini_5_Gen,iPad_Pro_Gen_3,iPad_Pro_Gen_3_1;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="overrideFields"
-               value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
+               value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::locale::Locale to run"
                value="AD,AL,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
     <parameter name="choiceParam::language::Language to run"
