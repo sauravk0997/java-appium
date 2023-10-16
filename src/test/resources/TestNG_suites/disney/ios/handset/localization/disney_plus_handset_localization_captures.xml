@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="iOS - Disney+ - Handset Localization Captures" annotations="JDK" configfailurepolicy="continue">
+<suite verbose="1" thread-count="12" name="iOS - Disney+ - Handset Localization Captures" annotations="JDK" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="bsuscavage"/>
     <parameter name="reporting.project-key" value="LQA"/>

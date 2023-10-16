@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="5" name="ios_handset_paywall_rc_2.24.0" annotations="JDK" configfailurepolicy="continue">
+<suite verbose="1" thread-count="12" name="ios_handset_paywall_rc_2.24.0" annotations="JDK" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
