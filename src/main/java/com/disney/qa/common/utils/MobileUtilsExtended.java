@@ -18,7 +18,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.decorators.Decorated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +30,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
  * Keep this file for possible future extending Android and iOS universal utils creation.
  */
 
-public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
+     static final Logger MOBILE_UTILS_EXTENDED_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /*
     This method gets screenshots of the device in use at the time it is called and buils them to a local directory
@@ -42,7 +41,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      */
 
     //TODO: In the event we lose access to Carina, we should add an Artifact method to this class to export the files
-    public void exportImagesToDirectory(){
+    default void exportImagesToDirectory(){
         WebDriver driver = getDriver();
         BufferedImage image;
         File srcFile;
@@ -60,7 +59,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         try{
              lang = ((HasCapabilities) getDriver()).getCapabilities().getCapability("language").toString().toUpperCase();
         } catch (NullPointerException e){
-            LOGGER.info("No language set in capabilities. Defaulting to ENGLISH.");
+            MOBILE_UTILS_EXTENDED_LOGGER.info("No language set in capabilities. Defaulting to ENGLISH.");
             lang = "EN";
         }
 
@@ -70,7 +69,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         String deviceType = IDriverPool.getDefaultDevice().getDeviceType().toString();
         File directory = new File("SCREENSHOTS" + File.separator + lang + deviceType + File.separator + deviceName + app);
         directory.mkdirs();
-        LOGGER.info("Files being written to: " + directory.toString());
+        MOBILE_UTILS_EXTENDED_LOGGER.info("Files being written to: {}", directory);
 
         try {
             File screenshotTest = File.createTempFile(deviceType + "_", ".png", directory);
@@ -78,11 +77,11 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
             image = ImageIO.read(srcFile);
             ImageIO.write(image, "png", screenshotTest);
         } catch (IOException e) {
-            LOGGER.info("Something went wrong. See log:\n" + e);
+            MOBILE_UTILS_EXTENDED_LOGGER.info("Something went wrong. See log:\n{}", e, e);
         }
     }
 
-    public void wideSwipeRight(int times, int duration){
+    default void wideSwipeRight(int times, int duration){
         WebDriver driver = getDriver();
         org.openqa.selenium.Dimension size = driver.manage().window().getSize();
 
@@ -91,12 +90,12 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         int y = size.height / 2;
 
         for(int i = 0; i < times; ++i) {
-            LOGGER.info("Swipe right will be executed.");
+            MOBILE_UTILS_EXTENDED_LOGGER.info("Swipe right will be executed.");
             swipe(startx, y, endx, y, duration);
         }
     }
 
-    public void wideSwipeLeft(int times, int duration){
+    default void wideSwipeLeft(int times, int duration){
         WebDriver driver = getDriver();
         Dimension size = driver.manage().window().getSize();
 
@@ -105,12 +104,12 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         int y = size.height / 2;
 
         for(int i = 0; i < times; ++i) {
-            LOGGER.info("Swipe left will be executed.");
+            MOBILE_UTILS_EXTENDED_LOGGER.info("Swipe left will be executed.");
             swipe(startx, y, endx, y, duration);
         }
     }
 
-    public String getL10Nvalue(String text){
+    default String getL10Nvalue(String text){
         if (text.contains("{L10N:")) {
             String key = text.replace("{L10N:", "").replace("}", "");
             text = L10N.getText(key);
@@ -123,11 +122,10 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * the bottom of the page. Only swipes once per use. Designed to be done in a loop.
      * Returns a boolean to be referenced.
      */
-    public boolean swipeAndCompareBeforeAndAfterPlacement(){
-        UniversalUtils universalUtils = new UniversalUtils();
-        BufferedImage beforeSwipe = universalUtils.getCurrentScreenView();
-        new MobileUtilsExtended().swipeUp(1000);
-        BufferedImage afterSwipe = universalUtils.getCurrentScreenView();
+    default boolean swipeAndCompareBeforeAndAfterPlacement(){
+        BufferedImage beforeSwipe = getCurrentScreenView();
+        swipeUp(1000);
+        BufferedImage afterSwipe = getCurrentScreenView();
 
         return areImagesDifferent(beforeSwipe, afterSwipe);
     }
@@ -140,15 +138,14 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      *                  The container is used to exclude the device tray, which may fluctuate
      *                  rapidly due to the LTE connection display.
      */
-    public void returnToTopOfScreen(ExtendedWebElement container){
+    default void returnToTopOfScreen(ExtendedWebElement container){
         BufferedImage beforeSwipe;
         BufferedImage afterSwipe;
         int timeout = 0;
         do {
-            UniversalUtils universalUtils = new UniversalUtils();
-            beforeSwipe = universalUtils.getElementImage(container);
-            new MobileUtilsExtended().swipeDown(1000);
-            afterSwipe = universalUtils.getElementImage(container);
+            beforeSwipe = getElementImage(container);
+            swipeDown(1000);
+            afterSwipe = getElementImage(container);
             timeout++;
         } while (areImagesDifferent(beforeSwipe, afterSwipe) && timeout < 50);
     }
@@ -159,7 +156,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     @Deprecated
-    public String getInstalledAppVersion() {
+    default String getInstalledAppVersion() {
         String fullBuild = getInstalledAppVersionFull();
         List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
         StringBuilder sb = new StringBuilder();
@@ -179,7 +176,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * @return - The full build of the installed app version (ex. 1.16.0.12345)
      */
     @Deprecated
-    public String getInstalledAppVersionFull() {
+    default String getInstalledAppVersionFull() {
         StringBuilder sb = new StringBuilder();
 
         String build = getDevice().getCapabilities().getCapability("app").toString();
@@ -216,7 +213,7 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
      * @param height - The desired height percentage
      * @param width - The desired width percentage
      */
-    public void clickElementAtLocation(ExtendedWebElement element, int height, int width) {
+    default void clickElementAtLocation(ExtendedWebElement element, int height, int width) {
         var dimension = element.getSize();
         Point location = element.getLocation();
 
@@ -225,20 +222,12 @@ public class MobileUtilsExtended extends UniversalUtils implements IMobileUtils 
         tap(location.getX() + x, location.getY() + y);
     }
 
-    public void clickElementAtAbsoluteLocation(ExtendedWebElement element, int height, double width) {
+    default void clickElementAtAbsoluteLocation(ExtendedWebElement element, int height, double width) {
         var dimension = element.getSize();
         var location = element.getLocation();
 
         double x = (dimension.getWidth() * width);
         int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
         tap(location.getX() + (int) x, location.getY() + y);
-    }
-
-    public WebDriver getCastedDriver() {
-        WebDriver drv = getDriver();
-        if (drv instanceof Decorated<?>) {
-            drv = (WebDriver) ((Decorated<?>) drv).getOriginal();
-        }
-        return drv;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" parallel="methods" thread-count="1" name="iOS - Disney+ - Handset Promotional Assets Test" annotations="JDK">
+<suite verbose="1" parallel="methods" thread-count="12" name="iOS - Disney+ - Handset Promotional Assets Test" annotations="JDK" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="bsuscavage"/>
     <parameter name="reporting.project-key" value="DIS" />
@@ -10,10 +10,10 @@
     <parameter name="jenkinsEnvironments" value="Enterprise Prod,Enterprise QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000;wdaStartupRetries=6"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="3"/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
-    <parameter name="overrideFields" value="browserup_proxy=true,custom_string=${custom_country}"/>
+    <parameter name="overrideFields" value="browserup_proxy=true,custom_string=${custom_country},init_retry_count=2,init_retry_interval=15,retry_count=1"/>
     <parameter name="choiceParam::custom_country::Country" value="All,Austria,Belgium,Belgium-Dutch,Belgium-French,Denmark,
     Finland,France,Germany,Greenland,Guernsey,Iceland,Ireland,Isle of Man,Italy,Jersey,Luxembourg,Mauritius,Monaco,
     Netherlands,Norway,Portugal,Singapore,Spain,Sweden,Switzerland,Switzerland-French,Switzerland-Italian,United Kingdom"/>

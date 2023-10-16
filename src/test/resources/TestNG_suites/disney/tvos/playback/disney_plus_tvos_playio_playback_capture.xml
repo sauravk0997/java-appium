@@ -8,13 +8,13 @@
     <parameter name="jenkinsEnvironments" value="QA,PROD"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-QA-Enterprise-tvOS,Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::contentType::Content type (for example: programId)" value=""/>
     <parameter name="stringParam::contentId::Content ID" value=""/>
     <parameter name="overrideFields"
-               value="custom_string=${contentType},custom_string2=${contentId},browserup_proxy=true"/>
+               value="custom_string=${contentType},custom_string2=${contentId},browserup_proxy=true,init_retry_count=2,init_retry_interval=15,retry_count=1"/>
 
     <test verbose="1" name="Disney Plus tvOS Playback Capture" parallel="methods">
         <classes>

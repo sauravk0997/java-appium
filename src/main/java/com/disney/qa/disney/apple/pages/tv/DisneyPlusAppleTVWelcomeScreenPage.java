@@ -4,7 +4,10 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
@@ -24,41 +27,41 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     @Override
     public boolean isOpened() {
         boolean isPresent = loginButton.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
     public void waitForWelcomePageToLoad() {
-        fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 2, "Welcome Screen was not loaded")
+        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 2, "Welcome Screen was not loaded")
                 .until(it -> loginButton.isElementPresent());
     }
 
     public boolean isSignUpFocused() {
         boolean isFocused = isFocused(signUpButton);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused;
     }
 
     public boolean isLoginBtnFocused() {
         boolean isFocused = isFocused(loginButton);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused;
     }
 
     @Override
     public void clickLogInButton() {
         loginButton.isElementPresent();
-        fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 2, "Sign Up button was not focused")
+        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 2, "Sign Up button was not focused")
                 //TODO: TVOS-3456 focus not found on sign up button, temp fix use of isElementPresent
                 .until(it -> signUpButton.isElementPresent());
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
-        fluentWait(getCastedDriver(), EXPLICIT_TIMEOUT, 1, "Login Button was not focused")
+        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 1, "Login Button was not focused")
                 .until(it -> {
                     clickDown();
                     return isFocused(loginButton);
                 });
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
     }
 
