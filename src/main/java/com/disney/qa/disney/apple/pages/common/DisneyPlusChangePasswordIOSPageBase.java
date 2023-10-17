@@ -56,28 +56,29 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isLogoutAllDevicesChecked() {
-        return logoutAllDevicesChecked.isElementPresent();
+        return logoutAllDevicesChecked.isPresent();
     }
 
     public boolean isLogoutAllDevicesUnchecked() {
-        return logoutAllDevicesUnchecked.isElementPresent();
+        return logoutAllDevicesUnchecked.isPresent();
     }
 
     public void clickLogoutAllDevices() {
+//        logoutAllDevicesUnchecked.click();
         getDynamicXpathContainsName("checkbox").click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
-        return logoutAllDevicesTitle.isElementPresent();
+        return logoutAllDevicesTitle.isPresent();
     }
 
     public boolean isLogoutAllDevicesPasswordCopyDisplayed() {
-        return logoutAllDevicesPasswordCopy.isElementPresent();
+        return logoutAllDevicesPasswordCopy.isPresent();
     }
 
     @Override
     public boolean isSaveBtnPresent() {
-        return newPasswordSaveBtn.isElementPresent();
+        return newPasswordSaveBtn.isPresent();
     }
 
     @Override
@@ -87,7 +88,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isCancelBtnPresent() {
-        return changePasswordCancelBtn.isElementPresent();
+        return changePasswordCancelBtn.isPresent();
     }
 
     @Override
@@ -99,7 +100,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isInvalidPasswordErrorDisplayed() {
-        return invalidPassword.isElementPresent();
+        return invalidPassword.isPresent();
     }
 
     public String getInvalidPasswordText() {
@@ -119,10 +120,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
         String expectedString = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
         LOGGER.info("Expected auth headline: {}", expectedString);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
-    }
-
-    public void clickLogoutAllCheckmark() {
-        logoutAllDevicesUnchecked.click();
     }
 
     public boolean isLogOutOfThisDeviceMessagePresent() {

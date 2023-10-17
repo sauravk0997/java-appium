@@ -108,6 +108,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clearText() {
 		LOGGER.info("Clearing text in search bar");
-		new IOSUtils().pressByElement(clearText, 1);
+		pressByElement(clearText, 1);
 	}
 }

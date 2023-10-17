@@ -25,7 +25,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isOpened() {
-        return createPasswordHeader.isElementPresent();
+        return createPasswordHeader.isPresent();
     }
 
     public boolean isHidePasswordIconPresent() {
@@ -54,8 +54,8 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public void submitPasswordValue(String value) {
         enterPasswordValue(value);
-        new IOSUtils().clickElementAtLocation(passwordEntryField, 0, 50);
-        new IOSUtils().dismissKeyboardForPhone();
+        clickElementAtLocation(passwordEntryField, 0, 50);
+        dismissKeyboardForPhone();
         clickPrimaryButton();
     }
 

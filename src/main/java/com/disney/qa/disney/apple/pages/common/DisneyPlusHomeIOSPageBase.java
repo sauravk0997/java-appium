@@ -58,7 +58,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return homeContentView.isElementPresent();
+        return homeContentView.isElementPresent(SHORT_TIMEOUT);
     }
 
     public void waitForHomePageToOpen() {
@@ -116,7 +116,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void initiatePlaybackFromContinueWatching() {
         ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
-        new IOSUtils().swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
         continueWatchingContentView.click();
     }
 

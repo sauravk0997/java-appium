@@ -54,6 +54,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
     protected ExtendedWebElement sharePlayHyperLink;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"SharePlay\"`]")
+    private  ExtendedWebElement sharePlay;
+
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
 
@@ -102,10 +105,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getSharePlay() {
-        return xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText()),
-                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText());
+        return sharePlay;
     }
 
     public ExtendedWebElement getSharePlayTooltip() {
@@ -151,7 +151,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public void clickJuniorModeLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
         ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
-        new IOSUtils().swipe(learnMoreLink);
+        swipe(learnMoreLink);
         learnMoreLink.click(SHORT_TIMEOUT);
     }
 
@@ -161,7 +161,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void clickDoneBtn() {
-        new MobileUtilsExtended().clickElementAtLocation(doneBtn, 50, 50);
+        clickElementAtLocation(doneBtn, 50, 50);
     }
 
     public boolean isEditTextFieldPresent() {

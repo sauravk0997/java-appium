@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology.qa;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.disney.util.TestGroup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,9 +28,8 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72301"})
-    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {"Anthology", TestGroup.PRE_CONFIGURATION})
     public void verifyAnthologyUpcomingBadgeAndMetadata() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
@@ -38,7 +38,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isStaticTextLabelPresent(UPCOMING));
         } catch (Exception e) {
             skipExecution("Skipping test, "+ UPCOMING + " label not found." + e.getMessage());
         }
@@ -58,9 +58,8 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72300"})
-    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {"Anthology", TestGroup.PRE_CONFIGURATION})
     public void verifyAnthologyLiveBadge() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -69,7 +68,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
             skipExecution("Skipping test, "+ LIVE + " label not found, no live content playing." + e.getMessage());
         }
@@ -88,9 +87,8 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72299"})
-    @Test(description = "Verify Anthology Series - Live Playback", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Playback", groups = {"Anthology", TestGroup.PRE_CONFIGURATION})
     public void verifyAnthologyLivePlayback() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -100,7 +98,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         QALogin();
         searchAndOpenDWTSDetails();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> details.doesAiringBadgeContainLive());
         } catch (Exception e) {
             skipExecution("Skipping test, "+ LIVE + " label not found, no live content playing." + e.getMessage());
         }
@@ -116,15 +114,14 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73876"})
-    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {"Anthology", TestGroup.PRE_CONFIGURATION})
     public void verifyAnthologyEnded() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
 //        setAppToHomeScreen(disneyAccount.get());
         QALogin();
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
         } catch (Exception e) {
             skipExecution("Skipping test, Watch button not found, no live content airing." + e.getMessage());
         }
@@ -134,9 +131,8 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72297"})
-    @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology"})
+    @Test(description = "Verify Anthology Series - Live Modal", groups = {"Anthology", TestGroup.PRE_CONFIGURATION})
     public void verifyAnthologyLiveModal() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
@@ -146,7 +142,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         try {
-            fluentWaitNoMessage(getCastedDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> details.isQAWatchButtonPresent());
         } catch (Exception e) {
             skipExecution("Skipping test, Watch button not found. " + e.getMessage());
         }

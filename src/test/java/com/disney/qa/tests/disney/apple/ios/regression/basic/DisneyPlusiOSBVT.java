@@ -3,15 +3,21 @@ package com.disney.qa.tests.disney.apple.ios.regression.basic;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 public class DisneyPlusiOSBVT extends DisneyBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     //Test constants
     private static final String  SHORT_SERIES = "Bluey";
     private static final String TEST = "Test";
@@ -21,9 +27,8 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72582"})
-    @Test(description = "iOS Basic Verification Test", groups = {"BVT"})
+    @Test(description = "iOS Basic Verification Test", groups = {"BVT", TestGroup.PRE_CONFIGURATION})
     public void iOSBVT() {
-        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -32,7 +37,6 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        IOSUtils utils = new IOSUtils();
         SoftAssert sa = new SoftAssert();
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
 
@@ -82,7 +86,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         pause(1); //to handle transition
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            utils.scrollDown();
+            scrollDown();
         }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");

@@ -6,14 +6,14 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-tvOS-Alice-Tests"/>
     <parameter name="capabilities"
-               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4K_2;platformName=iOS;deviceType=tvOS"/>
     <parameter name="jenkinsEnvironments" value="PROD,QA"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
 
-    <parameter name="overrideFields" value=""/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
         <classes>

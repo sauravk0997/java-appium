@@ -324,7 +324,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVPasswordPage.moveDown(1, 1);
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isSignUpBtnFocused(), "Sign up button is not focused after navigating to it");
-        aliceDriver.uploadAliceScreenshots();
         sa.assertAll();
     }
 

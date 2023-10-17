@@ -4,6 +4,8 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -41,7 +43,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = headlineHeader.isElementPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -71,13 +73,13 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("show");
     }
 
     public boolean isHidePasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hide");
     }
 
@@ -103,17 +105,18 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public void submitPasswordForLogin(String userPassword) {
         typePassword(userPassword);
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        new IOSUtils().hideKeyboard();
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        clickPrimaryButtonByCoordinates();
+        hideKeyboard();
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
         typePassword(userPassword);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         if (continueButton.isElementPresent()) {
             continueButton.click();
         } else {
-            new IOSUtils().clickNearElement(getTypeButtonByLabel("CONTINUE"), 0.5, 30);
+            clickNearElement(getTypeButtonByLabel("CONTINUE"), 0.5, 30);
         }
     }
 

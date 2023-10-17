@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -154,7 +155,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public DisneyPlusEditProfileIOSPageBase clickEditProfilesBtn() {
-		new MobileUtilsExtended().clickElementAtLocation(editProfilesBtn, 50, 50);
+		clickElementAtLocation(editProfilesBtn, 50, 50);
 		return initPage(DisneyPlusEditProfileIOSPageBase.class);
 	}
 
@@ -175,7 +176,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void swipeCells(String profile, int swipes, Direction direction) {
-		new MobileUtilsExtended().swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
+		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
 	}
 
 	public boolean isHelpWebviewOpen() {
@@ -194,26 +195,36 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
 		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-			new IOSUtils().clickElementAtLocation(wifiContainer, 50, 90);
+			clickElementAtLocation(wifiContainer, 50, 90);
 		}
 	}
 
 	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
 		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-			new IOSUtils().clickElementAtLocation(downloadContainer, 50, 90);
+			clickElementAtLocation(downloadContainer, 50, 90);
 		}
 	}
 
 	public boolean isDeviceStorageCorrectlyDisplayed() {
-		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPhone %s", getDictionary().getValueAfterPlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
+		ExtendedWebElement storageText = getTypeCellLabelContains(String.format("iPhone %s", getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
 		if(storageText.isElementPresent()) {
-			return storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
-					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
-					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+			return storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
+					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
+					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
 		} else {
 			return false;
 		}
+	}
+
+	public String getValueBeforePlaceholder(String rawValue) {
+		rawValue = rawValue.trim();
+		String substring = StringUtils.substringBefore(rawValue, "${").trim();
+		if (substring.equals(rawValue)) {
+			substring = StringUtils.substringBefore(rawValue, "{").trim();
+		}
+
+		return substring;
 	}
 
 	public boolean isDeleteDownloadsEnabled() {

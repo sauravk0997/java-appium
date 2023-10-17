@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -23,9 +24,8 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     //TODO: Refactor this test to support AdHoc builds
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72882"})
-    @Test(description = "Old app to new app installation with login validation", groups = {"Install"})
+    @Test(description = "Old app to new app installation with login validation", groups = {"Install", TestGroup.PRE_CONFIGURATION})
     public void testOldAppToNewAppInstallBVT() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -114,9 +114,8 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73477"})
-    @Test(description = "Old app with kids download to new app installation", groups = {"Install"})
+    @Test(description = "Old app with kids download to new app installation", groups = {"Install", TestGroup.PRE_CONFIGURATION})
     public void testOldAppToNewAppInstallDownloadKids() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -189,9 +188,8 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73476"})
-    @Test(description = "Old app with adult download to new app install", groups = {"Install"})
+    @Test(description = "Old app with adult download to new app install", groups = {"Install", TestGroup.PRE_CONFIGURATION})
     public void testOldAppToNewAppInstallDownloadAdult() {
-        initialSetup();
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

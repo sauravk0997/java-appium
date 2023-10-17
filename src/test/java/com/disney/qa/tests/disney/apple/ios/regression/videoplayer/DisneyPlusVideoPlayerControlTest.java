@@ -1,8 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -27,10 +27,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61163"})
-    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player"})
+    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyCloseButtonControlOnPlayer() {
-        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -64,10 +63,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61185"})
-    @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player"})
+    @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyRewindButtonControlOnPlayer() {
-        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);
@@ -89,10 +87,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61179"})
-    @Test(description = " Video Player > Tap on screen to Forward", groups = {"Video Player"})
+    @Test(description = " Video Player > Tap on screen to Forward", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyForwardButtonControlOnPlayer() {
-        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);
@@ -112,14 +109,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player"})
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContent() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
-        new IOSUtils().launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_episode_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_episode_deeplink"), 10);
         detailsPage.clickOpenButton();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
@@ -129,14 +125,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72788"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player"})
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContentMovie() {
-        initialSetup();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
-        new IOSUtils().launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_movie_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_movie_deeplink"), 10);
         detailsPage.clickOpenButton();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
@@ -146,10 +141,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61195"})
-    @Test(description = "Video Player > Player Controls UI - Confirm Program Title for Movies / Series / Extras", groups = {"Video Player"}, dataProvider = "contentType")
+    @Test(description = "Video Player > Player Controls UI - Confirm Program Title for Movies / Series / Extras", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType")
     @Maintainer("gkrishna1")
     public void verifyProgramTitleOnPlayer(String contentType, String content) {
-        initialSetup();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -169,8 +163,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
             String episodeTitle = detailsPage.getEpisodeContentTitle();
             detailsPage.clickPlayButton().isOpened();
             playerContentTitle = videoPlayer.getTitleLabel();
-            sa.assertTrue(playerContentTitle.contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
-            sa.assertTrue(videoPlayer.getSubTitleLabel().contains(content), "Content title doesn't match");
+            sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
+            sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match");
         } else if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.EXTRAS.toString())) {
             detailsPage.clickExtrasTab();
             detailsPage.tapOnFirstContentTitle();
@@ -185,10 +179,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61191"})
-    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player"})
+    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyPlayerControlUI() {
-        initialSetup();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SHORT_SERIES);

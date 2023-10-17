@@ -179,7 +179,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), 15);
         int attempts = 0;
         do {
-            new MobileUtilsExtended().clickElementAtLocation(playerView, 35, 50);
+            clickElementAtLocation(playerView, 35, 50);
         } while (attempts++ < 10 && !seekBar.isElementPresent(SHORT_TIMEOUT));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -244,7 +244,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 throw new IllegalArgumentException("Undefined player action");
         }
         int yOffset = y / 2;
-        new IOSUtils().tapAtCoordinateNoOfTimes(xOffset, yOffset, times);
+        tapAtCoordinateNoOfTimes(xOffset, yOffset, times);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -261,7 +261,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int seekBarWidth = seekBar.getSize().getWidth();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
-        new IOSUtils().dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(),3);
+        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(),3);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -280,7 +280,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public void seekOnPlayer() {
         pause(5);
         displayVideoController();
-        new IOSUtils().longPressAndHoldElement(currentTimeMarker, 20);
+        longPressAndHoldElement(currentTimeMarker, 20);
     }
 
     /**

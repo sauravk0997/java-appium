@@ -6,6 +6,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageB
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -15,13 +16,11 @@ import java.util.Date;
 public class DisneyPlusForgotPasswordTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62044"})
-    @Test(description = "Log in - Verify Forgot Password Link",groups = {"Onboarding"})
+    @Test(description = "Log in - Verify Forgot Password Link",groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testForgotPasswordLink() {
-        initialSetup();
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         SoftAssert softAssert = new SoftAssert();
-        handleAlert();
         EmailApi emailApi = new EmailApi();
         String subject = "Your one-time passcode";
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();

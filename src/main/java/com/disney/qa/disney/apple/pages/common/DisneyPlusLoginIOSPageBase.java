@@ -1,8 +1,9 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -72,8 +73,9 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public void submitEmail(String userEmailAddress) {
         fillOutEmailField(userEmailAddress);
-        UniversalUtils.captureAndUpload(getCastedDriver());
-        clickPrimaryButton();
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        clickPrimaryButtonByCoordinates();
+        pause(3);
     }
 
     public String getErrorMessageString() {
@@ -97,7 +99,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNoAccountAlertSubtextDisplayed() {
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String text = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT.getText());
         LOGGER.info("Expecting alert subtext: {}", text);
         return getDynamicAccessibilityId(text).isElementPresent();

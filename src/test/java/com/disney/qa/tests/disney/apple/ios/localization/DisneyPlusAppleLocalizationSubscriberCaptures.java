@@ -3,11 +3,15 @@ package com.disney.qa.tests.disney.apple.ios.localization;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
@@ -54,7 +58,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusAppleLocalizationBaseTest {
-
     private static final String SECONDARY_PROFILE = "Test_2";
     private static final String NINETEEN_EIGHTY = "1980";
     private static final String FIRST = "01";
@@ -79,7 +82,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSaveBtn();
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = {"Subscriber - UI", "Subscriber - UI - S1"})
+    @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = {"Subscriber - UI", "Subscriber - UI - S1", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void captureWelcomePageAndLoginFlow(String TUID) {
         setup();
         setZipTestName("SubscriberUI_1_welcomePage");
@@ -104,7 +107,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase forgotPasswordPage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        IOSUtils utils = new IOSUtils();
 
         getScreenshots("WelcomePage");
         welcomePage.clickLogInButton();
@@ -117,7 +119,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.clickPrimaryButton();
         pause(3);
         getScreenshots("LoginPageBadEmail");
-        new IOSUtils().handleSystemAlert(IOSUtils.AlertButtonCommand.ACCEPT, 10);
+        handleSystemAlert(IOSUtils.AlertButtonCommand.ACCEPT, 10);
         pause(3);
         loginPage.submitEmail(disneyAccount.get().getEmail());
         pause(3);
@@ -131,12 +133,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         forgotPasswordPage.clickPrimaryButton();
         pause(3);
         getScreenshots("ForgotPasswordPageBlankCode");
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         forgotPasswordPage.clickResend();
         pause(3);
         getScreenshots("ForgotPasswordPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         forgotPasswordPage.getBackArrow().click();
         passwordPage.submitPasswordForLogin("badpassword");
         pause(3);
@@ -146,7 +148,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("TravellingMessage");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void watchlistAndAppSettings(String TUID) {
         setup();
         setZipTestName("SubscriberUI_2_watchlist");
@@ -167,13 +169,13 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
         passwordPage.typePassword(testAccount.getUserPass());
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
         pause(5);
         getScreenshots("WhoseWatchingPage");
 
         whoseWatchingPage.clickProfile("Test");
-        handleAlert();
+//        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(3);
         getScreenshots("ProfilePage");
@@ -204,7 +206,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("VideoQuality");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void AccountsAndHelp(String TUID) {
         setup();
         setZipTestName("SubscriberUI_3_accounts");
@@ -229,7 +231,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
         passwordPage.typePassword(testAccount.getUserPass());
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
 
@@ -258,17 +260,17 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("ChangeEmailPage");
         forgotPasswordPage.clickPrimaryButton();
 
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("ChangeEmailPageBlankCode");
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         forgotPasswordPage.clickResend();
         pause(3);
         getScreenshots("ChangeEmailPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         getScreenshots("ChangeEmailPageAfterOtp");
 
         changeEmailPage.clickLogoutAllDevices();
@@ -276,16 +278,16 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmailLogOutOfAllDevices");
 
         changeEmailPage.clickSaveBtn();
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("EmailEmptySave");
 
         changeEmailPage.submitNewEmailAddress("a");
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("EmailBadEmailSave");
 
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         changeEmailPage.clickCancelBtn();
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
@@ -305,7 +307,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         getScreenshots("ChangePasswordPage");
 
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = initPage(DisneyPlusChangePasswordIOSPageBase.class);
@@ -331,7 +333,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         passwordPage.typePassword("a");
         changePasswordPage.clickSaveBtn();
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("InvalidPasswordError");
 
@@ -343,18 +345,18 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogoutAllDevicesPage");
 
         accountPage.clickPrimaryButton();
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("LogoutAllDevicesEmptyPassword");
 
         passwordPage.typePassword("a");
         accountPage.clickPrimaryButton();
-        iosUtils.get().dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(3);
         getScreenshots("LogoutAllDevicesWrongPassword");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void legal(String TUID) {
         setup();
         setZipTestName("SubscriberUI_4_legal");
@@ -363,14 +365,13 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
-        IOSUtils utils = new IOSUtils();
         DisneyAccount testAccount = disneyAccount.get();
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
         passwordPage.typePassword(testAccount.getUserPass());
 
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -397,7 +398,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("HelpWebview");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void profileMenu(String TUID) {
         setup();
         setZipTestName("SubscriberUI_5_profileMenu");
@@ -411,14 +412,13 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        IOSUtils utils = iosUtils.get();
         DisneyAccount testAccount = disneyAccount.get();
 
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -439,7 +439,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSkipButton();
 
         avatarPage.clickSaveBtn();
-        utils.hideKeyboard();
+        hideKeyboard();
         pause(2);
         getScreenshots("EmptyProfileName");
 
@@ -449,7 +449,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             addProfilePage.chooseGender();
         }
         avatarPage.clickSaveBtn();
-        utils.hideKeyboard();
+        hideKeyboard();
         pause(2);
         getScreenshots("DuplicateProfileName");
 
@@ -491,7 +491,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
         whoPage.clickProfile(DEFAULT_PROFILE);
@@ -541,7 +541,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("AfterDeleteWhoIsWatchingPage");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void PCON(String TUID) {
         setup();
         setZipTestName("SubscriberUI_6_PCON");
@@ -554,7 +554,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        IOSUtils utils = iosUtils.get();
         DisneyAccount testAccount = disneyAccount.get();
         DisneyProfile profile = disneyAccount.get().getProfile(DEFAULT_PROFILE);
         String ratingSystem = profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
@@ -579,7 +578,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
 
-        utils.swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 500);
+        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 500);
 
         pause(2);
         getScreenshots("PconMenuEditProfilePage");
@@ -611,7 +610,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             ExtendedWebElement currentRating = contentRatingPage
                     .getDynamicAccessibilityId(localizedRating);
 
-            utils.swipePageTillElementTappable(currentRating, 3, null, Direction.UP, 1000);
+            swipePageTillElementTappable(currentRating, 3, null, Direction.UP, 1000);
 
             currentRating.click();
             pause(2);
@@ -644,7 +643,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         loginPage.fillOutEmailField(testAccountTwoProfiles.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccountTwoProfiles.getUserPass());
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
         //S6.28
@@ -659,7 +658,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
-        utils.swipePageTillElementTappable(editProfilePage.getKidProofExitLabel(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(editProfilePage.getKidProofExitLabel(), 3, null, Direction.UP, 1000);
         editProfilePage.getKidProofExitLabel().click();
         pause(2);
         getScreenshots("KidExitProofError");
@@ -668,7 +667,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         editProfilePage.getKidsProfileToggleSwitch().click();
 
         //S6.15
-        utils.swipePageTillElementTappable(editProfilePage.getSharePlay(), 3, null, Direction.DOWN, 1000);
+        swipePageTillElementTappable(editProfilePage.getSharePlay(), 3, null, Direction.DOWN, 1000);
         editProfilePage.getSharePlay().click();
         pause(2);
         getScreenshots("GroupWatchKidsModeError");
@@ -680,7 +679,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         whoPage.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
-        utils.swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
         editProfilePage.getPinSettingsCell().click();
         passwordPage.typePassword(testAccount.getUserPass());
         passwordPage.clickPrimaryButton();
@@ -729,7 +728,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         whoPage.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
-        utils.swipePageTillElementTappable(editProfilePage.getKidProofExitToggleSwitch(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(editProfilePage.getKidProofExitToggleSwitch(), 3, null, Direction.UP, 1000);
         editProfilePage.getKidProofExitToggleSwitch().click();
         passwordPage.typePassword(testAccount.getUserPass());
         passwordPage.clickPrimaryButton();
@@ -762,12 +761,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         moreMenuPage.getExitJuniorModePin().click();
         moreMenuPage.getExitJuniorModePin().type("1111");
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         pause(2);
         getScreenshots("ExitKidsProfileWrongCodeError");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void downloadsAndSearch(String TUID) {
         setup();
         setZipTestName("SubscriberUI_7_downloads");
@@ -779,14 +778,13 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
-        IOSUtils utils = iosUtils.get();
         DisneyAccount testAccount = disneyAccount.get();
 
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
 
         //S7.1
@@ -803,18 +801,18 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(2);
         getScreenshots("MovieLandingPage");
 
-        utils.swipePageTillElementTappable(detailsPage.getTabBar(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getTabBar(), 3, null, Direction.UP, 1000);
 
         detailsPage.clickDetailsTab();
         pause(2);
         getScreenshots("MovieDetailsTab");
 
-        utils.swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
         pause(2);
         getScreenshots("MovieMiscellaneousdetails");
 
         //S7.3
-        utils.swipePageTillElementTappable(detailsPage.getPlayButton(), 3, null, Direction.DOWN, 1000);
+        swipePageTillElementTappable(detailsPage.getPlayButton(), 3, null, Direction.DOWN, 1000);
 
         detailsPage.addToWatchlist();
         detailsPage.startDownload();
@@ -853,7 +851,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(5);
         getScreenshots("SeriesLandingPage");
 
-        utils.swipePageTillElementTappable(detailsPage.getEpisodesTab(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getEpisodesTab(), 3, null, Direction.UP, 1000);
         pause(2);
         getScreenshotsNoCountUpdate("SeriesEpisodes");
 
@@ -861,12 +859,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(2);
         getScreenshotsNoCountUpdate("SeriesDetailsTab");
 
-        utils.swipePageTillElementTappable(detailsPage.getInfoView(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getInfoView(), 3, null, Direction.UP, 1000);
         detailsPage.getInfoView().click();
         pause(2);
         getScreenshotsNoCountUpdate("SeriesInfoView");
 
-        utils.swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
         pause(2);
         getScreenshotsNoCountUpdate("SeriesMiscellaneousDetails");
 
@@ -876,7 +874,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(5);
 
         //S7.4
-        utils.swipePageTillElementTappable(detailsPage.getSeasonSelectorButton(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(detailsPage.getSeasonSelectorButton(), 3, null, Direction.UP, 1000);
         detailsPage.getSeasonSelectorButton().click();
         pause(2);
         getScreenshots("SeasonSelector");
@@ -939,7 +937,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .getDynamicRowButtonLabel(
                         getDictionary()
                                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 7);
-        utils.swipePageTillElementTappable(lastEpisodeButton, 5, null, Direction.UP, 500);
+        swipePageTillElementTappable(lastEpisodeButton, 5, null, Direction.UP, 500);
         lastEpisodeButton.click();
         pause(2);
         getScreenshots("DownloadIsQueued");
@@ -980,7 +978,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
-        utils.swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
         appSettingsPage.getDeleteAllDownloadsButton().click();
         pause(2);
         getScreenshots("DeleteAllMultipleDownloads");
@@ -1005,7 +1003,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
-        utils.swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
+        swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
         appSettingsPage.getDeleteAllDownloadsButton().click();
         pause(1);
         getScreenshotsNoCountUpdate("DeleteAllSingleDownload");
@@ -1019,7 +1017,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogOut");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void searchMoviesAndSeries(String TUID) {
         setup();
         setZipTestName("SubscriberUI_8_search");
@@ -1145,7 +1143,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void welchOnboarding(String TUID) {
         setup();
         setZipTestName("SubscriberUI_10_welch");
@@ -1215,7 +1213,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("WelchLockedProfile");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13"})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void editorialContents(String TUID) {
         setup();
         setZipTestName("SubscriberUI_13_editorial_contents");

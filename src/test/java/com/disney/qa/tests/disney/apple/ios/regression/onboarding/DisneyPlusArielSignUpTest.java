@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -17,11 +18,9 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
-    @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSignUpDoBUnder18() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -54,11 +53,9 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
-    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSignUpDOBInvalid() {
-        initialSetup();
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
