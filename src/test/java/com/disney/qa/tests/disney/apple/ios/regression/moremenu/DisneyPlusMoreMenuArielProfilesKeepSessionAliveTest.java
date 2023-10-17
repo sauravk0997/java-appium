@@ -179,4 +179,40 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
+
+    @Maintainer("acadavidcorrea")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
+    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding"})
+    public void testPasswordPromptExpires() {
+        initialSetup();
+        SoftAssert softAssert = new SoftAssert();
+        handleAlert();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        login(disneyAccountApi.get().createAccount("US", "en"));
+
+        DisneyPlusWelcomeScreenIOSPageBase paywallPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+
+        softAssert.assertTrue(paywallPageBase.isLogOutButtonDisplayed(),
+                "Expected: 'Log out' button should be present");
+
+        softAssert.assertTrue(paywallPageBase.isCompleteSubscriptionButtonDisplayed(),
+                "Expected: 'Complete Subscription' button should be present");
+
+        paywallPageBase.clickCompleteSubscriptionButton();
+
+        softAssert.assertTrue(paywallPageBase.isCancelButtonDisplayed(),
+                "Expected: 'Cancel' button should be present");
+
+        softAssert.assertTrue(paywallPageBase.isMonthlySubButtonDisplayed(),
+                "Expected: Monthly Subscription button should be present");
+
+        softAssert.assertTrue(paywallPageBase.isYearlySubButtonDisplayed(),
+                "Expected: Yearly Subscription button should be present");
+
+        softAssert.assertTrue(paywallPageBase.isRestoreButtonDisplayed(),
+                "Expected: Restore button should be present");
+        pause(900);
+
+
+    }
 }
