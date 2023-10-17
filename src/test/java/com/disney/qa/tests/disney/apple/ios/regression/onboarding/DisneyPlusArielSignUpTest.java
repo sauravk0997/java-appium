@@ -86,10 +86,9 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72384"})
-    @Test(description = "Log in - Verify login - DOB under 18", groups = {"Onboarding"})
+    @Test(description = "Log in - Verify login - DOB under 18", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();
-        handleAlert();
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
