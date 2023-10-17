@@ -689,6 +689,130 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72335"})
+    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileBannerForPrimaryProfiles() {
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        //Create Disney account without DOB and Gender
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        enforceDOBCollectionPage.clickPrimaryButton();
+        updateProfilePage.chooseGender();
+        updateProfilePage.clickSaveBtn();
+
+        //Verify add profile banner
+        sa.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is not present");
+        sa.assertTrue(addProfileBanner.isProfileSubcopyPresent(), "Add Profile Banner sub copy is not present");
+        sa.assertTrue(addProfileBanner.isDismissButtonPresent(), "Dismiss button on add profile banner is not present");
+        sa.assertTrue(addProfileBanner.isAddProfileButtonPresent(), "Add profile button on add profile banner is not present");
+
+        //Verify if user dismiss add profile banner, it will be not shown anymore
+        addProfileBanner.tapDismissButton();
+        sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72335"})
+    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfilePageAfterClickingAddProfileButtonOnAddProfileBanner() {
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        //Create Disney account without DOB and Gender
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        enforceDOBCollectionPage.clickPrimaryButton();
+        updateProfilePage.chooseGender();
+        updateProfilePage.clickSaveBtn();
+        addProfileBanner.tapAddProfileButton();
+
+        //Verify if user click add profile on banner, add profile page is opened
+        sa.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar Page is not opened");
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isAddProfilePageOpened(), "Add Profile Page is not opened");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72335"})
+    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileBannerIsNotDispalyedForTheMaxAmountOfProfiles() {
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int Max = 6;
+
+        //Create Disney account without DOB and Gender
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+
+        //Add Max number of profile through API
+        for(int i=0;i<Max;i++){
+            disneyAccountApi.get().addProfile(disneyAccount.get(),KIDS_PROFILE,disneyAccount.get().getProfileLang(),null,true);
+        }
+
+        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        enforceDOBCollectionPage.clickPrimaryButton();
+        updateProfilePage.chooseGender();
+        updateProfilePage.clickSaveBtn();
+        //Verify add profile banner is not displayed if user already have maximum amount of profiles, namely 7
+        sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
