@@ -48,7 +48,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Password page did not launch");
 
@@ -81,7 +81,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyAccount.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyAccount.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -114,7 +114,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyAccount.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyAccount.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -156,7 +156,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -199,7 +199,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -241,7 +241,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -288,7 +288,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -347,7 +347,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -396,7 +396,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -441,7 +441,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
-        loginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        loginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
 
@@ -492,7 +492,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -536,7 +536,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -593,7 +593,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -658,7 +658,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
@@ -713,7 +713,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
-        loginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        loginPage.proceedToLocalizedPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
 

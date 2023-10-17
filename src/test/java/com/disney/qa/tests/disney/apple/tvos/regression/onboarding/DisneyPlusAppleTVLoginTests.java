@@ -138,7 +138,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen("somethin!^&&#@gmail");
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen("somethin!^&&#@gmail");
         sa.assertEquals(disneyPlusAppleTVLoginPage.getErrorMessageLabelText(), noEmailInputError);
 
         sa.assertAll();
@@ -156,7 +156,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(apiProvider.get().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
 
         List<String> expectedTextList = DisneyPlusAppleTVLoginPage.getUnknownEmailScreenTexts(languageUtils.get());
         IntStream.range(0, expectedTextList.size()).forEach(i -> {
@@ -186,7 +186,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(apiProvider.get().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
         disneyPlusAppleTVLoginPage.clickTryAgainBtn();
 
         sa.assertTrue(disneyPlusAppleTVLoginPage.isOpened(),
@@ -218,7 +218,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(uniqueUserEmail);
         disneyPlusAppleTVLoginPage.clickSignUpButtonUnknownEmailScreen();
 
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign Up page did not launch");
@@ -253,7 +253,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyAccount.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyAccount.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
 
@@ -275,7 +275,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
@@ -306,7 +306,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
@@ -339,7 +339,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
 
@@ -372,7 +372,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
 
@@ -427,7 +427,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
 
@@ -455,7 +455,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(entitledUser.getEmail());
 
         disneyPlusAppleTVPasswordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
 
@@ -479,6 +479,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         //TODO: Temp fix in place. After QCE-1333 is fixed, replace below lines with original Alice validation (QAA-11371).
         sa.assertTrue(applePageBase.doesAttributeEqualTrue(applePageBase.getStaticTextByLabelContains("Validating"), "enabled"));
+        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "Validating", AliceLabels.TITLE.getText())
+                .isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
 
         sa.assertAll();

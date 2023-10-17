@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -48,9 +47,8 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = emailField.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return staticTextNameContains.format("textFieldEmail").isPresent();
     }
 
     public void clickEnterNewBtn() {
