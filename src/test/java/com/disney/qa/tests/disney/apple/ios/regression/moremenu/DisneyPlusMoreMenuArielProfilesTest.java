@@ -717,7 +717,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         updateProfilePage.chooseGender();
-        updateProfilePage.clickSaveBtn();
+        updateProfilePage.tapSaveButton();
 
         //Verify add profile banner
         sa.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is not present");
@@ -761,7 +761,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         updateProfilePage.chooseGender();
-        updateProfilePage.clickSaveBtn();
+        updateProfilePage.tapSaveButton();
         addProfileBanner.tapAddProfileButton();
 
         //Verify if user click add profile on banner, add profile page is opened
@@ -807,7 +807,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         updateProfilePage.chooseGender();
-        updateProfilePage.clickSaveBtn();
+        updateProfilePage.tapSaveButton();
         //Verify add profile banner is not displayed if user already have maximum amount of profiles, namely 7
         sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
         sa.assertAll();
