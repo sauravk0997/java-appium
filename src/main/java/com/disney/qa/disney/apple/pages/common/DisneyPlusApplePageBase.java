@@ -45,6 +45,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SAVE_OVERRIDE = "SAVE OVERRIDE";
     private static final String REMOVE_OVERRIDE = "REMOVE OVERRIDE";
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
+    private static final String UPDATE_LATER = "Update Later";
+    private static final String UPDATE_AVAILABLE = "An update is available";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1102,11 +1104,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void detectAppleUpdateAndClickUpdateLater() {
-        if (staticTextLabelContains.format("An update is available").isPresent()) {
-            LOGGER.info("Dismissing Apple Update alert by clicking 'Update Later'..");
+        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent()) {
+            LOGGER.info("Dismissing Apple Update alert by clicking {}}..", UPDATE_LATER);
             moveDown(2,1);
-            LOGGER.info("Is 'Update Later' focused?" + isFocused(dynamicBtnFindByLabelContains.format("Update Later")));
-            LOGGER.info("Clicking 'Update Later'..");
+            LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format("Update Later")));
             clickSelect();
         }
     }
