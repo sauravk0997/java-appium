@@ -60,7 +60,7 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
 
 
     public void setBuildType() {
-        sessionBundles.put(APP, getDevice().getCapabilities().getCapability("app").toString());
+        sessionBundles.put(APP, R.CONFIG.get("capabilities.app"));
         LOGGER.info("App Download: {}", sessionBundles.get(APP));
         if(sessionBundles.get(APP).contains("Enterprise")) {
             buildType = BuildType.ENTERPRISE;
