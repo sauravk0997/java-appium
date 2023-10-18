@@ -431,8 +431,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     }
 
     public void setFlexWelcomeConfig() {
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
             LOGGER.info("{} found, setting flex welcome config..", priceTimeUnit);
             JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());

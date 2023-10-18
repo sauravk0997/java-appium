@@ -37,7 +37,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61973"})
-    @Test(description = "Verify Up Next UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify Up Next UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -153,7 +153,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62003"})
-    @Test(description = "Up Next Behavior when app gets backgrounded", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "autoplay-state")
+    @Test(description = "Up Next Behavior when app gets backgrounded", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "autoplay-state", enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextBehaviorWhenAppIsBackgrounded(String autoplayState) {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);

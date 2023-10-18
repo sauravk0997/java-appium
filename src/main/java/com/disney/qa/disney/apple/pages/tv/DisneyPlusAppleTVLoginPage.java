@@ -131,7 +131,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public void selectEnterNewEnterEmailSelectContinueBtn(String email) {
         clickEmailAndPressEnterNew();
         enterEmail(email);
-        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        moveToContinueBtnKeyboardEntry();
         clickSelect();
         clickContinueBtn();
     }
@@ -182,7 +182,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         clickEmailField();
         clickEnterNewBtn();
         enterEmail(email);
-        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        moveToContinueBtnKeyboardEntry();
         clickSelect();
         clickContinueBtn();
     }
