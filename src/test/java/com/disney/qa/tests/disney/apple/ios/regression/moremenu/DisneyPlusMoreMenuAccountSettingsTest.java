@@ -185,6 +185,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isGoogleSubscriptionTitlePresent(),
+                "Google Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isGoogleSubscriptionMessagePresent(),
                 "Google Subscription message was not displayed");
 
@@ -437,6 +439,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelefonicaVivoSubscriptionMessagePresent(),
+                "Telefonica Vivo Subscription title was not displayed");
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelefonicaVivoSubscriptionMessagePresent(),
                 "Telefonica Vivo Subscription message was not displayed");
 
