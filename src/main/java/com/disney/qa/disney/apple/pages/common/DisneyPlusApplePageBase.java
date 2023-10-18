@@ -675,6 +675,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                     }
                     return isFocused(keyboardContinue);
                 });
+        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -1104,7 +1105,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (staticTextLabelContains.format("An update is available").isPresent()) {
             LOGGER.info("Dismissing Apple Update alert by clicking 'Update Later'..");
             moveDown(2,1);
-            System.out.println(isFocused(dynamicBtnFindByLabelContains.format("Update Later")));
+            LOGGER.info("Is 'Update Later' focused?" + isFocused(dynamicBtnFindByLabelContains.format("Update Later")));
             LOGGER.info("Clicking 'Update Later'..");
             clickSelect();
         }
