@@ -18,7 +18,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
     private static final String MONTHLY = "Monthly";
-    private static final String Annual = "Annual";
+    private static final String ANNUAL = "Annual";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
@@ -79,7 +79,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isGoogleSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText());
-        return getStaticTextByLabel(title.concat(" Premium " + Annual)).isPresent();
+        return getStaticTextByLabel(title.concat(" Premium " + ANNUAL)).isPresent();
     }
 
     public ExtendedWebElement getGoogleSubscription() {
@@ -88,7 +88,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isRokuSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText());
-        return getStaticTextByLabel(title.concat(" " + Annual)).isPresent();
+        return getStaticTextByLabel(title.concat(" " + ANNUAL)).isPresent();
     }
 
     public ExtendedWebElement getRokuSubscription() {
@@ -97,7 +97,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isAmazonSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText());
-        return getStaticTextByLabel(title.concat(" Premium " + Annual)).isPresent();
+        return getStaticTextByLabel(title.concat(" Premium " + ANNUAL)).isPresent();
     }
 
     public ExtendedWebElement getAmazonSubscription() {
