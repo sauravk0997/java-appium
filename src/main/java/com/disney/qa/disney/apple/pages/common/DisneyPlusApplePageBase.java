@@ -667,17 +667,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     // Will take you to continue button on tvOS on screen keyboard
     public void moveToContinueBtnKeyboardEntry() {
-//        boolean isClearBtnPresent = keyboardClear.isPresent(SHORT_TIMEOUT);
-//        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "Unable to focus continue button on email Entry")
-//                .until(it -> {
-//                    if (isClearBtnPresent) {
-//                        moveRight(6,1);
-//                    } else {
-//                        moveDown(6,1);
-//                    }
-//                    return isFocused(keyboardContinue);
-//                });
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardContinue));
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
