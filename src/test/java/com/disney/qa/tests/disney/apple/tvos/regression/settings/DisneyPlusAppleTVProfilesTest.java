@@ -11,6 +11,8 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWhoIsWatchingPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -24,7 +26,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Who's Watching view", groups = {"Smoke"})
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getCastedDriver());
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -39,7 +41,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after clicking menu on Profile selection page");
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -51,8 +53,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
         disneyPlusAppleTVHomePage.moveUp(1,1);
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
-        aliceDriver.uploadAliceScreenshots();
-
         sa.assertAll();
     }
 
@@ -73,13 +73,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.clickSelect();
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVWhoIsWatchingPage.clickAddProfile();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(chooseAvatarPage.isOpened(), "Choose avatar page is not open after clicking add profile");
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), "Who is watching page is not open after clicking menu on Choose Avatar screen");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertAll();
     }
@@ -102,11 +102,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVWhoIsWatchingPage.clickEditProfile();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(disneyPlusAppleTVEditProfilePage.isEditModeProfileIconPresent(PROFILE_NAME));
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after clicking menu on edit profile page");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
 
@@ -131,11 +131,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVWhoIsWatchingPage.clickEditProfile();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(disneyPlusAppleTVEditProfilePage.isEditModeProfileIconPresent(PROFILE_NAME), "Edit mode profile icon is not present");
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after clicking menu on edit profile page");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
@@ -143,15 +143,15 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         disneyPlusAppleTVHomePage.clickSelect();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVWhoIsWatchingPage.clickEditProfile();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVEditProfilePage.isEditModeProfileIconPresent(PROFILE_NAME), "Edit mode profile icon is not present");
         //Accessibility ID of `Done` button is same as of `edit profile` button.
         disneyPlusAppleTVWhoIsWatchingPage.clickEditProfile();
-        UniversalUtils.captureAndUpload(getCastedDriver());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), "Who is watching page is not open after clicking Done on edit profile page");
 
         sa.assertAll();

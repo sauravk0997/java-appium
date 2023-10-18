@@ -13,13 +13,13 @@
     <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;wdaStartupRetries=6"/>
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS,Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="choiceParam::groups::Test Group selection. Only BVT to run." value="BVT"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig}"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
     <test verbose="1" name="DisneyPlus tvOS BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVBVT">

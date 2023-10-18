@@ -110,9 +110,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public void tapSaveButton() {
         if (!saveButton.isPresent()) {
-            new IOSUtils().swipeInContainer(null, IMobileUtils.Direction.UP, 1200);
-            saveButton.click();
+            swipeInContainer(null, IMobileUtils.Direction.UP, 1200);
         }
+        saveButton.click();
     }
 
     public ExtendedWebElement getSaveButton() {
@@ -142,7 +142,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         enterProfileName(profileName);
         enterDOB(month, day, year);
         chooseGender();
-        new MobileUtilsExtended().clickElementAtLocation(saveBtn, 50, 50);
+        clickElementAtLocation(saveBtn, 50, 50);
         //Save button is not tappable
         //saveBtn.click();
     }
@@ -150,7 +150,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     //format: Month, day, year
     public void enterDOB(DateHelper.Month month, String day, String year) {
         getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).click();
-        new IOSUtils().setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
+        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
     }
 

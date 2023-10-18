@@ -38,6 +38,6 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
         return dynamicBtnFindByName.format("primaryButton").isPresent();
     }
     public void tapAddProfileButton() {
-        new MobileUtilsExtended().clickElementAtLocation(secondaryButton, 50, 50);
+        clickElementAtLocation(secondaryButton, 50, 50);
     }
 }

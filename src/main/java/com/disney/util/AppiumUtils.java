@@ -3,6 +3,7 @@ package com.disney.util;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import io.appium.java_client.remote.SupportsContextSwitching;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +15,6 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.ios.IOSDriver;
 
 /**
  * Created by bogdan.zayats on 01/10/18.
@@ -287,11 +287,11 @@ public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
     /** switches to a webView **/
     public void switchToWebview() {
         LOGGER.info(StringUtils.join(getDriver().getWindowHandles(), ","));
-        Set<String> contextNames = ((IOSDriver) getDriver()).getContextHandles();
+        Set<String> contextNames = ((SupportsContextSwitching) getDriver()).getContextHandles();
         for (String contextName : contextNames) {
             LOGGER.info("Available contexts: " + contextName);
             if (contextName.contains("WEBVIEW")){
-                ((IOSDriver) driver).context(contextName);
+                ((SupportsContextSwitching) getDriver()).context(contextName);
                 LOGGER.info("Switched to " + contextName);
                 break;
             }

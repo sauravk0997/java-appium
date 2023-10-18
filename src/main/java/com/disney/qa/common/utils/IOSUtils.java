@@ -9,7 +9,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
+import com.zebrunner.carina.utils.messager.Messager;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.SupportsLegacyAppManagement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -18,7 +24,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -34,31 +39,28 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.IDriverPool;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
-public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String DIRECTION = "direction";
-    private static final String ELEMENT = "element";
-    private static final String DURATION = "duration";
-    private static final String BUNDLE_ID = "bundleId";
-    private static final String ACTION = "action";
+public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
+     static final Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+     static final String DIRECTION = "direction";
+     static final String ELEMENT = "element";
+     static final String DURATION = "duration";
+     static final String BUNDLE_ID = "bundleId";
+     static final String ACTION = "action";
 
-    private static final String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
+     static final String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
     public static final String DEVICE_TYPE = "capabilities.deviceType";
 
-    private static final String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
+     static final String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
 
     public enum ButtonStatus {
         ON, OFF, INVALID
@@ -242,14 +244,13 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param @element
      * @param @seconds
      */
-    public void pressByElement(ExtendedWebElement element, long seconds) {
+    default void pressByElement(ExtendedWebElement element, long seconds) {
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
         int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
         int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-        IOSDriver iosDriver = (IOSDriver) getCastedDriver();
-        LOGGER.info("Press {} for {}..", element, seconds);
-        TouchAction touchActions = new TouchAction(iosDriver);
+        IOS_UTILS_LOGGER.info("Press {} for {}..", element, seconds);
+        TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
         touchActions.press(new PointOption().withCoordinates(location.getX() + x, location.getY() + y)).
                 waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds))).release().perform();
     }
@@ -260,8 +261,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param x x-coordinate
      * @param y y-coordinate
      */
-    public void press(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
+    default void press(int x, int y) {
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
         touchAction.press(new PointOption<>().withCoordinates(x, y)).release().perform();
     }
 
@@ -271,8 +272,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param x x-coordinate
      * @param y y-coordinate
      */
-    public void longPress(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
+    default void longPress(int x, int y) {
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
         touchAction.longPress(new PointOption<>().withCoordinates(x, y)).release().perform();
     }
 
@@ -282,7 +283,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param x (distance (in integer) from left of screen to element)
      * @param y (distance (in integer) from top of screen to element)
      */
-    public void screenPress(int x, int y) {
+    default void screenPress(int x, int y) {
         Dimension scrSize = getDriver().manage().window().getSize();
         int a = scrSize.width / x;
         int b = scrSize.height / y;
@@ -295,12 +296,12 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param x (distance (in double) from left of screen to element)
      * @param y (distance (in double) from top of screen to element)
      */
-    public void screenPress(Double x, Double y) {
+    default void screenPress(Double x, Double y) {
         Dimension scrSize = getDriver().manage().window().getSize();
         int a = (int) (scrSize.width / x);
         int b = (int) (scrSize.height / y);
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((IOSDriver) getDriver());
-        LOGGER.info("Tapping on co-ordinates: [{}, {}]", a, b);
+        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
+        IOS_UTILS_LOGGER.info("Tapping on co-ordinates: [{}, {}]", a, b);
         touchAction.press(new PointOption<>().withCoordinates(a, b)).release().perform();
     }
 
@@ -311,19 +312,18 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param seconds long press will happen for this time duration (in double)
      */
 
-    public boolean longPressAndHoldElement(ExtendedWebElement element, long seconds) {
+    default boolean longPressAndHoldElement(ExtendedWebElement element, long seconds) {
         try {
             var dimension = element.getSize();
             Point location = element.getLocation();
             int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
             int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-            IOSDriver iosDriver = (IOSDriver) getCastedDriver();
-            TouchAction touchActions = new TouchAction(iosDriver);
+            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
             touchActions.longPress(PointOption.point(location.getX() + x, location.getY() + y)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds)));
             touchActions.perform();
             return true;
         } catch (Exception e) {
-            LOGGER.error("Error occurred during longPress and hold", e);
+            IOS_UTILS_LOGGER.error("Error occurred during longPress and hold", e);
             return false;
         }
     }
@@ -335,9 +335,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param yOffset   y-coordinate
      * @param numOfTaps tap count
      */
-    public void tapAtCoordinateNoOfTimes(int xOffset, int yOffset, int numOfTaps) {
-        IOSDriver iosDriver = (IOSDriver) getCastedDriver();
-        TouchAction<?> touchActions = new TouchAction<>(iosDriver);
+    default void tapAtCoordinateNoOfTimes(int xOffset, int yOffset, int numOfTaps) {
+        TouchAction<?> touchActions = new TouchAction<>((PerformsTouchActions) getDriver());
         touchActions.tap(TapOptions.tapOptions().withPosition(PointOption.point(xOffset, yOffset))
                 .withTapsCount(numOfTaps)).perform();
     }
@@ -352,15 +351,14 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param wait   seconds
      */
 
-    public boolean dragAndDropElement(int startX, int startY, int endX, int endY, long wait) {
+    default boolean dragAndDropElement(int startX, int startY, int endX, int endY, long wait) {
         try {
-            IOSDriver iosDriver = (IOSDriver) getCastedDriver();
-            TouchAction touchActions = new TouchAction(iosDriver);
+            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
             touchActions.longPress(PointOption.point(startX, startY)).moveTo(PointOption.point(endX, endY))
                     .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(wait))).perform();
             return true;
         } catch (Exception e) {
-            LOGGER.error("Error occurred during drag and drop", e);
+            IOS_UTILS_LOGGER.error("Error occurred during drag and drop", e);
             return false;
         }
     }
@@ -370,7 +368,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @return foundAlert
      */
-    public boolean isAlertPresent() {
+    default boolean isAlertPresent() {
         if (!isDriverRegistered(IDriverPool.DEFAULT)) {
             // no need to verify alert if driver has not started yet
             return false;
@@ -382,21 +380,35 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
             foundAlert = true;
         } catch (final WebDriverException e) {
             if (e.getMessage().contains("An attempt was made to operate on a modal dialog when one was not open")) {
-                LOGGER.error("Alert not found.", e);
+                IOS_UTILS_LOGGER.error("Alert not found.", e);
                 foundAlert = false;
             }
         }
         return foundAlert;
     }
 
-    public void acceptAlert() {
-        DriverHelper driver = new DriverHelper(getDriver());
-        driver.acceptAlert();
+    default void acceptAlert() {
+        WebDriver drv = getDriver();
+        Wait<WebDriver> wait = new WebDriverWait(drv, Duration.ofSeconds(3), Duration.ofMillis(1));
+        try {
+            wait.until((Function<WebDriver, Object>) dr -> isAlertPresent());
+            drv.switchTo().alert().accept();
+            Messager.ALERT_ACCEPTED.info("");
+        } catch (Exception e) {
+            Messager.ALERT_NOT_ACCEPTED.error("");
+        }
     }
 
-    public void cancelAlert() {
-        DriverHelper driver = new DriverHelper(getDriver());
-        driver.cancelAlert();
+    default void cancelAlert() {
+        WebDriver drv = getDriver();
+        Wait<WebDriver> wait = new WebDriverWait(drv, Duration.ofSeconds(3), Duration.ofMillis(1));
+        try {
+            wait.until((Function<WebDriver, Object>) dr -> isAlertPresent());
+            drv.switchTo().alert().dismiss();
+            Messager.ALERT_CANCELED.info("");
+        } catch (Exception e) {
+            Messager.ALERT_NOT_CANCELED.error("");
+        }
     }
 
     /**
@@ -404,10 +416,10 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param predicateLocator
      */
-    public void scrollUsingPredicate(String predicateLocator) {
+    default void scrollUsingPredicate(String predicateLocator) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
-        LOGGER.info("Scrolling down to predicate string: {}", predicateLocator);
+        IOS_UTILS_LOGGER.info("Scrolling down to predicate string: {}", predicateLocator);
         scrollObject.put("predicateString", predicateLocator);
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
@@ -415,10 +427,10 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     /**
      * A generic scroll down once/twice
      */
-    public void scrollDown() {
+    default void scrollDown() {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
-        LOGGER.info("Scrolling down..");
+        IOS_UTILS_LOGGER.info("Scrolling down..");
         scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
@@ -426,10 +438,10 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
     /**
      * A generic scroll up once/twice
      */
-    public void scrollUp() {
+    default void scrollUp() {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, String> scrollObject = new HashMap<>();
-        LOGGER.info("Scrolling up..");
+        IOS_UTILS_LOGGER.info("Scrolling up..");
         scrollObject.put(DIRECTION, Direction2.UP.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
     }
@@ -438,18 +450,18 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * A generic scroll down to element
      * Parent Container must be scrollable!
      */
-    public void scrollTo(ExtendedWebElement element) {
+    default void scrollTo(ExtendedWebElement element) {
         if (element.isVisible()) {
-            LOGGER.info("Element already visible before swiping");
+            IOS_UTILS_LOGGER.info("Element already visible before swiping");
         } else {
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
             HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-            LOGGER.info("Starting to fetch ID");
+            IOS_UTILS_LOGGER.info("Starting to fetch ID");
             swipeObject.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(element.getBy())).getId());
             swipeObject.put("toVisible", "scrolling till visible");
-            LOGGER.info("Scrolling to {}, found {}", element, element.getBy());
+            IOS_UTILS_LOGGER.info("Scrolling to {}, found {}", element, element.getBy());
             js.executeScript(Gestures.SCROLL.getGesture(), swipeObject);
-            LOGGER.info("Scroll complete");
+            IOS_UTILS_LOGGER.info("Scroll complete");
         }
     }
 
@@ -460,26 +472,26 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * order should be "next" or "previous"
      * offset should be 0.1 or 0.15 so you don't scroll more than one item at a time
      */
-    public void scrollPickerWheelUsingPredicate(String order, String predicateString, double offset) {
+    default void scrollPickerWheelUsingPredicate(String order, String predicateString, double offset) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         Map<String, Object> params = new HashMap<>();
         params.put("order", order);
         params.put("offset", offset);
-        params.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(MobileBy.iOSNsPredicateString(predicateString))).getId());
+        params.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(AppiumBy.iOSNsPredicateString(predicateString))).getId());
         try {
             js.executeScript(Gestures.SELECT_PICKER_WHEEL_VALUE.getGesture(), params);
         } catch (WebDriverException wde) {
-            LOGGER.error(wde.getMessage());
+            IOS_UTILS_LOGGER.error(wde.getMessage());
         }
     }
 
     /**
      * Swipe left using co-ordinates
      */
-    public void swipeLeft(double startx, double starty, double endx, double endy, int duration) {
+    default void swipeLeft(double startx, double starty, double endx, double endy, int duration) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-        LOGGER.info("Swiping from ({},{}) to ({},{})", startx, starty, endx, endy);
+        IOS_UTILS_LOGGER.info("Swiping from ({},{}) to ({},{})", startx, starty, endx, endy);
         swipeObject.put("startX", startx);
         swipeObject.put("startY", starty);
         swipeObject.put("endX", endx);
@@ -495,10 +507,10 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipe(Direction2 direction, int duration, WebElement element) {
+    default void swipe(Direction2 direction, int duration, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         HashMap<String, Object> swipeObject = new HashMap<>();
-        LOGGER.info("Scrolling {}...", direction);
+        IOS_UTILS_LOGGER.info("Scrolling {}...", direction);
         swipeObject.put(DIRECTION, direction.getDirection());
         swipeObject.put(DURATION, duration);
         swipeObject.put(ELEMENT, element);
@@ -515,9 +527,9 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      */
 
-    public void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
+    default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
         while (element.isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
-            new MobileUtilsExtended().swipeInContainer(container, direction, 1, 900);
+            swipeInContainer(container, direction, 1, 900);
             count--;
         }
     }
@@ -529,7 +541,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param timesW
      * @param subHeight
      */
-    public void clickNearElement(ExtendedWebElement element, double timesW, int subHeight) {
+    default void clickNearElement(ExtendedWebElement element, double timesW, int subHeight) {
         var dimension = element.getSize();
         Point location = element.getLocation();
         int x = (int) Math.round(dimension.getWidth() * timesW);
@@ -542,10 +554,10 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param appName
      */
-    public void appRestart(String appName) {
-        LOGGER.info("Restarting {} app", appName);
-        ((IOSDriver) getDriver()).closeApp();
-        ((IOSDriver) getDriver()).launchApp();
+    default void appRestart(String appName) {
+        IOS_UTILS_LOGGER.info("Restarting {} app", appName);
+        closeApp();
+        ((SupportsLegacyAppManagement)getDriver()).launchApp();
     }
 
     /**
@@ -558,9 +570,9 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param appName  (capabilities.app value, not the normal name)
      * @param bundleId
      */
-    public void appReinstall(String appName, String bundleId) {
-        LOGGER.info("Reinstalling {} app ", appName);
-        ((IOSDriver) getCastedDriver()).terminateApp(bundleId);
+    default void appReinstall(String appName, String bundleId) {
+        IOS_UTILS_LOGGER.info("Reinstalling {} app ", appName);
+        terminateApp(bundleId);
         installApp(appName);
         launchApp(bundleId);
     }
@@ -574,7 +586,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param appPath
      */
-    public void installApp(String appPath) {
+    default void installApp(String appPath) {
         Map<String, Object> params = new HashMap<>();
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         params.put("app", appPath);
@@ -587,7 +599,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param bundleId
      * @return true/false
      */
-    public boolean isAppInstalled(String bundleId) {
+    default boolean isAppInstalled(String bundleId) {
         Map<String, Object> params = new HashMap<>();
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         params.put(BUNDLE_ID, bundleId);
@@ -600,7 +612,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param bundleId
      */
-    public void launchApp(String bundleId) {
+    default void launchApp(String bundleId) {
         HashMap<String, Object> args = new HashMap<>();
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         args.put(BUNDLE_ID, bundleId);
@@ -615,9 +627,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *                 To leave the app deactivated, pass either null or -1 value.
      */
 
-    public void runAppInBackground(long duration) {
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        driver.runAppInBackground(Duration.ofSeconds(duration));
+    default void runAppInBackground(long duration) {
+       runAppInBackground(Duration.ofSeconds(duration));
     }
 
     /**
@@ -628,25 +639,14 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *                 When this param is not present then the device will remain in the locked state
      */
 
-    public void lockDevice(Duration... duration) {
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        LOGGER.info("Locking the device");
+    default void lockDevice(Duration... duration) {
+        IOS_UTILS_LOGGER.info("Locking the device");
         if (duration.length > 0) {
-            driver.lockDevice(duration[0]);
-            LOGGER.info("Device unlocked after {} seconds", duration[0].toSeconds());
+            lockDevice(duration[0]);
+            IOS_UTILS_LOGGER.info("Device unlocked after {} seconds", duration[0].toSeconds());
         } else {
-            driver.lockDevice();
+            lockDevice();
         }
-    }
-
-    /**
-     * unlocks the device
-     */
-
-    public void unlockDevice() {
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        LOGGER.info("Unlocking the device");
-        driver.unlockDevice();
     }
 
     /**
@@ -656,7 +656,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param bundleId
      */
-    public void activateApp(String bundleId) {
+    default void activateApp(String bundleId) {
         HashMap<String, Object> args = new HashMap<>();
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         args.put(BUNDLE_ID, bundleId);
@@ -676,12 +676,12 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param bundleId
      * @return state
      */
-    public long detectAppState(String bundleId) {
+    default long detectAppState(String bundleId) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         Map<String, Object> params = new HashMap<>();
         params.put(BUNDLE_ID, bundleId);
         final long state = (long) js.executeScript(Gestures.QUERY_APP_STATE.getGesture(), params);
-        LOGGER.info("Application state code is : {}", state);
+        IOS_UTILS_LOGGER.info("Application state code is : {}", state);
         return state;
     }
 
@@ -692,7 +692,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param command     - The command type to be issues (ACCEPT or DISMISS)
      * @param maxAttempts - Maximum number of attempts for alerts that are stacked for some reason.
      */
-    public void handleSystemAlert(AlertButtonCommand command, int maxAttempts) {
+    default void handleSystemAlert(AlertButtonCommand command, int maxAttempts) {
         while (maxAttempts > 0 && isAlertPresent()) {
             maxAttempts--;
             if (command.equals(AlertButtonCommand.ACCEPT)) {
@@ -703,9 +703,9 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         }
 
         if (isAlertPresent()) {
-            LOGGER.error("An alert is still visible on screen. Test may fail.");
+            IOS_UTILS_LOGGER.error("An alert is still visible on screen. Test may fail.");
         } else {
-            LOGGER.info("No alerts found on screen. Proceeding with test...");
+            IOS_UTILS_LOGGER.info("No alerts found on screen. Proceeding with test...");
         }
     }
 
@@ -716,31 +716,31 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
      */
     @Deprecated(forRemoval = true)
-    public void handleAlert(AlertButtonCommand alertButtonCommand) {
+    default void handleAlert(AlertButtonCommand alertButtonCommand) {
         Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5)).ignoring(WebDriverException.class).ignoring(NoSuchSessionException.class)
                 .ignoring(TimeoutException.class);
         try {
             do {
                 if (wait.until(ExpectedConditions.visibilityOfElementLocated
-                        (MobileBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
+                        (AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
                     JavascriptExecutor js = (JavascriptExecutor) getDriver();
                     HashMap<String, String> buttonMap = new HashMap<>();
                     buttonMap.put(ACTION, "getButtons");
                     List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    LOGGER.info("Buttons Present: {}", buttons);
+                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
                     buttonMap.put(ACTION, alertButtonCommand.getCommand());
                     if (AlertButtonCommand.ACCEPT.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        LOGGER.info("Clicking '{}'", buttons.get(1));
+                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(1));
                     } else if (AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        LOGGER.info("Clicking '{}'", buttons.get(0));
+                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(0));
                     }
                     js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
                 }
             }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed());
+            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed());
         } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            LOGGER.info("No pre-existing Alert present");
-            LOGGER.debug(e.getMessage());
+            IOS_UTILS_LOGGER.info("No pre-existing Alert present");
+            IOS_UTILS_LOGGER.debug(e.getMessage());
         }
     }
 
@@ -754,7 +754,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
      */
     @Deprecated(forRemoval = true)
-    public void handleAlert(AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlert, int timeOutInSeconds, int maxAttempts) {
+    default void handleAlert(AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlert, int timeOutInSeconds, int maxAttempts) {
 
         Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds))
                 .ignoring(WebDriverException.class)
@@ -762,18 +762,18 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
                 .ignoring(TimeoutException.class);
         try {
             do {
-                if (wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
+                if (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
                     JavascriptExecutor js = (JavascriptExecutor) getDriver();
                     HashMap<String, String> buttonMap = new HashMap<>();
                     buttonMap.put(ACTION, "getButtons");
                     List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    LOGGER.info("Buttons Present: {}", buttons);
+                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
                     interactWithButton(buttons, buttonMap, systemAlertCommand, locationAlertCommand, networkAlert, maxAttempts);
                 }
             }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed() && maxAttempts > 0);
+            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed() && maxAttempts > 0);
         } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            LOGGER.debug("No pre-existing Alert present", e);
+            IOS_UTILS_LOGGER.debug("No pre-existing Alert present", e);
         }
     }
 
@@ -799,14 +799,14 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
                         || button.contains(AlertButton.CLOSE.getAlertbtn())
                         || button.contains(AlertButton.OK.getAlertbtn())
                         || button.contains(AlertButton.DONT_ALLOW.getAlertbtn())) {
-                    LOGGER.info("System Alert found! Clicking '{}'", button);
+                    IOS_UTILS_LOGGER.info("System Alert found! Clicking '{}'", button);
                     buttonLabel = button;
                     buttonMap.put(ACTION, AlertButtonCommand.ACCEPT.getCommand());
                     buttonMap.put("buttonLabel", buttonLabel);
                     js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
                     break;
                 } else if (button.contains("Allow")) {
-                    LOGGER.info("Location Alert found! Clicking '{}'", button);
+                    IOS_UTILS_LOGGER.info("Location Alert found! Clicking '{}'", button);
                     buttonMap.put(ACTION, locationAlertCommand.getCommand());
                     js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
                     break;
@@ -821,8 +821,8 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      *
      * @param url
      */
-    public void launchDeeplink(String url) {
-        new UniversalUtils().launchWithDeeplinkAddress(url);
+    default void launchDeeplink(String url) {
+        launchWithDeeplinkAddress(url);
     }
 
     /**
@@ -832,7 +832,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param url          url address
      * @param explicitWait the wait time for the expected condition
      */
-    public void launchDeeplink(Boolean useSafari, String url, int explicitWait) {
+    default void launchDeeplink(Boolean useSafari, String url, int explicitWait) {
         if (useSafari != null && useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
@@ -849,109 +849,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         } else launchDeeplink(url);
     }
 
-    public class NetworkHandler {
-        private final By wifiSwitch = By.xpath("//XCUIElementTypeSwitch[@name='Wi-Fi']");
-        private final By wifi = MobileBy.AccessibilityId("WIFI");
-        private static final String SELECTED_WIFI = "//XCUIElementTypeStaticText[@name=\"%s\"]/following-sibling::XCUIElementTypeOther/XCUIElementTypeImage";
 
-        public void getWifiPage() {
-            terminateApp(SystemBundles.SETTINGS.getBundleId());
-            launchApp(SystemBundles.SETTINGS.getBundleId());
-            WebDriver driver = getDriver();
-            driver.findElement(wifi).click();
-        }
-
-        public ButtonStatus getBtnStatus(int maxAttempts) {
-            do {
-                try {
-                    int buttonValue = Integer.parseInt(getDriver().findElement(wifiSwitch).getAttribute(Attributes.VALUE.getAttribute()));
-                    if (buttonValue == 1) {
-                        return ButtonStatus.ON;
-                    } else if (buttonValue == 0) {
-                        return ButtonStatus.OFF;
-                    }
-                } catch (NoSuchElementException | NumberFormatException | StaleElementReferenceException e) {
-                    LOGGER.debug("Button status couldn't be fetched due to:\n{}\nMax attempts remaining: {}", e, +maxAttempts);
-                }
-            } while (maxAttempts-- > 0);
-            return ButtonStatus.INVALID;
-        }
-
-        public boolean checkIfWiFiSelected(String wifiName, int maxAttempts, int explicitWait) {
-            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
-            do {
-                try {
-                    if ("checkmark".equalsIgnoreCase(wait.until(ExpectedConditions.presenceOfElementLocated(
-                            By.xpath(String.format(SELECTED_WIFI, wifiName)))).getAttribute(Attributes.NAME.getAttribute()))) {
-                        return true;
-                    }
-                } catch (Exception e) {
-                    if (getBtnStatus(3) == ButtonStatus.OFF) {
-                        LOGGER.info("Wifi switch is turned off, needs to be toggled on..");
-                        break;
-                    } else if (getBtnStatus(3) == ButtonStatus.ON) {
-                        LOGGER.info("Different wifi network selected, need to pick correct wifi");
-                        break;
-                    } else {
-                        LOGGER.debug("Unable to verify 'checkmark' for '{}', due to:" +
-                                "\n Re-verifying, max attempts remaining: ", wifiName, e, maxAttempts);
-                    }
-                }
-            } while (maxAttempts-- > 0);
-            return false;
-        }
-
-        public boolean toggleWiFiButtonOnAndOff(String defaultWifiName, int maxAttempts) {
-            LOGGER.debug("Attempting to connect to '{}' by toggling wifi button ON and OFF", defaultWifiName);
-            toggleWifiBtn("OFF", maxAttempts, ButtonStatus.OFF);
-            LOGGER.debug("Wifi switch turned OFF, trying to turn ON now");
-            return toggleWifiBtn("ON", maxAttempts, ButtonStatus.ON);
-        }
-
-        public boolean toggleWifiBtn(String buttonOnOff, int maxAttempts, ButtonStatus buttonStatus) {
-            do {
-                LOGGER.info("Trying to switch {} wifi", buttonOnOff);
-                try {
-                    getDriver().findElement(wifiSwitch).click();
-                    if (getBtnStatus(maxAttempts).equals(buttonStatus)) {
-                        LOGGER.info("Successfully turned {} wifi", buttonOnOff);
-                        if (ButtonStatus.OFF.toString().equalsIgnoreCase(buttonOnOff)) {
-                            break;
-                        } else if (ButtonStatus.ON.toString().equalsIgnoreCase(buttonOnOff))
-                            return true;
-                    } else {
-                        LOGGER.info("Failed to turn {} wifi, retrying..", buttonOnOff);
-                    }
-                } catch (WebDriverException e) {
-                    LOGGER.debug("Unable to turn {} wifi due to:\n{}\nRetrying, max attempts remaining: {}", buttonOnOff, e, maxAttempts);
-                }
-            } while (maxAttempts-- > 0 && !getBtnStatus(maxAttempts).equals(buttonStatus));
-            return false;
-        }
-
-        public boolean selectWifi(String wifiName, int maxAttempts, int explicitWait) {
-            while (!checkIfWiFiSelected(wifiName, maxAttempts, 10) && maxAttempts-- > 0) {
-                LOGGER.info("{} is not set as current wifi/locator not found", wifiName);
-                try {
-                    WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
-                    wait.until(ExpectedConditions.presenceOfElementLocated(By.id(wifiName))).click();
-                    break; //TODO may need to replace with a check
-                } catch (Exception e) {
-                    LOGGER.debug("{} wifi could not be selected due to:\n{}" +
-                            "\nTrying again, max attempts remaining: ", wifiName, e, maxAttempts);
-                }
-            }
-            LOGGER.info("{} is set as current wifi", wifiName);
-            return true;
-        }
-
-        public void toggleWifi(IOSUtils.ButtonStatus status) {
-            getWifiPage();
-            toggleWifiBtn(status.toString(), 3, status);
-            terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        }
-
-    }
 
     /**
      * based on deviceType and current screen orientation, rotates to new orientation
@@ -960,13 +858,12 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param oldOrientation
      * @param newOrientation
      */
-    public void setToNewOrientation(DeviceType.Type deviceType, ScreenOrientation oldOrientation, ScreenOrientation newOrientation) {
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        if (IDriverPool.currentDevice.get().getDeviceType().equals(deviceType) && driver.getOrientation().equals(oldOrientation)) {
-            LOGGER.info("Changing current {} from {} orientation to {}", IDriverPool.currentDevice.get().getDeviceType(), oldOrientation, newOrientation);
-            driver.rotate(newOrientation);
+    default void setToNewOrientation(DeviceType.Type deviceType, ScreenOrientation oldOrientation, ScreenOrientation newOrientation) {
+        if (IDriverPool.currentDevice.get().getDeviceType().equals(deviceType) && getOrientation().equals(oldOrientation)) {
+            IOS_UTILS_LOGGER.info("Changing current {} from {} orientation to {}", IDriverPool.currentDevice.get().getDeviceType(), oldOrientation, newOrientation);
+            rotate(newOrientation);
         } else {
-            LOGGER.info("Orientation is as expected.");
+            IOS_UTILS_LOGGER.info("Orientation is as expected.");
         }
     }
 
@@ -980,7 +877,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param duration
      */
 
-    public void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
+    default void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
@@ -996,7 +893,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param direction
      * @param duration
      */
-    public void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
+    default void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isElementPresent() && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
@@ -1009,16 +906,15 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
         }
     }
 
-    public boolean detectDevice(DeviceType.Type device) {
+    default boolean detectDevice(DeviceType.Type device) {
         return IDriverPool.currentDevice.get().getDeviceType().equals(device);
     }
 
-    public boolean detectOrientation(ScreenOrientation orientation) {
-        IOSDriver driver = (IOSDriver) getCastedDriver();
-        return driver.getOrientation().equals(orientation);
+    default boolean detectOrientation(ScreenOrientation orientation) {
+        return getOrientation().equals(orientation);
     }
 
-    public void dismissKeyboardByClicking(int x, int y) {
+    default void dismissKeyboardByClicking(int x, int y) {
         if (!isKeyboardShown()) {
             return;
         }
@@ -1029,7 +925,7 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
                 });
     }
 
-    public void dismissKeyboardForPhone() {
+    default void dismissKeyboardForPhone() {
         if (IDriverPool.currentDevice.get().getDeviceType().equals(DeviceType.Type.IOS_PHONE)) {
             dismissKeyboardByClicking(2, 4);
         }
@@ -1042,27 +938,20 @@ public class IOSUtils extends MobileUtilsExtended implements IMobileUtils {
      * @param day
      * @param year
      */
-    public void setBirthDate(String month, String day, String year) {
-        IOSDriver iosDriver = (IOSDriver) getCastedDriver();
+    default void setBirthDate(String month, String day, String year) {
         HashMap<String, Object> scrollObject = new HashMap<>();
         scrollObject.put(DIRECTION, Direction2.DOWN.getDirection());
-        iosDriver.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
+        ( (JavascriptExecutor)getDriver()).executeScript(Gestures.SCROLL.getGesture(), scrollObject);
 
-        List<WebElement> pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
+        List<WebElement> pickers = getDriver().findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         Instant waitTimeout = Instant.now().plus(30, ChronoUnit.SECONDS);
         while (pickers.isEmpty() && Instant.now().isBefore(waitTimeout)) {
-            LOGGER.info("DOB picker is empty waiting for it to show on screen");
-            pickers = iosDriver.findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
+            IOS_UTILS_LOGGER.info("DOB picker is empty waiting for it to show on screen");
+            pickers = getDriver().findElements(AppiumBy.iOSNsPredicateString(PICKER_WHEEL_PREDICATE));
         }
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
-        UniversalUtils.captureAndUpload(getCastedDriver());
-    }
-}
-
-class IosUtilsException extends RuntimeException {
-    public IosUtilsException(String message) {
-        super(message);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 }

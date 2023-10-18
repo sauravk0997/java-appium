@@ -1,8 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import java.lang.invoke.MethodHandles;
 import java.util.TreeMap;
 
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.openqa.selenium.ScreenOrientation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 
@@ -26,16 +31,14 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    protected ThreadLocal<Integer> count = new ThreadLocal<>();
     protected String zipTestName;
 
     protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
     protected void setup() {
-        initialSetup();
         String locale = languageUtils.get().getLocale();
 
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).build();
@@ -48,9 +51,6 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         disneyAccount.set(testAccount);
         baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
         setJarvisOverrides();
-        startProxyAndRestart(languageUtils.get().getCountryName());
-
-        count.set(0);
     }
 
     protected void setPathToZip() {
@@ -69,61 +69,58 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        IOSUtils utils = iosUtils.get();
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccount.getEmail());
         loginPage.clickPrimaryButton();
         passwordPage.typePassword(testAccount.getUserPass());
-        utils.dismissKeyboardForPhone();
+        dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
     }
 
     protected void getScreenshots(String fileName) {
         rotateScreen(ScreenOrientation.PORTRAIT);
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
-            UniversalUtils.storeAndUploadSS(fileName + "Portrait", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Portrait");
             rotateScreen(ScreenOrientation.LANDSCAPE);
-            new IOSUtils().dismissKeyboardByClicking(5, 3);
+            dismissKeyboardByClicking(5, 3);
             pause(2);
-            UniversalUtils.storeAndUploadSS(fileName + "Landscape", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Landscape");
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
         } else {
-            UniversalUtils.storeAndUploadSS(fileName, count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName);
         }
-        count.set(count.get() + 1);
     }
 
     protected void getScreenshots(String fileName, boolean dismissKeyboard) {
         rotateScreen(ScreenOrientation.PORTRAIT);
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
-            UniversalUtils.storeAndUploadSS(fileName + "Portrait", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Portrait");
             rotateScreen(ScreenOrientation.LANDSCAPE);
             if (dismissKeyboard) {
-                new IOSUtils().dismissKeyboardByClicking(5, 3);
+                dismissKeyboardByClicking(5, 3);
             }
             pause(2);
-            UniversalUtils.storeAndUploadSS(fileName + "Landscape", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Landscape");
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
         } else {
-            UniversalUtils.storeAndUploadSS(fileName, count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName);
         }
-        count.set(count.get() + 1);
     }
 
     protected void getScreenshotsNoCountUpdate(String fileName) {
         rotateScreen(ScreenOrientation.PORTRAIT);
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
-            UniversalUtils.storeAndUploadSS(fileName + "Portrait", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Portrait");
             rotateScreen(ScreenOrientation.LANDSCAPE);
-            new IOSUtils().dismissKeyboardByClicking(5, 3);
+            dismissKeyboardByClicking(5, 3);
             pause(2);
-            UniversalUtils.storeAndUploadSS(fileName + "Landscape", count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName + "Landscape");
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
         } else {
-            UniversalUtils.storeAndUploadSS(fileName, count.get(), baseDirectory.get(), getCastedDriver());
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, fileName);
         }
     }
 

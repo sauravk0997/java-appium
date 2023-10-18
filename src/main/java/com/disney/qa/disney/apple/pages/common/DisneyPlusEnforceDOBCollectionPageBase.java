@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +34,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
 
     //format: Month, day, year
     public void enterDOB(DateHelper.Month month, String day, String year) {
-        new IOSUtils().setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
+        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
     }
 
