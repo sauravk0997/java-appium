@@ -1105,9 +1105,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void detectAppleUpdateAndClickUpdateLater() {
         if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent()) {
-            LOGGER.info("Dismissing Apple Update alert by clicking {}}..", UPDATE_LATER);
+            LOGGER.info("Dismissing Apple Update alert by clicking {}", UPDATE_LATER);
             moveDown(2,1);
-            LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format("Update Later")));
+            LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
     }
