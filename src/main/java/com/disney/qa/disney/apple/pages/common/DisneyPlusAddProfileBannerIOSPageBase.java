@@ -31,10 +31,10 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
         return dynamicBtnFindByName.format("secondaryButton").isPresent(SHORT_TIMEOUT);
     }
     public void tapDismissButton() {
-        clickElementAtLocation(secondaryButton,0,0);
+        clickSecondaryButtonByCoordinates();
         //Sometime Need to click 2 time, due to Interactions issue
         if(isProfileHeaderPresent()){
-            clickElementAtLocation(secondaryButton,0,0);
+            clickSecondaryButtonByCoordinates();
         }
     }
 
@@ -42,6 +42,6 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
         return dynamicBtnFindByName.format("primaryButton").isPresent();
     }
     public void tapAddProfileButton() {
-        clickElementAtLocation(primaryButton, 0, 0);
+        clickPrimaryButtonByCoordinates();
     }
 }
