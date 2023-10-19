@@ -22,12 +22,12 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     private ExtendedWebElement logoutAllDevicesChecked;
 
-    private ExtendedWebElement logoutAllDevicesTitle = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
 
-    private ExtendedWebElement logoutAllDevicesEmailCopy = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement logoutAllDevicesEmailCopy = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText());
@@ -70,7 +70,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void clickLogoutAllDevices() {
-        getDynamicXpathContainsName("checkbox").click();
+        getTypeButtonContainsLabel("checkbox").click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
