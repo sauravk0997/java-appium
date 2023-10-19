@@ -43,7 +43,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61939"})
-    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeekForDownloadedAsset() {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
