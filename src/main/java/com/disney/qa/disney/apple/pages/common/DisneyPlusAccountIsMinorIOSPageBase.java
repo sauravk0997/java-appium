@@ -35,4 +35,12 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
     public ExtendedWebElement getDismissButton() { return dismissButton; }
+
+    public void clickHelpCenterButton() {
+        helpCenterButton.click();
+    }
+
+    public void clickDismissButton() {
+        dismissButton.click();
+    }
 }
