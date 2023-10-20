@@ -5,7 +5,6 @@ import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.disney.DisneyContentIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -114,7 +113,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         SoftAssert sa = new SoftAssert();
 
         disneyAccountApi.addProfile(entitledUser, KIDS, KIDS_DOB, entitledUser.getProfileLang(), null, true, true);
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(entitledUser);
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(), "Who's watching page did not launch");

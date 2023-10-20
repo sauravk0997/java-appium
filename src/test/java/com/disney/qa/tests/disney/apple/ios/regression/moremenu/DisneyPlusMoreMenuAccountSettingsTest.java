@@ -608,7 +608,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(changePasswordPage.isCancelBtnPresent(),
                 "XMOBQA-61559 - 'Cancel' button was not displayed");
 
-        System.out.println(changePasswordPage.isLogoutAllDevicesUnchecked());
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesUnchecked(),
                 "XMOBQA-61559 - 'Logout All Devices' was not unchecked by default");
 

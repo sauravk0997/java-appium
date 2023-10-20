@@ -410,7 +410,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
      */
 
     public void logInTemp(DisneyAccount user) {
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
@@ -422,6 +422,14 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }
+
+    public void selectAppleUpdateLaterAndDismissAppTracking() {
+        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        pause(5);
+        applePageBase.detectAppleUpdateAndClickUpdateLater();
+        applePageBase.dismissAppTrackingPopUp();
+    }
+
     public void setFlexWelcomeConfig() {
         String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
