@@ -910,6 +910,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         Dimension size = getDriver().manage().window().getSize();
         if (R.CONFIG.get(DEVICE_TYPE).equals("Phone")) {
             LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
+            pause(1);
             tapAtCoordinateNoOfTimes((int)(size.width * 0.2), (int)(size.height * 0.04), 1);
         } else {
             tapAtCoordinateNoOfTimes((int)(size.width * 0.04), (int)(size.height * 0.01), 1);

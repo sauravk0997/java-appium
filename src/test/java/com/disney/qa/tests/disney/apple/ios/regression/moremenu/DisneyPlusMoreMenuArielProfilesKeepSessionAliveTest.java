@@ -29,7 +29,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final String TWENTY_EIGHTEEN = "2018";
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -85,7 +85,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74467"})
     @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileU13MinorConsentDecline() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
