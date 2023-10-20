@@ -184,7 +184,6 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
     @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding"})
     public void testPasswordPromptExpires() {
-        initialSetup();
         SoftAssert softAssert = new SoftAssert();
         handleAlert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
