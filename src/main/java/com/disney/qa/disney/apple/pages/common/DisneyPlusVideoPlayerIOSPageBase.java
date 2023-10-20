@@ -114,7 +114,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBackButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BACK_BTN.getText()));
+        return dynamicBtnFindByName.format("buttonBack");
     }
 
     public ExtendedWebElement getElementFor(PlayerControl control) {
