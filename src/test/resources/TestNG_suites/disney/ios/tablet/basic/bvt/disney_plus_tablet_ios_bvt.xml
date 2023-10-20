@@ -21,7 +21,6 @@
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="jenkinsBuild" value="2.26.0.61656"/>
     <parameter name="scheduling" value="H 8 * * *"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
