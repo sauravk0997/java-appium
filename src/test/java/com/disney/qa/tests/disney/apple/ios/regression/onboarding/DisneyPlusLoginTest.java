@@ -136,7 +136,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62050"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74502"})
     @Test(description = "Log in - Verify invalid email format - One Character", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testInvalidEmailFormatOneChar() {
         String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_EMAIL_ERROR.getText());
