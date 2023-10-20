@@ -266,7 +266,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62387"})
-    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);

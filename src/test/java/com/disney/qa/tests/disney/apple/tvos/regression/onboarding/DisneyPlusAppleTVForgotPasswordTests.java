@@ -44,7 +44,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
         SoftAssert sa = new SoftAssert();
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         SoftAssert sa = new SoftAssert();
         List<String> expectedText = disneyPlusAppleTVForgotPasswordPage.getForgotPasswordExpectedScreenTexts(disneyAccount.getEmail());
         String otpPlaceholder = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.OTP_PLACEHOLDER_SPACED.getText());
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -110,7 +110,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount disneyAccount = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -152,7 +152,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         EmailApi emailApi = new EmailApi();
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -195,7 +195,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         String emailResentSubTitle = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_SUBTITLE.getText());
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -237,7 +237,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -284,7 +284,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -343,7 +343,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -392,7 +392,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -437,7 +437,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
         String createPasswordScreenFieldText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
@@ -488,7 +488,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         String createPasswordScreenFieldText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -532,7 +532,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         EmailApi verifyEmail = new EmailApi();
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -589,7 +589,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         String encryptedPassword = "••••••••••••";
         SoftAssert sa = new SoftAssert();
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -654,7 +654,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         String invalidPassword = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
@@ -709,7 +709,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         EmailApi verifyEmail = new EmailApi();
         DisneyAccount disneyUser = disneyAccountApi.createAccountForOTP(country, language);
 
-        setFlexWelcomeConfig();
+        selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
