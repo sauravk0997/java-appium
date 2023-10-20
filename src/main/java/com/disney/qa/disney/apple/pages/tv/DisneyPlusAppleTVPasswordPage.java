@@ -58,9 +58,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ENTER_YOUR_PASSWORD.getText())).isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return staticTextLabelContains.format("Enter your password").isPresent();
     }
 
     public int getPasswordStrengthMeterWidth() {
