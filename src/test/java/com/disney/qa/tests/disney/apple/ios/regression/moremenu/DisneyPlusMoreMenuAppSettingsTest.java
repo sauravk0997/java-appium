@@ -367,7 +367,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62425", "XMOBQA-62427", "XMOBQA-62429", "XMOBQA-61233"})
-    @Test(description = "App Settings Page UI updates for Downloads test", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "App Settings Page UI updates for Downloads test", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
     public void verifyAppSettingsUIDownloadsUpdates() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

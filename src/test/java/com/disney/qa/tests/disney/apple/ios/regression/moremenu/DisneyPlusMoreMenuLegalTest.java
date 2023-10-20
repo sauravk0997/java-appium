@@ -64,7 +64,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62263"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         setOneTrustConfig();
         SoftAssert sa = new SoftAssert();

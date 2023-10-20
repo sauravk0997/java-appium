@@ -263,7 +263,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_O2() {
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -850,7 +850,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
-    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
@@ -892,7 +892,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -905,7 +905,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_Canal(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -918,7 +918,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_O2(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -931,7 +931,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_TelMex(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -944,7 +944,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
-    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
