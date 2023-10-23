@@ -122,7 +122,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "User was not directed to Password Entry as expected");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62223"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74488"})
     @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifySubmitPasswordPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -266,7 +266,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62387"})
-    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
         setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);

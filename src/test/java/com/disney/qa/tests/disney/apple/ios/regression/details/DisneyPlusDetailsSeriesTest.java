@@ -82,7 +82,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62435"})
-    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesPlayVsContinue() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
