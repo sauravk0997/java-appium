@@ -31,13 +31,17 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
         return dynamicBtnFindByName.format("secondaryButton").isPresent(SHORT_TIMEOUT);
     }
     public void tapDismissButton() {
-        dynamicBtnFindByName.format("secondaryButton").click();
+        clickSecondaryButtonByCoordinates();
+        //Sometime Need to click 2 time, due to Interactions issue
+        if(isProfileHeaderPresent()){
+            clickSecondaryButtonByCoordinates();
+        }
     }
 
     public boolean isAddProfileButtonPresent() {
         return dynamicBtnFindByName.format("primaryButton").isPresent();
     }
     public void tapAddProfileButton() {
-        clickElementAtLocation(secondaryButton, 50, 50);
+        clickPrimaryButtonByCoordinates();
     }
 }
