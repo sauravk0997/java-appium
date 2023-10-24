@@ -179,11 +179,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61191"})
-    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyPlayerControlUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        handleAlert();
         loginAndStartPlayback(SHORT_SERIES);
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
         videoPlayer.clickPauseButton();
