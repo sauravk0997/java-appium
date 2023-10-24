@@ -274,14 +274,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-//        handleAlert();
+        handleAlert();
 //        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
 
         } else if (!homePage.isOpened()) {
             restart();
-//            handleAlert();
+            handleAlert();
             //initialSetup();
             loginToHome(account, profileName);
         } else {

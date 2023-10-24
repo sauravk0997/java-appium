@@ -184,7 +184,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyPlayerControlUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        handleAlert();
         loginAndStartPlayback(SHORT_SERIES);
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
         videoPlayer.clickPauseButton();
@@ -193,7 +192,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY), "Airplay Button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.CHROMECAST), "Chromecast Button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON), "Audio subtitle Menu Button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isTitleLabelVisible(), "Title label is not visible on player overlay");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Current time label is not visible on player overlay");

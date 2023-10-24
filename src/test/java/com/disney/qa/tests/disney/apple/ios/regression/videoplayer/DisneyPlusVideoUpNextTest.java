@@ -49,7 +49,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61975"})
-    @Test(description = "User Taps play icon", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "User Taps play icon", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyPlayIconOnUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -91,7 +91,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61981"})
-    @Test(description = "User allows autoplay to occur", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "User allows autoplay to occur", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyAutoPlayOnPlayerView() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
