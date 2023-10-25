@@ -24,7 +24,6 @@
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},JOB_MAX_RUN_TIME=360,enableOneTrustConfig=${enableOneTrustConfig},appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
-    <parameter name="jenkinsBuild" value="2.25.0.61656"/>
     <parameter name="scheduling" value="30 7 * * *"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance">
