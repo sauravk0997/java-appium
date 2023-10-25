@@ -263,7 +263,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_O2() {
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -275,7 +275,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
-        //Due to existing bug, commenting out below steps for now
+        //Due to existing IOS-2649 bug, commenting out below steps for now
         /*disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
