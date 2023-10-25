@@ -138,7 +138,11 @@
                 <exclusion>
                     <groupId>com.zebrunner</groupId>
                     <artifactId>*</artifactId>
-                </exclusion>                
+                </exclusion>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-netty</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
