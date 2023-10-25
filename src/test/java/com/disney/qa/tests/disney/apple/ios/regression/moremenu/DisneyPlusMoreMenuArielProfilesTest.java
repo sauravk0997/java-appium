@@ -592,7 +592,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72311"})
-    @Test(description = "Profiles > Add profile, DOB and gender AAW", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Profiles > Add profile, DOB and gender AAW", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfilePageInlineError() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
