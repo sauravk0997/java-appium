@@ -37,6 +37,11 @@
             <name>QAIT Releases</name>
             <url>https://artifactory.us-east-1.bamgrid.net/qait-maven</url>
         </repository>
+        <repository>
+            <id>apiregistry-maven</id>
+            <name>apiregistry-maven</name>
+            <url>https://artifactory.us-east-1.bamgrid.net/apiregistry-maven</url>
+        </repository>
         <!--repository>
             <id>zebrunner_snapshots</id>
             <name>zebrunner Snapshots</name>
