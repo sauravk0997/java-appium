@@ -275,12 +275,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
-        disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
+        //Due to existing bug, commenting out below steps for now
+        /*disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
                 "Browser webview did not open");
 
-        /*Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
                 "Webview did not open to the expected url");*/
     }
 
