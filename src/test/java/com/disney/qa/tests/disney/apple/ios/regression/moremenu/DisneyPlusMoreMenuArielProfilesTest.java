@@ -596,6 +596,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     public void verifyAddProfilePageInlineError() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -621,6 +622,23 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         //Verify inline error for gender field if gender field is empty
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.clickSaveBtn();
+        sa.assertTrue(addProfile.isInlineErrorForGenderFieldPresent(), "Inline error for Gender field if Gender field is empty is not present");
+
+        // verify all gender option and user able to select gender value from dropdown
+        addProfile.clickGenderDropDown();
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
+            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+                    "Expected: " + genderItem + " option should be present");
+        }
+
+        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN.getGenderOption());
+
+        addProfile.clickSaveBtn();
+        //minor consent is shown
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            scrollDown();
+        }
 
         //Welch Full catalog access
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
