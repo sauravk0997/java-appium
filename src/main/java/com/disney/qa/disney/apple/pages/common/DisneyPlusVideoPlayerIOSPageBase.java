@@ -190,7 +190,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isVideoPlayerControlsDisplayed() {
         try{
-            seekBar.getElement().isDisplayed();
+            waitUntil(ExpectedConditions.visibilityOf(seekBar.getElement()),1);
             LOGGER.info("Video Player Controls are displayed");
         } catch (NoSuchElementException ex){
             LOGGER.info("Video Player Controls are NOT displayed");
@@ -208,9 +208,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         //TODO: work around due to bug IOS-6425
-       if(!getPlayButton().isElementPresent()) {
-           displayVideoController();
-       }
+        displayVideoController();
         getPlayButton().click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
