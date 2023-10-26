@@ -21,11 +21,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions ", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileForSingleProfile() {
         setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        oneTrustPage.tapRejectAllButton();
+        loginPage.dismissAppTrackingPopUp();
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(disneyAccount.get().getEmail());
@@ -50,6 +54,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         CreateDisneyProfileRequest createDisneyProfileRequest = new CreateDisneyProfileRequest();
 
         createDisneyProfileRequest
@@ -64,7 +69,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .setLanguage(languageUtils.get().getUserLanguage());
         disneyAccountApi.get().addProfile(createDisneyProfileRequest);
 
-
+        oneTrustPage.tapRejectAllButton();
+        loginPage.dismissAppTrackingPopUp();
         welcomePage.clickLogInButton();
         loginPage.submitEmail(disneyAccount.get().getEmail());
         passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
@@ -101,5 +107,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyAccount testAccount = disneyAccountApi.get().createAccount(createDisneyAccountRequest);
         disneyAccountApi.get().addFlex(testAccount);
         disneyAccount.set(testAccount);
+        handleAlert();
     }
 }

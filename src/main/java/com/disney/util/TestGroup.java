@@ -7,6 +7,7 @@ public final class TestGroup {
     // Team Groups
     public static final String WEB_TEAM = "web";
     public static final String WEB_APPEX = "web_appex";
+    public static final String QAIT = "qait";
 
     // BVTs/Environment Groups
     public static final String WEB_SMOKE = "web_smoke";
