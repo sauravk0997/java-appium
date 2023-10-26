@@ -5,7 +5,9 @@ import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -179,8 +181,23 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), 15);
-        clickElementAtLocation(playerView, 35, 50);
+        int attempts = 0;
+        do {
+            clickElementAtLocation(playerView, 35, 50);
+            pause(1);
+        } while (attempts++ < 10 && !isVideoPlayerControlsDisplayed());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public boolean isVideoPlayerControlsDisplayed() {
+        try{
+            seekBar.getElement().isDisplayed();
+            LOGGER.info("Video Player Controls are displayed");
+        } catch (NoSuchElementException ex){
+            LOGGER.info("Video Player Controls are NOT displayed");
+            return false;
+        }
+        return true;
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
