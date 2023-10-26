@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.alice;
 
 import com.disney.alice.AliceDriver;
+import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -20,6 +21,6 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
         welcomeScreenPage.isOpened();
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
     }
 }
