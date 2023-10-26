@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" thread-count="5" name="qait_smoke_tv_ios_test" annotations="JDK" configfailurepolicy="continue">
+
+    <parameter name="suiteOwner" value="qait"/>
+    <parameter name="reporting.project-key" value="QAIT"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="QAIT_Smoke_TV_IOS"/>
+    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="capabilities"
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;newCommandTimeout=180"/>
+    <parameter name="jenkinsDefaultRetryCount" value="1"/>
+    <parameter name="reporting.notification.slack-channels" value="qualityplatform-alerts"/>
+    <parameter name="stringParam::group::Test Group selection. Only 'QAIT' group to run" value="qait"/>
+    <parameter name="scheduling" value="H 5 * * *"/>
+    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
+    <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
+    <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
+
+    <test verbose="1" name="Disney Plus Smoke Device Test" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.qait.DisneyPlusTVSmokeTest"/>
+        </classes>
+    </test>
+</suite>
