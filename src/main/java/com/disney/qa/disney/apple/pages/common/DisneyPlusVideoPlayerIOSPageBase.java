@@ -184,9 +184,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
-            pause(1);
         } while (attempts++ < 10 && !isVideoPlayerControlsDisplayed());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        return this;
     }
 
     public boolean isVideoPlayerControlsDisplayed() {
