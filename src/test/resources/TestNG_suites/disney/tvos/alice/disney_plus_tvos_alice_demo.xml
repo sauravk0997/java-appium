@@ -23,7 +23,7 @@
 
 <test verbose="1" name="DisneyPlus tvOS Alice" parallel="methods">
     <classes>
-        <class name="com.disney.qa.tests.disney.apple.tvos.regression.alice.DisneyPlusAppleTVAlice">
+        <class name="com.disney.qa.tests.disney.apple.tvos.regression.alice.DisneyPlusAppleTVAliceTest">
             <methods>
                 <include name="testAppLaunch"/>
             </methods>

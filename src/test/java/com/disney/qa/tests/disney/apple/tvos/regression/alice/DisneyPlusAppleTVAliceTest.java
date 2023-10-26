@@ -9,7 +9,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class DisneyPlusAppleTVAlice extends DisneyPlusAppleTVBaseTest {
+public class DisneyPlusAppleTVAliceTest extends DisneyPlusAppleTVBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112667"})
