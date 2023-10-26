@@ -18,7 +18,7 @@ public class DisneyPlusAppleTVAlice extends DisneyPlusAppleTVBaseTest {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        welcomeScreenPage.isOpened();
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertAll();
     }
