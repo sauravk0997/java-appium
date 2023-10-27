@@ -328,4 +328,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextLabelName("titleLabel").getBy());
 		return titleLabel.get(num);
 	}
+
+	public void clickExitKidsProfileButton() {
+		clickElementAtLocation(exitKidsProfileButton, 50, 50);
+	}
 }
