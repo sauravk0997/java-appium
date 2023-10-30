@@ -29,6 +29,9 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
     @ExtendedFindBy(accessibilityId = "pcDescription")
     protected ExtendedWebElement preferenceCenterDescription;
 
+    @ExtendedFindBy(accessibilityId = "pcConfirmMyChoiceButton")
+    protected ExtendedWebElement pcConfirmMyChoiceButton;
+
     @Override
     public boolean isOpened() {
         return bannerDPDDescriptions.isPresent();
@@ -64,6 +67,10 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
 
     public void tapCustomizedChoices() {
         bannerPrivacySettingsButton.click();
+    }
+
+    public void tapConfirmMyChoiceButton() {
+        pcConfirmMyChoiceButton.click();
     }
 
 }
