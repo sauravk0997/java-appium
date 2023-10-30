@@ -879,6 +879,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         trackingPopUp.clickIfPresent();
     }
 
+    public void dismissAppTrackingPopUp(int timeout) {
+        trackingPopUp.clickIfPresent(timeout);
+    }
+
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
 
     public void clickThumbnailView() { thumbnailView.click(); }
