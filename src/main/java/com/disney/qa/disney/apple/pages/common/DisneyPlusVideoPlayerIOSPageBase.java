@@ -4,7 +4,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -181,19 +180,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
-        } while (attempts++ < 10 && !isVideoPlayerControlsDisplayed());
-        return this;
-    }
-
-    public boolean isVideoPlayerControlsDisplayed() {
-        try{
-            waitUntil(ExpectedConditions.visibilityOf(seekBar.getElement()),1);
-            LOGGER.info("Video Player Controls are displayed");
-        } catch (NoSuchElementException ex){
-            LOGGER.info("Video Player Controls are NOT displayed");
-            return false;
-        }
-        return true;
+        } while (attempts++ < 10 && !seekBar.isElementPresent(SHORT_TIMEOUT));
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
@@ -205,7 +193,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         //TODO: work around due to bug IOS-6425
-        displayVideoController();
+        if(!getPlayButton().isElementPresent()) {
+            displayVideoController();
+        }
         getPlayButton().click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
