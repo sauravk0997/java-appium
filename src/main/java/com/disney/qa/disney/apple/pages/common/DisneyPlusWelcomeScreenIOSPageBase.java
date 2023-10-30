@@ -79,11 +79,11 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isPresent();
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).isPresent();
     }
 
     public boolean isLogInButtonDisplayed() {
-        return loginButton.isPresent();
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).isPresent();
     }
 
     public boolean isLogOutButtonDisplayed() {
@@ -111,11 +111,11 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
-        loginButton.click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_BTN.getText())).click();
     }
 
     public void clickSignUpButton() {
-        signUpButton.click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SIGN_UP_BTN.getText())).click();
     }
 
     public void clickCompleteSubscriptionButton() {
