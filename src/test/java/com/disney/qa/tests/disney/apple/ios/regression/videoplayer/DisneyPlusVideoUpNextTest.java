@@ -225,7 +225,6 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
-        disneyPlusVideoPlayerIOSPageBase.displayVideoController();
         disneyPlusVideoPlayerIOSPageBase.clickPlayButton();
     }
 }
