@@ -24,4 +24,17 @@ public class DisneyPlusAppleTVAliceTest extends DisneyPlusAppleTVBaseTest {
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertAll();
     }
+
+    @Maintainer("csolmaz")
+    @Test(description = "Details Page - validate images, create zip of images, validate part on alice", groups = {"Alice"})
+    public void testDetailsPageImageCompare() {
+        selectAppleUpdateLaterAndDismissAppTracking();
+        SoftAssert sa = new SoftAssert();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+
+        //use areImagesTheSame
+
+
+        sa.assertAll();
+    }
 }
