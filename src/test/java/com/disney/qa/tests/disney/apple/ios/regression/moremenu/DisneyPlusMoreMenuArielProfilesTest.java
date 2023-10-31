@@ -122,7 +122,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
-    @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileU13RestrictionONAuthentication() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
