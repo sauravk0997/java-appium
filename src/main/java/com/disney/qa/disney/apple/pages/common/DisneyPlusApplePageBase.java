@@ -108,10 +108,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
-    protected ExtendedWebElement saveBtn = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
-            DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText());
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
+    protected ExtendedWebElement saveBtn ;
     @ExtendedFindBy(accessibilityId = "dismissButton")
     protected ExtendedWebElement dismissBtn;
     @ExtendedFindBy(accessibilityId = "homeTab")
@@ -702,10 +700,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveBtn() {
-        xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
-                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()).click();
+        saveBtn.click();
     }
 
     public boolean isCancelBtnPresent() {
@@ -877,6 +872,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissAppTrackingPopUp() {
         trackingPopUp.clickIfPresent();
+    }
+
+    public void dismissAppTrackingPopUp(int timeout) {
+        trackingPopUp.clickIfPresent(timeout);
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
