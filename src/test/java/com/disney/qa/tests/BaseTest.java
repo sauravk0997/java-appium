@@ -27,7 +27,7 @@ public class BaseTest extends AbstractTest {
     protected String locale = R.CONFIG.get("locale");
     protected String language = R.CONFIG.get("language");
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void ignoreStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available");
     }
