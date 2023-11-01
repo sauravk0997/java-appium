@@ -384,11 +384,11 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
-        sa.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
-                "XMOBQA-62425 - 'Delete All Downloads' cell was not properly displayed");
-
         sa.assertFalse(moreMenu.isDownloadOverWifiEnabled(),
                 "XMOBQA-61233 - 'Download Over Wi-Fi Only' was not disabled during download");
+
+        sa.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
+                "XMOBQA-62425 - 'Delete All Downloads' cell was not properly displayed");
 
         moreMenu.clickDeleteAllDownloads();
 
