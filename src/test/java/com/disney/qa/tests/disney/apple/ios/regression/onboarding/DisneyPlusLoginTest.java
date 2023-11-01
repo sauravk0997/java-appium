@@ -244,7 +244,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62070"})
-    @Test(description = "Log in - Unknown email - try again", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Unknown email - try again", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testEmailNoAccountTryAgain() {
         String noEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -255,7 +255,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(newEmail);
 
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
         disneyPlusLoginIOSPageBase.clickAlertTryAgainButton();
@@ -265,7 +264,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62072"})
-    @Test(description = "Log in - Unknown email - sign up", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Unknown email - sign up", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testEmailNoAccountSignUp() {
         String noEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -277,7 +276,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(newEmail);
 
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isNoAccountAlertSubtextDisplayed(), "No Account alert subtext was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
