@@ -25,7 +25,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final String customAppSettingLabel = "%s, %s ";
     private static final String VALUE = "value";
-    private static final String DINNER_IS_SERVED = "Dinner Is Served";
+    private static final String AVATAR = "Avatar The way of the water";
 
     public void onboard() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -378,7 +378,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(DINNER_IS_SERVED);
+        searchPage.searchForMedia(AVATAR);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.startDownload();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
