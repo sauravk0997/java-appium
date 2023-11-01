@@ -82,7 +82,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62435"})
-    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesPlayVsContinue() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -99,6 +99,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Play button doesn't exist on details page.");
         disneyPlusDetailsIOSPageBase.clickPlayButton();
         sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video player was not opened.");
+        pause(15);
         disneyPlusVideoPlayerIOSPageBase.clickBackButton();
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(), "Video player was not closed.");
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "Continue button doesn't exist on details page.");
