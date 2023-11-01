@@ -255,6 +255,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(newEmail);
 
+        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
         disneyPlusLoginIOSPageBase.clickAlertTryAgainButton();
@@ -276,6 +277,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(newEmail);
 
+        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isNoAccountAlertSubtextDisplayed(), "No Account alert subtext was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
