@@ -8,6 +8,7 @@ import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeSuite;
@@ -24,7 +25,12 @@ public class BaseTest extends AbstractTest {
     private static final String ZEBRUNNER_XRAY_EXECUTION_KEY = "reporting.tcm.xray.test-execution-key";
 
     protected String locale = R.CONFIG.get("locale");
-    protected String language = R.CONFIG.get("language");;
+    protected String language = R.CONFIG.get("language");
+
+    @BeforeSuite
+    public void ignoreStartupExceptions() {
+        WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available");
+    }
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
