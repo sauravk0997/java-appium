@@ -1,7 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -82,8 +80,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    private ExtendedWebElement backButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BACK_BTN.getText()));
-
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -115,6 +111,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
     }
 
+    public ExtendedWebElement getBackButton() {
+        return dynamicBtnFindByName.format("buttonBack");
+    }
+
     public ExtendedWebElement getElementFor(PlayerControl control) {
         switch (control) {
             case AIRPLAY:
@@ -122,7 +122,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             case AUDIO_SUBTITLE_BUTTON:
                 return audioSubtitleMenuButton;
             case BACK:
-                return backButton;
+                return getBackButton();
             case CHROMECAST:
                 return chromecastButton;
             case FAST_FORWARD:
@@ -193,9 +193,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         //TODO: work around due to bug IOS-6425
-       if(!getPlayButton().isElementPresent()) {
-           displayVideoController();
-       }
+        if(!getPlayButton().isElementPresent()) {
+            displayVideoController();
+        }
         getPlayButton().click();
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -203,7 +203,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusDetailsIOSPageBase clickBackButton() {
         displayVideoController();
-        backButton.click();
+        getBackButton().click();
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 

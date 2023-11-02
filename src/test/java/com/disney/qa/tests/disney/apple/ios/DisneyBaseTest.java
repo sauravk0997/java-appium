@@ -191,6 +191,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
 //        clearAppCache();
+        handleAlert();
     }
 
     public enum Person {
@@ -252,7 +253,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         pause(5);
-//        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
+        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
@@ -281,7 +282,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         } else if (!homePage.isOpened()) {
             restart();
-//            handleAlert();
+            handleAlert();
             //initialSetup();
             loginToHome(account, profileName);
         } else {

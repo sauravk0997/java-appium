@@ -24,7 +24,6 @@ public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
 
         sa.assertTrue(welcomeScreen.isMainTextDisplayed(),
                 "XMOBQA-62332 - 'Marketing Copy' was not displayed as expected");
-        System.out.println(welcomeScreen.isMainTextDisplayed());
 
         sa.assertTrue(welcomeScreen.isSignUpButtonDisplayed(),
                 "XMOBQA-62332 - 'Sign Up CTA' text was not displayed as expected");

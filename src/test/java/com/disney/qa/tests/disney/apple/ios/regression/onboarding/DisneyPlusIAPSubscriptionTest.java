@@ -481,7 +481,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         //Switch to Premium Monthly
         account.clickChangePremiumMonthlyPlan();
-        paywall.clickPremiumYearlyRowButton();
+        paywall.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
         paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY);
         paywall.clickOverlaySubscribeButton();
         try {

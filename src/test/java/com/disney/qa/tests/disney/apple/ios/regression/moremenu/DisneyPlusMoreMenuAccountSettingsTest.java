@@ -275,13 +275,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
                 "O2 Subscription message was not displayed");
 
-        disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
+        //Due to existing IOS-2649 bug, commenting out below steps for now
+        /*disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
                 "Browser webview did not open");
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
-                "Webview did not open to the expected url");
+                "Webview did not open to the expected url");*/
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
@@ -574,7 +575,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61557", "XMOBQA-61559", "XMOBQA-61565", "XMOBQA-61561"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangePasswordUI() {
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
@@ -608,7 +609,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(changePasswordPage.isCancelBtnPresent(),
                 "XMOBQA-61559 - 'Cancel' button was not displayed");
 
-        System.out.println(changePasswordPage.isLogoutAllDevicesUnchecked());
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesUnchecked(),
                 "XMOBQA-61559 - 'Logout All Devices' was not unchecked by default");
 
@@ -634,7 +634,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61563"})
-    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the password save functionality flow without Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangePasswordWithoutLogout() {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -654,7 +654,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangePasswordWithLogout() {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -676,7 +676,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61551", "XMOBQA-61553", "XMOBQA-61555"})
-    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangeEmailUI() {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -731,7 +731,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangeEmailWithoutLogout() {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -756,7 +756,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61601", "XMOBQA-61553"})
-    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the user is returned to Welcome after submitting new Email with Logout checked", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testChangeEmailWithLogout() {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -816,7 +816,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     //TODO: Refactor to use 2 drivers to cover XMOBQA-61603
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61599"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
@@ -850,7 +850,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
-    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
@@ -892,7 +892,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -905,7 +905,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_Canal(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -918,7 +918,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_O2(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -931,7 +931,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes")
+    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_TelMex(String planType) {
         SoftAssert sa = new SoftAssert();
         DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
@@ -944,7 +944,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
-    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());

@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="7" name="ios_tablet_regression_rc_2.24.0" annotations="JDK" configfailurepolicy="continue" parallel="tests">
+<suite verbose="1" thread-count="7" name="ios_tablet_regression_rc" annotations="JDK" configfailurepolicy="continue" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_tablet_regression_rc_2.24.0"/>
+    <parameter name="jenkinsJobName" value="ios_tablet_regression_rc"/>
     <parameter name="jenkinsEmail"
                value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
@@ -24,8 +24,7 @@
     <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},JOB_MAX_RUN_TIME=360,enableOneTrustConfig=${enableOneTrustConfig},appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
-    <parameter name="jenkinsBuild" value="2.24.0.60996"/>
-    <parameter name="scheduling" value="H 2 * * *"/>
+    <parameter name="scheduling" value="30 7 * * *"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance">
         <classes>

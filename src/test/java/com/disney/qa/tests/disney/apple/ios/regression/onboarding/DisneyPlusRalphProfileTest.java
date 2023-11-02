@@ -13,19 +13,113 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240"})
+    @Test(description = "Conditional OneTrust Initialization-CTA-AcceptAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
+    public void testConditionalOneTrustInitializationAcceptAll() {
+        setupForRalph();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
+        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(), "Reject all button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(),"Accept all button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(),"List of vendors link is not present on one trust banner");
+        oneTrustPage.tapAcceptAllButton();
+        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
+
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        passwordPage.clickPrimaryButton();
+        pause(5);
+        homePage.isOpened();
+        pause(3);
+        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74758"})
+    @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
+    public void testConditionalOneTrustInitializationCustomizeChoice() {
+        setupForRalph();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
+        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
+        oneTrustPage.tapCustomizedChoices();
+        sa.assertTrue(oneTrustPage.isPrivacyPreferenceCenterOpen(), "Privacy Preference page is not opened");
+        oneTrustPage.tapConfirmMyChoiceButton();
+        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        passwordPage.clickPrimaryButton();
+        homePage.waitForHomePageToOpen();
+        homePage.isOpened();
+        pause(3);
+        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74757"})
+    @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
+    public void testConditionalOneTrustInitializationRejectAll() {
+        setupForRalph();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
+        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(), "Reject all button is not present on one trust banner");
+        oneTrustPage.tapRejectAllButton();
+        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present, reject all button was not actioned");
+        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        passwordPage.clickPrimaryButton();
+        pause(5);
+        homePage.waitForHomePageToOpen();
+        homePage.isOpened();
+        pause(3);
+        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74136"})
-    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions ", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileForSingleProfile() {
         setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        oneTrustPage.tapRejectAllButton();
+        loginPage.dismissAppTrackingPopUp();
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(disneyAccount.get().getEmail());
@@ -50,6 +144,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         CreateDisneyProfileRequest createDisneyProfileRequest = new CreateDisneyProfileRequest();
 
         createDisneyProfileRequest
@@ -64,7 +159,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .setLanguage(languageUtils.get().getUserLanguage());
         disneyAccountApi.get().addProfile(createDisneyProfileRequest);
 
-
+        oneTrustPage.tapRejectAllButton();
+        loginPage.dismissAppTrackingPopUp();
         welcomePage.clickLogInButton();
         loginPage.submitEmail(disneyAccount.get().getEmail());
         passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
@@ -101,5 +197,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyAccount testAccount = disneyAccountApi.get().createAccount(createDisneyAccountRequest);
         disneyAccountApi.get().addFlex(testAccount);
         disneyAccount.set(testAccount);
+        handleAlert();
     }
 }
