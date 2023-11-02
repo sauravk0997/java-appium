@@ -8,7 +8,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_dev"/>
     <parameter name="jenkinsEmail"
-               value="Lauren.Churus@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -20,10 +20,8 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
-<!--    <parameter name="scheduling" value="H 8 * * *"/>-->
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},JOB_MAX_RUN_TIME=360,enableOneTrustConfig=${enableOneTrustConfig},appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
+    <parameter name="scheduling" value="30 16 * * *"/>
+    <parameter name="overrideFields" value="groups=Smoke,JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
