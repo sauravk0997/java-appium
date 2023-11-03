@@ -20,7 +20,8 @@
     <parameter name="scheduling" value="H 16 * * *"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="groups=Smoke,JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
+    <parameter name="overrideFields" value="enableOneTrustConfig=${enableOneTrustConfig},groups=Smoke,JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
