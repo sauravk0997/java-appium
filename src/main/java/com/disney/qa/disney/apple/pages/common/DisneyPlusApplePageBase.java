@@ -287,7 +287,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public enum contentType {
-        MOVIE, SERIES, EXTRAS
+        MOVIE, SERIES, EXTRAS, ADULT, CHILD
     }
 
     public static DisneyLocalizationUtils getDictionary() {

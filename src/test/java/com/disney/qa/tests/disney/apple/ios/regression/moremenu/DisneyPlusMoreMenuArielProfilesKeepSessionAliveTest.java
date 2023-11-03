@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.MobileUtilsExtended;
@@ -14,6 +15,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,10 +25,18 @@ import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
+
+    @DataProvider(name = "contentType")
+    public Object[][] contentType() {
+        return new Object[][]{{DisneyPlusApplePageBase.contentType.ADULT.toString(), "1988"},
+                {DisneyPlusApplePageBase.contentType.CHILD.toString(), "2018"}};
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String EIGHTY_EIGHT = "1988";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
@@ -182,36 +192,54 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
 
     @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
-    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding"})
-    public void testPasswordPromptExpires() {
-        SoftAssert softAssert = new SoftAssert();
-        handleAlert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(disneyAccountApi.get().createAccount("US", "en"));
+    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType")
+    public void testPasswordPromptExpires(String contentType, String content) {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-        DisneyPlusWelcomeScreenIOSPageBase paywallPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setLanguage(languageUtils.get().getUserLanguage());
 
-        softAssert.assertTrue(paywallPageBase.isLogOutButtonDisplayed(),
-                "Expected: 'Log out' button should be present");
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
 
-        softAssert.assertTrue(paywallPageBase.isCompleteSubscriptionButtonDisplayed(),
-                "Expected: 'Complete Subscription' button should be present");
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        welcomeScreen.clickCompleteSubscriptionButton();
 
-        paywallPageBase.clickCompleteSubscriptionButton();
-
-        softAssert.assertTrue(paywallPageBase.isCancelButtonDisplayed(),
-                "Expected: 'Cancel' button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isMonthlySubButtonDisplayed(),
-                "Expected: Monthly Subscription button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isYearlySubButtonDisplayed(),
-                "Expected: Yearly Subscription button should be present");
-
-        softAssert.assertTrue(paywallPageBase.isRestoreButtonDisplayed(),
-                "Expected: Restore button should be present");
-        pause(900);
-
-
+        dobCollectionPage.isOpened();
+        dobCollectionPage.keepSessionAlive(15, dobCollectionPage.getDateOfBirthHeader());
+        pause(30);
+        if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.ADULT.toString())) {
+            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
+                    "Forgot Password Link did not appear.");
+            passwordPage.clickForgotPasswordLink();
+            passwordPage.tapBackButton();
+            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+            sa.assertTrue(paywallPage.isOpened(),
+                    "Paywall Page did not open.");
+        }else{
+            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
+                    "Forgot Password Link did not appear.");
+            passwordPage.clickForgotPasswordLink();
+            passwordPage.tapBackButton();
+            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+            sa.assertTrue(accountIsMinorPage.isOpened(),
+                    "Account Minor Page did not open.");
+        }
+        sa.assertAll();
     }
 }
