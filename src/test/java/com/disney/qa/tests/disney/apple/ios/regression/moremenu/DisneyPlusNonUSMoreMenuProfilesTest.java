@@ -46,6 +46,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
                 "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
 
+        pause(1);
         disneyPlusAccountIOSPageBase.getBackArrow().click();
         disneyPlusMoreMenuIOSPageBase.clickAddProfile();
 
