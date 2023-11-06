@@ -61,7 +61,7 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
     private void getAliceScreenshots(String fileName, ThreadLocal<String> directory) {
         rotateScreen(ScreenOrientation.PORTRAIT);
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
-            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" , directory.get());
+            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.LANDSCAPE);
             dismissKeyboardByClicking(5, 3);
             pause(2);
