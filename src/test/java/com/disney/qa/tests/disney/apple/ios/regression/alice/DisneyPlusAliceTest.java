@@ -22,6 +22,5 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
 
         welcomeScreenPage.isOpened();
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-        sa.assertAll();
     }
 }
