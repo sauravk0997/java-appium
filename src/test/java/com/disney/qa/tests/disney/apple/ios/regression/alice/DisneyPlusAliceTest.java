@@ -51,11 +51,11 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
 
         homePage.isOpened();
         homePage.clickSearchIcon();
+        searchPage.isOpened();
         searchPage.clickSeriesTab();
         searchPage.selectRandomTitle();
         detailsPage.isOpened();
-        String detailsTitle = detailsPage.getMediaTitle();
-        getAliceScreenshots(detailsTitle + DETAILS_PAGE, baseDirectory);
+        getAliceScreenshots(getDetailsTitle() + DETAILS_PAGE, baseDirectory);
     }
 
     private void getAliceScreenshots(String fileName, ThreadLocal<String> directory) {
@@ -63,15 +63,26 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.LANDSCAPE);
-            dismissKeyboardByClicking(5, 3);
             pause(2);
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Landscape_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
+            pathToZip.set(String.format("iPad_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
+            UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
         } else {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory.get());
+            pathToZip.set(String.format("iPhone_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
+            UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
         }
-        pathToZip.set(String.format("Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+    }
+
+    private String getDetailsTitle() {
+        String detailsTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
+        if (detailsTitle.contains("/")) {
+            //to mitigate detail page titles that have a "/" which can cause an extra folder to be created
+            return detailsTitle.replace("/", "_");
+        } else {
+            return detailsTitle;
+        }
     }
 }
