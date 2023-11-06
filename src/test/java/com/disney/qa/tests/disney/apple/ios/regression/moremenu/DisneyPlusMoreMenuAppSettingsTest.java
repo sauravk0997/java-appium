@@ -81,7 +81,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
         String wifiOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText());
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(wifiOption).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).isElementPresent(),
                 "Wi-Fi Data Usage header was not present");
