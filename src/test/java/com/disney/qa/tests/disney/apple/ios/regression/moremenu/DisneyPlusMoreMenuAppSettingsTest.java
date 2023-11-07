@@ -277,8 +277,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         onboard();
 
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
-        moreMenu.getDynamicXpathContainsName(cellOption).click();
-        sa.assertTrue(moreMenu.getDynamicXpathContainsName(cellOption).isElementPresent(),
+        moreMenu.getStaticTextByLabel(cellOption).click();
+        sa.assertTrue(moreMenu.getStaticTextByLabel(cellOption).isElementPresent(),
                 "XMOBQA-61217 - 'Video Quality' header was not present");
         sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
@@ -290,20 +290,20 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2).getText(),
                 moreMenu.findSubtitleLabel(2).getText());
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
-        options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
+        options.forEach(option -> sa.assertTrue(moreMenu.getStaticCellByLabel(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));
 
         options.forEach(optionEnabled -> {
             try {
                 String enabledShorthand = StringUtils.substringBefore(optionEnabled, ",");
                 LOGGER.info("Enabling: '{}'", enabledShorthand);
-                moreMenu.getDynamicXpathContainsName(optionEnabled).click();
-                sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
+                moreMenu.getStaticCellByLabel(optionEnabled).click();
+                sa.assertTrue(moreMenu.getStaticCellByLabel(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
                         String.format("XMOBQA-61221 - '%s' was not enabled after selection", optionEnabled));
                 options.forEach(optionDisabled -> {
                     String disabledShorthand = StringUtils.substringBefore(optionDisabled, ",");
                     if (!disabledShorthand.equals(enabledShorthand)) {
-                        sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
+                        sa.assertTrue(moreMenu.getStaticCellByLabel(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
                                 String.format("XMOBQA-61221 - '%s' was not disabled after selection of '%s'", disabledShorthand, enabledShorthand));
                     }
                 });
