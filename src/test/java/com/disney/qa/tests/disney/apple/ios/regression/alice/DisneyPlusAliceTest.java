@@ -67,11 +67,11 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Landscape_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
-            pathToZip.set(String.format("iPad_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
+            setPathToZip("iPad_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
         } else {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory.get());
-            pathToZip.set(String.format("iPhone_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
+            setPathToZip("iPhone_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
         }
     }
@@ -84,5 +84,9 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         } else {
             return detailsTitle;
         }
+    }
+
+    private void setPathToZip(String zipString) {
+        pathToZip.set(String.format(zipString, R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
     }
 }
