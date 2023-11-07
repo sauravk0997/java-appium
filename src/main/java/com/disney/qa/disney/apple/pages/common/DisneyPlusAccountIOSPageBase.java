@@ -79,7 +79,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isGoogleSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText());
-        return getStaticTextByLabel(title.concat(" Premium " + ANNUAL)).isPresent();
+        return getStaticTextByLabel(title.concat(" " + ANNUAL)).isPresent();
     }
 
     public ExtendedWebElement getGoogleSubscription() {
@@ -97,7 +97,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isAmazonSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_AMAZON.getText());
-        return getStaticTextByLabel(title.concat(" Premium " + ANNUAL)).isPresent();
+        return getStaticTextByLabel(title.concat(" " + ANNUAL)).isPresent();
     }
 
     public ExtendedWebElement getAmazonSubscription() {
