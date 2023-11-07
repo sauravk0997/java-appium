@@ -66,6 +66,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement unlockedProfileCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"%s\"`]")
     protected ExtendedWebElement staticTextByLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"%s\"`]")
+    protected ExtendedWebElement staticTextByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"%s\" or label == \"%s\"`]")
     protected ExtendedWebElement staticTextByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label CONTAINS \"%s\"`]")
@@ -362,6 +364,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getStaticTextByLabel(String label) {
         return staticTextByLabel.format(label);
+    }
+
+    public ExtendedWebElement getStaticTextByName(String name) {
+        return staticTextByName.format(name);
+    }
+
+    public ExtendedWebElement getStaticCellByLabel(String label) {
+        return staticCellByLabel.format(label);
     }
 
     public  ExtendedWebElement getStaticTextLabelName(String name) {
