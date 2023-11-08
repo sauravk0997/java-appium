@@ -26,17 +26,10 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ge
 
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
 
-    @DataProvider(name = "contentType")
-    public Object[][] contentType() {
-        return new Object[][]{{DisneyPlusApplePageBase.contentType.ADULT.toString(), "1988"},
-                {DisneyPlusApplePageBase.contentType.CHILD.toString(), "2018"}};
-    }
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
-    private static final String EIGHTY_EIGHT = "1988";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
@@ -190,56 +183,4 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         addProfile.clickSaveProfileButton();
     }
 
-    @Maintainer("acadavidcorrea")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
-    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType")
-    public void testPasswordPromptExpires(String contentType, String content) {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-        DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
-        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
-
-        createDisneyAccountRequest
-                .setDateOfBirth(null)
-                .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
-
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
-
-        welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
-        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
-        welcomeScreen.clickCompleteSubscriptionButton();
-
-        dobCollectionPage.isOpened();
-        dobCollectionPage.keepSessionAlive(15, dobCollectionPage.getDateOfBirthHeader());
-        pause(30);
-        if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.ADULT.toString())) {
-            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
-            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
-                    "Forgot Password Link did not appear.");
-            passwordPage.clickForgotPasswordLink();
-            passwordPage.tapBackButton();
-            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
-            sa.assertTrue(paywallPage.isOpened(),
-                    "Paywall Page did not open.");
-        }else{
-            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
-            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
-                    "Forgot Password Link did not appear.");
-            passwordPage.clickForgotPasswordLink();
-            passwordPage.tapBackButton();
-            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
-            sa.assertTrue(accountIsMinorPage.isOpened(),
-                    "Account Minor Page did not open.");
-        }
-        sa.assertAll();
-    }
 }

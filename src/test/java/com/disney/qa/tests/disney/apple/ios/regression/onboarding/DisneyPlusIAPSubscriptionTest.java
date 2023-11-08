@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
@@ -35,8 +36,15 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
+
+    @DataProvider(name = "contentType")
+    public Object[][] userType() {
+        return new Object[][]{{DisneyPlusApplePageBase.userType.ADULT.toString(), "1988"},
+                {DisneyPlusApplePageBase.userType.CHILD.toString(), "2018"}};
+    }
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DOB_ADULT = "01/01/1983";
+    private static final String FIRST = "01";
     private static final String PRETTY_FREEKIN_SCARY = "Pretty Freekin Scary";
 //    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     @DataProvider(name = "disneyPlanTypes")
@@ -614,5 +622,58 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
+    }
+
+    @Maintainer("acadavidcorrea")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
+    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType")
+    public void testPasswordPromptExpires(String contentType, String content) {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(languageUtils.get().getLocale())
+                .setLanguage(languageUtils.get().getUserLanguage());
+
+        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(disneyAccount.get().getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
+                "Complete Subscription Button did not appear.");
+        welcomeScreen.clickCompleteSubscriptionButton();
+
+        dobCollectionPage.isOpened();
+        dobCollectionPage.keepSessionAlive(15, dobCollectionPage.getDateOfBirthHeader());
+        pause(30);
+        if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.userType.ADULT.toString())) {
+            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
+                    "Forgot Password Link did not appear.");
+            passwordPage.clickForgotPasswordLink();
+            passwordPage.tapBackButton();
+            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+            sa.assertTrue(paywallPage.isOpened(),
+                    "Paywall Page did not open.");
+        }else{
+            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
+                    "Forgot Password Link did not appear.");
+            passwordPage.clickForgotPasswordLink();
+            passwordPage.tapBackButton();
+            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+            sa.assertTrue(accountIsMinorPage.isOpened(),
+                    "Account Minor Page did not open.");
+        }
+        sa.assertAll();
     }
 }
