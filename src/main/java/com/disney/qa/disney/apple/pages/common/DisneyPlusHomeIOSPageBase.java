@@ -123,4 +123,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getDisneyTile() {
         return disneyTile;
     }
+
+    public boolean isHuluTileVisible(){
+        return dynamicCellByLabel.format("hulu").isPresent();
+    }
+
+    public void tapHuluBrandTile(){
+        dynamicCellByLabel.format("hulu").click();
+    }
 }
