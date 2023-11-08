@@ -58,7 +58,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value);
-        clickSaveBtn();
+        primaryButton.click();
     }
 
     public boolean isLogoutAllDevicesChecked() {
