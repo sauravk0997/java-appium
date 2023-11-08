@@ -47,6 +47,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
+    private static final int ENABLED_LIMIT_ATTEMPTS = 10;
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1105,11 +1106,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void detectAppleUpdateAndClickUpdateLater() {
-        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent()) {
+        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent(5)) {
             LOGGER.info("Dismissing Apple Update alert by clicking {}", UPDATE_LATER);
             moveDown(2,1);
             LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
+    }
+
+    public boolean isElementEnabled(ExtendedWebElement element) {
+        int attempts = 0;
+        while (attempts < ENABLED_LIMIT_ATTEMPTS) {
+            try {
+                element.getElement().isEnabled();
+                LOGGER.info(String.format("Element %s is enabled", element.getBy()));
+                attempts = ENABLED_LIMIT_ATTEMPTS;
+            } catch (NoSuchElementException ex) {
+                return false;
+            }
+            attempts++;
+        }
+        return true;
     }
 }
