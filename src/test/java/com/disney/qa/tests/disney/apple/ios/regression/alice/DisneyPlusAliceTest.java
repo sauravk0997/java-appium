@@ -67,7 +67,7 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
 
     private void getAliceScreenshots(String fileName, ThreadLocal<String> directory) {
         rotateScreen(ScreenOrientation.PORTRAIT);
-        if (getDevice().getDeviceType() == DeviceType.Type.APPLE_TV) {
+        if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.LANDSCAPE);
             pause(2);
@@ -76,7 +76,7 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
             pause(2);
             setPathToZip("iPad_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
-        } else if (getDevice().getDeviceType() == DeviceType.Type.APPLE_TV ) {
+        } else {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory.get());
             setPathToZip("iPhone_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
