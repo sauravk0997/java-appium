@@ -625,7 +625,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @Maintainer("acadavidcorrea")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668","XMOBQA-74776"})
     @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType")
     public void testPasswordPromptExpires(String contentType, String content) {
         SoftAssert sa = new SoftAssert();
