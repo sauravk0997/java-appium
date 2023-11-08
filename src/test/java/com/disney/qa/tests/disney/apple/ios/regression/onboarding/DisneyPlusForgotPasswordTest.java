@@ -16,7 +16,7 @@ import java.util.Date;
 public class DisneyPlusForgotPasswordTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62044"})
-    @Test(description = "Log in - Verify Forgot Password Link",groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Verify Forgot Password Link",groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testForgotPasswordLink() {
         disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
