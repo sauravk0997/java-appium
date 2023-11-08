@@ -320,12 +320,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public ExtendedWebElement findSubtitleLabel(int num) {
-		List<ExtendedWebElement> subtitleLabel = findExtendedWebElements(getStaticTextLabelName("subtitleLabel").getBy());
+		List<ExtendedWebElement> subtitleLabel = findExtendedWebElements(getStaticTextByName("subtitleLabel").getBy());
 		return subtitleLabel.get(num);
 	}
 
 	public ExtendedWebElement findTitleLabel(int num) {
-		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextLabelName("titleLabel").getBy());
+		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextByName("titleLabel").getBy());
 		return titleLabel.get(num);
 	}
 

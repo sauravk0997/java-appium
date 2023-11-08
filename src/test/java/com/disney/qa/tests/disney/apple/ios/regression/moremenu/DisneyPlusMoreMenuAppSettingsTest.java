@@ -25,7 +25,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final String customAppSettingLabel = "%s, %s ";
     private static final String VALUE = "value";
-    private static final String DINNER_IS_SERVED = "Dinner Is Served";
+    private static final String AVATAR = "Avatar The way of the water";
 
     public void onboard() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -81,7 +81,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
         String wifiOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText());
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(wifiOption).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).isElementPresent(),
                 "Wi-Fi Data Usage header was not present");
@@ -277,8 +277,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         onboard();
 
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
-        moreMenu.getDynamicXpathContainsName(cellOption).click();
-        sa.assertTrue(moreMenu.getDynamicXpathContainsName(cellOption).isElementPresent(),
+        moreMenu.getStaticTextByLabel(cellOption).click();
+        sa.assertTrue(moreMenu.getStaticTextByLabel(cellOption).isElementPresent(),
                 "XMOBQA-61217 - 'Video Quality' header was not present");
         sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
                 "XMOBQA-61217 - Back Arrow was not present");
@@ -290,20 +290,20 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2).getText(),
                 moreMenu.findSubtitleLabel(2).getText());
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
-        options.forEach(option -> sa.assertTrue(moreMenu.getDynamicXpathContainsName(option).isElementPresent(),
+        options.forEach(option -> sa.assertTrue(moreMenu.getStaticCellByLabel(option).isElementPresent(),
                 String.format("XMOBQA-61219 - '%s' option was not present", option)));
 
         options.forEach(optionEnabled -> {
             try {
                 String enabledShorthand = StringUtils.substringBefore(optionEnabled, ",");
                 LOGGER.info("Enabling: '{}'", enabledShorthand);
-                moreMenu.getDynamicXpathContainsName(optionEnabled).click();
-                sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
+                moreMenu.getStaticCellByLabel(optionEnabled).click();
+                sa.assertTrue(moreMenu.getStaticCellByLabel(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
                         String.format("XMOBQA-61221 - '%s' was not enabled after selection", optionEnabled));
                 options.forEach(optionDisabled -> {
                     String disabledShorthand = StringUtils.substringBefore(optionDisabled, ",");
                     if (!disabledShorthand.equals(enabledShorthand)) {
-                        sa.assertTrue(moreMenu.getDynamicXpathContainsName(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
+                        sa.assertTrue(moreMenu.getStaticCellByLabel(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
                                 String.format("XMOBQA-61221 - '%s' was not disabled after selection of '%s'", disabledShorthand, enabledShorthand));
                     }
                 });
@@ -367,7 +367,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62425", "XMOBQA-62427", "XMOBQA-62429", "XMOBQA-61233"})
-    @Test(description = "App Settings Page UI updates for Downloads test", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "App Settings Page UI updates for Downloads test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyAppSettingsUIDownloadsUpdates() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -378,17 +378,17 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         setAppToHomeScreen(disneyAccount.get());
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(DINNER_IS_SERVED);
+        searchPage.searchForMedia(AVATAR);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.startDownload();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
-        sa.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
-                "XMOBQA-62425 - 'Delete All Downloads' cell was not properly displayed");
-
         sa.assertFalse(moreMenu.isDownloadOverWifiEnabled(),
                 "XMOBQA-61233 - 'Download Over Wi-Fi Only' was not disabled during download");
+
+        sa.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
+                "XMOBQA-62425 - 'Delete All Downloads' cell was not properly displayed");
 
         moreMenu.clickDeleteAllDownloads();
 

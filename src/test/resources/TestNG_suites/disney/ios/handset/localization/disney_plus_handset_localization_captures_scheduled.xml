@@ -18,13 +18,13 @@
     <parameter name="overrideFields"
                value="browserup_proxy=true,capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},custom_string5=${enableDebugDisplay},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="jenkinsRegressionPipeline" value="Disney-iOS-Localization-Pipeline_Group-1,Disney-iOS-Localization-Pipeline_Group-2,Disney-iOS-Localization-Pipeline_Group-3"/>
-    <parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-1" value="H 4 * * 1"/>
+    <!--<parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-1" value="H 4 * * 1"/>-->
     <parameter name="jenkinsRegressionMatrix"
                value="locale:AR, language:es; locale:AR, language:en; locale:BR, language:pt; locale:BR, language:en; locale:FR, language:fr; locale:FR, language:en; locale:ES, language:es; locale:ES, language:en; locale:DE, language:de; locale:DE, language:en; locale:TR, language:tr; locale:TR, language:en; locale:PL, language:pl; locale:PL, language:en; locale:KR, language:ko; locale:KR, language:en; locale:JP, language:ja; locale:JP, language:en; locale:GR, language:el; locale:GR, language:en; locale:MX, language:es; locale:MX, language:en"/>
-    <parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-2" value="H 4 1-7,15-21 * 2"/>
+    <!--<parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-2" value="H 4 1-7,15-21 * 2"/>-->
     <parameter name="jenkinsRegressionMatrix"
                value="locale:GB, language:en; locale:CA, language:fr; locale:CA, language:en; locale:CH, language:de; locale:CH, language:fr; locale:CH, language:it; locale:CH, language:en; locale:AT, language:de; locale:AT, language:en; locale:LU, language:de; locale:LU, language:fr; locale:LU, language:en; locale:IT, language:it; locale:IT, language:en; locale:NL, language:nl; locale:NL, language:en; locale:SG, language:zh; locale:SG, language:en; locale:NO, language:no; locale:NO, language:en"/>
-    <parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-3" value="H 4 8-14,22-28 * 2"/>
+    <!--<parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-3" value="H 4 8-14,22-28 * 2"/>-->
     <parameter name="jenkinsRegressionMatrix"
                value="locale:DK, language:da; locale:DK, language:es; locale:SE, language:sv; locale:SE, language:en; locale:PT, language:pt; locale:PT, language:en; locale:FI, language:fi; locale:FI, language:en; locale:RO, language:ro; locale:RO, language:en; locale:CZ, language:cs; locale:CZ, language:en; locale:HU, language:hu; locale:HU, language:en; locale:HK, language:zh; locale:HK, language:en; locale:TW, language:zh; locale:TW, language:en; locale:SK, language:sk; locale:SK, language:en"/>
     <parameter name="choiceParam::locale::Locale to run"

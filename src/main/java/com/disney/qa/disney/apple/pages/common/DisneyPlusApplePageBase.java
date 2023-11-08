@@ -66,6 +66,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement unlockedProfileCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"%s\"`]")
     protected ExtendedWebElement staticTextByLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"%s\"`]")
+    protected ExtendedWebElement staticTextByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"%s\" or label == \"%s\"`]")
     protected ExtendedWebElement staticTextByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label CONTAINS \"%s\"`]")
@@ -108,10 +110,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
-    protected ExtendedWebElement saveBtn = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
-            DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText());
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
+    protected ExtendedWebElement saveBtn ;
     @ExtendedFindBy(accessibilityId = "dismissButton")
     protected ExtendedWebElement dismissBtn;
     @ExtendedFindBy(accessibilityId = "homeTab")
@@ -364,6 +364,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getStaticTextByLabel(String label) {
         return staticTextByLabel.format(label);
+    }
+
+    public ExtendedWebElement getStaticTextByName(String name) {
+        return staticTextByName.format(name);
+    }
+
+    public ExtendedWebElement getStaticCellByLabel(String label) {
+        return staticCellByLabel.format(label);
     }
 
     public  ExtendedWebElement getStaticTextLabelName(String name) {
@@ -702,10 +710,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveBtn() {
-        xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()),
-                DictionaryKeys.BTN_ACCOUNT_CREATE_PASSWORD_SAVE.getText()).click();
+        saveBtn.click();
     }
 
     public boolean isCancelBtnPresent() {
@@ -877,6 +882,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissAppTrackingPopUp() {
         trackingPopUp.clickIfPresent();
+    }
+
+    public void dismissAppTrackingPopUp(int timeout) {
+        trackingPopUp.clickIfPresent(timeout);
     }
 
     public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
