@@ -16,6 +16,9 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     private ExtendedWebElement newEmailHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_NEW_HEADER.getText()));
 
+    @ExtendedFindBy(accessibilityId = "primaryButton")
+    private ExtendedWebElement saveBtn;
+
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
     private ExtendedWebElement logoutAllDevicesUnchecked;
 
@@ -58,7 +61,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value);
-        clickSaveBtn();
+        saveBtn.click();
     }
 
     public boolean isLogoutAllDevicesChecked() {

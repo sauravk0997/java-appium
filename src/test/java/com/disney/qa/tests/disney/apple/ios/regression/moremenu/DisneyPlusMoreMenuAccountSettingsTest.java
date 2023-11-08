@@ -692,10 +692,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
                 "XMOBQA-61553 - OTP entry page was not opened");
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isOpened(),
                 "XMOBQA-61551 - 'Change Email' screen was not opened");
+
+        hideKeyboard();
 
         sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isHeadlineSubtitlePresent(),
                 "XMOBQA-61551 - 'Change Email' subtitle was not displayed");
@@ -743,7 +745,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
         String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
@@ -770,7 +772,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
         String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValue(otp);
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
+
+        Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isOpened(),
+                "'Change Email' screen was not opened");
+
+        hideKeyboard();
+
         disneyPlusChangeEmailIOSPageBase.clickLogoutAllDevices();
         String newEmail = generateGmailAccount();
         disneyAccount.get().setEmail(newEmail);
