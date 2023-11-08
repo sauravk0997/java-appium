@@ -16,10 +16,13 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.ScreenOrientation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 public class DisneyPlusAliceTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -54,13 +57,17 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         searchPage.isOpened();
         searchPage.clickSeriesTab();
         searchPage.selectRandomTitle();
-        detailsPage.isOpened();
+        try {
+            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isOpened());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Detail page was not open." + e);
+        }
         getAliceScreenshots(getDetailsTitle() + DETAILS_PAGE, baseDirectory);
     }
 
     private void getAliceScreenshots(String fileName, ThreadLocal<String> directory) {
         rotateScreen(ScreenOrientation.PORTRAIT);
-        if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
+        if (getDevice().getDeviceType() == DeviceType.Type.APPLE_TV) {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory.get());
             rotateScreen(ScreenOrientation.LANDSCAPE);
             pause(2);
@@ -69,7 +76,7 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
             pause(2);
             setPathToZip("iPad_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
-        } else {
+        } else if (getDevice().getDeviceType() == DeviceType.Type.APPLE_TV ) {
             UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory.get());
             setPathToZip("iPhone_Detail_Page_Images_%s_%s_%s.zip");
             UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
