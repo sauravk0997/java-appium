@@ -41,7 +41,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
         String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
-        disneyPlusMoreMenuIOSPageBase.getDynamicXpathContainsName(cellOption).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
                 "Cellular Data Usage header was not present");
