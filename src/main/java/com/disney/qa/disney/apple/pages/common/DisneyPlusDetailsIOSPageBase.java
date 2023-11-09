@@ -191,7 +191,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     //TODO Should discuss setting up Series vs. Movies page factories due to differences like this
     public void startDownload() {
         if (!movieDownloadButton.isElementPresent(DELAY)) {
-            swipe(getDownloadButton());
+            swipePageTillElementPresent(getDownloadButton(), 5, null, Direction.UP, 1);
             getDownloadButton().click();
         } else {
             movieDownloadButton.click();

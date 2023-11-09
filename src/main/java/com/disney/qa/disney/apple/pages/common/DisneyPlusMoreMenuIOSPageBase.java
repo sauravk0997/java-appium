@@ -332,4 +332,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public void clickExitKidsProfileButton() {
 		clickElementAtLocation(exitKidsProfileButton, 50, 50);
 	}
+
+	public void clickBackArrowFromWatchlist() {
+		//TEMP solution for bugged watchlist
+		getTypeButtonByLabel("iconNavBack24LightActive").click();
+	}
 }

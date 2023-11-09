@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,8 +12,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 
 public class DisneyPlusiOSBVT extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -77,7 +74,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(SHORT_SERIES), "Short Series not found on Watchlist");
 
-        moreMenu.getBackArrow().click();
+        moreMenu.clickBackArrowFromWatchlist();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         pause(1); //to handle transition
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
