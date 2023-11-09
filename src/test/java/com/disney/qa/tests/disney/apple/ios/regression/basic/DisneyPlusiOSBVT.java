@@ -84,7 +84,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
 
-        moreMenu.clickExitKidsProfileButton();
+        moreMenu.tapExitKidsProfileButton();
         whoIsWatching.clickProfile(TEST);
         homePage.isOpened();
         homePage.clickSearchIcon();
