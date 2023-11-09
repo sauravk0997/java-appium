@@ -33,7 +33,6 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label ==\"Done\"`]")
     private ExtendedWebElement doneBtn;
 
-
     protected ExtendedWebElement dateOfBirthHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DATE_OF_BIRTH_TITLE.getText()));
 
     //FUNCTIONS

@@ -1,19 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Collections;
 import java.util.List;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
@@ -44,7 +38,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DOB_ADULT = "01/01/1983";
-    private static final String FIRST = "01";
     private static final String PRETTY_FREEKIN_SCARY = "Pretty Freekin Scary";
 //    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     @DataProvider(name = "disneyPlanTypes")
