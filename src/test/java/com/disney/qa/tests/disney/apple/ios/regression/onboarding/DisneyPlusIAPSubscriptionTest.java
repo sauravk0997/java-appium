@@ -39,8 +39,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @DataProvider(name = "contentType")
     public Object[][] userType() {
-        return new Object[][]{{DisneyPlusApplePageBase.userType.ADULT.toString(), "1988"},
-                {DisneyPlusApplePageBase.userType.CHILD.toString(), "2018"}};
+        return new Object[][]{{DisneyPlusApplePageBase.userType.ADULT.toString(), "01/01/1988"},
+                {DisneyPlusApplePageBase.userType.CHILD.toString(), "01/01/2018"}};
     }
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DOB_ADULT = "01/01/1983";
@@ -654,9 +654,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         dobCollectionPage.isOpened();
         dobCollectionPage.keepSessionAlive(15, dobCollectionPage.getDateOfBirthHeader());
-        pause(30);
+        pause(35);
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.userType.ADULT.toString())) {
-            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            dobCollectionPage.enterDOB(content);
             sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
                     "Forgot Password Link did not appear.");
             passwordPage.clickForgotPasswordLink();
@@ -665,7 +665,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
             sa.assertTrue(paywallPage.isOpened(),
                     "Paywall Page did not open.");
         }else{
-            dobCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, content);
+            dobCollectionPage.enterDOB(content);
             sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
                     "Forgot Password Link did not appear.");
             passwordPage.clickForgotPasswordLink();
