@@ -70,4 +70,14 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
             attempts--;
         }
     }
+
+    public void goRightOnPlayerForDuration(int attempts, int duration, int pauseNum) {
+        while (attempts > 0) {
+            LOGGER.info("click Right for duration {} ", duration);
+            clickRight(duration);
+            LOGGER.info("pause for {} seconds since player is not respecting duration..", pauseNum);
+            pause(pauseNum);
+            attempts--;
+        }
+    }
 }
