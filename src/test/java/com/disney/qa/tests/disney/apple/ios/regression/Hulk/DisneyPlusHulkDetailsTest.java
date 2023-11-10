@@ -10,8 +10,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -39,7 +37,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickFirstCarouselPoster();
+        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.ANIMATED_MOVIES_QA, 1, Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -51,7 +49,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusApplePageBase applePage = initPage(DisneyPlusApplePageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
 
@@ -65,7 +62,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
 
-        homePage.clickFirstCarouselPoster();
+        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.NEW_TO_DISNEY_QA, 1, Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
