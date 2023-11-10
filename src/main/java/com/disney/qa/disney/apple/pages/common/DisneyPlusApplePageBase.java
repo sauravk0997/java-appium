@@ -198,6 +198,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement typeCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert")
     protected ExtendedWebElement typeSystemAlerts;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert [`label == \"%s\"`]")
+    private ExtendedWebElement typeAlertByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton")
     protected ExtendedWebElement typeButtons;
     @ExtendedFindBy(accessibilityId = "Keyboard")
@@ -1111,5 +1113,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
+    }
+
+    public ExtendedWebElement getUnavailableOkButton() {
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ERROR_MEDIAUNAVAILABLE.getText()));
+    }
+
+    public ExtendedWebElement getUnavailableContentError() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
     }
 }
