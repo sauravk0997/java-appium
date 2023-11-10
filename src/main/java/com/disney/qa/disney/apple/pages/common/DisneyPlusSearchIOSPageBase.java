@@ -122,7 +122,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY.getText())
                 .replace(ratingImage, " ")
-                .replaceAll("\\{ }", "");
+                .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
 
@@ -131,7 +131,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY_KIDS.getText())
                 .replace(ratingImage, " ")
-                .replaceAll("\\{ }", "");
+                .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
 }

@@ -100,7 +100,9 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("Only murders in the building");
+        searchPage.searchForMedia("Demolition");
         sa.assertFalse(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-14 profile");
+        sa.assertAll();
     }
 }
