@@ -198,8 +198,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement typeCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert")
     protected ExtendedWebElement typeSystemAlerts;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert [`label == \"%s\"`]")
-    private ExtendedWebElement typeAlertByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton")
     protected ExtendedWebElement typeButtons;
     @ExtendedFindBy(accessibilityId = "Keyboard")

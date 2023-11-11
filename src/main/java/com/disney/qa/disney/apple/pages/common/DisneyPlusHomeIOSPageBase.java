@@ -51,23 +51,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"continueWatchingContentView\"`]")
     protected ExtendedWebElement continueWatchingContentView;
 
-    @ExtendedFindBy(accessibilityId = "standardHeroContentView")
-    private ExtendedWebElement standardHeroContentView;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[%s]")
-    protected ExtendedWebElement collectionCellTileRow;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell")
     protected ExtendedWebElement collectionCellNoRow;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"editorialContentView\"`]")
-    protected ExtendedWebElement editorialContent;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
-    protected ExtendedWebElement collectionCellContains;
 
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
@@ -217,10 +205,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    //select random tile, scroll to specific collection, then select random tile
     /**
      * Select random tile, scroll to specific collection, then selects random tile
-         * @param collection gets collection name from enum Collection
+     * @param collection gets collection name from enum Collection
      * @param count swipe collection for number of times
      * @param direction Up or Down homeContentView
      */
