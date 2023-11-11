@@ -37,7 +37,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.ANIMATED_MOVIES_QA, 1, Direction.UP);
+        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.ANIMATED_MOVIES_QA, 3, Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -62,7 +62,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
 
-        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.NEW_TO_DISNEY_QA, 1, Direction.UP);
+        homePage.clickRandomCollectionTile(DisneyPlusHomeIOSPageBase.Collection.NEW_TO_DISNEY_QA, 3, Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
