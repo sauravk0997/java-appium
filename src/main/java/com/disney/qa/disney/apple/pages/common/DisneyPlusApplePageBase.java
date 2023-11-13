@@ -1112,4 +1112,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             clickSelect();
         }
     }
+
+    public ExtendedWebElement getUnavailableOkButton() {
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ERROR_MEDIAUNAVAILABLE.getText()));
+    }
+
+    public ExtendedWebElement getUnavailableContentError() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
+    }
 }
