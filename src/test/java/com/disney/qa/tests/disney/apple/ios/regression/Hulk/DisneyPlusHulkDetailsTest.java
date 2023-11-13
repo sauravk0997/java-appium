@@ -78,8 +78,19 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(disneyAccount.get());
 
+        homePage.isOpened();
+        System.out.println(getDriver().getPageSource());
+        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY_QA));
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_QA, 3, homePage.getHomeContentView(), Direction.UP);
+        detailsPage.isOpened();
+        detailsPage.clickCloseButton();
+        pause(5);
         homePage.tapHuluBrandTile();
-        huluPage.clickRandomCollectionTile(CollectionConstant.Collection.HULK_MOVIES_QA, 3, null, Direction.UP);
+        huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULK_MOVIES_QA, 3, null, Direction.UP);
+        System.out.println(getDriver().getPageSource());
+
+        huluPage.clickCollectionCellTileRow(CollectionConstant.Collection.HULK_MOVIES_QA, 0);
+
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 

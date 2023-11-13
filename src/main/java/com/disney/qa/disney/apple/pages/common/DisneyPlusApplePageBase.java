@@ -264,6 +264,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[%s]")
+    protected ExtendedWebElement collectionCellTileRow;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1137,7 +1140,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      */
     public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         swipeTillCollectionPresent(collection, count, container, direction);
-        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 1)).click();
+        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 0)).click();
     }
 
     public List<ExtendedWebElement> getAllCollectionCells (CollectionConstant.Collection  collection) {
@@ -1149,5 +1152,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             swipeInContainer(container, direction, 1, 1200);
             count--;
         }
+    }
+
+    public ExtendedWebElement getCollectionCellTileRow(CollectionConstant.Collection collection, int tileRow) {
+        return collectionCellTileRow.format(CollectionConstant.getCollectionName(collection), tileRow);
+    }
+
+    public void clickCollectionCellTileRow(CollectionConstant.Collection collection, int tileRow) {
+        LOGGER.info("Clicking collection '%s tile row '%s", collection, tileRow);
+        getCollectionCellTileRow(collection, tileRow).click();
     }
 }
