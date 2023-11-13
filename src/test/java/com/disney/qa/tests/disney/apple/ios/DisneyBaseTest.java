@@ -175,8 +175,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         setBuildType();
-        handleAlert();
-
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
             //initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
@@ -346,8 +344,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @return The app version number used in config calls and other displays (ex. 1.16.0)
      */
     private synchronized String getAppVersion() {
-
-        return "2.24";
+        String version = AppCenterManager.getInstance()
+                .getAppInfo(R.CONFIG.get("capabilities.app"))
+                .getVersion();
+        LOGGER.info("version:{}", version);
+        return version;
     }
 
     @AfterMethod(alwaysRun = true)
