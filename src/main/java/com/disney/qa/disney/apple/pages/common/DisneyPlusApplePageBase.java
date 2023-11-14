@@ -264,9 +264,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[%s]")
-    protected ExtendedWebElement collectionCellTileRow;
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1147,6 +1144,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
     }
 
+
+    /**
+     * Navigate to collection and clicks a tile in collection.
+     * @param collection gets collection name from enum Collection
+     * @param count number of times to swipe
+     * @param container container view - input 'null' if desire to be left empty.
+     * @param direction Up or Down
+     */
     public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
             swipeInContainer(container, direction, 1, 1200);
@@ -1154,32 +1159,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public ExtendedWebElement getCollectionCellTileRow(CollectionConstant.Collection collection, int tileRow) {
-        return collectionCellTileRow.format(CollectionConstant.getCollectionName(collection), tileRow);
-    }
-
-    public void clickCollectionCellTileRow(CollectionConstant.Collection collection, int tileRow) {
-        LOGGER.info("Clicking collection '%s tile row '%s", collection, tileRow);
-        getCollectionCellTileRow(collection, tileRow).click();
-    }
-
-    public List<String> getCollectionTilesFromFindElements(CollectionConstant.Collection collection, int startNum) {
-        List<ExtendedWebElement> collectionTiles = findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
-        List<String> tiles = new ArrayList<>();
-        System.out.println(collectionTiles);
-        IntStream.range(startNum, collectionTiles.size()).forEach(i -> tiles.add(collectionTiles.get(i).getText()));
-        return tiles;
-    }
-
-    public ExtendedWebElement getCollectionTile(CollectionConstant.Collection collection, int num) {
-       List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
-       return tiles.get(num);
-    }
-
-    public List<String> getTilesFromFindElementsNoCollection(int startNum) {
-        List<ExtendedWebElement> collectionTiles = findExtendedWebElements(cell.getBy());
-        List<String> tiles = new ArrayList<>();
-        IntStream.range(startNum, collectionTiles.size()).forEach(i -> tiles.add(collectionTiles.get(i).getText()));
-        return tiles;
+    /**
+     * Navigate to collection and clicks a tile in collection.
+     * @param collection gets collection name from enum Collection
+     * @param num select a tile starting with 0. Typically only first 3 are visible on handset, or first 4-5 on tablet.
+     */
+    public void clickCollectionTile(CollectionConstant.Collection collection, int num) {
+        List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+        clickElementAtLocation(tiles.get(num), 50, 50);
     }
 }

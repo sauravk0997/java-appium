@@ -13,8 +13,6 @@ import com.zebrunner.carina.utils.R;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
-
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
@@ -67,9 +65,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {""})
-    @Test(description = "Details Tab - validate all", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkDetailsTab() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74633"})
+    @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkMovieDetailsTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -77,35 +75,21 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
 
         setAppToHomeScreen(disneyAccount.get());
-
-        homePage.isOpened();
-        System.out.println(getDriver().getPageSource());
-        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY_QA));
-//        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_QA, 3, homePage.getHomeContentView(), Direction.UP);
-//        detailsPage.isOpened();
-//        detailsPage.clickCloseButton();
-//        pause(5);
+        homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
         huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULK_MOVIES_QA, 3, null, Direction.UP);
-        System.out.println(getDriver().getPageSource());
-
-        System.out.println(huluPage.getTilesFromFindElementsNoCollection(0));
-        System.out.println(huluPage.getTilesFromFindElementsNoCollection(5));
-        System.out.println(huluPage.getTilesFromFindElementsNoCollection(10));
-        System.out.println(huluPage.getCollectionTilesFromFindElements(CollectionConstant.Collection.HULK_MOVIES_QA, 0));
-
-        huluPage.getCollectionTile(CollectionConstant.Collection.HULK_MOVIES_QA, 0).click();
-//        huluPage.clickCollectionCellTileRow(CollectionConstant.Collection.HULK_MOVIES_QA, 0);
-
-//        huluPage.getTypeCellLabelContains("101 Dalmatians").click();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULK_MOVIES_QA, 1);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 
-        detailsPage.clickDetailsTab();
+        if (R.CONFIG.get("env").equalsIgnoreCase("PROD")) {
+            detailsPage.clickDetailsTab();
+        }
         detailsPage.swipeTillActorsElementPresent();
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration is not present");
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
         sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
@@ -113,39 +97,40 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {""})
-    @Test(description = "Details Tab - validate all", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyClickHomeCell() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74633"})
+    @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-
         setAppToHomeScreen(disneyAccount.get());
-
         homePage.isOpened();
-        System.out.println(getDriver().getPageSource());
-        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY));
-//        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 3, homePage.getHomeContentView(), Direction.UP);
-        System.out.println(homePage.getCollectionTilesFromFindElements(CollectionConstant.Collection.NEW_TO_DISNEY, 0));
-//        homePage.getCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 0).click();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
 
-        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-        homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU).get(0).click();
-        homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY).get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULK_PLAYABLE_QA, 0);
+        detailsPage.isOpened();
 
+        //validate details tab
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
         detailsPage.clickDetailsTab();
-        detailsPage.swipeTillActorsElementPresent();
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
-        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
-        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
-        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present on Details tab");
+
+        //validate episodes tab
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present on Details page");
+        detailsPage.getEpisodesTab().click();
+        sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
+
+        //validate suggested tab
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Suggest tab not present");
+        detailsPage.compareSuggestedTitleToMediaTitle(sa);
+
+        //validate extras tab
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras tab not present on Details page");
+        detailsPage.clickExtrasTab();
+        sa.assertTrue(detailsPage.getFirstTitleLabel().getText().toLowerCase().contains("trailer"), "'Trailer' text not found in extras title.");
         sa.assertAll();
     }
 }
