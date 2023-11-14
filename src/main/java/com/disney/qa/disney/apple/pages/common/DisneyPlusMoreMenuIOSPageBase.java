@@ -328,4 +328,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		List<ExtendedWebElement> titleLabel = findExtendedWebElements(getStaticTextByName("titleLabel").getBy());
 		return titleLabel.get(num);
 	}
+
+	public void clickBackArrowFromWatchlist() {
+		//TEMP solution for bugged watchlist
+		getTypeButtonByLabel("iconNavBack24LightActive").click();
+	}
 }

@@ -18,7 +18,6 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
     private static final String ORIGINALS = "Originals";
-    private static final String KIDS_DOB = "2018-01-01";
     private static final String LATEST = "latest";
 
     //TODO: Refactor this test to support AdHoc builds
