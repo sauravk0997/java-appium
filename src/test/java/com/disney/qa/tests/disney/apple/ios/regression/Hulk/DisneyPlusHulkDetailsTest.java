@@ -81,16 +81,60 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         System.out.println(getDriver().getPageSource());
         System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY_QA));
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_QA, 3, homePage.getHomeContentView(), Direction.UP);
-        detailsPage.isOpened();
-        detailsPage.clickCloseButton();
-        pause(5);
+//        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_QA, 3, homePage.getHomeContentView(), Direction.UP);
+//        detailsPage.isOpened();
+//        detailsPage.clickCloseButton();
+//        pause(5);
         homePage.tapHuluBrandTile();
         huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULK_MOVIES_QA, 3, null, Direction.UP);
         System.out.println(getDriver().getPageSource());
 
-        huluPage.clickCollectionCellTileRow(CollectionConstant.Collection.HULK_MOVIES_QA, 0);
+        System.out.println(huluPage.getTilesFromFindElementsNoCollection(0));
+        System.out.println(huluPage.getTilesFromFindElementsNoCollection(5));
+        System.out.println(huluPage.getTilesFromFindElementsNoCollection(10));
+        System.out.println(huluPage.getCollectionTilesFromFindElements(CollectionConstant.Collection.HULK_MOVIES_QA, 0));
 
+        huluPage.getCollectionTile(CollectionConstant.Collection.HULK_MOVIES_QA, 0).click();
+//        huluPage.clickCollectionCellTileRow(CollectionConstant.Collection.HULK_MOVIES_QA, 0);
+
+//        huluPage.getTypeCellLabelContains("101 Dalmatians").click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
+
+        detailsPage.clickDetailsTab();
+        detailsPage.swipeTillActorsElementPresent();
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {""})
+    @Test(description = "Details Tab - validate all", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyClickHomeCell() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+
+        setAppToHomeScreen(disneyAccount.get());
+
+        homePage.isOpened();
+        System.out.println(getDriver().getPageSource());
+        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY));
+//        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 3, homePage.getHomeContentView(), Direction.UP);
+        System.out.println(homePage.getCollectionTilesFromFindElements(CollectionConstant.Collection.NEW_TO_DISNEY, 0));
+//        homePage.getCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 0).click();
+
+        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        homePage.getAllCollectionCells(CollectionConstant.Collection.RECOMMENDED_FOR_YOU).get(0).click();
+        homePage.getAllCollectionCells(CollectionConstant.Collection.NEW_TO_DISNEY).get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 

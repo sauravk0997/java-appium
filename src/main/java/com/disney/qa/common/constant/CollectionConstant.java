@@ -44,13 +44,15 @@ public class CollectionConstant {
             case CONTINUE_WATCHING:
                 return "76aed686-1837-49bd-b4f5-5d2a27c0c8d4";
             case DOCUMENTARIES_AND_REALITY:
-                return "5537a5bf-697a-403e-875d-40794922fd13";
+//                return "5537a5bf-697a-403e-875d-40794922fd13";
+                return "52ae7413-2c06-435f-bc72-74bc6edda108";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
             case MUSIC_AND_DANCE:
                 return "73d4a334-87c8-4059-91de-9d49171c41fb";
             case NEW_TO_DISNEY:
-                return "3c61bd68-b639-44a9-97b4-5bed89a7c479";
+//                return "3c61bd68-b639-44a9-97b4-5bed89a7c479";
+                return "15cf48b7-37ac-4845-8ab2-a06a1d9d2c24";
             case ORIGINALS:
                 return "6711b1f3-da45-4236-8ae6-faf241d66102";
             case REALITY_SERIES:

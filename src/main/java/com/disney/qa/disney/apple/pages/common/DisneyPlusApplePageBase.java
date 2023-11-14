@@ -1162,4 +1162,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         LOGGER.info("Clicking collection '%s tile row '%s", collection, tileRow);
         getCollectionCellTileRow(collection, tileRow).click();
     }
+
+    public List<String> getCollectionTilesFromFindElements(CollectionConstant.Collection collection, int startNum) {
+        List<ExtendedWebElement> collectionTiles = findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+        List<String> tiles = new ArrayList<>();
+        System.out.println(collectionTiles);
+        IntStream.range(startNum, collectionTiles.size()).forEach(i -> tiles.add(collectionTiles.get(i).getText()));
+        return tiles;
+    }
+
+    public ExtendedWebElement getCollectionTile(CollectionConstant.Collection collection, int num) {
+       List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+       return tiles.get(num);
+    }
+
+    public List<String> getTilesFromFindElementsNoCollection(int startNum) {
+        List<ExtendedWebElement> collectionTiles = findExtendedWebElements(cell.getBy());
+        List<String> tiles = new ArrayList<>();
+        IntStream.range(startNum, collectionTiles.size()).forEach(i -> tiles.add(collectionTiles.get(i).getText()));
+        return tiles;
+    }
 }
