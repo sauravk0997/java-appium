@@ -21,8 +21,4 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isOpened() {
         return networkCollection.isPresent();
     }
-
-    public void clickMovieTile() {
-
-    }
 }
