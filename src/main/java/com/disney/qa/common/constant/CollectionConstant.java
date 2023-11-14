@@ -24,7 +24,6 @@ public class CollectionConstant {
         NEW_TO_DISNEY_QA,
         HULK_MOVIES_QA,
         HULK_SERIES_QA,
-        HULU_BRAND_QA,
         HULK_PLAYABLE_QA;
     }
 
@@ -47,15 +46,13 @@ public class CollectionConstant {
             case CONTINUE_WATCHING:
                 return "76aed686-1837-49bd-b4f5-5d2a27c0c8d4";
             case DOCUMENTARIES_AND_REALITY:
-//                return "5537a5bf-697a-403e-875d-40794922fd13";
                 return "52ae7413-2c06-435f-bc72-74bc6edda108";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
             case MUSIC_AND_DANCE:
                 return "73d4a334-87c8-4059-91de-9d49171c41fb";
             case NEW_TO_DISNEY:
-//                return "3c61bd68-b639-44a9-97b4-5bed89a7c479";
-                return "15cf48b7-37ac-4845-8ab2-a06a1d9d2c24";
+                return "96f8f6f2-01c9-41a1-b40a-5f9fa585dcb2";
             case ORIGINALS:
                 return "6711b1f3-da45-4236-8ae6-faf241d66102";
             case REALITY_SERIES:
@@ -74,8 +71,6 @@ public class CollectionConstant {
                 return "e57ab7d2-e60b-49fa-89bb-3d8f7ec066f7";
             case HULK_SERIES_QA:
                 return "c802e50f-1005-4ce3-a27a-626325142b48";
-            case HULU_BRAND_QA:
-                return "f6a72752-c82c-400c-b676-04af950bbcf8";
             case HULK_PLAYABLE_QA:
                 return "b79d78cf-192d-4e65-8720-6a54bbdbf280";
             default:
