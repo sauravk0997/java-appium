@@ -19,7 +19,7 @@
     <parameter name="overrideFields" value="enableOneTrustConfig=${enableOneTrustConfig},JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Alice,Ariel,Ariel-More Menu,BVT,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
+               value=",Alice,Ariel,Ariel-More Menu,BVT,Smoke,Hulk,Onboarding,More Menu,Details,Video Player,Search"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance">
         <classes>
@@ -85,6 +85,17 @@
     <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
         </classes>
     </test>
 </suite>
