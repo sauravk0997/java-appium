@@ -91,7 +91,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return yearlySkuBtn.isElementPresent();
+        return restoreBtn.isPresent();
     }
 
     public boolean isSwitchToAnnualHeaderDisplayed() {
@@ -235,9 +235,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickPurchaseButton(PlanType planType) {
         if (planType.equals(PlanType.PREMIUM_MONTHLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.monthly.premium.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.monthly.dpluspremium22.apple").click();
         } else if (planType.equals(PlanType.PREMIUM_YEARLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.yearly.premium.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.yearly.dpluspremium22.apple").click();
         } else {
             productPurchaseBtn.click();
         }
