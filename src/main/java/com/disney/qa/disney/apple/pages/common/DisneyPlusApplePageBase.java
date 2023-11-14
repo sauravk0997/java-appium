@@ -7,10 +7,10 @@ import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
 
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -47,7 +47,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
-    private static final int ENABLED_LIMIT_ATTEMPTS = 10;
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1115,17 +1114,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isElementEnabled(ExtendedWebElement element) {
-        int attempts = 0;
-        while (attempts < ENABLED_LIMIT_ATTEMPTS) {
-            try {
-                element.getElement().isEnabled();
-                String locator = element.getBy().toString();
-                LOGGER.info(String.format("Element [%s] is enabled", locator));
-                attempts = ENABLED_LIMIT_ATTEMPTS;
-            } catch (NoSuchElementException ex) {
-                return false;
-            }
-            attempts++;
+        try {
+            String locator = element.getBy().toString();
+            DisneyPlusApplePageBase.fluentWait(getDriver(), DriverHelper.EXPLICIT_TIMEOUT, 1, String.format("Element [%s] is NOT enabled", locator))
+                    .until(it -> element.getElement().isEnabled());
+            LOGGER.info(String.format("Element [%s] is enabled", locator));
+        } catch (NoSuchElementException ex) {
+            return false;
         }
         return true;
     }
