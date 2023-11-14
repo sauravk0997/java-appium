@@ -1119,7 +1119,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         while (attempts < ENABLED_LIMIT_ATTEMPTS) {
             try {
                 element.getElement().isEnabled();
-                LOGGER.info(String.format("Element %s is enabled", element.getBy()));
+                String locator = element.getBy().toString();
+                LOGGER.info(String.format("Element [%s] is enabled", locator));
                 attempts = ENABLED_LIMIT_ATTEMPTS;
             } catch (NoSuchElementException ex) {
                 return false;
