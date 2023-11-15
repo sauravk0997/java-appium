@@ -175,13 +175,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         setBuildType();
-        //handleAlert();
-
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
-            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-            relaunch();
-//            handleAlert();
+            //initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+            //relaunch();
+            //handleAlert();
         }
 
         try {
