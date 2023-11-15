@@ -144,6 +144,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "playIcon")
     private ExtendedWebElement extrasPlayIcon;
 
+    @ExtendedFindBy(accessibilityId = "title")
+    private ExtendedWebElement detailsTabTitle;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -580,7 +583,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         isOpened();
         if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
             String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
-            sa.assertTrue(typeCellLabelContains.format(title[0]).isPresent(), "Suggested title not present");
+            clickDetailsTab();
+            sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
         } else {
             sa.assertTrue(params.get(SUGGESTED_CELL_TITLE).equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         }
