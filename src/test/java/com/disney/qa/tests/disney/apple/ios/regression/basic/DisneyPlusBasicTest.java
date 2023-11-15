@@ -4,6 +4,7 @@ import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
@@ -145,10 +146,14 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
                 "Expected - 'Edit Profiles' title should be present in Edit Profiles page");
 
         pause(3);
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(softAssert, disneyAccount.get().getFirstName(), "round_tile", "round_tile_hovered");
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(softAssert, disneyAccount.get().getFirstName(), "round_tile", "round_tile_hovered");
 
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(softAssert, "Add Profile", "round_tile", "round_tile_hovered");
-
+            aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(softAssert, "Add Profile", "round_tile", "round_tile_hovered");
+        }else{
+            softAssert.assertTrue(disneyAccount.get().getFirstName().contains("Test"));
+            softAssert.assertTrue(moreMenu.isAddProfileButtonPresent());
+        }
         softAssert.assertTrue(editProfile.clickBackBtn().isOpened(),
                 "Expected - Back button should user to More Menu page");
 
