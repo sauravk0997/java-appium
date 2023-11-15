@@ -48,7 +48,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return staticTextNameContains.format("textFieldEmail").isPresent();
+        return isElementEnabled(emailField);
     }
 
     public void clickEnterNewBtn() {
