@@ -579,7 +579,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         isOpened();
         if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
             String[] title = params.get("suggestedCellTitle").split(",");
-            sa.assertTrue(staticTextByLabel.format(title[0]).isPresent(), "Suggested title not present");
+            sa.assertTrue(typeCellLabelContains.format(title[0]).isPresent(), "Suggested title not present");
         } else {
             sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         }
