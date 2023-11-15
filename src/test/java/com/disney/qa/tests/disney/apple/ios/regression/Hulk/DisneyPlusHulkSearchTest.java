@@ -138,7 +138,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
         searchPage.tapRecentSearchClearButton();
         sa.assertFalse(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
-        searchPage.tapTitleUnderRecentSearch("Luca");
+        sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
         sa.assertAll();
     }
 }
