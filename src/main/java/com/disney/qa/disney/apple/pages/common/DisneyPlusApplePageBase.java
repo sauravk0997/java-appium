@@ -1118,7 +1118,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             String locator = element.getBy().toString();
             DisneyPlusApplePageBase.fluentWait(getDriver(), DriverHelper.EXPLICIT_TIMEOUT, 1, String.format("Element [%s] is NOT enabled", locator))
                     .until(it -> element.getElement().isEnabled());
-            LOGGER.info(String.format("Element [%s] is enabled", locator));
         } catch (NoSuchElementException ex) {
             return false;
         }
