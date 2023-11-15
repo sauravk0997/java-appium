@@ -31,6 +31,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
+    private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
 
     //LOCATORS
 
@@ -574,14 +575,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             swipeInContainer(null, Direction.UP, 1200);
         }
         clickSuggestedTab();
-        params.put("suggestedCellTitle", getTabCells().get(0));
+        params.put(SUGGESTED_CELL_TITLE, getTabCells().get(0));
         clickFirstTabCell();
         isOpened();
         if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
-            String[] title = params.get("suggestedCellTitle").split(",");
+            String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
             sa.assertTrue(typeCellLabelContains.format(title[0]).isPresent(), "Suggested title not present");
         } else {
-            sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+            sa.assertTrue(params.get(SUGGESTED_CELL_TITLE).equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
         }
         params.clear();
     }
