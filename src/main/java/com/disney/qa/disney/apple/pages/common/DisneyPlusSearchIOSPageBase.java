@@ -41,6 +41,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "Clear text")
     private ExtendedWebElement clearText;
 
+
+    @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
+    private ExtendedWebElement cancelButtonRecentSearch;
+
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    private ExtendedWebElement headerViewTitleLabel;
+
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -109,9 +116,24 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
-        pressByElement(clearText, 1);
+        clearText.click();
     }
 
+    public boolean isRecentSearchDisplayed(){
+        return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
+    }
+
+    public boolean isTitlePresent(String title){
+        return staticTextByLabel.format(title).isPresent();
+    }
+
+    public void tapTitleUnderRecentSearch(String title) {
+        staticTextByLabel.format(title).click();
+    }
+
+    public void tapRecentSearchClearButton(){
+        cancelButtonRecentSearch.click();
+    }
     public boolean isNoResultsFoundMessagePresent(String title) {
         String noResultError = "No results found for \"" + title + "\"";
         return getDynamicAccessibilityId(noResultError).isPresent();
