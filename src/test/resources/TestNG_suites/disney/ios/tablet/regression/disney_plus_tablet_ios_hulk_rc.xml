@@ -5,7 +5,7 @@
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_hulk_rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-74906"/>
     <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="QA,Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
@@ -22,6 +22,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
         </classes>
     </test>
 </suite>

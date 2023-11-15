@@ -4,6 +4,7 @@ import com.disney.exceptions.FailedToFocusElementException;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -258,6 +259,10 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         navigateToOneGlobalNavMenu(menu);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
+        //Sometimes global nav is not dismissed, to accommodate when clicking select does not work first time
+        if (new DisneyPlusApplePageBase(getDriver()).isGlobalNavExpanded()) {
+            clickSelect();
+        }
     }
 
     public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {

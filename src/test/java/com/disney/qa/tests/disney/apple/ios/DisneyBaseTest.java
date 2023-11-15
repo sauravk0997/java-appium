@@ -47,6 +47,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
+    public static final String KIDS_DOB = "2018-01-01";
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
@@ -174,13 +175,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         setBuildType();
-        //handleAlert();
-
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
-            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-            relaunch();
-//            handleAlert();
+            //initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+            //relaunch();
+            //handleAlert();
         }
 
         try {
@@ -321,7 +320,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Starting API threads");
         // Call getDriver to set platform variables
         getDriver();
-//        handleAlert();
         setBuildType();
 
         if (buildType == BuildType.IAP) {

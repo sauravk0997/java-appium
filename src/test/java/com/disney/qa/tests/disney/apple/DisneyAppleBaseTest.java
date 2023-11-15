@@ -68,7 +68,7 @@ public class DisneyAppleBaseTest extends BaseMobileTest {
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getEnterpriseBundle());
             removeAdHocApps();
             removePurchaseApps();
-        } else if (sessionBundles.get(APP).contains("Disney_iOS_AdHoc") || sessionBundles.get(APP).contains("Disney_IAP")) {
+        } else if (sessionBundles.get(APP).contains("Disney-Ad-Hoc") || sessionBundles.get(APP).contains("Disney_IAP") || sessionBundles.get(APP).contains("Disney_iOS_AdHoc")) {
             buildType = BuildType.IAP;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getIapBundle());
             removeEnterpriseApps();
