@@ -83,7 +83,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     @Override
     public void clickSaveBtn() {
-        newPasswordSaveBtn.click();
+        primaryButton.click();
     }
 
     @Override
