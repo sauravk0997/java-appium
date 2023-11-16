@@ -147,6 +147,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement detailsTabTitle;
 
+    @ExtendedFindBy(accessibilityId = "networkAttributionImage")
+    private ExtendedWebElement networkAttributionImage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
+    private ExtendedWebElement firstContentImage;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -685,5 +691,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getFirstTitleLabel() {
         return firstTitleLabel;
+    }
+
+    public ExtendedWebElement getNetworkAttributionImage() {
+        return networkAttributionImage;
+    }
+
+    public ExtendedWebElement getEpisodeContentImage() {
+        return firstContentImage;
+//        return dynamicOtherFindByNameContainsRow.format("contentImageView", 1);
     }
 }

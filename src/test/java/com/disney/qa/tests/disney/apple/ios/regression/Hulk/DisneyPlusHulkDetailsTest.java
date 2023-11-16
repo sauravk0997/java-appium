@@ -2,19 +2,38 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
+import org.bouncycastle.util.encoders.BufferedDecoder;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+
+import static com.disney.qa.disney.apple.pages.tv.AppleTVConstants.DEFAULT_IMAGE_PATH;
+
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
+    protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
+    protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -132,5 +151,41 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.clickExtrasTab();
         sa.assertTrue(detailsPage.getFirstTitleLabel().getText().toLowerCase().contains("trailer"), "'Trailer' text not found in extras title.");
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74548"})
+    @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkNetworkAttribution() throws IOException {
+        baseDirectory.set("Screenshots/");
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
+        homePage.isOpened();
+        System.out.println(homePage.isHuluTileVisible());
+        homePage.tapHuluBrandTile();
+        pause(10);
+//        homePage.clickSearchIcon();
+//        searchPage.searchForMedia("Only Murders in the Building");
+//        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        BufferedImage networkAttributionImage = getElementImage(detailsPage.getNetworkAttributionImage());
+
+        BufferedImage networkAttributionImage2 = getElementImage(detailsPage.getNetworkAttributionImage());
+
+        System.out.println(areImagesTheSame(networkAttributionImage, networkAttributionImage2, 10));
+        Screenshot.capture(detailsPage.getNetworkAttributionImage().getElement(), ScreenshotType.EXPLICIT_VISIBLE);
+//        detailsPage.swipePageTillElementPresent(detailsPage.getEpisodeContentImage(),3, null, Direction.UP, 750);
+        detailsPage.swipeUp(1, 750);
+        System.out.println(detailsPage.getEpisodeContentImage().isPresent());
+        pause(3);
+//         detailsPage.splitImage(detailsPage.getEpisodeContentImage(), baseDirectory, "Details_Page");
+
+        System.out.println(areImagesTheSame(networkAttributionImage, detailsPage.splitImage(detailsPage.getEpisodeContentImage(), baseDirectory, "Details_Page"), 10));
     }
 }
