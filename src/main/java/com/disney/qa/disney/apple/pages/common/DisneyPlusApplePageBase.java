@@ -4,13 +4,14 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
 
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -22,6 +23,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -255,6 +257,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement staticTextNameContains;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell")
+    protected ExtendedWebElement collectionCellNoRow;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
+    protected ExtendedWebElement collectionCell;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1105,12 +1113,23 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void detectAppleUpdateAndClickUpdateLater() {
-        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent()) {
+        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent(5)) {
             LOGGER.info("Dismissing Apple Update alert by clicking {}", UPDATE_LATER);
             moveDown(2,1);
             LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
+    }
+
+    public boolean isElementEnabled(ExtendedWebElement element) {
+        try {
+            String locator = element.getBy().toString();
+            DisneyPlusApplePageBase.fluentWait(getDriver(), DriverHelper.EXPLICIT_TIMEOUT, 1, String.format("Element [%s] is NOT enabled", locator))
+                    .until(it -> element.getElement().isEnabled());
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+        return true;
     }
 
     public ExtendedWebElement getUnavailableOkButton() {
@@ -1119,5 +1138,45 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getUnavailableContentError() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
+    }
+
+    /**
+     * Select random tile, scroll to specific collection, then selects random tile
+     * @param collection gets collection name from enum Collection
+     * @param count swipe collection for number of times
+     * @param direction Up or Down homeContentView
+     */
+    public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
+        swipeTillCollectionPresent(collection, count, container, direction);
+        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 0)).click();
+    }
+
+    public List<ExtendedWebElement> getAllCollectionCells (CollectionConstant.Collection  collection) {
+        return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+    }
+
+
+    /**
+     * Navigate to collection and clicks a tile in collection.
+     * @param collection gets collection name from enum Collection
+     * @param count number of times to swipe
+     * @param container container view - input 'null' if desire to be left empty.
+     * @param direction Up or Down
+     */
+    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
+        while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeInContainer(container, direction, 1, 1200);
+            count--;
+        }
+    }
+
+    /**
+     * Navigate to collection and clicks a tile in collection.
+     * @param collection gets collection name from enum Collection
+     * @param num select a tile starting with 0. Typically only first 3 are visible on handset, or first 4-5 on tablet.
+     */
+    public void clickCollectionTile(CollectionConstant.Collection collection, int num) {
+        List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+        clickElementAtLocation(tiles.get(num), 50, 50);
     }
 }

@@ -31,6 +31,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
+    private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
 
     //LOCATORS
 
@@ -66,7 +67,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement tabBar;
 
     @FindBy(name = "titleLabel_0")
-    private ExtendedWebElement firstEpisodeTitleLabel;
+    private ExtendedWebElement firstTitleLabel;
 
     @ExtendedFindBy(accessibilityId = "contentDescription")
     protected ExtendedWebElement contentDescription;
@@ -139,6 +140,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
+
+    @ExtendedFindBy(accessibilityId = "playIcon")
+    private ExtendedWebElement extrasPlayIcon;
+
+    @ExtendedFindBy(accessibilityId = "title")
+    private ExtendedWebElement detailsTabTitle;
 
     //FUNCTIONS
 
@@ -266,7 +273,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public String getEpisodeContentTitle() {
         //We want to remove the list numbering and duration from the episode's title label
         LOGGER.info("getting first episode title from Details page");
-        return firstEpisodeTitleLabel.getAttribute("value")
+        return firstTitleLabel.getAttribute("value")
                 .split("[.]")[1]
                 .split("\\d+", 2)[0]
                 .trim();
@@ -310,7 +317,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapOnFirstContentTitle() {
-        firstEpisodeTitleLabel.click();
+        firstTitleLabel.click();
     }
 
     public List<ExtendedWebElement> getSeasonsFromPicker() {
@@ -571,9 +578,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             swipeInContainer(null, Direction.UP, 1200);
         }
         clickSuggestedTab();
-        params.put("suggestedCellTitle", getTabCells().get(0));
+        params.put(SUGGESTED_CELL_TITLE, getTabCells().get(0));
         clickFirstTabCell();
-        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        isOpened();
+        if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
+            String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
+            clickDetailsTab();
+            sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
+        } else {
+            sa.assertTrue(params.get(SUGGESTED_CELL_TITLE).equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
+        }
         params.clear();
     }
 
@@ -667,5 +681,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContentDetailsPagePresent() {
         return getTypeOtherByName("contentDetailsPage").isPresent();
+    }
+
+    public ExtendedWebElement getFirstTitleLabel() {
+        return firstTitleLabel;
     }
 }
