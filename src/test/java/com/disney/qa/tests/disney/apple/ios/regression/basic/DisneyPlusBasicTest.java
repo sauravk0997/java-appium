@@ -150,9 +150,11 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
             aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(softAssert, disneyAccount.get().getFirstName(), "round_tile", "round_tile_hovered");
 
             aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(softAssert, "Add Profile", "round_tile", "round_tile_hovered");
-        }else{
-            softAssert.assertTrue(disneyAccount.get().getFirstName().contains("Test"));
-            softAssert.assertTrue(moreMenu.isAddProfileButtonPresent());
+        } else{
+            softAssert.assertTrue(disneyAccount.get().getFirstName().contains("Test"),
+                    "Expected - First user name should be present in Edit Profile page");
+            softAssert.assertTrue(moreMenu.isAddProfileButtonPresent(),
+                    "Expected - Add profile button should be present in Edit Profile page");
         }
         softAssert.assertTrue(editProfile.clickBackBtn().isOpened(),
                 "Expected - Back button should user to More Menu page");
