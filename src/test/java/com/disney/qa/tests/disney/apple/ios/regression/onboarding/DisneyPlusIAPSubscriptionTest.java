@@ -648,22 +648,16 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         dobCollectionPage.isOpened();
         dobCollectionPage.keepSessionAlive(15, dobCollectionPage.getDateOfBirthHeader());
         pause(35);
+        dobCollectionPage.enterDOB(content);
+        sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
+                "Forgot Password Link did not appear.");
+        passwordPage.clickForgotPasswordLink();
+        passwordPage.tapBackButton();
+        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.userType.ADULT.toString())) {
-            dobCollectionPage.enterDOB(content);
-            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
-                    "Forgot Password Link did not appear.");
-            passwordPage.clickForgotPasswordLink();
-            passwordPage.tapBackButton();
-            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
             sa.assertTrue(paywallPage.isOpened(),
                     "Paywall Page did not open.");
-        }else{
-            dobCollectionPage.enterDOB(content);
-            sa.assertTrue(passwordPage.isForgotPasswordLinkDisplayed(),
-                    "Forgot Password Link did not appear.");
-            passwordPage.clickForgotPasswordLink();
-            passwordPage.tapBackButton();
-            passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        } else {
             sa.assertTrue(accountIsMinorPage.isOpened(),
                     "Account Minor Page did not open.");
         }
