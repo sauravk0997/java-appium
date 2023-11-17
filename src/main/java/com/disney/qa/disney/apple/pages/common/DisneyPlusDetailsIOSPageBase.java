@@ -275,7 +275,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * @return - Media title
      */
     public String getMediaTitle() {
-        System.out.println(logoImage.getText());
         return logoImage.getText();
     }
 
