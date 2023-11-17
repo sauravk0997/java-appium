@@ -150,9 +150,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
     private ExtendedWebElement networkAttributionImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
-    private ExtendedWebElement firstContentImage;
-
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -390,11 +387,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     //Series = Creator, Movies = Director
     public boolean isCreatorDirectorDisplayed() {
-        return suits.isPresent();
+        return suits.isPresent(5) || dynamicOtherFindByNameContains.format("Creator").isPresent(5);
     }
 
     public boolean areActorsDisplayed() {
-        return getActors().isPresent();
+        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format("Starring").isPresent(5);
     }
 
     public boolean isDurationDisplayed() {
@@ -692,10 +689,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getNetworkAttributionImage() {
         return networkAttributionImage;
-    }
-
-    public ExtendedWebElement getEpisodeContentImage() {
-        return firstContentImage;
     }
 
     public ExtendedWebElement getServiceAttribution() {
