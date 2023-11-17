@@ -197,6 +197,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement typeCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert")
     protected ExtendedWebElement typeSystemAlerts;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"%s\"`]")
+    protected ExtendedWebElement typeAlertByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton")
     protected ExtendedWebElement typeButtons;
     @ExtendedFindBy(accessibilityId = "Keyboard")
@@ -1134,7 +1136,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getUnavailableContentError() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
+        return typeAlertByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
+    }
+
+    public ExtendedWebElement getUnavailableContentErrorPreview() {
+        return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
     }
 
     /**
