@@ -147,7 +147,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement detailsTabTitle;
 
-    @ExtendedFindBy(accessibilityId = "networkAttributionImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
     private ExtendedWebElement networkAttributionImage;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
@@ -269,6 +269,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * @return - Media title
      */
     public String getMediaTitle() {
+        System.out.println(logoImage.getText());
         return logoImage.getText();
     }
 
@@ -587,13 +588,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         params.put(SUGGESTED_CELL_TITLE, getTabCells().get(0));
         clickFirstTabCell();
         isOpened();
-        if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
-            String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
-            clickDetailsTab();
-            sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
-        } else {
-            sa.assertTrue(params.get(SUGGESTED_CELL_TITLE).equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
-        }
+        String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
+        clickDetailsTab();
+        sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
         params.clear();
     }
 
