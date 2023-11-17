@@ -3,10 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.UniversalUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -16,6 +13,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.bouncycastle.util.encoders.BufferedDecoder;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -156,15 +154,35 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74548"})
     @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkNetworkAttribution() throws IOException {
-        baseDirectory.set("Screenshots/");
-        SoftAssert sa = new SoftAssert();
+    public void verifyHulkNetworkAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToHomeScreen(disneyAccount.get());
+        homePage.isOpened();
+//        System.out.println(homePage.isHuluTileVisible());
+//        homePage.tapHuluBrandTile();
+//        pause(10);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia("Only Murders in the Building");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.getNetworkAttributionImage().isPresent(), "Network attribution image was not found on Hulu series details page.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
+    @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkServiceAttribution() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
+
         homePage.isOpened();
         System.out.println(homePage.isHuluTileVisible());
         homePage.tapHuluBrandTile();
@@ -173,19 +191,45 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 //        searchPage.searchForMedia("Only Murders in the Building");
 //        searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
+        System.out.println(getDriver().getPageSource());
+        Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+    }
 
-        BufferedImage networkAttributionImage = getElementImage(detailsPage.getNetworkAttributionImage());
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73898"})
+    @Test(description = "Hulk Details verify extras tab", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkExtrasTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
 
-        BufferedImage networkAttributionImage2 = getElementImage(detailsPage.getNetworkAttributionImage());
+        homePage.isOpened();
+        System.out.println(homePage.isHuluTileVisible());
+        homePage.tapHuluBrandTile();
+        pause(10);
 
-        System.out.println(areImagesTheSame(networkAttributionImage, networkAttributionImage2, 10));
-        Screenshot.capture(detailsPage.getNetworkAttributionImage().getElement(), ScreenshotType.EXPLICIT_VISIBLE);
-//        detailsPage.swipePageTillElementPresent(detailsPage.getEpisodeContentImage(),3, null, Direction.UP, 750);
-        detailsPage.swipeUp(1, 750);
-        System.out.println(detailsPage.getEpisodeContentImage().isPresent());
-        pause(3);
-//         detailsPage.splitImage(detailsPage.getEpisodeContentImage(), baseDirectory, "Details_Page");
-
-        System.out.println(areImagesTheSame(networkAttributionImage, detailsPage.splitImage(detailsPage.getEpisodeContentImage(), baseDirectory, "Details_Page"), 10));
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
+        detailsPage.clickExtrasTab();
+        System.out.println(getDriver().getPageSource());
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1000);
+        }
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
+        sa.assertTrue(detailsPage.getCompactEpisodeAdditionalContentView().isPresent(), "Extras tab title and description was not found.");
+        detailsPage.getPlayIcon().click();
+        videoPlayer.isOpened();
+        pause(15);
+        videoPlayer.clickPauseButton().clickPlayButton();
+        pause(5);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
+        sa.assertAll();
     }
 }

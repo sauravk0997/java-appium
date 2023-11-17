@@ -142,7 +142,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement progressBar;
 
     @ExtendedFindBy(accessibilityId = "playIcon")
-    private ExtendedWebElement extrasPlayIcon;
+    private ExtendedWebElement playIcon;
 
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement detailsTabTitle;
@@ -699,6 +699,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEpisodeContentImage() {
         return firstContentImage;
-//        return dynamicOtherFindByNameContainsRow.format("contentImageView", 1);
+    }
+
+    public ExtendedWebElement getServiceAttribution() {
+        return staticTextLabelContains.format("Included with your Hulu subscription");
+    }
+
+    public ExtendedWebElement getPlayIcon() {
+        return playIcon;
+    }
+
+    public ExtendedWebElement getCompactEpisodeAdditionalContentView() {
+        return getTypeOtherByName("compactEpisodeAdditionalContentView");
     }
 }

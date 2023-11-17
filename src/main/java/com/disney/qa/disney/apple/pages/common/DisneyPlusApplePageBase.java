@@ -11,7 +11,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.report.ReportContext;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -24,12 +23,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
@@ -1172,99 +1165,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void clickCollectionTile(CollectionConstant.Collection collection, int num) {
         List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
         clickElementAtLocation(tiles.get(num), 50, 50);
-    }
-
-    public BufferedImage cropImage(ExtendedWebElement element, int x, int y, int w, int h) {
-        try {
-            BufferedImage originalImage = getElementImage(element);
-            int height = originalImage.getHeight();
-            int width = originalImage.getWidth();
-            BufferedImage croppedImage = originalImage.getSubimage(x, y, w, h);
-            return croppedImage;
-        } catch (Exception e) {
-            LOGGER.error(String.format("Cropped image not successful: %s", e.getMessage()), e);
-        }
-        return null;
-    }
-
-    protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
-    public void cropImageNew(ExtendedWebElement element) {
-        baseDirectory.set("Screenshots/");
-        BufferedImage image;
-        try {
-//            BufferedImage originalImage = ImageIO.read(new File("C:/Test/pool.jpg"));
-            BufferedImage originalImage = getElementImage(element);
-            System.out.println("Original Image Dimension: " + originalImage.getWidth() + "x" + originalImage.getHeight());
-
-            BufferedImage subImage = originalImage.getSubimage(0, originalImage.getHeight()/2, originalImage.getWidth(), originalImage.getHeight()/2);
-            System.out.println("Cropped Image Dimension: " + subImage.getWidth() + "x" + subImage.getHeight());
-//            String fileName = String.format(DEFAULT_IMAGE_PATH, "Screenshot" + new Date().getTime());
-//            File newFile = subImage;
-//            FileUtils.copyFile(subImage, new File(fileName));
-            File screenshotTest = File.createTempFile(R.CONFIG.get("capabilities.deviceType") + "_", ".png");
-            File newFile = Path.of(ReportContext.getTestDir().getAbsolutePath())
-                    .resolve(String.valueOf(subImage)).toFile();
-            image = ImageIO.read(screenshotTest);
-//            File outputfile = new File("subImage");
-//            ImageIO.write(image, "png", new);
-
-            System.out.println("Image cropped successfully: " + screenshotTest.getPath());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public BufferedImage splitImage(ExtendedWebElement element, ThreadLocal<String> directory, String name) throws IOException {
-//        final BufferedImage source = ImageIO.read(new File("<sourceDir>/1fby-6t-555d.png"));
-        final BufferedImage source2 = getElementImage(element);
-//        int idx = 0;
-//        for (int y = 0; y < source2.getHeight(); y += 32) {
-//            ImageIO.write(source2.getSubimage(0, y, 32, 32), "png", new File(String.format("%s%s.png", directory.get(), name)));
-//        }
-        int oneThird = source2.getWidth()/3;
-        int twoThird = oneThird + oneThird;
-        int w = twoThird - oneThird;
-
-        System.out.println(source2.getWidth());
-        System.out.println(source2.getHeight());
-//        System.out.println(source2.getMinX());
-//        System.out.println(source2.getMinY());
-//        System.out.println(source2.getMinTileX());
-//        System.out.println(source2.getMinTileY());
-
-
-        int x = -1 * source2.getWidth();
-        ImageIO.write(source2.getSubimage(0, source2.getHeight()/2, , source2.getHeight()/2),
-                "png", new File(String.format("%s%s.png", directory.get(), name)));
-        BufferedImage newImage = ImageIO.read(new File(String.format("%s%s.png", directory.get(), name)));
-        System.out.println(newImage.getWidth());
-        System.out.println(newImage.getHeight());
-        return newImage;
-    }
-
-
-    public void splitIntoSprits() throws IOException {
-        BufferedImage bigImg = ImageIO.read(new File("sheet.png"));
-        // The above line throws an checked IOException which must be caught.
-
-        final int width = 10;
-        final int height = 10;
-        final int rows = 5;
-        final int cols = 5;
-        BufferedImage[] sprites = new BufferedImage[rows * cols];
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < cols; j++)
-            {
-                sprites[(i * cols) + j] = bigImg.getSubimage(
-                        j * width,
-                        i * height,
-                        width,
-                        height
-                );
-            }
-        }
     }
 }
