@@ -86,7 +86,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         if (R.CONFIG.get("env").equalsIgnoreCase("PROD")) {
             detailsPage.clickDetailsTab();
         }
-//        detailsPage.swipeTillActorsElementPresent();
+        detailsPage.swipeTillActorsElementPresent();
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
@@ -152,7 +152,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia("Only Murders in the Building");
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        Assert.assertTrue(detailsPage.getNetworkAttributionImage().isPresent(), "Network attribution image was not found on Hulu series details page.");
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
+        } else {
+            Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
+        }
     }
 
     @Maintainer("csolmaz")

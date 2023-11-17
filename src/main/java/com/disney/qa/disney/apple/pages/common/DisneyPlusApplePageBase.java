@@ -144,7 +144,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label CONTAINS \"%s\"`]")
-    private ExtendedWebElement dynamicOtherFindByLabelContains;
+    protected ExtendedWebElement dynamicOtherFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicOtherFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")

@@ -148,7 +148,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement detailsTabTitle;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
-    private ExtendedWebElement networkAttributionImage;
+    private ExtendedWebElement handsetNetworkAttributionImage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
+    private ExtendedWebElement tabletNetworkAttributionImage;
 
     //FUNCTIONS
 
@@ -387,7 +390,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     //Series = Creator, Movies = Director
     public boolean isCreatorDirectorDisplayed() {
-        return suits.isPresent(5) || dynamicOtherFindByNameContains.format("Creator").isPresent(5);
+        return suits.isPresent(5) || dynamicOtherFindByLabelContains.format("Creator").isPresent(5);
     }
 
     public boolean areActorsDisplayed() {
@@ -687,8 +690,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstTitleLabel;
     }
 
-    public ExtendedWebElement getNetworkAttributionImage() {
-        return networkAttributionImage;
+    public ExtendedWebElement getHandsetNetworkAttributionImage() {
+        return handsetNetworkAttributionImage;
+    }
+
+    public ExtendedWebElement getTabletNetworkAttributionImage() {
+        return tabletNetworkAttributionImage;
     }
 
     public ExtendedWebElement getServiceAttribution() {
