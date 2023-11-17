@@ -711,10 +711,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return playIcon;
     }
 
-    public ExtendedWebElement getCompactEpisodeAdditionalContentView() {
-        return getTypeOtherByName("compactEpisodeAdditionalContentView");
-    }
-
     public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
 
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
