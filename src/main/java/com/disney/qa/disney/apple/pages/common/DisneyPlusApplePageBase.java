@@ -11,6 +11,7 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -1109,12 +1110,23 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void detectAppleUpdateAndClickUpdateLater() {
-        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent()) {
+        if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent(5)) {
             LOGGER.info("Dismissing Apple Update alert by clicking {}", UPDATE_LATER);
             moveDown(2,1);
             LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
+    }
+
+    public boolean isElementEnabled(ExtendedWebElement element) {
+        try {
+            String locator = element.getBy().toString();
+            DisneyPlusApplePageBase.fluentWait(getDriver(), DriverHelper.EXPLICIT_TIMEOUT, 1, String.format("Element [%s] is NOT enabled", locator))
+                    .until(it -> element.getElement().isEnabled());
+        } catch (NoSuchElementException ex) {
+            return false;
+        }
+        return true;
     }
 
     public ExtendedWebElement getUnavailableOkButton() {

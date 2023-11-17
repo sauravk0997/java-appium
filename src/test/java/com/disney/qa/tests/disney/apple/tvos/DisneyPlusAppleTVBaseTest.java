@@ -427,7 +427,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         pause(5);
         applePageBase.detectAppleUpdateAndClickUpdateLater();
-        applePageBase.dismissAppTrackingPopUp();
+        applePageBase.dismissAppTrackingPopUp(5);
     }
 
     public void setFlexWelcomeConfig() {

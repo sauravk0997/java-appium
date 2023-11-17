@@ -109,4 +109,40 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-14 profile");
         sa.assertAll();
     }
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74547"})
+    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifySearchDisplayRecentSearches() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        disneyAccountApi.get().editContentRatingProfileSetting(disneyAccount.get(), "MPAAAndTVPG", "TV-MA");
+        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+
+        searchPage.searchForMedia("Luca");
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
+        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase("Luca"), "Details page for luca didn't open");
+        homePage.getSearchNav().click();
+
+        searchPage.searchForMedia("The Simpsons");
+        searchPage.getDisplayedTitles().get(0).click();
+        pause(2);
+        homePage.getSearchNav().click();
+        searchPage.clearText();
+
+        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
+        sa.assertTrue(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
+        searchPage.tapRecentSearchClearButton();
+        sa.assertFalse(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
+        sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
+        sa.assertAll();
+    }
 }
