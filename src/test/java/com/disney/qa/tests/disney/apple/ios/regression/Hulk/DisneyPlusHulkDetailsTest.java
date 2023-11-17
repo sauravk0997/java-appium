@@ -147,9 +147,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 //        setAppToHomeScreen(disneyAccount.get());
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
-//        homePage.clickSearchIcon();
-//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-//        searchPage.getDisplayedTitles().get(0).click();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
         huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
@@ -166,7 +163,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
@@ -175,9 +171,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         setAppToHulkHomeScreen(ADULT_PROFILE);
 
         homePage.isOpened();
-//        homePage.clickSearchIcon();
-//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-//        searchPage.getDisplayedTitles().get(0).click();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
         huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
@@ -191,15 +184,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyHulkExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
-//        homePage.clickSearchIcon();
-//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-//        searchPage.getDisplayedTitles().get(0).click();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
         huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
