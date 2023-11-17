@@ -111,7 +111,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-
         huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
 
@@ -148,9 +147,12 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 //        setAppToHomeScreen(disneyAccount.get());
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
+//        homePage.clickSearchIcon();
+//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+//        searchPage.getDisplayedTitles().get(0).click();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
             Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
@@ -167,14 +169,18 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
 //        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
 //        setAppToHomeScreen(disneyAccount.get());
         setAppToHulkHomeScreen(ADULT_PROFILE);
 
         homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
+//        homePage.clickSearchIcon();
+//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+//        searchPage.getDisplayedTitles().get(0).click();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
     }
@@ -187,12 +193,16 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
+//        homePage.clickSearchIcon();
+//        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+//        searchPage.getDisplayedTitles().get(0).click();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
 
