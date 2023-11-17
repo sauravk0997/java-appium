@@ -9,6 +9,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -43,13 +44,15 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
                     if (item == RESTARTSUBSCRIPTION_CTA || item == RESTARTSUBSCRIPTION_LOGOUT) {
                         return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, item.getText()).toUpperCase();
                     }
-                    return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText());
+                    return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, item.getText());
                 }).collect(Collectors.toList());
     }
 
     public ExtendedWebElement getLogoutHeader() {
-        return staticTextByLabel.format(getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOG_OUT_CONFIRMATION_TITLE.getText()));
+        String label = getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOG_OUT_CONFIRMATION_TITLE.getText());
+        String cellFormatLocator = "type == 'XCUIElementTypeAlert' and label == '%s'";
+        return findExtendedWebElement(AppiumBy.iOSNsPredicateString(String.format(cellFormatLocator, label)));
     }
 
     public boolean isLogoutPageOpen() {
