@@ -200,7 +200,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             detailsPage.swipeUp(1500);
         }
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
-        sa.assertTrue(detailsPage.getCompactEpisodeAdditionalContentView().isPresent(), "Extras tab title and description was not found.");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
+        sa.assertTrue(detailsPage.getFirstRunTimeLabel().isPresent(), "First extras runtime was not found");
 
         //temp commented out - player issues
 //        detailsPage.getPlayIcon().click();

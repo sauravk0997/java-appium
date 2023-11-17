@@ -153,6 +153,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
     private ExtendedWebElement tabletNetworkAttributionImage;
 
+    @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
+    private ExtendedWebElement firstDescriptionLabel;
+
+    @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
+    private ExtendedWebElement firstRunTimeLabel;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -709,4 +715,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getCompactEpisodeAdditionalContentView() {
         return getTypeOtherByName("compactEpisodeAdditionalContentView");
     }
+
+    public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
+
+    public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 }
