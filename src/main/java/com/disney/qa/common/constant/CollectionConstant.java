@@ -24,7 +24,10 @@ public class CollectionConstant {
         NEW_TO_DISNEY_QA,
         HULK_MOVIES_QA,
         HULK_SERIES_QA,
-        HULK_PLAYABLE_QA;
+        HULK_PLAYABLE_QA,
+        HULU_FEATURED,
+        HULU_NEWLY_ADDED,
+        HULU_ORIGINALS;
     }
 
     public static String getCollectionName(Collection collection) {
@@ -73,6 +76,12 @@ public class CollectionConstant {
                 return "c802e50f-1005-4ce3-a27a-626325142b48";
             case HULK_PLAYABLE_QA:
                 return "b79d78cf-192d-4e65-8720-6a54bbdbf280";
+            case HULU_FEATURED:
+                return "411d41c1-34bb-4307-98a7-7562c6a9259d";
+            case HULU_NEWLY_ADDED:
+                return "48d99856-a5e2-44ef-bd1f-a142d7d5b247";
+            case HULU_ORIGINALS:
+                return "1beca79d-5c75-4949-84d0-3e73fab3c23c";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
