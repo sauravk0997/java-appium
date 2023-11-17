@@ -149,7 +149,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia("Only Murders in the Building");
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
