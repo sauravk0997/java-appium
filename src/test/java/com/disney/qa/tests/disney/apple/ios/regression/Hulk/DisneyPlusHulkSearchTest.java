@@ -34,7 +34,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
         pause(5);
-        System.out.println(getDriver().getPageSource());
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.getDetailsTabTitle().contains("Naruto"), "Details page for 'Naruto' didn't open");
         sa.assertAll();
