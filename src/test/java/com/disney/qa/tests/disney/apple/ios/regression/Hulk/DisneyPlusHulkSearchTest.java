@@ -34,7 +34,9 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
         pause(5);
-        sa.assertTrue(detailsPage.getStaticTextByName("Naruto").isPresent(), "Details page for 'Naruto' didn't open");
+        System.out.println(getDriver().getPageSource());
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.getDetailsTabTitle().contains("Naruto"), "Details page for 'Naruto' didn't open");
         sa.assertAll();
 
     }
@@ -117,9 +119,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-        disneyAccountApi.get().editContentRatingProfileSetting(disneyAccount.get(), "MPAAAndTVPG", "TV-MA");
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+//        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+//        disneyAccountApi.get().editContentRatingProfileSetting(disneyAccount.get(), "MPAAAndTVPG", "TV-MA");
+//        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHulkHomeScreen(ADULT_PROFILE);
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -133,8 +136,11 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
         searchPage.searchForMedia("The Simpsons");
         searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
+        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase("The Simpsons"), "Details page for The Simpsons didn't open");
         pause(2);
         homePage.getSearchNav().click();
+        searchPage.isOpened();
         searchPage.clearText();
 
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");

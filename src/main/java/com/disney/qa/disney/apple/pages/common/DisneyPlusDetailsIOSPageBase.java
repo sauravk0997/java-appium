@@ -636,8 +636,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getDetailsTabTitle() {
-        String[] contentDesc = contentDescription.getText().split(" is");
-        return contentDesc[0];
+        return detailsTabTitle.getText();
     }
 
     public boolean isSeasonRatingPresent() {
