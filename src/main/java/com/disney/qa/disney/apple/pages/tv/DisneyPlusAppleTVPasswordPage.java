@@ -43,8 +43,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
 
-    ExtendedWebElement createNewPasswordField = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText()));
-
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);
     }
@@ -210,7 +208,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void enterNewPassword(String text) {
-        createNewPasswordField.type(text);
+        getDynamicAccessibilityId(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText()))
+                .type(text);
     }
 
     /**
