@@ -957,7 +957,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent()) {
+        if (globalNavBarView.isElementPresent(DELAY)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
@@ -1130,7 +1130,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             String locator = element.getBy().toString();
             DisneyPlusApplePageBase.fluentWait(getDriver(), DriverHelper.EXPLICIT_TIMEOUT, 1, String.format("Element [%s] is NOT enabled", locator))
                     .until(it -> element.getElement().isEnabled());
-        } catch (NoSuchElementException ex) {
+        } catch (TimeoutException ex) {
             return false;
         }
         return true;
