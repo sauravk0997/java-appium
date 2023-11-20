@@ -30,7 +30,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(homePage.getUnavailableContentError().isPresent() ||  homePage.getUnavailableContentErrorPreview().isPresent(), "Unavailable content error not present.");
+        sa.assertTrue(homePage.getUnavailableContentError().isPresent(), "Unavailable content error not present.");
         sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
 
         homePage.getUnavailableOkButton().click();
@@ -53,7 +53,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(homePage.getUnavailableContentError().isPresent() || homePage.getUnavailableContentErrorPreview().isPresent(), "Unavailable content error not present.");
+        sa.assertTrue(homePage.getUnavailableContentError().isPresent(), "Unavailable content error not present.");
         sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
 
         homePage.getUnavailableOkButton().click();
@@ -81,9 +81,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 
-        if (R.CONFIG.get("env").equalsIgnoreCase("PROD")) {
-            detailsPage.clickDetailsTab();
-        }
+        detailsPage.clickDetailsTab();
         detailsPage.swipeTillActorsElementPresent();
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");

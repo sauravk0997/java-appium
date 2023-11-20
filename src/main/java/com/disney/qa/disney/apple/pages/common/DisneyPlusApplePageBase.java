@@ -1139,10 +1139,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeAlertByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
     }
 
-    public ExtendedWebElement getUnavailableContentErrorPreview() {
-        return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
-    }
-
     /**
      * Select random tile, scroll to specific collection, then selects random tile
      * @param collection gets collection name from enum Collection
