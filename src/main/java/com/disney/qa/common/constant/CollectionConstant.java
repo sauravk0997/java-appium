@@ -20,11 +20,6 @@ public class CollectionConstant {
         RECOMMENDED_FOR_YOU,
         SHORTS,
         TRENDING,
-        ANIMATED_MOVIES_QA,
-        NEW_TO_DISNEY_QA,
-        HULK_MOVIES_QA,
-        HULK_SERIES_QA,
-        HULK_PLAYABLE_QA,
         HULU_FEATURED_PREVIEW,
         HULU_NEWLY_ADDED_PREVIEW,
         HULU_ORIGINALS_PREVIEW,
@@ -71,16 +66,6 @@ public class CollectionConstant {
                 return "c082e3f6-4e7e-44f3-b6d8-aab7a8bf7367";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
-            case ANIMATED_MOVIES_QA:
-                return "43b6e7d1-ee42-4699-ac18-17c4658f5219";
-            case NEW_TO_DISNEY_QA:
-                return "76317bf0-3465-48d1-a7f5-80e37e3338b2";
-            case HULK_MOVIES_QA:
-                return "e57ab7d2-e60b-49fa-89bb-3d8f7ec066f7";
-            case HULK_SERIES_QA:
-                return "c802e50f-1005-4ce3-a27a-626325142b48";
-            case HULK_PLAYABLE_QA:
-                return "b79d78cf-192d-4e65-8720-6a54bbdbf280";
             case HULU_FEATURED_PREVIEW:
                 return "411d41c1-34bb-4307-98a7-7562c6a9259d";
             case HULU_NEWLY_ADDED_PREVIEW:
