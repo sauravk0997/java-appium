@@ -46,8 +46,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
-    public static final String ADULT_PROFILE = "ADULT";
-    public static final String TV_14_PROFILE = "TV-14";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String KIDS_DOB = "2018-01-01";
     public static final String PHONE = "Phone";
@@ -617,34 +615,4 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 //            }
 //        }
 //    }
-
-    public void setAppToHulkHomeScreen(String... profileName) {
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-//        handleAlert();
-//        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
-        if (welcomePage.isOpened()) {
-            welcomePage.clickLogInButton();
-            loginPage.submitEmail("hulk+automation+2@disneyplustesting.com");
-            passwordPage.submitPasswordForLogin("G0Disney!");
-            pause(5);
-            initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
-            if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
-                initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
-            }
-        } else if (!homePage.isOpened()) {
-            restart();
-            handleAlert();
-            //initialSetup();
-            welcomePage.clickLogInButton();
-            loginPage.submitEmail("hulk+automation+2@disneyplustesting.com");
-            passwordPage.submitPasswordForLogin("G0Disney!");
-        } else {
-            welcomePage.clickHomeIcon();
-        }
-        pause(3);
-    }
 }
