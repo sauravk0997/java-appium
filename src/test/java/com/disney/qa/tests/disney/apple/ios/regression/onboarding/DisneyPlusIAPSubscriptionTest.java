@@ -615,8 +615,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
-    @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void testPasswordPromptExpiresDOBOver18() {
+    @Test(description = "SUF – Password prompt when action grant expires", dataProvider = "disneyPlanTypes", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    public void testPasswordPromptExpiresDOBOver18(DisneyPlusPaywallIOSPageBase.PlanType planType) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -624,6 +624,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
         createDisneyAccountRequest
                 .setDateOfBirth(null)
@@ -649,6 +650,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         passwordPage.clickForgotPasswordLink();
         passwordPage.tapBackButton();
         passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        if(paywallIOSPageBase.getSelectButtonFor(planType).isPresent()){
+            paywallIOSPageBase.getSelectButtonFor(planType).click();
+            sa.assertTrue(paywallIOSPageBase.isOpened(), "paywall screen didn't load");
+        }
         sa.assertTrue(paywallPage.isOpened(),
                     "Paywall Page did not open.");
         sa.assertAll();
