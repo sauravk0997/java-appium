@@ -649,7 +649,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         passwordPage.clickForgotPasswordLink();
         passwordPage.tapBackButton();
         passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
-            sa.assertTrue(paywallPage.isOpened(),
+        sa.assertTrue(paywallPage.isOpened(),
                     "Paywall Page did not open.");
         sa.assertAll();
     }
