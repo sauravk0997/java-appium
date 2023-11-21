@@ -25,6 +25,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
@@ -33,7 +34,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
         pause(5);
-        sa.assertTrue(detailsPage.getStaticTextByName("Naruto").isPresent(), "Details page for 'Naruto' didn't open");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.getDetailsTabTitle().contains("Naruto"), "Details page for 'Naruto' didn't open");
         sa.assertAll();
 
     }
@@ -47,6 +49,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
@@ -67,6 +70,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         disneyAccountApi.get().editContentRatingProfileSetting(disneyAccount.get(), "MPAAAndTVPG", "TV-14");
         disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
         setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -129,8 +133,11 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
         searchPage.searchForMedia("The Simpsons");
         searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
+        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase("The Simpsons"), "Details page for The Simpsons didn't open");
         pause(2);
         homePage.getSearchNav().click();
+        searchPage.isOpened();
         searchPage.clearText();
 
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");

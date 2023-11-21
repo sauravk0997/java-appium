@@ -38,6 +38,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
 
+    @ExtendedFindBy(accessibilityId = "ff723d29-20d5-4303-9cce-4a9aac8e269e")
+    private ExtendedWebElement huluTile;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandNameCell;
 
@@ -127,11 +130,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHuluTileVisible(){
-        return dynamicCellByLabel.format("hulu").isPresent();
+        return huluTile.isPresent();
     }
 
     public void tapHuluBrandTile(){
-        dynamicCellByLabel.format("hulu").click();
+        huluTile.click();
     }
 
     public ExtendedWebElement getHomeContentView() { return homeContentView; }
