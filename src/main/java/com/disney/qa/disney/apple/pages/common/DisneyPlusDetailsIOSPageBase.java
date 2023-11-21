@@ -142,10 +142,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement progressBar;
 
     @ExtendedFindBy(accessibilityId = "playIcon")
-    private ExtendedWebElement extrasPlayIcon;
+    private ExtendedWebElement playIcon;
 
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement detailsTabTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
+    private ExtendedWebElement handsetNetworkAttributionImage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
+    private ExtendedWebElement tabletNetworkAttributionImage;
+
+    @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
+    private ExtendedWebElement firstDescriptionLabel;
+
+    @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
+    private ExtendedWebElement firstRunTimeLabel;
 
     //FUNCTIONS
 
@@ -383,11 +395,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     //Series = Creator, Movies = Director
     public boolean isCreatorDirectorDisplayed() {
-        return suits.isPresent();
+        return suits.isPresent(5) || dynamicOtherFindByLabelContains.format("Creator").isPresent(5);
     }
 
     public boolean areActorsDisplayed() {
-        return getActors().isPresent();
+        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format("Starring").isPresent(5);
     }
 
     public boolean isDurationDisplayed() {
@@ -581,13 +593,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         params.put(SUGGESTED_CELL_TITLE, getTabCells().get(0));
         clickFirstTabCell();
         isOpened();
-        if (R.CONFIG.get("env").equalsIgnoreCase("QA")) {
-            String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
-            clickDetailsTab();
-            sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
-        } else {
-            sa.assertTrue(params.get(SUGGESTED_CELL_TITLE).equalsIgnoreCase(getMediaTitle()), "Suggested title is not the same media title.");
-        }
+        String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
+        clickDetailsTab();
+        sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
         params.clear();
     }
 
@@ -628,8 +636,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getDetailsTabTitle() {
-        String[] contentDesc = contentDescription.getText().split(" is");
-        return contentDesc[0];
+        return detailsTabTitle.getText();
     }
 
     public boolean isSeasonRatingPresent() {
@@ -686,4 +693,24 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstTitleLabel() {
         return firstTitleLabel;
     }
+
+    public ExtendedWebElement getHandsetNetworkAttributionImage() {
+        return handsetNetworkAttributionImage;
+    }
+
+    public ExtendedWebElement getTabletNetworkAttributionImage() {
+        return tabletNetworkAttributionImage;
+    }
+
+    public ExtendedWebElement getServiceAttribution() {
+        return staticTextLabelContains.format("Included with your Hulu subscription");
+    }
+
+    public ExtendedWebElement getPlayIcon() {
+        return playIcon;
+    }
+
+    public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
+
+    public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 }

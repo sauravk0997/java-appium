@@ -2,19 +2,20 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -26,7 +27,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
         disneyAccountApi.get().addProfile(disneyAccount.get(), JUNIOR_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), BABY_YODA, true, true);
 
-        setAppToHomeScreen(disneyAccount.get(), JUNIOR_PROFILE);
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
@@ -35,7 +35,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.ANIMATED_MOVIES_QA, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES_PREVIEW, 3, homePage.getHomeContentView(), Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -48,8 +48,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-
         setAppToHomeScreen(disneyAccount.get());
+        homePage.isOpened();
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
@@ -59,7 +59,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
 
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_QA, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_PREVIEW, 3, homePage.getHomeContentView(), Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -73,18 +73,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-
         setAppToHomeScreen(disneyAccount.get());
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-        huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULK_MOVIES_QA, 3, null, Direction.UP);
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULK_MOVIES_QA, 1);
+        huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULU_ORIGINALS_PREVIEW, 3, null, Direction.UP);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_ORIGINALS_PREVIEW, 0);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 
-        if (R.CONFIG.get("env").equalsIgnoreCase("PROD")) {
-            detailsPage.clickDetailsTab();
-        }
+        detailsPage.clickDetailsTab();
         detailsPage.swipeTillActorsElementPresent();
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
@@ -109,8 +106,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULK_PLAYABLE_QA, 0);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PREVIEW, 1);
         detailsPage.isOpened();
 
         //validate details tab
@@ -132,5 +128,95 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.clickExtrasTab();
         sa.assertTrue(detailsPage.getFirstTitleLabel().getText().toLowerCase().contains("trailer"), "'Trailer' text not found in extras title.");
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74548"})
+    @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkNetworkAttribution() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
+        homePage.isOpened();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PREVIEW, 1);
+        detailsPage.isOpened();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
+        } else {
+            Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
+        }
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
+    @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkServiceAttribution() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
+
+        homePage.isOpened();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PREVIEW, 1);
+        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73898"})
+    @Test(description = "Hulk Details verify extras tab", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkExtrasTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
+
+        homePage.isOpened();
+        homePage.isHuluTileVisible();
+        homePage.tapHuluBrandTile();
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PREVIEW, 1);
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
+
+        detailsPage.clickExtrasTab();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
+        sa.assertTrue(detailsPage.getFirstRunTimeLabel().isPresent(), "First extras runtime was not found");
+
+        detailsPage.getPlayIcon().click();
+        videoPlayer.isOpened();
+        continuousPlay(2);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        detailsPage.clickSuggestedTab();
+        detailsPage.clickExtrasTab();
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
+        sa.assertAll();
+    }
+
+    private void continuousPlay(int count) {
+        while (count>=0) {
+            DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+            pause(15);
+            videoPlayer.clickPauseButton();
+            pause(2);
+            videoPlayer.clickPlayButton();
+            count--;
+        }
     }
 }
