@@ -662,7 +662,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74950"})
     @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void testPasswordPromptAfterActionGrantExpiresChildDOB() {
+    public void testPasswordPromptAfterActionGrantExpiresU18DOB() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
