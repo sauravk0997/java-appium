@@ -86,7 +86,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @Override
     public boolean isKidsHomePageOpen() {
-        return getDynamicCellByLabel("Mickey and Friends").isElementPresent();
+        return getDynamicCellByLabel("Disney Junior").isElementPresent();
     }
 
     public void clickHomeBtn() {
