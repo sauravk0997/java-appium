@@ -31,7 +31,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
                 "Sign up button is not focused post app launch");
 
-        // Alice cannot detect this text in the screen
+        // Alice cannot detect this text in the screen: https://jira.disneystreaming.com/browse/QCE-2472
         // aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "SIGN UP NOW", AliceLabels.BUTTON_HOVERED.getText());
 
         disneyPlusAppleTVWelcomeScreenPage.clickDown();
