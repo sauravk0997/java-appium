@@ -64,6 +64,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isMainTextDisplayed() {
+        LOGGER.info(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText()));
         return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
