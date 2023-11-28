@@ -40,6 +40,8 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    public ExtendedWebElement getDateOfBirthHeader(){ return dateOfBirthHeader; }
+
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
