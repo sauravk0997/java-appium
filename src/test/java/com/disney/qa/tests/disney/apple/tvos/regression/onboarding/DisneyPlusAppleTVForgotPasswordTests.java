@@ -519,7 +519,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVForgotPasswordPage.moveDown(1, 1);
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueBtnOnCreatePasswordPresent(), "Continue button was not focused after moving down from create new password field");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueButtonFocused(), "Continue button was not focused after moving down from create new password field");
         sa.assertAll();
     }
 
