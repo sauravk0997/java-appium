@@ -312,6 +312,9 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         startTime = emailApi.getStartTime();
         disneyPlusAppleTVForgotPasswordPage.clickResend();
         sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getActionableAlertTitle(), disneyPlusAppleTVForgotPasswordPage.getCheckYourEmailScreenTitle());
+
+        // Wait added to discard the error to get the old code
+        pause(15);
         String otpTwo = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
         //select ok on resend OTP email screen
         disneyPlusAppleTVForgotPasswordPage.clickSelect();
@@ -516,7 +519,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVForgotPasswordPage.moveDown(1, 1);
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueBtnOnCreatePasswordPresent(), "Continue button was not focused after moving down from create new password field");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueButtonFocused(), "Continue button was not focused after moving down from create new password field");
         sa.assertAll();
     }
 

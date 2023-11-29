@@ -171,6 +171,11 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         return isPresent;
     }
 
+    public boolean isContinueButtonFocused() {
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        return isFocused(primaryButton);
+    }
+
     public void clickForgotPasswordBtn() {
         forgotPasswordBtn.click();
     }
