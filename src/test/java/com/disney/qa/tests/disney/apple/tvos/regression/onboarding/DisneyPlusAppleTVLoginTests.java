@@ -478,9 +478,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(entitledUser);
 
-        //TODO: Temp fix in place. After QCE-1333 is fixed, replace below lines with original Alice validation (QAA-11371).
-        sa.assertTrue(applePageBase.doesAttributeEqualTrue(applePageBase.getStaticTextByLabelContains("Validating"), "enabled"));
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
+        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "Validating", AliceLabels.TITLE.getText())
+                .isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
 
         sa.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
