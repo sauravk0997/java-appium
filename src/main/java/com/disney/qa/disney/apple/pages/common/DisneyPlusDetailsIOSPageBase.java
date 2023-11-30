@@ -713,4 +713,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
 
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
+
+    public void isNetworkAttributionPresent(SoftAssert sa, String network) {
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            sa.assertTrue(getHandsetNetworkAttributionImage().isPresent(), "Handset " + network + " Network attribution image was not found on series details page");
+        } else {
+            sa.assertTrue(getTabletNetworkAttributionImage().isPresent(), "Tablet " + network + " Network attribution image was not found on series details page");
+        }
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+    }
 }

@@ -18,6 +18,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -27,6 +28,7 @@ import org.testng.asserts.SoftAssert;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -111,7 +113,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
-    protected ExtendedWebElement saveBtn ;
+    protected ExtendedWebElement saveBtn;
     @ExtendedFindBy(accessibilityId = "dismissButton")
     protected ExtendedWebElement dismissBtn;
     @ExtendedFindBy(accessibilityId = "homeTab")
@@ -282,6 +284,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public String getStepTitleText() {
         return stepTitle.getText();
     }
+
     public void tapBackButton() {
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Back button is not present").until(it -> backButton.isElementPresent(ONE_SEC_TIMEOUT));
         backButton.click();
@@ -362,9 +365,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getTypeButtonContainsLabel(String label) {
         return dynamicBtnFindByLabelContains.format(label);
     }
+
     public ExtendedWebElement getTypeOtherContainsLabel(String label) {
         return dynamicOtherFindByLabelContains.format(label);
     }
+
     public ExtendedWebElement getTypeOtherContainsName(String name) {
         return dynamicOtherFindByNameContains.format(name);
     }
@@ -381,7 +386,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return staticCellByLabel.format(label);
     }
 
-    public  ExtendedWebElement getStaticTextLabelName(String name) {
+    public ExtendedWebElement getStaticTextLabelName(String name) {
         return staticTextLabelName.format(name);
     }
 
@@ -536,7 +541,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickOpenButton() {
-        ExtendedWebElement openButton =  dynamicBtnFindByLabel.format("Open");
+        ExtendedWebElement openButton = dynamicBtnFindByLabel.format("Open");
         openButton.isElementPresent(10);
         openButton.click();
     }
@@ -550,7 +555,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     /**
      * @param startNum Specify beginning range number
-     * @param endNum Specify ending range number
+     * @param endNum   Specify ending range number
      * @return - Returns how many cells per row
      */
     public boolean isContentShownCertainNumberPerRow(int startNum, int endNum) {
@@ -689,7 +694,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void moveToLocalizedKeyboard() {
         ExtendedWebElement keyboardContinueLocalized = getDynamicAccessibilityId(disneyLanguageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KEYBOARD_CONTINUE.getText()).toLowerCase());
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE,"Email_Input_Screen");
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeOtherElements.getBy());
         if (keyboardContinueLocalized.isPresent()) {
             IntStream.range(0, listOfOtherElements.size()).forEach(i ->
@@ -785,7 +790,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public String getSystemAlertText(){
+    public String getSystemAlertText() {
         return typeSystemAlerts.getText();
     }
 
@@ -848,7 +853,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         typeButtons.click();
     }
 
-    public void clickMoreTab() { moreTab.click(); }
+    public void clickMoreTab() {
+        moreTab.click();
+    }
 
     public By getTypeButtonBy() {
         return typeButtons.getBy();
@@ -895,9 +902,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         trackingPopUp.clickIfPresent(timeout);
     }
 
-    public boolean isThumbnailViewPresent() { return thumbnailView.isPresent(); }
+    public boolean isThumbnailViewPresent() {
+        return thumbnailView.isPresent();
+    }
 
-    public void clickThumbnailView() { thumbnailView.click(); }
+    public void clickThumbnailView() {
+        thumbnailView.click();
+    }
 
     public enum FooterTabs {
         HOME("homeTab"),
@@ -921,13 +932,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (R.CONFIG.get(DEVICE_TYPE).equals("Phone")) {
             LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
             pause(1);
-            tapAtCoordinateNoOfTimes((int)(size.width * 0.2), (int)(size.height * 0.04), 1);
+            tapAtCoordinateNoOfTimes((int) (size.width * 0.2), (int) (size.height * 0.04), 1);
         } else {
-            tapAtCoordinateNoOfTimes((int)(size.width * 0.04), (int)(size.height * 0.01), 1);
+            tapAtCoordinateNoOfTimes((int) (size.width * 0.04), (int) (size.height * 0.01), 1);
         }
     }
 
-    public boolean  verifyTextOnWebView(String text) {
+    public boolean verifyTextOnWebView(String text) {
         return staticTextLabelContains.format(text).isPresent(SHORT_TIMEOUT);
     }
 
@@ -971,29 +982,29 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     /**
-     *
-     * @param min session to be kept alive for these many minutes
+     * @param min     session to be kept alive for these many minutes
      * @param element check on this element to make sure session is alive
-     *
      */
     public void keepSessionAlive(int min, ExtendedWebElement element) {
         LOGGER.info("pausing session for {} mins", min);
         int pauseInterval = 15;
-        int upperbound = min * 60/ pauseInterval ;
+        int upperbound = min * 60 / pauseInterval;
         AtomicInteger count = new AtomicInteger(0);
         IntStream.range(0, upperbound).forEach(i -> {
             pause(pauseInterval);
             count.addAndGet(pauseInterval);
             Assert.assertTrue(element.isPresent(),
                     String.format("Element was not present after %d seconds elapsed.", count.get()));
-        } );
+        });
     }
 
     public ExtendedWebElement getAiringBadgeLabel() {
         return airingBadgeLabel;
     }
 
-    public ExtendedWebElement getProgressBar() { return progressBar; }
+    public ExtendedWebElement getProgressBar() {
+        return progressBar;
+    }
 
     public void validateLiveProgress(SoftAssert sa) {
         if (getStaticTextByLabelContains("Started").isPresent()) {
@@ -1095,7 +1106,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickItemWhileMovingDown(ExtendedWebElement element) {
-        fluentWait(getDriver(), 300L, 0, "Unable to find Config ").until(it-> {
+        fluentWait(getDriver(), 300L, 0, "Unable to find Config ").until(it -> {
             if (element.isVisible(1L)) {
                 return true;
             } else {
@@ -1114,7 +1125,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void detectAppleUpdateAndClickUpdateLater() {
         if (staticTextLabelContains.format(UPDATE_AVAILABLE).isPresent(5)) {
             LOGGER.info("Dismissing Apple Update alert by clicking {}", UPDATE_LATER);
-            moveDown(2,1);
+            moveDown(2, 1);
             LOGGER.info("Is {} focused? {}", UPDATE_LATER, isFocused(dynamicBtnFindByLabelContains.format(UPDATE_LATER)));
             clickSelect();
         }
@@ -1141,26 +1152,28 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     /**
      * Select random tile, scroll to specific collection, then selects random tile
+     *
      * @param collection gets collection name from enum Collection
-     * @param count swipe collection for number of times
-     * @param direction Up or Down homeContentView
+     * @param count      swipe collection for number of times
+     * @param direction  Up or Down homeContentView
      */
     public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         swipeTillCollectionPresent(collection, count, container, direction);
         getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 0)).click();
     }
 
-    public List<ExtendedWebElement> getAllCollectionCells (CollectionConstant.Collection  collection) {
+    public List<ExtendedWebElement> getAllCollectionCells(CollectionConstant.Collection collection) {
         return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
     }
 
 
     /**
      * Navigate to collection and clicks a tile in collection.
+     *
      * @param collection gets collection name from enum Collection
-     * @param count number of times to swipe
-     * @param container container view - input 'null' if desire to be left empty.
-     * @param direction Up or Down
+     * @param count      number of times to swipe
+     * @param container  container view - input 'null' if desire to be left empty.
+     * @param direction  Up or Down
      */
     public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
@@ -1172,10 +1185,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     /**
      * Navigate to collection and clicks a tile in collection.
      * @param collection gets collection name from enum Collection
-     * @param num select a tile starting with 0. Typically only first 3 are visible on handset, or first 4-5 on tablet.
+     * @param num        select a tile starting with 0. Typically only first 3 are visible on handset, or first 4-5 on tablet.
      */
     public void clickCollectionTile(CollectionConstant.Collection collection, int num) {
-        List<ExtendedWebElement> tiles =  findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
+        List<ExtendedWebElement> tiles = findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
         clickElementAtLocation(tiles.get(num), 50, 50);
     }
 

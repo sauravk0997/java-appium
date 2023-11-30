@@ -14,7 +14,6 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
-    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
 
 
     @Maintainer("csolmaz")
@@ -206,6 +205,65 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.clickSuggestedTab();
         detailsPage.clickExtrasTab();
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863"})
+    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkSeriesAndMovieNetworkAttribution() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+//        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+//        setAppToHomeScreen(disneyAccount.get());
+        setAppToHulkHomeScreen(ADULT_PROFILE);
+        homePage.isOpened();
+        homePage.clickSearchIcon();
+
+        //Series
+        searchPage.searchForMedia("Abbott Elementary");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.isNetworkAttributionPresent(sa, "ABC");
+
+        homePage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia("Only Murders in the Building");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        System.out.println(detailsPage.getHandsetNetworkAttributionImage().isPresent());
+        detailsPage.isNetworkAttributionPresent(sa, "Hulu");
+
+        homePage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia("Cruel Summer");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.isNetworkAttributionPresent(sa, "Freeform");
+
+        //Movies
+        homePage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia("Mickey Saves Christmas");
+        searchPage.getDisplayedTitles().get(1).click();
+        detailsPage.isOpened();
+        detailsPage.isNetworkAttributionPresent(sa, "ABC");
+
+        homePage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia("Prey");
+        searchPage.getDisplayedTitles().get(1).click();
+        detailsPage.isOpened();
+        detailsPage.isNetworkAttributionPresent(sa, "Hulu");
+
+        homePage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia("Private Property");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.isNetworkAttributionPresent(sa, "Lionsgate");
         sa.assertAll();
     }
 
