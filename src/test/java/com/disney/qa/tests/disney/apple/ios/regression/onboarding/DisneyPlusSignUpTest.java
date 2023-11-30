@@ -53,7 +53,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "'Subscriber Agreement' hyperlink was not displayed as expected");
 
         sa.assertEquals(disneyPlusApplePageBase.getPrimaryButtonText().toLowerCase(),
-                languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, AGREE_AND_CONTINUE_BTN.getText()).toLowerCase());
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, AGREE_AND_CONTINUE_BTN.getText()).toLowerCase());
 
         sa.assertAll();
     }
@@ -70,7 +70,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         welcomePage.clickSignUpButton();
 
         disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
-        String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
+        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
 
         sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
                 "XMOBQA-62229 - Submitting no email did not produce an invalid email error");
@@ -116,7 +116,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(disneyAccount.get().getEmail());
+        disneyPlusSignUpIOSPageBase.submitEmailAddress(getAccount().getEmail());
 
         Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(),
                 "User was not directed to Password Entry as expected");
@@ -376,7 +376,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62054"})
     @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyInvalidEmailError() {
-        String invalidEmailError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
+        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
@@ -392,13 +392,13 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         //TODO: IOS-6072 & IOS-6073: alternative validation above
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
-        languageUtils.get().getLegalHeaders().forEach(header ->
+        getLocalizationUtils().getLegalHeaders().forEach(header ->
                 sa.assertTrue(disneyPlusLegalIOSPageBase.getTypeButtonByLabel(header).isElementPresent(),
                         String.format("XMOBQA-62385 - Header '%s' was not displayed for the given locale '%s'", header, locale)));
 
         String expandedHeader = "";
-        for (String headerToExpand : languageUtils.get().getLegalHeaders()) {
-            for (String header : languageUtils.get().getLegalHeaders()) {
+        for (String headerToExpand : getLocalizationUtils().getLegalHeaders()) {
+            for (String header : getLocalizationUtils().getLegalHeaders()) {
                 if (disneyPlusLegalIOSPageBase.getTypeButtonByLabel(header).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED)) {
                     expandedHeader = header;
                 }

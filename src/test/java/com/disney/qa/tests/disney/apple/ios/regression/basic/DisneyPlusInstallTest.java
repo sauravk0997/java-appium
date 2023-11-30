@@ -36,13 +36,13 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
         downloadApp(oldAppVersion.get());
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
@@ -125,13 +125,13 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
         downloadApp(oldAppVersion.get());
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
@@ -198,14 +198,14 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
         oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
 
         //install old app
         removeApp(buildType.getDisneyBundle());
         downloadApp(oldAppVersion.get());
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);

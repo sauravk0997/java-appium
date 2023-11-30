@@ -14,7 +14,7 @@
     <parameter name="stringParam::contentType::Content type (for example: programId)" value=""/>
     <parameter name="stringParam::contentId::Content ID" value=""/>
     <parameter name="overrideFields"
-               value="custom_string=${contentType},custom_string2=${contentId},browserup_proxy=true,init_retry_count=2,init_retry_interval=15"/>
+               value="custom_string=${contentType},custom_string2=${contentId},init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="Disney Plus tvOS Playback Capture" parallel="methods">
         <classes>

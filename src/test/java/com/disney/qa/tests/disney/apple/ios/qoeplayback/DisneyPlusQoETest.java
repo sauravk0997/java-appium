@@ -277,7 +277,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
         subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
         disneyPlusWelcomeIOSPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyAccount account = disneyAccount.get();
+        DisneyAccount account = getAccount();
         addHoraValidationSku(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPage.isOpened(), "Welcome screen did not launch");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);

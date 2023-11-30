@@ -12,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
     public void onboard() {
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62612"})

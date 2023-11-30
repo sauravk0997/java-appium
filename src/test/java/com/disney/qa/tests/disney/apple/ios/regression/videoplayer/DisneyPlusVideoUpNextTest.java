@@ -42,7 +42,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     public void verifyUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
         sa.assertAll();
@@ -58,11 +58,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         //Login
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Turn off autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(disneyAccount.get().getFirstName(), "OFF");
+        editProfile.toggleAutoplay(getAccount().getFirstName(), "OFF");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         //Search and forward the content
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
@@ -83,7 +83,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         disneyPlusUpNextIOSPageBase.tapSeeAllEpisodesButton();
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),"Tapping on 'See all episodes' didn't take to details page");
@@ -100,11 +100,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Turn ON autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(disneyAccount.get().getFirstName(), "ON");
+        editProfile.toggleAutoplay(getAccount().getFirstName(), "ON");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         //Bring up upnext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
@@ -129,7 +129,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Search for a series having 'Extras'
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -162,12 +162,12 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Turn ON autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfile.isOpened();
-        editProfile.toggleAutoplay(disneyAccount.get().getFirstName(), autoplayState);
+        editProfile.toggleAutoplay(getAccount().getFirstName(), autoplayState);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         //Bring up upNext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
@@ -192,11 +192,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Turn ON autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(disneyAccount.get().getFirstName(), "OFF");
+        editProfile.toggleAutoplay(getAccount().getFirstName(), "OFF");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         //Forward the content
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);

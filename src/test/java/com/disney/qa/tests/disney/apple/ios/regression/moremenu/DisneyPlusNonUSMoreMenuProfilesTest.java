@@ -40,7 +40,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase1 = new DisneyPlusAccountIOSPageBase(getDriver());
         sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
@@ -53,7 +53,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon clicking 'Add Profile'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         disneyPlusEditProfileIOSPageBase.clickSkipBtn();
         disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
@@ -69,7 +69,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     private void setAppToAccountSettings() {
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }

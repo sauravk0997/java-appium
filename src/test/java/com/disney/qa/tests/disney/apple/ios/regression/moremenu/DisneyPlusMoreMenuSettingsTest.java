@@ -30,7 +30,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(),TEST_USER,ADULT_DOB,disneyAccount.get().getProfileLang(),DARTH_MAUL,false,true);
+        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
         onboard(TEST_USER);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -50,8 +50,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "User taps on Profile Switcher", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfileSwitcher() {
         List<String> profiles = Arrays.asList("Profile 2", "Profile 3", "Profile 4", "Profile 5", "Profile 6");
-        profiles.forEach(profile -> disneyAccountApi.get().addProfile(disneyAccount.get(), profile, disneyAccount.get().getProfileLang(), "5", false));
-        onboard(disneyAccount.get().getFirstName());
+        profiles.forEach(profile -> getAccountApi().addProfile(getAccount(), profile, getAccount().getProfileLang(), "5", false));
+        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         disneyPlusMoreMenuIOSPageBase.swipeCells("Profile 3", 12, Direction.LEFT);
 
@@ -63,7 +63,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "User taps on Edit Profiles", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
-        onboard(disneyAccount.get().getFirstName());
+        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
@@ -88,7 +88,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61659"})
     @Test(description = "User taps on Watchlist", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyWatchlist() {
-        onboard(disneyAccount.get().getFirstName());
+        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
 
@@ -105,7 +105,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61661"})
     @Test(description = "User Taps on App Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAppSettings() {
-        onboard(disneyAccount.get().getFirstName());
+        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
 
@@ -125,8 +125,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getFirstName());
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
+        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
         SoftAssert sa = new SoftAssert();
         moreMenu.clickMoreTab();
         //Scenario: Verify Help hyperlink
@@ -137,7 +137,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenu.isOpened(), "User was not returned to the More Menu after navigating back from safari");
         //Scenario: Verify Info hyperlink
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.clickEditModeProfile(getAccount().getFirstName());
         editProfilePage.selectInfoHyperlink();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
         sa.assertTrue(editProfilePage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"User was not navigated to Disney plus help center");
@@ -156,7 +156,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61665"})
     @Test(description = "User taps on Log Out", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyLogOut() {
-        onboard(disneyAccount.get().getFirstName());
+        onboard(getAccount().getFirstName());
         initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
 
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -167,7 +167,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61667"})
     @Test(description = "More Menu View - App Version Number", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAppVersionNumber() {
-        onboard(disneyAccount.get().getFirstName());
+        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
@@ -181,7 +181,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: Simplified Kids More Menu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySimplifiedKidsMoreMenu() {
         SoftAssert softAssert = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(),KIDS_PROFILE,KIDS_DOB,disneyAccount.get().getProfileLang(),DARTH_MAUL,true,true);
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),DARTH_MAUL,true,true);
         onboard(KIDS_PROFILE);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -207,7 +207,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     private void onboard(String profile) {
-        setAppToHomeScreen(disneyAccount.get(), profile);
+        setAppToHomeScreen(getAccount(), profile);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 }

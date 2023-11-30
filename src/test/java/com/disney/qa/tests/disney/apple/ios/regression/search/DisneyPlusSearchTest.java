@@ -20,7 +20,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "search_button_selected");

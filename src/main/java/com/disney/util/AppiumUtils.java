@@ -1,5 +1,6 @@
 package com.disney.util;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +16,14 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 import io.appium.java_client.AppiumBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by bogdan.zayats on 01/10/18.
  */
 public class AppiumUtils extends DisneyAbstractPage implements IMobileUtils {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final int MAX_SEARCH_SWIPES = 55;
     private static final long TIMEOUT = 300;
 

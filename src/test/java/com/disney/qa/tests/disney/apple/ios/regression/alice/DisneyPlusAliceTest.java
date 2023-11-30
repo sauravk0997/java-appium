@@ -50,7 +50,7 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         baseDirectory.set("Screenshots/");
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         homePage.isOpened();
         homePage.clickSearchIcon();

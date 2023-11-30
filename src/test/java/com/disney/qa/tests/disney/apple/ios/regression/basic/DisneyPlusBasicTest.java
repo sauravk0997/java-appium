@@ -40,7 +40,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     public void testLoginWithEntitledAccount() {
         SoftAssert softAssert = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
                 "Expected: Home Screen should be opened");
@@ -54,7 +54,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.HOME),
                 "Expected: Home button should be present in nav bar");
@@ -71,7 +71,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @Test(description = "Verify Search", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testSearch() {
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.SEARCH),
                 "Expected: Search button should be present in nav bar");
@@ -88,7 +88,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @Test(description = "Verify Downloads", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testDownloads() {
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS),
                 "Expected: Downloads button should be present in nav bar");
@@ -105,7 +105,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @Test(description = "Verify More Menu", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testMoreMenu() {
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.MORE_MENU),
                 "Expected: More button should be present in nav bar");
@@ -128,7 +128,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     public void testEditProfile() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -147,11 +147,11 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
 
         pause(3);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(softAssert, disneyAccount.get().getFirstName(), "round_tile", "round_tile_hovered");
+            aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(softAssert, getAccount().getFirstName(), "round_tile", "round_tile_hovered");
 
             aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(softAssert, "Add Profile", "round_tile", "round_tile_hovered");
         } else {
-            softAssert.assertTrue(disneyAccount.get().getFirstName().contains("Test"),
+            softAssert.assertTrue(getAccount().getFirstName().contains("Test"),
                     "Expected - First user name should be present in Edit Profile page");
             softAssert.assertTrue(moreMenu.isAddProfileButtonPresent(),
                     "Expected - Add profile button should be present in Edit Profile page");
@@ -165,12 +165,12 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62705"})
     @Test(description = "Verify Changing Profiles", groups = {"Smoke", TestGroup.PRE_CONFIGURATION})
     public void testChangingProfiles() {
-        disneyAccountApi.get().addProfile(disneyAccount.get(), TEST_USER, ADULT_DOB, disneyAccount.get().getProfileLang(), null, false, true);
+        getAccountApi().addProfile(getAccount(), TEST_USER, ADULT_DOB, getAccount().getProfileLang(), null, false, true);
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get(), TEST_USER);
+        setAppToHomeScreen(getAccount(), TEST_USER);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        whoseWatchingPage.clickProfile(disneyAccount.get().getFirstName());
+        whoseWatchingPage.clickProfile(getAccount().getFirstName());
 
         softAssert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
                 "Expected - Home page should be opened after selecting non-active profile");
@@ -185,7 +185,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         initPage(DisneyPlusHomeIOSPageBase.class).getSearchNav().click();
         disneyPlusSearchIOSPageBase.searchForMedia("Wall-E");
 

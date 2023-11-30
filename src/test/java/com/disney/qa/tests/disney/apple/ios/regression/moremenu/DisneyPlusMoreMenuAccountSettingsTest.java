@@ -70,7 +70,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     public void setAppToAccountSettings() {
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
@@ -82,23 +82,23 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
         pause(3);
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(disneyAccount.get().getEmail()).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(disneyAccount.get().getEmail())
-                        && disneyPlusAccountIOSPageBase.isChangeLinkActive(disneyAccount.get().getEmail()),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getAccount().getEmail())
+                        && disneyPlusAccountIOSPageBase.isChangeLinkActive(getAccount().getEmail()),
                 "Change Email link was not displayed and enabled");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
                 "User Password (hidden) was not displayed");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())),
                 "Change Password link was not displayed");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(),
                 "Billing Details (Subscriptions) header not displayed");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(),
                 "Settings header not displayed");
 
         sa.assertTrue(disneyPlusAccountIOSPageBase.isRestrictProfilesContainerPresent(),
@@ -137,7 +137,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyBundle() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         setAppToAccountSettings();
@@ -161,7 +161,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_HuluBundle() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         setAppToAccountSettings();
@@ -181,7 +181,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_GooglePlay() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -202,7 +202,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Roku() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -223,7 +223,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Amazon() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -244,7 +244,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Verizon() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -265,7 +265,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_O2() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         setAppToAccountSettings();
@@ -288,7 +288,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_TelecomTIM() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -309,7 +309,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Movistar() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -330,7 +330,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DeutscheTelekom() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -351,7 +351,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Sky() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -372,7 +372,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Telmex() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         setAppToAccountSettings();
@@ -394,7 +394,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Bradesco() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -415,7 +415,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_BradescoNext() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -436,7 +436,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_TelefonicaVivo() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -460,7 +460,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_MercadoLibre() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -481,7 +481,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499", "XMOBQA-61569"})
     @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_Cablevision() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -503,7 +503,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         SoftAssert sa = new SoftAssert();
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         sa.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreMonthlySubscriptionTitlePresent(),
@@ -533,8 +533,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 .userPass("Mandalorian11!")
                 .profiles(List.of(profile))
                 .build();
-        disneyAccountApi.get().entitleAccount(externalAccount, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), "V1");
-        disneyAccount.set(externalAccount);
+        getAccountApi().entitleAccount(externalAccount, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), "V1");
+        setAccount(externalAccount);
 
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -542,8 +542,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
-        if (homePage.getStaticTextByLabelContains(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText())).isPresent()) {
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        if (homePage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText())).isPresent()) {
             sa.assertTrue(oneTrustPage.isOpened(), "One trust page did not open.");
             oneTrustPage.tapCloseButton();
         }
@@ -560,10 +560,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerifyAccountLinkPresent(),
                 "XMOBQA-62566 - Verify Account link was not present");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(disneyAccount.get().getEmail()),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getAccount().getEmail()),
                 "XMOBQA-62570 - Change Email link was not displayed");
 
-        sa.assertFalse(disneyPlusAccountIOSPageBase.isChangeLinkActive(disneyAccount.get().getEmail()),
+        sa.assertFalse(disneyPlusAccountIOSPageBase.isChangeLinkActive(getAccount().getEmail()),
                 "XMOBQA-62570 - Change Email link was not disabled");
 
         disneyPlusAccountIOSPageBase.clickVerifyAccountLink();
@@ -580,14 +580,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "XMOBQA-61559 - OTP entry page was not opened");
@@ -641,11 +641,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         emailApi.set(new EmailApi());
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         Date startTime = emailApi.get().getStartTime();
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
 
@@ -662,11 +662,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
         emailApi.set(new EmailApi());
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         Date startTime = emailApi.get().getStartTime();
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         changePasswordPage.clickLogoutAllDevices();
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
@@ -684,10 +684,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
-        disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
                 "XMOBQA-61553 - OTP entry page was not opened");
@@ -702,7 +702,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isHeadlineSubtitlePresent(),
                 "XMOBQA-61551 - 'Change Email' subtitle was not displayed");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isCurrentEmailShown(disneyAccount.get().getEmail()),
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isCurrentEmailShown(getAccount().getEmail()),
                 "XMOBQA-61551 - 'Change Email' display of user email was not shown");
 
         sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isNewEmailHeaderPresent(),
@@ -741,10 +741,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
-        disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
 
@@ -768,10 +768,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         emailApi.set(new EmailApi());
         Date startTime = emailApi.get().getStartTime();
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
-        disneyPlusAccountIOSPageBase.clickChangeLink(disneyAccount.get().getEmail());
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isOpened(),
@@ -781,14 +781,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         disneyPlusChangeEmailIOSPageBase.clickLogoutAllDevices();
         String newEmail = generateGmailAccount();
-        disneyAccount.get().setEmail(newEmail);
+        getAccount().setEmail(newEmail);
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
 
         Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new email");
 
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         Assert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(),
                 "User was not able to log in successfully with the new email");
@@ -835,14 +835,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicePage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         accountPage.clickLogOutOfAllDevices();
         logOutOfDevicePage.clickForgotPasswordLink();
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP Page was not opened");
 
-        String otp = emailApi.get().getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
@@ -867,7 +867,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusAccountIOSPageBase.isSingleSubHeaderPresent(),
                 "Single Subscription header text was not displayed");
 
-        disneyAccountApi.get().entitleAccount(disneyAccount.get(), DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, SUBSCRIPTION_V1);
+        getAccountApi().entitleAccount(getAccount(), DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, SUBSCRIPTION_V1);
         logout();
         setAppToAccountSettings();
 
@@ -880,7 +880,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
     @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -891,7 +891,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
     @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Roku() {
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -903,10 +903,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_VerizonStandalone(String planType) {
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
-        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
+        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
+        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
         performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL, planName, sa);
         sa.assertAll();
@@ -916,10 +916,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_Canal(String planType) {
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
-            List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
-            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlement).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
-            disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
+            List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
+            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlement).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+            setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
             DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
             performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL, planName, sa);
             sa.assertAll();
@@ -929,10 +929,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_O2(String planType) {
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
-            List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
-            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
-            disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
+            List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
+            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+            setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
         performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL, planName, sa);
         sa.assertAll();
@@ -942,10 +942,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify Direct Paused Billing display and navigation", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
     public void verifyPausedSubscription_TelMex(String planType) {
         SoftAssert sa = new SoftAssert();
-        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), planType), SUBSCRIPTION_V1);
-        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
+        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
+        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
         performPausedEntitlementCheck(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, TELMEX_URL, planName, sa);
         sa.assertAll();
@@ -958,10 +958,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
-                new DisneyEntitlement(disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY), SUBSCRIPTION_V1),
-                new DisneyEntitlement(disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+                new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY), SUBSCRIPTION_V1),
+                new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
+        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         disneyPlusAccountIOSPageBase.keepSessionAlive(1, welcomePage.getSignupButton());
         setAppToAccountSettings();
 
@@ -971,7 +971,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         logout();
 
-        disneyAccountApi.get().revokeSkuV3(disneyAccount.get(), disneyEntitlements.get(1).getOffer());
+        getAccountApi().revokeSkuV3(getAccount(), disneyEntitlements.get(1).getOffer());
 
         setAppToAccountSettings();
 
@@ -1013,17 +1013,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                     .firstName(firstName)
                     .lastName(lastName)
                     .email(generateGmailAccount())
-                    .language(languageUtils.get().getUserLanguage())
-                    .country(languageUtils.get().getLocale()).build();
+                    .language(getLocalizationUtils().getUserLanguage())
+                    .country(getLocalizationUtils().getLocale()).build();
 
             createDisneyAccountRequest.addSku(iap);
             createDisneyAccountRequest.setOrderSettings(billingOrder);
-            disneyAccount.get().getOrderSettings().clear();
+            getAccount().getOrderSettings().clear();
 
             try {
-                disneyAccountApi.get().entitleAccount(
-                        disneyAccount.get(),
-                        disneyAccountApi.get().fetchOffer(provider),
+                getAccountApi().entitleAccount(
+                        getAccount(),
+                        getAccountApi().fetchOffer(provider),
                         SUBSCRIPTION_V1);
 
                 performIapHoldProviderSubscriptionCheck(sa, provider, iap);
@@ -1041,21 +1041,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyBillingHoldWithPartnerSub_VerizonStandalone() throws JSONException, URISyntaxException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
-        DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), MONTHLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(monthly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
-        disneyAccount.set(monthly);
+        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
+        setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
 
-        DisneyAccount yearly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(yearly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
-        disneyAccount.set(yearly);
+        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
+        setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
 
@@ -1067,21 +1067,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyBillingHoldWithPartnerSub_VerizonBundle() throws JSONException, URISyntaxException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
-        DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), MONTHLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(monthly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(monthly);
+        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
 
-        DisneyAccount yearly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(yearly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(yearly);
+        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
 
@@ -1094,21 +1094,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
         List<DisneyOrder> billingOrder = new LinkedList<>();
         billingOrder.add(DisneyOrder.SET_BILLING_HOLD);
-        DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), MONTHLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(monthly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(monthly);
+        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
 
-        DisneyAccount yearly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(yearly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(yearly);
+        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
 
@@ -1120,21 +1120,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     public void verifyBillingHoldWithPartnerSub_O2() throws JSONException, URISyntaxException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
-        DisneyAccount monthly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), MONTHLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(monthly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(monthly);
+        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(monthly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));
 
-        DisneyAccount yearly = disneyAccountApi.get().createAccountWithBillingHold(
-                disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), YEARLY).getOfferId(),
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
+        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
+                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        disneyAccountApi.get().entitleAccount(yearly, disneyAccountApi.get().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
-        disneyAccount.set(yearly);
+        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
+        setAccount(yearly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));
 

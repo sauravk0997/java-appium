@@ -22,12 +22,12 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         String mediaId = R.CONFIG.get("capabilities.contentId");
 
         if(R.CONFIG.get("capabilities.contentType").equals("programId")) {
-            searchApi.get().addMovieToWatchlist(disneyAccount.get(), mediaId);
+            getSearchApi().addMovieToWatchlist(getAccount(), mediaId);
         } else {
-            searchApi.get().addSeriesToWatchlist(disneyAccount.get(), mediaId);
+            getSearchApi().addSeriesToWatchlist(getAccount(), mediaId);
         }
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(
@@ -37,6 +37,6 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
         detailsIOSPageBase.clickPlayButton();
         pause(10);
 
-        HARUtils.attachHarAsArtifact(proxy.get(), "playback");
+//        HARUtils.attachHarAsArtifact(proxy.get(), "playback");
     }
 }

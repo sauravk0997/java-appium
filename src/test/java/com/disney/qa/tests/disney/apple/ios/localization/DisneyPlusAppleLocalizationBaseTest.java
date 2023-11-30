@@ -39,17 +39,17 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
     protected void setup() {
-        String locale = languageUtils.get().getLocale();
+        String locale = getLocalizationUtils().getLocale();
 
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(languageUtils.get().getUserLanguage()).build();
-        DisneyOffer disneyOffer = disneyAccountApi.get().lookupOfferToUse(locale, "Yearly");
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage()).build();
+        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         request.addEntitlement(entitlement);
-        DisneyAccount testAccount = disneyAccountApi.get().createAccount(request);
+        DisneyAccount testAccount = getAccountApi().createAccount(request);
 
-        disneyAccountApi.get().addFlex(testAccount);
-        disneyAccount.set(testAccount);
-        baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
+        getAccountApi().addFlex(testAccount);
+        setAccount(testAccount);
+        baseDirectory.set(String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage()));
         setJarvisOverrides();
     }
 
@@ -126,8 +126,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
     @DataProvider
     protected Object[] tuidGenerator() {
-        languageUtils.set(new DisneyLocalizationUtils(R.CONFIG.get("locale"), R.CONFIG.get("language"), "ios", DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
-        return new String[]{String.format("TUID: %s | %s", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage())};
+        return new String[]{String.format("TUID: %s | %s", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage())};
     }
 
     public void setJarvisOverrides() {
@@ -196,6 +195,5 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     @AfterMethod
     public void cleanProxies() {
         ProxyPool.stopProxy();
-        proxy.remove();
     }
 }

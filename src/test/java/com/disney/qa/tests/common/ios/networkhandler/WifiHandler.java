@@ -2,7 +2,7 @@ package com.disney.qa.tests.common.ios.networkhandler;
 
 import com.disney.qa.common.utils.IOSUtils.SystemBundles;
 import com.disney.qa.common.utils.ios_settings.NetworkHandler;
-import com.disney.qa.tests.BaseMobileTest;
+import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
@@ -13,9 +13,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-public class WifiHandler extends BaseMobileTest {
+public class WifiHandler extends AbstractTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private final static String WIFI_NETWORK = R.CONFIG.get("custom_string").replace("_"," ");
+    private final static String WIFI_NETWORK = R.CONFIG.get("custom_string").replace("_", " ");
 
     @BeforeTest
     public void setUp() {
@@ -44,8 +44,7 @@ public class WifiHandler extends BaseMobileTest {
         }
         softAssert.assertTrue(networkHandler.toggleWiFiButtonOnAndOff(WIFI_NETWORK, 5),
                 "Error during toggle switch approach");
-        softAssert.assertTrue(networkHandler.selectWifi(WIFI_NETWORK, 3 ,30), "Error during picking wifi approach");
+        softAssert.assertTrue(networkHandler.selectWifi(WIFI_NETWORK, 3, 30), "Error during picking wifi approach");
         softAssert.assertAll();
     }
-
 }

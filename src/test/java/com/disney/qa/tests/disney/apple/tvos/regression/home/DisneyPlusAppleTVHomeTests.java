@@ -26,7 +26,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
 
         logInTemp(entitledUser);
@@ -37,9 +37,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         aliceDriver.screenshotAndRecognize().isLabelNotPresent(sa, AliceLabels.HOME_BUTTON_IS_SELECTED.getText())
                 .isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
         disneyPlusAppleTVHomePage.clickDown();
-        List<ContentSet> allSets = searchApi.getAllSetsInHomeCollection(entitledUser, country, language, PERSONALIZED_COLLECTION);
-        CollectionRequest collectionRequest = CollectionRequest.builder().region(country).collectionType(PERSONALIZED_COLLECTION).account(entitledUser).language(language).slug(DisneyStandardCollection.HOME.getSlug()).contentClass(DisneyStandardCollection.HOME.getSlug()).build();
-        ContentCollection collection = searchApi.getCollection(collectionRequest);
+        List<ContentSet> allSets = getSearchApi().getAllSetsInHomeCollection(entitledUser, getCountry(), getLanguage(), PERSONALIZED_COLLECTION);
+        CollectionRequest collectionRequest = CollectionRequest.builder().region(getCountry()).collectionType(PERSONALIZED_COLLECTION).account(entitledUser).language(getLanguage()).slug(DisneyStandardCollection.HOME.getSlug()).contentClass(DisneyStandardCollection.HOME.getSlug()).build();
+        ContentCollection collection = getSearchApi().getCollection(collectionRequest);
         List<String> brands = DisneySearchApi.parseValueFromJson(collection.getJsonNode().toString(), "$..[?(@.type == 'GridContainer')]..items..text..full..content");
         disneyPlusAppleTVHomePage.traverseAndVerifyHomepageLayout(allSets, brands, sa);
 

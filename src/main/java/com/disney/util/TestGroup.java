@@ -49,5 +49,4 @@ public final class TestGroup {
 
     public static final String PROXY = "proxy";
     public static final String PRE_CONFIGURATION = "pre_configuration";
-    public static final String BUNDLE_BASIC = "bundle_basic";
 }

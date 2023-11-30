@@ -8,7 +8,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Map;
 
 /*
@@ -16,6 +19,7 @@ import java.util.Map;
  */
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     private ExtendedWebElement whosWatchingTitle;

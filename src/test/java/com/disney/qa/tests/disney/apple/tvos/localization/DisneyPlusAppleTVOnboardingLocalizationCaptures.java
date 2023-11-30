@@ -1,9 +1,12 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
+import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,10 +35,10 @@ import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final ThreadLocal<String> baseDirectory = new ThreadLocal<>();
     private final ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(getApiConfiguration(DISNEY));
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
@@ -47,7 +50,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             setJarvisOverrides();
         }
         DisneyCountryData countryData = new DisneyCountryData();
-        String country = (String) countryData.searchAndReturnCountryData(locale, "code", "country");
+        String country = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
         initiateProxy(country);
         pause(10);
         clearAppCache();
@@ -55,18 +58,18 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding", "Ariel"})
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
-        baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
+        baseDirectory.set(String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage()));
 
-        boolean ariel = languageUtils.get().getCountryName().equals("United States");
-        boolean korea = languageUtils.get().getCountryName().equals("Korea");
+        boolean ariel = getLocalizationUtils().getCountryName().equals("United States");
+        boolean korea = getLocalizationUtils().getCountryName().equals("Korea");
         boolean logoutCheck = true;
 
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
-                .country(languageUtils.get().getLocale())
-                .language(languageUtils.get().getUserLanguage())
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
                 .gender(null)
                 .build();
-        DisneyAccount account = disneyAccountApi.createAccount(request);
+        DisneyAccount account = getAccountApi().createAccount(request);
 
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage signUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -105,11 +108,11 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         loginPage.clickLocalizationEnterNewBtn();
         getScreenshots("5-2_SubmitEmailText", baseDirectory);
 
-        loginPage.enterEmail(apiProvider.get().getUniqueUserEmail());
+        loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
         loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         loginPage.clickSelect();
         loginPage.clickContinueBtn();
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             loginPage.isLocalizedPageWithPrimaryButtonOpened();
             getScreenshots("5-3_SubscriberAgreement", baseDirectory);
             loginPage.clickPrimaryButton();
@@ -162,7 +165,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 welcomeScreenPage.clickSignUpButton();
                 signUpPage.clickEmailButton();
                 loginPage.clickLocalizationEnterNewBtn();
-                loginPage.enterEmail(apiProvider.get().getUniqueUserEmail());
+                loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
                 loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
                 loginPage.clickSelect();
                 loginPage.clickContinueBtn();
@@ -232,7 +235,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             getScreenshots("18-3_GenderMenu", baseDirectory);
         }
 
-        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
+        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
     }
 
@@ -245,9 +248,9 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createExpiredAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
+        DisneyAccount user = getAccountApi().createExpiredAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUB_VERSION);
         baseDirectory.set("Screenshots-Onboarding-PartTwo/");
-        pathToZip.set(String.format("Onboarding_Full_Expired_Account_%s_%s_%s.zip", locale, language, getDate()));
+        pathToZip.set(String.format("Onboarding_Full_Expired_Account_%s_%s_%s.zip", getCountry(), getLanguage(), getDate()));
 
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
 
@@ -268,7 +271,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         //Some countries have subscriber agreement requirement:
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             disneyPlusApplePageBase.isLocalizedPageWithPrimaryButtonOpened();
             pause(5);
             disneyPlusApplePageBase.clickPrimaryButton();
@@ -287,9 +290,9 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
     @Test(description = "Onboarding flows Background Images Check", groups = {"BGImage"})
     public void backgroundImage() {
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
-                .country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
+                .country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
         request.addOrderSetting(DisneyOrder.SET_EXPIRED);
-        DisneyAccount account = disneyAccountApi.createAccount(request);
+        DisneyAccount account = getAccountApi().createAccount(request);
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -298,9 +301,9 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
         int count = 1;
         baseDirectory.set("Screenshots-BGImage/");
-        pathToZip.set(String.format("Onboarding_Background_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
+        pathToZip.set(String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
 
-        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+        boolean isArielRegion = getLocalizationUtils().getCountryName().equals("United States");
 
 //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
@@ -308,10 +311,10 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         disneyPlusAppleTVSignUpPage.isOpened();
 
-        boolean isKr = locale.equalsIgnoreCase("kr");
+        boolean isKr = getCountry().equalsIgnoreCase("kr");
         disneyPlusAppleTVSignUpPage.selectCheckBoxesForKr(isKr);
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
@@ -351,7 +354,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.isOpened();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(account.getEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
@@ -371,7 +374,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
 
         baseDirectory.set("Screenshots-CapturePurchaseFlow/");
-        pathToZip.set(String.format("Capture_Purchase_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
+        pathToZip.set(String.format("Capture_Purchase_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -379,13 +382,13 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPaywallPage disneyPlusAppleTVPaywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
 
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
-        if (languageUtils.get().getCountryName().equals("United States")) {
+        if (getLocalizationUtils().getCountryName().equals("United States")) {
             LOGGER.info("DOB entry required.");
             StringBuilder dob = new StringBuilder()
                     .append(DisneyBaseTest.Person.ADULT.getMonth().getNum())
@@ -461,7 +464,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 //        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyContentApiChecker.get().getUniqueUserEmail());
 //
 //        //Some countries have subscriber agreement requirement:
-//        if(languageUtils.get().isSubscriberAgreementRequired() ) {
+//        if(getLocalizationUtils().isSubscriberAgreementRequired() ) {
 //            disneyPlusApplePageBase.isLocalizedPageWithPrimaryButtonOpened();
 //            pause(1);
 //            getScreenshots("6_SA", baseDirectory);
