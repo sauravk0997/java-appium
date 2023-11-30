@@ -47,7 +47,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
 
     public boolean isLoginBtnFocused() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused(getSignupButton());
+        return isFocused(getLoginButton());
     }
 
     @Override
