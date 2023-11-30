@@ -2,23 +2,18 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.common.constant.ImageConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
+
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -29,19 +24,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
     protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
-
-    @DataProvider(name = "image-constant")
-    public Object[][] imageConstant() {
-        return new Object[][]{{String.valueOf(ImageConstant.Image.ABC)},
-                {String.valueOf(ImageConstant.Image.FREEFORM)},
-                {String.valueOf(ImageConstant.Image.HULU)},
-                {String.valueOf(ImageConstant.Image.LIONSGATE)}
-//                ImageConstant.getImage(ImageConstant.Image.ABC)},
-//                {ImageConstant.getImage(ImageConstant.Image.FREEFORM)},
-//                {ImageConstant.getImage(ImageConstant.Image.HULU)},
-//                {ImageConstant.getImage(ImageConstant.Image.LIONSGATE)}
-        };
-    }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -236,9 +218,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863"})
-    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "image-constant")
-    public void verifyHulkSeriesAndMovieNetworkAttribution(String imageConstant) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863", "XMOBQA-74548"})
+    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkSeriesAndMovieNetworkAttribution() {
         baseDirectory.set("Screenshots/");
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -248,79 +230,22 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 //        setAppToHomeScreen(disneyAccount.get());
         setAppToHulkHomeScreen(ADULT_PROFILE);
         homePage.isOpened();
-        if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.HULU))) {
-            IntStream.range(0, getHuluMedia().size()).forEach(i -> {
-                homePage.clickSearchIcon();
-                searchPage.isOpened();
-                if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                    searchPage.clearText();
-                }
-                searchPage.searchForMedia(getHuluMedia().get(i));
-                        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-                        results.get(0).click();
-                        detailsPage.isOpened();
-                try {
-                    validateImageComparison(imageConstant, sa);
-                    Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.LIONSGATE))) {
-            IntStream.range(0, getLionsgateMedia().size()).forEach(i -> {
-                homePage.clickSearchIcon();
-                searchPage.isOpened();
-                if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                    searchPage.clearText();
-                }
-                searchPage.searchForMedia(getLionsgateMedia().get(i));
-                List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-                results.get(0).click();
-                detailsPage.isOpened();
-                try {
-                    validateImageComparison(imageConstant, sa);
-                    Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.ABC))) {
-            IntStream.range(0, getAbcMedia().size()).forEach(i -> {
-                homePage.clickSearchIcon();
-                searchPage.isOpened();
-                if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                    searchPage.clearText();
-                }
-                searchPage.searchForMedia(getAbcMedia().get(i));
-                List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-                results.get(0).click();
-                detailsPage.isOpened();
-                try {
-                    validateImageComparison(imageConstant, sa);
-                    Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.FREEFORM))) {
-            IntStream.range(0, getFreeformMedia().size()).forEach(i -> {
-                homePage.clickSearchIcon();
-                searchPage.isOpened();
-                if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                    searchPage.clearText();
-                }
-                searchPage.searchForMedia(getFreeformMedia().get(i));
-                List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-                results.get(0).click();
-                detailsPage.isOpened();
-                try {
-                    validateImageComparison(imageConstant, sa);
-                    Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
+        IntStream.range(0, getMedia().size()).forEach(i -> {
+            homePage.clickSearchIcon();
+            searchPage.isOpened();
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(getMedia().get(i));
+                    List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+                    results.get(0).click();
+                    detailsPage.isOpened();
+            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+                Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
+            } else {
+                Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
+            }
+        });
         sa.assertAll();
     }
 
@@ -335,84 +260,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         }
     }
 
-    private ArrayList<String> getLionsgateMedia() {
+    protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("The Right One");
         contentList.add("Private Property");
-        return contentList;
-    }
-
-    protected ArrayList<String> getHuluMedia() {
-        ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Only Murders in the Building");
-        contentList.add("The Bear");
         contentList.add("Palm Springs");
-        return contentList;
-    }
-
-    private ArrayList<String> getAbcMedia() {
-        ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Abbott Elementary");
         contentList.add("Home Economics");
-        return contentList;
-    }
-
-    private ArrayList<String> getFreeformMedia() {
-        ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Cruel Summer");
         contentList.add("Praise Petey");
         return contentList;
     }
-
-    private void validateImageComparison(String imageConstant, SoftAssert sa) throws IOException {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-//        if (new Object().equals(imageConstant)) {
-//
-//        }
-//        if (new Object().equals(ImageConstant.getImage(ImageConstant.Image.ABC))) {
-        if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.ABC))) {
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.ABC), 10));
-            } else {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getTabletNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.ABC), 10));
-            }
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.HULU))) {
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.HULU), 10));
-            } else {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getTabletNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.HULU), 10));
-            }
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.FREEFORM))) {
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.FREEFORM), 10));
-            } else {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getTabletNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.FREEFORM), 10));
-            }
-        } else if (imageConstant.equalsIgnoreCase(String.valueOf(ImageConstant.Image.LIONSGATE))) {
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.LIONSGATE), 10));
-            } else {
-                sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getTabletNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.LIONSGATE), 10));
-            }
-        }
-    }
-
-//    private void validateImages() {
-//        var imageConstant = String.valueOf(ImageConstant.Image.values());
-//        switch (imageConstant) {
-//            case huluValidate:
-//                if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-//                    sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.ABC), 10));
-//                } else {
-//                    sa.assertTrue(
-//        }
-//    }
-//    private void compareImages(SoftAssert sa) throws IOException {
-//        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-//        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-//            sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getHandsetNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.ABC), 10));
-//        } else {
-//            sa.assertTrue(areImagesTheSame(getElementImage(detailsPage.getTabletNetworkAttributionImage()), ImageConstant.getImage(ImageConstant.Image.ABC), 10));
-//        }
-
 }
