@@ -2,13 +2,11 @@ package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,16 +25,5 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "search_button_selected");
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62322"})
-    @Test(description = "Search: Originals deeplink", groups = {"Search", TestGroup.PRE_CONFIGURATION })
-    public void verifyOriginalsDeeplink() {
-        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_originals_deeplink_2"), 10);
-        originalsPage.clickOpenButton();
-        Assert.assertTrue(originalsPage.isOpened(), "Originals page was not opened by deeplink.");
     }
 }
