@@ -289,9 +289,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62282"})
     @Test(description = "Series Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsDeeplink() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
-        launchDeeplink(true, R.TESTDATA.get("disney_plus_only_murders_in_the_building_series_details_deeplink"), 10);
-        Assert.assertTrue(initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle().contains("Only Murders in the Building"),
-                "Only Murders in the Building Details page did not open via deeplink.");
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_series_detail_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.getMediaTitle().contains("Avengers Assemble"),
+                "Avengers Assemble Details page did not open via deeplink.");
     }
 }

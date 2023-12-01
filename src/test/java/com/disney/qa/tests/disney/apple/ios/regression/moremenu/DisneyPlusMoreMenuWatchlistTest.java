@@ -76,8 +76,10 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62294"})
     @Test(description = "Verify Watchlist Deeplink", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyWatchlistDeeplink() {
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink"), 10);
-        Assert.assertTrue(initPage(DisneyPlusWatchlistIOSPageBase.class).isOpened(), "Watchlist page did not open via deeplink.");
+        watchlistPage.clickOpenButton();
+        Assert.assertTrue(watchlistPage.isOpened(), "Watchlist page did not open via deeplink.");
     }
 }

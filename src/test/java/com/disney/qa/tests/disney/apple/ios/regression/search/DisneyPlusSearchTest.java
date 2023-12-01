@@ -33,8 +33,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62322"})
     @Test(description = "Search: Originals deeplink", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyOriginalsDeeplink() {
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_originals_deeplink_2"), 10);
-        Assert.assertTrue(initPage(DisneyPlusOriginalsIOSPageBase.class).isOpened(), "Originals page was not opened by deeplink.");
+        originalsPage.clickOpenButton();
+        Assert.assertTrue(originalsPage.isOpened(), "Originals page was not opened by deeplink.");
     }
 }

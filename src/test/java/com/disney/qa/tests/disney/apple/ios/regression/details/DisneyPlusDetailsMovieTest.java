@@ -157,9 +157,12 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62280"})
     @Test(description = "Movies Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsDeeplink() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
-        launchDeeplink(true, R.TESTDATA.get("disney_plus_prey_movie_details_deeplink"), 10);
-        Assert.assertTrue(initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle().contains("Prey"),
-                "Prey Movie Details page did not open via deeplink.");
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_movie_detail_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.getMediaTitle().contains("Cars"),
+                "Cars Movie Details page did not open via deeplink.");
     }
 }
