@@ -1,13 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -23,8 +18,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-
-import javax.imageio.ImageIO;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
@@ -720,40 +713,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
 
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
-
-    public void isNetworkAttributionPresent(SoftAssert sa, String network) {
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            sa.assertTrue(getHandsetNetworkAttributionImage().isPresent(), "Handset " + network + " Network attribution image was not found on series details page");
-        } else {
-            sa.assertTrue(getTabletNetworkAttributionImage().isPresent(), "Tablet " + network + " Network attribution image was not found on series details page");
-        }
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-    }
-
-
-    public BufferedImage splitImage(ExtendedWebElement element, ThreadLocal<String> directory, String name) throws IOException {
-//        final BufferedImage source = ImageIO.read(new File("<sourceDir>/1fby-6t-555d.png"));
-        final BufferedImage source2 = getElementImage(element);
-        int oneThird = source2.getWidth() / 3;
-        int twoThird = oneThird + oneThird;
-        int w = twoThird - oneThird;
-        System.out.println(source2.getWidth());
-        System.out.println(source2.getHeight());
-
-        int x = -1 * source2.getWidth();
-
-        //x,y,w,h
-        ImageIO.write(source2.getSubimage(0, source2.getHeight() / 2, source2.getWidth(), source2.getHeight() / 2),
-                "png", new File(String.format("%s%s.png", directory.get(), name)));
-        BufferedImage newImage = ImageIO.read(new File(String.format("%s%s.png", directory.get(), name)));
-        System.out.println(newImage.getWidth());
-        System.out.println(newImage.getHeight());
-//        BufferedImage source3 = ImageIO.read(new File("Screenshots/Details_Page.png"));
-//        ImageIO.write(source3.getSubimage(source2.getWidth()-25, source2.getHeight()/2, source2.getWidth()-25, source2.getHeight()/2),
-//                "png", new File(String.format("%s%s.png", directory.get(), name)));
-//        BufferedImage newImage2 = ImageIO.read(new File(String.format("%s%s.png", directory.get(), name)));
-//        System.out.println(newImage2.getWidth());
-//        System.out.println(newImage2.getHeight());
-        return newImage;
-    }
 }
