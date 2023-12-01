@@ -20,9 +20,8 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-////        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
-////        setAppToHomeScreen(disneyAccount.get());
-        setAppToHulkHomeScreen(ADULT_PROFILE);
+        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAppToHomeScreen(disneyAccount.get());
         sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isOpened(), "Hulu page didn't open after navigating via brand tile");
