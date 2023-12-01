@@ -11,9 +11,11 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -149,5 +151,15 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.doesMetadataYearContainDetailsTabYear(), "Metadata year does not contain details tab year.");
 
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62280"})
+    @Test(description = "Movies Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieDetailsDeeplink() {
+        setAppToHomeScreen(disneyAccount.get());
+        launchDeeplink(true, R.TESTDATA.get("disney_plus_prey_movie_details_deeplink"), 10);
+        Assert.assertTrue(initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle().contains("Prey"),
+                "Prey Movie Details page did not open via deeplink.");
     }
 }

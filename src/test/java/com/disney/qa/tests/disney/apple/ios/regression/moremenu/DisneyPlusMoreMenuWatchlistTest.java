@@ -1,13 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -42,7 +39,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusBrandIOSPageBase disneyPlusBrandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase =  initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
 
         onboard();
         //Adding a Pixar item to Watchlist
@@ -74,5 +71,13 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
                 "Titles were not placed in the correct order");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62294"})
+    @Test(description = "Verify Watchlist Deeplink", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyWatchlistDeeplink() {
+        setAppToHomeScreen(disneyAccount.get());
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink"), 10);
+        Assert.assertTrue(initPage(DisneyPlusWatchlistIOSPageBase.class).isOpened(), "Watchlist page did not open via deeplink.");
     }
 }
