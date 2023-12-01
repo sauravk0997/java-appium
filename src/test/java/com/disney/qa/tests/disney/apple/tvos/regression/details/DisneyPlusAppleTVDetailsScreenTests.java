@@ -27,7 +27,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
-    @Test(description = "Verify movie details screen appearance", groups = {"Smoke"})
+    @Test(description = "Verify movie details screen appearance", groups = {"Details", "Smoke"})
     public void movieDetailsPageAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();

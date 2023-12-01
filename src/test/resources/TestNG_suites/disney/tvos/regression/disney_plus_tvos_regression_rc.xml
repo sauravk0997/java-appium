@@ -16,7 +16,7 @@
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <!--<parameter name="scheduling" value="H 12 * * *"/>-->
 

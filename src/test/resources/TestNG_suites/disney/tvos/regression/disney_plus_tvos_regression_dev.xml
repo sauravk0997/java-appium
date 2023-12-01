@@ -14,7 +14,7 @@
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
     <parameter name="scheduling" value="H 17 * * *"/>
     <parameter name="overrideFields" value="groups=Smoke,init_retry_count=2,init_retry_interval=15"/>
 

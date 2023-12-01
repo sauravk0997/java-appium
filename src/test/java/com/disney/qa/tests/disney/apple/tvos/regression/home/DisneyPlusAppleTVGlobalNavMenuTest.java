@@ -46,7 +46,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89541", "XCDQA-89543", "XCDQA-89549", "XCDQA-89547", "XCDQA-89545"})
-    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = {"Home"})
+    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = {"Home", "Smoke"})
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -103,7 +103,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91703", "XCDQA-91701"})
-    @Test(description = "Global Nav Menu appearance - kids mode", groups ={"Home"})
+    @Test(description = "Global Nav Menu appearance - kids mode", groups ={"Home", "Smoke"})
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
