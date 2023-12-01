@@ -78,8 +78,9 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     public void verifyWatchlistDeeplink() {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(disneyAccount.get());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink_2"), 10);
         watchlistPage.clickOpenButton();
-        Assert.assertTrue(watchlistPage.isOpened(), "Watchlist page did not open via deeplink.");
+        pause(2);
+        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
     }
 }
