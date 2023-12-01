@@ -35,6 +35,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 //        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
 //        setAppToHomeScreen(disneyAccount.get());
         setAppToHulkHomeScreen(JUNIOR_PROFILE);
+        homePage.isOpened();
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
@@ -87,7 +88,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
         huluPage.swipeTillCollectionPresent(CollectionConstant.Collection.HULU_ORIGINALS_PREVIEW, 3, null, Direction.UP);
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_ORIGINALS_PREVIEW, 0);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_ORIGINALS_PREVIEW, 1);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 
@@ -192,7 +193,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
-        continuousPlay(2);
+        continuousPlay(1);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickSuggestedTab();
