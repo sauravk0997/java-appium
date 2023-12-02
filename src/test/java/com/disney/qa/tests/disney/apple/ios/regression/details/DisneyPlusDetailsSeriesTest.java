@@ -9,11 +9,13 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.openqa.selenium.ScreenOrientation;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -281,5 +283,18 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62282"})
+    @Test(description = "Series Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsDeeplink() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(disneyAccount.get());
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_series_detail_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.getMediaTitle().contains("Avengers Assemble"),
+                "Avengers Assemble Details page did not open via deeplink.");
     }
 }
