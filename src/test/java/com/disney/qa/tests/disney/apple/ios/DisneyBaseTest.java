@@ -51,9 +51,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY, dependsOnMethods = "preConfiguration")
-    public void initProxy() {
-        LOGGER.warn("Proxy logic disabled.");
+//    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
+//    public void initProxy() {
+//        LOGGER.warn("Proxy logic disabled.");
         /*
         new GeoedgeProxyServer().setProxyHostForSelenoid();
         String country = getLocalizationUtils().getCountryName();
@@ -129,9 +129,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             Assert.fail(String.format("Proxy Cannot be started for country '%s'. Manual validation is required.", country));
         }
          */
-    }
+//    }
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "initProxy")
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions() {
         getDriver();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
