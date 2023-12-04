@@ -158,7 +158,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @Test(description = "Movies Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsDeeplink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_movie_detail_deeplink"), 10);
         detailsPage.clickOpenButton();
         detailsPage.isOpened();

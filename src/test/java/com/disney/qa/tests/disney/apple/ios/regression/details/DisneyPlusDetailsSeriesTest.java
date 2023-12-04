@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -290,7 +289,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @Test(description = "Series Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsDeeplink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_series_detail_deeplink"), 10);
         detailsPage.clickOpenButton();
         detailsPage.isOpened();
