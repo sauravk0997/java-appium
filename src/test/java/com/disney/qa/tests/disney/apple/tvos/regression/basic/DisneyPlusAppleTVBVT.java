@@ -6,12 +6,17 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.api.disney.DisneyContentIds.END_GAME;
 
 public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //Test constants
     private static final String KIDS = "Kids";
@@ -37,8 +42,8 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
 
         selectAppleUpdateLaterAndDismissAppTracking();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount user = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        disneyAccountApi.addProfile(user, KIDS, KIDS_DOB, user.getProfileLang(), null, true, true);
+        DisneyAccount user = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        getAccountApi().addProfile(user, KIDS, KIDS_DOB, user.getProfileLang(), null, true, true);
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(welcome.isOpened(), "Welcome screen did not launch");
 

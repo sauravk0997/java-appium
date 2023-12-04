@@ -8,12 +8,17 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.invoke.MethodHandles;
 
 /*
  * Email and password login pages
  */
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExtendedFindBy(accessibilityId = "signUpSwap")
     protected ExtendedWebElement signUpButton;

@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="Analytics PQoE Smoke Test Runs iOS" annotations="JDK" thread-count="1" configfailurepolicy="continue">
+<suite verbose="1" name="Analytics PQoE Smoke Test Runs iOS" annotations="JDK" thread-count="15" parallel="tests" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="isong1"/>
     <parameter name="reporting.project-key" value="ANA01"/>

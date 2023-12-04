@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="8" name="ios_tablet_bvt_prod" annotations="JDK" configfailurepolicy="continue">
+<suite verbose="1" name="ios_tablet_bvt_prod" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>

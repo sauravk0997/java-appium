@@ -14,25 +14,17 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.ScreenOrientation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
-
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 public class DisneyPlusAliceTest extends DisneyBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
-    protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    private static final String DETAILS_PAGE = "_Details_Page";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74625"})
-    @Test(description = "App Launches - Alice validates Disney logo present on Welcome screen", groups = {"Alice", TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-74625" })
+    @Test(description = "App Launches - Alice validates Disney logo present on Welcome screen", groups = { "Alice", TestGroup.PRE_CONFIGURATION })
     public void testAppLaunch() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -44,13 +36,12 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @Test(description = "Details Page - take screenshot, create zip of image", groups = {"Alice", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - take screenshot, create zip of image", groups = { "Alice", TestGroup.PRE_CONFIGURATION })
     public void testSeriesDetailsScreenshot() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        baseDirectory.set("Screenshots/");
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         homePage.isOpened();
         homePage.clickSearchIcon();
@@ -62,24 +53,25 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         } catch (Exception e) {
             throw new SkipException("Skipping test, Detail page was not open." + e);
         }
-        getAliceScreenshots(getDetailsTitle() + DETAILS_PAGE, baseDirectory);
+        getAliceScreenshots(getDetailsTitle() + "_Details_Page");
     }
 
-    private void getAliceScreenshots(String fileName, ThreadLocal<String> directory) {
+    private void getAliceScreenshots(String fileName) {
+        String directory = "Screenshots/";
         rotateScreen(ScreenOrientation.PORTRAIT);
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_TABLET) {
-            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory.get());
+            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Portrait_" + getDate(), directory);
             rotateScreen(ScreenOrientation.LANDSCAPE);
             pause(2);
-            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Landscape_" + getDate(), directory.get());
+            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPad_Landscape_" + getDate(), directory);
             rotateScreen(ScreenOrientation.PORTRAIT);
             pause(2);
-            setPathToZip("iPad_Detail_Page_Images_%s_%s_%s.zip");
-            UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+            UniversalUtils.archiveAndUploadsScreenshots(directory,
+                    String.format("iPad_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
         } else {
-            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory.get());
-            setPathToZip("iPhone_Detail_Page_Images_%s_%s_%s.zip");
-            UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+            UniversalUtils.storeScreenshot(getDriver(), fileName + "_iPhone_" + getDate(), directory);
+            UniversalUtils.archiveAndUploadsScreenshots(directory,
+                    String.format("iPhone_Detail_Page_Images_%s_%s_%s.zip", R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
         }
     }
 
@@ -91,9 +83,5 @@ public class DisneyPlusAliceTest extends DisneyBaseTest {
         } else {
             return detailsTitle;
         }
-    }
-
-    private void setPathToZip(String zipString) {
-        pathToZip.set(String.format(zipString, R.CONFIG.get("locale"), R.CONFIG.get("language"), getDate()));
     }
 }

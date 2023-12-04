@@ -3,8 +3,9 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Date;
+
+import com.disney.qa.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -13,23 +14,13 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.ITestResult;
 import org.testng.SkipException;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
-import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
@@ -40,8 +31,12 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+/**
+ * Base class for ios
+ */
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
@@ -54,44 +49,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
-    public static final String SUBSCRIPTION_V1 = "V1";
-    public static final String SUBSCRIPTION_V3 = "V3";
-    public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
-    //Keeping this not to a specific plan name to support localization tests
-    //Plan names in non-us countries might differ from that in us.
-    public static final String BUNDLE_PREMIUM = "Yearly";
-    public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
 
-    protected static final ThreadLocal<DisneyContentApiChecker> disneyApiHandler = new ThreadLocal<>();
-    protected static final ThreadLocal<DisneyAccount> disneyAccount = new ThreadLocal<>();
-    protected static final ThreadLocal<DisneyAccountApi> disneyAccountApi = new ThreadLocal<>();
-    protected static final ThreadLocal<DisneyMobileConfigApi> configApi = new ThreadLocal<>();
-    protected static final ThreadLocal<DisneySearchApi> searchApi = new ThreadLocal<>();
-    static final ThreadLocal<String> appVersion = new ThreadLocal<>();
-
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
-    public void preConfiguration(ITestResult testResult) {
-        String locale = R.CONFIG.get("locale");
-        String language =  R.CONFIG.get("language");
-        disneyApiHandler.set(new DisneyContentApiChecker());
-        disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
-        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, getAppVersion()));
-        languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
-        languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
-        languageUtils.get().setLegalDocuments();
-        searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
-        String accountPlan = Arrays.asList(testResult.getMethod().getGroups()).contains(TestGroup.BUNDLE_BASIC) ? BUNDLE_BASIC : BUNDLE_PREMIUM;
-        DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
-        disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
-        DisneyPlusApplePageBase.setDictionary(languageUtils.get());
-    }
-
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY, dependsOnMethods = "preConfiguration")
-    public void initProxy() {
-        LOGGER.warn("Proxy logic disabled.");
+//    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
+//    public void initProxy() {
+//        LOGGER.warn("Proxy logic disabled.");
         /*
         new GeoedgeProxyServer().setProxyHostForSelenoid();
-        String country = languageUtils.get().getCountryName();
+        String country = getLocalizationUtils().getCountryName();
         GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
         geoedgeProxyFreshInstance.setProxyHostForSelenoid();
         Map<String, String> headers = new HashMap<>();
@@ -164,9 +128,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             Assert.fail(String.format("Proxy Cannot be started for country '%s'. Manual validation is required.", country));
         }
          */
-    }
+//    }
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "initProxy")
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions() {
         getDriver();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
@@ -189,7 +153,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
-//        clearAppCache();
+        //        clearAppCache();
         handleAlert();
     }
 
@@ -219,7 +183,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         public String getDay(Boolean leadingZero) {
-            if(leadingZero && this.day.length() == 1) {
+            if (leadingZero && this.day.length() == 1) {
                 return "0" + this.day;
             } else {
                 return this.day;
@@ -274,8 +238,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-//        handleAlert();
-//        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
+        //        handleAlert();
+        //        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
 
@@ -303,22 +267,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleSystemAlert(command, 10);
     }
 
-    public void initialSetup(String locale, String language, String... planType) {
-        disneyApiHandler.set(new DisneyContentApiChecker());
-        disneyAccountApi.set(new DisneyAccountApi(getApiConfiguration(DISNEY)));
-
-        configApi.set(new DisneyMobileConfigApi(IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, getAppVersion()));
-        languageUtils.set(new DisneyLocalizationUtils(locale, language, IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY));
-        languageUtils.get().setDictionaries(configApi.get().getDictionaryVersions());
-        languageUtils.get().setLegalDocuments();
-        searchApi.set(new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),  disneyApiHandler.get().getPartner()));
-        String accountPlan = planType.length > 0 ? planType[0] : BUNDLE_PREMIUM;
-        DisneyOffer offer = disneyAccountApi.get().lookupOfferToUse(locale, accountPlan);
-        disneyAccount.set(disneyAccountApi.get().createAccount(offer, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V1));
-
-
-        LOGGER.info("Starting API threads");
-        // Call getDriver to set platform variables
+    public void initialSetup(String locale, String language) {
         getDriver();
         setBuildType();
 
@@ -329,7 +278,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         try {
-            DisneyPlusApplePageBase.setDictionary(languageUtils.get());
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
         } catch (Exception e) {
@@ -339,37 +287,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     /**
-     * Returns installed app version based on the filename pulled from AppCenter when the test started.
-     * Similar to getInstalledAppVersionFull() except it does not include the build number
-     * @return The app version number used in config calls and other displays (ex. 1.16.0)
-     */
-    private synchronized String getAppVersion() {
-        String version = AppCenterManager.getInstance()
-                .getAppInfo(R.CONFIG.get("capabilities.app"))
-                .getVersion();
-        LOGGER.info("version:{}", version);
-        return version;
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void cleanThreads() {
-        LOGGER.info("Cleaning threads");
-        disneyApiHandler.remove();
-        languageUtils.remove();
-        disneyAccount.remove();
-        disneyAccountApi.remove();
-        LOGGER.info("Threads cleaned");
-        DisneyPlusApplePageBase.cleanLanguageUtils();
-    }
-
-    /**
      * Performs an app relaunch without terminating the Appium session.
      * Also gets rid of Network Visibility alert.
      */
     public void restart() {
         terminateApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
-//        handleAlert();
+        //        handleAlert();
     }
 
     /**
@@ -389,18 +313,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).click();
             tries++;
             switch (tab) {
-                case MORE_MENU:
-                    isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
-                    break;
-                case HOME:
-                    isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-                    break;
-                case SEARCH:
-                    isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
-                    break;
-                case DOWNLOADS:
-                    isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
-                    break;
+            case MORE_MENU:
+                isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
+                break;
+            case HOME:
+                isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
+                break;
+            case SEARCH:
+                isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
+                break;
+            case DOWNLOADS:
+                isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
+                break;
             }
         } while (!isOpened && tries < 3);
     }
@@ -476,29 +400,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public ApiConfiguration getApiConfiguration(String partner) {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                .partner(partner)
-                .useMultiverse(USE_MULTIVERSE)
-                .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
-                .build();
-        return apiConfiguration;
-    }
-    protected boolean useMultiverse() {
-        return R.CONFIG.getBoolean("useMultiverse");
-    }
-    public DisneyAccountApi getAccountApi() {
-        if (disneyAccountApi.get() == null) {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).environment(DisneyParameters.getEnv())
-                    .partner(PARTNER).useMultiverse(useMultiverse()).build();
-            disneyAccountApi.set(new DisneyAccountApi(apiConfiguration));
-        }
-        return disneyAccountApi.get();
-    }
-    public void addHoraValidationSku(DisneyAccount accountToEntitle){
-        if (horaEnabled()) {
+    public void addHoraValidationSku(DisneyAccount accountToEntitle) {
+        if (DisneyConfiguration.isHoraEnabled()) {
             try {
                 getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
             } catch (URISyntaxException e) {
@@ -506,8 +409,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
     }
+
     public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
-        if (horaEnabled()) {
+        if (DisneyConfiguration.isHoraEnabled()) {
             HoraValidator hv = new HoraValidator(accountId);
             hv.assertValidation(softAssert);
             hv.checkListForPQOE(softAssert, checkList);
@@ -519,7 +423,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         request.addSku(sku);
         request.setCountry(country);
         request.setLanguage(language);
-        return disneyAccountApi.get().createAccount(request);
+        return getAccountApi().createAccount(request);
     }
 
     public void setFlexWelcomeConfig() {
@@ -573,7 +477,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-//        handleAlert();
+        //        handleAlert();
     }
 
     public void launchJarvisOrInstall() {
@@ -604,15 +508,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     //TODO: uncomment it after moving the Subscription test to a separate XML
 
-//    public void clearDSSSandboxAccountFor(String accountName) {
-//        LOGGER.info("Clearing purchase history for '{}' account", accountName);
-//        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-//        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
-//            if (account.getAttributes().getAcAccountName().contains(accountName)) {
-//                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
-//                                .is2xxSuccessful(),
-//                        "Clear account purchase history for" + accountName + "was not successful!");
-//            }
-//        }
-//    }
+    //    public void clearDSSSandboxAccountFor(String accountName) {
+    //        LOGGER.info("Clearing purchase history for '{}' account", accountName);
+    //        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
+    //        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
+    //            if (account.getAttributes().getAcAccountName().contains(accountName)) {
+    //                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
+    //                                .is2xxSuccessful(),
+    //                        "Clear account purchase history for" + accountName + "was not successful!");
+    //            }
+    //        }
+    //    }
 }

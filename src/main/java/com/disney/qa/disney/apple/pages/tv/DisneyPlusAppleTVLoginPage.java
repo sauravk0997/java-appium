@@ -133,7 +133,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         moveToContinueBtnKeyboardEntry();
         clickSelect();
-        clickContinueBtn();
     }
 
     public boolean isContinueButtonDisplayed() {

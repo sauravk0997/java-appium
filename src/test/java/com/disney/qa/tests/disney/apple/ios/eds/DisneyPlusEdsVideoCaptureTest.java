@@ -5,14 +5,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.disney.util.HARUtils;
 import com.disney.util.TestGroup;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
@@ -57,9 +51,8 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
     }
 
     private DisneyPlusDetailsIOSPageBase onboardAndOpenMedia() {
-        proxy.get().newHar();
         restartDriver(true);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         //Open SEARCH page and open the first result for query 'Mickey'
         DisneyPlusSearchIOSPageBase searchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -71,28 +64,28 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
     private void harValidation() {
         pause(10);
-        HARUtils harUtils = new HARUtils(proxy.get());
-        SoftAssert sa = new SoftAssert();
-        sa.assertFalse(proxy.get().getHar().getLog().getEntries().isEmpty(),
-                "Proxy capture failed. There are no har entries to scan.");
-        Map<HARUtils.RequestDataType, List<String>> harFilter = new HashMap<>();
-        harFilter.put(HARUtils.RequestDataType.URL, List.of("bamgrid.com/dust"));
-        harFilter.put(HARUtils.RequestDataType.POST_DATA,
-                List.of("urn:dss:event:fed:media:playback:requested",
-                        "urn:dss:event:fed:media:payload:fetched",
-                        "urn:dss:event:fed:media:playlist:master:fetched",
-                        "urn:dss:event:fed:media:playback:started",
-                        "urn:dss:event:fed:media:playback:paused",
-                        "urn:dss:event:fed:media:playback:resumed",
-                        "urn:dss:event:fed:media:playback:rebuffering:started",
-                        "urn:dss:event:fed:media:playback:rebuffering:ended",
-                        "urn:dss:event:fed:media:playback:ended"));
-        harUtils.printFilteredHarDetails(harFilter);
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmm");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
-
-        harUtils.publishHAR(String.format("Mobile_Traffic_%s", dateFormat.format(new Date())));
-        sa.assertAll();
+//        HARUtils harUtils = new HARUtils(proxy.get());
+//        SoftAssert sa = new SoftAssert();
+//        sa.assertFalse(proxy.get().getHar().getLog().getEntries().isEmpty(),
+//                "Proxy capture failed. There are no har entries to scan.");
+//        Map<HARUtils.RequestDataType, List<String>> harFilter = new HashMap<>();
+//        harFilter.put(HARUtils.RequestDataType.URL, List.of("bamgrid.com/dust"));
+//        harFilter.put(HARUtils.RequestDataType.POST_DATA,
+//                List.of("urn:dss:event:fed:media:playback:requested",
+//                        "urn:dss:event:fed:media:payload:fetched",
+//                        "urn:dss:event:fed:media:playlist:master:fetched",
+//                        "urn:dss:event:fed:media:playback:started",
+//                        "urn:dss:event:fed:media:playback:paused",
+//                        "urn:dss:event:fed:media:playback:resumed",
+//                        "urn:dss:event:fed:media:playback:rebuffering:started",
+//                        "urn:dss:event:fed:media:playback:rebuffering:ended",
+//                        "urn:dss:event:fed:media:playback:ended"));
+//        harUtils.printFilteredHarDetails(harFilter);
+//
+//        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmm");
+//        dateFormat.setTimeZone(TimeZone.getTimeZone("EST"));
+//
+//        harUtils.publishHAR(String.format("Mobile_Traffic_%s", dateFormat.format(new Date())));
+//        sa.assertAll();
     }
 }

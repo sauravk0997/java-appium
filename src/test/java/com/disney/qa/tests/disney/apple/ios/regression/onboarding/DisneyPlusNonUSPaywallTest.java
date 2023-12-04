@@ -18,7 +18,7 @@ public class DisneyPlusNonUSPaywallTest extends DisneyBaseTest {
     public void testLoginWithUnentitledAccount() {
         SoftAssert softAssert = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(disneyAccountApi.get().createAccount("US", "en"));
+        login(getAccountApi().createAccount("US", "en"));
 
         DisneyPlusWelcomeScreenIOSPageBase paywallPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
@@ -59,7 +59,7 @@ public class DisneyPlusNonUSPaywallTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-        DisneyAccount expired = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
+        DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(expired);
 

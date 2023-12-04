@@ -6,12 +6,16 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private String ratingImage = "current_rating_value_image";
 

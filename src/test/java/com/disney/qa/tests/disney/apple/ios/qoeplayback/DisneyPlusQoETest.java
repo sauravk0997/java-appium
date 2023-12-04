@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.qoeplayback;
 
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -24,16 +22,8 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusQoETest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String MOVIES = "Movies";
-    private DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase;
-    private DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase;
-    private DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase;
-    private DisneyPlusSearchIOSPageBase searchPage;
-    private DisneyPlusVideoPlayerIOSPageBase videoPlayerPage;
-    private DisneyPlusDetailsIOSPageBase detailsIOSPageBase;
-    private DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage;
-    private DisneyPlusAudioSubtitleIOSPageBase subtitlePage;
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1578"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1578" })
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEStartupSequence(ITestContext context) {
@@ -65,9 +55,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         item8.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item8);
 
-        checkAssertions(sa,account.getAccountId(), checkList);
+        checkAssertions(sa, account.getAccountId(), checkList);
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1577"})
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1577" })
     @Test(description = "Smoke Test Playback QoE events", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEPlayback() {
@@ -77,6 +68,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         DisneyAccount account = loginAndStartPlayback();
 
         pause(10);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         videoPlayerPage.clickPauseButton();
         pause(10);
         videoPlayerPage.clickPlayButton();
@@ -85,22 +77,21 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         pause(10);
         videoPlayerPage.tapForwardButton(6);
         int remainingTimeAfterFwdTapInPauseMode = videoPlayerPage.getRemainingTime();
-        sa.assertTrue( remainingTimeInPauseMode > remainingTimeAfterFwdTapInPauseMode,
+        sa.assertTrue(remainingTimeInPauseMode > remainingTimeAfterFwdTapInPauseMode,
                 "Remaining time in pause mode before fwd tap " + remainingTimeInPauseMode +
                         " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPauseMode);
         LOGGER.info("Remaining time in pause mode fwd tap " + remainingTimeInPauseMode +
                 "remaining time after fwd tap " + remainingTimeAfterFwdTapInPauseMode);
 
-
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item1.addRequirement("exact","playbackActivity", "started" );
+        item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
         EventChecklist item2 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item2.addRequirement("exact","playbackActivity","paused");
-        item2.addRequirement("exact","cause", "user" );
+        item2.addRequirement("exact", "playbackActivity", "paused");
+        item2.addRequirement("exact", "cause", "user");
         checkList.add(item2);
         EventChecklist item3 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item3.addRequirement("exact","playbackActivity","resumed");
+        item3.addRequirement("exact", "playbackActivity", "resumed");
         checkList.add(item3);
         EventChecklist item4 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item4.addRequirement("exists", "activitySessionId");
@@ -125,7 +116,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         checkAssertions(sa, account.getAccountId(), checkList);
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-1094"})
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1094" })
     @Test(description = "Test Pause/Resume QoE event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEPauseAndResume() {
@@ -136,25 +128,25 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         DisneyAccount account = loginAndStartPlayback();
 
         pause(10);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         videoPlayerPage.clickPauseButton();
         pause(10);
 
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item1.addRequirement("exact","playbackActivity", "started" );
+        item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
         EventChecklist item2 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item2.addRequirement("exact","playbackActivity","paused");
-        item2.addRequirement("exact","cause", "user" );
+        item2.addRequirement("exact", "playbackActivity", "paused");
+        item2.addRequirement("exact", "cause", "user");
         checkList.add(item2);
         EventChecklist item3 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item3.addRequirement("notexact","playbackActivity","resumed");
+        item3.addRequirement("notexact", "playbackActivity", "resumed");
         checkList.add(item3);
         //Check Pause message exist and make sure resume message does not exists by getting qoe events before resuming the video
         checkAssertions(sa, account.getAccountId(), checkList);
 
-
         EventChecklist item4 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item4.addRequirement("exact","playbackActivity","resumed");
+        item4.addRequirement("exact", "playbackActivity", "resumed");
         checkList_resumed.add(item4);
         videoPlayerPage.clickPlayButton();
 
@@ -162,7 +154,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
         checkAssertions(sa, account.getAccountId(), checkList_resumed);
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-938"})
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-938" })
     @Test(description = "Verify Hearbeat QoE Event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEHeartBeat() {
@@ -171,7 +164,9 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         //Log in and start a movie
         DisneyAccount account = loginAndStartPlayback();
         //Enable subtitle
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         videoPlayerPage.tapAudioSubTitleMenu();
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
         subtitlePage.chooseSubtitlesLanguage("English [CC]");
@@ -190,20 +185,20 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         pause(10);
 
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
-        item1.addRequirement("exact","playbackActivity", "started" );
+        item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
         EventChecklist item2 = new EventChecklist("urn:dss:event:client:playback:heartbeat:v1");
-        item2.addRequirement("exact","sampleType", "user" );
+        item2.addRequirement("exact", "sampleType", "user");
         item2.addRequirement("exists", "playlistAudioChannels");
         item2.addRequirement("exists", "playlistAudioCodec");
         item2.addRequirement("exists", "playlistAudioLanguage");
         item2.addRequirement("exists", "playlistAudioName");
-        item2.addRequirement("exact","playlistSubtitleLanguage","en");
-        item2.addRequirement("exact","playlistSubtitleName","English [CC]");
+        item2.addRequirement("exact", "playlistSubtitleLanguage", "en");
+        item2.addRequirement("exact", "playlistSubtitleName", "English [CC]");
         checkList.add(item2);
 
         EventChecklist item3 = new EventChecklist("urn:dss:event:client:playback:heartbeat:v1");
-        item3.addRequirement("exact","sampleType","state");
+        item3.addRequirement("exact", "sampleType", "state");
         item3.addRequirement("exists", "activitySessionId");
         item3.addRequirement("exists", "audioBitrate");
         item3.addRequirement("exists", "bufferSegmentDuration");
@@ -234,7 +229,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkList.add(item3);
 
         EventChecklist item4 = new EventChecklist("urn:dss:event:client:playback:heartbeat:v1");
-        item4.addRequirement("exact","sampleType","periodic");
+        item4.addRequirement("exact", "sampleType", "periodic");
         item4.addRequirement("exists", "activitySessionId");
         item4.addRequirement("exists", "audioBitrate");
         item4.addRequirement("exists", "bufferSegmentDuration");
@@ -269,23 +264,18 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
 
     private DisneyAccount loginAndStartPlayback() {
         SoftAssert sa = new SoftAssert();
-        disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
-        searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
-        videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        detailsIOSPageBase = new DisneyPlusDetailsIOSPageBase(getDriver());
-        subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
-        disneyPlusWelcomeIOSPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyAccount account = disneyAccount.get();
+        DisneyPlusSearchIOSPageBase searchPage = new DisneyPlusSearchIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeIOSPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyAccount account = getAccount();
         addHoraValidationSku(account);
         Assert.assertTrue(disneyPlusWelcomeIOSPage.isOpened(), "Welcome screen did not launch");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         //Login Steps
         disneyPlusWelcomeIOSPage.clickLogInButton();
-        disneyPlusLoginIOSPageBase.fillOutEmailField(account.getEmail());
+        new DisneyPlusLoginIOSPageBase(getDriver()).fillOutEmailField(account.getEmail());
         hideKeyboard();
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(account.getUserPass());
+        new DisneyPlusPasswordIOSPageBase(getDriver()).submitPasswordForLogin(account.getUserPass());
+        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPagesBase = new DisneyPlusHomeIOSPageBase(getDriver());
         Assert.assertTrue(disneyPlusHomeIOSPagesBase.isOpened(), "Home screen did not launch");
         //Navigate to Movie Page
         disneyPlusHomeIOSPagesBase.clickSearchIcon();
@@ -294,8 +284,8 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
         //Start first movie from the movie page
         searchPage.getDisplayedTitles().get(0).click();
-        detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
-        Assert.assertTrue(videoPlayerPage.isOpened(), "Video Player did not launch");
+        new DisneyPlusDetailsIOSPageBase(getDriver()).clickPlayButton().waitForVideoToStart();
+        Assert.assertTrue(new DisneyPlusVideoPlayerIOSPageBase(getDriver()).isOpened(), "Video Player did not launch");
         return account;
     }
 }

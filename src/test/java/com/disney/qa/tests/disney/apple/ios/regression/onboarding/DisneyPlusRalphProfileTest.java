@@ -38,8 +38,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
 
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         pause(5);
         homePage.isOpened();
@@ -67,8 +67,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         oneTrustPage.tapConfirmMyChoiceButton();
         sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         homePage.waitForHomePageToOpen();
         homePage.isOpened();
@@ -95,8 +95,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present, reject all button was not actioned");
         sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         pause(5);
         homePage.waitForHomePageToOpen();
@@ -122,8 +122,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         loginPage.dismissAppTrackingPopUp();
 
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         pause(5);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -148,22 +148,22 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         CreateDisneyProfileRequest createDisneyProfileRequest = new CreateDisneyProfileRequest();
 
         createDisneyProfileRequest
-                .setDisneyAccount(disneyAccount.get())
+                .setDisneyAccount(getAccount())
                 .setProfileName(SECONDARY_PROFILE)
                 .setDateOfBirth("1995-01-01")
                 .setAvatarId(R.TESTDATA.get("disney_darth_maul_avatar_id"))
                 .setGender(null)
                 .setKidsModeEnabled(false)
                 .setStarOnboarded(false)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
-        disneyAccountApi.get().addProfile(createDisneyProfileRequest);
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        getAccountApi().addProfile(createDisneyProfileRequest);
 
         oneTrustPage.tapRejectAllButton();
         loginPage.dismissAppTrackingPopUp();
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         pause(5);
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
@@ -175,13 +175,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     private void  setupForRalph(String... DOB) {
-        String locale = languageUtils.get().getLocale();
+        String locale = getLocalizationUtils().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
         createDisneyAccountRequest
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
         // Depending on the test scenario we need to set the DOB to
         // 1. certain age or
         // 2. set to null - to trigger the data collection flow
@@ -191,12 +191,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         } else if(DOB == null) {
             createDisneyAccountRequest.setDateOfBirth(null);
         }
-        DisneyOffer disneyOffer = disneyAccountApi.get().lookupOfferToUse(locale, "Disney Plus Standard W Ads Monthly - DE - Web");
+        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Disney Plus Standard W Ads Monthly - DE - Web");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
-        DisneyAccount testAccount = disneyAccountApi.get().createAccount(createDisneyAccountRequest);
-        disneyAccountApi.get().addFlex(testAccount);
-        disneyAccount.set(testAccount);
+        DisneyAccount testAccount = getAccountApi().createAccount(createDisneyAccountRequest);
+        getAccountApi().addFlex(testAccount);
+        setAccount(testAccount);
         handleAlert();
     }
 }

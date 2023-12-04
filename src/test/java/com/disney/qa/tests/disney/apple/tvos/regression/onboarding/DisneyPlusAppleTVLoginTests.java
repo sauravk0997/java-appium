@@ -28,7 +28,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90606", "XCDQA-90604"})
-    @Test(description = "Email Input screen: Navigate Back", groups = {"Smoke"})
+    @Test(description = "Email Input screen: Navigate Back", groups = {"Onboarding", "Smoke"})
     public void backToWelcomeScreen() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -44,7 +44,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90608"})
-    @Test(description = "Email Input screen: Screen details/appearance", groups = {"Smoke"})
+    @Test(description = "Email Input screen: Screen details/appearance", groups = {"Onboarding", "Smoke"})
     public void emailInputScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -55,7 +55,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         sa.assertTrue(disneyPlusAppleTVLoginPage.isOpened(), "Email input screen did not launch");
         sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldFocused(), "Email input is not focused by default");
-        sa.assertEquals(disneyPlusAppleTVLoginPage.getHeadlineHeaderText(), languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_IN_TITLE.getText()));
+        sa.assertEquals(disneyPlusAppleTVLoginPage.getHeadlineHeaderText(), getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_IN_TITLE.getText()));
         sa.assertTrue(disneyPlusAppleTVLoginPage.isContinueButtonDisplayed(), "Continue button is not present");
         sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldDisplayed(), "Email text field is not present");
 
@@ -63,7 +63,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90610"})
-    @Test(description = "Email Input screen: Navigation", groups = {"Smoke"})
+    @Test(description = "Email Input screen: Navigation", groups = {"Onboarding"})
     public void emailInputNavigation() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -80,7 +80,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90612", "XCDQA-90614"})
-    @Test(description = "Email Input screen: on-screen keyboard appearance", groups = {"Smoke"})
+    @Test(description = "Email Input screen: on-screen keyboard appearance", groups = {"Onboarding"})
     public void emailInputKeyboardAppearance() {
         String tempEmailText = "bcd";
         SoftAssert sa = new SoftAssert();
@@ -108,13 +108,13 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90600"})
-    @Test(description = "Check for the error message with no email input", groups = {"Smoke"})
+    @Test(description = "Check for the error message with no email input", groups = {"Onboarding"})
     public void verifyErrorMessageWithNoEmailInput() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
 
-        String noEmailInputError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
+        String noEmailInputError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -127,13 +127,13 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90602"})
-    @Test(description = "Check for error message with invalid email input", groups = {"Smoke"})
+    @Test(description = "Check for error message with invalid email input", groups = {"Onboarding"})
     public void verifyErrorMessageWithInvalidEmailInput() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
 
-        String noEmailInputError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
+        String noEmailInputError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -146,7 +146,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90104"})
-    @Test(description = "Verify all the texts on the we couldn't find an account for that email screen", groups = {"Smoke"})
+    @Test(description = "Verify all the texts on the we couldn't find an account for that email screen", groups = {"Onboarding"})
     public void unknownEmailScreenTextVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -156,9 +156,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(apiProvider.get().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getContentApiChecker().getUniqueUserEmail());
 
-        List<String> expectedTextList = DisneyPlusAppleTVLoginPage.getUnknownEmailScreenTexts(languageUtils.get());
+        List<String> expectedTextList = DisneyPlusAppleTVLoginPage.getUnknownEmailScreenTexts(getLocalizationUtils());
         IntStream.range(0, expectedTextList.size()).forEach(i -> {
             if (i == 0) {
                 sa.assertEquals(disneyPlusAppleTVLoginPage.getActionableAlertTitle(), expectedTextList.get(i));
@@ -179,14 +179,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        String errorMessage = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_INVALID_EMAIL_ERROR.getText());
-        String continueBtnText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText());
+        String errorMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_INVALID_EMAIL_ERROR.getText());
+        String continueBtnText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(apiProvider.get().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getContentApiChecker().getUniqueUserEmail());
         disneyPlusAppleTVLoginPage.clickTryAgainBtn();
 
         sa.assertTrue(disneyPlusAppleTVLoginPage.isOpened(),
@@ -204,10 +204,10 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
-    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Smoke"})
+    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
-        String uniqueUserEmail = apiProvider.get().getUniqueUserEmail();
+        String uniqueUserEmail = getContentApiChecker().getUniqueUserEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -240,14 +240,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90598"})
-    @Test(description = "Given user enters a valid registered email then user is taken Log In password screen", groups = {"Smoke"})
+    @Test(description = "Given user enters a valid registered email then user is taken Log In password screen", groups = {"Onboarding"})
     public void registeredEmailTakenToLoginPassword() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount disneyAccount = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount disneyAccount = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -261,15 +261,15 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90701"})
-    @Test(description = "Log In Password screen details verification", groups = {"Smoke"})
+    @Test(description = "Log In Password screen details verification", groups = {"Onboarding"})
     public void passwordScreenDetailsVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        List<String> expectedTexts = DisneyPlusAppleTVPasswordPage.getLogInPasswordScreenTexts(languageUtils.get());
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        List<String> expectedTexts = DisneyPlusAppleTVPasswordPage.getLogInPasswordScreenTexts(getLocalizationUtils());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -288,7 +288,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90703"})
-    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Smoke"})
+    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"})
     public void passwordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -296,11 +296,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
-        String passwordGhost = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, PASSWORD.getText());
-        String forgotPasswordBtnText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText());
-        String logInBtnText = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_BTN.getText());
+        String passwordGhost = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, PASSWORD.getText());
+        String forgotPasswordBtnText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText());
+        String logInBtnText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_BTN.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -326,14 +326,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90705"})
-    @Test(description = "On Password Screen selecting enter your password displays on screen keyboard", groups = {"Smoke"})
+    @Test(description = "On Password Screen selecting enter your password displays on screen keyboard", groups = {"Onboarding"})
     public void clickingPasswordFieldLaunchesOnScreenKeyboard() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -357,14 +357,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-90711"})
-    @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {"Smoke"})
+    @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {"Onboarding"})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         String encryptedPassword = "••••";
 
@@ -412,16 +412,16 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90697"})
-    @Test(description = "On enter password screen when no input is provided but login is attempted an error should be prompted", groups = {"Smoke"})
+    @Test(description = "On enter password screen when no input is provided but login is attempted an error should be prompted", groups = {"Onboarding"})
     public void noInputPasswordError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
-        String emptyPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_NO_PASSWORD_ERROR.getText());
+        String emptyPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_NO_PASSWORD_ERROR.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -440,16 +440,16 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})
-    @Test(description = "When user enters an incorrect password an appropriate error message is prompted to the user", groups = {"Smoke"})
+    @Test(description = "When user enters an incorrect password an appropriate error message is prompted to the user", groups = {"Onboarding"})
     public void incorrectPasswordErrorMessage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
-        String incorrectPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -466,12 +466,12 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90689"})
-    @Test(description = "When user enters the correct password then a validating screen is prompted prior to login", groups = {"Smoke"})
+    @Test(description = "When user enters the correct password then a validating screen is prompted prior to login", groups = {"Onboarding"})
     public void validatingScreenPostLogIn() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
@@ -487,21 +487,21 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90691"})
-    @Test(description = "User logging in with a single profile account will be taken directly to home page", groups = {"Smoke"})
+    @Test(description = "User logging in with a single profile account will be taken directly to home page", groups = {"Onboarding", "Smoke"})
     public void singleProfileAccountIsTakenToHomePage() {
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         logIn(entitledUser);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90693"})
-    @Test(description = "User logging in with multiple profile account will be taken Who's Watching", groups = {"Smoke"})
+    @Test(description = "User logging in with multiple profile account will be taken Who's Watching", groups = {"Onboarding"})
     public void multipleProfileAccountIsTakenToProfileSelection() {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        disneyAccountApi.addProfile(entitledUser, "test", language, null, false);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        getAccountApi().addProfile(entitledUser, "test", getLanguage(), null, false);
 
         logInWithoutHomeCheck(entitledUser);
 
@@ -509,11 +509,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90695"})
-    @Test(description = "User's profile selected post login is displayed in global nav", groups = {"Smoke"})
+    @Test(description = "User's profile selected post login is displayed in global nav", groups = {"Onboarding"})
     public void profileNameRetention() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
@@ -529,13 +529,13 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90591", "XCDQA-90593"})
-    @Test(description = "Verify Restart subscription screen details", groups = "Smoke")
+    @Test(description = "Verify Restart subscription screen details", groups = {"Onboarding"})
     public void verifyRestartSubscriptionScreenDetails() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyAccount disneyAccount = disneyAccountApi.createExpiredAccount(ENTITLEMENT_LOOKUP, country, language, SUB_VERSION);
+        DisneyAccount disneyAccount = getAccountApi().createExpiredAccount(ENTITLEMENT_LOOKUP, getCountry(), getLanguage(), SUB_VERSION);
 
         logInWithoutHomeCheck(disneyAccount);
 
@@ -567,11 +567,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90596"})
-    @Test(description = "Verify Restart subscription screen details", groups = {"Smoke"})
+    @Test(description = "Verify Restart subscription screen details", groups = {"Onboarding"})
     public void verifyCompleteSubButtonOnUnSubbedRegisteredAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());
-        DisneyAccount disneyAccount = disneyAccountApi.createAccount(country, language);
+        DisneyAccount disneyAccount = getAccountApi().createAccount(getCountry(), getLanguage());
 
         logInWithoutHomeCheck(disneyAccount);
 
@@ -582,27 +582,27 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91057"})
-    @Test(description = "User logging in with a single profile is taken to home page", groups = {"Smoke"})
+    @Test(description = "User logging in with a single profile is taken to home page", groups = {"Onboarding", "Smoke"})
     public void userLoggingInWithASingleProfileTakesUserToHome() {
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         logIn(entitledUser);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061", "XCDQA-91063"})
-    @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {"Smoke"})
+    @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {"Onboarding"})
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         String testProfile = "test";
-        disneyAccountApi.addProfile(entitledUser, testProfile, language, null, false);
-        String whoIsWatchingTitle = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CHOOSE_PROFILE_TITLE.getText());
-        String editProfileBtn = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_EDIT_PROFILE.getText());
-        String addProfileBtn = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_PROFILE.getText());
+        getAccountApi().addProfile(entitledUser, testProfile, getLanguage(), null, false);
+        String whoIsWatchingTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CHOOSE_PROFILE_TITLE.getText());
+        String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_EDIT_PROFILE.getText());
+        String addProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_PROFILE.getText());
 
         logInWithoutHomeCheck(entitledUser);
 
@@ -631,17 +631,17 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     //TODO add avatar recognition once training is complete
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065", "XCDQA-91067"})
-    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Smoke"})
+    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"})
     public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        List<ContentSet> sets = searchApi.getAllSetsInHomeCollection(entitledUser, country, language, "PersonalizedCollection");
+        List<ContentSet> sets = getSearchApi().getAllSetsInHomeCollection(entitledUser, getCountry(), getLanguage(), "PersonalizedCollection");
         List<String> titles = sets.get(1).getTitles();
 
-        disneyAccountApi.patchProfileAvatar(entitledUser, entitledUser.getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
+        getAccountApi().patchProfileAvatar(entitledUser, entitledUser.getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
 
         logIn(entitledUser);
 

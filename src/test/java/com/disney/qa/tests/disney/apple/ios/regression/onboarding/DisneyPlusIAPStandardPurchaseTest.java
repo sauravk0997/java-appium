@@ -51,7 +51,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
         if (!dobCollectionPage.isOpened()) {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
@@ -111,7 +111,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
         if (!dobCollectionPage.isOpened()) {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
@@ -172,7 +172,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
         if (!dobCollectionPage.isOpened()) {
             dobCollectionPage.getTypeButtonByLabel("done").clickIfPresent();
             initPage(DisneyPlusCreatePasswordIOSPageBase.class).tapSignUpButton();
