@@ -610,8 +610,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertEquals(disneyPlusAppleTVWhoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle);
 
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, testProfile, ROUND_TILE.getText())
-                .assertLabelContainsCaption(sa, entitledUser.getProfiles().get(0).getProfileName(), ROUND_TILE_HOVERED.getText())
+        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, entitledUser.getProfiles().get(0).getProfileName(), ROUND_TILE_HOVERED.getText())
+                .assertLabelContainsCaption(sa, testProfile, ROUND_TILE.getText())
                 .assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE.getText());
 
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isDynamicAccessibilityIDElementPresent(editProfileBtn),
