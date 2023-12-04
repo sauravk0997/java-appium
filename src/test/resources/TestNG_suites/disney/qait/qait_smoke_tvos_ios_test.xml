@@ -9,7 +9,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS;newCommandTimeout=180"/>
+               value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="reporting.notification.slack-channels" value="qualityplatform-alerts"/>
     <parameter name="stringParam::group::Test Group selection. Only 'QAIT' group to run" value="qait"/>
