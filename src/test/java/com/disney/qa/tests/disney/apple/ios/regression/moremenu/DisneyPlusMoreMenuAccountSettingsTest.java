@@ -1,10 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.client.responses.graphql.login.DisneyPlus;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOrder;
@@ -56,7 +54,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String BRADESCO_URL = "banco.bradesco";
     private static final String BRADESCO_NEXT_URL = "next.me";
     private static final String DETELEKOM_URL = "telekom.de";
-    ThreadLocal<EmailApi> emailApi = new ThreadLocal<>();
 
     @BeforeMethod
     public void handleAlert() {
@@ -578,8 +575,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordUI() {
         SoftAssert sa = new SoftAssert();
-        emailApi.set(new EmailApi());
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
@@ -587,7 +583,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "XMOBQA-61559 - OTP entry page was not opened");
@@ -640,12 +636,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
-        emailApi.set(new EmailApi());
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
 
@@ -661,12 +656,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        emailApi.set(new EmailApi());
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         accountPage.clickChangePasswordCell();
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         changePasswordPage.clickLogoutAllDevices();
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
@@ -682,12 +676,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        emailApi.set(new EmailApi());
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
                 "XMOBQA-61553 - OTP entry page was not opened");
@@ -739,12 +732,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
 
-        emailApi.set(new EmailApi());
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
 
@@ -766,12 +758,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = new DisneyPlusHomeIOSPageBase(getDriver());
 
-        emailApi.set(new EmailApi());
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
         disneyPlusAccountIOSPageBase.clickChangeLink(getAccount().getEmail());
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isOpened(),
@@ -827,8 +818,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void testLogoutOfAllDevicesForgotPasswordFunctions() {
         SoftAssert sa = new SoftAssert();
-        emailApi.set(new EmailApi());
-        Date startTime = emailApi.get().getStartTime();
+        Date startTime = getEmailApi().getStartTime();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -842,7 +832,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP Page was not opened");
 
-        String otp = emailApi.get().getDisneyOTP(getAccount().getEmail(), startTime);
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtpValue(otp);
         sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");

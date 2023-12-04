@@ -15,7 +15,6 @@ import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
@@ -285,12 +284,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void cleanThreads() {
-        LOGGER.info("Cleaning threads");
-        LOGGER.info("Threads cleaned");
     }
 
     /**

@@ -12,6 +12,7 @@ import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.disney.DisneyHttpHeaders;
 import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.disney.DisneyPlusOverrideKeys;
+import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -42,6 +43,7 @@ import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -132,6 +134,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
+    private static final LazyInitializer<EmailApi> EMAIL_API = new LazyInitializer<>() {
+        @Override
+        protected EmailApi initialize() throws ConcurrentException {
+            return new EmailApi();
+        }
+    };
+
     @BeforeSuite(alwaysRun = true)
     public void ignoreStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available");
@@ -159,6 +168,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     @BeforeSuite(alwaysRun = true)
     public void initPageDictionary() {
         DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void clearDisneyAppleBaseTest() {
+        DISNEY_ACCOUNT.remove();
     }
 
     public static String getCountry() {
@@ -196,6 +210,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static DisneyAccountApi getAccountApi() {
         try {
             return ACCOUNT_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static EmailApi getEmailApi() {
+        try {
+            return EMAIL_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
