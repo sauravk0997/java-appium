@@ -3,15 +3,12 @@ package com.disney.qa.tests.disney.apple.ios.localization;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
@@ -292,14 +289,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> {
-                    if (!debugMode) {
+                    if (!DEBUG_MODE) {
                         return accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
                     } else {
                         return accountPage.isChangeLinkPresent(DictionaryKeys.HIDDEN_PASSWORD.getText());
                     }
                 });
         startTime = emailApi.getStartTime();
-        if (!debugMode) {
+        if (!DEBUG_MODE) {
             accountPage.clickChangeLink(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
         } else {
             accountPage.clickChangeLink(DictionaryKeys.HIDDEN_PASSWORD.getText());

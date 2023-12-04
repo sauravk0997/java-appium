@@ -13,18 +13,14 @@ import org.testng.annotations.DataProvider;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.zebrunner.carina.proxy.browserup.ProxyPool;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -32,11 +28,10 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    protected ThreadLocal<String> baseDirectory = new ThreadLocal<>();
-    protected ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    protected String zipTestName;
-
-    protected boolean debugMode = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
+    protected static final ThreadLocal<String> BASE_DIRECTORY = new ThreadLocal<>();
+    protected static final ThreadLocal<String> PATH_TO_ZIP = new ThreadLocal<>();
+    private static final ThreadLocal<String> ZIP_TEST_NAME = new ThreadLocal<>();
+    protected static final boolean DEBUG_MODE = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
 
     protected void setup() {
         String locale = getLocalizationUtils().getLocale();
@@ -49,20 +44,20 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
         getAccountApi().addFlex(testAccount);
         setAccount(testAccount);
-        baseDirectory.set(String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage()));
+        BASE_DIRECTORY.set(String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage()));
         setJarvisOverrides();
     }
 
     protected void setPathToZip() {
-        pathToZip.set(String.format("%s_%s_%s_%s.zip",
-                zipTestName,
+        PATH_TO_ZIP.set(String.format("%s_%s_%s_%s.zip",
+                ZIP_TEST_NAME.get(),
                 R.CONFIG.get("locale"),
                 R.CONFIG.get("language"),
                 DateUtils.now()));
     }
 
     protected void setZipTestName(String testName) {
-        zipTestName = testName;
+        ZIP_TEST_NAME.set(testName);
     }
 
     protected void loginDismiss(DisneyAccount testAccount) {
@@ -174,7 +169,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
             }
         });
 
-        if(debugMode) {
+        if(DEBUG_MODE) {
             while (!jarvis.getDebugDisplayOverrideValue().equals("key")) {
                 jarvis.clickDebugDisplayOverride();
             }
@@ -189,11 +184,9 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     public void uploadScreenshots(){
         LOGGER.info("Running after method upload screenshots");
         setPathToZip();
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
-    }
-
-    @AfterMethod
-    public void cleanProxies() {
-        ProxyPool.stopProxy();
+        UniversalUtils.archiveAndUploadsScreenshots(BASE_DIRECTORY.get(), PATH_TO_ZIP.get());
+        BASE_DIRECTORY.remove();
+        PATH_TO_ZIP.remove();
+        ZIP_TEST_NAME.remove();
     }
 }

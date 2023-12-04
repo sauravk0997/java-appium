@@ -254,7 +254,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
         getScreenshots("ProfileSelect");
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+        UniversalUtils.archiveAndUploadsScreenshots(BASE_DIRECTORY.get(), PATH_TO_ZIP.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
