@@ -35,16 +35,16 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        String invalidPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
+        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //wait for action grant to expire
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
         createKidsProfile();
         passwordPage.submitPasswordWhileLoggedIn("IncorrectPassword!123");
         //Verify that error is shown on screen
         softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertAll();
     }
@@ -57,12 +57,12 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //wait for action grant to expire
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
@@ -92,12 +92,12 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //wait for action grant to expire
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         //Decline consent
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
@@ -116,12 +116,12 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //wait for action grant to expire
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         //Abandon the flow
         terminateApp(sessionBundles.get(DISNEY));
@@ -143,7 +143,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -153,7 +153,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         addProfile.clickSaveProfileButton();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             scrollDown();

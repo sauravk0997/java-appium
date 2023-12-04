@@ -18,18 +18,18 @@ public class DisneyPlusForgotPasswordTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62044"})
     @Test(description = "Log in - Verify Forgot Password Link",groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testForgotPasswordLink() {
-        disneyAccount.set(disneyAccountApi.get().createAccountForOTP(languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         SoftAssert softAssert = new SoftAssert();
         EmailApi emailApi = new EmailApi();
         String subject = "Your one-time passcode";
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(disneyAccount.get().getEmail());
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(getAccount().getEmail());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Forgot password link not displayed");
         Date startTime = emailApi.getStartTime();
         disneyPlusPasswordIOSPageBase.clickForgotPasswordLink();
         softAssert.assertTrue(initPage(DisneyPlusOneTimePasscodeIOSPageBase.class).isOpened(), "Forgot password page not opened");
-        String otp = emailApi.getDisneyOTP(disneyAccount.get().getEmail(), startTime);
+        String otp = emailApi.getDisneyOTP(getAccount().getEmail(), startTime);
         softAssert.assertTrue(otp.length() > 0);
         softAssert.assertAll();
     }

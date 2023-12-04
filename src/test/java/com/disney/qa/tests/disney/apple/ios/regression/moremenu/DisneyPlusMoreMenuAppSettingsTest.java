@@ -29,7 +29,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
     public void onboard() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
     }
@@ -40,7 +40,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
-        String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
+        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
@@ -50,11 +50,11 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "Back Arrow was not present");
 
         String automaticLabel = String.format(customAppSettingLabel
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText())
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC_BODY.getText()));
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText())
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC_BODY.getText()));
         String saveDataLabel = String.format(customAppSettingLabel
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA.getText())
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA.getText())
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
 
         ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
@@ -80,7 +80,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
-        String wifiOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText());
+        String wifiOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText());
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(wifiOption).isElementPresent(),
@@ -90,11 +90,11 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "Back Arrow was not present");
 
         String automaticLabel = String.format(customAppSettingLabel
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_AUTOMATIC.getText())
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_AUTOMATIC_BODY.getText()));
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_AUTOMATIC.getText())
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_AUTOMATIC_BODY.getText()));
         String saveDataLabel = String.format(customAppSettingLabel
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_SAVE_DATA.getText())
-                ,languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_SAVE_DATA_BODY.getText()));
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_SAVE_DATA.getText())
+                ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_SAVE_DATA_BODY.getText()));
 
         ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(automaticLabel);
         sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
@@ -140,39 +140,39 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             disneyPlusDetailsIOSPageBase.clickPlayButton();
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getStaticTextByLabel(languageUtils.get()
+                            .getStaticTextByLabel(getLocalizationUtils()
                                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_REQUIRED_TITLE.getText()))
                             .isElementPresent(),
                     "XMOBQA-61211 - 'WiFi Required' popup title was not displayed");
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getStaticTextByLabel(languageUtils.get()
+                            .getStaticTextByLabel(getLocalizationUtils()
                                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_STREAMING_ONLY_MESSAGE.getText()))
                             .isElementPresent(),
                     "XMOBQA-61211 - 'WiFi Required' descriptive text was not displayed");
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getDynamicAccessibilityId(languageUtils.get()
+                            .getDynamicAccessibilityId(getLocalizationUtils()
                                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()))
                             .isElementPresent(),
                     "XMOBQA-61211 - 'App Settings' button was not displayed");
 
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.getDynamicAccessibilityId(languageUtils.get()
+            sa.assertTrue(disneyPlusDetailsIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
                             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DISMISS_BTN.getText()))
                             .isElementPresent(),
                     "XMOBQA-61211 - 'Dismiss' button was not displayed");
 
-            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(languageUtils.get()
+            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DISMISS_BTN.getText())).click();
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),
                     "XMOBQA-61229/61231 - The user did not stay on the Media page after dismissing the modal");
 
             disneyPlusDetailsIOSPageBase.clickPlayButton();
-            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(languageUtils.get()
+            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).click();
 
-            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get()
+            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils()
                             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent()
                             && initPage(DisneyPlusEditProfileIOSPageBase.class).getBackArrow().isElementPresent(),
                     "XMOBQA-61235 - User was not redirected to App Settings from Modal navigation");
@@ -214,7 +214,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             disneyPlusDetailsIOSPageBase.startDownload();
             pause(10);
 
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadInProgressDisplayed(languageUtils.get(), 1),
+            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadInProgressDisplayed(getLocalizationUtils(), 1),
                     "Download did not start while on WiFi");
 
             networkHandler.toggleWifi(IOSUtils.ButtonStatus.OFF);
@@ -222,14 +222,14 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
             disneyPlusDetailsIOSPageBase.pauseDownload();
 
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadPaused(languageUtils.get()),
+            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadPaused(getLocalizationUtils()),
                     "Download was not paused after WiFi was disabled");
 
-            disneyPlusDetailsIOSPageBase.removeDownload(languageUtils.get());
+            disneyPlusDetailsIOSPageBase.removeDownload(getLocalizationUtils());
             disneyPlusDetailsIOSPageBase.startDownload();
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getStaticTextByLabel(languageUtils.get()
+                            .getStaticTextByLabel(getLocalizationUtils()
                                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_REQUIRED_TITLE.getText()))
                             .isElementPresent(),
                     "'WiFi Required' popup title was not displayed");
@@ -260,7 +260,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             disneyPlusBrandIOSPageBase.clickFirstCarouselPoster();
             disneyPlusDetailsIOSPageBase.startDownload();
 
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadInProgressDisplayed(languageUtils.get(), 1),
+            sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadInProgressDisplayed(getLocalizationUtils(), 1),
                     "Download did not start");
         } finally {
             networkHandler.toggleWifi(IOSUtils.ButtonStatus.ON);
@@ -276,7 +276,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
 
-        String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
+        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
         moreMenu.getStaticTextByLabel(cellOption).click();
         sa.assertTrue(moreMenu.getStaticTextByLabel(cellOption).isElementPresent(),
                 "XMOBQA-61217 - 'Video Quality' header was not present");
@@ -313,7 +313,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         });
 
         moreMenu.getBackArrow().click();
-        sa.assertTrue(moreMenu.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
+        sa.assertTrue(moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
                 "User was not returned to the More Menu after closing Video Quality submenu");
         sa.assertAll();
     }
@@ -329,32 +329,32 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
                 "Back Arrow is not displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_PLAYBACK_TITLE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_PLAYBACK_TITLE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Video Playback' section header was not properly displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SETTINGS_TITLE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SETTINGS_TITLE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Downloads' section header was not displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Stream over Wi-Fi only' cell was not properly displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Wi-Fi Data Usage' cell was not properly displayed");
 
-        String cellOption = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
+        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
                 "XMOBQA-61223 - 'Cellular Data Usage' cell was not properly displayed");
 
         String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
 
-        sa.assertEquals(usage[1].trim(),  languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText()),
+        sa.assertEquals(usage[1].trim(),  getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText()),
                 "XMOBQA-61205 - Cellular data default was not set to 'Automatic'");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Download Over Wi-Fi Only' cell was not properly displayed");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText())).isElementPresent(),
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Video Quality' cell was not properly displayed");
 
         sa.assertFalse(disneyPlusMoreMenuIOSPageBase.isDeleteDownloadsEnabled(),
@@ -375,7 +375,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(AVATAR);
@@ -397,7 +397,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "XMOBQA-62429 - Modal Items are not all properly displayed");
 
         if(modalDisplayed) {
-            moreMenu.getTypeButtonByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).click();
+            moreMenu.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).click();
             sa.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
                     "XMOBQA-62427 - 'Delete All Downloads' did not remain enabled after cancel operation");
         } else {
@@ -406,7 +406,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
         moreMenu.clickDeleteAllDownloads();
         if(moreMenu.areAllDeleteModalItemsPresent()) {
-            moreMenu.getTypeButtonByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).click();
+            moreMenu.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).click();
 
             sa.assertFalse(moreMenu.isDeleteDownloadsEnabled(),
                     "XMOBQA-62425 - 'Delete All Downloads' cell as not disabled after confirming deletion");

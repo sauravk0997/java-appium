@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     public void noWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
@@ -37,8 +37,8 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
 
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isAIDElementPresentWithScreenshot(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_COPY.getText())), "Empty watchlist text is not present");
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isAIDElementPresentWithScreenshot(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_SUBCOPY.getText())), "Empty watchlist text is not present");
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isAIDElementPresentWithScreenshot(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_COPY.getText())), "Empty watchlist text is not present");
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isAIDElementPresentWithScreenshot(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_SUBCOPY.getText())), "Empty watchlist text is not present");
         sa.assertAll();
     }
 
@@ -52,10 +52,10 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         titles.add(DisneyContentIds.LUCA);
         titles.add(DisneyContentIds.WANDA_VISION);
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        IntStream.range(0, titles.size()).forEach(i -> searchApi.addToWatchlist(entitledUser, titles.get(i).getContentType(), titles.get(i).getContentId()));
+        IntStream.range(0, titles.size()).forEach(i -> getSearchApi().addToWatchlist(entitledUser, titles.get(i).getContentType(), titles.get(i).getContentId()));
 
         logInTemp(entitledUser);
 
@@ -71,7 +71,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         });
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
 
-        searchApi.addToWatchlist(entitledUser, DisneyContentIds.SOUL.getContentType(), DisneyContentIds.SOUL.getContentId());
+        getSearchApi().addToWatchlist(entitledUser, DisneyContentIds.SOUL.getContentType(), DisneyContentIds.SOUL.getContentId());
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after login");
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
@@ -90,11 +90,11 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         titles.add(DisneyContentIds.LUCA);
         titles.add(DisneyContentIds.WANDA_VISION);
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
-        IntStream.range(0, titles.size()).forEach(i -> searchApi.addToWatchlist(entitledUser, titles.get(i).getContentType(), titles.get(i).getContentId()));
+        IntStream.range(0, titles.size()).forEach(i -> getSearchApi().addToWatchlist(entitledUser, titles.get(i).getContentType(), titles.get(i).getContentId()));
 
         logInTemp(entitledUser);
 

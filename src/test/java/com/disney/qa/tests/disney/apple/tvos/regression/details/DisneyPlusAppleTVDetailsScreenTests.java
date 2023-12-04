@@ -31,13 +31,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void movieDetailsPageAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        searchApi.addMovieToWatchlist(entitledUser, IS_PROD ? END_GAME.getContentId() : END_GAME_QA.getContentId());
-        ContentMovie contentMovie = searchApi.getMovie(IS_PROD ? AVENGERS_ENDGAME_PROD.getEncodedFamilyId() : AVENGERS_ENDGAME_QA.getEncodedFamilyId(), country, language);
+        getSearchApi().addMovieToWatchlist(entitledUser, IS_PROD ? END_GAME.getContentId() : END_GAME_QA.getContentId());
+        ContentMovie contentMovie = getSearchApi().getMovie(IS_PROD ? AVENGERS_ENDGAME_PROD.getEncodedFamilyId() : AVENGERS_ENDGAME_QA.getEncodedFamilyId(), getCountry(), getLanguage());
         String briefDescription = contentMovie.getBriefDescription();
         String ratingsValue = contentMovie.getContentRatingsValue();
         List<String> tabs = Stream.of("SUGGESTED", "EXTRAS", "DETAILS").collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -124,7 +124,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVVideoPlayerPage disneyPlusAppleTVVideoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         logInTemp(entitledUser);
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());

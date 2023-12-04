@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWatchlistIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -17,7 +16,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(description = "Home - Deeplink", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyHomeDeeplink() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_home_deeplink"), 10);
         homePage.clickOpenButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
