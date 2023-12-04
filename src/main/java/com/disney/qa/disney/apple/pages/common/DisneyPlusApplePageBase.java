@@ -63,7 +63,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicClassChain;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == '%s'`]")
     protected ExtendedWebElement staticCellByLabel;
-    private static final ThreadLocal<DisneyLocalizationUtils> disneyLanguageUtils = new ThreadLocal<>();
+    private static DisneyLocalizationUtils disneyLanguageUtils = null;
     @ExtendedFindBy(accessibilityId = "Clear")
     public ExtendedWebElement keyboardClear;
     @ExtendedFindBy(accessibilityId = "unlockedProfileCell")
@@ -304,15 +304,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public static DisneyLocalizationUtils getDictionary() {
-        return disneyLanguageUtils.get();
+        return Objects.requireNonNull(disneyLanguageUtils);
     }
 
     public static void setDictionary(DisneyLocalizationUtils dictionary) {
-        disneyLanguageUtils.set(dictionary);
-    }
-
-    public static void cleanLanguageUtils() {
-        disneyLanguageUtils.remove();
+        disneyLanguageUtils = dictionary;
     }
 
     public ExtendedWebElement getDynamicAccessibilityId(String id) {

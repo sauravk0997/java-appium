@@ -291,7 +291,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void cleanThreads() {
         LOGGER.info("Cleaning threads");
         LOGGER.info("Threads cleaned");
-        DisneyPlusApplePageBase.cleanLanguageUtils();
     }
 
     /**

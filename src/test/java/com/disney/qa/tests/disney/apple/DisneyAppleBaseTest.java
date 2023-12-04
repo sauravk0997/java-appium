@@ -104,7 +104,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
             disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
             disneyLocalizationUtils.setLegalDocuments();
-            DisneyPlusApplePageBase.setDictionary(disneyLocalizationUtils);
             return disneyLocalizationUtils;
         }
     };
@@ -157,6 +156,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             Xray.setExecutionKey(xrayExectionKey);
             // Xray.enableRealTimeSync();
         }
+    }
+
+    @BeforeSuite(alwaysRun = true)
+    public void initPageDictionary() {
+        DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
     }
 
     public static String getCountry() {
