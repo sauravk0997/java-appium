@@ -58,7 +58,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
     private static final String SECONDARY_PROFILE = "Test_2";
     private static final String NINETEEN_EIGHTY = "1980";
     private static final String FIRST = "01";
-    public static final int SWIPE_COUNTER = 5;
+    private static final int SWIPE_COUNTER = 5;
 
     //TODO: Replace this with the createProfile in AddProfilePage
     private void createProfile(String profileName, boolean isArielRegion) {
@@ -72,14 +72,15 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         avatarPage.clickSkipButton();
 
         avatarPage.typeProfileName(profileName);
-        if(isArielRegion) {
+        if (isArielRegion) {
             addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
             addProfilePage.chooseGender();
         }
         avatarPage.clickSaveBtn();
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = {"Subscriber - UI", "Subscriber - UI - S1", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "(iOS) Section 1| Welcome page and login flow", groups = { "Subscriber - UI",
+            "Subscriber - UI - S1", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void captureWelcomePageAndLoginFlow(String TUID) {
         setup();
         setZipTestName("SubscriberUI_1_welcomePage");
@@ -91,7 +92,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             localeForTravelling = "GB";
         }
 
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(localeForTravelling).language(getLocalizationUtils().getUserLanguage()).build();
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(localeForTravelling)
+                .language(getLocalizationUtils().getUserLanguage()).build();
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
         request.addEntitlement(entitlement);
@@ -145,7 +147,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("TravellingMessage");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = {"Subscriber - UI", "Subscriber - UI - S2", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S2 Watchlist and App Settings", groups = { "Subscriber - UI", "Subscriber - UI - S2",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void watchlistAndAppSettings(String TUID) {
         setup();
         setZipTestName("SubscriberUI_2_watchlist");
@@ -156,9 +159,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyAccount testAccount = getAccount();
 
-        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
-        String wifiOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText());
-        String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
+        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_DATA_USAGE.getText());
+        String wifiOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.WIFI_DATA_USAGE.getText());
+        String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
         getAccountApi().addProfile(testAccount, "SecondaryTestProfile",
                 getAccount().getProfileLang(), null, false);
@@ -172,7 +178,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("WhoseWatchingPage");
 
         whoseWatchingPage.clickProfile("Test");
-//        handleAlert();
+        //        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         pause(3);
         getScreenshots("ProfilePage");
@@ -203,7 +209,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("VideoQuality");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = {"Subscriber - UI", "Subscriber - UI - S3", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = { "Subscriber - UI", "Subscriber - UI - S3",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void AccountsAndHelp(String TUID) {
         setup();
         setZipTestName("SubscriberUI_3_accounts");
@@ -218,7 +225,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         EmailApi emailApi = new EmailApi();
 
         String locale = getLocalizationUtils().getLocale();
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage()).build();
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
+                .build();
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
         request.addEntitlement(entitlement);
@@ -230,7 +238,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         passwordPage.typePassword(testAccount.getUserPass());
         dismissKeyboardForPhone();
         passwordPage.clickPrimaryButton();
-
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickMenuOptionByIndex(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
@@ -265,7 +272,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         getScreenshots("ChangeEmailPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
+                emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangeEmailPageAfterOtp");
@@ -290,19 +298,22 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> {
                     if (!DEBUG_MODE) {
-                        return accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
+                        return accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.HIDDEN_PASSWORD.getText()));
                     } else {
                         return accountPage.isChangeLinkPresent(DictionaryKeys.HIDDEN_PASSWORD.getText());
                     }
                 });
         startTime = emailApi.getStartTime();
         if (!DEBUG_MODE) {
-            accountPage.clickChangeLink(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
+            accountPage.clickChangeLink(
+                    getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
         } else {
             accountPage.clickChangeLink(DictionaryKeys.HIDDEN_PASSWORD.getText());
         }
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
+                emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangePasswordPage");
@@ -353,7 +364,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogoutAllDevicesWrongPassword");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = {"Subscriber - UI", "Subscriber - UI - S4", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = { "Subscriber - UI", "Subscriber - UI - S4",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void legal(String TUID) {
         setup();
         setZipTestName("SubscriberUI_4_legal");
@@ -395,7 +407,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("HelpWebview");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = {"Subscriber - UI", "Subscriber - UI - S5", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S5 Profile menu: Edit profiles", groups = { "Subscriber - UI", "Subscriber - UI - S5",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void profileMenu(String TUID) {
         setup();
         setZipTestName("SubscriberUI_5_profileMenu");
@@ -441,7 +454,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmptyProfileName");
 
         avatarPage.typeProfileName(DEFAULT_PROFILE);
-        if(isArielRegion) {
+        if (isArielRegion) {
             addProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
             addProfilePage.chooseGender();
         }
@@ -538,7 +551,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("AfterDeleteWhoIsWatchingPage");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = {"Subscriber - UI", "Subscriber - UI - S6", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S6 PCON", groups = { "Subscriber - UI", "Subscriber - UI - S6",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void PCON(String TUID) {
         setup();
         setZipTestName("SubscriberUI_6_PCON");
@@ -556,7 +570,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String ratingSystem = profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
 
         //create a second account for a later step
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage()).build();
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         request.addEntitlement(entitlement);
@@ -564,7 +579,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getAccountApi().addProfile(testAccountTwoProfiles, SECONDARY_PROFILE, "2018-01-01", getLocalizationUtils().getUserLanguage(),
                 null, false, true);
         //set account to the lowest rating for a step later on
-        getAccountApi().editContentRatingProfileSetting(testAccount, getAccountApi().getDisneyProfiles(testAccountTwoProfiles).get(1).getProfileId(), ratingSystem,
+        getAccountApi().editContentRatingProfileSetting(testAccount, getAccountApi().getDisneyProfiles(testAccountTwoProfiles).get(1).getProfileId(),
+                ratingSystem,
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(0));
 
         loginDismiss(testAccount);
@@ -755,7 +771,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(2);
         getScreenshots("ExitKidsProfileCodeGiven");
 
-
         moreMenuPage.getExitJuniorModePin().click();
         moreMenuPage.getExitJuniorModePin().type("1111");
         dismissKeyboardForPhone();
@@ -763,7 +778,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("ExitKidsProfileWrongCodeError");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = {"Subscriber - UI", "Subscriber - UI - S7", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = { "Subscriber - UI",
+            "Subscriber - UI - S7", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void downloadsAndSearch(String TUID) {
         setup();
         setZipTestName("SubscriberUI_7_downloads");
@@ -790,7 +806,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("EmptyDownloadsPage");
 
         //S7.2
-        String movieTitle = getSearchApi().getMovie("aRbVJUb2h2Rf", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoTitle();
+        String movieTitle = getSearchApi().getMovie("aRbVJUb2h2Rf", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                .getVideoTitle();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         searchPage.searchForMedia(movieTitle);
         List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
@@ -826,7 +843,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         downloadsPage
                 .getDynamicRowButtonLabel(
                         getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 1).click();
+                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 1)
+                .click();
 
         pause(2);
         getScreenshots("MovieDownload");
@@ -836,7 +854,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         downloadsPage
                 .getDynamicRowButtonLabel(
                         getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()), 1).click();
+                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()), 1)
+                .click();
         pause(2);
         getScreenshots("MoviePausedDownload");
         detailsPage.clickAlertConfirm();
@@ -886,7 +905,9 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         detailsPage.clickAlertDismissBtn();
 
         detailsPage.getSeasonSelectorButton().click();
-        String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "3"));
+        String seasonsButton = getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
+                Map.of(SEASON_NUMBER, "3"));
         detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         pause(2);
@@ -895,24 +916,31 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         //download a couple of seasons for download in progress button
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "4"));
+        seasonsButton = getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
+                Map.of(SEASON_NUMBER, "4"));
         detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "5"));
+        seasonsButton = getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
+                Map.of(SEASON_NUMBER, "5"));
         detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, "6"));
+        seasonsButton = getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
+                Map.of(SEASON_NUMBER, "6"));
         detailsPage.getStaticTextByLabel(seasonsButton).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
-        String seriesTitle = getSearchApi().getSeries("3ZoBZ52QHb4x", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getSeriesTitle();
+        String seriesTitle = getSearchApi().getSeries("3ZoBZ52QHb4x", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                .getSeriesTitle();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         pause(2);
@@ -949,7 +977,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         downloadsPage
                 .getDynamicRowButtonLabel(
                         getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 3).click();
+                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 3)
+                .click();
 
         pause(2);
         getScreenshots("SingleCheckbox");
@@ -957,7 +986,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         downloadsPage
                 .getDynamicRowButtonLabel(
                         getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 4).click();
+                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 4)
+                .click();
 
         pause(2);
         getScreenshotsNoCountUpdate("MultipleCheckbox");
@@ -985,7 +1015,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         // IOS re-installs D+.
         restart();
 
-        movieTitle = getSearchApi().getMovie("5MpPFhS8FTXh", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoTitle();
+        movieTitle = getSearchApi().getMovie("5MpPFhS8FTXh", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                .getVideoTitle();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         searchPage.searchForMedia(movieTitle);
         movies = searchPage.getDisplayedTitles();
@@ -1014,7 +1045,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LogOut");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {"Subscriber - UI", "Subscriber - UI - S8", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {
+            "Subscriber - UI", "Subscriber - UI - S8", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void searchMoviesAndSeries(String TUID) {
         setup();
         setZipTestName("SubscriberUI_8_search");
@@ -1032,7 +1064,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("SearchPage");
 
         //S8.2
-        searchPage.searchForMedia("jjjjjjjlkshjdai8or7325uihad87t87t86686&^%&#^%!^@%&#^!@%($^%#@!&SUAS&^$#&124124345^%!$#&^#%sadas2451234124!&$^%!&@$sasda&^#535323$%*#&^$%&*");
+        searchPage.searchForMedia(
+                "jjjjjjjlkshjdai8or7325uihad87t87t86686&^%&#^%!^@%&#^!@%($^%#@!&SUAS&^$#&124124345^%!$#&^#%sadas2451234124!&$^%!&@$sasda&^#535323$%*#&^$%&*");
         getScreenshots("BadSearch");
 
         //S8.3
@@ -1140,12 +1173,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = {"Subscriber - UI", "Subscriber - UI - S10", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S10 - Welch Onboarding", groups = { "Subscriber - UI", "Subscriber - UI - S10",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void welchOnboarding(String TUID) {
         setup();
         setZipTestName("SubscriberUI_10_welch");
         String locale = getLocalizationUtils().getLocale();
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage()).isStarOnboarded(false).build();
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
+                .isStarOnboarded(false).build();
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
         request.addEntitlement(entitlement);
@@ -1210,7 +1245,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("WelchLockedProfile");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = {"Subscriber - UI", "Subscriber - UI - S13", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(dataProvider = "tuidGenerator", description = "iOS S13 Editorial Contents", groups = { "Subscriber - UI", "Subscriber - UI - S13",
+            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
     public void editorialContents(String TUID) {
         setup();
         setZipTestName("SubscriberUI_13_editorial_contents");
@@ -1307,7 +1343,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         swipe(homePage.getBackArrow(), Direction.DOWN);
         homePage.getBackArrow().click();
 
-        if(homePage.isStarTilePresent()) {
+        if (homePage.isStarTilePresent()) {
             homePage.clickStarTile();
             brandPage.isOpened();
             pause(2);
