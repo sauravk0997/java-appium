@@ -66,10 +66,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
-    private static final String COUNTRY = WebDriverConfiguration.getLocale()
-            .getCountry();
-    private static final String LANGUAGE = WebDriverConfiguration.getLocale()
-            .getLanguage();
+    private static final String COUNTRY = R.CONFIG.get("locale");
+    private static final String LANGUAGE = R.CONFIG.get("language");
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
         protected DisneyContentApiChecker initialize() {
