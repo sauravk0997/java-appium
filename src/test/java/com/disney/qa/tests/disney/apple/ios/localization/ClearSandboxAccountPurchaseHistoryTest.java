@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-public class ClearSandboxAccountPurchaseHistory extends AbstractTest {
+public class ClearSandboxAccountPurchaseHistoryTest extends AbstractTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

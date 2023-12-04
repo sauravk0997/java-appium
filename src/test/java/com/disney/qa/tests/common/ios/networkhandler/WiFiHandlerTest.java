@@ -13,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-public class WifiHandler extends AbstractTest {
+public class WiFiHandlerTest extends AbstractTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final static String WIFI_NETWORK = R.CONFIG.get("custom_string").replace("_", " ");
 
