@@ -30,7 +30,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String ASPECT_RATIO_SERIES = "The Simpsons";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
-    private static final String DEVICE_TYPE = "capabilities.deviceType";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62441"})

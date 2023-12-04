@@ -71,8 +71,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
 
-    public void getScreenshots(String filename, ThreadLocal<String> directory) {
-        UniversalUtils.storeScreenshot(getDriver(), filename, directory.get());
+    public void getScreenshots(String filename, String directory) {
+        UniversalUtils.storeScreenshot(getDriver(), filename, directory);
     }
 
     /**
