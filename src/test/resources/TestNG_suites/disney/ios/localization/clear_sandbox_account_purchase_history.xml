@@ -8,7 +8,7 @@
 
     <test verbose="1" name="iOS Clear Sandbox Account Purchase History">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.localization.ClearSandboxAccountPurchaseHistory"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.localization.ClearSandboxAccountPurchaseHistoryTest"/>
         </classes>
     </test>
 </suite>

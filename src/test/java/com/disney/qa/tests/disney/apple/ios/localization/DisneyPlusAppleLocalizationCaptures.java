@@ -32,20 +32,20 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
     private void captureOnboardingBackgrounds(String TUID) {
         setup();
         setZipTestName("Onboarding_Backgrounds");
-        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+        boolean isArielRegion = getLocalizationUtils().getCountryName().equals("United States");
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase completeSubscriptionIOSPageBase = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
 
         //Create an expired account
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
+        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
         List<DisneyOrder> orderList = new LinkedList();
         orderList.add(DisneyOrder.SET_EXPIRED);
         request.setOrderSettings(orderList);
-        DisneyOffer disneyOffer = disneyAccountApi.get().lookupOfferToUse(languageUtils.get().getLocale(), "Yearly");
+        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
         request.addEntitlement(entitlement);
-        DisneyAccount testAccount = disneyAccountApi.get().createAccount(request);
+        DisneyAccount testAccount = getAccountApi().createAccount(request);
 
         //Dismiss system alert and take WelcomePage screenshot
         welcomeScreenIOSPageBase.waitUntil(ExpectedConditions.elementToBeClickable(welcomeScreenIOSPageBase.getSignUpButtonBy()), 30);
@@ -83,7 +83,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
     public void captureFullOnboardingFlow(String TUID) {
         setup();
         setZipTestName("Onboarding_Full");
-        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+        boolean isArielRegion = getLocalizationUtils().getCountryName().equals("United States");
 
         DisneyPlusDOBCollectionPageBase dobPageBase = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -110,9 +110,9 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
          * If the subscriber agreement is a part of onboarding, the hyperlink is not present in this location.
          * Increases count by 1 to keep the expected numbering
          */
-        boolean checkboxRequired = new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry");
+        boolean checkboxRequired = new DisneyGlobalUtils().getBooleanFromCountries(getLocalizationUtils().getLocale(), "isEmailCheckBoxOptInCountry");
 
-        if (!languageUtils.get().isSubscriberAgreementRequired() && !checkboxRequired) {
+        if (!getLocalizationUtils().isSubscriberAgreementRequired() && !checkboxRequired) {
             signUpPage.openSubscriberAgreement();
             pause(3);
             getScreenshots("SubscriberAgreement");
@@ -134,7 +134,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
          * If the subscriber agreement is a part of onboarding, it will be displayed at this point.
          * Resets the count to 5 (expected value) to keep the expected numbering
          */
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             getScreenshots("1SubscriberAgreement");
             signUpPage.clickAgreeAndContinue();
             pause(3);
@@ -156,7 +156,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         createPasswordPage.enterPasswordValue("fair123456!");
         pause(1);
         getScreenshots("Great");
-        createPasswordPage.enterPasswordValue(disneyAccount.get().getUserPass());
+        createPasswordPage.enterPasswordValue(getAccount().getUserPass());
         dismissKeyboardForPhone();
         createPasswordPage.clickPrimaryButton();
         pause(3);
@@ -169,7 +169,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             dobPageBase.clickSystemAlertSecondaryBtn();
             welcomePage.clickSignUpButton();
             signUpPage.submitEmailAddress(generateGmailAccount());
-            createPasswordPage.enterPasswordValue(disneyAccount.get().getUserPass());
+            createPasswordPage.enterPasswordValue(getAccount().getUserPass());
             dismissKeyboardForPhone();
             createPasswordPage.clickPrimaryButton();
             dobPageBase.enterDOB("01/01/1980");
@@ -187,7 +187,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
                 ExpectedConditions.elementToBeClickable(completeSubscriptionPage.getSystemAlertDefaultBtn().getBy()),
                 30);
         completeSubscriptionPage.clickAlertConfirm();
-        loginDismiss(disneyAccount.get());
+        loginDismiss(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickAddProfile();
         avatarPage.clickSkipButton();
@@ -205,7 +205,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
     @Test(dataProvider = "tuidGenerator", description = "Capture IAP related images", groups = {"Onboarding - IAP", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY}, enabled = false)
     public void capturePurchaseFlow(String TUID) {
         setup();
-        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+        boolean isArielRegion = getLocalizationUtils().getCountryName().equals("United States");
 
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
@@ -215,14 +215,14 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase signUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
 
-        if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
+        if (new DisneyGlobalUtils().getBooleanFromCountries(getLocalizationUtils().getLocale(), "isEmailCheckBoxOptInCountry")) {
             LOGGER.info("Checkbox needed");
             signUpIOSPageBase.clickUncheckedBoxes();
         }
 
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
 
         if(isArielRegion) {
             setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -254,7 +254,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
         getScreenshots("ProfileSelect");
-        UniversalUtils.archiveAndUploadsScreenshots(baseDirectory.get(), pathToZip.get());
+        UniversalUtils.archiveAndUploadsScreenshots(BASE_DIRECTORY.get(), PATH_TO_ZIP.get());
     }
 
     @Test(dataProvider = "tuidGenerator", description = "Capture Ariel onboarding images", groups = {"Onboarding - Ariel", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
@@ -270,7 +270,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         welcomePage.clickSignUpButton();
 
-        if (new DisneyGlobalUtils().getBooleanFromCountries(languageUtils.get().getLocale(), "isEmailCheckBoxOptInCountry")) {
+        if (new DisneyGlobalUtils().getBooleanFromCountries(getLocalizationUtils().getLocale(), "isEmailCheckBoxOptInCountry")) {
             LOGGER.info("Checkbox needed");
             signUpIOSPageBase.clickUncheckedBoxes();
         }
@@ -307,7 +307,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         pause(1);
         getScreenshots("great");
 
-        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+        createPasswordPage.submitPasswordValue(getAccount().getUserPass());
 
         //S1.7
         pause(2);
@@ -326,7 +326,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         //S1.8
         welcomePage.clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        createPasswordPage.submitPasswordValue(disneyAccount.get().getUserPass());
+        createPasswordPage.submitPasswordValue(getAccount().getUserPass());
         setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
         pause(2);
@@ -357,7 +357,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         welcomePage.clickSignUpButton();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
 
         setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();

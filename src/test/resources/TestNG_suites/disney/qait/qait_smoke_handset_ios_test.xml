@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" thread-count="12" name="qait_smoke_handset_ios_test" annotations="JDK" configfailurepolicy="continue">
+<suite verbose="1"  name="qait_smoke_handset_ios_test" annotations="JDK" configfailurepolicy="continue" thread-count="20" parallel="tests">
 
     <parameter name="suiteOwner" value="qait"/>
     <parameter name="reporting.project-key" value="QAIT"/>

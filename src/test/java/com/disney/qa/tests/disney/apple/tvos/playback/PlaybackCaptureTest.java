@@ -25,11 +25,10 @@ public class PlaybackCaptureTest extends DisneyPlusAppleTVBaseTest {
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
         DisneyCountryData countryData = new DisneyCountryData();
-        String fullCountryName = (String) countryData.searchAndReturnCountryData(country, "code", "country");
+        String fullCountryName = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
         initiateProxy(fullCountryName, CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT,
                 CaptureType.REQUEST_COOKIES, CaptureType.RESPONSE_COOKIES, CaptureType.REQUEST_BINARY_CONTENT, CaptureType.RESPONSE_BINARY_CONTENT,
                 CaptureType.REQUEST_HEADERS, CaptureType.RESPONSE_HEADERS);
-        proxy.get().newHar();
         clearAppCache();
     }
 
@@ -39,10 +38,10 @@ public class PlaybackCaptureTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage disneyPlusAppleTVVideoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyAccount entitledUser = disneyAccountApi.createAccount("Yearly", country, language, "V2");
+        DisneyAccount entitledUser = getAccountApi().createAccount("Yearly", getCountry(), getLanguage(), "V2");
         String contentType = R.CONFIG.get("custom_string");
         String contentId = R.CONFIG.get("custom_string2");
-        searchApi.addToWatchlist(entitledUser, contentType, contentId);
+        getSearchApi().addToWatchlist(entitledUser, contentType, contentId);
 
         logIn(entitledUser);
 
@@ -61,7 +60,7 @@ public class PlaybackCaptureTest extends DisneyPlusAppleTVBaseTest {
         pause(20);
 
         String name = UUID.randomUUID() + "playback_tvOS";
-        HARUtils.generateValidHarForCharles(proxy.get(), name);
+//        HARUtils.generateValidHarForCharles(proxy.get(), name);
         name = name + ".har";
         Artifact.attachToTest(name, Path.of(name));
     }

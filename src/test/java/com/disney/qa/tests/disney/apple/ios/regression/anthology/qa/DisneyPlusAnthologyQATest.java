@@ -34,7 +34,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-//        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(getAccount());
         QALogin();
         searchAndOpenDWTSDetails();
         try {
@@ -64,7 +64,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-//        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(getAccount());
         QALogin();
         searchAndOpenDWTSDetails();
         try {
@@ -94,7 +94,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-//        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(getAccount());
         QALogin();
         searchAndOpenDWTSDetails();
         try {
@@ -118,7 +118,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
     public void verifyAnthologyEnded() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-//        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(getAccount());
         QALogin();
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isQAWatchButtonPresent());
@@ -137,7 +137,7 @@ public class DisneyPlusAnthologyQATest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-//        setAppToHomeScreen(disneyAccount.get());
+//        setAppToHomeScreen(getAccount());
         QALogin();
         searchAndOpenDWTSDetails();
 

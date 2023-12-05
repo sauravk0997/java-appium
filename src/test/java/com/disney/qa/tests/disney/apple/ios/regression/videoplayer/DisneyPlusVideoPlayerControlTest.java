@@ -114,7 +114,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyCloseButtonForDeepLinkingContent() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_episode_deeplink"), 10);
         detailsPage.clickOpenButton();
         videoPlayer.waitForVideoToStart();
@@ -130,7 +130,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyCloseButtonForDeepLinkingContentMovie() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_movie_deeplink"), 10);
         detailsPage.clickOpenButton();
         videoPlayer.waitForVideoToStart();
@@ -151,7 +151,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String playerContentTitle;
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
@@ -203,7 +203,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);

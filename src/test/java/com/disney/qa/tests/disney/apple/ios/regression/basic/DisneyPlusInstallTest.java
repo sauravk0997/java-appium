@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusInstallTest extends DisneyBaseTest {
-    ThreadLocal<String> oldAppVersion = new ThreadLocal<>();
+    private static final String oldAppVersion = R.CONFIG.get("oldAppVersion");
     private static final String KIDS_SHORT_SERIES = "Bluey";
     private static final String ADULTS_SHORT_MOVIE = "Purl";
     private static final String KIDS = "KIDS";
@@ -22,8 +22,8 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
     //TODO: Refactor this test to support AdHoc builds
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72882"})
-    @Test(description = "Old app to new app installation with login validation", groups = {"Install", TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72882" })
+    @Test(description = "Old app to new app installation with login validation", groups = { "Install", TestGroup.PRE_CONFIGURATION })
     public void testOldAppToNewAppInstallBVT() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -35,14 +35,13 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        downloadApp(oldAppVersion.get());
+        downloadApp(oldAppVersion);
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
@@ -51,7 +50,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Current app version found does not match expected old app version");
 
         //install new app
@@ -106,14 +105,14 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS), KIDS + " Profile not found on Profile Switch display.");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Old app version and new app version are the same");
         sa.assertAll();
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73477"})
-    @Test(description = "Old app with kids download to new app installation", groups = {"Install", TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73477" })
+    @Test(description = "Old app with kids download to new app installation", groups = { "Install", TestGroup.PRE_CONFIGURATION })
     public void testOldAppToNewAppInstallDownloadKids() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -124,14 +123,13 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        downloadApp(oldAppVersion.get());
+        downloadApp(oldAppVersion);
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
@@ -140,7 +138,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Current app version found does not match expected old app version");
 
         homePage.clickSearchIcon();
@@ -180,14 +178,14 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         details.dismissNotificationsPopUp(); //notifications pop-up appears after exit player
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isOpened(), "More Menu is not displayed");
-        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Old app version and new app version are the same");
         sa.assertAll();
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73476"})
-    @Test(description = "Old app with adult download to new app install", groups = {"Install", TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73476" })
+    @Test(description = "Old app with adult download to new app install", groups = { "Install", TestGroup.PRE_CONFIGURATION })
     public void testOldAppToNewAppInstallDownloadAdult() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -198,14 +196,13 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-        oldAppVersion.set(R.CONFIG.get("oldAppVersion"));
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
 
         //install old app
         removeApp(buildType.getDisneyBundle());
-        downloadApp(oldAppVersion.get());
+        downloadApp(oldAppVersion);
         relaunch();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isOpened(), "Who Is Watching Page not displayed");
 
         whoIsWatching.clickProfile(TEST);
@@ -214,7 +211,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(TEST), TEST + " Profile not found on Profile Switch display.");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertTrue(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Current app version found does not match expected old app version");
 
         homePage.clickSearchIcon();
@@ -254,7 +251,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         details.dismissNotificationsPopUp(); //notifications pop-up appears after exit player
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isOpened(), "More Menu is not displayed");
-        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion.get()),
+        sa.assertFalse(moreMenuPage.getAppVersionText().contains(oldAppVersion),
                 "Old app version and new app version are the same");
 
         whoIsWatching.clickProfile(KIDS);

@@ -1,14 +1,16 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
+import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
@@ -32,10 +34,7 @@ import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
-
-    private final ThreadLocal<String> baseDirectory = new ThreadLocal<>();
-    private final ThreadLocal<String> pathToZip = new ThreadLocal<>();
-    private final DisneyAccountApi disneyAccountApi = new DisneyAccountApi(getApiConfiguration(DISNEY));
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
@@ -47,26 +46,26 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             setJarvisOverrides();
         }
         DisneyCountryData countryData = new DisneyCountryData();
-        String country = (String) countryData.searchAndReturnCountryData(locale, "code", "country");
+        String country = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
         initiateProxy(country);
         pause(10);
         clearAppCache();
     }
 
-    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = {"Onboarding", "Ariel"})
+    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { "Onboarding", "Ariel" })
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
-        baseDirectory.set(String.format("Screenshots/%s/%s/", languageUtils.get().getCountryName(), languageUtils.get().getUserLanguage()));
+        String baseDirectory = String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage());
 
-        boolean ariel = languageUtils.get().getCountryName().equals("United States");
-        boolean korea = languageUtils.get().getCountryName().equals("Korea");
+        boolean ariel = getLocalizationUtils().getCountryName().equals("United States");
+        boolean korea = getLocalizationUtils().getCountryName().equals("Korea");
         boolean logoutCheck = true;
 
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
-                .country(languageUtils.get().getLocale())
-                .language(languageUtils.get().getUserLanguage())
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
                 .gender(null)
                 .build();
-        DisneyAccount account = disneyAccountApi.createAccount(request);
+        DisneyAccount account = getAccountApi().createAccount(request);
 
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage signUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -105,11 +104,11 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         loginPage.clickLocalizationEnterNewBtn();
         getScreenshots("5-2_SubmitEmailText", baseDirectory);
 
-        loginPage.enterEmail(apiProvider.get().getUniqueUserEmail());
+        loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
         loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         loginPage.clickSelect();
         loginPage.clickContinueBtn();
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             loginPage.isLocalizedPageWithPrimaryButtonOpened();
             getScreenshots("5-3_SubscriberAgreement", baseDirectory);
             loginPage.clickPrimaryButton();
@@ -162,7 +161,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 welcomeScreenPage.clickSignUpButton();
                 signUpPage.clickEmailButton();
                 loginPage.clickLocalizationEnterNewBtn();
-                loginPage.enterEmail(apiProvider.get().getUniqueUserEmail());
+                loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
                 loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
                 loginPage.clickSelect();
                 loginPage.clickContinueBtn();
@@ -232,12 +231,13 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             getScreenshots("18-3_GenderMenu", baseDirectory);
         }
 
-        pathToZip.set(String.format("Ariel_Onboarding_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory,
+                String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = {"Onboarding"})
+    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { "Onboarding" })
     public void captureFullOnboardingFlowToExpiredAccount() {
+        String baseDirectory = "Screenshots-Onboarding-PartTwo/";
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -245,13 +245,12 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
 
-        DisneyAccount user = disneyAccountApi.createExpiredAccount(ENTITLEMENT_LOOKUP, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUB_VERSION);
-        baseDirectory.set("Screenshots-Onboarding-PartTwo/");
-        pathToZip.set(String.format("Onboarding_Full_Expired_Account_%s_%s_%s.zip", locale, language, getDate()));
+        DisneyAccount user = getAccountApi().createExpiredAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
 
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
 
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(10); //handle initial load of app
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
@@ -259,37 +258,39 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
 
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(15);
         disneyPlusAppleTVSignUpPage.isRestartSubBtnPresent();
         getScreenshots("18-WelcomeBack", baseDirectory);
 
         disneyPlusAppleTVSignUpPage.clickRestartSubscription();
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         //Some countries have subscriber agreement requirement:
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             disneyPlusApplePageBase.isLocalizedPageWithPrimaryButtonOpened();
             pause(5);
             disneyPlusApplePageBase.clickPrimaryButton();
         }
 
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+        //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         pause(15);
         disneyPlusAppleTVRestartSubscriptionPage.isOpened();
         getScreenshots("19-RestartPaywall", baseDirectory);
 
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory,
+                String.format("Onboarding_Full_Expired_Account_%s_%s_%s.zip", getCountry(), getLanguage(), getDate()));
 
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Onboarding flows Background Images Check", groups = {"BGImage"})
+    @Test(description = "Onboarding flows Background Images Check", groups = { "BGImage" })
     public void backgroundImage() {
+        String baseDirectory = "Screenshots-BGImage/";
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
-                .country(languageUtils.get().getLocale()).language(languageUtils.get().getUserLanguage()).build();
+                .country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
         request.addOrderSetting(DisneyOrder.SET_EXPIRED);
-        DisneyAccount account = disneyAccountApi.createAccount(request);
+        DisneyAccount account = getAccountApi().createAccount(request);
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -297,21 +298,19 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
         int count = 1;
-        baseDirectory.set("Screenshots-BGImage/");
-        pathToZip.set(String.format("Onboarding_Background_Images_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
 
-        boolean isArielRegion = languageUtils.get().getCountryName().equals("United States");
+        boolean isArielRegion = getLocalizationUtils().getCountryName().equals("United States");
 
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+        //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
 
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         disneyPlusAppleTVSignUpPage.isOpened();
 
-        boolean isKr = locale.equalsIgnoreCase("kr");
+        boolean isKr = getCountry().equalsIgnoreCase("kr");
         disneyPlusAppleTVSignUpPage.selectCheckBoxesForKr(isKr);
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
@@ -326,13 +325,13 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             disneyPlusAppleTVCompletePurchasePage.isOpened();
             disneyPlusAppleTVCompletePurchasePage.clickSelect();
         } else {
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+            //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
             disneyPlusAppleTVCompletePurchasePage.isOpened();
             disneyPlusAppleTVCompletePurchasePage.clickBack();
             if (disneyPlusAppleTVCompletePurchasePage.isAlertDefaultBtnPresent()) {
                 disneyPlusAppleTVCompletePurchasePage.clickDefaultAlertBtn();
             }
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+            //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
             disneyPlusAppleTVCompletePurchasePage.isCustomButtonPresent();
         }
         pause(5);
@@ -346,22 +345,23 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
         clearAppCache();
 
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+        //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.isOpened();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(account.getEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(account.getUserPass());
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+        //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVRestartSubscriptionPage.isLocalizedPageWithPrimaryButtonOpened();
         pause(15);
         getScreenshots(count + "-WelcomeBack", baseDirectory);
 
-        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory,
+                String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
     @Test(description = "Basic IAP flow", enabled = false)
@@ -370,8 +370,6 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             skipExecution("Test run is not against IAP compatible build.");
         }
 
-        baseDirectory.set("Screenshots-CapturePurchaseFlow/");
-        pathToZip.set(String.format("Capture_Purchase_%s_%s_%s.zip", language.toUpperCase(), locale, getDate()));
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -379,13 +377,13 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPaywallPage disneyPlusAppleTVPaywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
 
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(apiProvider.get().getUniqueUserEmail());
-        if (languageUtils.get().isSubscriberAgreementRequired()) {
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
         }
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
-        if (languageUtils.get().getCountryName().equals("United States")) {
+        if (getLocalizationUtils().getCountryName().equals("United States")) {
             LOGGER.info("DOB entry required.");
             StringBuilder dob = new StringBuilder()
                     .append(DisneyBaseTest.Person.ADULT.getMonth().getNum())
@@ -410,123 +408,123 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     }
 
-//    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = {"onboarding"})
-//    public void captureFullOnboardingFlowToExpiredAccount() {
+    //    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = {"onboarding"})
+    //    public void captureFullOnboardingFlowToExpiredAccount() {
 
     //  captureFullOnboardingFlowEndToEnd crashes at logOut while proxied. Commented out just in case in the future possible.
-//    @Test(description = "Onboarding Flow End To End Capture Screenshots", groups = {"Localization"})
-//    public void captureFullOnboardingFlowEndToEnd() {
-//        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
-//        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-//        DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
-//        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-//        DisneyPlusAppleTVLegalPage disneyPlusAppleTVLegalPage = new DisneyPlusAppleTVLegalPage(getDriver());
-//        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-//        DisneyPlusAppleTVPaywallPage disneyPlusAppleTVPaywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
-//        DisneyPlusAppleTVCompleteSubscriptionPage disneyPlusAppleTVCompleteSubscriptionPage = new DisneyPlusAppleTVCompleteSubscriptionPage(getDriver());
-//
-//        DisneyAccount user = disneyAccountApi.createExpiredAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
-//        baseDirectory.set(String.format("Screenshots/"));
-//        pathToZip.set(String.format("%s_%s_%s_%s.zip", region.get(), regionLanguage.get(), "Onboarding", DateUtils.now()));
-//
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-//        pause(15); //wait for page to fully load
-//        disneyPlusAppleTVWelcomeScreenPage.isOpened();
-//        getScreenshots("1_Landing_page", baseDirectory);
-//
-//        disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
-//        pause(5); //wait for page to fully load
-//        disneyPlusAppleTVSignUpPage.isOpened();
-//        getScreenshots("2_Enter_email", baseDirectory);
-//
-//        disneyPlusAppleTVSignUpPage.isOpened();
-//
-//        disneyPlusAppleTVSignUpPage.moveDown(2,1);
-//        disneyPlusAppleTVSignUpPage.clickSelect();
-//        disneyPlusAppleTVLegalPage.isOpened();
-//        getScreenshots("3_Privacy_Policy", baseDirectory);
-//
-//        disneyPlusAppleTVLegalPage.clickBack();
-//        disneyPlusAppleTVSignUpPage.moveUp(2,1);
-//        disneyPlusAppleTVLoginPage.clickEmailField();
-//        disneyPlusAppleTVLoginPage.clickLocalizationEnterNewBtn();
-//        getScreenshots("4_Enter_your_email", baseDirectory);
-//
-//        disneyPlusAppleTVLoginPage.keyPressTimes(disneyPlusAppleTVLoginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-//
-//        disneyPlusAppleTVLoginPage.clickSelect();
-//        disneyPlusAppleTVLoginPage.clickContinueBtn();
-//        disneyPlusAppleTVLoginPage.isOpened();
-//        getScreenshots("5_Error_1", baseDirectory);
-//        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyContentApiChecker.get().getUniqueUserEmail());
-//
-//        //Some countries have subscriber agreement requirement:
-//        if(languageUtils.get().isSubscriberAgreementRequired() ) {
-//            disneyPlusApplePageBase.isLocalizedPageWithPrimaryButtonOpened();
-//            pause(1);
-//            getScreenshots("6_SA", baseDirectory);
-//            disneyPlusApplePageBase.clickPrimaryButton();
-//        }
-//        pause(1);
-//        getScreenshots("7_Create PW", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.moveDown(1,1);
-//        disneyPlusAppleTVPasswordPage.clickSignUp();
-//        pause(1);
-//        getScreenshots("8_Error_2", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.clickUp();
-//        disneyPlusAppleTVPasswordPage.clickPassword();
-//
-//        pause(1);
-//        disneyPlusAppleTVPasswordPage.isOpened();
-//        getScreenshots("9_Create_a_password", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.enterPassword("123");
-//        pause(1);
-//        getScreenshots("10_Error_3", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.enterPassword("local123");
-//        pause(1);
-//        getScreenshots("11_Fair", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.enterPassword("local1234");
-//        pause(1);
-//        getScreenshots("12_Good", baseDirectory);
-//        disneyPlusAppleTVPasswordPage.enterPassword("local123b456@");
-//        pause(1);
-//        getScreenshots("12_Excellent", baseDirectory);
-//
-//        disneyPlusAppleTVLoginPage.keyPressTimes(disneyPlusAppleTVLoginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-//        disneyPlusAppleTVSignUpPage.clickSelect();
-//        disneyPlusAppleTVSignUpPage.clickPrimaryButton();
-//        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-//
-//        disneyPlusAppleTVPaywallPage.isOpened();
-//        getScreenshots("14_Paywall", baseDirectory);
-//
-//        disneyPlusAppleTVPaywallPage.clickMenuTimes(1,1);
-//        disneyPlusAppleTVPaywallPage.isOpened();
-//        getScreenshots("15_Finish_later", baseDirectory);
-//
-//        disneyPlusAppleTVPaywallPage.clickAlertConfirm(); //click finish later button
-//        disneyPlusAppleTVSignUpPage.isOpened();
-//        getScreenshots("16_One_Step_Away", baseDirectory);
-//
-//        disneyPlusAppleTVCompleteSubscriptionPage.isOpened();
-//        disneyPlusAppleTVCompleteSubscriptionPage.moveDown(1,1);
-//        disneyPlusAppleTVCompleteSubscriptionPage.clickLogOutBtn();
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
-//        getScreenshots("17_Log_out", baseDirectory);
-//        disneyPlusAppleTVWelcomeScreenPage.clickSelect();
-//
-//        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
-//        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-//
-//        disneyPlusAppleTVWelcomeScreenPage.isOpened();
-//        getScreenshots("18_Welcome_back", baseDirectory);
-//
-//        disneyPlusAppleTVSignUpPage.isOpened();
-//        disneyPlusAppleTVSignUpPage.clickSelect();
-//        disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-//        getScreenshots("19_Restart_paywall", baseDirectory);
-//
-//        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
-//    }
+    //    @Test(description = "Onboarding Flow End To End Capture Screenshots", groups = {"Localization"})
+    //    public void captureFullOnboardingFlowEndToEnd() {
+    //        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
+    //        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+    //        DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
+    //        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+    //        DisneyPlusAppleTVLegalPage disneyPlusAppleTVLegalPage = new DisneyPlusAppleTVLegalPage(getDriver());
+    //        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+    //        DisneyPlusAppleTVPaywallPage disneyPlusAppleTVPaywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
+    //        DisneyPlusAppleTVCompleteSubscriptionPage disneyPlusAppleTVCompleteSubscriptionPage = new DisneyPlusAppleTVCompleteSubscriptionPage(getDriver());
+    //
+    //        DisneyAccount user = disneyAccountApi.createExpiredAccount(ENTITLEMENT_LOOKUP, region.get(), regionLanguage.get(), SUB_VERSION);
+    //        baseDirectory.set(String.format("Screenshots/"));
+    //        pathToZip.set(String.format("%s_%s_%s_%s.zip", region.get(), regionLanguage.get(), "Onboarding", DateUtils.now()));
+    //
+    //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+    //        pause(15); //wait for page to fully load
+    //        disneyPlusAppleTVWelcomeScreenPage.isOpened();
+    //        getScreenshots("1_Landing_page", baseDirectory);
+    //
+    //        disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
+    //        pause(5); //wait for page to fully load
+    //        disneyPlusAppleTVSignUpPage.isOpened();
+    //        getScreenshots("2_Enter_email", baseDirectory);
+    //
+    //        disneyPlusAppleTVSignUpPage.isOpened();
+    //
+    //        disneyPlusAppleTVSignUpPage.moveDown(2,1);
+    //        disneyPlusAppleTVSignUpPage.clickSelect();
+    //        disneyPlusAppleTVLegalPage.isOpened();
+    //        getScreenshots("3_Privacy_Policy", baseDirectory);
+    //
+    //        disneyPlusAppleTVLegalPage.clickBack();
+    //        disneyPlusAppleTVSignUpPage.moveUp(2,1);
+    //        disneyPlusAppleTVLoginPage.clickEmailField();
+    //        disneyPlusAppleTVLoginPage.clickLocalizationEnterNewBtn();
+    //        getScreenshots("4_Enter_your_email", baseDirectory);
+    //
+    //        disneyPlusAppleTVLoginPage.keyPressTimes(disneyPlusAppleTVLoginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+    //
+    //        disneyPlusAppleTVLoginPage.clickSelect();
+    //        disneyPlusAppleTVLoginPage.clickContinueBtn();
+    //        disneyPlusAppleTVLoginPage.isOpened();
+    //        getScreenshots("5_Error_1", baseDirectory);
+    //        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(disneyContentApiChecker.get().getUniqueUserEmail());
+    //
+    //        //Some countries have subscriber agreement requirement:
+    //        if(getLocalizationUtils().isSubscriberAgreementRequired() ) {
+    //            disneyPlusApplePageBase.isLocalizedPageWithPrimaryButtonOpened();
+    //            pause(1);
+    //            getScreenshots("6_SA", baseDirectory);
+    //            disneyPlusApplePageBase.clickPrimaryButton();
+    //        }
+    //        pause(1);
+    //        getScreenshots("7_Create PW", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.moveDown(1,1);
+    //        disneyPlusAppleTVPasswordPage.clickSignUp();
+    //        pause(1);
+    //        getScreenshots("8_Error_2", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.clickUp();
+    //        disneyPlusAppleTVPasswordPage.clickPassword();
+    //
+    //        pause(1);
+    //        disneyPlusAppleTVPasswordPage.isOpened();
+    //        getScreenshots("9_Create_a_password", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.enterPassword("123");
+    //        pause(1);
+    //        getScreenshots("10_Error_3", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.enterPassword("local123");
+    //        pause(1);
+    //        getScreenshots("11_Fair", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.enterPassword("local1234");
+    //        pause(1);
+    //        getScreenshots("12_Good", baseDirectory);
+    //        disneyPlusAppleTVPasswordPage.enterPassword("local123b456@");
+    //        pause(1);
+    //        getScreenshots("12_Excellent", baseDirectory);
+    //
+    //        disneyPlusAppleTVLoginPage.keyPressTimes(disneyPlusAppleTVLoginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+    //        disneyPlusAppleTVSignUpPage.clickSelect();
+    //        disneyPlusAppleTVSignUpPage.clickPrimaryButton();
+    //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
+    //
+    //        disneyPlusAppleTVPaywallPage.isOpened();
+    //        getScreenshots("14_Paywall", baseDirectory);
+    //
+    //        disneyPlusAppleTVPaywallPage.clickMenuTimes(1,1);
+    //        disneyPlusAppleTVPaywallPage.isOpened();
+    //        getScreenshots("15_Finish_later", baseDirectory);
+    //
+    //        disneyPlusAppleTVPaywallPage.clickAlertConfirm(); //click finish later button
+    //        disneyPlusAppleTVSignUpPage.isOpened();
+    //        getScreenshots("16_One_Step_Away", baseDirectory);
+    //
+    //        disneyPlusAppleTVCompleteSubscriptionPage.isOpened();
+    //        disneyPlusAppleTVCompleteSubscriptionPage.moveDown(1,1);
+    //        disneyPlusAppleTVCompleteSubscriptionPage.clickLogOutBtn();
+    //        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
+    //        getScreenshots("17_Log_out", baseDirectory);
+    //        disneyPlusAppleTVWelcomeScreenPage.clickSelect();
+    //
+    //        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+    //        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
+    //
+    //        disneyPlusAppleTVWelcomeScreenPage.isOpened();
+    //        getScreenshots("18_Welcome_back", baseDirectory);
+    //
+    //        disneyPlusAppleTVSignUpPage.isOpened();
+    //        disneyPlusAppleTVSignUpPage.clickSelect();
+    //        disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
+    //        getScreenshots("19_Restart_paywall", baseDirectory);
+    //
+    //        ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory.get(), pathToZip.get());
+    //    }
 
 }

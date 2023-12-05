@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -20,6 +21,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
 
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
@@ -47,7 +49,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusChangePasswordIOSPageBase password = initPage(DisneyPlusChangePasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        String incorrectPasswordError = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         onboard();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         pause(3);
@@ -65,7 +67,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(updateProfilePage.isOpened(), "'Let's update your profile' page is not opened after abandoning the authentication flow");
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
@@ -86,8 +88,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
-        disneyAccountApi.get().addProfile(disneyAccount.get(),KIDS_PROFILE,KIDS_DOB,disneyAccount.get().getProfileLang(),null,true,false);
+        setAppToHomeScreen(getAccount());
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),null,true,false);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfiles.clickEditModeProfile(KIDS_PROFILE);
@@ -96,7 +98,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         pause(4);
         changePassword.isHeadlineSubtitlePresent();
         softAssert.assertTrue(changePassword.isPasswordDescriptionPresent());
-        changePassword.enterPassword(disneyAccount.get());
+        changePassword.enterPassword(getAccount());
         softAssert.assertEquals(editProfiles.getAutoplayState(), "On","After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
         softAssert.assertAll();
     }
@@ -109,7 +111,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         createKidsProfile();
         //Abandon the flow after DOB entry
         terminateApp(sessionBundles.get(DISNEY));
@@ -131,18 +133,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.tapAccountTab();
         //Restrict Profile Creation toggle ON
         moreMenu.clickToggleView();
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         accountPage.isOpened();
         moreMenu.tapBackButton();
         pause(2);
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
@@ -183,7 +185,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
@@ -225,7 +227,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
@@ -251,7 +253,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         //Abandon the flow
         terminateApp(buildType.getDisneyBundle());
@@ -265,9 +267,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
-    @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION, TestGroup.BUNDLE_BASIC})
+    @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAdTierUserCoViewing() {
-        setAppToHomeScreen(disneyAccount.get());
+        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
         //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -275,7 +279,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         pause(2);
-        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.clickEditModeProfile(getAccount().getFirstName());
         if (R.CONFIG.get("capabilities.deviceType").equals("Phone")) {
             swipeUp(400);
         }
@@ -300,7 +304,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase1 = new DisneyPlusAccountIOSPageBase(getDriver());
         sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
@@ -312,7 +316,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
                 "User was not directed to Password entry upon clicking 'Add Profile'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         try {
             disneyPlusEditProfileIOSPageBase.clickSkipBtn();
@@ -342,18 +346,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.tapAccountTab();
         //Restrict Profile Creation toggle ON
         moreMenu.clickToggleView();
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         accountPage.isOpened();
         moreMenu.tapBackButton();
         pause(2);
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
-        passwordPage.submitPasswordWhileLoggedIn(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
 
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
@@ -384,8 +388,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        disneyAccountApi.get().addProfile(disneyAccount.get(), KIDS_PROFILE, KIDS_DOB, disneyAccount.get().getProfileLang(), null, true, true);
-        setAppToHomeScreen(disneyAccount.get());
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
+        setAppToHomeScreen(getAccount());
 
         whoIsWatching.clickProfile("Test");
         moreMenu.clickMoreTab();
@@ -417,10 +421,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfilePage.clickEditModeProfile(getAccount().getFirstName());
         editProfilePage.clickGenderButton();
 
         sa.assertTrue(editGenderPage.isOpened(), "Expected: 'Select Gender' page should be opened");
@@ -450,7 +454,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
@@ -485,7 +489,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         //minor authentication is prompted
         Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
-        passwordPage.enterPassword(disneyAccount.get());
+        passwordPage.enterPassword(getAccount());
         passwordPage.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
@@ -501,7 +505,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
@@ -536,9 +540,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72664"})
-    @Test(description = " Profiles > Kids Profile new copy", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION, TestGroup.BUNDLE_BASIC})
+    @Test(description = " Profiles > Kids Profile new copy", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyLearnMoreLinkForKidsProfile() {
-        setAppToHomeScreen(disneyAccount.get());
+        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
         setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -574,7 +580,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         //minor authentication is prompted
         Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
-        passwordPage.enterPassword(disneyAccount.get());
+        passwordPage.enterPassword(getAccount());
         passwordPage.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
 
@@ -601,7 +607,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
@@ -665,14 +671,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
+                .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
         sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
 
@@ -706,14 +712,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
+                .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         updateProfilePage.chooseGender();
@@ -750,14 +756,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
+                .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         updateProfilePage.chooseGender();
@@ -790,18 +796,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
+                .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
         //Add Max number of profile through API
         for(int i=0;i<Max;i++){
-            disneyAccountApi.get().addProfile(disneyAccount.get(),KIDS_PROFILE,disneyAccount.get().getProfileLang(),null,true);
+            getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(),null,true);
         }
 
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -814,14 +820,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     private void setAppToAccountSettings() {
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
 
     private void onboard() {
-        setAppToHomeScreen(disneyAccount.get());
-        disneyAccountApi.get().addProfile(disneyAccount.get(),KIDS_PROFILE,disneyAccount.get().getProfileLang(),null,true);
+        setAppToHomeScreen(getAccount());
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(),null,true);
         pause(3);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }

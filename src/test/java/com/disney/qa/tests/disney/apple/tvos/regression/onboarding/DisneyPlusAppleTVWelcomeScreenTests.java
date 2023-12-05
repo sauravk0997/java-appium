@@ -19,7 +19,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89345", "XCDQA-89341"})
-    @Test(description = "Verify navigation & focus of the welcome screen, primarily sign up & login buttons", groups = {"Smoke"})
+    @Test(description = "Verify navigation & focus of the welcome screen, primarily sign up & login buttons", groups = {"Onboarding"})
     public void welcomeScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
-    @Test(description = "Verify all texts and images on the screen conform to dictionary keys and expected images", groups = {"Smoke"})
+    @Test(description = "Verify all texts and images on the screen conform to dictionary keys and expected images", groups = {"Smoke", "Onboarding"})
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -61,7 +61,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(welcomePage.getSignupButton().isElementPresent(), "Sign Up button is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");
         sa.assertTrue(welcomePage.isWelcomeSubTextPresent(), "Welcome sub text is not present");
-        sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(languageUtils.get().
+        sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
                         MOBILE_LINK_TEXT.getText())), "Mobile link text not present");
         sa.assertAll();
