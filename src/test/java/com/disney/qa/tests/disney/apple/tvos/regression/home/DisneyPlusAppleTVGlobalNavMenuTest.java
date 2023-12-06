@@ -197,6 +197,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         homePage.clickRandomBrandTile();
         brandsPage.isOpened();
 
+        LOGGER.info("Validating Global Nav is not present in brand screen");
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
 
         brandsPage.clickMenuTimes(1, 1);
@@ -206,6 +207,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         homePage.clickMenuTimes(1, 1);
         homePage.clickProfileTab();
         homePage.clickSelect();
+        LOGGER.info("Validating Global Nav is not present in profile screen");
         sa.assertFalse(whoIsWatchingPage.isGlobalNavPresent(), "Global Nav menu is present.");
         sa.assertTrue(whoIsWatchingPage.isOpened(), "Profile page did not launch");
         whoIsWatchingPage.clickMenuTimes(1, 1);
@@ -214,11 +216,11 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
             String menu = innerPages.get(i);
             homePage.hiddenNavStateOnInnerPages(menu);
             switch (menu.toLowerCase()) {
-            case "search":
-                sa.assertFalse(searchPage.isGlobalNavPresent(), "Global Nav menu is present");
+            case "searchtab":
+                sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(searchPage.isOpened(), "Search Page did not launch");
                 break;
-            case "watchlist":
+            case "watchlistcell":
                 sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
                 break;
@@ -235,12 +237,11 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(originalsPage.isOpened(), "Originals page did not launch");
                 break;
             case "settingsTab":
-                sa.assertFalse(settingsPage.isGlobalNavPresent(), "Global Nav menu is present.");
+                sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(
                         settingsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent(),
                         "Settings page did not launch");
                 break;
-
             default:
                 LOGGER.info("Invalid global nav menu");
                 break;

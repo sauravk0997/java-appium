@@ -138,6 +138,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
+        //Wait to handle the expanded validation
+        pause(5);
         if (homePage.isGlobalNavExpanded()) {
             LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
