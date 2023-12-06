@@ -45,7 +45,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Expected - play button should exists on details page");
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
         //Wait for content to load
-        pause(15);
+        pause(35);
         disneyPlusVideoPlayerIOSPageBase.clickBackButton().isOpened();
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "'CONTINUE' button doesn't exist on details page");
         sa.assertAll();
