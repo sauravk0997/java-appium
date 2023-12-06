@@ -225,6 +225,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
                 break;
             case "movies":
+                homePage.clickRight();
                 sa.assertFalse(moviesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(moviesPage.isOpened(), "Movies page did not launch");
                 break;
