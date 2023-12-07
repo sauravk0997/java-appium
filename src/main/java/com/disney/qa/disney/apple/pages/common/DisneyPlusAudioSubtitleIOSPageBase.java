@@ -7,9 +7,14 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.invoke.MethodHandles;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
 

@@ -72,7 +72,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         signUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         signUpIOSPageBase.clickAgreeAndContinueIfPresent();
-        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(disneyAccount.get().getUserPass());
+        initPage(DisneyPlusCreatePasswordIOSPageBase.class).submitPasswordValue(getAccount().getUserPass());
         sa.assertTrue(dobCollectionPage.isOpened(), "DOB collection page didn't open after signing up");
         setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
@@ -194,7 +194,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-        DisneyAccount expiredAccount = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
+        DisneyAccount expiredAccount = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(expiredAccount);
 
@@ -218,7 +218,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @Maintainer("gkrishna1")
     @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyReturningUserCompletesSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        DisneyAccount nonActiveAccount = disneyAccountApi.get().createAccount("US", "en");
+        DisneyAccount nonActiveAccount = getAccountApi().createAccount("US", "en");
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
@@ -310,10 +310,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
-        disneyAccount.set(disneyAccountApi.get().createAccount(offerName, languageUtils.get().getLocale(), languageUtils.get().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
+        setAccount(getAccountApi().createAccount(offerName, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
@@ -329,7 +329,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusRestartSubscriptionIOSPageBase restartSubs = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
-        DisneyAccount expired = disneyAccountApi.get().createExpiredAccount("Yearly", "US", "en", "V1");
+        DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
         welcomePage.dismissNotificationsPopUp();
         welcomePage.clickLogInButton();
         login(expired);
@@ -393,10 +393,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Validate ads in video player
         home.clickSearchIcon();
@@ -457,10 +457,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_PREMIUM_22,
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_PREMIUM_22,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Validate ads in video player
         home.clickSearchIcon();
@@ -520,10 +520,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
-        disneyAccount.set(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
-                languageUtils.get().getLocale(), languageUtils.get().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(disneyAccount.get(), disneyAccount.get().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Validate ads in video player
         home.clickSearchIcon();
@@ -587,13 +587,13 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         createDisneyAccountRequest
                 .setDateOfBirth(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
         welcomeScreen.clickCompleteSubscriptionButton();
@@ -629,14 +629,14 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
         welcomeScreen.clickCompleteSubscriptionButton();
@@ -649,7 +649,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "Forgot Password Link did not appear.");
         passwordPage.clickForgotPasswordLink();
         passwordPage.tapBackButton();
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         if(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.BASIC).isPresent()){
             paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.BASIC).click();
             sa.assertTrue(paywallIOSPageBase.isOpened(), "paywall screen didn't load");
@@ -674,14 +674,14 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
         welcomeScreen.clickCompleteSubscriptionButton();
@@ -694,7 +694,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "Forgot Password Link did not appear.");
         passwordPage.clickForgotPasswordLink();
         passwordPage.tapBackButton();
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(accountIsMinorPage.isOpened(),
                     "Account Minor Page did not open.");
         sa.assertAll();

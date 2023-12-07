@@ -30,7 +30,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase =  initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusSearchIOSPageBase.clickMoviesTab();
         List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
@@ -53,7 +53,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase disneyPlusDownloadsIOSPageBase = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusHomeIOSPageBase.getSearchNav().click();
         disneyPlusSearchIOSPageBase.searchForMedia("Bluey");

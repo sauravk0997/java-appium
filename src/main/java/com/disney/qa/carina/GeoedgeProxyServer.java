@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.crypto.CryptoTool;
 import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.proxy.browserup.ProxyPool;
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
@@ -41,7 +39,6 @@ public class GeoedgeProxyServer {
             .withSpecificJsonMessageConverter()
             .withUtf8EncodingMessageConverter()
             .build();
-    AllowListManager allowList = new AllowListManager();
     private Yaml yaml = new Yaml();
     private InputStream countryStream = this.getClass()
             .getClassLoader()
@@ -49,7 +46,6 @@ public class GeoedgeProxyServer {
     private ArrayList<Object> countryList = yaml.load(countryStream);
     private CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
     private boolean useGeoEdgeProxyIpRequest = R.CONFIG.getBoolean("proxy_server_geoedge");
-    private int proxyPortForThread = 0;
 
     public static void setGeoEdgeProxyIp(String countryIp) {
         proxyIp = countryIp;
@@ -74,13 +70,8 @@ public class GeoedgeProxyServer {
     @java.lang.SuppressWarnings("squid:S00112")
     public BrowserUpProxy getGeoedgeProxy(String country) {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
-        this.proxyPortForThread = ProxyPool.getProxy().getPort(); //get port is available only before stop!!!
-        ProxyPool.stopProxy();
 
         BrowserUpProxy proxy = ProxyPool.createProxy();
-        proxy.setTrustAllServers(true);
-        proxy.setMitmDisabled(false);
-        proxy.setConnectTimeout(180, TimeUnit.SECONDS);
 
         //Returns null because it finds the country but not the field to return
         String isGeoEdgeUnsupported =
@@ -99,13 +90,11 @@ public class GeoedgeProxyServer {
                 proxy.setChainedProxy(new InetSocketAddress(countryIp, 443));
                 String password = cryptoTool.decrypt(R.TESTDATA.get("browsermob_pw"));
                 proxy.chainedProxyAuthorization(R.TESTDATA.get("browsermob_un"), password, AuthType.BASIC);
-                allowList.addIpToAllowList(countryIp);
                 LOGGER.info("GeoEdge Host Set to: {}", proxy.getChainedProxy().getHostName());
             }
         } else {
             String[] splitHost = countryIp.split(":");
             proxy.setChainedProxy(new InetSocketAddress(splitHost[0], Integer.parseInt(splitHost[1])));
-            allowList.addIpToAllowList(splitHost[0]);
             LOGGER.info("GeoEdge Host Set to: {}", proxy.getChainedProxy().getHostName());
         }
 
@@ -154,43 +143,12 @@ public class GeoedgeProxyServer {
                         LOGGER.debug("Local Address: " + ia.isSiteLocalAddress());
                         LOGGER.debug("Is Reachable: " + ia.isReachable(1));
                         R.CONFIG.put("proxy_host", ia.getHostAddress());
-                        allowList.addIpToAllowList(ia.getHostAddress());
                     }
                 }
             }
         } catch (Exception ex) {
             LOGGER.error("Proxy Setup Error Recorded: " + ex.getMessage(), ex);
         }
-    }
-
-    /**
-     * This will check the proxy port that was started when we called browserup_proxy = true in the @BeforeClass.  It will
-     * then pull that back for use for Geoedge Proxying.
-     */
-    @java.lang.SuppressWarnings("squid:S00112")
-    @Deprecated
-    public int getAndSetDynamicProxyPort() {
-
-        String currentPort = Configuration.get(Configuration.Parameter.PROXY_PORT);
-
-        LOGGER.info(String.format("Checking Proxy Info: %s:%s", Configuration.get(Configuration.Parameter.PROXY_HOST), currentPort));
-
-        R.CONFIG.put("browserup_port", currentPort);
-        String bmPort = R.CONFIG.get("browserup_port");
-
-        if (bmPort.isEmpty()) {
-            throw new RuntimeException("Browser Mob Port Value wasn't properly set for Proxy, aborting.");
-        }
-        return Integer.parseInt(bmPort);
-    }
-
-    /**
-     * This will grab the port value of the stored proxy on the current thread.
-     *
-     * @return brings back BrowserUpProxy port that was set on the current thread.
-     */
-    public int getProxyPortForThread() {
-        return this.proxyPortForThread;
     }
 
     public JsonNode getGeoEdgeProxyServerJson() throws URISyntaxException {

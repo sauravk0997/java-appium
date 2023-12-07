@@ -13,7 +13,7 @@ import java.lang.invoke.MethodHandles;
 
 public abstract class DisneyAbstractPage extends AbstractPage implements IOSUtils {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     protected static final long EXTRA_LONG_TIMEOUT = 300;
     protected static final int LONG_TIMEOUT = 60;

@@ -11,8 +11,11 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -24,6 +27,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LEGAL_TITLE;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static String errorMessage = "'%s' is not shown";
     private static String assertionMessage = "%s is focused after selecting the menu";
@@ -120,7 +124,7 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     }
 
-    public void getAllLegalSectionsScreenshot(String filename, ThreadLocal<String> directory) {
+    public void getAllLegalSectionsScreenshot(String filename, String directory) {
         getLegalTabs().forEach(legalTitle -> {
             String sectionName = legalTitle.getAttribute("name");
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, filename + "_" + sectionName + "_tvOS");

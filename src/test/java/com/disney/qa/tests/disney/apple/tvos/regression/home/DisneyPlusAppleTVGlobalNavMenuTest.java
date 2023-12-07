@@ -11,47 +11,60 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private List<String> globalNav;
-    private List<String> globalNavText;
-    private List<String> globalNavAliceLabels;
+    private static final ThreadLocal<List<String>> GLOBAL_NAV = new ThreadLocal<>();
+    private static final ThreadLocal<List<String>> GLOBAL_NAV_TEXT = new ThreadLocal<>();
+    private static final ThreadLocal<List<String>> GLOBAL_NAV_ALICE_LABELS = new ThreadLocal<>();
 
     private static final String KIDS_DOB = "2018-01-01";
     private static final String KIDS = "Kids";
     private static final String WATCHLIST_REF_TYPE_MOVIES = "programId";
 
-    @BeforeMethod
-    public void beforeMethod() {
-        globalNav = Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenu.values())
+    @BeforeMethod(alwaysRun = true)
+    public void initDisneyPlusAppleTVGlobalNavMenuTest() {
+        GLOBAL_NAV.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenu.values())
                 .map(DisneyPlusAppleTVHomePage.globalNavigationMenu::getText)
-                .collect(Collectors.toList());
-        globalNavText = Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenuText.values())
+                .collect(Collectors.toList()));
+        GLOBAL_NAV_TEXT.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenuText.values())
                 .map(DisneyPlusAppleTVHomePage.globalNavigationMenuText::getText)
-                .collect(Collectors.toList());
-        globalNavAliceLabels = Stream.of(AliceLabels.PROFILE_BUTTON.getText(), AliceLabels.HOME_BUTTON_IS_SELECTED.getText(), AliceLabels.SEARCH_ICON.getText(),
-                AliceLabels.WATCHLIST_ICON.getText(), AliceLabels.MOVIES_ICON.getText(), AliceLabels.ORIGINALS_ICON.getText(),
-                AliceLabels.SERIES_ICON.getText(), AliceLabels.SETTINGS_ICON.getText(), AliceLabels.DISNEY_LOGO.getText())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+        GLOBAL_NAV_ALICE_LABELS.set(
+                Stream.of(AliceLabels.PROFILE_BUTTON.getText(), AliceLabels.HOME_BUTTON_IS_SELECTED.getText(), AliceLabels.SEARCH_ICON.getText(),
+                                AliceLabels.WATCHLIST_ICON.getText(), AliceLabels.MOVIES_ICON.getText(), AliceLabels.ORIGINALS_ICON.getText(),
+                                AliceLabels.SERIES_ICON.getText(), AliceLabels.SETTINGS_ICON.getText(), AliceLabels.DISNEY_LOGO.getText())
+                        .collect(Collectors.toList()));
     }
 
+    @AfterMethod(alwaysRun = true)
+    public void clearDisneyPlusAppleTVGlobalNavMenuTest() {
+        GLOBAL_NAV.remove();
+        GLOBAL_NAV_TEXT.remove();
+        GLOBAL_NAV_ALICE_LABELS.remove();
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89541", "XCDQA-89543", "XCDQA-89549", "XCDQA-89547", "XCDQA-89545"})
-    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = {"Home", "Smoke"})
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-89541", "XCDQA-89543", "XCDQA-89549", "XCDQA-89547", "XCDQA-89545" })
+    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { "Home", "Smoke" })
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
         logInTemp(entitledUser);
@@ -62,57 +75,65 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
-        sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()), "Home is not focused by default -1");
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME.getText().toUpperCase(), AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
+        sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
+                "Home is not focused by default -1");
+        aliceDriver.screenshotAndRecognize()
+                .assertLabelContainsCaption(sa, DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME.getText().toUpperCase(),
+                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
 
         disneyPlusAppleTVHomePage.clickSelect();
         LOGGER.info("Collapsing Global Nav menu by clicking select");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after clicking select from expanded global nav");
+        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
+                "Global Nav menu is not collapsed after clicking select from expanded global nav");
 
         disneyPlusAppleTVHomePage.moveLeft(1, 1);
         LOGGER.info("Expanding Global Nav menu by moving left");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after moving left on home page");
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()), "Home is not focused by default -2");
+        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
+                "Home is not focused by default -2");
 
         disneyPlusAppleTVHomePage.moveRight(1, 1);
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
         LOGGER.info("Collapsing Global Nav menu by moving right");
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after moving right from expanded global nav");
+        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
+                "Global Nav menu is not collapsed after moving right from expanded global nav");
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, globalNavText.size()).forEach(i -> {
-            String menu = globalNav.get(i);
-            String menuText = globalNavText.get(i);
+        IntStream.range(0, GLOBAL_NAV_TEXT.get().size()).forEach(i -> {
+            String menu = GLOBAL_NAV.get().get(i);
+            String menuText = GLOBAL_NAV_TEXT.get().get(i);
             disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(menu);
             if (i != 0) {
                 LOGGER.info(String.format("checking for %s global nav menu focus", menu));
-                sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu)), String.format("%s is not focused on expanded global nav", menu));
+                sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu)),
+                        String.format("%s is not focused on expanded global nav", menu));
                 sa.assertEquals(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu).getText().toUpperCase(), menuText.toUpperCase());
-                aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(), AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
+                aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(),
+                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
             } else {
                 LOGGER.info("Checking for profile button focus");
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnFocused());
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, globalNavAliceLabels.toArray(String[]::new));
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
 
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91703", "XCDQA-91701"})
-    @Test(description = "Global Nav Menu appearance - kids mode", groups ={"Home", "Smoke"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-91703", "XCDQA-91701" })
+    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" })
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
         SoftAssert sa = new SoftAssert();
 
-        disneyAccountApi.addProfile(entitledUser, KIDS, KIDS_DOB, entitledUser.getProfileLang(), null, true, true);
+        getAccountApi().addProfile(entitledUser, KIDS, KIDS_DOB, entitledUser.getProfileLang(), null, true, true);
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(entitledUser);
 
@@ -122,29 +143,31 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, globalNav.size()).forEach(i -> {
-            String menu = globalNav.get(i);
+        IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
+            String menu = GLOBAL_NAV.get().get(i);
             if (i != 0) {
-                sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu), String.format("%s is not found on expanded global nav", menu));
+                sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu),
+                        String.format("%s is not found on expanded global nav", menu));
             } else {
                 LOGGER.info("Checking for profile button focus");
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnPresent());
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, globalNavAliceLabels.toArray(String[]::new));
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(
                 DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText())), "HOME Nav bar selection is not focused/hovered");
 
         disneyPlusAppleTVHomePage.clickSelect();
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not collapsed after clicking select from expanded global nav");
+        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
+                "Global Nav menu is not collapsed after clicking select from expanded global nav");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, globalNavAliceLabels.toArray(String[]::new));
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90916", "XCDQA-90918"})
-    @Test(description = "Hidden Nav state - inner pages", groups = {"Home"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
+    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" })
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -158,8 +181,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
-        searchApi.addToWatchlist(entitledUser, DisneyContentIds.END_GAME.getContentType(), DisneyContentIds.END_GAME.getContentId());
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        getSearchApi().addToWatchlist(entitledUser, DisneyContentIds.END_GAME.getContentType(), DisneyContentIds.END_GAME.getContentId());
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
@@ -180,59 +203,60 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(homePage.isHomeContentViewPresent(), "Not on home page after clicking menu on Brand page");
 
         //Navigate to Profile tab outside of switch for stability
-        homePage.clickMenuTimes(1,1);
+        homePage.clickMenuTimes(1, 1);
         homePage.clickProfileTab();
         homePage.clickSelect();
         sa.assertFalse(whoIsWatchingPage.isGlobalNavPresent(), "Global Nav menu is present.");
-        sa.assertTrue(whoIsWatchingPage.isOpened(),"Profile page did not launch");
-        whoIsWatchingPage.clickMenuTimes(1,1);
+        sa.assertTrue(whoIsWatchingPage.isOpened(), "Profile page did not launch");
+        whoIsWatchingPage.clickMenuTimes(1, 1);
 
         IntStream.range(0, innerPages.size()).forEach(i -> {
             String menu = innerPages.get(i);
             homePage.hiddenNavStateOnInnerPages(menu);
             switch (menu.toLowerCase()) {
-                case "search":
-                    sa.assertFalse(searchPage.isGlobalNavPresent(), "Global Nav menu is present");
-                    sa.assertTrue(searchPage.isOpened(), "Search Page did not launch");
-                    break;
-                case "watchlist":
-                    sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                    sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
-                    break;
-                case "movies":
-                    sa.assertFalse(moviesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                    sa.assertTrue(moviesPage.isOpened(), "Movies page did not launch");
-                    break;
-                case "series":
-                    sa.assertFalse(seriesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                    sa.assertTrue(seriesPage.isOpened(), "Series page did not launch");
-                    break;
-                case "originals":
-                    sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                    sa.assertTrue(originalsPage.isOpened(), "Originals page did not launch");
-                    break;
-                case "settingsTab":
-                    sa.assertFalse(settingsPage.isGlobalNavPresent(), "Global Nav menu is present.");
-                    sa.assertTrue(settingsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent(),
+            case "search":
+                sa.assertFalse(searchPage.isGlobalNavPresent(), "Global Nav menu is present");
+                sa.assertTrue(searchPage.isOpened(), "Search Page did not launch");
+                break;
+            case "watchlist":
+                sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
+                sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
+                break;
+            case "movies":
+                sa.assertFalse(moviesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
+                sa.assertTrue(moviesPage.isOpened(), "Movies page did not launch");
+                break;
+            case "series":
+                sa.assertFalse(seriesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
+                sa.assertTrue(seriesPage.isOpened(), "Series page did not launch");
+                break;
+            case "originals":
+                sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
+                sa.assertTrue(originalsPage.isOpened(), "Originals page did not launch");
+                break;
+            case "settingsTab":
+                sa.assertFalse(settingsPage.isGlobalNavPresent(), "Global Nav menu is present.");
+                sa.assertTrue(
+                        settingsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent(),
                         "Settings page did not launch");
-                    break;
+                break;
 
-                default:
-                    LOGGER.info("Invalid global nav menu");
-                    break;
+            default:
+                LOGGER.info("Invalid global nav menu");
+                break;
             }
         });
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90928"})
-    @Test(description = "Hidden state - Hero Carousel", groups = {"Home"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90928" })
+    @Test(description = "Hidden state - Hero Carousel", groups = { "Home" })
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
 
         logInTemp(entitledUser);
 
@@ -242,7 +266,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         disneyPlusAppleTVHomePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()), "Home is not focused by default");
+        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
+                "Home is not focused by default");
         disneyPlusAppleTVHomePage.moveRight(1, 1);
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), "Global Nav menu is present");

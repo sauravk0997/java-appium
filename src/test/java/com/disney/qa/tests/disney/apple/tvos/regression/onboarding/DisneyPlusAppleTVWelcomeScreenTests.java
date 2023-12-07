@@ -61,7 +61,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(welcomePage.getSignupButton().isElementPresent(), "Sign Up button is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");
         sa.assertTrue(welcomePage.isWelcomeSubTextPresent(), "Welcome sub text is not present");
-        sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(languageUtils.get().
+        sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
                         MOBILE_LINK_TEXT.getText())), "Mobile link text not present");
         sa.assertAll();

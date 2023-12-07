@@ -12,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
     public void onboard() {
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62612"})
@@ -77,7 +77,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @Test(description = "Verify Watchlist Deeplink", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyWatchlistDeeplink() {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink_2"), 10);
         watchlistPage.clickOpenButton();
         pause(2);

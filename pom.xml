@@ -27,11 +27,11 @@
             <name>Bamtech Releases</name>
             <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-releases</url>
         </repository>
-        <repository>
+        <!--repository>
             <id>bamtech_snapshots</id>
             <name>Bamtech Snapshots</name>
             <url>https://artifactory.us-east-1.bamgrid.net/connected-maven-snapshots</url>
-        </repository>
+        </repository-->
         <repository>
             <id>qait_releases</id>
             <name>QAIT Releases</name>
@@ -61,12 +61,12 @@
             <name>hulu-mvn-releases</name>
             <url>https://artifactory.prod.hulu.com/artifactory/hulu-mvn-releases</url>
         </repository>
-        <repository>
+        <!--repository>
             <snapshots/>
             <id>hulu-artifactory-mvn-snapshots</id>
             <name>hulu-mvn-snapshots</name>
             <url>https://artifactory.prod.hulu.com/artifactory/hulu-mvn-snapshots</url>
-        </repository>
+        </repository-->
     </repositories>
 
     <dependencies>
@@ -92,19 +92,6 @@
                     <artifactId>rest-assured</artifactId>
                 </exclusion-->
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zebrunner</groupId>
-            <artifactId>carina-api</artifactId>
-            <version>1.0.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-all</artifactId>
-                </exclusion>
-            </exclusions>
-
         </dependency>
 
         <!-- temp until disney-api-utils fix it inside it's own classpath -->
@@ -151,7 +138,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.9.7</version>
         </dependency>
-       
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -217,12 +204,6 @@
         </dependency>
 
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.5.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.disney.hora</groupId>
             <artifactId>hora-validator</artifactId>
             <version>${hora-validator-version}</version>
@@ -235,27 +216,6 @@
                     <groupId>com.zebrunner</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.disney</groupId>
-            <artifactId>Google-sheets-wrapper</artifactId>
-            <version>1.0.7</version>
-            <classifier>jar-with-dependencies</classifier>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.qaprosoft</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.zebrunner</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>                
             </exclusions>
         </dependency>
 

@@ -31,14 +31,14 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
@@ -65,14 +65,14 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.get().getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
         welcomeScreen.clickCompleteSubscriptionButton();
@@ -100,14 +100,14 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
-                .setCountry(languageUtils.get().getLocale())
-                .setLanguage(languageUtils.get().getUserLanguage());
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        disneyAccount.set(disneyAccountApi.get().createAccount(createDisneyAccountRequest));
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(disneyAccount.get().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(disneyAccount.get().getUserPass());
+        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
+        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
 
         softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");

@@ -21,7 +21,7 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
     public void originalsAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = disneyAccountApi.createAccount(offer, country, language, SUB_VERSION);
+        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOriginalsPage disneyPlusAppleTVOriginalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
 

@@ -41,10 +41,10 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
     }
 
     /**
@@ -56,7 +56,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "XMOBQA-62261 - Legal Page did not open on navigation");
 
-        languageUtils.get().getLegalHeaders().forEach(header -> {
+        getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
@@ -74,10 +74,10 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         confirmLegalPageOpens();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        languageUtils.get().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
+        getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
-            if (documentHeader.equalsIgnoreCase(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
+            if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();
 
@@ -100,7 +100,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         confirmLegalPageOpens();
         boolean hyperlinkFound = false;
 
-        for (String header : languageUtils.get().getLegalHeaders()) {
+        for (String header : getLocalizationUtils().getLegalHeaders()) {
             LOGGER.info("Looking for hyperlink in '{}'", header);
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(header).click();
             pause(5);
@@ -130,7 +130,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         confirmLegalPageOpens();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
-        String apiResponse = cleanDocument(languageUtils.get().getLegalDocumentBody("Imprint"));
+        String apiResponse = cleanDocument(getLocalizationUtils().getLegalDocumentBody("Imprint"));
         String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
 
         sa.assertEquals(appDisplay, apiResponse,
@@ -156,13 +156,13 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
 
         confirmLegalPageOpens();
-        String doNotSellString = languageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
+        String doNotSellString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
         sa.assertTrue(oneTrustPage.isOpened(), "");
         //Toggle switch but do not tap confirm your choice button

@@ -29,7 +29,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         //search movies
         disneyPlusHomeIOSPageBase.clickSearchIcon();
@@ -62,7 +62,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
 
         //series
         home.clickSearchIcon();

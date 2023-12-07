@@ -22,9 +22,12 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
@@ -39,6 +42,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
@@ -61,7 +65,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicClassChain;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == '%s'`]")
     protected ExtendedWebElement staticCellByLabel;
-    private static final ThreadLocal<DisneyLocalizationUtils> disneyLanguageUtils = new ThreadLocal<>();
+    private static DisneyLocalizationUtils disneyLanguageUtils = null;
     @ExtendedFindBy(accessibilityId = "Clear")
     public ExtendedWebElement keyboardClear;
     @ExtendedFindBy(accessibilityId = "unlockedProfileCell")
@@ -303,15 +307,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public static DisneyLocalizationUtils getDictionary() {
-        return disneyLanguageUtils.get();
+        return Objects.requireNonNull(disneyLanguageUtils);
     }
 
     public static void setDictionary(DisneyLocalizationUtils dictionary) {
-        disneyLanguageUtils.set(dictionary);
-    }
-
-    public static void cleanLanguageUtils() {
-        disneyLanguageUtils.remove();
+        disneyLanguageUtils = dictionary;
     }
 
     public ExtendedWebElement getDynamicAccessibilityId(String id) {
@@ -693,8 +693,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void moveToLocalizedKeyboard() {
-        ExtendedWebElement keyboardContinueLocalized = getDynamicAccessibilityId(disneyLanguageUtils.get().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KEYBOARD_CONTINUE.getText()).toLowerCase());
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
+        ExtendedWebElement keyboardContinueLocalized = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KEYBOARD_CONTINUE.getText()).toLowerCase());
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE,"Email_Input_Screen");
         List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeOtherElements.getBy());
         if (keyboardContinueLocalized.isPresent()) {
             IntStream.range(0, listOfOtherElements.size()).forEach(i ->

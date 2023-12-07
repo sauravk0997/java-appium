@@ -22,7 +22,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
     private void onboard() {
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 
@@ -55,7 +55,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(areImagesTheSame(addProfileAvatar, selectedAvatar, 10),
                 "XMOBQA-62630 - Avatar Selected was either not displayed or was altered beyond the accepted margin of error");
         //Finish creating profile
-        if (disneyAccount.get().getProfileLang().equalsIgnoreCase("en")) {
+        if (getAccount().getProfileLang().equalsIgnoreCase("en")) {
             addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1923");
         }
         sa.assertTrue(EditProfileIOSPageBase.isServiceEnrollmentAccessFullCatalogPagePresent(), "Not on serviceEnrollmentAccessFullCatalog page");
@@ -81,7 +81,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         ExtendedWebElement[] avatars;
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
         BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
 
@@ -111,8 +111,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
-        disneyAccountApi.get().addProfile(disneyAccount.get(), SECONDARY_PROFILE, ADULT_DOB, disneyAccount.get().getProfileLang(), THE_CHILD, false, true);
+        setAppToHomeScreen(getAccount());
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), THE_CHILD, false, true);
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
         disneyPlusMoreMenuIOSPageBase.clickAddProfile();
         ExtendedWebElement[] avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
@@ -132,11 +132,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(disneyAccount.get());
+        setAppToHomeScreen(getAccount());
         //Turn ON autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(disneyAccount.get().getFirstName());
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertAll();

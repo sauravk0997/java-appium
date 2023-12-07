@@ -2,6 +2,7 @@ package com.disney.qa.common.utils.ios_settings;
 
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
+import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
@@ -18,8 +19,11 @@ import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IOSSettingsMenuBase extends DisneyAbstractPage {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeNavigationBar[`name == 'Settings'`]")
     private ExtendedWebElement header;
