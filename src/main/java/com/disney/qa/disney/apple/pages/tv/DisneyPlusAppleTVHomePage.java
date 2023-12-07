@@ -165,6 +165,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         } else {
             moveDown(Math.abs(timeToMove), 1);
         }
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         whichGlobalNavMenuIsFocused();
     }
 
@@ -243,18 +244,14 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void hiddenNavStateOnInnerPages(String globalNavMenu) {
         pause(SHORT_TIMEOUT); //if no pause, selecting menu back goes to native home outside of app
-        openGlobalNavWithClickingMenu();
         LOGGER.info("Navigating to global nav menu: {}", globalNavMenu);
+        if (globalNavMenu.equalsIgnoreCase(globalNavigationMenu.MOVIES.getText())){
+            clickLeft();
+        } else {
+            clickMenuTimes(1, 1);
+        }
         navigateToOneGlobalNavMenu(globalNavMenu);
         clickSelect();
-        openAnyContentOnInnerPages(1, 1);
-        if (globalNavMenu.equalsIgnoreCase(globalNavigationMenu.SEARCH.getText()) ||
-                globalNavMenu.equalsIgnoreCase(globalNavigationMenu.MOVIES.getText()) ||
-                globalNavMenu.equalsIgnoreCase(globalNavigationMenu.SERIES.getText())) {
-            clickMenuTimes(2,1);
-        } else {
-            clickMenuTimes(1,1);
-        }
     }
 
     public void openGlobalNavAndSelectOneMenu(String menu) {
