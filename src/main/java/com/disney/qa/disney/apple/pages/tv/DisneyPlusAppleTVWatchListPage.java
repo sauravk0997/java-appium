@@ -13,8 +13,8 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusMoreMenuIOSPage.class)
 public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
 
-    // TODO: In 2.25.1, there is not a unique identifier to watchlist, review with dev site
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView")
+    // TODO: Watchlist accessibility id requested: TVOS-4227
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement watchlistCollectionView;
 
     @ExtendedFindBy(accessibilityId = "watchlistButton")
