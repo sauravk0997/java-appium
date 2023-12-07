@@ -93,10 +93,10 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicAccessibilityId(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isElementPresent()
-                        && disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
+                        && disneyPlusMoreMenuIOSPageBase.isBackArrowInWatchlistPresent(),
                 "Watchlist was not opened");
 
-        disneyPlusMoreMenuIOSPageBase.getBackArrow().click();
+        disneyPlusMoreMenuIOSPageBase.clickBackArrowFromWatchlist();
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(),
                 "User was not returned to the More Menu after closing Watchlist");

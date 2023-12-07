@@ -337,4 +337,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		//TEMP solution for bugged watchlist
 		getTypeButtonByLabel("iconNavBack24LightActive").click();
 	}
+
+	public boolean isBackArrowInWatchlistPresent() {
+		//TEMP solution for bugged watchlist
+		return getTypeButtonByLabel("iconNavBack24LightActive").isPresent();
+	}
 }
