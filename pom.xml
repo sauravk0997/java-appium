@@ -287,6 +287,8 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${project.build.directory}/test-classes/TestNG_suites/${suite}.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <forkCount>2.5C</forkCount>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
         </plugins>
