@@ -13,7 +13,8 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusMoreMenuIOSPage.class)
 public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
 
-    @ExtendedFindBy(accessibilityId = "watchlist")
+    // TODO: Watchlist accessibility id requested: TVOS-4227
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement watchlistCollectionView;
 
     @ExtendedFindBy(accessibilityId = "watchlistButton")
