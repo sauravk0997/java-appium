@@ -110,15 +110,21 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(getAccount());
         createKidsProfile();
+        pause(5);
         //Abandon the flow after DOB entry
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
         homePage.waitForHomePageToOpen();
         moreMenu.clickMoreTab();
-        softAssert.assertFalse(addProfile.isProfilePresent(KIDS_PROFILE), "KIDS profile was created after abandoning the authentication flow");
+        softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "KIDS profile was created after abandoning the authentication flow");
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         softAssert.assertAll();
     }
 
