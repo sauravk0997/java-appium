@@ -143,7 +143,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreStartupExceptions() {
-        WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available");
+        WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available",
+                // todo investigate should we show warnings for some types of exceptions
+                "lock file for downloading application has not disappeared after",
+                "Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure",
+                "Cannot download the app from",
+                "App is no installed among system apps",
+                "Failed to receive any data within the timeout");
     }
 
     @BeforeSuite(alwaysRun = true)
