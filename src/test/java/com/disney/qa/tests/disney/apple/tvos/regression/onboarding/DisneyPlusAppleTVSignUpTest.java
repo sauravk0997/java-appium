@@ -218,6 +218,9 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Password entry page did not launch");
         disneyPlusAppleTVPasswordPage.logInWithPassword(entitledUser.getUserPass());
+        //Wait to handle the expanded validation
+        pause(5);
+        collapseGlobalNav();
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page did not launch");
 
         sa.assertAll();
