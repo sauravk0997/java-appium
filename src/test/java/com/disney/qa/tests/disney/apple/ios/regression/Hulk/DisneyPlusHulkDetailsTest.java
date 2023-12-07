@@ -226,17 +226,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
-        homePage.isOpened();
         IntStream.range(0, getMedia().size()).forEach(i -> {
             homePage.clickSearchIcon();
-            searchPage.isOpened();
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
             }
             searchPage.searchForMedia(getMedia().get(i));
-                    List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-                    results.get(0).click();
-                    detailsPage.isOpened();
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
             if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
                 Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
             } else {
