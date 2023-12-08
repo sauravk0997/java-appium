@@ -50,10 +50,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(user);
         sa.assertTrue(whoIsWatching.isOpened(), "Who's Watching not displayed");
         whoIsWatching.clickProfile(TEST);
-        if (homePage.isGlobalNavExpanded()) {
-            LOGGER.warn("Menu was opened before landing. Closing menu.");
-            homePage.clickSelect();
-        }
+        collapseGlobalNav();
         sa.assertTrue(homePage.isOpened(), "Home page not displayed");
 
         homePage.moveDownFromHeroTileToBrandTile();
