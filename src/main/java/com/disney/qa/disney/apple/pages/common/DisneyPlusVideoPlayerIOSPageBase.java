@@ -182,7 +182,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
         pause(1);
-        tapAtCoordinateNoOfTimes((int)(size.width * 35), (int)(size.height * 50), 1);
+        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), 15);
         int attempts = 0;
         do {
