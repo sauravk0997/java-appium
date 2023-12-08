@@ -180,11 +180,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
+        Dimension size = getDriver().manage().window().getSize();
+        pause(1);
+        tapAtCoordinateNoOfTimes((int)(size.width * 35), (int)(size.height * 50), 1);
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), 15);
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
-        } while (attempts++ < 10 && !seekBar.isElementPresent(SHORT_TIMEOUT));
+        } while (attempts++ < 5 && !seekBar.isElementPresent(SHORT_TIMEOUT));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
