@@ -163,9 +163,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
     private ExtendedWebElement firstRunTimeLabel;
 
-    @ExtendedFindBy(accessibilityId = "dismiss popup")
-    private ExtendedWebElement dismissPopup;
-
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -722,6 +719,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 
     public ExtendedWebElement getShareBtn() { return shareBtn; }
-
-    public ExtendedWebElement getDismissPopup() { return dismissPopup; }
 }
