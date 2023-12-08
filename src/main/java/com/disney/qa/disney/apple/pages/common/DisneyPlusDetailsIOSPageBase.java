@@ -402,7 +402,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     //Series = Creator, Movies = Director
     public boolean isCreatorDirectorDisplayed() {
-        return suits.isPresent(5) || dynamicOtherFindByLabelContains.format("Creator").isPresent(5);
+        return dynamicOtherFindByLabelContains.format("Director").isPresent(5) || dynamicOtherFindByLabelContains.format("Creator").isPresent(5);
     }
 
     public boolean areActorsDisplayed() {
@@ -528,7 +528,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getDetailsTab() {
-        return detailsTab;
+        return getTypeButtonByLabel("DETAILS");
     }
 
     public ExtendedWebElement getActors() {
