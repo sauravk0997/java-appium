@@ -62,10 +62,9 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
-        if (homePage.isGlobalNavExpanded()) {
-            LOGGER.warn("Menu was opened before landing. Closing menu.");
-            homePage.clickSelect();
-        }
+        //Wait to handle the expanded validation
+        pause(5);
+        collapseGlobalNav();
 
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
@@ -138,10 +137,9 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
-        if (homePage.isGlobalNavExpanded()) {
-            LOGGER.warn("Menu was opened before landing. Closing menu.");
-            homePage.clickSelect();
-        }
+        //Wait to handle the expanded validation
+        pause(5);
+        collapseGlobalNav();
 
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
@@ -197,5 +195,13 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         welcomeScreen.isOpened();
         super.installJarvis();
+    }
+
+    public void collapseGlobalNav() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        if (homePage.isGlobalNavExpanded()) {
+            LOGGER.warn("Menu was opened before landing. Closing menu.");
+            homePage.clickSelect();
+        }
     }
 }

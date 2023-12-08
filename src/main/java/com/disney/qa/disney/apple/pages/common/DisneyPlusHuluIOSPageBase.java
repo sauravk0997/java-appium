@@ -8,12 +8,17 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
+    @ExtendedFindBy(accessibilityId = "brandLandingView")
+    protected ExtendedWebElement brandLandingView;
+
     public DisneyPlusHuluIOSPageBase(WebDriver driver) {
         super(driver);
     }
 
     @Override
     public boolean isOpened() {
-        return isCollectionPresent(CollectionConstant.Collection.HULU_FEATURED_PREVIEW);
+        ExtendedWebElement studiosLabel = staticTextByLabel.format("Studios and Networks");
+        swipePageTillElementPresent(studiosLabel, 3, brandLandingView, Direction.UP, 500);
+        return studiosLabel.isPresent();
     }
 }
