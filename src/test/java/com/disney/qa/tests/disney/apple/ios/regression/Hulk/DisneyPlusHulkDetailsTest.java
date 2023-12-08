@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -8,17 +9,14 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.List;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
-
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -239,17 +237,17 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
         detailsPage.getShareBtn().click();
-        pause(2);
+        sa.assertTrue(detailsPage.getTypeOtherByLabel("Prey | Disney+").isPresent(), "'Prey | Disney+' title was not found on share actions.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Messages").isPresent(), "Share action 'Messages' was not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(), "Share action 'Mail' was not found.");
-        sa.assertTrue(detailsPage.getTypeOtherByLabel("Prey | Disney+").isPresent(), "'Prey | Disney+' title was not found on share actions.");
-//        System.out.println(getDriver().getPageSource());
-        detailsPage.getShareBtn().click();
 
-//        detailsPage.getTypeButtonByLabel("Close").click();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+            detailsPage.clickHomeIcon();
+        } else {
+            detailsPage.getTypeButtonByLabel("Close").click();
+        }
 
         //Kids
-        detailsPage.getBackArrow().click();
         homePage.clickMoreTab();
         whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
         homePage.clickSearchIcon();
