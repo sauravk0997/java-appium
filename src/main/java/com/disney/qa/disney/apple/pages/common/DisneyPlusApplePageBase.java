@@ -1195,4 +1195,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isCollectionPresent(CollectionConstant.Collection collection) {
         return collectionCell.format(CollectionConstant.getCollectionName(collection)).isPresent();
     }
+
+    public ExtendedWebElement getUnavailableContentErrorPreview() {
+        return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
+    }
+
 }
