@@ -354,6 +354,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywallPage.getSelectButtonFor(planName).click();
         //1. Test Resume and finish later actioned by Cancel button on billing cycle page
         paywallPage.clickCancelBtn();
+        pause(2);
         //Resume button on alert
         paywallPage.clickSystemAlertSecondaryBtn();
         pause(5);
@@ -403,6 +404,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         search.searchForMedia(PRETTY_FREEKIN_SCARY);
         List<ExtendedWebElement> results = search.getDisplayedTitles();
         results.get(0).click();
+        pause(3);
         details.clickPlayButton();
         sa.assertTrue(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
         video.clickBackButton();
@@ -427,6 +429,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
+        pause(3);
 
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
