@@ -70,13 +70,13 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Subscriptions")
     protected ExtendedWebElement subscriptionsButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$10.99 ✓\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"13.99 ✓\"`]")
     private ExtendedWebElement premiumMonthlyPriceCheckmark;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$109.99 ✓\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"139.99 ✓\"`]")
     private ExtendedWebElement premiumYearlyPriceCheckmark;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"$7.99 ✓\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"7.99 ✓\"`]")
     private ExtendedWebElement basicMonthlyPriceCheckmark;
 
 
