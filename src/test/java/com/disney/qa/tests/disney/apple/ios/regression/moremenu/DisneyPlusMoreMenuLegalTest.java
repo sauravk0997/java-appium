@@ -66,7 +66,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62263"})
     @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyLegalUsesFallbackDictionary(String TUID) {
-        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
 
@@ -123,7 +122,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62266"})
     @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyImpressumTab(String TUID) {
-        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         onboard(country, "en");
@@ -150,7 +148,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Maintainer("gkrishna")
     @Test(description = "One trust - 'opt-out module'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustModal() {
-        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
