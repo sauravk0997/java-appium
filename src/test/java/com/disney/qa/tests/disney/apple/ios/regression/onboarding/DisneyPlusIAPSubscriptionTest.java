@@ -419,13 +419,15 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywall.clickBundleSelectButton();
         paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY);
         paywall.clickOverlaySubscribeButton();
-
+        pause(3);
         try {
             CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
             paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-        }
+            }
+        pause(5);
+        handleAlert();
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
@@ -434,7 +436,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
         details.clickPlayButton();
-        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
+        sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
 
@@ -443,6 +445,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         //Validate in ios native settings the plan has been switched as alternative solution
         iosSettings.navigateToManageSubscription();
+        pause(2);
         sa.assertTrue(iosSettings.isPremiumMonthlyPriceCheckmarkPresent(), "Premium Monthly Price with checkmark not displayed.");
         sa.assertAll();
     }
