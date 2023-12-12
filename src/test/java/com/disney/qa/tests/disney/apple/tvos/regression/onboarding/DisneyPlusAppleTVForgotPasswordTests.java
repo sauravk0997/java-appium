@@ -738,6 +738,9 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.selectContinueBtnOnKeyboardEntry();
         passwordPage.clickContinueBtn();
 
+        if(homePage.isGlobalNavExpanded()){
+            homePage.clickSelect();
+        }
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
         sa.assertAll();
     }
