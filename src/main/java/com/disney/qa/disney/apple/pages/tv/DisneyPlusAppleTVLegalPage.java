@@ -69,8 +69,8 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
         IntStream.range(0, allDocuments.size()).forEach(i -> {
             legalButtons.add(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
-            String document = getDictionary().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllDocumentCodes).get(i));
-            legalDocuments.add(getDictionary().getLegalDocumentBody(document));
+            String document = getDictionary().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
+            legalDocuments.add(document);
         });
         List<String> labels = new ArrayList<>(legalButtons);
         List<String> documents = new ArrayList<>(legalDocuments);
