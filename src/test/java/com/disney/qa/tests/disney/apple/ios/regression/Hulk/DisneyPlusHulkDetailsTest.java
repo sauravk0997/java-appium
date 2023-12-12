@@ -228,6 +228,44 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74628"})
+    @Test(description = "Hulk Details verify share on adult and kids profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkShare() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Adult
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia("Prey");
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        detailsPage.getShareBtn().click();
+        sa.assertTrue(detailsPage.getTypeOtherByLabel("Prey | Disney+").isPresent(), "'Prey | Disney+' title was not found on share actions.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Messages").isPresent(), "Share action 'Messages' was not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(), "Share action 'Mail' was not found.");
+
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+            detailsPage.clickHomeIcon();
+        } else {
+            detailsPage.getTypeButtonByLabel("Close").click();
+        }
+
+        //Kids
+        homePage.clickMoreTab();
+        whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia("I Am Groot");
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertFalse(detailsPage.getShareBtn().isPresent(), "Share button was found on kids profile.");
+    }
+
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863", "XMOBQA-74548"})
     @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieNetworkAttribution() {
