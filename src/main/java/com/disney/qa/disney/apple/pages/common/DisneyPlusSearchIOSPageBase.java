@@ -123,6 +123,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         pressByElement(clearText, 1);
     }
 
+    public ExtendedWebElement getClearText() {
+        return clearText;
+    }
+
     public boolean isRecentSearchDisplayed(){
         return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
     }
