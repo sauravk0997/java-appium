@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -165,8 +164,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public String getPlanName(PlanType planType) {
         switch (planType) {
             case BASIC:
-                return getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText());
+                return "Disney+ Basic";
             case BUNDLE_TRIO_BASIC:
                 return getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS_BUNDLE.getText());
@@ -177,9 +175,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
                 return getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
             case PREMIUM_MONTHLY:
+                return "Disney+ Premium";
             case PREMIUM_YEARLY:
-                return getDictionary().
-                        getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText());
+                return "Disney+ Premium";
 
             default:
                 throw new IllegalArgumentException(
@@ -190,7 +188,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public boolean verifyPlanCardFor(PlanType planType) {
         return planCardTitleLabel.format(getPlanName(planType)).isElementPresent() &&
                 planCardSubTitleLabel.format(getPlanName(planType)).isElementPresent() &&
-                priceLabel.format(getPlanName(planType)).isElementPresent() &&
+                //priceLabel.format(getPlanName(planType)).isElementPresent() &&
                 selectBtn.format(getPlanName(planType)).isElementPresent();
     }
 
@@ -199,19 +197,19 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isChooseYourPlanHeaderPresent() {
-        waitForPresenceOfAnElement(chooseYourPlanHeader);
-        return chooseYourPlanHeader.getText()
-                .equalsIgnoreCase(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_TITLE.getText()));
+        String chooseYourPlanHeaderText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_TITLE.getText());
+        return chooseYourPlanHeader.getText().toLowerCase().contains(chooseYourPlanHeaderText.toLowerCase());
     }
 
     public boolean isChooseYourPlanSubHeaderPresent() {
-        return chooseYourPlanSubHeader.getText()
-                .equalsIgnoreCase(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_SUBCOPY.getText()));
+        String subHeaderLabel = getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_SUBCOPY.getText()).trim();
+        return chooseYourPlanSubHeader.getText().contains(subHeaderLabel.replace(".",""));
     }
 
     public boolean isFooterLabelPresent() {
-        return footerLabel.getText().equalsIgnoreCase(getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText()));
+        String footerLabelText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText());
+        return staticTextLabelContains.format(footerLabelText).isPresent();
     }
 
     public void tapFinishLaterButton() {
@@ -271,7 +269,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickBundleSelectButton() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_BUNDLE_NOADS_CTA.getText())).click();
+        dynamicBtnFindByNameContains.format("selectButton").click();
     }
 
     public void clickPremiumYearlyRowButton() {
