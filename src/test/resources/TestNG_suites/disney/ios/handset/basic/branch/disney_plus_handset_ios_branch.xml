@@ -21,7 +21,7 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Alice,Ariel,Ariel-More Menu,BVT,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
+               value=",Alice,Ariel,Ariel-More Menu,BVT,Smoke,Onboarding,More Menu,Details,Video Player,Search,Home"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
         <classes>
@@ -101,6 +101,11 @@
     <test verbose="1" name="DisneyPlus iOS Handset BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
         </classes>
     </test>
 </suite>
