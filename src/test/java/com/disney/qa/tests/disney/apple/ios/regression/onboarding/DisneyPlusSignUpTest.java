@@ -221,7 +221,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62377"})
     @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalHyperlinkPrivacyPolicy() {
-        setOneTrustConfig();
+        //setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -241,7 +241,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62385"})
     @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyUSLegalCenterUI() {
-        setOneTrustConfig();
+        //setOneTrustConfig();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
