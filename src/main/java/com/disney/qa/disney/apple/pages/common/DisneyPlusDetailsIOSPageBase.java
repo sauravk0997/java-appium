@@ -717,4 +717,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
 
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
+
+    public ExtendedWebElement getShareBtn() { return shareBtn; }
 }
