@@ -8,14 +8,20 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
-    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
-
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -27,9 +33,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+
         setAppToHomeScreen(getAccount());
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         pause(3);
+
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
@@ -165,7 +176,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
@@ -217,6 +227,35 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863", "XMOBQA-74548"})
+    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkSeriesAndMovieNetworkAttribution() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        IntStream.range(0, getMedia().size()).forEach(i -> {
+            homePage.clickSearchIcon();
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(getMedia().get(i));
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+                Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
+            } else {
+                Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
+            }
+        });
+        sa.assertAll();
+    }
+
     private void continuousPlay(int count) {
         while (count>=0) {
             DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -226,5 +265,17 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             videoPlayer.clickPlayButton();
             count--;
         }
+    }
+
+    protected ArrayList<String> getMedia() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Private Property");
+        contentList.add("Only Murders in the Building");
+        contentList.add("Palm Springs");
+        contentList.add("Abbott Elementary");
+        contentList.add("Home Economics");
+        contentList.add("Cruel Summer");
+        contentList.add("Praise Petey");
+        return contentList;
     }
 }
