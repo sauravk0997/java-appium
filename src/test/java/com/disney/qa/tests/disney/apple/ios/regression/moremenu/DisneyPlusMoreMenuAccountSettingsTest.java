@@ -83,7 +83,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify the Account submenu display elements are present", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
         DisneyAccount accountV2 = createV2Account();
-
         setAppToAccountSettings(accountV2);
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -126,9 +125,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
         DisneyAccount accountV2 = createV2Account();
-        setAccount(accountV2);
-
-        setAppToAccountSettings();
+        setAppToAccountSettings(accountV2);
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isDisneyPlusPremiumSubscriptionPresent(),
