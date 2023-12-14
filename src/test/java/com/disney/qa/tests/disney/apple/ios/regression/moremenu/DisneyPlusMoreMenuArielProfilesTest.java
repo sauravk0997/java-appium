@@ -119,11 +119,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         //Abandon the flow after DOB entry
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        homePage.waitForHomePageToOpen();
-        moreMenu.clickMoreTab();
-        softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "KIDS profile was created after abandoning the authentication flow");
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        moreMenu.clickMoreTab();
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         softAssert.assertAll();
     }

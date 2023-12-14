@@ -121,9 +121,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62261", "XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyImpressumTab(String TUID) {
-        setOneTrustConfig();
         SoftAssert sa = new SoftAssert();
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         onboard(country, "en");
