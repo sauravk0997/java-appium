@@ -65,6 +65,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
     public static final String SUBSCRIPTION_V1 = "V1";
+    public static final String SUBSCRIPTION_V2 = "V2";
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
