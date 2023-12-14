@@ -707,7 +707,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         EmailApi verifyEmail = new EmailApi();
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
@@ -738,9 +737,10 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.enterNewPassword(MICKEY_MOUSE_PW);
         passwordPage.selectContinueBtnOnKeyboardEntry();
         passwordPage.clickContinueBtn();
-        whoIsWatchingPage.waitForProfileButton(DEFAULT_PROFILE);
-        whoIsWatchingPage.clickProfile(DEFAULT_PROFILE);
 
+        if(homePage.isGlobalNavExpanded()){
+            homePage.clickSelect();
+        }
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
         sa.assertAll();
     }
