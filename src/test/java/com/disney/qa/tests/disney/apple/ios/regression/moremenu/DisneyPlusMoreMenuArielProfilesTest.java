@@ -158,7 +158,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            parentalConsent.scrollConsentContent(2);
+            //parentalConsent.scrollConsentContent(2);
+            scrollDown();
         }
         //Accept parental consent
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
