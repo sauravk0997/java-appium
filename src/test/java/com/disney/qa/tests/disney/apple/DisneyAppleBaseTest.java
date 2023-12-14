@@ -124,7 +124,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), "V2");
+        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1);
     });
 
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
