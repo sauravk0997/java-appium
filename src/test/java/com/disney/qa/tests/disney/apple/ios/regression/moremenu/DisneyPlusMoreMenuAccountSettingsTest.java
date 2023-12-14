@@ -73,21 +73,26 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
 
+    public void setAppToAccountSettings(DisneyAccount account) {
+        setAppToHomeScreen(account, account.getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61547"})
     @Test(description = "Verify the Account submenu display elements are present", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
         DisneyAccount accountV2 = createV2Account();
-        setAccount(accountV2);
 
-        setAppToAccountSettings();
+        setAppToAccountSettings(accountV2);
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
         pause(3);
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(accountV2.getEmail()).isPresent(),
                 "User Email address was not displayed");
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getAccount().getEmail())
-                        && disneyPlusAccountIOSPageBase.isChangeLinkActive(getAccount().getEmail()),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(accountV2.getEmail())
+                        && disneyPlusAccountIOSPageBase.isChangeLinkActive(accountV2.getEmail()),
                 "Change Email link was not displayed and enabled");
 
         sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
