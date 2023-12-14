@@ -40,10 +40,10 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Subscriber Agreement\"`]")
     private ExtendedWebElement subscriberAgreement;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Your California Privacy Rights\"`]")
-    private ExtendedWebElement yourCAPrivacyRights;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Your US State Privacy Rights\"`]")
+    private ExtendedWebElement yourUSPrivacyRights;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Do Not Sell My Personal Information\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Do Not Sell or Share My Personal Information\"`]")
     private ExtendedWebElement doNotSellMyPersonalInfo;
 
     public DisneyPlusAppleTVLegalPage(WebDriver driver) {
@@ -98,8 +98,8 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                         moveDown(45, 1);
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
-                    case "Your California Privacy Rights":
-                        sa.assertFalse(isFocused(yourCAPrivacyRights), String.format(assertionMessage, labels.get(i)));
+                    case "Your US State Privacy Rights":
+                        sa.assertFalse(isFocused(yourUSPrivacyRights), String.format(assertionMessage, labels.get(i)));
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         moveDown(10, 1);
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
@@ -112,8 +112,8 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                 moveLeft(1, 1);
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             } else {
-                clickSelect();
                 sa.assertFalse(isFocused(doNotSellMyPersonalInfo), String.format(assertionMessage, labels.get(i)));
+                clickSelect();
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 documentArray = documents.get(i).split(lineFeed);
                 IntStream.range(0, documentArray.length).forEach(j -> sa.assertTrue(isDynamicAccessibilityIDElementPresent(documentArray[j]), String.format(errorMessage, documentArray[j])));
