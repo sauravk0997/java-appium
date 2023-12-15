@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -141,4 +140,35 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62634"})
+    @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfileDefaultsToTVMA() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        onboard();
+        moreMenu.clickAddProfile();
+        //Choose avatar
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        //Finish creating profile
+        addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1955");
+        //Verify ServiceEnrollment pin page
+        sa.assertTrue(editProfile.isServiceEnrollmentSetPINPresent(), "ServiceEnrollment set pin page is not shown");
+        sa.assertTrue(editProfile.isProfilePinDescriptionDisplayed(), "Profile pin description is not displayed");
+        sa.assertTrue(editProfile.isProfilePinActionDisplayed(), "Profile pin action is not displayed");
+        sa.assertTrue(editProfile.isProfilePinReminderDisplayed(), "Profile pin reminder is not displayed");
+        LOGGER.info("Selecting 'Not Now' on pin settings page");
+        addProfile.clickSecondaryButtonByCoordinates();
+        //Verify rating is displayed in account's page
+        moreMenu.clickEditProfilesBtn();
+        pause(2);
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
+        sa.assertAll();
+    }
+
 }

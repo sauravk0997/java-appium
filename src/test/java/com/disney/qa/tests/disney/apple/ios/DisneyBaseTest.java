@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
 
+import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
@@ -49,6 +50,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
+    public static final String RATING_MATURE = "TV-MA";
 
 //    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
 //    public void initProxy() {
@@ -220,6 +222,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
+    }
+
+    public DisneyAccount createV2Account() {
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     }
 
     /**
