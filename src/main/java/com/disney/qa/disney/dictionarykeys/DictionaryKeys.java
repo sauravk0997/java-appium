@@ -321,6 +321,7 @@ public enum DictionaryKeys {
     SECURE_PROFILE_PIN_DESCRIPTION("add_profile_secure_profile_pin_description"),
     SECURE_PROFILE_PIN_ERROR("secure_profile_pin_error"),
     SECURE_PROFILE_PIN_MATURITY_RATING("secure_profile_pin_maturity_rating"),
+    SECURE_PROFILE_PIN_REMINDER("add_profile_secure_profile_pin_anytime_reminder"),
     SECURE_PROFILE_PIN_TITLE("secure_profile_pin_title"),
     SECURE_PROFILE_PIN_TOAST("secure_profile_pin_toast"),
     SELECT_ALL_LABEL("select_all_label"),
