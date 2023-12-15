@@ -51,6 +51,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
+    public static final String RATING_TV14 = "TV-14";
 
 //    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
 //    public void initProxy() {

@@ -1,8 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -35,6 +33,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "Cancel")
     private ExtendedWebElement cancelButton;
+
+    @ExtendedFindBy(accessibilityId = "headlineHeader")
+    private ExtendedWebElement headlineHeader;
 
     //Visibility set to false
     //dict key: create_profile_add_profile
@@ -214,4 +215,22 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         String inlineErrorForGenderField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
         return staticTextByLabel.format(inlineErrorForGenderField).isPresent();
     }
+
+    public boolean verifyHeadlineHeaderText() {
+        String accessFullCatalogText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
+        return headlineHeader.getText().equalsIgnoreCase(accessFullCatalogText);
+    }
+
+    public boolean isUpdateMaturityRatingActionDisplayed() {
+        String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
+        return staticTextByLabel.format(getDictionary().formatPlaceholderString(
+                maturityRatingInfo, Map.of("highest_rating_value_image", "TV-MA"))).isPresent();
+    }
+
+    public boolean isMaturityRatingNotNowInfoDisplayed() {
+        String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
+        return staticTextByLabel.format(getDictionary().formatPlaceholderString(
+                maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+    }
+    //update_maturity_rating_action - "Set your content rating to {highest_rating_value_image}
 }
