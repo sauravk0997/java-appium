@@ -232,5 +232,4 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return staticTextByLabel.format(getDictionary().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
     }
-    //update_maturity_rating_action - "Set your content rating to {highest_rating_value_image}
 }
