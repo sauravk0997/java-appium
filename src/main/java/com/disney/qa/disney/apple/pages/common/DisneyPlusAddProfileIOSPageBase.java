@@ -34,9 +34,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "Cancel")
     private ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy(accessibilityId = "headlineHeader")
-    private ExtendedWebElement headlineHeader;
-
     //Visibility set to false
     //dict key: create_profile_add_profile
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Add Profile\"`]")
