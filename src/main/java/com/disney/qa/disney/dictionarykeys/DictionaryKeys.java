@@ -19,6 +19,7 @@ public enum DictionaryKeys {
     AD_BADGE_LABEL("ad_badge_label"),
     ADD_PROFILE_HEADER("add_profile_header"),
     ADD_PROFILE_SUB("add_profile_subcopy"),
+    ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE("add_profile_update_maturity_rating_title"),
     AGREE_AND_CONTINUE_BTN("btn_agree_continue"),
     AUTH_INVALID_CREDENTIALS("auth_invalidcredentials"),
     AUTH_MINOR_PASSWORD("auth_minor_password_body"),
