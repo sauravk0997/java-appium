@@ -9,6 +9,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
@@ -102,6 +103,9 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     private void setUp() {
         initialSetup("US", "en");
         handleAlert();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
