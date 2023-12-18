@@ -78,14 +78,9 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
                         "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone-14/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
-            case TABLET_LANDSCAPE:
+            case TABLET:
                 path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-landscape/ipad-pro-gen-3/detail-page-%s-%s" +
-                                pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
-                break;
-            case TABLET_PORTRAIT:
-                path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-portrait/ipad-pro-gen-3/detail-page-%s-%s" +
+                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad-pro-gen-3/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
             default:
@@ -96,8 +91,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
 
     private enum PlatformType {
         HANDSET,
-        TABLET_LANDSCAPE,
-        TABLET_PORTRAIT,
+        TABLET;
     }
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
@@ -158,14 +152,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Landscape")
     public void aliceUploadBaseImagesTabletLandscape(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
-        aliceS3Baseline(hulkContent, PlatformType.TABLET_LANDSCAPE);
-    }
-
-    @Maintainer("csolmaz")
-    @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Portrait")
-    public void aliceUploadBaseImagesTabletPortrait(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
-        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        aliceS3Baseline(hulkContent, PlatformType.TABLET_PORTRAIT);
+        aliceS3Baseline(hulkContent, PlatformType.TABLET);
     }
 }
 

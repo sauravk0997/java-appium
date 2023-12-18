@@ -6,16 +6,11 @@ import com.disney.hatter.api.alice.model.ImagesRequestS3;
 import com.disney.hatter.api.alice.model.ImagesResponse360;
 import com.disney.hatter.core.config.ConfigProperties;
 import com.disney.hatter.core.utils.FileUtil;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.disney.hatter.api.alice.AliceApiUtil;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusAliceDataProvider.HulkContentS3;
-import com.disney.util.TestGroup;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +22,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -42,8 +36,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
 
     private static final String HANDSET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-handset.json";
-    private static final String TABLET_LANDSCAPE_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet-landscape.json";
-    private static final String TABLET_PORTRAIT_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet-portrait.json";
+    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet.json";
 
     public List<Object[]> parseHulkS3Json(String filePath) {
         List<Object[]> data = new ArrayList<>();
@@ -76,14 +69,7 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     }
 
     @DataProvider
-    public Iterator<Object[]> tabletLandscapeDataContentProvider() {
-        return parseHulkS3Json(TABLET_LANDSCAPE_S3_PATH).iterator();
-    }
-
-    @DataProvider
-    public Iterator<Object[]> tabletPortraitDataContentProvider() {
-        return parseHulkS3Json(TABLET_PORTRAIT_S3_PATH).iterator();
-    }
+    public Iterator<Object[]> tabletDataContentProvider() { return parseHulkS3Json(TABLET_S3_PATH).iterator(); }
 
     private AliceApiUtil getAliceClient() {
         return new AliceApiUtil(MULTIVERSE_STAGING_ENDPOINT);
@@ -95,7 +81,6 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
     private void setUp() {
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         initialSetup("US", "en");
         handleAlert();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
@@ -144,16 +129,8 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "tabletLandscapeDataContentProvider", description = "Alice Base Images Test - Tablet")
-    public void aliceBaselineCompareS3TabletLandscapeTest(HulkContentS3 hulkContent) {
-        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
-        aliceS3BaselineVsLatestScreenshot(hulkContent);
-    }
-
-    @Maintainer("csolmaz")
-    @Test(dataProvider = "tabletPortraitDataContentProvider", description = "Alice Base Images Test - Amazon Fire Tablet")
-    public void aliceBaselineCompareS3TabletPortraitTest(HulkContentS3 hulkContent) {
-        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Images Test - Tablet")
+    public void aliceBaselineCompareS3TabletTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 }
