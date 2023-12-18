@@ -141,17 +141,17 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     }
 
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
-    public void aliceBaseImagesHandset(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
+    public void aliceUploadBaseImagesHandset(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.HANDSET);
     }
 
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Landscape")
-    public void aliceBaseImagesTabletLandscape(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
+    public void aliceUploadBaseImagesTabletLandscape(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.TABLET_LANDSCAPE);
     }
 
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Portrait")
-    public void aliceBaseImagesTabletPortrait(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
+    public void aliceUploadBaseImagesTabletPortrait(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.TABLET_PORTRAIT);
     }
 }

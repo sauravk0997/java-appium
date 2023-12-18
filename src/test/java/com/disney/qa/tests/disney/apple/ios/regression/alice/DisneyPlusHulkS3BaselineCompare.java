@@ -94,13 +94,13 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         initialSetup("US", "en");
         handleAlert();
-//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-//        setAppToHomeScreen(getAccount());
-        welcomePage.isOpened();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+17029164796248a0b@gsuite.disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
-        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+//        welcomePage.isOpened();
+//        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+//        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+17029164796248a0b@gsuite.disneyplustesting.com");
+//        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+//        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
 
     private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
@@ -135,17 +135,17 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     }
 
     @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Images Test - Handset")
-    public void aliceBaselineS3HandsetTest(HulkContentS3 hulkContent) {
+    public void aliceBaselineCompareS3HandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Test(dataProvider = "tabletLandscapeDataContentProvider", description = "Alice Base Images Test - Tablet")
-    public void aliceBaselineS3TabletTest(HulkContentS3 hulkContent) {
+    public void aliceBaselineCompareS3TabletLandscapeTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Test(dataProvider = "tabletPortraitDataContentProvider", description = "Alice Base Images Test - Amazon Fire Tablet")
-    public void aliceBaselineS3AmazonFireTabletTest(HulkContentS3 hulkContent) {
+    public void aliceBaselineCompareS3TabletPortraitTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 }
