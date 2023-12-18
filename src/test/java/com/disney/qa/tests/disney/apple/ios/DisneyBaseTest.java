@@ -9,6 +9,7 @@ import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -38,7 +39,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
@@ -52,6 +53,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_TV14 = "TV-14";
+
+    public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
 
 //    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
 //    public void initProxy() {
@@ -132,6 +135,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
          */
 //    }
+
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
+    public void enableNoTestReset() {
+        R.CONFIG.put(MobileCapabilityType.NO_RESET, "true", true);
+        R.CONFIG.put(MobileCapabilityType.FULL_RESET, "false", true);
+        R.CONFIG.put("capabilities.explicit_timeout", "10", true);
+    }
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions() {

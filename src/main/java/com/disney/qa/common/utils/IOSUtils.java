@@ -833,10 +833,14 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      * @param explicitWait the wait time for the expected condition
      */
     default void launchDeeplink(Boolean useSafari, String url, int explicitWait) {
+        JavascriptExecutor js = null;
         if (useSafari != null && useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            if (js == null) {
+                js = (JavascriptExecutor) getDriver();
+            }
+            js.executeScript(Gestures.TERMINATE_APP.getGesture(), args);
             js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
@@ -845,7 +849,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
             getDriver().findElement(urlField).click();
             wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
             String enterBtnUnicode = "\uE007";
-            getDriver().findElement(urlField).sendKeys(url + enterBtnUnicode);
+            getDriver().findElement(urlField).sendKeys(url);
+            getDriver().findElement(urlField).sendKeys(enterBtnUnicode);
         } else launchDeeplink(url);
     }
 
