@@ -143,15 +143,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean verifyProfileSettingsMaturityRating(String rating) {
-        scrollDown();
         String contentRatingText = getDictionary().formatPlaceholderString(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.MATURITY_RATING_DESCRIPTION_VALUE.getText()),
                 Map.of(USER_RATING_KEY, rating));
+        swipe(staticTextByLabel.format(contentRatingText),1);
         return staticTextByLabel.format(contentRatingText).isPresent();
 
     }
-
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
