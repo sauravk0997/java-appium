@@ -149,9 +149,8 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Landscape")
-    public void aliceUploadBaseImagesTabletLandscape(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
-        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
+    @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
+    public void aliceUploadBaseImagesTablet(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.TABLET);
     }
 }
