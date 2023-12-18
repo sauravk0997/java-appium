@@ -64,7 +64,6 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     }
 
     private String buildS3BucketPath(String contentTitle, PlatformType platformType) {
-//        LocalDateTime currentDateTime = LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
         String path = "";
         String pngFileType = ".png";
 
