@@ -19,8 +19,10 @@ import com.disney.util.TestGroup;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -96,11 +98,6 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         handleAlert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-//        welcomePage.isOpened();
-//        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-//        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+17029164796248a0b@gsuite.disneyplustesting.com");
-//        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
-//        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
 
     private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
@@ -141,11 +138,13 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
 
     @Test(dataProvider = "tabletLandscapeDataContentProvider", description = "Alice Base Images Test - Tablet")
     public void aliceBaselineCompareS3TabletLandscapeTest(HulkContentS3 hulkContent) {
+        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Test(dataProvider = "tabletPortraitDataContentProvider", description = "Alice Base Images Test - Amazon Fire Tablet")
     public void aliceBaselineCompareS3TabletPortraitTest(HulkContentS3 hulkContent) {
+        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 }
