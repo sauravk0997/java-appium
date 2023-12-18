@@ -9,6 +9,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.OutputType;
@@ -147,17 +148,20 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         s3ImageNames.add(s3BucketPath);
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
     public void aliceUploadBaseImagesHandset(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.HANDSET);
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Landscape")
     public void aliceUploadBaseImagesTabletLandscape(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
         aliceS3Baseline(hulkContent, PlatformType.TABLET_LANDSCAPE);
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet Portrait")
     public void aliceUploadBaseImagesTabletPortrait(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);

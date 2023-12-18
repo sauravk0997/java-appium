@@ -19,6 +19,7 @@ import com.disney.util.TestGroup;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.json.JSONObject;
@@ -136,17 +137,20 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Images Test - Handset")
     public void aliceBaselineCompareS3HandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "tabletLandscapeDataContentProvider", description = "Alice Base Images Test - Tablet")
     public void aliceBaselineCompareS3TabletLandscapeTest(HulkContentS3 hulkContent) {
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
+    @Maintainer("csolmaz")
     @Test(dataProvider = "tabletPortraitDataContentProvider", description = "Alice Base Images Test - Amazon Fire Tablet")
     public void aliceBaselineCompareS3TabletPortraitTest(HulkContentS3 hulkContent) {
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
