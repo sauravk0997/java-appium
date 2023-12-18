@@ -4,6 +4,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.alice;
 import com.disney.hatter.api.alice.AliceApiUtil;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,6 +104,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         handleAlert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
+        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
 
 
