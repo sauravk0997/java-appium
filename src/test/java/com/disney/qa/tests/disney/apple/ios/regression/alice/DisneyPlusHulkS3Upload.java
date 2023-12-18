@@ -77,12 +77,12 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
                 break;
             case TABLET_LANDSCAPE:
                 path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-landscape/ipad-air-gen-4/detail-page-%s-%s" +
+                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-landscape/ipad-pro-gen-3/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
             case TABLET_PORTRAIT:
                 path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-portrait/ipad-air-gen-4/detail-page-%s-%s" +
+                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet-portrait/ipad-pro-gen-3/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
             default:
