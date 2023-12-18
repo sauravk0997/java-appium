@@ -19,6 +19,7 @@ import com.disney.util.TestGroup;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
@@ -96,8 +97,12 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         initialSetup("US", "en");
         handleAlert();
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        }
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
+        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
 
     private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
