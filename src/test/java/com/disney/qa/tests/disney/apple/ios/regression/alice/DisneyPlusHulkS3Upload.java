@@ -68,6 +68,10 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         return new AliceApiUtil(MULTIVERSE_STAGING_ENDPOINT);
     }
 
+    private String getDeviceNameFromCapabilities() {
+        return R.CONFIG.get("capabilities.deviceName").toLowerCase();
+    }
+
     private String buildS3BucketPath(String contentTitle, PlatformType platformType, String deviceName) {
         String path = "";
         String pngFileType = ".png";
@@ -152,10 +156,6 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
     public void aliceUploadBaseImagesTablet(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, PlatformType.TABLET, getDeviceNameFromCapabilities());
-    }
-
-    private String getDeviceNameFromCapabilities() {
-       return R.CONFIG.get("capabilities.deviceName");
     }
 }
 
