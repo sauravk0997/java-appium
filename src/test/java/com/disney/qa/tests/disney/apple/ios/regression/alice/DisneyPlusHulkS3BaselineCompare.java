@@ -38,6 +38,8 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     private static final String HANDSET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-handset.json";
     private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet.json";
 
+    private static final String TABLET_S3_LOCAL_PATH = "src/test/resources/json/ipad6genlocal.json";
+
     public List<Object[]> parseHulkS3Json(String filePath) {
         List<Object[]> data = new ArrayList<>();
 
