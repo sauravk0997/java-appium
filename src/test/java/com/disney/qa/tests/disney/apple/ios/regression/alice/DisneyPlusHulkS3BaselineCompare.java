@@ -123,13 +123,13 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Images Test - Handset")
+    @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
     public void aliceBaselineCompareS3HandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Images Test - Tablet")
+    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
     public void aliceBaselineCompareS3TabletTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
