@@ -36,8 +36,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
 
     private static final String HANDSET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-handset.json";
-//    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet.json";
-    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet-ipad-pro-2.json";
+    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet.json";
+//    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet-ipad-pro-2.json";
 
     public List<Object[]> parseHulkS3Json(String filePath) {
         List<Object[]> data = new ArrayList<>();
@@ -108,17 +108,17 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         sa.assertTrue(getAliceClient().isImageSimilar360S3(
                 srcFile, hulkContentS3.getS3FileName()),"Images are not similar");
 
-//        ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3FileName());
-//        ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
-//        JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
-//        double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
-//
-//        LOGGER.info("Similarity Percentage is: " + imageSimilarityPercentage);
-//        LOGGER.info("Raw JSON response: " + jsonResponse);
-//
-//        sa.assertTrue(
-//                imageSimilarityPercentage > ConfigProperties.getInstance().getPercentageOfSimilarity(),
-//                "Similarity Percentage score was 95 or lower.");
+        ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3FileName());
+        ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
+        JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
+        double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
+
+        LOGGER.info("Similarity Percentage is: " + imageSimilarityPercentage);
+        LOGGER.info("Raw JSON response: " + jsonResponse);
+
+        sa.assertTrue(
+                imageSimilarityPercentage > ConfigProperties.getInstance().getPercentageOfSimilarity(),
+                "Similarity Percentage score was 95 or lower.");
 
         sa.assertAll();
     }
