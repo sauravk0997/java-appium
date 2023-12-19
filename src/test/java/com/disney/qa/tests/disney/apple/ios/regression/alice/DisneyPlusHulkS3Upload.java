@@ -68,19 +68,19 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         return new AliceApiUtil(MULTIVERSE_STAGING_ENDPOINT);
     }
 
-    private String buildS3BucketPath(String contentTitle, PlatformType platformType) {
+    private String buildS3BucketPath(String contentTitle, PlatformType platformType, String deviceName) {
         String path = "";
         String pngFileType = ".png";
 
         switch (platformType) {
             case HANDSET:
                 path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone-14/detail-page-%s-%s" +
+                        "bamtech-qa-alice/disney/recognition/alice/apple-handset/" + deviceName + "/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
             case TABLET:
                 path = String.format(
-                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad-pro-2/detail-page-%s-%s" +
+                        "bamtech-qa-alice/disney/recognition/alice/apple-tablet/" + deviceName + "/detail-page-%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
                 break;
             default:
@@ -123,7 +123,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         LOGGER.info("S3 Storage image names: " + s3ImageNames);
     }
 
-    private void aliceS3Baseline(DisneyPlusAliceDataProvider.HulkContent hulkContent, PlatformType platformType) {
+    private void aliceS3Baseline(DisneyPlusAliceDataProvider.HulkContent hulkContent, PlatformType platformType, String deviceName) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String underscoreTitle = hulkContent.getTitle().replace(' ', '_');
@@ -136,7 +136,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
         fluentWait(getDriver(), 20, 3, "Details tab is not present").until(it -> detailsPage.getDetailsTab().isPresent(1));
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        String s3BucketPath = buildS3BucketPath(underscoreTitle, platformType);
+        String s3BucketPath = buildS3BucketPath(underscoreTitle, platformType, deviceName);
 
         imageS3UploadRequests.put(srcFile, s3BucketPath);
         s3ImageNames.add(s3BucketPath);
@@ -145,13 +145,17 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
     public void aliceUploadBaseImagesHandset(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
-        aliceS3Baseline(hulkContent, PlatformType.HANDSET);
+        aliceS3Baseline(hulkContent, PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
     public void aliceUploadBaseImagesTablet(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
-        aliceS3Baseline(hulkContent, PlatformType.TABLET);
+        aliceS3Baseline(hulkContent, PlatformType.TABLET, getDeviceNameFromCapabilities());
+    }
+
+    private String getDeviceNameFromCapabilities() {
+       return R.CONFIG.get("capabilities.deviceName");
     }
 }
 
