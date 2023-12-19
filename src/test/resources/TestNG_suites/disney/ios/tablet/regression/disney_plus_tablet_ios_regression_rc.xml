@@ -22,7 +22,7 @@
     <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
     <parameter name="overrideFields" value="enableOneTrustConfig=${enableOneTrustConfig},JOB_MAX_RUN_TIME=480,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Smoke,Onboarding,More Menu,Details,Video Player,Search"/>
+               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,Onboarding,Search,Smoke,Video Player"/>
     <!--<parameter name="scheduling" value="H 5 * * *"/>-->
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
@@ -79,6 +79,18 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Home" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="iOS Handset Hulk" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
         </classes>
     </test>
 </suite>

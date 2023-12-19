@@ -1,8 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -20,6 +18,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final String USER_RATING_KEY = "profile_rating_restriction";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -67,6 +66,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "serviceEnrollmentAccessFullCatalog")
     private ExtendedWebElement serviceEnrollmentAccessFullCatalogPage;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"serviceEnrollmentSetPIN\"`]")
+    private ExtendedWebElement serviceEnrollmentSetPIN;
+
     @ExtendedFindBy(accessibilityId = "backgroundVideoToggleCell")
     private ExtendedWebElement backgroundVideoToggleCell;
 
@@ -81,6 +83,12 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(accessibilityId = "alertAction:destructiveButton")
     private ExtendedWebElement confirmProfileDeleteButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Content Rating\"`]")
+    private ExtendedWebElement contentRatingTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
+    private ExtendedWebElement subtitleLabel;
 
     private ExtendedWebElement pinSettingsCell = xpathNameOrName.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -134,6 +142,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 .isElementPresent();
     }
 
+    public boolean verifyProfileSettingsMaturityRating(String rating) {
+        String contentRatingText = getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.MATURITY_RATING_DESCRIPTION_VALUE.getText()),
+                Map.of(USER_RATING_KEY, rating));
+        swipe(staticTextByLabel.format(contentRatingText),1);
+        return staticTextByLabel.format(contentRatingText).isPresent();
+
+    }
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
@@ -175,6 +192,25 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isServiceEnrollmentAccessFullCatalogPagePresent() {
         return serviceEnrollmentAccessFullCatalogPage.isElementPresent();
+    }
+
+    public boolean isServiceEnrollmentSetPINPresent() {
+        return serviceEnrollmentSetPIN.isElementPresent();
+    }
+
+    public boolean isProfilePinActionDisplayed() {
+        return staticTextByLabel.format(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_ACTION.getText())).isPresent();
+    }
+
+    public boolean isProfilePinDescriptionDisplayed() {
+        return staticTextByLabel.format(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_DESCRIPTION.getText())).isPresent();
+    }
+
+    public boolean isProfilePinReminderDisplayed() {
+       return  staticTextByLabel.format(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_REMINDER.getText())).isPresent();
     }
 
     /** This method toggles the 'autoplay' switch to the requested state for the
