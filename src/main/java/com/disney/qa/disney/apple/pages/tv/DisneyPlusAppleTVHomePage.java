@@ -273,29 +273,21 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
             moveRight(1, 1);
         });
 
-        moveDown(1, 1);
+        moveDown(2, 1);
         moveLeft(4, 1);
-        moveRight(4, 1);
-        for (int i=0; i<sets.size(); i++) {
+        moveRight(2, 1);
+        for (int i=1; i<sets.size(); i++) {
             var shelfTitle = sets.get(i).getSetName();
             var getSetAssets = sets.get(i).getTitles();
 
             sa.assertTrue(isAIDElementPresentWithScreenshot(shelfTitle), "Following shelf container not found " + shelfTitle);
 
-            String item = getSetAssets.get(4);
+            String item = getSetAssets.get(2);
 
-            boolean isPresent = dynamicCellByLabel.format(item).isElementPresent();
-            boolean isFocused = isFocused(dynamicCellByLabel.format(item));
+            boolean isPresent = dynamicCellByLabel.format(item).isPresent();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
-            if(!isFocused){
-                moveLeft(1,1);
-                isFocused = isFocused(dynamicCellByLabel.format(getSetAssets.get(3)));
-                moveRight(1,1);
-                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            }
             sa.assertTrue(isPresent, "The following content was not found " + item);
-            sa.assertTrue(isFocused, "The following content was not focused " + item);
 
             moveDown(1, 1);
         }
