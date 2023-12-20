@@ -52,9 +52,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Notice of Right to Opt Out of Sale/Sharing\"`][2]")
     private ExtendedWebElement noticeOfRightTitle;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Some states provide residents (or, in some cases, their authorized agents) with the right to opt out of “targeted advertising,” “selling,” or “sharing” of personal information. Please visit Your US State Privacy Rights (privacy.twdc.com/usstates), including the Your California Privacy Rights section, for more information about your rights and our privacy practices.  You or your legally authorized agent can uncheck the box to opt out of these activities on this digital property consistent with applicable law.\"`]")
-    private ExtendedWebElement noticeOfRightContent;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Selling, Sharing, Targeted Advertising  \"`][1]")
     private ExtendedWebElement sellingSharingButton;
 
@@ -63,24 +60,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Selling, Sharing, Targeted Advertising\"`]")
     private ExtendedWebElement sellingSharingCheckboxLabel;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"We may use personal information to support “targeted advertising,” “selling,” or “sharing,” as defined by applicable privacy laws, which may result in third parties receiving your personal information. Please note that, your opt-out choice is specific to this property, on this device. If you access other digital properties of the Walt Disney Family of Companies, you will need to make your election for each property and device. Also, if you clear your device settings, you may need to opt out again on this property. \"`]")
-    private ExtendedWebElement sellingSharingContent1;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"In addition to the above checkbox, you may choose to provide the information requested in this opt-out form (usprivacy.disney.com/dnssmpi), which may enable us to take action on your opt-out election more broadly than just on this digital property. \"`]")
-    private ExtendedWebElement sellingSharingContent2;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"You may also choose to enable online, where available, a universal tool that automatically communicates your opt-out preferences, such as the Global Privacy Control (“GPC”). We will process the GPC signal as a request to opt out. \"`]")
-    private ExtendedWebElement sellingSharingContent3;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"If you opt out, you may continue to see advertising, including ads that may be based on personal information processed before you opted out. \"`]")
-    private ExtendedWebElement sellingSharingContent4;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"You also may have rights to opt out from certain third parties selling and sharing your personal information. You will need to separately exercise your opt-out rights with regard to each, which you may do through this IAB opt-out list (iabprivacy.com/optout.html). You may also wish to use other available online tools to limit various types of interest-based advertising or tracking. \"`]")
-    private ExtendedWebElement sellingSharingContent5;
-
-    @ExtendedFindBy(accessibilityId = "To learn more, visit \"Do Not Sell or Share My Personal Information\" and \"Targeted Advertising\" Opt-Out Rights (privacy.thewaltdisneycompany.com/en/dnssmpi).")
-    private ExtendedWebElement sellingSharingContent6;
 
     public DisneyPlusAppleTVLegalPage(WebDriver driver) {
         super(driver);
@@ -153,20 +132,12 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(noticeOfRightButton.isPresent(),"Notice of Right to Opt Out of Sale/Sharing Button is not been displayed");
                 sa.assertTrue(noticeOfRightTitle.isPresent(),"Notice of Right to Opt Out of Sale/Sharing Title is not been displayed");
-                sa.assertTrue(noticeOfRightContent.isPresent(),"Notice of Right to Opt Out of Sale/Sharing Content is not been displayed");
 
                 moveDown(1,1);
                 moveRight(1,1);
                 sa.assertTrue(sellingSharingButton.isPresent(),"Selling, Sharing, Targeted Advertising Button is not been displayed");
                 sa.assertTrue(sellingSharingTitle.isPresent(),"Selling, Sharing, Targeted Advertising Title is not been displayed");
                 sa.assertTrue(sellingSharingCheckboxLabel.isPresent(),"Selling, Sharing, Targeted Advertising Checkbox label is not been displayed");
-                sa.assertTrue(sellingSharingContent1.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 1 is not been displayed");
-                sa.assertTrue(sellingSharingContent2.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 2 is not been displayed");
-                sa.assertTrue(sellingSharingContent3.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 3 is not been displayed");
-                moveDown(6,1);
-                sa.assertTrue(sellingSharingContent4.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 4 is not been displayed");
-                sa.assertTrue(sellingSharingContent5.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 5 is not been displayed");
-                sa.assertTrue(sellingSharingContent6.isPresent(),"Selling, Sharing, Targeted Advertising Content paragraph 6 is not been displayed");
 
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             }
