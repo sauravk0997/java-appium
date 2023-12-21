@@ -532,7 +532,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-        //        handleAlert();
+        handleAlert();
     }
 
     public void launchJarvisOrInstall() {

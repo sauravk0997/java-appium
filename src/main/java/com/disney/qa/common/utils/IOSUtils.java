@@ -50,23 +50,23 @@ import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
-     static final Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-     static final String DIRECTION = "direction";
-     static final String ELEMENT = "element";
-     static final String DURATION = "duration";
-     static final String BUNDLE_ID = "bundleId";
-     static final String ACTION = "action";
+    JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
+    Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    String DIRECTION = "direction";
+    String ELEMENT = "element";
+    String DURATION = "duration";
+    String BUNDLE_ID = "bundleId";
+    String ACTION = "action";
+    String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
+    String DEVICE_TYPE = "capabilities.deviceType";
 
-     static final String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
-    public static final String DEVICE_TYPE = "capabilities.deviceType";
+    String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
 
-     static final String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
-
-    public enum ButtonStatus {
+    enum ButtonStatus {
         ON, OFF, INVALID
     }
 
-    public enum AlertButtonCommand {
+    enum AlertButtonCommand {
         ACCEPT("accept"),
         DISMISS("dismiss");
 
@@ -81,7 +81,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum AlertButton {
+    enum AlertButton {
         LATER("Later"),
         REMIND_ME_LATER("Remind Me Later"),
         NOT_NOW("Not Now"),
@@ -100,7 +100,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum Direction2 {
+    enum Direction2 {
         UP("up"),
         DOWN("down"),
         LEFT("left"),
@@ -117,7 +117,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum Gestures {
+    enum Gestures {
         SCROLL("mobile: scroll"),
         SWIPE("mobile: swipe"),
         ALERT("mobile: alert"),
@@ -144,7 +144,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
 
     }
 
-    public enum Attributes {
+    enum Attributes {
         UID("UID"),
         ACCESSIBILITY_CONTAINER("accessibilityContainer"),
         ACCESSIBLE("accessible"),
@@ -181,7 +181,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum SystemBundles {
+    enum SystemBundles {
         ACTIVITY("com.apple.Fitness"),
         APP_STORE("com.apple.AppStore"),
         BOOKS("com.apple.iBooks"),
@@ -825,7 +825,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         launchWithDeeplinkAddress(url);
     }
 
-    JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
+
 
     class JavascriptExecutorService {
         private static volatile JavascriptExecutor js;
