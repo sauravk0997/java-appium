@@ -1086,7 +1086,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void enableBrazeConfig() {
-        pause(5);
+        Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
         if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("braze Config isEnabled is already enabled to true..");
         } else {
@@ -1097,7 +1097,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void disableBrazeConfig() {
-        pause(5);
+        Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
         if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
                 || getStaticTextByLabelContains(SET_TO_TRUE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("disabling brazeConfig isEnable config..");
@@ -1224,5 +1224,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getUnavailableContentErrorPreview() {
         return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
     }
-
 }
