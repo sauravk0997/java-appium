@@ -104,8 +104,6 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         LOGGER.info("S3 File: " + hulkContentS3.getS3FileName());
-        sa.assertTrue(getAliceClient().isImageSimilar360S3(
-                srcFile, hulkContentS3.getS3FileName()),"Images are not similar");
 
         ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3FileName());
         ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);

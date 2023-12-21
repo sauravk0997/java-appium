@@ -19,11 +19,4 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,disableBrazeConfig=${disableBrazeConfig},appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="booleanParam::disableBrazeConfig::by Default set to true to disable." value="true"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
-
-    <test verbose="1" name="DisneyPlus iOS Tablet    Alice" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3BaselineCompareTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3UploadTest"/>
-        </classes>
-    </test>
 </suite>

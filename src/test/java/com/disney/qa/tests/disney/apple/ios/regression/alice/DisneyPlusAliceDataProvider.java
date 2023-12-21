@@ -5,7 +5,7 @@ import lombok.Data;
 public interface DisneyPlusAliceDataProvider {
 
     @Data
-    public static class HulkContent {
+    class HulkContent {
 
         private String title;
         private String entityId;
@@ -25,7 +25,7 @@ public interface DisneyPlusAliceDataProvider {
     }
 
     @Data
-    public static class HulkContentS3 {
+    class HulkContentS3 {
         private String title;
         private String entityId;
         private String s3file;

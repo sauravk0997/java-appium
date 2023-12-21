@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.alice;
 
-
 import com.disney.hatter.api.alice.AliceApiUtil;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -31,12 +30,10 @@ import java.util.*;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 
-
 public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
 
     Map<File, String> imageS3UploadRequests = new HashMap<>();
     List<String> s3ImageNames = new ArrayList<>();
-
 
     @DataProvider
     public Iterator<Object[]> dataContentProvider() {
@@ -110,7 +107,6 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
-
 
     @AfterTest(alwaysRun = true)
     private void uploadImagesS3() throws IOException {

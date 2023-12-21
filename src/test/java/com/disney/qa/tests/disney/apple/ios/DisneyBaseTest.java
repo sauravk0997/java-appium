@@ -386,7 +386,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
                 .until(it -> {
                     LOGGER.info("Jarvis is not launched, launching jarvis...");
-                    pause(1);
                     boolean isRunning = isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS));
                     LOGGER.info("Is app running: {}", isRunning);
                     return isRunning;
