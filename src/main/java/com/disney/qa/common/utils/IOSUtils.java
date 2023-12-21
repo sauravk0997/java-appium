@@ -825,8 +825,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         launchWithDeeplinkAddress(url);
     }
 
-
-
     class JavascriptExecutorService {
         private static volatile JavascriptExecutor js;
 
@@ -849,7 +847,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      * @param url          url address
      * @param explicitWait the wait time for the expected condition
      */
-    default void launchDeeplink(Boolean useSafari, String url, int explicitWait) {
+    default void launchDeeplink(boolean useSafari, String url, int explicitWait) {
         if (useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
