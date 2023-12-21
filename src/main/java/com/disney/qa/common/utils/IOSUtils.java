@@ -9,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 import com.zebrunner.carina.utils.messager.Messager;
@@ -826,6 +827,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
     }
 
     class JavascriptExecutorService {
+        @SuppressWarnings("squid:S3077")
         private static volatile JavascriptExecutor js;
 
         public JavascriptExecutor getJavascriptExecutorInstance(WebDriver driver) {
@@ -851,8 +853,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         if (useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.TERMINATE_APP.getGesture(), args);
-            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.LAUNCH_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).get().executeScript(Gestures.TERMINATE_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).get().executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
