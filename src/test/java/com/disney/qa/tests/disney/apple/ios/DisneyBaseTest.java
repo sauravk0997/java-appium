@@ -140,7 +140,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void enableNoTestReset() {
         R.CONFIG.put(MobileCapabilityType.NO_RESET, "true", true);
         R.CONFIG.put(MobileCapabilityType.FULL_RESET, "false", true);
-        R.CONFIG.put("capabilities.explicit_timeout", "10", true);
     }
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
