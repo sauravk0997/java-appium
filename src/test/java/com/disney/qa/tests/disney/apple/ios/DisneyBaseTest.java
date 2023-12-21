@@ -381,6 +381,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
+    public void installAndLaunchJarvis() {
+        installJarvis();
+        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
+                .until(it -> {
+                    LOGGER.info("Jarvis is not launched, launching jarvis...");
+                    pause(1);
+                    boolean isRunning = isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS));
+                    LOGGER.info("Is app running: {}", isRunning);
+                    return isRunning;
+                });
+    }
+
     public void rotateScreen(ScreenOrientation orientation) {
         try {
             rotate(orientation);
@@ -501,7 +514,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setBrazeConfig() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        installAndLaunchJarvis();
         jarvis.openAppConfigOverrides();
         applePageBase.scrollToItem("brazeConfig").click();
         LOGGER.info("fetching braze config value from config file:" + R.CONFIG.get("brazeConfig"));
