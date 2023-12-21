@@ -14,14 +14,6 @@ public interface DisneyPlusAliceDataProvider {
             this.title = title;
             this.entityId = entityId;
         }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getEntityId() {
-            return entityId;
-        }
     }
 
     @Data
@@ -34,14 +26,6 @@ public interface DisneyPlusAliceDataProvider {
             this.title = title;
             this.entityId = entityId;
             this.s3file = s3File;
-        }
-
-        public String getEntityId() {
-            return entityId;
-        }
-
-        public String getS3FileName() {
-            return s3file;
         }
     }
 }

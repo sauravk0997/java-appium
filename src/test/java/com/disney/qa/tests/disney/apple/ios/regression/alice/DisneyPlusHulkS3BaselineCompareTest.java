@@ -103,9 +103,9 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
         fluentWait(getDriver(), 20, 3, "Details tab is not present").until(it -> detailsPage.getDetailsTab().isPresent(1));
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        LOGGER.info("S3 File: " + hulkContentS3.getS3FileName());
+        LOGGER.info("S3 File: " + hulkContentS3.getS3file());
 
-        ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3FileName());
+        ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3file());
         ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
         JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
         double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
