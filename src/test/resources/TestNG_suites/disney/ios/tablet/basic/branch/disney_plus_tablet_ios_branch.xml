@@ -79,8 +79,8 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Alice" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3BaselineCompare"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3Upload"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3BaselineCompareTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3UploadTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">

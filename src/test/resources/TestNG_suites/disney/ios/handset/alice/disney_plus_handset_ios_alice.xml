@@ -16,13 +16,13 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value="DisneyPlusHulkS3BaselineCompare#aliceBaselineCompareS3HandsetTest"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="branch=cs/QAA-12786-1,JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 
 <test verbose="1" name="DisneyPlus iOS Handset Alice" parallel="methods">
 <classes>
-    <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3BaselineCompare"/>
-    <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3Upload"/>
+    <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3BaselineCompareTest"/>
+    <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3UploadTest"/>
 </classes>
 </test>
 </suite>

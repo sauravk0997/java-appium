@@ -32,7 +32,7 @@ import java.util.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 
 
-public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
+public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
 
     Map<File, String> imageS3UploadRequests = new HashMap<>();
     List<String> s3ImageNames = new ArrayList<>();
