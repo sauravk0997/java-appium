@@ -69,7 +69,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     }
 
     private String getDeviceNameFromCapabilities() {
-        return R.CONFIG.get("capabilities.deviceName").toLowerCase();
+        return R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
     }
 
     private String buildS3BucketPath(String contentTitle, PlatformType platformType, String deviceName) {
@@ -102,6 +102,7 @@ public class DisneyPlusHulkS3Upload extends DisneyBaseTest {
     private void setUp() {
         initialSetup("US", "en");
         handleAlert();
+        setBrazeConfig();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }

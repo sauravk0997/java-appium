@@ -498,6 +498,31 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //        handleAlert();
     }
 
+    public void setBrazeConfig() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        applePageBase.scrollToItem("brazeConfig").click();
+        LOGGER.info("fetching braze config value from config file:" + R.CONFIG.get("brazeConfig"));
+        boolean disableBrazeConfig = Boolean.parseBoolean(R.CONFIG.get("disableBrazeConfig"));
+        if (disableBrazeConfig) {
+            LOGGER.info("Navigating to isEnabled..");
+            applePageBase.scrollToItem("isEnabled").click();
+            applePageBase.disableBrazeConfig();
+        } else {
+            applePageBase.removeDomainIdentifier();
+            applePageBase.navigateBack();
+            applePageBase.enableBrazeConfig();
+        }
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        //        handleAlert();
+    }
+
     public void launchJarvisOrInstall() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));

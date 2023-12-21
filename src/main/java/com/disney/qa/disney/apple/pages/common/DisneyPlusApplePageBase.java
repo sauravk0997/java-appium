@@ -1085,6 +1085,30 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public void enableBrazeConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("braze Config isEnabled is already enabled to true..");
+        } else {
+            LOGGER.info("Enabling brazeConfig isEnable config..");
+            clickToggleView();
+            Assert.assertTrue(getStaticTextByLabelContains("Set to: true").isPresent());
+        }
+    }
+
+    public void disableBrazeConfig() {
+        pause(5);
+        if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
+                || getStaticTextByLabelContains("Set to: true").isPresent(SHORT_TIMEOUT)) {
+//        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent()) {
+            LOGGER.info("disabling brazeConfig isEnable config..");
+            clickToggleView();
+            Assert.assertTrue(getStaticTextByLabelContains("Set to: false").isPresent());
+        } else {
+            LOGGER.info("brazeConfig is already disabled..");
+        }
+    }
+
     public void disableFlexWelcomeConfig() {
         pause(5);
         if (getStaticTextByLabelContains("welcome is using its default value of true").isPresent()) {

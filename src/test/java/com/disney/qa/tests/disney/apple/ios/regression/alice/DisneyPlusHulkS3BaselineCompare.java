@@ -83,6 +83,7 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
     private void setUp() {
         initialSetup("US", "en");
         handleAlert();
+        setBrazeConfig();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }
