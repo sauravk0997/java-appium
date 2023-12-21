@@ -1084,7 +1084,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void enableBrazeConfig() {
-        waitForPresenceOfAnElement(staticTextLabelContains);
+        pause(5);
         if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("braze Config isEnabled is already enabled to true..");
         } else {
@@ -1095,7 +1095,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void disableBrazeConfig() {
-        waitForPresenceOfAnElement(staticTextLabelContains);
+        pause(5);
         if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
                 || getStaticTextByLabelContains("Set to: true").isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("disabling brazeConfig isEnable config..");
