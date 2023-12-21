@@ -34,10 +34,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
     protected ExtendedWebElement alertTryAgainBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Sorry, we are having trouble creating your account. Please re-enter your email and password and try again. If the problem persists, contact Disney+ Support (Error Code 6).\"`]")
-    public ExtendedWebElement invalidEmailError;
-
+    
     public DisneyPlusLoginIOSPageBase(WebDriver driver) {
         super(driver);
     }
