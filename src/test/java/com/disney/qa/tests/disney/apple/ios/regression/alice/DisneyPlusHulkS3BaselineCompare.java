@@ -100,7 +100,6 @@ public class DisneyPlusHulkS3BaselineCompare extends DisneyBaseTest {
         launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
         detailsPage.clickOpenButton();
         sa.assertTrue(detailsPage.isAppRunning(sessionBundles.get(DISNEY)), "Disney app is not running.");
-        detailsPage.dismissNotificationsPopUp();
         fluentWait(getDriver(), 20, 3, "Details tab is not present").until(it -> detailsPage.getDetailsTab().isPresent(1));
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
