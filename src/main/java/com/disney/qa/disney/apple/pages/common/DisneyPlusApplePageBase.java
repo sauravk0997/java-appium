@@ -53,7 +53,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
-    private static final String NOT_NOW = "Not Now";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -890,9 +889,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        if (staticTextByLabel.format(NOT_NOW).isPresent(5)) {
-            LOGGER.info("Clicking 'Not Now'..");
-            staticTextByLabel.format(NOT_NOW).click();
+        if (notificationPopUp.isPresent(5)) {
+            getStaticTextByLabel("Not Now").click();
         }
     }
 
@@ -1100,7 +1098,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         pause(5);
         if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
                 || getStaticTextByLabelContains("Set to: true").isPresent(SHORT_TIMEOUT)) {
-//        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent()) {
             LOGGER.info("disabling brazeConfig isEnable config..");
             clickToggleView();
             Assert.assertTrue(getStaticTextByLabelContains("Set to: false").isPresent());
