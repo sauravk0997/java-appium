@@ -131,8 +131,8 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
         detailsPage.clickOpenButton();
-        sa.assertTrue(detailsPage.isAppRunning(sessionBundles.get(DISNEY)), "Disney app is not running.");
-        fluentWait(getDriver(), 20, 3, "Details tab is not present").until(it -> detailsPage.getDetailsTab().isPresent(1));
+        fluentWait(getDriver(), 20, 3, "Disney app is not present").until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found.");
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         String s3BucketPath = buildS3BucketPath(underscoreTitle, platformType, deviceName);
