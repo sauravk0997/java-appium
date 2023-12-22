@@ -381,7 +381,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void installAndLaunchJarvis() {
-//        installJarvis();
+        installJarvis();
         startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
                 .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
