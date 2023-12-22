@@ -14,6 +14,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -28,7 +29,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
 
@@ -124,6 +125,13 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         LOGGER.info("S3 Storage image names: " + s3ImageNames);
     }
 
+    private void takeScreenshot(String underscoreTitle, PlatformType platformType, String deviceName) {
+        File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        String s3BucketPath = buildS3BucketPath(underscoreTitle, platformType, deviceName);
+        imageS3UploadRequests.put(srcFile, s3BucketPath);
+        s3ImageNames.add(s3BucketPath);
+    }
+
     private void aliceS3Baseline(DisneyPlusAliceDataProvider.HulkContent hulkContent, PlatformType platformType, String deviceName) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -131,14 +139,18 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
         detailsPage.clickOpenButton();
-        fluentWait(getDriver(), 20, 3, "Disney app is not present").until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+
+        try {
+            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        } catch (TimeoutException e) {
+            takeScreenshot(underscoreTitle, platformType, deviceName);
+            LOGGER.info("Timeout exception: {}", e.getMessage());
+            Assert.fail("Disney app is not present.");
+        }
+
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found.");
 
-        File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
-        String s3BucketPath = buildS3BucketPath(underscoreTitle, platformType, deviceName);
-
-        imageS3UploadRequests.put(srcFile, s3BucketPath);
-        s3ImageNames.add(s3BucketPath);
+        takeScreenshot(underscoreTitle, platformType, deviceName);
         sa.assertAll();
     }
 

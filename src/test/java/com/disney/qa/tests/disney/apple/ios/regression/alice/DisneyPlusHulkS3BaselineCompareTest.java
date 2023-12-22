@@ -16,10 +16,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -30,7 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
@@ -95,7 +98,13 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
         launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
         detailsPage.clickOpenButton();
-        fluentWait(getDriver(), 20, 3, "Disney app is not present").until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        try {
+            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        } catch (TimeoutException e) {
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+            LOGGER.info("Timeout exception: {}", e.getMessage());
+            Assert.fail("Disney app is not present.");
+        }
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found.");
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
