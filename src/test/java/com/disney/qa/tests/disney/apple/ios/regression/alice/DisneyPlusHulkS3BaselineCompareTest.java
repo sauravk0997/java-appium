@@ -72,7 +72,8 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
     @DataProvider
     public Iterator<Object[]> tabletDataContentProvider() {
-        return parseHulkS3Json(TABLET_S3_PATH).iterator(); }
+        return parseHulkS3Json(TABLET_S3_PATH).iterator();
+    }
 
     private AliceApiManager getAliceApiManager() {
         return new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
