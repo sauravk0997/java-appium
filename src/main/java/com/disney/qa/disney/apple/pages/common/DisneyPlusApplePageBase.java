@@ -1085,17 +1085,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void enableBrazeConfig() {
-        Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
-        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("braze Config isEnabled is already enabled to true..");
-        } else {
-            LOGGER.info("Enabling brazeConfig isEnable config..");
-            clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_TRUE).isPresent());
-        }
-    }
-
     public void disableBrazeConfig() {
         Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
         if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
