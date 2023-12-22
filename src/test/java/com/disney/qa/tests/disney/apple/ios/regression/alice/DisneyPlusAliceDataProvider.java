@@ -6,7 +6,6 @@ public interface DisneyPlusAliceDataProvider {
 
     @Data
     class HulkContent {
-
         private String title;
         private String entityId;
 
