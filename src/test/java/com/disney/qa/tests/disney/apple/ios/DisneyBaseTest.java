@@ -384,12 +384,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         installJarvis();
         startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
-                .until(it -> {
-                    LOGGER.info("Jarvis is not launched, launching jarvis...");
-                    boolean isRunning = isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS));
-                    LOGGER.info("Is app running: {}", isRunning);
-                    return isRunning;
-                });
+                .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
     }
 
     public void rotateScreen(ScreenOrientation orientation) {
