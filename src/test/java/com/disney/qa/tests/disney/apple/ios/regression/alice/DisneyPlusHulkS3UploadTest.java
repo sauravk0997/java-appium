@@ -139,6 +139,7 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
 
         imageS3UploadRequests.put(srcFile, s3BucketPath);
         s3ImageNames.add(s3BucketPath);
+        sa.assertAll();
     }
 
     @Maintainer("csolmaz")
