@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.alice;
 
 import com.disney.hatter.api.alice.AliceApiManager;
-import com.disney.hatter.api.alice.AliceApiUtil;
 import com.disney.hatter.api.alice.model.ImagesRequestS3;
 import com.disney.hatter.api.alice.model.ImagesResponse360;
 import com.disney.hatter.core.config.ConfigProperties;
@@ -69,11 +68,8 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
     }
 
     @DataProvider
-    public Iterator<Object[]> tabletDataContentProvider() { return parseHulkS3Json(TABLET_S3_PATH).iterator(); }
-
-    private AliceApiUtil getAliceClient() {
-        return new AliceApiUtil(MULTIVERSE_STAGING_ENDPOINT);
-    }
+    public Iterator<Object[]> tabletDataContentProvider() {
+        return parseHulkS3Json(TABLET_S3_PATH).iterator(); }
 
     private AliceApiManager getAliceApiManager() {
         return new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
