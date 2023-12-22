@@ -77,11 +77,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Alice" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusAliceTest"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>

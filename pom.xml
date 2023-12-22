@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hatter.version>2.0.19</hatter.version>
+        <hatter.version>2.0.20</hatter.version>
         <zebrunner-agent.version>1.9.7</zebrunner-agent.version>
         <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
         <spring.version>4.1.1.RELEASE</spring.version>
@@ -72,16 +72,12 @@
     <dependencies>
         <dependency>
             <groupId>com.disney</groupId>
-            <artifactId>hatter-core</artifactId>
+            <artifactId>hatter-api</artifactId>
             <version>${hatter.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.hulu.sidekick</groupId>
                     <artifactId>locksmith</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>com.zebrunner</groupId>
