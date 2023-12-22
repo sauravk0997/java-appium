@@ -13,7 +13,7 @@
     <parameter name="capabilities"
                value="platformName=iOS;deviceName=iPad_Pro_Gen_3;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value="DisneyPlusHulkS3BaselineCompare#aliceBaselineCompareS3TabletTest"/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value="DisneyPlusHulkS3BaselineCompareTest#aliceBaselineCompareS3TabletTest"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,disableBrazeConfig=${disableBrazeConfig},appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
