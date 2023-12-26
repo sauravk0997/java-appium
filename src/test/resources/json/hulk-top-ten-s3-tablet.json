@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Koala Man",
+    "entityId": "ff03d7eb-4315-4d3b-85ec-b9b5158e371c",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Koala_Man-2023_12_21_05_18_12"
+  },
+  {
+    "title": "Lost",
+    "entityId": "466b3994-b574-44f1-88bc-63707507a6cb",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Lost-2023_12_21_05_18_37"
+  },
+  {
+    "title": "Crime + Punishment",
+    "entityId": "f141e4b4-b89c-4bbd-a938-6728ce6a7fdc",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Crime_+_Punishment-2023_12_21_05_19_05"
+  },
+  {
+    "title": "American Horror Story",
+    "entityId": "a67a233c-fcfe-4e8e-b000-052603ddd616",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-American_Horror_Story-2023_12_21_05_19_33"
+  },
+  {
+    "title": "Naruto",
+    "entityId": "993d48dc-d507-47cb-8cca-23e6794f6f66",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Naruto-2023_12_21_05_20_02"
+  },
+  {
+    "title": "Only Murders In The Building",
+    "entityId": "ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Only_Murders_In_The_Building-2023_12_21_05_20_28"
+  },
+  {
+    "title": "The Bear",
+    "entityId": "05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-The_Bear-2023_12_21_05_20_53"
+  },
+  {
+    "title": "Casual",
+    "entityId": "22d27085-0f5e-42aa-949f-1b81ba5726d8",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Casual-2023_12_21_05_21_17"
+  },
+  {
+    "title": "House",
+    "entityId": "ef39603f-eb90-4248-8237-f6168d7c1be1",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-House-2023_12_21_05_21_40"
+  },
+  {
+    "title": "Family Guy",
+    "entityId": "3c3c0f8b-7366-4d15-88ab-18050285978e",
+    "s3File": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_pro_gen_3/detail-page-Family_Guy-2023_12_21_05_22_09"
+  }
+]

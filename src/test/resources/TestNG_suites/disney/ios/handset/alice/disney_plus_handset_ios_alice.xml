@@ -13,9 +13,10 @@
     <parameter name="capabilities"
                value="platformName=iOS;deviceName=iPhone_14;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value="DisneyPlusHulkS3BaselineCompare#aliceBaselineCompareS3HandsetTest"/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value="DisneyPlusHulkS3BaselineCompareTest#aliceBaselineCompareS3HandsetTest"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="branch=cs/QAA-12786-1,JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="booleanParam::disableBrazeConfig::by Default set to true to disable." value="true"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 </suite>

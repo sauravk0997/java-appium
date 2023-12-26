@@ -53,6 +53,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
+    private static final String SET_TO_TRUE = "Set to: true";
+    private static final String SET_TO_FALSE = "Set to: false";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1063,12 +1065,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void enableOneTrustConfig() {
         pause(5);
         if (getStaticTextByLabelContains("default value of true").isPresent() //to accommodate jarvis bug
-                || getStaticTextByLabelContains("Set to: true").isPresent()) {
+                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent()) {
             LOGGER.info("isEnabledV2 is already enabled to true..");
         } else {
             LOGGER.info("Enabling oneTrustConfig isEnableV2 config..");
             clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains("Set to: true").isPresent());
+            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_TRUE).isPresent());
         }
     }
 
@@ -1083,12 +1085,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public void disableBrazeConfig() {
+        Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
+        if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
+                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("disabling brazeConfig isEnable config..");
+            clickToggleView();
+            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_FALSE).isPresent());
+        } else {
+            LOGGER.info("brazeConfig is already disabled..");
+        }
+    }
+
     public void disableFlexWelcomeConfig() {
         pause(5);
         if (getStaticTextByLabelContains("welcome is using its default value of true").isPresent()) {
             LOGGER.info("Disabling flex welcome config..");
             clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains("Set to: false").isPresent());
+            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_FALSE).isPresent());
         }
     }
 
@@ -1199,5 +1213,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getUnavailableContentErrorPreview() {
         return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
     }
-
 }

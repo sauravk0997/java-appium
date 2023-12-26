@@ -50,23 +50,23 @@ import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
-     static final Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-     static final String DIRECTION = "direction";
-     static final String ELEMENT = "element";
-     static final String DURATION = "duration";
-     static final String BUNDLE_ID = "bundleId";
-     static final String ACTION = "action";
+    JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
+    Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    String DIRECTION = "direction";
+    String ELEMENT = "element";
+    String DURATION = "duration";
+    String BUNDLE_ID = "bundleId";
+    String ACTION = "action";
+    String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
+    String DEVICE_TYPE = "capabilities.deviceType";
 
-     static final String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
-    public static final String DEVICE_TYPE = "capabilities.deviceType";
+    String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
 
-     static final String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
-
-    public enum ButtonStatus {
+    enum ButtonStatus {
         ON, OFF, INVALID
     }
 
-    public enum AlertButtonCommand {
+    enum AlertButtonCommand {
         ACCEPT("accept"),
         DISMISS("dismiss");
 
@@ -81,7 +81,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum AlertButton {
+    enum AlertButton {
         LATER("Later"),
         REMIND_ME_LATER("Remind Me Later"),
         NOT_NOW("Not Now"),
@@ -100,7 +100,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum Direction2 {
+    enum Direction2 {
         UP("up"),
         DOWN("down"),
         LEFT("left"),
@@ -117,7 +117,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum Gestures {
+    enum Gestures {
         SCROLL("mobile: scroll"),
         SWIPE("mobile: swipe"),
         ALERT("mobile: alert"),
@@ -144,7 +144,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
 
     }
 
-    public enum Attributes {
+    enum Attributes {
         UID("UID"),
         ACCESSIBILITY_CONTAINER("accessibilityContainer"),
         ACCESSIBLE("accessible"),
@@ -181,7 +181,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
-    public enum SystemBundles {
+    enum SystemBundles {
         ACTIVITY("com.apple.Fitness"),
         APP_STORE("com.apple.AppStore"),
         BOOKS("com.apple.iBooks"),
@@ -825,6 +825,22 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         launchWithDeeplinkAddress(url);
     }
 
+    class JavascriptExecutorService {
+        @SuppressWarnings("squid:S3077")
+        private static volatile JavascriptExecutor js;
+
+        public JavascriptExecutor getJavascriptExecutorInstance(WebDriver driver) {
+            if (js == null) {
+                synchronized (JavascriptExecutor.class) {
+                    if (js == null) {
+                        js = (JavascriptExecutor) driver;
+                    }
+                }
+            }
+            return js;
+        }
+    }
+
     /**
      * Launches deeplink using safari
      *
@@ -832,12 +848,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      * @param url          url address
      * @param explicitWait the wait time for the expected condition
      */
-    default void launchDeeplink(Boolean useSafari, String url, int explicitWait) {
-        if (useSafari != null && useSafari) {
+    default void launchDeeplink(boolean useSafari, String url, int explicitWait) {
+        if (useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            JavascriptExecutor js = (JavascriptExecutor) getDriver();
-            js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.TERMINATE_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
@@ -845,11 +861,10 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
             getDriver().findElement(urlField).click();
             wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
             String enterBtnUnicode = "\uE007";
-            getDriver().findElement(urlField).sendKeys(url + enterBtnUnicode);
+            getDriver().findElement(urlField).sendKeys(url);
+            getDriver().findElement(urlField).sendKeys(enterBtnUnicode);
         } else launchDeeplink(url);
     }
-
-
 
     /**
      * based on deviceType and current screen orientation, rotates to new orientation
