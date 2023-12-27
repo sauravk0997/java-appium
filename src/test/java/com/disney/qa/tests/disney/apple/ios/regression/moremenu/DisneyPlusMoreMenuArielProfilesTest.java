@@ -34,7 +34,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
-    private static final String NINETEEN_EIGHTY = "1980";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
     @Maintainer("gkrishna1")
@@ -293,7 +292,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
@@ -324,7 +323,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         try {
             disneyPlusEditProfileIOSPageBase.clickSkipBtn();
             disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
-            disneyPlusEditProfileIOSPageBase.enterDOB(DateHelper.Month.JANUARY, FIRST, NINETEEN_EIGHTY);
+            disneyPlusEditProfileIOSPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
             disneyPlusEditProfileIOSPageBase.chooseGender();
             disneyPlusEditProfileIOSPageBase.clickSaveBtn();
             disneyPlusEditProfileIOSPageBase.clickPrimaryButton();
