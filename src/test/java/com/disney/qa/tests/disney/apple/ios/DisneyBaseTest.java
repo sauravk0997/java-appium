@@ -9,6 +9,7 @@ import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -38,7 +39,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
@@ -52,6 +53,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_TV14 = "TV-14";
+
+    public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
 
 //    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
 //    public void initProxy() {
@@ -132,6 +135,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
          */
 //    }
+
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
+    public void enableNoTestReset() {
+        R.CONFIG.put(MobileCapabilityType.NO_RESET, "true", true);
+        R.CONFIG.put(MobileCapabilityType.FULL_RESET, "false", true);
+    }
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions() {
@@ -371,6 +380,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
+    public void installAndLaunchJarvis() {
+        installJarvis();
+        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
+                .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
+    }
+
     public void rotateScreen(ScreenOrientation orientation) {
         try {
             rotate(orientation);
@@ -485,7 +501,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-        //        handleAlert();
+                handleAlert();
+    }
+
+    public void disableBrazeConfig() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        installAndLaunchJarvis();
+        jarvis.openAppConfigOverrides();
+        applePageBase.scrollToItem("brazeConfig").click();
+        LOGGER.info("Navigating to isEnabled..");
+        applePageBase.scrollToItem("isEnabled").click();
+        applePageBase.disableBrazeConfig();
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
     }
 
     public void launchJarvisOrInstall() {

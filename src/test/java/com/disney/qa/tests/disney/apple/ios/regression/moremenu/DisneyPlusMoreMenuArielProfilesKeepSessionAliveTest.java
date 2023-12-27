@@ -150,13 +150,13 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         addProfile.clickSaveProfileButton();
         //Consent authentication
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            scrollDown();
+            parentalConsent.scrollConsentContent(4);
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
