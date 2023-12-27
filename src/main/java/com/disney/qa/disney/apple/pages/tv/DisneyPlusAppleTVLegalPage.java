@@ -32,19 +32,34 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     private static String errorMessage = "'%s' is not shown";
     private static String assertionMessage = "%s is focused after selecting the menu";
 
-    private ExtendedWebElement legalCenterTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LEGAL_TITLE.getText()));
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Legal\"`]")
+    private ExtendedWebElement legalTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Privacy Policy\"`]")
     private ExtendedWebElement privacyPolicy;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Subscriber Agreement\"`]")
     private ExtendedWebElement subscriberAgreement;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Your California Privacy Rights\"`]")
-    private ExtendedWebElement yourCAPrivacyRights;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Your US State Privacy Rights\"`]")
+    private ExtendedWebElement yourUSPrivacyRights;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Do Not Sell My Personal Information\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Do Not Sell or Share My Personal Information\"`]")
     private ExtendedWebElement doNotSellMyPersonalInfo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Notice of Right to Opt Out of Sale/Sharing\"`][1]")
+    private ExtendedWebElement noticeOfRightButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Notice of Right to Opt Out of Sale/Sharing\"`][2]")
+    private ExtendedWebElement noticeOfRightTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Selling, Sharing, Targeted Advertising  \"`][1]")
+    private ExtendedWebElement sellingSharingButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Selling, Sharing, Targeted Advertising  \"`][2]")
+    private ExtendedWebElement sellingSharingTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Selling, Sharing, Targeted Advertising\"`]")
+    private ExtendedWebElement sellingSharingCheckboxLabel;
 
     public DisneyPlusAppleTVLegalPage(WebDriver driver) {
         super(driver);
@@ -52,7 +67,7 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = legalCenterTitle.isPresent();
+        boolean isPresent = legalTitle.isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
@@ -69,8 +84,8 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
         IntStream.range(0, allDocuments.size()).forEach(i -> {
             legalButtons.add(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
-            String document = getDictionary().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllDocumentCodes).get(i));
-            legalDocuments.add(getDictionary().getLegalDocumentBody(document));
+            String document = getDictionary().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
+            legalDocuments.add(document);
         });
         List<String> labels = new ArrayList<>(legalButtons);
         List<String> documents = new ArrayList<>(legalDocuments);
@@ -98,10 +113,10 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                         moveDown(45, 1);
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
-                    case "Your California Privacy Rights":
-                        sa.assertFalse(isFocused(yourCAPrivacyRights), String.format(assertionMessage, labels.get(i)));
+                    case "Your US State Privacy Rights":
+                        sa.assertFalse(isFocused(yourUSPrivacyRights), String.format(assertionMessage, labels.get(i)));
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                        moveDown(10, 1);
+                        moveDown(25, 1);
                         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                         break;
                     default:
@@ -112,11 +127,18 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                 moveLeft(1, 1);
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             } else {
+                sa.assertTrue(isFocused(doNotSellMyPersonalInfo), String.format(assertionMessage, labels.get(i)));
                 clickSelect();
-                sa.assertFalse(isFocused(doNotSellMyPersonalInfo), String.format(assertionMessage, labels.get(i)));
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                documentArray = documents.get(i).split(lineFeed);
-                IntStream.range(0, documentArray.length).forEach(j -> sa.assertTrue(isDynamicAccessibilityIDElementPresent(documentArray[j]), String.format(errorMessage, documentArray[j])));
+                sa.assertTrue(noticeOfRightButton.isPresent(),"Notice of Right to Opt Out of Sale/Sharing Button is not been displayed");
+                sa.assertTrue(noticeOfRightTitle.isPresent(),"Notice of Right to Opt Out of Sale/Sharing Title is not been displayed");
+
+                moveDown(1,1);
+                moveRight(1,1);
+                sa.assertTrue(sellingSharingButton.isPresent(),"Selling, Sharing, Targeted Advertising Button is not been displayed");
+                sa.assertTrue(sellingSharingTitle.isPresent(),"Selling, Sharing, Targeted Advertising Title is not been displayed");
+                sa.assertTrue(sellingSharingCheckboxLabel.isPresent(),"Selling, Sharing, Targeted Advertising Checkbox label is not been displayed");
+
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             }
             moveDown(1, 1);
