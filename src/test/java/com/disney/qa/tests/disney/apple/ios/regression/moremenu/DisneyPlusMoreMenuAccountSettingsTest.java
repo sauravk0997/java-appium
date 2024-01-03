@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.account.CancellationReasons;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -970,7 +971,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         logout();
 
-        getAccountApi().revokeSkuV3(getAccount(), disneyEntitlements.get(1).getOffer());
+        getAccountApi().revokeSkuV3(getAccount(), disneyEntitlements.get(1).getOffer(), CancellationReasons.VOLUNTARY_CANCEL);
 
         setAppToAccountSettings();
 
