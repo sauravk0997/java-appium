@@ -22,7 +22,7 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
     //Disabling these tests since we are not able to verify that thumbnail is present on screen as we seek along
     //These tests were working before, we will evaluate after the carina upgrade again.
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61937"})
-    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Verify Thumbnail Seek Functionality", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeek() {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -37,13 +37,16 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         movies.get(1).click();
         pause(5);
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        Thread thumbnailCheck = new Thread(() -> {
+            sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isThumbnailViewPresent(),"thumbnail view on player is not present");
+        });
+        thumbnailCheck.start();
         disneyPlusVideoPlayerIOSPageBase.seekOnPlayer();
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isThumbnailViewPresent(),"thumbnail view on player is not present");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61939"})
-    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Verify Thumbnail Seek Functionality for downloaded asset", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyThumbnailSeekForDownloadedAsset() {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -66,8 +69,11 @@ public class DisneyPlusVideoPlayerThumbnailSeekTest extends DisneyBaseTest {
         disneyPlusDownloadsIOSPageBase.tapDownloadedAssetFromListView(SHORT_SERIES);
         disneyPlusDownloadsIOSPageBase.tapDownloadedAsset(SHORT_SERIES);
         disneyPlusVideoPlayerIOSPageBase.isOpened();
+        Thread thumbnailCheck = new Thread(() -> {
+            sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isThumbnailViewPresent(),"thumbnail view on player for downloaded content is not present");
+        });
+        thumbnailCheck.start();
         disneyPlusVideoPlayerIOSPageBase.seekOnPlayer();
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isThumbnailViewPresent(),"thumbnail view on player for downloaded content is not present");
         sa.assertAll();
     }
 }
