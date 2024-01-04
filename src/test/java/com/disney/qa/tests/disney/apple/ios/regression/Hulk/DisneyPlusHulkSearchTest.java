@@ -6,6 +6,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -148,4 +149,38 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
         sa.assertAll();
     }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74652"})
+    @Test(description = "Search > Limited Availability Messaging", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyLimitedAvailabilityMessaging() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().editContentRatingProfileSetting(getAccount(), "MPAAAndTVPG", "TV-14");
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), R.TESTDATA.get("disney_darth_maul_avatar_id"), true, true);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia("The chronicles of Narnia");
+        //dismisses the keyboard
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        searchPage.swipeUp(1000);
+        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message wasn't present for TV-14 profile");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia("Bluey");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
+        sa.assertAll();
+    }
+
 }
