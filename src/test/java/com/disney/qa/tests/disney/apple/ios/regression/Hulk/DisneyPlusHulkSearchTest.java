@@ -55,6 +55,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Demolition");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "'No results' error message was not as expected");
         sa.assertAll();
     }
@@ -86,6 +88,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Only murders in the building");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"), "No results found message was not as expected for kids profile");
         sa.assertAll();
@@ -107,7 +111,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Demolition");
         sa.assertFalse(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA profile");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-14 profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
     @Maintainer("gkrishna1")
@@ -181,6 +185,27 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         pause(2);
         sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
         sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74652"})
+    @Test(description = "Search > Query input and response behavior", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyQueryInputResponse() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia("H");
+        sa.assertTrue(searchPage.getDisplayedTitles().get(0).getText().startsWith("H"), "doesn't start with 'H'");
+        LOGGER.info("Movie starting with 'H' - {}",searchPage.getDisplayedTitles().get(0).getText());
+        searchPage.searchForMedia("Her");
+        sa.assertTrue(searchPage.getDisplayedTitles().get(0).getText().startsWith("Her"), "doesn't start with 'Her'");
+        LOGGER.info("Movie starting with 'Her' - {}",searchPage.getDisplayedTitles().get(0).getText());
+        sa.assertAll();
+
     }
 
 }
