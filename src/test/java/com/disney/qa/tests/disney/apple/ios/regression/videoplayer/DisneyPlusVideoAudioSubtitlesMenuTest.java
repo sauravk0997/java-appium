@@ -45,7 +45,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62347"})
-    @Test(description = "Verify Menu, Languages and UI(change options)", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Verify Menu, Languages and UI(change options)", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifySubtitleMenuLanguageChangesPersist() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
@@ -58,15 +58,15 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
 
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("subtitleOff"),"Selected subtitle language is not as expected");
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("Off"),"Selected subtitle language is not as expected");
         subtitlePage.chooseAudioLanguage("Italiano");
-        subtitlePage.chooseSubtitlesLanguage("English [CC]");
+        subtitlePage.chooseSubtitlesLanguage("English");
         subtitlePage.tapCloseButton();
 
         disneyPlusVideoPlayerIOSPageBase.isOpened();
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("Italiano"), "Checkmark was not present for the selected lang");
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("English [CC]"), "Selected subtitle language is not as expected");
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("English"), "Selected subtitle language is not as expected");
 
         sa.assertAll();
     }

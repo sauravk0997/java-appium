@@ -36,15 +36,15 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "closeInactive")
     private ExtendedWebElement closeButton;
 
-    @FindBy(xpath = "//XCUIElementTypeCell[@name=\"%s\"]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
     private ExtendedWebElement languageCell;
 
     //This will return the third generation element in view hierarchy
-    @FindBy(xpath = "//XCUIElementTypeCell[@name=\"%s\"]/*/*/*")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
     private ExtendedWebElement languageCellCheckmark;
 
     //This will return the immediate preceding sibling in view hierarchy
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"%s\"]/preceding-sibling::*")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
     private ExtendedWebElement audioSubtitleCheckBox;
 
     //FUNCTIONS
