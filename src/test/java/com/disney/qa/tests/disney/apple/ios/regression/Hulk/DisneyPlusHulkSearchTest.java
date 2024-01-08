@@ -211,7 +211,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.getDisplayedTitles().get(0).getText().startsWith("Her"), "doesn't start with 'Her'");
         LOGGER.info("Movie starting with 'Her' - {}",searchPage.getDisplayedTitles().get(0).getText());
         sa.assertAll();
-
     }
 
 }
