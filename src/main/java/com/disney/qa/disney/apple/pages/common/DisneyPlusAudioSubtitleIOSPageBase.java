@@ -40,7 +40,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     private ExtendedWebElement languageCell;
 
     //This will return the third generation element in view hierarchy
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$name='subtitleCollectionView'$]/XCUIElementTypeCell/XCUIElementTypeOther[$name CONTAINS '%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
     private ExtendedWebElement languageCellCheckmark;
 
     //This will return the immediate preceding sibling in view hierarchy

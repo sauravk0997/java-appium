@@ -16,7 +16,7 @@ import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.Disney
 public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62343"})
-    @Test(description = " Verify Menu, Languages and UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = " Verify Menu, Languages and UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifySubtitleMenuLanguageUI() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
@@ -32,14 +32,14 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(subtitlePage.isSubtitleHeadingPresent(), "Subtitle Heading is not present");
 
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("subtitleOff"),"Selected subtitle language is not as expected");
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("Off"),"Selected subtitle language is not as expected");
 
         subtitlePage.tapCloseButton();
         disneyPlusVideoPlayerIOSPageBase.isOpened();
 
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("subtitleOff"), "Selected subtitle language is not as expected");
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("Off"), "Selected subtitle language is not as expected");
 
         sa.assertAll();
     }
@@ -60,7 +60,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("Off"),"Selected subtitle language is not as expected");
         subtitlePage.chooseAudioLanguage("Italiano");
-        subtitlePage.chooseSubtitlesLanguage("English");
+        subtitlePage.chooseSubtitlesLanguage("English [CC]");
         subtitlePage.tapCloseButton();
 
         disneyPlusVideoPlayerIOSPageBase.isOpened();
