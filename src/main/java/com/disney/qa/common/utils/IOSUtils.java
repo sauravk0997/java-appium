@@ -852,8 +852,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         if (useSafari) {
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            //javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.TERMINATE_APP.getGesture(), args);
-            //javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.LAUNCH_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.TERMINATE_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
