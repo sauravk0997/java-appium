@@ -153,7 +153,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY.getText())
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
-        return getDynamicAccessibilityId(dictVal).isPresent();
+        return getStaticTextByLabel(dictVal).isPresent();
     }
 
     public boolean isKIDSPCONRestrictedTitlePresent() {

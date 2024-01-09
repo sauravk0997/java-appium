@@ -36,11 +36,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
 
-
-        setAppToHomeScreen(getAccount());
-        whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        pause(3);
-
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
