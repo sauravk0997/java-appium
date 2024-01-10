@@ -287,7 +287,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public void seekOnPlayer() {
         pause(5);
         displayVideoController();
-        longPressAndHoldElement(currentTimeMarker, 30);
+        longPressAndHoldElement(currentTimeMarker, 20);
     }
 
     /**
