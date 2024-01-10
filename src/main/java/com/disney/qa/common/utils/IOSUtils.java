@@ -50,7 +50,6 @@ import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
-    JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
     String ELEMENT = "element";
@@ -825,15 +824,15 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         launchWithDeeplinkAddress(url);
     }
 
-    class JavascriptExecutorService {
+    class JavascriptExecutorService implements IOSUtils {
         @SuppressWarnings("squid:S3077")
         private static volatile JavascriptExecutor js;
 
-        public JavascriptExecutor getJavascriptExecutorInstance(WebDriver driver) {
+        public JavascriptExecutor getJavascriptExecutorInstance() {
             if (js == null) {
                 synchronized (JavascriptExecutor.class) {
                     if (js == null) {
-                        js = (JavascriptExecutor) driver;
+                        js = (JavascriptExecutor) getDriver();
                     }
                 }
             }
@@ -850,10 +849,11 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      */
     default void launchDeeplink(boolean useSafari, String url, int explicitWait) {
         if (useSafari) {
+            JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.TERMINATE_APP.getGesture(), args);
-            javascriptExecutorService.getJavascriptExecutorInstance(getDriver()).executeScript(Gestures.LAUNCH_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance().executeScript(Gestures.TERMINATE_APP.getGesture(), args);
+            javascriptExecutorService.getJavascriptExecutorInstance().executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
