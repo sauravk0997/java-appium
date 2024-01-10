@@ -1,0 +1,502 @@
+[
+  {
+    "entityId": "abefa6f0-4c04-412c-a00b-af1267556739",
+    "title": "(Dub) Afro Samurai Resurrection",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-(Dub)_Afro_Samurai_Resurrection-2024_01_10_09_46_38"
+  },
+  {
+    "entityId": "2c0baf22-e7af-4d40-a63b-bfc506bebbd2",
+    "title": "(Dub) Akira",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-(Dub)_Akira-2024_01_10_09_47_11"
+  },
+  {
+    "entityId": "5bd397cd-d21b-41a0-a7c8-dbe2e39282e4",
+    "title": "(Dub) Sword Art Online Extra Edition",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-(Dub)_Sword_Art_Online_Extra_Edition-2024_01_10_09_47_43"
+  },
+  {
+    "entityId": "8fca598e-a61c-46cc-ac44-692eaadd2f66",
+    "title": "(Sub) K MISSING KINGS",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-(Sub)_K_MISSING_KINGS-2024_01_10_09_48_44"
+  },
+  {
+    "entityId": "1e17ccf6-196e-412c-a25d-2eaa0533773d",
+    "title": "5 Years Apart",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-5_Years_Apart-2024_01_10_09_49_18"
+  },
+  {
+    "entityId": "4a636670-28a8-45af-b779-e63882433210",
+    "title": "6 Days",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-6_Days-2024_01_10_09_49_52"
+  },
+  {
+    "entityId": "0d2ee94d-9de1-4a84-8beb-8b516a488a67",
+    "title": "7 Days",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-7_Days-2024_01_10_09_50_24"
+  },
+  {
+    "entityId": "44ce8dab-7e88-4980-92fb-597b44c1eb21",
+    "title": "12 Hour Shift",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-12_Hour_Shift-2024_01_10_09_50_58"
+  },
+  {
+    "entityId": "b5ed8d80-a762-452e-9425-3c46a571e90e",
+    "title": "12 Strong",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-12_Strong-2024_01_10_09_53_20"
+  },
+  {
+    "entityId": "2a4d87e6-83c9-420d-bd80-f11cfa43522e",
+    "title": "13 Assassins",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-13_Assassins-2024_01_10_09_53_50"
+  },
+  {
+    "entityId": "82aa5096-8424-4d44-b04b-9f5253d22e34",
+    "title": "27 Dresses",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-27_Dresses-2024_01_10_09_54_23"
+  },
+  {
+    "entityId": "6cd96079-fd77-4717-b30d-2b1ff6412a6e",
+    "title": "28 Weeks Later",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-28_Weeks_Later-2024_01_10_09_54_52"
+  },
+  {
+    "entityId": "345025ec-5022-4cca-a5f7-d3870fce96b3",
+    "title": "69: The Saga of Danny Hernandez",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-69:_The_Saga_of_Danny_Hernandez-2024_01_10_09_55_22"
+  },
+  {
+    "entityId": "915793bb-f95d-4a14-a02a-6e32f24fc4cc",
+    "title": "97 Minutes",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-97_Minutes-2024_01_10_09_55_55"
+  },
+  {
+    "entityId": "95032075-0cac-4bb0-996b-74b786a0bd82",
+    "title": "100% Wolf",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-100%_Wolf-2024_01_10_09_56_32"
+  },
+  {
+    "entityId": "dfd953cc-976d-4373-a85c-0aeaa6504bb9",
+    "title": "211",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-211-2024_01_10_09_57_05"
+  },
+  {
+    "entityId": "5a6451df-9c9d-4e58-8df2-910568d9bda8",
+    "title": "2067",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-2067-2024_01_10_09_57_35"
+  },
+  {
+    "entityId": "d9f5b5d7-d253-4bf0-a4b1-58bddd6d1bb0",
+    "title": "A Christmas Frequency",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Christmas_Frequency-2024_01_10_09_58_06"
+  },
+  {
+    "entityId": "19399d6b-8c11-49fc-855b-f98bc9f393e6",
+    "title": "A Country Christmas Story",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Country_Christmas_Story-2024_01_10_09_58_38"
+  },
+  {
+    "entityId": "643a8d51-49cc-40c4-84ed-6d2d60af5351",
+    "title": "A Day to Die",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Day_to_Die-2024_01_10_09_59_12"
+  },
+  {
+    "entityId": "e2b1d118-9f19-4264-9655-dccb68fd1301",
+    "title": "A Glitch in the Matrix",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Glitch_in_the_Matrix-2024_01_10_09_59_43"
+  },
+  {
+    "entityId": "684246f7-e67f-4449-a1c8-c80cb72525dd",
+    "title": "A Good Day to Die Hard",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Good_Day_to_Die_Hard-2024_01_10_10_00_16"
+  },
+  {
+    "entityId": "5f072dc6-d44e-48e3-be24-b6db3b67df6b",
+    "title": "A Haunting in Venice",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Haunting_in_Venice-2024_01_10_10_00_49"
+  },
+  {
+    "entityId": "7e9433a6-8f0f-4225-a265-a9c858d38e60",
+    "title": "A Knight's Tale",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Knight's_Tale-2024_01_10_10_01_21"
+  },
+  {
+    "entityId": "955c8ebc-879d-4d95-83fe-fbed49141276",
+    "title": "A Little White Lie",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Little_White_Lie-2024_01_10_10_01_55"
+  },
+  {
+    "entityId": "f5c42e59-7f47-47b4-929a-f82fcb66b3d9",
+    "title": "A Merry Christmas Wish",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Merry_Christmas_Wish-2024_01_10_10_02_29"
+  },
+  {
+    "entityId": "ef1997ac-db54-4155-9a48-8aec255107eb",
+    "title": "A Merry Friggin' Christmas",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Merry_Friggin'_Christmas-2024_01_10_10_02_51"
+  },
+  {
+    "entityId": "ddb3fd6a-0458-444e-896e-2d60047155ac",
+    "title": "A Million Little Pieces",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Million_Little_Pieces-2024_01_10_10_03_27"
+  },
+  {
+    "entityId": "a806489d-ddcc-4bde-9cd6-bb064ca6299a",
+    "title": "A Murder to Remember",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Murder_to_Remember-2024_01_10_10_03_56"
+  },
+  {
+    "entityId": "dae23d5d-3f1c-4597-890c-4f17ca99cc0a",
+    "title": "A Nasty Piece of Work",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Nasty_Piece_of_Work-2024_01_10_10_04_52"
+  },
+  {
+    "entityId": "83cd18af-114f-4d02-b67c-dd54cbd52e85",
+    "title": "A Piece of Cake",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Piece_of_Cake-2024_01_10_10_05_23"
+  },
+  {
+    "entityId": "01345d4e-3e1f-4ff5-b25d-bbca6c810b0e",
+    "title": "A Sister's Secret",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Sister's_Secret-2024_01_10_10_05_46"
+  },
+  {
+    "entityId": "f9362dcf-9fee-4245-92ab-1af31c909fb8",
+    "title": "A Taste of Hunger (Eng Dub)",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A_Taste_of_Hunger_(Eng_Dub)-2024_01_09_18_12_23"
+  },
+  {
+    "entityId": "f8df41cd-fe30-4c51-956e-a1d7ca14eba2",
+    "title": "A.C.O.R.N.S: Operation Crack Down",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-A.C.O.R.N.S:_Operation_Crack_Down-2024_01_10_10_08_40"
+  },
+  {
+    "entityId": "32c7c38d-77af-48a9-b2de-ef97e0c4723c",
+    "title": "Abandoned",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Abandoned-2024_01_10_10_09_12"
+  },
+  {
+    "entityId": "faf8a30a-6d07-46b7-930b-a8afd625af8b",
+    "title": "Abducted: The Carlina White Story",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Abducted:_The_Carlina_White_Story-2024_01_10_10_09_42"
+  },
+  {
+    "entityId": "8f53928b-e9f0-43a0-82f6-c83f4fadccda",
+    "title": "About Endlessness",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-About_Endlessness-2024_01_10_10_10_39"
+  },
+  {
+    "entityId": "06f5126e-6268-4f1b-bcc9-030bd4d3e075",
+    "title": "Accident Man: Hitman's Holiday",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Accident_Man:_Hitman's_Holiday-2024_01_10_10_11_16"
+  },
+  {
+    "entityId": "28bc8212-1779-4e8f-851a-e1d45bbeb4b7",
+    "title": "Accidental Love",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Accidental_Love-2024_01_10_10_11_49"
+  },
+  {
+    "entityId": "dc4db4af-ab04-4be6-a0f6-d2c11bdc9491",
+    "title": "Adam Sandler's Eight Crazy Nights",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Adam_Sandler's_Eight_Crazy_Nights-2024_01_10_10_12_22"
+  },
+  {
+    "entityId": "c4ede94a-532c-4615-bbc0-7a9c27c8c903",
+    "title": "After Earth",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-After_Earth-2024_01_10_10_12_54"
+  },
+  {
+    "entityId": "c1414fdf-0741-4bd2-b62c-554db3d8f643",
+    "title": "Aftershock",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Aftershock-2024_01_10_10_13_27"
+  },
+  {
+    "entityId": "5281dd71-220d-4132-a973-ef821342665e",
+    "title": "Agnes",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Agnes-2024_01_10_10_13_59"
+  },
+  {
+    "entityId": "ebee72d6-84f9-48da-8cb5-3626685005b1",
+    "title": "Aileen Wuornos: American Boogeywoman",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Aileen_Wuornos:_American_Boogeywoman-2024_01_10_10_14_30"
+  },
+  {
+    "entityId": "27389b6b-bf27-45a6-afdf-cef0fe723cff",
+    "title": "Alien",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alien-2024_01_10_10_15_04"
+  },
+  {
+    "entityId": "a69c932d-881a-40b8-b154-dd913923feee",
+    "title": "Alien 3",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alien_3-2024_01_10_10_15_35"
+  },
+  {
+    "entityId": "4da92623-1e5a-4d7f-a79f-cc16272aaf6e",
+    "title": "Alien Resurrection",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alien_Resurrection-2024_01_10_10_16_08"
+  },
+  {
+    "entityId": "6b1c5a9b-3ca7-4d0f-be11-43b11ff08ee5",
+    "title": "Alita: Battle Angel",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alita:_Battle_Angel-2024_01_10_10_16_29"
+  },
+  {
+    "entityId": "5ac53941-cef2-47b9-b9f5-62bfdfd8ce52",
+    "title": "All Good Things",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-All_Good_Things-2024_01_10_10_17_04"
+  },
+  {
+    "entityId": "cf6d796a-558f-478b-8490-eeb0456512b4",
+    "title": "All My Puny Sorrows",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-All_My_Puny_Sorrows-2024_01_10_10_18_01"
+  },
+  {
+    "entityId": "2352d108-ab20-4b0a-8cbf-dc5e16302cb1",
+    "title": "All Roads Lead to Rome",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-All_Roads_Lead_to_Rome-2024_01_10_10_18_33"
+  },
+  {
+    "entityId": "b132ff87-cd6a-41c6-862a-a2fd047e3bcc",
+    "title": "All That We Destroy",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-All_That_We_Destroy-2024_01_10_10_19_03"
+  },
+  {
+    "entityId": "a6f8d89d-e916-4b8f-9bb8-cba3032d3c8a",
+    "title": "Alone",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alone-2024_01_10_10_19_34"
+  },
+  {
+    "entityId": "c81d3dce-5261-49a6-95bb-5648ced7cb6f",
+    "title": "Alone at Night",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alone_at_Night-2024_01_10_10_20_03"
+  },
+  {
+    "entityId": "6bc7de5b-5f07-417e-a2c9-a331f5671bc9",
+    "title": "Alone Together",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Alone_Together-2024_01_10_10_20_38"
+  },
+  {
+    "entityId": "7d081314-859f-4270-afc8-4ab7bb054ef1",
+    "title": "Along Came the Devil",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Along_Came_the_Devil-2024_01_10_10_21_08"
+  },
+  {
+    "entityId": "29082a7d-a263-404a-a5dc-e5757b53ac34",
+    "title": "Am I a Serial Killer?",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Am_I_a_Serial_Killer?-2024_01_10_10_21_40"
+  },
+  {
+    "entityId": "8a2fbcf2-5591-41c8-b7cb-05f1b83f1ea8",
+    "title": "American Carnage",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Carnage-2024_01_10_10_22_11"
+  },
+  {
+    "entityId": "081a90b0-ae5f-4965-bbf8-ebb0a1d19b37",
+    "title": "American Citizen",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Citizen-2024_01_10_10_22_33"
+  },
+  {
+    "entityId": "5098d9ea-32fe-45ca-8a3c-c692aff61ed2",
+    "title": "American Murderer",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Murderer-2024_01_10_10_23_11"
+  },
+  {
+    "entityId": "08872591-6646-4f6a-8c6d-b945d060ce64",
+    "title": "American Night",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Night-2024_01_10_10_23_42"
+  },
+  {
+    "entityId": "454abeb3-73af-4ab2-9e78-ab51829ac2bc",
+    "title": "American Rapstar",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Rapstar-2024_01_10_10_24_15"
+  },
+  {
+    "entityId": "d193f3e1-4515-4cef-a445-8c2021ec0694",
+    "title": "American Sicario",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Sicario-2024_01_10_10_24_48"
+  },
+  {
+    "entityId": "b09864d0-58ac-44be-86ba-0b35f38bfa64",
+    "title": "American Siege",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-American_Siege-2024_01_10_10_25_25"
+  },
+  {
+    "entityId": "479359b1-4164-44ab-b3a0-5bdd1975386b",
+    "title": "Amish Witches: The True Story of Holmes County",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Amish_Witches:_The_True_Story_of_Holmes_County-2024_01_10_10_26_22"
+  },
+  {
+    "entityId": "9e3f9082-e695-4f82-b2b1-4360246405e4",
+    "title": "Among the Shadows",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Among_the_Shadows-2024_01_10_10_26_54"
+  },
+  {
+    "entityId": "67bb5c02-3bf1-4fbe-b18d-c33ab7041f6c",
+    "title": "Amsterdam",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Amsterdam-2024_01_10_10_27_24"
+  },
+  {
+    "entityId": "cbcef3dd-2217-4986-97d5-d706bceda73d",
+    "title": "Anais in Love",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Anais_in_Love-2024_01_10_10_27_55"
+  },
+  {
+    "entityId": "08c2a90b-c9fb-461d-859c-7417c4c255b7",
+    "title": "Another Round",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Another_Round-2024_01_10_10_28_51"
+  },
+  {
+    "entityId": "6b25fac9-da2b-45a3-8e09-e4156b0471cc",
+    "title": "Anthem",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Anthem-2024_01_10_10_29_21"
+  },
+  {
+    "entityId": "06579b36-1e85-4ef1-8fef-131e61fa771f",
+    "title": "Apollo 18",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Apollo_18-2024_01_10_10_29_52"
+  },
+  {
+    "entityId": "5dee6ffc-dfb6-425e-b3b2-d665241e99b4",
+    "title": "Appendage",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Appendage-2024_01_10_10_30_22"
+  },
+  {
+    "entityId": "4124bdba-2655-431f-830b-d5d04f61afce",
+    "title": "Armageddon",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Armageddon-2024_01_10_10_31_46"
+  },
+  {
+    "entityId": "9dab1fcf-8f61-49f6-a2f1-531000a383e5",
+    "title": "Ask Dr. Ruth",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Ask_Dr._Ruth-2024_01_10_10_32_15"
+  },
+  {
+    "entityId": "dec9855c-6204-45d4-9d0d-037ddc31d06a",
+    "title": "Asking for It",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Asking_for_It-2024_01_10_10_33_11"
+  },
+  {
+    "entityId": "0f01a841-4ff2-4f35-a664-a4d39d0b045c",
+    "title": "Assassin",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Assassin-2024_01_10_10_34_08"
+  },
+  {
+    "entityId": "bd7a7130-3684-4fb3-9b04-e2a25fbbcca2",
+    "title": "Australia",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Australia-2024_01_10_10_34_38"
+  },
+  {
+    "entityId": "b3b34658-c527-4d85-9a86-275242a0bab5",
+    "title": "Automata",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Automata-2024_01_10_10_35_10"
+  },
+  {
+    "entityId": "1a4b6b78-916f-4353-b59c-f718ee872a57",
+    "title": "Baby Ruby",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Baby_Ruby-2024_01_10_10_35_44"
+  },
+  {
+    "entityId": "cadc538b-b037-43e7-888b-292058e9653f",
+    "title": "Babylon A.D.",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Babylon_A.D.-2024_01_10_10_36_16"
+  },
+  {
+    "entityId": "eb67f592-fd7a-4d0b-aa82-6fef5ee0dd6b",
+    "title": "Bad Hair",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Bad_Hair-2024_01_10_10_37_14"
+  },
+  {
+    "entityId": "f035d845-9730-48bd-a2e1-4a40ad9710a0",
+    "title": "Bad Lieutenant: Port of Call New Orleans",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Bad_Lieutenant:_Port_of_Call_New_Orleans-2024_01_10_10_37_46"
+  },
+  {
+    "entityId": "16bdcced-91ad-423a-a084-5740d9ac10d3",
+    "title": "Bad Therapy",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Bad_Therapy-2024_01_10_10_38_19"
+  },
+  {
+    "entityId": "94f5a525-5c12-4f26-9159-97b846c8cf44",
+    "title": "Ballet Now",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Ballet_Now-2024_01_10_10_38_46"
+  },
+  {
+    "entityId": "69387771-fd81-4e02-9f3a-39402b7a8ed4",
+    "title": "Banana Split",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Banana_Split-2024_01_10_10_39_45"
+  },
+  {
+    "entityId": "a513bfb2-acca-4a6e-ab76-bc52c35a4807",
+    "title": "Barbarian",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Barbarian-2024_01_10_10_40_18"
+  },
+  {
+    "entityId": "74e2e518-151c-4ee0-9635-1dfdf551374a",
+    "title": "Batman & Bill",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Batman_&_Bill-2024_01_10_10_40_50"
+  },
+  {
+    "entityId": "79fa28fc-f95d-44e7-b272-fc28e3dba581",
+    "title": "Beans",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Beans-2024_01_10_10_41_22"
+  },
+  {
+    "entityId": "8503c78f-b054-4660-acd9-3a89211beba4",
+    "title": "Beast of Burden",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Beast_of_Burden-2024_01_10_10_41_54"
+  },
+  {
+    "entityId": "f5b642f3-a188-4732-be96-f74893f7f9bd",
+    "title": "Becoming Santa",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Becoming_Santa-2024_01_10_10_42_28"
+  },
+  {
+    "entityId": "c329ff9a-205b-4ac3-a29c-22eb49e64abd",
+    "title": "Begin Again",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Begin_Again-2024_01_10_10_43_01"
+  },
+  {
+    "entityId": "4616f930-31ad-4ef5-ab1a-ce2efb69256b",
+    "title": "Believe Me: The Abduction of Lisa McVey",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Believe_Me:_The_Abduction_of_Lisa_McVey-2024_01_10_10_43_34"
+  },
+  {
+    "entityId": "feb83130-251f-44a0-b494-b10704a3dfba",
+    "title": "Benediction",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Benediction-2024_01_10_10_44_07"
+  },
+  {
+    "entityId": "8b3129b2-861a-4dfe-9969-a3e22da25ec9",
+    "title": "Bernie",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Bernie-2024_01_10_10_44_39"
+  },
+  {
+    "entityId": "ef5e8c30-1a30-43f2-8a09-c6970012b664",
+    "title": "Best Night Ever",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Best_Night_Ever-2024_01_10_10_45_12"
+  },
+  {
+    "entityId": "6a1abdf7-362b-4a7a-98cd-4ac32e73ca5a",
+    "title": "Between Me and My Mind",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Between_Me_and_My_Mind-2024_01_10_10_45_44"
+  },
+  {
+    "entityId": "5c4bd5fe-ab53-4392-a054-3c2c3719ef9a",
+    "title": "Beyond JFK: The Question Of Conspiracy",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Beyond_JFK:_The_Question_Of_Conspiracy-2024_01_10_10_46_09"
+  },
+  {
+    "entityId": "ae521f64-e3fc-4e82-b677-630d3c30bc90",
+    "title": "Big Gold Brick",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Big_Gold_Brick-2024_01_10_10_46_50"
+  },
+  {
+    "entityId": "387ba517-ec86-4799-a952-a8c5848edfe3",
+    "title": "Big Time Adolescence",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Big_Time_Adolescence-2024_01_10_10_47_21"
+  },
+  {
+    "entityId": "b476911d-3350-4639-89db-1aee20e6a4e7",
+    "title": "Billie",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/detail-page-Billie-2024_01_10_10_47_51"
+  }
+]
