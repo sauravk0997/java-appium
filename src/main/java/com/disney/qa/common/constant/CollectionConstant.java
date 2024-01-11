@@ -20,13 +20,12 @@ public class CollectionConstant {
         RECOMMENDED_FOR_YOU,
         SHORTS,
         TRENDING,
-        HULU_FEATURED_PROD,
+        HULU_FEATURED,
         HULU_NEWLY_ADDED_PREVIEW,
         HULU_ORIGINALS_PROD,
         KIDS_PRINCESSES_AND_FAIRY_TALES_PROD,
         KIDS_MICKEY_AND_FRIENDS_PROD,
         KIDS_DOGS_AND_CATS_PREVIEW,
-        NEW_TO_DISNEY_PROD,
         RECOMMENDED_FOR_YOU_PREVIEW;
     }
 
@@ -55,7 +54,7 @@ public class CollectionConstant {
             case MUSIC_AND_DANCE:
                 return "73d4a334-87c8-4059-91de-9d49171c41fb";
             case NEW_TO_DISNEY:
-                return "96f8f6f2-01c9-41a1-b40a-5f9fa585dcb2";
+                return "49f2a28a-69d5-4db8-a086-885e92a59f3a";
             case ORIGINALS:
                 return "6711b1f3-da45-4236-8ae6-faf241d66102";
             case REALITY_SERIES:
@@ -66,8 +65,8 @@ public class CollectionConstant {
                 return "c082e3f6-4e7e-44f3-b6d8-aab7a8bf7367";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
-            case HULU_FEATURED_PROD:
-                return "df877194-2e5d-4a1c-a2fd-a59fa3d79ca1";
+            case HULU_FEATURED:
+                return "8c7b7539-60cd-4365-a3a2-debf926fed6f";
             case HULU_NEWLY_ADDED_PREVIEW:
                 return "48d99856-a5e2-44ef-bd1f-a142d7d5b247";
             case HULU_ORIGINALS_PROD:
@@ -78,8 +77,6 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case KIDS_DOGS_AND_CATS_PREVIEW:
                 return "1b2d6a9e-26b2-4259-8767-67a91ada9c87";
-            case NEW_TO_DISNEY_PROD:
-                return "2e347570-8e01-4258-8f97-882afe202ee2";
             case RECOMMENDED_FOR_YOU_PREVIEW:
                 return "c93d66b6-cbf4-4125-ac3e-a0e605157cce";
             default:
