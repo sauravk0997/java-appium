@@ -65,7 +65,6 @@
 
     <test verbose="1" name="DisneyPlus iOS Tablet Video Player Acceptance" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerThumbnailSeekTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
         </classes>
     </test>
