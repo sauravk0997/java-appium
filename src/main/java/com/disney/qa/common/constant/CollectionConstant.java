@@ -6,27 +6,20 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
-        CLASSIC_SHORTS,
         CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
-        MUSIC_AND_DANCE,
         NEW_TO_DISNEY,
         ORIGINALS,
-        REALITY_SERIES,
         RECOMMENDED_FOR_YOU,
-        SHORTS,
         TRENDING,
         HULU_FEATURED,
-        HULU_NEWLY_ADDED_PREVIEW,
-        HULU_ORIGINALS_PROD,
-        KIDS_PRINCESSES_AND_FAIRY_TALES_PROD,
-        KIDS_MICKEY_AND_FRIENDS_PROD,
-        KIDS_DOGS_AND_CATS_PREVIEW,
-        RECOMMENDED_FOR_YOU_PREVIEW;
+        HULU_ORIGINALS,
+        KIDS_PRINCESSES_AND_FAIRY_TALES,
+        KIDS_MICKEY_AND_FRIENDS;
     }
 
     public static String getCollectionName(Collection collection) {
@@ -36,49 +29,35 @@ public class CollectionConstant {
             case ANIMATED_MOVIES:
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
-                return "0af2fea3-8cc5-45e0-90d4-7e964d4ac4f8";
+                return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
             case CAROUSEL:
                 return "5c3a73f7-f06c-42c6-ab6c-525ba9af1327";
-            case CLASSIC_SHORTS:
-                return "dd04d249-96f2-4149-a2da-a9f2302d157b";
             case COLLECTIONS:
-                return "1da80bf5-b832-44fd-b6ab-4b257e319094";
+                return "ed2d5ad2-cfc6-42c7-942e-aa539772f10c";
             case COMEDIES:
-                return "cad0303b-5f54-4276-8303-7f9ba3d4303e";
+                return "4981954b-4043-4a74-924a-5096e0ef9c56";
             case CONTINUE_WATCHING:
                 return "76aed686-1837-49bd-b4f5-5d2a27c0c8d4";
             case DOCUMENTARIES_AND_REALITY:
-                return "52ae7413-2c06-435f-bc72-74bc6edda108";
+                return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
-            case MUSIC_AND_DANCE:
-                return "73d4a334-87c8-4059-91de-9d49171c41fb";
             case NEW_TO_DISNEY:
-                return "49f2a28a-69d5-4db8-a086-885e92a59f3a";
+                return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
-                return "6711b1f3-da45-4236-8ae6-faf241d66102";
-            case REALITY_SERIES:
-                return "bd532890-e3d4-415e-831d-348eb949b9ec";
+                return "a93c9e0b-96ef-4e57-a03d-1b780880e0b8";
             case RECOMMENDED_FOR_YOU:
                 return "7894d9c6-43ab-4691-b349-cf72362095dd";
-            case SHORTS:
-                return "c082e3f6-4e7e-44f3-b6d8-aab7a8bf7367";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
             case HULU_FEATURED:
                 return "8c7b7539-60cd-4365-a3a2-debf926fed6f";
-            case HULU_NEWLY_ADDED_PREVIEW:
-                return "48d99856-a5e2-44ef-bd1f-a142d7d5b247";
-            case HULU_ORIGINALS_PROD:
-                return "e0c26361-9a7f-460f-b6d1-29f95467bbe0";
-            case KIDS_PRINCESSES_AND_FAIRY_TALES_PROD:
+            case HULU_ORIGINALS:
+                return "a55ccd44-a52f-486c-9aaa-29a19297aab4";
+            case KIDS_PRINCESSES_AND_FAIRY_TALES:
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
-            case KIDS_MICKEY_AND_FRIENDS_PROD:
+            case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
-            case KIDS_DOGS_AND_CATS_PREVIEW:
-                return "1b2d6a9e-26b2-4259-8767-67a91ada9c87";
-            case RECOMMENDED_FOR_YOU_PREVIEW:
-                return "c93d66b6-cbf4-4125-ac3e-a0e605157cce";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
