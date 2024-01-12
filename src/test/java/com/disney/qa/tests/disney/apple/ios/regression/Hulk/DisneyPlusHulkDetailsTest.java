@@ -43,7 +43,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         pause(2);
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES_PROD, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES, 3, homePage.getHomeContentView(), Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
