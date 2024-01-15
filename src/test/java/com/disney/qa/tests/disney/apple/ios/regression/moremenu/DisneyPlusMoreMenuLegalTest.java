@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.disney.qa.api.disney.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -12,6 +14,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,11 +149,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, getLanguage(), MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpensImpressum();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
+        String apiResponse = cleanDocument(getLocalizationUtils().getLegalDocumentBody("Imprint"));
         String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
-        sa.assertTrue(appDisplay.contains("Imprint"), String.format("'Impressum' text was not correctly displayed for '%s'", country));
+        sa.assertEquals(appDisplay, apiResponse,
+                String.format("'Impressum' text was not correctly displayed for '%s'", country));
+//        sa.assertTrue(appDisplay.contains("Imprint"), String.format("'Impressum' text was not correctly displayed for '%s'", country));
 
         sa.assertAll();
     }
