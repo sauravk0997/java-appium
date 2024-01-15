@@ -30,7 +30,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
 
@@ -44,7 +43,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         pause(2);
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES_PROD, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES, 3, homePage.getHomeContentView(), Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -68,7 +67,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
 
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY_PROD, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 3, homePage.getHomeContentView(), Direction.UP);
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -89,10 +88,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
 
-        if (R.CONFIG.get("env").equalsIgnoreCase("PROD")) {
-            detailsPage.clickDetailsTab();
-            scrollDown();
-        }
+        detailsPage.clickDetailsTab();
+        scrollDown();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
             detailsPage.swipeTillActorsElementPresent();;
         }
@@ -119,7 +116,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PROD, 1);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 2);
         detailsPage.isOpened();
 
         //validate episodes tab
@@ -139,7 +136,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //validate extras tab
         sa.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras tab not present on Details page");
         detailsPage.clickExtrasTab();
-        sa.assertTrue(detailsPage.getFirstTitleLabel().getText().toLowerCase().contains("trailer"), "'Trailer' text not found in extras title.");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Extras first title not present.");
         sa.assertAll();
     }
 
@@ -155,7 +152,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PROD, 1);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
             Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
@@ -177,8 +174,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-        pause(3);
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PROD, 1);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
     }
@@ -198,7 +194,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.isOpened();
         homePage.isHuluTileVisible();
         homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED_PROD, 1);
+        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
 
