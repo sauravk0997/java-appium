@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -22,6 +21,8 @@ import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    private static final String PREY = "Prey";
+    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -29,12 +30,12 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyJuniorProfileDetailsUnavailableState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
         homePage.clickOpenButton();
 
@@ -43,7 +44,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         pause(2);
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.KIDS_PRINCESSES_AND_FAIRY_TALES, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia("Mickey");
+        searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -54,6 +57,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyAdultProfileDetailsUnavailableState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
@@ -66,8 +70,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
-
-        homePage.clickRandomCollectionTile(CollectionConstant.Collection.NEW_TO_DISNEY, 3, homePage.getHomeContentView(), Direction.UP);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertAll();
     }
@@ -82,8 +87,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
+        homePage.isOpened();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia("Prey");
+        searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
@@ -109,14 +115,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.isOpened();
-        homePage.isHuluTileVisible();
-        homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 2);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
         //validate episodes tab
@@ -145,14 +151,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkNetworkAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.isOpened();
-        homePage.isHuluTileVisible();
-        homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
             Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
@@ -166,15 +172,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-
         homePage.isOpened();
-        homePage.isHuluTileVisible();
-        homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
     }
@@ -185,16 +191,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyHulkExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-
         homePage.isOpened();
-        homePage.isHuluTileVisible();
-        homePage.tapHuluBrandTile();
-        huluPage.clickCollectionTile(CollectionConstant.Collection.HULU_FEATURED, 1);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
 
@@ -233,7 +238,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         //Adult
         homePage.clickSearchIcon();
-        searchPage.searchForMedia("Prey");
+        searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
         detailsPage.getShareBtn().click();
@@ -285,23 +290,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void continuousPlay(int count) {
-        while (count>=0) {
-            DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-            pause(15);
-            videoPlayer.clickPauseButton();
-            pause(2);
-            videoPlayer.clickPlayButton();
-            count--;
-        }
-    }
-
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Private Property");
         contentList.add("Only Murders in the Building");
         contentList.add("Palm Springs");
-        contentList.add("Abbott Elementary");
         contentList.add("Home Economics");
         contentList.add("Cruel Summer");
         contentList.add("Praise Petey");
