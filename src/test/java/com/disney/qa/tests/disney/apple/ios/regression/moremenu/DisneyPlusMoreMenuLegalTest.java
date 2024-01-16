@@ -149,7 +149,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, getLanguage(), MobilePlatform.IOS,
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
@@ -157,11 +157,10 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         confirmLegalPageOpensImpressum();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
-        String apiResponse = cleanDocument(getLocalizationUtils().getLegalDocumentBody("Imprint"));
+        String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody("Imprint"));
         String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
         sa.assertEquals(appDisplay, apiResponse,
                 String.format("'Impressum' text was not correctly displayed for '%s'", country));
-//        sa.assertTrue(appDisplay.contains("Imprint"), String.format("'Impressum' text was not correctly displayed for '%s'", country));
 
         sa.assertAll();
     }
