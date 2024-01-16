@@ -295,6 +295,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .trim();
     }
 
+    public void waitForWatchlistButtonToAppear() {
+            LOGGER.info("Waiting for  WatchlistButton to appear");
+            fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Watchlist button is not present")
+                    .until(it -> watchlistButton.isPresent());
+    }
+
     public void addToWatchlist() {
         watchlistButton.click();
     }
