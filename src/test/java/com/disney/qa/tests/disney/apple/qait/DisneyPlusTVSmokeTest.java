@@ -11,7 +11,6 @@ public class DisneyPlusTVSmokeTest extends DisneyPlusAppleTVBaseTest {
 
     @Test(groups = {TestGroup.QAIT})
     public void testTvWelcomeScreen() {
-        setFlexWelcomeConfig();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
