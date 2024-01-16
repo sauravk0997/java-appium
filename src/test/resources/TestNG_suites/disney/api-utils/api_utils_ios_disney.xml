@@ -15,8 +15,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
-    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
-    <parameter name="overrideFields" value="disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="reporting.notification.slack-channels" value="qte-release-tests"/>
     <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
 

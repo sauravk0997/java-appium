@@ -1100,24 +1100,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void disableFlexWelcomeConfig() {
-        pause(5);
-        if (getStaticTextByLabelContains("welcome is using its default value of true").isPresent()) {
-            LOGGER.info("Disabling flex welcome config..");
-            clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_FALSE).isPresent());
-        }
-    }
-
-    public void enableFlexWelcomeConfig() {
-        pause(5);
-        if (getStaticTextByLabelContains("Override in use! Set to: false").isPresent()) {
-            LOGGER.info("Enabling flex welcome config..");
-            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-            Assert.assertTrue(getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent());
-        }
-    }
-
     public void clickConfig(String appConfig) {
         clickItemWhileMovingDown(config.format(appConfig));
     }
