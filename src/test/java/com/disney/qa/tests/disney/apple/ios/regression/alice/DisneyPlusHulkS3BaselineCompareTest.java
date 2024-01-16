@@ -33,18 +33,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+import static com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3UploadTest.HULK_100_MOVIES_JSON_PATH;
 
 public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
-    private static final String HANDSET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-handset.json";
-    private static final String TABLET_S3_PATH = "src/test/resources/json/hulk-top-ten-s3-tablet.json";
-
-    public List<Object[]> parseHulkS3Json(String filePath) {
+    public List<Object[]> parseHulkS3Json(DisneyPlusAliceDataProvider.PlatformType platformType) {
         List<Object[]> data = new ArrayList<>();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        File jsonFile = new File(filePath);
+        File jsonFile = new File(HULK_100_MOVIES_JSON_PATH);
 
         try {
             JsonNode jsonObjects = objectMapper.readTree(jsonFile);
@@ -53,7 +52,7 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
                 HulkContentS3 content = new HulkContentS3(
                         jsonObject.get("title").asText(),
                         jsonObject.get("entityId").asText(),
-                        jsonObject.get("s3File").asText());
+                        jsonObject.get(platformType.getS3Path()).asText());
 
                 data.add(new Object[]{content});
             });
@@ -67,12 +66,12 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
     @DataProvider
     public Iterator<Object[]> handsetDataContentProvider() {
-        return parseHulkS3Json(HANDSET_S3_PATH).iterator();
+        return parseHulkS3Json(DisneyPlusAliceDataProvider.PlatformType.HANDSET).iterator();
     }
 
     @DataProvider
     public Iterator<Object[]> tabletDataContentProvider() {
-        return parseHulkS3Json(TABLET_S3_PATH).iterator();
+        return parseHulkS3Json(DisneyPlusAliceDataProvider.PlatformType.TABLET).iterator();
     }
 
     private AliceApiManager getAliceApiManager() {
@@ -92,13 +91,8 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
         initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
     }
 
-    private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
-        SoftAssert sa = new SoftAssert();
+    private void recoverApp() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
-
-        launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
-        detailsPage.clickOpenButton();
         try {
             fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
         } catch (TimeoutException e) {
@@ -106,7 +100,41 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
             LOGGER.info("Timeout exception: {}", e.getMessage());
             Assert.fail("Disney app is not present.");
         }
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found.");
+    }
+
+    private void navigateToDeeplink(HulkContentS3 hulkContentS3) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+        detailsPage.clickOpenButton();
+    }
+
+    private void isContentUnavailableErrorPresent(DisneyPlusAliceDataProvider.HulkContentS3 hulkContentS3) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+            Assert.fail("'This content is unavailable' error displayed on " + hulkContentS3.getTitle());
+        }
+    }
+
+    private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        navigateToDeeplink(hulkContentS3);
+        recoverApp();
+        isContentUnavailableErrorPresent(hulkContentS3);
+
+        int count = 3;
+        while (!detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT) && count > 0) {
+            navigateToDeeplink(hulkContentS3);
+            recoverApp();
+            LOGGER.info("Count is at: " + count --);
+        }
+
+        isContentUnavailableErrorPresent(hulkContentS3);
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present after app recovery.");
 
         File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
         LOGGER.info("S3 File: " + hulkContentS3.getS3file());
@@ -122,7 +150,6 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
         sa.assertTrue(
                 imageSimilarityPercentage > ConfigProperties.getInstance().getPercentageOfSimilarity(),
                 "Similarity Percentage score was 95 or lower.");
-
         sa.assertAll();
     }
 

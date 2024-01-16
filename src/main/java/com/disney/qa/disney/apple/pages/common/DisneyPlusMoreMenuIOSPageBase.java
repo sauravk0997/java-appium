@@ -75,7 +75,16 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	@ExtendedFindBy(accessibilityId = "accountTab")
 	private ExtendedWebElement accountTab;
-	
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
+	private ExtendedWebElement downloadOverWifiOnly;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
+	private ExtendedWebElement deleteAllDownloadsCell;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS '%s'$]")
+	private ExtendedWebElement deleteOneDownload;
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
@@ -227,12 +236,20 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		if (substring.equals(rawValue)) {
 			substring = StringUtils.substringBefore(rawValue, "{").trim();
 		}
+		return substring;
+	}
 
+	public String getDeleteOneDownloadValue(String rawValue) {
+		rawValue = rawValue.trim();
+		String substring = StringUtils.substringBetween(rawValue, " {", "({").trim();
+		if (substring.equals(rawValue)) {
+			substring = StringUtils.substringBetween(rawValue, " {", "({").trim();
+		}
 		return substring;
 	}
 
 	public boolean isDeleteDownloadsEnabled() {
-		ExtendedWebElement deleteAllDownloads = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
+		ExtendedWebElement deleteAllDownloads = deleteAllDownloadsCell.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
 		if(deleteAllDownloads.isElementPresent()) {
 			return deleteAllDownloads.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 		} else {
@@ -241,18 +258,18 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void clickDeleteAllDownloads() {
-		getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).click();
+		deleteAllDownloadsCell.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).click();
 	}
 
 	public boolean areAllDeleteModalItemsPresent() {
 		return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
-				&& getDynamicXpathContainsName(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
+				&& deleteOneDownload.format(getDeleteOneDownloadValue(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
 				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
 				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
 	}
 
 	public boolean isDownloadOverWifiEnabled() {
-		return getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+		return downloadOverWifiOnly.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 	}
 
 	public boolean areWatchlistTitlesDisplayed(String... titles) {

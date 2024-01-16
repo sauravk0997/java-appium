@@ -31,10 +31,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Naruto");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
-        pause(5);
+        pause(3);
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.getDetailsTabTitle().contains("Naruto"), "Details page for 'Naruto' didn't open");
         sa.assertAll();
@@ -55,6 +57,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Demolition");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "'No results' error message was not as expected");
         sa.assertAll();
     }
@@ -77,6 +81,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Only murders in the building");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"), "No results found message was not as expected for TV-14 profile");
 
@@ -86,6 +92,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Only murders in the building");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"), "No results found message was not as expected for kids profile");
         sa.assertAll();
@@ -106,14 +114,18 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Demolition");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
         sa.assertFalse(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA profile");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-14 profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74547"})
     @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchDisplayRecentSearches() {
+        String media1 = "Luca";
+        String media2 = "Bluey";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -126,27 +138,27 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
 
-        searchPage.searchForMedia("Luca");
+        searchPage.searchForMedia(media1);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
-        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase("Luca"), "Details page for luca didn't open");
+        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase(media1), String.format("Details page for %s didn't open", media1));
         homePage.getSearchNav().click();
 
-        searchPage.searchForMedia("The Simpsons");
+        searchPage.searchForMedia(media2);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
-        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase("The Simpsons"), "Details page for The Simpsons didn't open");
+        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase(media2), String.format("Details page for %s didn't open", media2));
         pause(2);
         homePage.getSearchNav().click();
         searchPage.isOpened();
         searchPage.clearText();
 
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
-        sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
-        sa.assertTrue(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
+        sa.assertTrue(searchPage.isTitlePresent(media1), "recently searched title was not displayed under recent search");
+        sa.assertTrue(searchPage.isTitlePresent(media2), "recently searched title was not displayed under recent search");
         searchPage.tapRecentSearchClearButton();
-        sa.assertFalse(searchPage.isTitlePresent("The Simpsons"), "recently searched title was not displayed under recent search");
-        sa.assertTrue(searchPage.isTitlePresent("Luca"), "recently searched title was not displayed under recent search");
+        sa.assertFalse(searchPage.isTitlePresent(media2), "recently searched title was not displayed under recent search");
+        sa.assertTrue(searchPage.isTitlePresent(media1), "recently searched title was not displayed under recent search");
         sa.assertAll();
     }
 
@@ -180,6 +192,26 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
         sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74611"})
+    @Test(description = "Search > Query input and response behavior", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyQueryInputResponse() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia("H");
+        sa.assertTrue(searchPage.getDisplayedTitles().get(0).getText().startsWith("H"), "doesn't start with 'H'");
+        LOGGER.info("Movie starting with 'H' - {}",searchPage.getDisplayedTitles().get(0).getText());
+        searchPage.searchForMedia("Her");
+        sa.assertTrue(searchPage.getDisplayedTitles().get(0).getText().startsWith("Her"), "doesn't start with 'Her'");
+        LOGGER.info("Movie starting with 'Her' - {}",searchPage.getDisplayedTitles().get(0).getText());
         sa.assertAll();
     }
 

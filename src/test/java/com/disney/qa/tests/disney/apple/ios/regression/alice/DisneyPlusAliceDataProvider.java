@@ -27,4 +27,18 @@ public interface DisneyPlusAliceDataProvider {
             this.s3file = s3File;
         }
     }
+
+    enum PlatformType {
+        HANDSET("handsetS3FilePath"),
+        TABLET("tabletS3FilePath");
+
+        private final String s3Path;
+        PlatformType(String s3path) {
+            this.s3Path = s3path;
+        }
+
+        public String getS3Path() {
+            return s3Path;
+        }
+    }
 }
