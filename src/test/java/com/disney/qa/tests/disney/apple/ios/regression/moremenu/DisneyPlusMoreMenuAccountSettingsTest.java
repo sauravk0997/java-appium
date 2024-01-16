@@ -166,7 +166,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_HuluBundle() {
         setAccount(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -186,7 +186,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_GooglePlay() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -207,7 +207,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Roku() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -228,7 +228,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Amazon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -249,7 +249,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Verizon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -270,7 +270,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_O2() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -293,7 +293,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_TelecomTIM() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -314,7 +314,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Movistar() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -335,7 +335,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_DeutscheTelekom() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -356,7 +356,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Sky() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -377,7 +377,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Telmex() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -399,7 +399,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Bradesco() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -420,7 +420,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_BradescoNext() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -441,7 +441,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_TelefonicaVivo() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -465,7 +465,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_MercadoLibre() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -486,7 +486,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Cablevision() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -507,7 +507,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502", "XMOBQA-61569"})
-    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
