@@ -21,12 +21,15 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+
+    private static final String WRONG_PASSWORD = "local123b456@";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
@@ -164,6 +167,57 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
         softAssert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
+    @Maintainer("gkrishna1")
+    @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION })
+    public void verifyExistingProfileMinorAuth() {
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusChangePasswordIOSPageBase password = initPage(DisneyPlusChangePasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+
+        SoftAssert softAssert = new SoftAssert();
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        setAppToHomeScreen(getAccount());
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(),null,true);
+
+        //wait for 15 min to expire the current action grant
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        pause(3);
+        moreMenu.clickMoreTab();
+        //01-01-2018
+        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        updateProfilePage.tapSaveButton();
+        softAssert.assertTrue(passwordPage.isOpened(), "Password entry modal is not shown after updating the profile");
+        passwordPage.submitPasswordWhileLoggedIn(WRONG_PASSWORD);
+        softAssert.assertEquals(loginPage.getErrorMessageString(), incorrectPasswordError, NO_ERROR_DISPLAYED);
+        password.clickCancelBtn();
+        terminateApp(buildType.getDisneyBundle());
+        launchApp(buildType.getDisneyBundle());
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        softAssert.assertTrue(updateProfilePage.isOpened(), "'Let's update your profile' page is not opened after abandoning the authentication flow");
+        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        updateProfilePage.tapSaveButton();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+            parentalConsent.scrollConsentContent(2);
+        }
+        parentalConsent.tapAgreeButton();
+        softAssert.assertTrue(whoIsWatching.isOpened(), "Who is watching page didn't open after clicking on agree button");
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 
