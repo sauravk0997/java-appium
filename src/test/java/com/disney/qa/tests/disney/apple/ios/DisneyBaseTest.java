@@ -450,30 +450,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(request);
     }
 
-    public void setFlexWelcomeConfig() {
-        String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
-            LOGGER.info("{} found, setting Flex Welcome Config..", priceTimeUnit);
-            launchJarvisOrInstall();
-            jarvis.openAppConfigOverrides();
-            jarvis.openOverrideSection("flexEnabledScreens");
-            applePageBase.scrollToItem("welcome").click();
-            LOGGER.info("fetching disableFlexWelcomeConfig value from config file:" + R.CONFIG.get("disableFlexWelcomeConfig"));
-            boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
-            if (disableFlexWelcomeConfig) {
-                applePageBase.disableFlexWelcomeConfig();
-            } else {
-                applePageBase.enableFlexWelcomeConfig();
-            }
-            LOGGER.info("Restarting Disney app..");
-            restart();
-        } else {
-            LOGGER.info("Resuming with test, not setting flex welcome config..");
-        }
-    }
-
     public void setOneTrustConfig() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         JarvisAppleBase jarvis = getJarvisPageFactory();

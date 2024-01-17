@@ -152,32 +152,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
         applePageBase.dismissAppTrackingPopUp(5);
     }
 
-    public void setFlexWelcomeConfig() {
-        String priceTimeUnit = "{{PRICE_0}}/{{TIME_UNIT_0}}";
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
-        if (applePageBase.getStaticTextByLabelContains(priceTimeUnit).isPresent()) {
-            LOGGER.info("{} found, setting flex welcome config..", priceTimeUnit);
-            JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
-            boolean disableFlexWelcomeConfig = Boolean.parseBoolean(R.CONFIG.get("disableFlexWelcomeConfig"));
-            installJarvisForConfig();
-            launchJarvis();
-            Assert.assertTrue(jarvis.isOpened(), "Jarvis App selection page did not launch");
-            jarvis.selectApp(JarvisAppleBase.AppName.TVOS_DISNEY);
-            applePageBase.clickConfig(APP_CONFIG.getText());
-            applePageBase.clickConfig(EDIT_CONFIG.getText());
-            applePageBase.clickConfig("flexEnabledScreens");
-            applePageBase.clickConfig("welcome");
-            if (disableFlexWelcomeConfig) {
-                applePageBase.disableFlexWelcomeConfig();
-            } else {
-                applePageBase.enableFlexWelcomeConfig();
-            }
-            startApp(sessionBundles.get(DISNEY));
-        } else {
-            LOGGER.info("{} not found, not setting flex welcome config..", priceTimeUnit);
-        }
-    }
-
     public void launchJarvis() {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         applePageBase.fluentWait(getDriver(), 30, 0, "Unable to launch Jarvis")

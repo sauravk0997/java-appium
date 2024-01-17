@@ -18,8 +18,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
-    <parameter name="booleanParam::enableOneTrustConfig::by Default enabled to fix 5 tests, uncheck to disable oneTrustConfig." value="true"/>
-    <parameter name="overrideFields" value="enableOneTrustConfig=${enableOneTrustConfig},JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,Onboarding,Search,Smoke,Video Player"/>
     <!--<parameter name="scheduling" value="H 0 * * *"/>-->
