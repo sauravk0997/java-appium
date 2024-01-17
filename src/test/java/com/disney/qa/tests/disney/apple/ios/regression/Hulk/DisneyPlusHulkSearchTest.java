@@ -218,7 +218,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74611"})
     @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyEmptyWatchlist() {
+    public void verifyEmptyWatchlistAndAddToWatchlist() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
