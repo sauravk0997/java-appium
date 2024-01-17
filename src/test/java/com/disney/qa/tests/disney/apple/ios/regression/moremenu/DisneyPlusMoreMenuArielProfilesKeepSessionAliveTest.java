@@ -201,7 +201,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertTrue(passwordPage.isOpened(), "Password entry modal is not shown after updating the profile");
         passwordPage.submitPasswordWhileLoggedIn(WRONG_PASSWORD);
         softAssert.assertEquals(loginPage.getErrorMessageString(), incorrectPasswordError, NO_ERROR_DISPLAYED);
-        password.clickCancelBtn();
+        password.clickCancelButton();
         terminateApp(buildType.getDisneyBundle());
         launchApp(buildType.getDisneyBundle());
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -217,7 +217,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         parentalConsent.tapAgreeButton();
         softAssert.assertTrue(whoIsWatching.isOpened(), "Who is watching page didn't open after clicking on agree button");
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isElementPresent(), "Kids Home page is not open after login");
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 

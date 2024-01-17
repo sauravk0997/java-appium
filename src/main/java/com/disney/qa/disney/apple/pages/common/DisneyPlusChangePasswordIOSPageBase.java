@@ -96,12 +96,18 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
         return changePasswordCancelBtn.isPresent();
     }
 
+    //Need to remove below method once we replace it from all steps with clickCancelButton method
     @Override
     public void clickCancelBtn() {
         xpathNameOrName.format(getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
                                 DictionaryKeys.CANCEL_LABEL.getText()),
                 DictionaryKeys.CANCEL_LABEL.getText()).click();
+    }
+
+    public void clickCancelButton() {
+        String cancelButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.CANCEL_LABEL.getText());
+        dynamicBtnFindByLabel.format(cancelButton).click();
     }
 
     public boolean isInvalidPasswordErrorDisplayed() {
