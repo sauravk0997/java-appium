@@ -16,8 +16,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Only 'Install' group to run" value="Install"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="stringParam::oldAppVersion::Enter in an old app version, like 2.13.0.52926" value=""/>
-    <parameter name="overrideFields" value="oldAppVersion=${oldAppVersion},disableFlexWelcomeConfig=${disableFlexWelcomeConfig},init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="booleanParam::disableFlexWelcomeConfig::by Default disabled uncheck to enable Flex welcome screen." value="true"/>
+    <parameter name="overrideFields" value="oldAppVersion=${oldAppVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Install" parallel="methods">
