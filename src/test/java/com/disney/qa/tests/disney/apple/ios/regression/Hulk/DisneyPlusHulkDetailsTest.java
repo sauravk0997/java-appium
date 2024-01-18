@@ -292,7 +292,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("Private Property");
         contentList.add("Only Murders in the Building");
         contentList.add("Palm Springs");
         contentList.add("Home Economics");
