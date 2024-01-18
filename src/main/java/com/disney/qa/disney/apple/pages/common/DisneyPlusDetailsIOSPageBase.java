@@ -199,7 +199,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getDownloadCompleteButton() {
-        return dynamicBtnFindByLabelContains.format("downloadComplete");
+        return dynamicBtnFindByLabelContains.format("downloadComplete24");
     }
 
     public boolean isContinueButtonPresent() {
