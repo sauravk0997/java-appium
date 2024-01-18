@@ -27,7 +27,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61163"})
-    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void verifyCloseButtonControlOnPlayer() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -54,11 +54,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         //Initiate playback from 'continue watching' from Home
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        homePage.initiatePlaybackFromContinueWatching();
+        homePage.initiatePlaybackFromContinueWatching(SHORT_SERIES);
+        detailsPage.clickContinueButton();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
-        sa.assertTrue(homePage.isOpened(), "'Home' page didn't open after closing the video player");
+        sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");
         sa.assertAll();
     }
 
