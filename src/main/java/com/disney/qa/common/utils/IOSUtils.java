@@ -848,12 +848,11 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      * @param explicitWait the wait time for the expected condition
      */
     default void launchDeeplink(boolean useSafari, String url, int explicitWait) {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         if (useSafari) {
-            JavascriptExecutorService javascriptExecutorService = new JavascriptExecutorService();
             HashMap<String, Object> args = new HashMap<>();
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            javascriptExecutorService.getJavascriptExecutorInstance().executeScript(Gestures.TERMINATE_APP.getGesture(), args);
-            javascriptExecutorService.getJavascriptExecutorInstance().executeScript(Gestures.LAUNCH_APP.getGesture(), args);
+            js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
