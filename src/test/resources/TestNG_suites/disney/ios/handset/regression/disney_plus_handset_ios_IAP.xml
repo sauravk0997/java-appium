@@ -23,6 +23,8 @@
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPSubscriptionTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
         </classes>
     </test>
 </suite>

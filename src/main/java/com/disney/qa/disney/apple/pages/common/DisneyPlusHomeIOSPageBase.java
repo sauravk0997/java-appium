@@ -51,7 +51,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "homeContentView")
     protected ExtendedWebElement homeContentView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"continueWatchingContentView\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$label='%s'$]/**/XCUIElementTypeCell/**XCUIElementTypeCell[$label == '%s'$][1]")
     protected ExtendedWebElement continueWatchingContentView;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell")
@@ -123,10 +123,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         brandTiles.get(new SecureRandom().nextInt(brandTiles.size() - 1)).click();
     }
 
-    public void initiatePlaybackFromContinueWatching() {
+    public void initiatePlaybackFromContinueWatching(String series) {
         ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
+        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
         swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
-        continueWatchingContentView.click();
+        continueWatchingContentView.format(continueWatchingText, series).click();
     }
 
     public ExtendedWebElement getDisneyTile() {

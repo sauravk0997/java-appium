@@ -199,7 +199,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getDownloadCompleteButton() {
-        return dynamicBtnFindByLabelContains.format("downloadComplete");
+        return dynamicBtnFindByLabelContains.format("downloadComplete24");
     }
 
     public boolean isContinueButtonPresent() {
@@ -293,6 +293,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .split("[.]")[1]
                 .split("\\d+", 2)[0]
                 .trim();
+    }
+
+    public void waitForWatchlistButtonToAppear() {
+            LOGGER.info("Waiting for  WatchlistButton to appear");
+            fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Watchlist button is not present")
+                    .until(it -> watchlistButton.isPresent());
     }
 
     public void addToWatchlist() {

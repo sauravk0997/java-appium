@@ -30,54 +30,8 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENT
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String KIDS_DOB = "2018-01-01";
-    private static final String WRONG_PASSWORD = "local123b456@";
-    private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
-    @Maintainer("gkrishna1")
-    @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION }, enabled = false)
-    public void verifyExistingProfileMinorAuth() {
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusChangePasswordIOSPageBase password = initPage(DisneyPlusChangePasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        SoftAssert softAssert = new SoftAssert();
-        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
-        onboard();
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        pause(3);
-        moreMenu.clickMoreTab();
-        //01-01-2018
-        editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        updateProfilePage.tapSaveButton();
-        softAssert.assertTrue(passwordPage.isOpened(), "Password entry modal is not shown after updating the profile");
-        passwordPage.submitPasswordWhileLoggedIn(WRONG_PASSWORD);
-        softAssert.assertEquals(loginPage.getErrorMessageString(), incorrectPasswordError, NO_ERROR_DISPLAYED);
-        password.clickCancelBtn();
-        terminateApp(buildType.getDisneyBundle());
-        launchApp(buildType.getDisneyBundle());
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        softAssert.assertTrue(updateProfilePage.isOpened(), "'Let's update your profile' page is not opened after abandoning the authentication flow");
-        editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        updateProfilePage.tapSaveButton();
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
-            parentalConsent.scrollConsentContent(2);
-        }
-        parentalConsent.tapAgreeButton();
-        softAssert.assertTrue(whoIsWatching.isOpened(), "Who is watching page didn't open after clicking on agree button");
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isElementPresent(), "Kids Home page is not open after login");
-        softAssert.assertAll();
-    }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -206,13 +160,13 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         softAssert.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
         moreMenu.clickHomeIcon();
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isElementPresent(), "Kids Home page is not open after login");
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
-    @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileU13MinorConsentDecline() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
@@ -226,20 +180,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
         //Once bug is resolved, remove line 217
         moreMenu.clickMoreTab();
-        editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
-        //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey and Friends").isPresent(), "Kids Home page is not open after login");
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74468"})
-    @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileU13MinorConsentAbandonFlow() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -252,10 +204,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(KIDS_PROFILE);
         pause(3);
         moreMenu.clickMoreTab();
-        editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
-        //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         //Abandon the flow
         terminateApp(buildType.getDisneyBundle());
@@ -263,7 +213,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         //Select KIDS profile
         whoIsWatching.clickProfile(KIDS_PROFILE);
         //TODO: Bug created IOS-5038
-        softAssert.assertTrue(updateProfilePage.isOpened(), "Update your profile page is not shown after abandoning the consent flow");
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertAll();
     }
 
