@@ -54,7 +54,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void tapDownloadedAssetFromListView(String downloadedAsset) {
-		staticTextLabelName.format(downloadedAsset).click();
+		staticTextByLabel.format(downloadedAsset).click();
 	}
 
 	public void tapDownloadedAsset(String downloadedAsset) {
