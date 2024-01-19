@@ -177,14 +177,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart(int seconds) {
-        LOGGER.info("Waiting for video buffering to complete...");
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), seconds);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), seconds);
-        LOGGER.info("Buffering completed.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
