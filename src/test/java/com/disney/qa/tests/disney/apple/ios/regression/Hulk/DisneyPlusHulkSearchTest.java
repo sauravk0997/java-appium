@@ -258,4 +258,44 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu Media title was not added to the watchlist");
         sa.assertAll();
     }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75122"})
+    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyAddAndRemoveItemToWatchlist() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Add Hulu title to watch list
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(HULU_CONTENT);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.waitForWatchlistButtonToAppear();
+        detailsPage.addToWatchlist();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(), "remove from watchlist button wasn't displayed");
+
+        //Verify watchlist is populated with the added titles
+        homePage.clickMoreTab();
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu media title was not added to the watchlist");
+        moreMenu.clickBackArrowFromWatchlist();
+        //Remove title from the watchlist
+        homePage.clickSearchIcon();
+        detailsPage.getRemoveFromWatchListButton().click();
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "add to watchlist button wasn't displayed");
+        homePage.clickMoreTab();
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        //verify empty watch list
+        sa.assertTrue(moreMenu.isWatchlistHeaderDisplayed(),
+                "'Watchlist' header was not displayed");
+        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+                "Empty Watchlist text/logo was not displayed");
+        sa.assertAll();
+    }
 }
