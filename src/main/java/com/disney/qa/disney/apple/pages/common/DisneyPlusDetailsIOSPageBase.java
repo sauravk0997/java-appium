@@ -373,6 +373,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("'Remove from watchlist' button clicked");
     }
 
+    public ExtendedWebElement getRemoveFromWatchListButton() {
+        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
+        return getTypeButtonByLabel(watchlistRemoveLabel);
+    }
+
 
     public void swipeTabBar (Direction direction, int duration) {
         swipeInContainer(tabBar, direction, duration);
