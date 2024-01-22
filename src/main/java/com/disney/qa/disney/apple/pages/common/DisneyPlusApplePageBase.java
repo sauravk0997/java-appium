@@ -1198,4 +1198,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getUnavailableContentErrorPreview() {
         return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
     }
+
+    public ExtendedWebElement getBackButton() { return backButton; }
 }

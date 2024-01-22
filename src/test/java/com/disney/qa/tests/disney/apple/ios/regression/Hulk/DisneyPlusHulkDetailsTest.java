@@ -8,6 +8,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -289,6 +290,37 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             }
         });
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74610"})
+    @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkBaseUIMovies() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        //
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia("Prey");
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Prey"), "Prey media title not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+        sa.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating not found.");
+        sa.assertTrue(detailsPage.isGenreDisplayed());
+
+
+        String selectorSeason = detailsPage.getSeasonSelector();
+        detailsPage.clickDetailsTab();
+        swipePageTillElementPresent(detailsPage.getFormats(), 3, null, IMobileUtils.Direction.UP, 600);
     }
 
     protected ArrayList<String> getMedia() {
