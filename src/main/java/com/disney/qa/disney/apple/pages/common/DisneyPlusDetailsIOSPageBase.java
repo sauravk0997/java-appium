@@ -375,7 +375,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getRemoveFromWatchListButton() {
         String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        return getTypeButtonByLabel(watchlistRemoveLabel).format();
+        return getTypeButtonByLabel(watchlistRemoveLabel);
     }
 
 
