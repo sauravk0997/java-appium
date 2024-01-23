@@ -302,25 +302,112 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-
-        //
         homePage.clickSearchIcon();
-        searchPage.searchForMedia("Prey");
+        searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
+        //back button, share button, title, description
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("Prey"), "Prey media title not found.");
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
-        sa.assertTrue(detailsPage.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
-        sa.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating not found.");
-        sa.assertTrue(detailsPage.isGenreDisplayed());
+
+        //network and service attribution
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            sa.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
+        } else {
+            sa.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
+        }
+        sa.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+
+        //media features - audio and video
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //CTAs
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        //Release date, duration, genres, rating
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
+                "Duration from metadata label does not match duration from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
+
+        //tabs
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+        sa.assertAll();
+    }
 
 
-        String selectorSeason = detailsPage.getSeasonSelector();
-        detailsPage.clickDetailsTab();
-        swipePageTillElementPresent(detailsPage.getFormats(), 3, null, IMobileUtils.Direction.UP, 600);
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74933"})
+    @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkBaseUISeries() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        //back button, share button, title, description, seasons
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
+
+        //network and service attribution
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            sa.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
+        } else {
+            sa.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
+        }
+        sa.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+
+        //media features - audio, video, accessibility
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //CTAs
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        //Release date, duration, genres
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        System.out.println(getDriver().getPageSource());
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+
+        //tabs
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+        sa.assertAll();
     }
 
     protected ArrayList<String> getMedia() {

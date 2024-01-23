@@ -42,7 +42,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "shareButton")
     private ExtendedWebElement shareBtn;
 
-    @ExtendedFindBy(accessibilityId = "play")
+    @ExtendedFindBy(accessibilityId = "PLAY")
     protected ExtendedWebElement playButton;
 
     @ExtendedFindBy(accessibilityId = "bookmarked")
@@ -424,6 +424,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return metaDataLabel.isPresent();
     }
 
+    public ExtendedWebElement getReleaseDate() { return releaseDate; }
+
+    public ExtendedWebElement getDuration() { return duration; }
+
+    public ExtendedWebElement getGenre() { return genre; }
+
+    public ExtendedWebElement getRating() { return rating; }
+
     public boolean isPlayButtonDisplayed() {
         return getPlayButton().isPresent();
     }
@@ -476,6 +484,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         swipePageTillElementPresent(releaseDate, 3, contentDetailsPage, Direction.UP, 500);
         String[] detailsTabYear = releaseDate.getText().split(", ");
         return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
+    }
+
+    public boolean metadataLabelCompareDetailsTab(int metadataPart, ExtendedWebElement element, int detailsTabPart) {
+        Map<String, String> params = new HashMap<>();
+        String[] metadataLabelParts = metaDataLabel.getText().split(",");
+        LOGGER.info("metadata label parts ");
+        params.put("metadataLabelPart", metadataLabelParts[metadataPart]);
+        clickDetailsTab();
+        swipePageTillElementPresent(element, 3, null, Direction.UP, 500);
+        String[] detailsTabParts = element.getText().split(",");
+        LOGGER.info("Verifying metadata {} is same as details tab {}", metadataLabelParts[metadataPart], detailsTabParts[detailsTabPart]);
+        return detailsTabParts[detailsTabPart].contains(params.get("metadataLabelPart").trim());
     }
 
     public boolean compareEpisodeNum() {
