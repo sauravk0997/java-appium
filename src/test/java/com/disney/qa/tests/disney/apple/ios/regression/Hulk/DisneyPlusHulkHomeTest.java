@@ -68,13 +68,12 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
 
         homePage.tapHuluBrandTile();
+        sa.assertTrue(huluPage.validateScrollingInCollections(), "User cannot scroll horizontally");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network logos are not present");
 
         networkLogos.forEach(item ->
                 sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item)));
 
         sa.assertAll();
-
-
     }
 }
