@@ -475,21 +475,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public boolean doesMetadataYearContainDetailsTabYear() {
-        LOGGER.info("verifying season year range");
-        Map<String, String> params = new HashMap<>();
-        String[] metadataLabelParts = metaDataLabel.getText().split(",");
-        params.put("metaDataYear(s)", metadataLabelParts[0]);
-        clickDetailsTab();
-        swipePageTillElementPresent(releaseDate, 3, contentDetailsPage, Direction.UP, 500);
-        String[] detailsTabYear = releaseDate.getText().split(", ");
-        return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
-    }
-
     public boolean metadataLabelCompareDetailsTab(int metadataPart, ExtendedWebElement element, int detailsTabPart) {
         Map<String, String> params = new HashMap<>();
         String[] metadataLabelParts = metaDataLabel.getText().split(",");
-        LOGGER.info("metadata label parts ");
         params.put("metadataLabelPart", metadataLabelParts[metadataPart]);
         clickDetailsTab();
         swipePageTillElementPresent(element, 3, null, Direction.UP, 500);

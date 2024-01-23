@@ -106,7 +106,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextLabelName("metaDataLabel");
     }
 
-    @Override
     public boolean doesMetadataYearContainDetailsTabYear() {
         LOGGER.info("verifying season year range");
         Map<String, String> params = new HashMap<>();
