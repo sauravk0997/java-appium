@@ -58,7 +58,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
-    @Override
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
         getTypeButtonByName("play").click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());

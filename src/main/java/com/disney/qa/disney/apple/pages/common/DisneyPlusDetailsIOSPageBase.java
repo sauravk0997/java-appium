@@ -42,7 +42,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "shareButton")
     private ExtendedWebElement shareBtn;
 
-    @ExtendedFindBy(accessibilityId = "PLAY")
+    @ExtendedFindBy(accessibilityId = "play")
     protected ExtendedWebElement playButton;
 
     @ExtendedFindBy(accessibilityId = "bookmarked")
@@ -179,8 +179,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shareBtn.isElementPresent(time);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
-        getTypeButtonByName("play").click();
+    public DisneyPlusVideoPlayerIOSPageBase clickPlayButton(DisneyLocalizationUtils dictionary) {
+        getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY.getText())).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -438,7 +439,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getRating() { return rating; }
 
     public boolean isPlayButtonDisplayed() {
-        return getPlayButton().isPresent();
+        return getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent();
     }
 
     public boolean isWatchlistButtonDisplayed() {
@@ -452,7 +453,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTrailerButtonDisplayed() {
-        return trailerButton.isElementPresent();
+        return trailerButton.isPresent();
     }
 
     public ExtendedWebElement getTrailerButton() {
@@ -559,8 +560,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return episodesTab;
     }
 
-    public ExtendedWebElement getPlayButton() {
-        return playButton;
+    public ExtendedWebElement getPlayButton(DisneyLocalizationUtils dictionary) {
+        return getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY.getText()));
     }
 
     public ExtendedWebElement getSeasonSelectorButton() {
@@ -738,4 +740,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 
     public ExtendedWebElement getShareBtn() { return shareBtn; }
+
+    public ExtendedWebElement getRestartButton(DisneyLocalizationUtils dictionary) {
+        return getTypeButtonByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_DETAILS_RESTART.getText()));
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickPlayButtonDK(DisneyLocalizationUtils dictionary) {
+        getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY.getText())).click();
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }

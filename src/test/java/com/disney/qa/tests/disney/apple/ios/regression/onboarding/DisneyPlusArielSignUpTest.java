@@ -1,6 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.DisneyEntitlement;
+import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -26,19 +30,32 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+//        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+//
+//        createDisneyAccountRequest
+//                .setDateOfBirth(null)
+//                .setGender(null)
+//                .setCountry(getLocalizationUtils().getLocale())
+//                .setLanguage(getLocalizationUtils().getUserLanguage());
+//
+//        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+//        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(offer).subVersion("V2").build();
+//        createDisneyAccountRequest.addEntitlement(entitlement);
 
-        createDisneyAccountRequest
-                .setDateOfBirth(null)
-                .setGender(null)
-                .setCountry(getLocalizationUtils().getLocale())
-                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+//        getAccountApi().setup
+
+        DisneyAccount disneyAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
+        getAccountApi().patchProfileAge(disneyAccount, null, disneyAccount.getProfileId());
+
+        DisneyAccountApi accountApi = getAccountApi();
+        DisneyAccount account = accountApi.createEntitledAccount("US", "en");
+        account = accountApi.addFlex(account);
+
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(disneyAccount.getEmail());
+        passwordPage.submitPasswordForLogin(disneyAccount.getUserPass());
 
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");

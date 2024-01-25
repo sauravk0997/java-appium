@@ -13,7 +13,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back", groups = TestGroup.PRE_CONFIGURATION)
     public void capturePauseResume() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).waitForVideoToStart();
         videoPlayerIOSPageBase
                 .clickPauseButton()
                 .displayVideoController()
@@ -26,8 +26,8 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back", groups = TestGroup.PRE_CONFIGURATION)
     public void capturePauseResumeScrub() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
-        detailsIOSPageBase.clickPlayButton();
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
+        detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).waitForVideoToStart();
         videoPlayerIOSPageBase.clickPauseButton()
                 .displayVideoController()
                 .clickPlayButton()
@@ -40,8 +40,8 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
     @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
     public void capturePauseScrubResume() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
-        detailsIOSPageBase.clickPlayButton();
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
+        detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).waitForVideoToStart();
         videoPlayerIOSPageBase.clickPauseButton()
                 .scrubToPlaybackPercentage(50)
                 .clickPlayButton()

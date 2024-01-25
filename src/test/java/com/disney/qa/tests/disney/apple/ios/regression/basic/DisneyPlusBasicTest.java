@@ -191,7 +191,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         }
 
         disneyPlusDetailsIOSPageBase.dismissAlert();
-        disneyPlusDetailsIOSPageBase.clickPlayButton();
+        disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
 
         softAssert.assertTrue(initPage(DisneyPlusVideoPlayerIOSPageBase.class).isOpened(),
                 "Expected - Video player should be opened");

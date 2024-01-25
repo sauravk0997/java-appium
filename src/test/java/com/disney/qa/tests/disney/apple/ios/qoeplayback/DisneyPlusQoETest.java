@@ -284,7 +284,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isElementPresent(), "Movies screen not displayed");
         //Start first movie from the movie page
         searchPage.getDisplayedTitles().get(0).click();
-        new DisneyPlusDetailsIOSPageBase(getDriver()).clickPlayButton().waitForVideoToStart();
+        new DisneyPlusDetailsIOSPageBase(getDriver()).clickPlayButton(DisneyPlusApplePageBase.getDictionary()).waitForVideoToStart();
         Assert.assertTrue(new DisneyPlusVideoPlayerIOSPageBase(getDriver()).isOpened(), "Video Player did not launch");
         return account;
     }

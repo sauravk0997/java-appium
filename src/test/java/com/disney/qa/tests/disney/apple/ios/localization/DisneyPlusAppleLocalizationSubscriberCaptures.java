@@ -826,7 +826,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("MovieMiscellaneousdetails");
 
         //S7.3
-        swipePageTillElementTappable(detailsPage.getPlayButton(), 3, null, Direction.DOWN, 1000);
+        swipePageTillElementTappable(detailsPage.getPlayButton(DisneyPlusApplePageBase.getDictionary()), 3, null, Direction.DOWN, 1000);
 
         detailsPage.addToWatchlist();
         detailsPage.startDownload();
@@ -1263,7 +1263,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         searchPage.searchForMedia("Simpsons");
         List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
         movies.get(0).click();
-        detailsPage.clickPlayButton();
+        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         //let it play for just a few seconds to go into the "continue watching" collection
         pause(10);
         videoPlayerPage.clickBackButton();

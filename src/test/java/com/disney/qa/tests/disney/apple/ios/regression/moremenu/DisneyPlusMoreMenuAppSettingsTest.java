@@ -124,7 +124,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             disneyPlusMoreMenuIOSPageBase.toggleStreamOverWifiOnly(IOSUtils.ButtonStatus.ON);
             disneyPlusMoreMenuIOSPageBase.getHomeNav().click();
             disneyPlusHomeIOSPageBase.clickFirstCarouselPoster();
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
+            disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
             Assert.assertTrue(new
                             DisneyPlusVideoPlayerIOSPageBase(getDriver()).isOpened(),
                     "XMOBQA-61211 - Video Player did not open");
@@ -137,7 +137,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             relaunch();
             disneyPlusMoreMenuIOSPageBase.getHomeNav().click();
             disneyPlusHomeIOSPageBase.clickFirstCarouselPoster();
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
+            disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
 
             sa.assertTrue(disneyPlusDetailsIOSPageBase
                             .getStaticTextByLabel(getLocalizationUtils()
@@ -168,7 +168,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),
                     "XMOBQA-61229/61231 - The user did not stay on the Media page after dismissing the modal");
 
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
+            disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
             disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).click();
 

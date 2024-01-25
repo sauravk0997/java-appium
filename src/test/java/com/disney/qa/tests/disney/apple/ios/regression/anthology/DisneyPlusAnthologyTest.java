@@ -249,7 +249,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, " + PLAY + " label not found, currently live content playing. " + e);
         }
 
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertTrue(videoPlayer.isOpened(), "Video Player did not launch.");
 
         videoPlayer.clickBackButton();
@@ -348,7 +348,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
 
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback.");

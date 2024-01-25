@@ -405,7 +405,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = search.getDisplayedTitles();
         results.get(0).click();
         pause(3);
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertTrue(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
         video.clickBackButton();
 
@@ -435,7 +435,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
@@ -473,7 +473,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         search.searchForMedia(PRETTY_FREEKIN_SCARY);
         List<ExtendedWebElement> results = search.getDisplayedTitles();
         results.get(0).click();
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
         video.clickBackButton();
 
@@ -536,7 +536,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         search.searchForMedia(PRETTY_FREEKIN_SCARY);
         List<ExtendedWebElement> results = search.getDisplayedTitles();
         results.get(0).click();
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertTrue(video.isAdBadgeLabelPresent(), "Ad badge label not present after video began");
         video.clickBackButton();
 
@@ -562,7 +562,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
-        details.clickPlayButton();
+        details.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();

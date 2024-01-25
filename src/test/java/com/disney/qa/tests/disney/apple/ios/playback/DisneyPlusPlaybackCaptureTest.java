@@ -29,7 +29,7 @@ public class DisneyPlusPlaybackCaptureTest extends DisneyBaseTest {
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         watchlistPage.getBadgeContentView().click();
 
-        detailsIOSPageBase.clickPlayButton();
+        detailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
         pause(10);
 
         //        HARUtils.attachHarAsArtifact(proxy.get(), "playback");

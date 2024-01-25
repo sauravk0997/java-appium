@@ -24,6 +24,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    private static final String SELF_RELIANCE = "Self Reliance";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -300,7 +301,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
@@ -329,9 +331,16 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
 
         //CTAs
-        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Play CTA not found.");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= 5870);
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getRestartButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Restart button was not found.");
 
         //Release date, duration, genres, rating
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
@@ -360,7 +369,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
@@ -390,9 +400,16 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
 
         //CTAs
-        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Play CTA not found.");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 1900);
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getRestartButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Restart button was not found.");
 
         //Release date, duration, genres
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
