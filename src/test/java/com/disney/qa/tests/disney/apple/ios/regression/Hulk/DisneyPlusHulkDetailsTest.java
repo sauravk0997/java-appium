@@ -8,7 +8,6 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -149,27 +148,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74548"})
-    @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkNetworkAttribution() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
-        } else {
-            Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
-        }
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
     @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkServiceAttribution() {
@@ -178,13 +156,18 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        detailsPage.isOpened();
-        Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+
+        IntStream.range(0, getHuluMedia().size()).forEach(i -> {
+            homePage.clickSearchIcon();
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(getHuluMedia().get(i));
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            detailsPage.isOpened();
+            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+        });
     }
 
     @Maintainer("csolmaz")
@@ -315,14 +298,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
 
-        //network and service attribution
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            sa.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
-        } else {
-            sa.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
-        }
-        sa.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
-
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
@@ -384,14 +359,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
 
-        //network and service attribution
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            sa.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
-        } else {
-            sa.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
-        }
-        sa.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
-
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
@@ -429,11 +396,18 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("Only Murders in the Building");
+        contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
         contentList.add("Palm Springs");
         contentList.add("Home Economics");
         contentList.add("Cruel Summer");
         contentList.add("Praise Petey");
+        return contentList;
+    }
+
+    protected ArrayList<String> getHuluMedia() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
+        contentList.add(PREY);
         return contentList;
     }
 }

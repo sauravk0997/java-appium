@@ -481,6 +481,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    /**
+     * Method used to compare metadataLabel split string from main detail screen
+     * feature area to a detail tab element's split string
+     * @param metadataPart Split part of metadataLabel for comparison
+     * @param element details tab element
+     * @param detailsTabPart Split part of a details tab element for comparison
+     * @return - Media title
+     */
     public boolean metadataLabelCompareDetailsTab(int metadataPart, ExtendedWebElement element, int detailsTabPart) {
         Map<String, String> params = new HashMap<>();
         String[] metadataLabelParts = metaDataLabel.getText().split(",");
@@ -744,11 +752,5 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getRestartButton(DisneyLocalizationUtils dictionary) {
         return getTypeButtonByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_DETAILS_RESTART.getText()));
-    }
-
-    public DisneyPlusVideoPlayerIOSPageBase clickPlayButtonDK(DisneyLocalizationUtils dictionary) {
-        getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                BTN_PLAY.getText())).click();
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }

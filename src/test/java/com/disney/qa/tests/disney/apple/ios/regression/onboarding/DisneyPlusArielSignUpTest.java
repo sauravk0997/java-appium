@@ -30,32 +30,19 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
-//        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-//
-//        createDisneyAccountRequest
-//                .setDateOfBirth(null)
-//                .setGender(null)
-//                .setCountry(getLocalizationUtils().getLocale())
-//                .setLanguage(getLocalizationUtils().getUserLanguage());
-//
-//        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-//        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(offer).subVersion("V2").build();
-//        createDisneyAccountRequest.addEntitlement(entitlement);
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
 
-//        getAccountApi().setup
-
-        DisneyAccount disneyAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
-        getAccountApi().patchProfileAge(disneyAccount, null, disneyAccount.getProfileId());
-
-        DisneyAccountApi accountApi = getAccountApi();
-        DisneyAccount account = accountApi.createEntitledAccount("US", "en");
-        account = accountApi.addFlex(account);
-
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(disneyAccount.getEmail());
-        passwordPage.submitPasswordForLogin(disneyAccount.getUserPass());
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
         sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
                 "Complete Subscription Button did not appear.");
