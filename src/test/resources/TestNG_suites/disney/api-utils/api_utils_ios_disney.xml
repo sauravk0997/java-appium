@@ -39,12 +39,6 @@
                     <include name="verifyAccountOnHold"/>
                 </methods>
             </class>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest">
-                <methods>
-                    <include name="testSignUpDoBUnder18"/>
-                </methods>
-            </class>
-
         </classes>
     </test>
 
