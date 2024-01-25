@@ -23,7 +23,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement huluBrandImageCollapsed;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
-    protected ExtendedWebElement backButton;
+    protected ExtendedWebElement collectionBackButton;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
     protected ExtendedWebElement artworkBackground;
@@ -62,7 +62,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isBackButtonPresent() {
-        return backButton.isPresent();
+        return collectionBackButton.isPresent();
     }
 
     public boolean isArtworkBackgroundPresent() {
@@ -74,14 +74,13 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickOnBackButton() {
-        backButton.click();
+        collectionBackButton.click();
     }
 
     public boolean isNetworkLogoPresent(String logoName) {
         if (!typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT)) {
 
-            // studiosAndNetworkCollection element has not visible attribute in false. This is a workaround
-            // swipeInContainer(studiosAndNetworkCollection, Direction.LEFT, 500);
+            // studiosAndNetworkCollection element has visible attribute in false. This is a workaround
             swipeLeftInCollection(studiosAndNetworkCollection);
         }
         return typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT);
@@ -92,9 +91,9 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         Dimension elementDimensions = collection.getSize();
 
         int endY;
-        int startY = endY = elementLocation.getY() + Math.round((float) elementDimensions.getHeight() / 2.0F);
-        int startX = (int) ((long) elementLocation.getX() + Math.round(0.8 * (double) elementDimensions.getWidth()));
-        int endX = (int) ((long) elementLocation.getX() + Math.round(0.25 * (double) elementDimensions.getWidth()));
+        int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX =  elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
         this.swipe(startX, startY, endX, endY, 500);
     }
@@ -104,7 +103,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         List<ExtendedWebElement> titles1 = getHuluTitlesInCollection();
         swipeLeftInCollection(huluOriginalsCollection);
         List<ExtendedWebElement> titles2 = getHuluTitlesInCollection();
-        return !(titles1 == titles2);
+        return titles1 != titles2;
     }
 
     public List<ExtendedWebElement> getHuluTitlesInCollection() {
