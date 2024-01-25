@@ -298,6 +298,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
 
+        System.out.println(getDriver().getPageSource());
+
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
@@ -359,6 +361,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
 
+        System.out.println(getDriver().getPageSource());
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");

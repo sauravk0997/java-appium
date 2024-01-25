@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.zebrunner.carina.utils.messager.Messager;
-import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import io.appium.java_client.PerformsTouchActions;
