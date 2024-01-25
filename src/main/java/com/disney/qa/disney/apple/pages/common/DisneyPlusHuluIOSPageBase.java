@@ -92,8 +92,8 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
         int endY;
         int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
-        int startX =  elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
-        int endX = elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+        int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
         this.swipe(startX, startY, endX, endY, 500);
     }
