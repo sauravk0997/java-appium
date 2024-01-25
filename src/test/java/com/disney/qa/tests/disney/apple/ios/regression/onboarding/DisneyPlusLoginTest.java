@@ -350,7 +350,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = new DisneyPlusRestartSubscriptionIOSPageBase(getDriver());
 
-        DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
+        DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V2");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(expired);
 
