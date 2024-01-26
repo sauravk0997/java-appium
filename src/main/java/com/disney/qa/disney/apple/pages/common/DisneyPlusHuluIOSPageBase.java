@@ -6,8 +6,6 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
