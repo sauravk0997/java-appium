@@ -315,7 +315,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
 
-        validateBaseUI(sa, PREY, 5870);
+        validateBaseUI(sa, PREY);
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
+                "Duration from metadata label does not match duration from details tab.");
         sa.assertAll();
     }
 
@@ -332,7 +334,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.isOpened();
 
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
-        validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING, 1900);
+        validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
         sa.assertAll();
     }
 
@@ -353,7 +355,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         return contentList;
     }
 
-    private void validateBaseUI(SoftAssert sa, String mediaTitle, int remainingTimeSeconds) {
+    private void validateBaseUI(SoftAssert sa, String mediaTitle) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         detailsPage.isOpened();
@@ -376,9 +378,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
 
+        //Restart
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= remainingTimeSeconds);
+        videoPlayer.scrubToPlaybackPercentage(50);
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
@@ -386,15 +389,13 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //Release date, duration, genres, rating
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
-                "Duration from metadata label does not match duration from details tab.");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
                 "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
                 "Genre Drama from metadata label does not match Genre Drama from details tab.");
         sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
 
-        //tabs
+        //Tabs
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
