@@ -60,6 +60,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "DETAILS")
     protected ExtendedWebElement detailsTab;
 
+    @ExtendedFindBy(accessibilityId = "restartButton")
+    protected ExtendedWebElement restartButton;
+
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
@@ -589,6 +592,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return infoView;
     }
 
+    public ExtendedWebElement getRestartButton() {
+        return restartButton;
+    }
+    
     public boolean isHeroImagePresent() {
         return getTypeOtherByName("heroImage").isPresent();
     }
