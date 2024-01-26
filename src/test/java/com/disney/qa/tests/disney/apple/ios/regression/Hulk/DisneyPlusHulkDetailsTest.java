@@ -309,58 +309,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
 
-        //media features - audio, video, accessibility
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
-
-        //back button, share button, title, description
-        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
-        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
-
-        //CTAs
-        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
-        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
-        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
-
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= 5870);
-        videoPlayer.clickBackButton();
-        detailsPage.isOpened();
-        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
-
-
-        //Release date, duration, genres, rating
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
-                "Release date from metadata label does not match release date from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
-                "Duration from metadata label does not match duration from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
-                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
-                "Genre Drama from metadata label does not match Genre Drama from details tab.");
-        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
-
-        //tabs
-        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
-        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+        validateBaseUI(sa, PREY, 5870);
         sa.assertAll();
     }
-
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74933"})
@@ -368,52 +325,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyHulkBaseUISeries() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"), 10);
         detailsPage.clickOpenButton();
         detailsPage.isOpened();
 
-        //media features - audio, video, accessibility
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
-
-        //back button, share button, title, description, seasons
-        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
-        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING), "Prey media title not found.");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
-
-        //CTAs
-        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
-        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
-        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
-
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 1900);
-        videoPlayer.clickBackButton();
-        detailsPage.isOpened();
-        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
-
-        //Release date, duration, genres
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
-                "Release date from metadata label does not match release date from details tab.");
-        System.out.println(getDriver().getPageSource());
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
-                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
-                "Genre Drama from metadata label does not match Genre Drama from details tab.");
-
-        //tabs
-        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
-        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+        validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING, 1900);
         sa.assertAll();
     }
 
@@ -432,5 +351,52 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
         contentList.add(PREY);
         return contentList;
+    }
+
+    private void validateBaseUI(SoftAssert sa, String mediaTitle, int remainingTimeSeconds) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        detailsPage.isOpened();
+
+        //media features - audio, video, accessibility
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //back button, share button, title, description
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(mediaTitle), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+
+        //CTAs
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= remainingTimeSeconds);
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
+
+        //Release date, duration, genres, rating
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
+                "Duration from metadata label does not match duration from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
+
+        //tabs
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
     }
 }
