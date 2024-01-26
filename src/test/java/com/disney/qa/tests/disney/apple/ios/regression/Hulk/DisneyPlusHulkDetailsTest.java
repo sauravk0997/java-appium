@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.alice.AliceAssertion;
+import com.disney.alice.AliceDriver;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -299,5 +301,23 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         contentList.add("Cruel Summer");
         contentList.add("Praise Petey");
         return contentList;
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75264"})
+    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkDeepLinkNewURLStructure() {
+        SoftAssert sa = new SoftAssert();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulu_network_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        pause(10);
+        AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
+
+        aliceAssertion.isLabelPresent(sa, "abc");
+        sa.assertAll();
+
     }
 }
