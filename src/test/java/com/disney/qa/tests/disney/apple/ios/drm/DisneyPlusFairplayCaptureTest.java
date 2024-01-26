@@ -10,7 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
@@ -22,6 +21,10 @@ import com.disney.qa.api.disney.DisneyPlusOverrideKeys;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.util.ZipUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.agent.core.registrar.Artifact;

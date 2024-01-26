@@ -91,7 +91,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         search.searchForMedia(SHORT_SERIES);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        details.clickPlayButton();
+        details.clickPlayButton().isOpened();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
         sa.assertAll();
     }

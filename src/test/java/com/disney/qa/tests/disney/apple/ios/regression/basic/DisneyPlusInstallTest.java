@@ -83,7 +83,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         details.addToWatchlist();
         details.startDownload();
         details.waitForSeriesDownloadToComplete();
-        details.clickPlayButton();
+        details.clickPlayButton().isOpened();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 
         videoPlayer.clickBackButton();
