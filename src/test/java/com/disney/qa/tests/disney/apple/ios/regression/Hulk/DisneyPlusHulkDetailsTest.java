@@ -187,7 +187,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75267"})
     @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -207,7 +207,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Details button is not displayed on details page");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
         sa.assertAll();
     }
 
