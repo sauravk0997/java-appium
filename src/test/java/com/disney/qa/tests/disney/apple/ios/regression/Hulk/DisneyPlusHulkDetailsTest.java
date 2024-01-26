@@ -367,15 +367,12 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUISeries() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"), 10);
+        detailsPage.clickOpenButton();
         detailsPage.isOpened();
 
         //media features - audio, video, accessibility

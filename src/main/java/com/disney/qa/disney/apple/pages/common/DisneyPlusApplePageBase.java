@@ -1200,9 +1200,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
-
-    public ExtendedWebElement getRemoveFromWatchListButton() {
-        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        return getTypeButtonByLabel(watchlistRemoveLabel);
-    }
 }
