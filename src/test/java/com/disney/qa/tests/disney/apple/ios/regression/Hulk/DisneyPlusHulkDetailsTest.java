@@ -318,20 +318,18 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
-        //back button, share button, title, description
-        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
-        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
-
-        System.out.println(getDriver().getPageSource());
-
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //back button, share button, title, description
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
 
         //CTAs
         sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
@@ -381,20 +379,19 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
-        //back button, share button, title, description, seasons
-        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
-        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING), "Prey media title not found.");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
-        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
-
-        System.out.println(getDriver().getPageSource());
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //back button, share button, title, description, seasons
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
 
         //CTAs
         sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
