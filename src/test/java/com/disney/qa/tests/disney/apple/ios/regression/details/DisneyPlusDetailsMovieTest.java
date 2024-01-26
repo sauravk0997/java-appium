@@ -43,7 +43,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         movies.get(0).click();
         sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Expected - play button should exists on details page");
-        disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        disneyPlusDetailsIOSPageBase.clickPlayButton();
         //Wait for content to load
         pause(35);
         disneyPlusVideoPlayerIOSPageBase.clickBackButton().isOpened();

@@ -56,7 +56,7 @@ public class DisneyPlusDevicesSmokeTest extends DisneyBaseTest {
         disneyPlusSearchIOSPageBase.searchForMedia(BLUEY_SERIES);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        disneyPlusDetailsIOSPageBase.clickPlayButton();
         pause(10);
         sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video Player did not launch");
         sa.assertAll();

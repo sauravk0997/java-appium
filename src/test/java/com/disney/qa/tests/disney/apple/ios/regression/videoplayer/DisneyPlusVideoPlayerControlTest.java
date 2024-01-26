@@ -162,7 +162,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getContentTitle().equalsIgnoreCase(content), "We're not on the right content's detail page");
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
             String episodeTitle = detailsPage.getEpisodeContentTitle();
-            detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).isOpened();
+            detailsPage.clickPlayButton().isOpened();
             playerContentTitle = videoPlayer.getTitleLabel();
             sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle), "Episode title doesn't match, expected: " + episodeTitle + " but found " + playerContentTitle);
             sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match");
@@ -172,7 +172,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
             playerContentTitle = videoPlayer.getTitleLabel();
             sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match, expected: " + content + " but found " + playerContentTitle);
         } else {
-            detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).isOpened();
+            detailsPage.clickPlayButton().isOpened();
             playerContentTitle = videoPlayer.getTitleLabel();
             sa.assertTrue(playerContentTitle.contains(content), "Content title doesn't match, expected: " + content + " but found " + playerContentTitle);
         }
@@ -210,6 +210,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary()).waitForVideoToStart().isOpened();
+        detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
     }
 }

@@ -179,8 +179,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shareBtn.isElementPresent(time);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase clickPlayButton(DisneyLocalizationUtils dictionary) {
-        getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+    public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
+        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_PLAY.getText())).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -439,7 +439,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getRating() { return rating; }
 
     public boolean isPlayButtonDisplayed() {
-        return getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent();
+        return getPlayButton().isPresent();
     }
 
     public boolean isWatchlistButtonDisplayed() {
@@ -568,8 +568,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return episodesTab;
     }
 
-    public ExtendedWebElement getPlayButton(DisneyLocalizationUtils dictionary) {
-        return getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+    public ExtendedWebElement getPlayButton() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_PLAY.getText()));
     }
 

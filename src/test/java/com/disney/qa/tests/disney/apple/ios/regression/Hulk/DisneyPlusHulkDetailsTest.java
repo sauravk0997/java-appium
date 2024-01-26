@@ -308,11 +308,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
 
         //CTAs
-        sa.assertTrue(detailsPage.getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
 
-        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= 5870);
         videoPlayer.clickBackButton();
@@ -370,11 +370,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
 
         //CTAs
-        sa.assertTrue(detailsPage.getPlayButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
 
-        detailsPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 1900);
         videoPlayer.clickBackButton();

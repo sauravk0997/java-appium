@@ -62,7 +62,7 @@ public class DisneyPlusFairplayCaptureTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPage.isOpened();
         disneyPlusWelcomeScreenIOSPage.getDynamicCellByLabel(getSetAssets.get(0)).click();
         disneyPlusDetailsIOSPage.isOpened();
-        disneyPlusDetailsIOSPage.clickPlayButton(DisneyPlusApplePageBase.getDictionary());
+        disneyPlusDetailsIOSPage.clickPlayButton();
         pause(30);
 
         //        new HARUtils(proxy.get()).printSpecificHarDetails(Stream.of(HARUtils.RequestDataType.URL, HARUtils.RequestDataType.POST_DATA,
