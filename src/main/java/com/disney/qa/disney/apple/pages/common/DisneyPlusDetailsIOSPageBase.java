@@ -595,7 +595,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getRestartButton() {
         return restartButton;
     }
-    
+
     public boolean isHeroImagePresent() {
         return getTypeOtherByName("heroImage").isPresent();
     }
@@ -755,9 +755,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 
     public ExtendedWebElement getShareBtn() { return shareBtn; }
-
-    public ExtendedWebElement getRestartButton(DisneyLocalizationUtils dictionary) {
-        return getTypeButtonByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_DETAILS_RESTART.getText()));
-    }
 }

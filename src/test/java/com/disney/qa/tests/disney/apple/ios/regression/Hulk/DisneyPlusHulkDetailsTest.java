@@ -343,7 +343,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTimeThreeIntegers() <= 5870);
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
-        sa.assertTrue(detailsPage.getRestartButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Restart button was not found.");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
+
 
         //Release date, duration, genres, rating
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
@@ -405,7 +406,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.fluentWait(getDriver(), 120, 10, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 1900);
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
-        sa.assertTrue(detailsPage.getRestartButton(DisneyPlusApplePageBase.getDictionary()).isPresent(), "Restart button was not found.");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
 
         //Release date, duration, genres
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
