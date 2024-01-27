@@ -373,6 +373,15 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().contains(mediaTitle), "Prey media title not found.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
 
+        //Release date, duration, genres, rating
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
+
         //CTAs
         sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
@@ -385,15 +394,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
-
-        //Release date, duration, genres, rating
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
-                "Release date from metadata label does not match release date from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
-                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
-                "Genre Drama from metadata label does not match Genre Drama from details tab.");
-        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
 
         //Tabs
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
