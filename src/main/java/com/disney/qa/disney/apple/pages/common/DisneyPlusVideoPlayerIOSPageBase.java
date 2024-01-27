@@ -290,6 +290,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         longPressAndHoldElement(currentTimeMarker, 20);
     }
 
+    public int getCurrentPositionOnPlayer() {
+        displayVideoController();
+       return currentTimeMarker.getLocation().getX();
+    }
+
     /**
      * Opens the player overlay, reads remaining time on the seekbar
      * and converts it to seconds
