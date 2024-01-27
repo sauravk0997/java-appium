@@ -147,42 +147,26 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74548"})
-    @Test(description = "Hulk Details verify included with hulu subscription network attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkNetworkAttribution() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on Hulu series details page.");
-        } else {
-            Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on Hulu series details page.");
-        }
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
-    @Test(description = "Hulk Details verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkServiceAttribution() {
+    @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkSeriesAndMovieServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        detailsPage.isOpened();
-        Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+
+        IntStream.range(0, getHuluMedia().size()).forEach(i -> {
+            homePage.clickSearchIcon();
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(getHuluMedia().get(i));
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            detailsPage.isOpened();
+            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+        });
     }
 
 
@@ -317,13 +301,103 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74610"})
+    @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkBaseUIMovies() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        validateBaseUI(sa, PREY);
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
+                "Duration from metadata label does not match duration from details tab.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74933"})
+    @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkBaseUISeries() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        detailsPage.isOpened();
+
+        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
+        validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("Only Murders in the Building");
+        contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
         contentList.add("Palm Springs");
         contentList.add("Home Economics");
         contentList.add("Cruel Summer");
         contentList.add("Praise Petey");
         return contentList;
+    }
+
+    protected ArrayList<String> getHuluMedia() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
+        contentList.add(PREY);
+        return contentList;
+    }
+
+    private void validateBaseUI(SoftAssert sa, String mediaTitle) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        detailsPage.isOpened();
+
+        //media features - audio, video, accessibility
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //back button, share button, title, description
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(mediaTitle), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+
+        //Release date, duration, genres, rating
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
+
+        //CTAs
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        //Restart
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
+
+        //Tabs
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
     }
 }
