@@ -287,7 +287,6 @@ public enum DictionaryKeys {
     PAYWALL_SWITCH_ANNUAL_TITLE("switch_annual_confirmation_title"),
     PLAN_SWITCH_IAP_ANNUAL("plan_switch_iap_cta_annual"),
     PLAY("play"),
-    PLAY_BTN("btn_play"),
     PLAYBACK_LANGUAGE_HEADER("profile_settings_playback_language_header"),
     POSTPLAY_SNEAK_PEEK("postplay_sneakpeek"),
     POSTPLAY_UPNEXT("postplay_upnext"),
