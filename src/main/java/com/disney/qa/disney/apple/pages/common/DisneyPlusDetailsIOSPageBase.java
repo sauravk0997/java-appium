@@ -183,8 +183,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                BTN_PLAY.getText())).click();
+        getPlayButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
