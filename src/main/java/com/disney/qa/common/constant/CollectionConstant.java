@@ -19,7 +19,8 @@ public class CollectionConstant {
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
-        KIDS_MICKEY_AND_FRIENDS;
+        KIDS_MICKEY_AND_FRIENDS,
+        STUDIOS_AND_NETWORKS;
     }
 
     public static String getCollectionName(Collection collection) {
@@ -58,6 +59,8 @@ public class CollectionConstant {
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
+            case STUDIOS_AND_NETWORKS:
+                return "917351f3-45cf-4251-b425-c8fd1b18434d";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }

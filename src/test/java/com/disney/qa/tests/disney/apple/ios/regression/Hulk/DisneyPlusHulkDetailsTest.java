@@ -173,11 +173,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         });
     }
 
-
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75267"})
-    @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyMovieDetailsPageRestartButton() {
+    @Test(description = "Hulu Series Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -196,6 +195,36 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         pause(5);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
+        detailsPage.getRestartButton().click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginnning");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75281"})
+    @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieDetailsPageRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickPlayButton().isOpened();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        pause(5);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
+        detailsPage.getRestartButton().click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginnning");
         sa.assertAll();
     }
 
