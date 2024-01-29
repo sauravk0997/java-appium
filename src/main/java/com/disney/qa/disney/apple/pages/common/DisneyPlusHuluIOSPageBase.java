@@ -15,12 +15,6 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeButton[@name=\"iconNavBack24Dark\"]/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageCollapsed;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
-    protected ExtendedWebElement collectionBackButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
-    protected ExtendedWebElement artworkBackground;
-
     public DisneyPlusHuluIOSPageBase(WebDriver driver) {
         super(driver);
     }
