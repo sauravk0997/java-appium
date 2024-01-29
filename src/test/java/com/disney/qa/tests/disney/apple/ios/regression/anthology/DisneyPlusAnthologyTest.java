@@ -182,7 +182,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
                 "Media title of logo image does not match " + DANCING_WITH_THE_STARS);
-        sa.assertTrue(details.doesMetadataYearContainDetailsTabYear(), "Metadata label date year not found and does not match details tab year.");
+        sa.assertTrue(details.metadataLabelCompareDetailsTab(0, details.getReleaseDate(), 1), "Metadata label date year not found and does not match details tab year.");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertAll();
     }
