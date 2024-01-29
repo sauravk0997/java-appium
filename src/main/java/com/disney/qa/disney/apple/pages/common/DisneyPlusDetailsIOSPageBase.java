@@ -60,6 +60,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "DETAILS")
     protected ExtendedWebElement detailsTab;
 
+    @ExtendedFindBy(accessibilityId = "restartButton")
+    protected ExtendedWebElement restartButton;
+
     private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
@@ -180,7 +183,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
-        getTypeButtonByName("play").click();
+        getPlayButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -429,6 +432,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return metaDataLabel.isPresent();
     }
 
+    public ExtendedWebElement getReleaseDate() { return releaseDate; }
+
+    public ExtendedWebElement getDuration() { return duration; }
+
+    public ExtendedWebElement getGenre() { return genre; }
+
+    public ExtendedWebElement getRating() { return rating; }
+
     public boolean isPlayButtonDisplayed() {
         return getPlayButton().isPresent();
     }
@@ -444,7 +455,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTrailerButtonDisplayed() {
-        return trailerButton.isElementPresent();
+        return trailerButton.isPresent();
     }
 
     public ExtendedWebElement getTrailerButton() {
@@ -472,15 +483,23 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public boolean doesMetadataYearContainDetailsTabYear() {
-        LOGGER.info("verifying season year range");
+    /**
+     * Method used to compare metadataLabel split string from main detail screen
+     * feature area to a detail tab element's split string
+     * @param metadataPart Split part of metadataLabel for comparison
+     * @param element details tab element
+     * @param detailsTabPart Split part of a details tab element for comparison
+     * @return - Media title
+     */
+    public boolean metadataLabelCompareDetailsTab(int metadataPart, ExtendedWebElement element, int detailsTabPart) {
         Map<String, String> params = new HashMap<>();
         String[] metadataLabelParts = metaDataLabel.getText().split(",");
-        params.put("metaDataYear(s)", metadataLabelParts[0]);
+        params.put("metadataLabelPart", metadataLabelParts[metadataPart]);
         clickDetailsTab();
-        swipePageTillElementPresent(releaseDate, 3, contentDetailsPage, Direction.UP, 500);
-        String[] detailsTabYear = releaseDate.getText().split(", ");
-        return params.get("metaDataYear(s)").contains(detailsTabYear[1]);
+        swipePageTillElementPresent(element, 3, null, Direction.UP, 500);
+        String[] detailsTabParts = element.getText().split(",");
+        LOGGER.info("Verifying metadata {} is same as details tab {}", metadataLabelParts[metadataPart], detailsTabParts[detailsTabPart]);
+        return detailsTabParts[detailsTabPart].contains(params.get("metadataLabelPart").trim());
     }
 
     public boolean compareEpisodeNum() {
@@ -552,7 +571,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getPlayButton() {
-        return playButton;
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY.getText()));
     }
 
     public ExtendedWebElement getSeasonSelectorButton() {
@@ -569,6 +589,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getInfoView() {
         return infoView;
+    }
+
+    public ExtendedWebElement getRestartButton() {
+        return restartButton;
     }
 
     public boolean isHeroImagePresent() {

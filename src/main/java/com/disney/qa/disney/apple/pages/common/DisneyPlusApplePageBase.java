@@ -1237,4 +1237,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
         return titles1 != titles2;
     }
+
+    public ExtendedWebElement getBackButton() { return backButton; }
 }
