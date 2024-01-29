@@ -7,9 +7,12 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,6 +76,37 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         networkLogos.forEach(item ->
                 sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item)));
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75264"})
+    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkDeepLinkNewURLStructure() throws IOException {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulu_network_deeplink"), 10);
+        homePage.clickOpenButton();
+
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        // Get Network logo by deeplink access
+        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage());
+        homePage.clickHomeIcon();
+
+        homePage.tapHuluBrandTile();
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
+        huluPage.clickOnNetworkLogo("ABC");
+
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        // Get Network logo by app navigation
+        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage());
+
+        sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
+                "The user doesn't land on the given Network page");
 
         sa.assertAll();
     }

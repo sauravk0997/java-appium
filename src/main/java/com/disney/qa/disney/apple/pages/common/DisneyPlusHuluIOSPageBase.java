@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -52,5 +53,15 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean validateScrollingInHuluCollection() {
         return validateScrollingInCollections(CollectionConstant.Collection.HULU_ORIGINALS);
+    }
+
+    public ExtendedWebElement getNetworkLogo(String network){
+        return findExtendedWebElement(AppiumBy
+                .iOSClassChain(String.format("**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]/**/XCUIElementTypeImage"
+                        , network)));
+    }
+
+    public void clickOnNetworkLogo(String network){
+        getNetworkLogo(network).click();
     }
 }
