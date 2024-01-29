@@ -23,6 +23,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
+    private static final String BLUEY = "Bluey";
+    private static final String HULU_UPPERCASE_H = "Hulu";
+    private static final String HULU_ALL_LOWERCASE = "hulu";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -338,6 +342,47 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74916"})
+    @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileNoHulu() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        homePage.isOpened();
+        sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
+        validateHuluBrandingNotFound(sa, "Home");
+
+        //Hulu Original Movie
+        homePage.clickSearchIcon();
+        validateHuluBrandingNotFound(sa, "Search");
+        searchPage.searchForMedia(PREY);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(PREY), PREY + "no result found message not found.");
+
+        //Hulu Original Kids Series
+        searchPage.clearText();
+        searchPage.searchForMedia(THE_BRAVEST_KNIGHT);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(THE_BRAVEST_KNIGHT), THE_BRAVEST_KNIGHT + "no result found message not found.");
+
+        //Disney Original Kids Series
+        searchPage.clearText();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        validateHuluBrandingNotFound(sa, "Details");
+
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
@@ -399,5 +444,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+    }
+
+    private void validateHuluBrandingNotFound(SoftAssert sa, String screen) {
+        DisneyPlusApplePageBase applePage = initPage(DisneyPlusApplePageBase.class);
+        sa.assertTrue(applePage.getStaticTextByLabelContains(HULU_UPPERCASE_H).isElementNotPresent(SHORT_TIMEOUT) ||
+                applePage.getStaticTextByLabelContains(HULU_ALL_LOWERCASE).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' +" + screen);
     }
 }
