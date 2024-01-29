@@ -1246,7 +1246,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return artworkBackground.isPresent();
     }
 
-    public void clickOnBackButton() {
+    public void clickOnCollectionBackButton() {
         collectionBackButton.click();
     }
 
