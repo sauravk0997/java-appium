@@ -1,6 +1,6 @@
-package com.disney.qa.common.http.resttemplate;
+package com.disney.proxy;
 
-import com.disney.qa.common.http.resttemplate.ssl.DisabledSslClientHttpRequestFactory;
+import com.disney.proxy.ssl.DisabledSslClientHttpRequestFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.google.common.base.Predicate;
@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * Created by mk on 6/30/15.
+ * todo remove spring
  */
 public class RestTemplateBuilder {
 

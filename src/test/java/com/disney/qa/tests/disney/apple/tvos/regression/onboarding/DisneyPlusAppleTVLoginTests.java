@@ -6,6 +6,7 @@ import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneyApiCommon;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -156,7 +157,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(DisneyApiCommon.getUniqueEmail());
 
         List<String> expectedTextList = DisneyPlusAppleTVLoginPage.getUnknownEmailScreenTexts(getLocalizationUtils());
         IntStream.range(0, expectedTextList.size()).forEach(i -> {
@@ -186,7 +187,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(DisneyApiCommon.getUniqueEmail());
         disneyPlusAppleTVLoginPage.clickTryAgainBtn();
 
         sa.assertTrue(disneyPlusAppleTVLoginPage.isOpened(),
@@ -207,7 +208,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
-        String uniqueUserEmail = getContentApiChecker().getUniqueUserEmail();
+        String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());

@@ -126,7 +126,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
     public void setJarvisOverrides() {
         TreeMap<String, Object> overrides = new TreeMap<>();
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
+        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("unpinDictionaries"));
         String globalizationVersion = R.CONFIG.get("custom_string2");
 
         if (unpinDictionaries) {

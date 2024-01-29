@@ -1,7 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.account.DisneyAccountApi;
-import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;

@@ -1,7 +1,6 @@
 package com.disney.qa.common;
 
 import com.disney.qa.common.utils.IOSUtils;
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.NoSuchElementException;

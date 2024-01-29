@@ -16,7 +16,7 @@
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="booleanParam::enableDebugDisplay::Toggle to enable display dictionary keys in the app" value="false"/>
     <parameter name="overrideFields"
-               value="capabilities.locale=${locale},capabilities.language=${language},custom_string=${unpinDictionaries},custom_string2=${globalizationApiVer},custom_string5=${enableDebugDisplay},init_retry_count=2,init_retry_interval=15"/>
+               value="capabilities.locale=${locale},capabilities.language=${language},custom_string2=${globalizationApiVer},custom_string5=${enableDebugDisplay},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="jenkinsRegressionPipeline" value="Disney-iOS-Localization-Pipeline_Group-1,Disney-iOS-Localization-Pipeline_Group-2,Disney-iOS-Localization-Pipeline_Group-3"/>
     <!--<parameter name="jenkinsRegressionScheduling_Disney-iOS-Localization-Pipeline_Group-1" value="H 4 * * 1"/>-->
     <parameter name="jenkinsRegressionMatrix"

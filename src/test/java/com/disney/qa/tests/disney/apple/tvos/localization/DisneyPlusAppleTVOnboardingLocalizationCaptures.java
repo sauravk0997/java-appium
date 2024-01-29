@@ -4,6 +4,10 @@ import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import com.disney.qa.api.utils.DisneyApiCommon;
+import com.disney.util.TestGroup;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import io.appium.java_client.remote.options.SupportsAppOption;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +18,6 @@ import org.testng.annotations.Test;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOrder;
-import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCompletePurchasePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCompleteSubscriptionPage;
@@ -30,7 +33,6 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.utils.R;
 
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
@@ -38,21 +40,16 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
+        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("unpinDictionaries"));
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
         if (unpinDictionaries || displayDictionaryKeys || (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null"))) {
             installJarvis();
             setJarvisOverrides();
         }
-        DisneyCountryData countryData = new DisneyCountryData();
-        String country = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
-        initiateProxy(country);
-        pause(10);
-        clearAppCache();
     }
 
-    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { "Onboarding", "Ariel" })
+    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { "Onboarding", "Ariel", TestGroup.PROXY })
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
         String baseDirectory = String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage());
 
@@ -104,7 +101,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         loginPage.clickLocalizationEnterNewBtn();
         getScreenshots("5-2_SubmitEmailText", baseDirectory);
 
-        loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
+        loginPage.enterEmail(DisneyApiCommon.getUniqueEmail());
         loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         loginPage.clickSelect();
         loginPage.clickContinueBtn();
@@ -156,12 +153,14 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
             getScreenshots("13_NotEligible", baseDirectory);
 
             dobCollectionPage.clickSelect();
-            String appName = Configuration.getMobileApp().toLowerCase();
+            String appName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                    .orElseThrow()
+                    .toLowerCase();
             if (appName.contains("adhoc") && !appName.contains("non-iap")) {
                 welcomeScreenPage.clickSignUpButton();
                 signUpPage.clickEmailButton();
                 loginPage.clickLocalizationEnterNewBtn();
-                loginPage.enterEmail(getContentApiChecker().getUniqueUserEmail());
+                loginPage.enterEmail(DisneyApiCommon.getUniqueEmail());
                 loginPage.keyPressTimes(loginPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
                 loginPage.clickSelect();
                 loginPage.clickContinueBtn();
@@ -235,7 +234,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { "Onboarding" })
+    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { "Onboarding", TestGroup.PROXY })
     public void captureFullOnboardingFlowToExpiredAccount() {
         String baseDirectory = "Screenshots-Onboarding-PartTwo/";
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
@@ -284,7 +283,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Onboarding flows Background Images Check", groups = { "BGImage" })
+    @Test(description = "Onboarding flows Background Images Check", groups = { "BGImage", TestGroup.PROXY })
     public void backgroundImage() {
         String baseDirectory = "Screenshots-BGImage/";
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
@@ -309,7 +308,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
         boolean isKr = getCountry().equalsIgnoreCase("kr");
         disneyPlusAppleTVSignUpPage.selectCheckBoxesForKr(isKr);
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(DisneyApiCommon.getUniqueEmail());
         if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();
@@ -364,7 +363,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Basic IAP flow", enabled = false)
+    @Test(description = "Basic IAP flow", groups = TestGroup.PROXY, enabled = false)
     public void capturePurchaseFlow() {
         if (false) {
             skipExecution("Test run is not against IAP compatible build.");
@@ -377,7 +376,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPaywallPage disneyPlusAppleTVPaywallPage = new DisneyPlusAppleTVPaywallPage(getDriver());
 
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getContentApiChecker().getUniqueUserEmail());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(DisneyApiCommon.getUniqueEmail());
         if (getLocalizationUtils().isSubscriberAgreementRequired()) {
             if (!disneyPlusAppleTVPasswordPage.isPasswordEntryFieldPresent(15))
                 disneyPlusAppleTVPasswordPage.clickSelect();

@@ -1,5 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.alice;
 
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+
+/*
 import com.disney.hatter.api.alice.AliceApiUtil;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -30,11 +33,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
-
+*/
+//FIXME Move Alice API from Hatter to the Alice Client!
 public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
-
+/*
     public static final String HULK_100_MOVIES_JSON_PATH = "src/test/resources/json/hulk-movies-details-first-100.json";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     private static final Map<File, String> imageS3UploadRequests = new LinkedHashMap<>();
@@ -196,4 +199,6 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
     public void aliceUploadBaseImagesTablet(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusAliceDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
     }
+
+ */
 }

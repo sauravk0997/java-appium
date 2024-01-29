@@ -1,33 +1,34 @@
 package com.disney.qa.tests.disney.apple;
 
 import java.lang.invoke.MethodHandles;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.browserup.bup.proxy.CaptureType;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
 import com.disney.qa.api.account.DisneyAccountApi;
-import com.disney.qa.api.disney.DisneyHttpHeaders;
-import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.api.disney.DisneyPlusOverrideKeys;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
-import com.disney.qa.carina.GeoedgeProxyServer;
+import com.disney.proxy.GeoedgeProxyServer;
+import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.config.DisneyConfiguration;
-import com.disney.qa.disney.DisneyCountryData;
-import com.disney.qa.disney.DisneyProductData;
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.util.disney.DisneyGlobalUtils;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
+import com.zebrunner.carina.utils.config.Configuration;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
+import io.appium.java_client.remote.options.SupportsAppOption;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
@@ -39,11 +40,11 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyContentApiChecker;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 /**
@@ -53,6 +54,7 @@ import org.testng.annotations.BeforeSuite;
 public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    public static final int SHORT_TIMEOUT = 5;
     protected static final String CHECKED = "Checked";
     protected static final String UNCHECKED = "Unchecked";
     protected static final String TRUE = "true";
@@ -69,23 +71,28 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
-    private static final String COUNTRY = R.CONFIG.get("locale");
-    private static final String LANGUAGE = R.CONFIG.get("language");
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
         protected DisneyContentApiChecker initialize() {
-            return new DisneyContentApiChecker();
+            if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
+                return new DisneyContentApiChecker(MobilePlatform.TVOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                        DisneyConfiguration.getPartner());
+            } else {
+                return new DisneyContentApiChecker(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
+            }
         }
     };
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
             String version = AppCenterManager.getInstance()
-                    .getAppInfo(R.CONFIG.get("capabilities.app"))
+                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                            .orElseThrow(
+                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
                     .getVersion();
             LOGGER.info("version:{}", version);
             if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
-                return new DisneyMobileConfigApi("tvos", "prod", DisneyConfiguration.partner(), version);
+                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
             } else {
                 return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
             }
@@ -96,7 +103,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         protected DisneyLocalizationUtils initialize() {
             DisneyLocalizationUtils disneyLocalizationUtils;
             if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
-                disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), "apple-tv", "prod", DisneyConfiguration.partner());
+                disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), "apple-tv", "prod",
+                        DisneyConfiguration.getPartner());
             } else {
                 disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
@@ -115,9 +123,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                     .platform(APPLE)
                     .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                    .partner(R.CONFIG.get("partner"))
-                    .useMultiverse(DisneyConfiguration.useMultiverse())
-                    .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
+                    .partner(DisneyConfiguration.getPartner())
+                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
                     .build();
             return new DisneyAccountApi(apiConfiguration);
         }
@@ -131,7 +139,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
         @Override
         protected DisneySearchApi initialize() {
-            return new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), getContentApiChecker().getPartner());
+            return new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DisneyConfiguration.getPartner());
         }
     };
 
@@ -142,39 +150,73 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
+    private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
+
     @BeforeSuite(alwaysRun = true)
-    public void ignoreStartupExceptions() {
-        WebDriverConfiguration.addIgnoredNewSessionErrorMessages("timed out waiting for a node to become available",
-                // todo investigate should we show warnings for some types of exceptions
-                "lock file for downloading application has not disappeared after",
-                "Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure",
-                "Cannot download the app from",
-                "App is no installed among system apps",
-                "Failed to receive any data within the timeout");
+    public void ignoreDriverSessionStartupExceptions() {
+        WebDriverConfiguration.addIgnoredNewSessionErrorMessages(
+                Map.of(
+                        "timed out waiting for a node to become available",
+                        Duration.ofMinutes(15),
+                        "lock file for downloading application has not disappeared after",
+                        Duration.ofMinutes(10),
+                        "Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure",
+                        Duration.ofMinutes(10),
+                        "Cannot download the app from",
+                        Duration.ofMinutes(10),
+                        "App is no installed among system apps",
+                        Duration.ofMinutes(10),
+                        "Failed to receive any data within the timeout",
+                        Duration.ofMinutes(10))
+        );
     }
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
         // QCE-545 Jenkins- XML: Set x-ray execution key dynamically
-
         /*
          * Register custom parameter in TestNG suite xml
          * <parameter name="stringParam::reporting.tcm.xray.test-execution-key::XRay test execution value" value="XWEBQAS-31173"/>
          *
          * Run a job and provide updated execution key if necessary
          */
-
-        String xrayExectionKey = R.CONFIG.get("reporting.tcm.xray.test-execution-key");
-        if (!xrayExectionKey.isEmpty() && !xrayExectionKey.equalsIgnoreCase("null")) {
-            LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", xrayExectionKey);
-            Xray.setExecutionKey(xrayExectionKey);
+        Configuration.get(DisneyConfiguration.Parameter.REPORTING_TCM_XRAY_TEST_EXECUTION_KEY).ifPresent(key -> {
+            LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", key);
+            Xray.setExecutionKey(key);
             // Xray.enableRealTimeSync();
-        }
+        });
     }
 
     @BeforeSuite(alwaysRun = true)
     public void initPageDictionary() {
+        //todo remove this configuration method
         DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
+    }
+
+    @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
+    public final void initProxy() {
+        //todo enable when grid will be updated and devices will use proxy
+        // R.CONFIG.put("proxy_type", "Zebrunner", true);
+        ZebrunnerProxyBuilder builder;
+        String countryCode = getCountry();
+        boolean isUpstreamProxyNeeded = !countryCode.equalsIgnoreCase("US");
+        boolean isGeoedgeUnsupportedRegion = GeoedgeProxyServer.getGeoEdgeIp(countryCode)
+                .isEmpty();
+
+        if (isGeoedgeUnsupportedRegion) {
+            LOGGER.info("Starting proxy -- unsupported country, no upstream proxy");
+            builder = ZebrunnerProxyBuilder.getInstance();
+        } else if (isUpstreamProxyNeeded && !isGeoedgeUnsupportedRegion) {
+            LOGGER.info("Starting proxy using upstream proxy through country {}", countryCode);
+            builder = GeoedgeProxyServer.getGeoedgeProxy(countryCode);
+        } else {
+            LOGGER.info("Getting proxy not using upstream proxy for country {}", countryCode);
+            builder = ZebrunnerProxyBuilder.getInstance();
+        }
+        builder.enableSSlInsecure();
+        builder.useExtendedProxy();
+        PROXY.set(builder);
+        builder.build(true);
     }
 
     @AfterMethod(alwaysRun = true)
@@ -183,11 +225,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     public static String getCountry() {
-        return COUNTRY;
+        return WebDriverConfiguration.getLocale().getCountry();
     }
 
     public static String getLanguage() {
-        return LANGUAGE;
+        return WebDriverConfiguration.getLocale().getLanguage();
     }
 
     public static DisneyContentApiChecker getContentApiChecker() {
@@ -362,79 +404,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public String getDate() {
         String date = DateUtils.now();
         return date.replace(":", "_");
-    }
-
-    /**
-     * Starts a BrowserUp proxy session for the designated country with Basic Request and Response captures
-     *
-     * @param country - Country NAME to proxy to.
-     */
-    public void initiateProxy(String country) {
-        initiateProxy(country, CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
-    }
-
-    /**
-     * Starts a BrowserUp proxy session for the designated country with specified capture types
-     *
-     * @param country      - Country NAME to proxy to
-     * @param captureTypes - Desired capture types to record
-     */
-    public void initiateProxy(String country, CaptureType... captureTypes) {
-        GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
-        geoedgeProxyFreshInstance.setProxyHostForSelenoid();
-        Map<String, String> headers = new HashMap<>();
-
-        String countryCode = new DisneyCountryData()
-                .searchAndReturnCountryData(country,
-                        "country",
-                        "code");
-        getDriver();
-        DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
-        DisneyProductData productData = new DisneyProductData();
-        boolean productHasLaunched = productData.searchAndReturnProductData("hasLaunched").equalsIgnoreCase("true");
-        boolean countryHasNotLaunched = disneyGlobalUtils.getBooleanFromCountries(countryCode, "hasNotLaunched");
-
-        if (DisneyParameters.getEnv().equalsIgnoreCase("prod")) {
-            headers.put(DisneyHttpHeaders.DISNEY_STAGING, TRUE);
-            if ((countryHasNotLaunched || !productHasLaunched)) {
-                headers.put(DisneyHttpHeaders.BAMTECH_CDN_BYPASS, "21ea40fe-bdb5-4426-b134-66f98acb2b68");
-            }
-        }
-
-        headers.put(DisneyHttpHeaders.BAMTECH_IS_TEST, "true");
-
-        boolean isStar = DisneyConfiguration.partner().equalsIgnoreCase("star");
-
-        if (!isStar) {
-            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY);
-        } else {
-            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY_STAR);
-        }
-
-        if ((countryHasNotLaunched || !productHasLaunched)) {
-            if (!isStar) {
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
-            } else {
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
-            }
-            headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
-            headers.put(DisneyHttpHeaders.BAMTECH_CANONBALL_PREVIEW, "3Br5QesdzePvQEH");
-        }
-
-        boolean isGeoEdgeUnsupportedRegion = disneyGlobalUtils.getBooleanFromCountries(countryCode, "isGeoEdgeUnsupportedRegion")
-                || disneyGlobalUtils.getBooleanFromCountries(countryCode, "isGeoEdgeSupportedRegionWithIssues");
-        if (isGeoEdgeUnsupportedRegion) {
-            headers.put(DisneyHttpHeaders.BAMTECH_DSS_PHYSICAL_COUNTRY_OVERRIDE, countryCode);
-            if (isStar) {
-                headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
-                headers.put(DisneyHttpHeaders.BAMTECH_GEO_OVERRIDE, countryCode);
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
-                headers.put(DisneyHttpHeaders.BAMTECH_AKA_USER_GEO_OVERRIDE, countryCode);
-                headers.put(DisneyHttpHeaders.BAMTECH_PARTNER, DisneyConfiguration.partner());
-            }
-        } else if (!countryCode.equals("US")) {
-            headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
-        }
     }
 
     public JarvisAppleBase getJarvisPageFactory() {

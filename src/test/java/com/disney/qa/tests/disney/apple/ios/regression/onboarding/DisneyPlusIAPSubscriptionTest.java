@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 import java.lang.invoke.MethodHandles;

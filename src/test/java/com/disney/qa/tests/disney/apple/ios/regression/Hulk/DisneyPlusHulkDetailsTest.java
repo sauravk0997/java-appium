@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");

@@ -1,4 +1,4 @@
-package com.disney.qa.common.http.resttemplate.ssl;
+package com.disney.proxy.ssl;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 

@@ -1,7 +1,5 @@
 package com.disney.qa.common.utils;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
-
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
@@ -14,6 +12,7 @@ import java.util.function.Function;
 import com.zebrunner.carina.utils.messager.Messager;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.SupportsLegacyAppManagement;
 import org.openqa.selenium.By;
@@ -49,7 +48,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
-public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
+public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
     String ELEMENT = "element";
@@ -527,7 +526,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      */
 
     default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
-        while (element.isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
+        while (element.isElementNotPresent(5) && count >= 0) {
             swipeInContainer(container, direction, 1, 900);
             count--;
         }
@@ -892,7 +891,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      */
 
     default void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
-        while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
+        while (!element.isPresent(5) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }

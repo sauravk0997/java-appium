@@ -1,4 +1,4 @@
-package com.disney.qa.api.disney;
+package com.disney.config;
 
 import com.disney.qa.star.StarPlusParameters;
 import com.disney.util.disney.DisneyGlobalUtils;

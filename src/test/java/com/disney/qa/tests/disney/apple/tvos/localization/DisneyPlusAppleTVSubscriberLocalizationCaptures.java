@@ -3,11 +3,11 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
+import com.disney.util.TestGroup;
 import com.disney.util.ZipUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.SkipException;
@@ -33,20 +33,17 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
+        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("unpinDictionaries"));
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
         if (unpinDictionaries || displayDictionaryKeys || (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null"))) {
             installJarvis();
             setJarvisOverrides();
         }
-        DisneyCountryData countryData = new DisneyCountryData();
-        String country = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
-        initiateProxy(country);
         clearAppCache();
     }
 
-    @Test(description = "Subscriber Flow of Login", groups = { "SusbscriberLoginFlow", "SubUI" })
+    @Test(description = "Subscriber Flow of Login", groups = { "SusbscriberLoginFlow", "SubUI", TestGroup.PROXY })
     public void captureLoginFlow() {
         DisneyPlusApplePageBase applePage = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -127,7 +124,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
                 String.format("%s_%s_%s_%s.zip", "Sub_UI_Log_In", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = { "SubscriberFlowNavSearchWatchlist", "SubUI" })
+    @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = { "SubscriberFlowNavSearchWatchlist", "SubUI", TestGroup.PROXY })
     public void captureSubscriberUIFlowGlobalNavSearchWatchlist() {
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -178,7 +175,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = { "SubscriberFlowProfiles", "SubUI" })
+    @Test(description = "Subscriber Flow of Global Nav, Search and Watchlist Screenshots", groups = { "SubscriberFlowProfiles", "SubUI", TestGroup.PROXY })
     public void captureSubscriberUIFlowProfiles() throws URISyntaxException {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -312,7 +309,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Account Settings Capture Screenshots", groups = { "SubscriberFlowAccountSettings", "SubUI" })
+    @Test(description = "Account Settings Capture Screenshots", groups = { "SubscriberFlowAccountSettings", "SubUI", TestGroup.PROXY })
     public void captureAccountSettings() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -471,7 +468,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = " Capture Subscriber UI Flows: PCON", groups = { "SubscriberFlowSettingsPCON", "SubUI" })
+    @Test(description = " Capture Subscriber UI Flows: PCON", groups = { "SubscriberFlowSettingsPCON", "SubUI", TestGroup.PROXY })
     public void captureSubscriberUIFlowSettingsPCON() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
@@ -578,7 +575,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Capture Subscriber UI Flows: Settings Screenshots", groups = { "SubscriberFlowSettings", "SubUI" })
+    @Test(description = "Capture Subscriber UI Flows: Settings Screenshots", groups = { "SubscriberFlowSettings", "SubUI", TestGroup.PROXY })
     public void captureSubscriberUIFlowSettings() {
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -637,7 +634,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Capture Subscriber UI Flows: Player Screenshots", groups = { "SubscriberFlowPlayer", "SubUI" })
+    @Test(description = "Capture Subscriber UI Flows: Player Screenshots", groups = { "SubscriberFlowPlayer", "SubUI", TestGroup.PROXY })
     public void captureSubscriberUIFlowPlayer() {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
