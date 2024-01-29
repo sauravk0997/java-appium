@@ -42,18 +42,6 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(SHORT_TIMEOUT);
     }
 
-    public boolean isBackButtonPresent() {
-        return collectionBackButton.isPresent();
-    }
-
-    public boolean isArtworkBackgroundPresent() {
-        return artworkBackground.isPresent();
-    }
-
-    public void clickOnBackButton() {
-        collectionBackButton.click();
-    }
-
     public boolean isNetworkLogoPresent(String logoName) {
         if (!typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT)) {
             // studiosAndNetworkCollection element has visible attribute in false. This is a workaround
