@@ -24,6 +24,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 
 import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
@@ -777,7 +778,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(),null,true);
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(), BABY_YODA,true);
         pause(3);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
