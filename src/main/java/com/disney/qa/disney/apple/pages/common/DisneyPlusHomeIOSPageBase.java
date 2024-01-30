@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.disney.qa.common.constant.CollectionConstant;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -85,6 +86,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void clickFirstCarouselPoster() {
         clickContent(4, 1);
         pause(5);
+    }
+
+    public List<ExtendedWebElement> getKidsCarousels() {
+        return getAllCollectionCells(CollectionConstant.Collection.KIDS_CAROUSEL);
     }
 
     public void clickPixarTile() {
