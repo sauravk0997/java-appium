@@ -100,6 +100,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.clickOpenButton();
 
         sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        pause(5);
         // Get Network logo by deeplink access
         BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage());
         homePage.clickHomeIcon();
@@ -109,6 +110,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         huluPage.clickOnNetworkLogo("ABC");
 
         sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        pause(5);
         // Get Network logo by app navigation
         BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage());
 
