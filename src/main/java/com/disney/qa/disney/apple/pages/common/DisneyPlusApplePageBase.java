@@ -270,6 +270,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
+    @ExtendedFindBy(accessibilityId = "brandLandingView")
+    protected ExtendedWebElement brandLandingView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
+    protected ExtendedWebElement collectionBackButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
+    protected ExtendedWebElement artworkBackground;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1192,11 +1201,53 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isCollectionPresent(CollectionConstant.Collection collection) {
-        return collectionCell.format(CollectionConstant.getCollectionName(collection)).isPresent();
+        return getCollection(collection).isPresent();
     }
 
     public ExtendedWebElement getUnavailableContentErrorPreview() {
         return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
+    }
+
+    public void swipeInHuluBrandPage(Direction direction) {
+        swipeInContainer(brandLandingView, direction, 500);
+    }
+
+
+    public ExtendedWebElement getCollection(CollectionConstant.Collection collection) {
+        return collectionCell.format(CollectionConstant.getCollectionName(collection));
+    }
+
+    public void swipeLeftInCollection(CollectionConstant.Collection collection) {
+        ExtendedWebElement collectionElement = getCollection(collection);
+        Point elementLocation = collectionElement.getLocation();
+        Dimension elementDimensions = collectionElement.getSize();
+
+        int endY;
+        int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+
+        this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
+        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
+        List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
+        swipeLeftInCollection(collection);
+        List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
+        return titles1 != titles2;
+    }
+
+    public boolean isBackButtonPresent() {
+        return collectionBackButton.isPresent();
+    }
+
+    public boolean isArtworkBackgroundPresent() {
+        return artworkBackground.isPresent();
+    }
+
+    public void clickOnCollectionBackButton() {
+        collectionBackButton.click();
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
