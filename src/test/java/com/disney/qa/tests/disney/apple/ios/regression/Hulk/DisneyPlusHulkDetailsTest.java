@@ -384,6 +384,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), null, false, true);
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
+        //Tested this scenario with Disney content as we dont have any Hulu content with shop tab in PROD currently
+
         //Primary Adult Profile
         homePage.clickSearchIcon();
         searchPage.searchForMedia(SPIDERMAN3);
@@ -393,6 +395,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             detailsPage.swipeUp(1500);
         }
 
+        //Currently we dont have copy key and value in dictionary for Hulu content copy hence while validating passed full string text
+        //Once we will get copy key and value in Dictionary, we need to replace String text with copy key in below validation
         sa.assertTrue(detailsPage.getShopTabImage().isPresent(), "Background Image was not found");
         sa.assertTrue(detailsPage.getStaticTextByLabel("Shop this Character").isPresent(), "");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Bring your favorite Disney").isPresent(), "");
