@@ -60,6 +60,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
+    private ExtendedWebElement networkLogoImage;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -143,4 +145,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomeContentView() { return homeContentView; }
+
+    public ExtendedWebElement getNetworkLogoImage() {
+        return networkLogoImage;
+    }
+
+    public boolean isNetworkLogoImageVisible(){
+        return networkLogoImage.isPresent();
+    }
 }
