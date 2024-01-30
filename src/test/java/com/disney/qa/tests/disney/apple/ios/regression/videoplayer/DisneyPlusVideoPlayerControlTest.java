@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -14,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 
@@ -25,6 +27,11 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 {DisneyPlusApplePageBase.contentType.EXTRAS.toString(), "Thor: Love and Thunder"}};
     }
 
+    @DataProvider(name = "userType")
+    public Object[][] userType() {
+        return new Object[][]{{"DISNEY_HULU_NO_ADS_ESPN_WEB"},
+                {"DISNEY_VERIFIED_HULU_ESPN_BUNDLE"}};
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61163"})
     @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
@@ -197,6 +204,29 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isTitleLabelVisible(), "Title label is not visible on player overlay");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Current time label is not visible on player overlay");
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Remaining time label is not visible on player overlay");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75245"})
+    @Test(description = "Hulk - Hulu Video Player - Service Attribution", dataProvider = "userType", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyVideoPlayerServiceAttribution(String userType) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType), getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.getPlayButton().click();
+        videoPlayer.isOpened();
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(), "service attribution wasn't visible when video started");
+        sa.assertFalse(videoPlayer.isSeekbarVisible(), "player controls were displayed when video started");
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(), "service attribution wasn't visible along with controls");
         sa.assertAll();
     }
 

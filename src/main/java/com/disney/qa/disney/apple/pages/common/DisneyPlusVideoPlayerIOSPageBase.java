@@ -84,6 +84,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
+    @FindBy(name = "serviceAttributionLabel")
+    private ExtendedWebElement serviceAttributionLabel;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -153,6 +156,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isTitleLabelVisible() {
         displayVideoController();
         return titleLabel.isElementPresent();
+    }
+    public boolean isSeekbarVisible() {
+        return seekBar.isPresent();
+    }
+
+
+    public boolean isServiceAttributionLabelVisible() {
+        return serviceAttributionLabel.isPresent();
+    }
+
+    public boolean isServiceAttributionLabelVisibleWithControls() {
+        displayVideoController();
+        return serviceAttributionLabel.isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {
