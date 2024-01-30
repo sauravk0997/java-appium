@@ -25,8 +25,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
-    private static final String HULU_UPPERCASE_H = "Hulu";
-    private static final String HULU_ALL_LOWERCASE = "hulu";
+    private static final String HULU = "Hulu";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -377,6 +376,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyJuniorProfileNoHulu() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -384,30 +384,43 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
 
+        //No upsell
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        sa.assertFalse(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account option was available to a child account, upsell option possible");
+
+        //Home
+        moreMenu.clickHomeIcon();
         homePage.isOpened();
+        homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
+                String.format("%s contains %s", element.getText(), HULU)));
         sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
-        validateHuluBrandingNotFound(sa, "Home");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Home page");
+
+        //Search
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Search page");
 
         //Hulu Original Movie
-        homePage.clickSearchIcon();
-        validateHuluBrandingNotFound(sa, "Search");
         searchPage.searchForMedia(PREY);
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(PREY), PREY + "no result found message not found.");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(PREY), PREY + " 'no results found' message not found.");
 
         //Hulu Original Kids Series
         searchPage.clearText();
         searchPage.searchForMedia(THE_BRAVEST_KNIGHT);
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(THE_BRAVEST_KNIGHT), THE_BRAVEST_KNIGHT + "no result found message not found.");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(THE_BRAVEST_KNIGHT), THE_BRAVEST_KNIGHT + " 'no results found' message not found.");
 
-        //Disney Original Kids Series
+        //Details
         searchPage.clearText();
         searchPage.searchForMedia(BLUEY);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        validateHuluBrandingNotFound(sa, "Details");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Detail page");
 
+        //Ad badge
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
         sa.assertAll();
     }
@@ -473,11 +486,5 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
-    }
-
-    private void validateHuluBrandingNotFound(SoftAssert sa, String screen) {
-        DisneyPlusApplePageBase applePage = initPage(DisneyPlusApplePageBase.class);
-        sa.assertTrue(applePage.getStaticTextByLabelContains(HULU_UPPERCASE_H).isElementNotPresent(SHORT_TIMEOUT) ||
-                applePage.getStaticTextByLabelContains(HULU_ALL_LOWERCASE).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' +" + screen);
     }
 }
