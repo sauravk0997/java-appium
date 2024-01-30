@@ -70,7 +70,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "EXTRAS")
     protected ExtendedWebElement extrasTab;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
 
     @FindBy(name = "titleLabel_0")
@@ -165,6 +165,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
     private ExtendedWebElement firstRunTimeLabel;
+
+    @ExtendedFindBy(accessibilityId = "SHOP")
+    protected ExtendedWebElement shopTab;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
+    private ExtendedWebElement shopTabImage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
+    protected ExtendedWebElement tabletWebviewAddressBar;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
+    private ExtendedWebElement phoneWebviewAddressBar;
 
     //FUNCTIONS
 
@@ -754,4 +766,24 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 
     public ExtendedWebElement getShareBtn() { return shareBtn; }
+
+    public ExtendedWebElement getShopBtn() { return shopTab; }
+
+    public void clickShopTab() {
+        if (!shopTab.isPresent()) {
+            swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
+            swipeTabBar(Direction.LEFT, 1000);
+        }
+        shopTab.click();
+    }
+
+    public ExtendedWebElement getShopTabImage() {
+        return shopTabImage;
+    }
+
+    public boolean isShopWebviewOpen() {
+        ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+        return addressbar.getText().contains("shopdisney.com");
+    }
 }

@@ -23,6 +23,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    private static final String SPIDERMAN3 = "SpiderMan 3";
+    private static final String ADULT_DOB = "1923-10-23";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -336,6 +338,49 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
         validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
         sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75248"})
+    @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {TestGroup.PRE_CONFIGURATION})
+    public void verifyShopTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), null, false, true);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Primary Adult Profile
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN3);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickShopTab();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+
+        sa.assertTrue(detailsPage.getShopTabImage().isPresent(), "Background Image was not found");
+        sa.assertTrue(detailsPage.getStaticTextByLabel("Shop this Character").isPresent(), "");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Bring your favorite Disney").isPresent(), "");
+        sa.assertTrue(detailsPage.getTypeOtherByLabel("Go to shop Disney").isPresent(), "");
+        sa.assertTrue(detailsPage.getStaticTextByLabel("Merchandise available while supplies last").isPresent(), "");
+
+        detailsPage.getTypeOtherByLabel("Go to shop Disney").click();
+        sa.assertTrue(detailsPage.isShopWebviewOpen(), "'Shop' web view was not opened");
+        moreMenu.goBackToDisneyAppFromSafari();
+
+        //Secondary
+        homePage.clickMoreTab();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN3);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertFalse(detailsPage.getShopBtn().isPresent(), "Shop button was found on Secondary profile.");
     }
 
     protected ArrayList<String> getMedia() {
