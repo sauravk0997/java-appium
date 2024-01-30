@@ -8,11 +8,11 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +26,13 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                     "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
                     "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
+
+    @DataProvider(name = "huluDeepLinks")
+    public Object[][] huluDeepLinks() {
+        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_abc_network_deeplink")},
+                {R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink")}
+        };
+    }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74645"})
@@ -81,15 +88,15 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75264"})
-    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkDeepLinkNewURLStructure() throws IOException {
+    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
+    public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulu_network_deeplink"), 10);
+        launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
         sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");

@@ -29,6 +29,12 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         return staticTextByLabel.format("Studios and Networks");
     }
 
+    public ExtendedWebElement getNetworkLogo(String network){
+        return findExtendedWebElement(AppiumBy
+                .iOSClassChain(String.format("**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]/**/XCUIElementTypeImage"
+                        , network)));
+    }
+
    public boolean isStudiosAndNetworkPresent() {
         ExtendedWebElement studiosLabel = getStudiosAndNetwork();
         swipePageTillElementPresent(studiosLabel, 3, brandLandingView, Direction.UP, 500);
@@ -53,12 +59,6 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean validateScrollingInHuluCollection() {
         return validateScrollingInCollections(CollectionConstant.Collection.HULU_ORIGINALS);
-    }
-
-    public ExtendedWebElement getNetworkLogo(String network){
-        return findExtendedWebElement(AppiumBy
-                .iOSClassChain(String.format("**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]/**/XCUIElementTypeImage"
-                        , network)));
     }
 
     public void clickOnNetworkLogo(String network){
