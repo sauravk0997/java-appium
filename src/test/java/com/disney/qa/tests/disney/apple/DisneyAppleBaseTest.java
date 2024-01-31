@@ -4,6 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
@@ -29,6 +31,7 @@ import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
 import io.appium.java_client.remote.options.SupportsAppOption;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
@@ -154,20 +157,30 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
-        WebDriverConfiguration.addIgnoredNewSessionErrorMessages(
-                Map.of(
-                        "timed out waiting for a node to become available",
-                        Duration.ofMinutes(15),
-                        "lock file for downloading application has not disappeared after",
-                        Duration.ofMinutes(10),
-                        "Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure",
-                        Duration.ofMinutes(10),
-                        "Cannot download the app from",
-                        Duration.ofMinutes(10),
-                        "App is no installed among system apps",
-                        Duration.ofMinutes(10),
-                        "Failed to receive any data within the timeout",
-                        Duration.ofMinutes(10))
+        WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
+                        Map.of(
+                                "timed out waiting for a node to become available",
+                                Duration.ofMinutes(25),
+                                "lock file for downloading application has not disappeared after",
+                                Duration.ofMinutes(15),
+                                "Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure",
+                                Duration.ofMinutes(15),
+                                "Cannot download the app from",
+                                Duration.ofMinutes(15),
+                                "App is no installed among system apps",
+                                Duration.ofMinutes(15),
+                                "Failed to receive any data within the timeout",
+                                Duration.ofMinutes(15),
+                                "Unable to start WebDriverAgent session because of xcodebuild failure",
+                                Duration.ofMinutes(15),
+                                "java.util.concurrent.TimeoutException",
+                                Duration.ofMinutes(10),
+                                "Possible causes are invalid address of the remote server or browser start-up failure",
+                                Duration.ofMinutes(10),
+                                "Connection was refused to port",
+                                Duration.ofMinutes(10)).entrySet().stream(),
+                        Map.of("Error forwarding the new session cannot find", Duration.ofMinutes(10)).entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
         );
     }
 
