@@ -447,7 +447,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         detailsPage.startDownload();
-        detailsPage.waitForLongMovieDownloadToComplete(350, 20);
+        detailsPage.waitForMovieDownloadComplete(350, 20);
         detailsPage.clickDownloadsIcon();
         downloadsPage.isOpened();
 

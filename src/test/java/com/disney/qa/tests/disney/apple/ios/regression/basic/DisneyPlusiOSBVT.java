@@ -64,7 +64,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
 
         details.addToWatchlist();
         details.startDownload();
-        details.waitForSeriesDownloadToComplete();
+        details.waitForSeriesDownloadToComplete(60, 3);
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Downloads is not displayed.");
 
