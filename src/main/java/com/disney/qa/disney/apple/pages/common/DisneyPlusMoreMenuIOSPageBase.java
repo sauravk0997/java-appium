@@ -64,12 +64,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Done\"`]")
 	protected ExtendedWebElement webviewDoneBtn;
 
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
-	protected ExtendedWebElement tabletWebviewAddressBar;
-
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
-	private ExtendedWebElement phoneWebviewAddressBar;
-
 	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
 	private ExtendedWebElement exitKidsProfileButton;
 
