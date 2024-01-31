@@ -187,7 +187,6 @@ public enum DictionaryKeys {
     HIDDEN_PASSWORD("login_hide_password_asterisk"),
     SHOW_PASSWORD("onboardingpw_btn_showpassword"),
     HIDE_PASSWORD("onboarding_password_hidepassword"),
-    IMAGE_RATING_OFFLINE_RATED_R("image_rating_oflc_r"),
     INTERRUPT_SUBSCRIPTION("interrupt_subscription"),
     INTERRUPT_SUBSCRIPTION_TITLE("interrupt_subscription_title"),
     INVALID_CREDENTIALS_ERROR("invalidcredentials"),
