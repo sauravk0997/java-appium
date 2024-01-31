@@ -430,34 +430,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
-    @Test(description = "Hulk - Home - Continue Watching Row - Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHuluContentInContinueWatching() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        detailsPage.clickPlayButton().isOpened();
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_CONTINUE_WATCHING);
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        sa.assertTrue(homePage.isContentVisibleInContinueWatching(PREY), "Hulu content was not found in continue watching");
-        sa.assertAll();
-    }
-
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75248"})
     @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyShopTab() {
@@ -502,6 +474,34 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(SPIDERMAN_THREE);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertFalse(detailsPage.getShopBtn().isPresent(), "Shop button was found on Secondary profile.");
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
+    @Test(description = "Hulk - Home - Continue Watching Row - Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluContentInContinueWatching() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.isOpened();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton().isOpened();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_CONTINUE_WATCHING);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        sa.assertTrue(homePage.isContentVisibleInContinueWatching(PREY), "Hulu content was not found in continue watching");
+        sa.assertAll();
     }
 
     protected ArrayList<String> getMedia() {
