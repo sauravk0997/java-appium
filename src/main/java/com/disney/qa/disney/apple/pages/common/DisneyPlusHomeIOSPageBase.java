@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.disney.qa.common.constant.CollectionConstant;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -60,6 +61,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
+    private ExtendedWebElement networkLogoImage;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -83,6 +86,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void clickFirstCarouselPoster() {
         clickContent(4, 1);
         pause(5);
+    }
+
+    public List<ExtendedWebElement> getKidsCarousels() {
+        return getAllCollectionCells(CollectionConstant.Collection.KIDS_CAROUSEL);
     }
 
     public void clickPixarTile() {
@@ -143,4 +150,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomeContentView() { return homeContentView; }
+
+    public ExtendedWebElement getNetworkLogoImage() {
+        return networkLogoImage;
+    }
+
+    public boolean isNetworkLogoImageVisible(){
+        return networkLogoImage.isPresent();
+    }
 }

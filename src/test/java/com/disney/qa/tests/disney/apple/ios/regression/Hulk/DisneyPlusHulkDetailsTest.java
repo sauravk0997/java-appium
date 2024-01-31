@@ -24,6 +24,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
+    private static final String BLUEY = "Bluey";
+    private static final String HULU = "Hulu";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ADULT_DOB = "1923-10-23";
 
@@ -367,6 +370,61 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
         validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74916"})
+    @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileNoHulu() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        //No upsell
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        sa.assertFalse(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account option was available to a child account, upsell option possible");
+
+        //Home
+        moreMenu.clickHomeIcon();
+        homePage.isOpened();
+        homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
+                String.format("%s contains %s", element.getText(), HULU)));
+        sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Home page");
+
+        //Search
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Search page");
+
+        //Hulu Original Movie
+        searchPage.searchForMedia(PREY);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(PREY), PREY + " 'no results found' message not found.");
+
+        //Hulu Original Kids Series
+        searchPage.clearText();
+        searchPage.searchForMedia(THE_BRAVEST_KNIGHT);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(THE_BRAVEST_KNIGHT), THE_BRAVEST_KNIGHT + " 'no results found' message not found.");
+
+        //Details
+        searchPage.clearText();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Detail page");
+
+        //Ad badge
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
         sa.assertAll();
     }
 
