@@ -42,8 +42,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
-    protected Map<String, String> sessionBundles = new HashMap<>();
-    public static final String DISNEY = "disney";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
@@ -925,29 +923,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickThumbnailView() {
         thumbnailView.click();
-    }
-
-    public void navigateToTab(DisneyPlusApplePageBase.FooterTabs tab) {
-        int tries = 0;
-        boolean isOpened = false;
-        do {
-            initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).click();
-            tries++;
-            switch (tab) {
-                case MORE_MENU:
-                    isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
-                    break;
-                case HOME:
-                    isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-                    break;
-                case SEARCH:
-                    isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
-                    break;
-                case DOWNLOADS:
-                    isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
-                    break;
-            }
-        } while (!isOpened && tries < 3);
     }
 
     public enum FooterTabs {
