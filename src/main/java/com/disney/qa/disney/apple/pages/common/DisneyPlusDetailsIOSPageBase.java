@@ -39,8 +39,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_WEB_URL = "shopdisney.com";
     private static final String SHOP_TAB_HEADING = "Shop this Character";
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
-    private static final String SHOP_TAB_LegalText = "Merchandise available while supplies last";
-    private static final String SHOP_TAB_NavigateToWebText = "Go to shop Disney";
+    private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last";
+    private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
 
     //LOCATORS
 
@@ -795,14 +795,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isShopTabLegalTextPresent() {
-        return getStaticTextByLabel(SHOP_TAB_LegalText).isPresent();
+        return getStaticTextByLabel(SHOP_TAB_LEGALTEXT).isPresent();
     }
 
     public boolean isShopTabNavigateToWebTextPresent() {
-        return getTypeOtherByLabel(SHOP_TAB_NavigateToWebText).isPresent();
+        return getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).isPresent();
     }
 
     public void navigateToShopWebPage() {
-        getTypeOtherByLabel(SHOP_TAB_NavigateToWebText).click();
+        getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 }

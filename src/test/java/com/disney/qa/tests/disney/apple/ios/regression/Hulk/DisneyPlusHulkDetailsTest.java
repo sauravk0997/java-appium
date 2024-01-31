@@ -463,7 +463,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isShopTabLegalTextPresent(), "Shop Tab Legal text was not found");
 
         detailsPage.navigateToShopWebPage();
-        sa.assertTrue(detailsPage.isShopWebviewOpen(), "'Shop' web page not opened");
+        sa.assertTrue(detailsPage.isShopWebviewOpen(), "Shop web page not opened");
         moreMenu.goBackToDisneyAppFromSafari();
 
         //Secondary
