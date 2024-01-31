@@ -82,7 +82,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
 
         details.addToWatchlist();
         details.startDownload();
-        details.waitForSeriesDownloadToComplete();
+        details.waitForSeriesDownloadToComplete(60, 3);
         details.clickPlayButton().isOpened();
         sa.assertTrue(videoPlayer.isOpened(), "Video player not displayed");
 
@@ -147,7 +147,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(details.isOpened(), "Series detail screen not displayed");
 
         details.startDownload();
-        details.waitForSeriesDownloadToComplete();
+        details.waitForSeriesDownloadToComplete(60, 3);
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 
@@ -220,7 +220,7 @@ public class DisneyPlusInstallTest extends DisneyBaseTest {
         sa.assertTrue(details.isOpened(), "Series detail screen not displayed");
 
         details.startDownload();
-        details.waitForMovieDownloadComplete();
+        details.waitForMovieDownloadComplete(60, 3);
         homePage.clickDownloadsIcon();
         sa.assertTrue(downloads.isDownloadsDisplayed(), "Download is not displayed.");
 

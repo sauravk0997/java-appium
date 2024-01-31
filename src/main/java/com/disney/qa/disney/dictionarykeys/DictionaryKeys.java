@@ -335,6 +335,7 @@ public enum DictionaryKeys {
     SIGN_UP_BTN("btn_welcome_signup_cta"),
     SIGN_UP_LOGIN_BTN("btn_signup"),
     SIGN_UP_TITLE("sign_up_title"),
+    SIZE_RUNTIME_PLACEHOLDER("size_runtime_placeholder"),
     STREAM_WIFI_ONLY("settings_datausage_wifionly"),
     SUB_SELECTOR_STANDALONE_ADS_CTA("sub_selector_standalone_ads_cta"),
     SUB_SELECTOR_STANDALONE_NOADS_CTA("sub_selector_standalone_noads_cta"),
