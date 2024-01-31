@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -130,10 +131,14 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         brandTiles.get(new SecureRandom().nextInt(brandTiles.size() - 1)).click();
     }
 
+    public ExtendedWebElement getContinueWatchilngLabel() {
+        return getDynamicAccessibilityId(continueWatchingText);
+    }
+    public void scrollToContinueWatching(){
+        swipeInContainerTillElementIsPresent(homeContentView, getContinueWatchilngLabel(), 3, Direction.UP);
+    }
     public void initiatePlaybackFromContinueWatching(String series) {
-        ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
-        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
-        swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
+        scrollToContinueWatching();
         continueWatchingContentView.format(continueWatchingText, series).click();
     }
 
@@ -160,9 +165,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContentVisibleInContinueWatching(String content) {
-        ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
-        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
-        swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
+        scrollToContinueWatching();
         return continueWatchingContentView.format(continueWatchingText, content).isPresent();
     }
 }

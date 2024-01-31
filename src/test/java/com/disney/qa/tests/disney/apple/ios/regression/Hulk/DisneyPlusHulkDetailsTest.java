@@ -427,7 +427,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73898"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(description = "Hulk - Home - Continue Watching Row - Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluContinueWatching() {
         SoftAssert sa = new SoftAssert();
@@ -443,7 +443,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        detailsPage.getPlayIcon().click();
+        detailsPage.clickPlayButton().isOpened();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_CONTINUE_WATCHING);
