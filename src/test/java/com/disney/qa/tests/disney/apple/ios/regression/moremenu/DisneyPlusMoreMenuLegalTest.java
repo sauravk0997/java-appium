@@ -98,7 +98,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
-        
+
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
