@@ -67,6 +67,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
 
     enum AlertButtonCommand {
         ACCEPT("accept"),
+        OK("ok"),
         DISMISS("dismiss");
 
         private String command;

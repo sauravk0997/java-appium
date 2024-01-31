@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
@@ -71,7 +72,8 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        AlertButton.OK.getAlertbtn();
+        //AlertButton.OK.getAlertbtn();
+        handleAlert(IOSUtils.AlertButtonCommand.OK);
         //acceptAlert();
         //acceptAlert();
         paywallIOSPageBase.dismissNotificationsPopUp();
