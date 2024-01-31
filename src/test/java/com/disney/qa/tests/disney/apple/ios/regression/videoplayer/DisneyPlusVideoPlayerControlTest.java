@@ -43,7 +43,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         //Initiate playback from 'downloads'
         detailsPage.startDownload();
-        detailsPage.waitForSeriesDownloadToComplete();
+        detailsPage.waitForSeriesDownloadToComplete(60, 3);
         homePage.clickDownloadsIcon();
         downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
         downloadsPage.tapDownloadedAsset(SHORT_SERIES);
