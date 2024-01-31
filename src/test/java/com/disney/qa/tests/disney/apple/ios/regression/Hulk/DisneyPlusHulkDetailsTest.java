@@ -429,7 +429,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(description = "Hulk - Home - Continue Watching Row - Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHuluContinueWatching() {
+    public void verifyHuluContentInContinueWatching() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -450,7 +450,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        sa.assertTrue(homePage.isContentVisibleInContinueWatching(PREY), "content was not found in continue watching");
+        sa.assertTrue(homePage.isContentVisibleInContinueWatching(PREY), "Hulu content was not found in continue watching");
         sa.assertAll();
     }
 
