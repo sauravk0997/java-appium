@@ -1,5 +1,6 @@
 package com.disney.alice.labels;
 
+//TODO Move to the Alice Client!
 public enum AliceLabels {
 
     ACTIVATION_CODE("activation_code"),
