@@ -84,9 +84,21 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+        setAccount(getAccountApi().createAccount(offer, "US", lang, SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
 
-        onboard("US", lang);
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
+
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
