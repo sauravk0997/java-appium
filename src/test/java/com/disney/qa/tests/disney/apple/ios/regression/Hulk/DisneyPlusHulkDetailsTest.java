@@ -425,6 +425,44 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+//    XMOBQA-75112
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74916"})
+    @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+
+        homePage.isOpened();
+//        sa.assertFalse(homePage.isDownloadsTabDisplayed(), "Downloads tab was found");
+        sa.assertTrue(homePage.isDownloadsTabDisplayed(), "Downloads tab was found"); //on no ads tier
+
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        System.out.println(getDriver().getPageSource());
+        sa.assertTrue(detailsPage.isDownloadButtonDisplayed(), "Movie download button is not displayed.");
+
+        detailsPage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        detailsPage.isOpened();
+        System.out.println(getDriver().getPageSource());
+        sa.assertTrue(detailsPage.isDownloadButtonDisplayed(), "Series download button is not displayed.");
+
+
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
