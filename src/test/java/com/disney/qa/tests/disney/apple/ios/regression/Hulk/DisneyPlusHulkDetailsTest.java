@@ -431,7 +431,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public void verifyHuluMovieDownloadAsset() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -444,18 +444,17 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.isOpened();
         detailsPage.startDownload();
         detailsPage.waitForLongMovieDownloadToComplete(350, 20);
-        detailsPage.clickDetailsTab();
         detailsPage.clickDownloadsIcon();
-        downloads.isOpened();
+        downloadsPage.isOpened();
 
         //Downloaded movie asset metadata
-        sa.assertTrue(downloads.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
-        sa.assertTrue(downloads.getDownloadedAssetImage(PREY).isPresent(), "Downloaded movie asset image was not found.");
-        sa.assertTrue(downloads.getSizeAndRuntime().isPresent(), "Downloaded movie asset size and runtime are not found.");
-        sa.assertTrue(downloads.getRating().getText().toLowerCase().contains("r"), "Movie downloaded asset rating not found.");
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
+        sa.assertTrue(downloadsPage.getDownloadedAssetImage(PREY).isPresent(), "Downloaded movie asset image was not found.");
+        sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(), "Downloaded movie asset size and runtime are not found.");
+        sa.assertTrue(downloadsPage.getRating().getText().toLowerCase().contains("r"), "Movie downloaded asset rating not found.");
 
         //Playback of downloaded movie asset
-        downloads.tapDownloadedAsset(PREY);
+        downloadsPage.tapDownloadedAsset(PREY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
         sa.assertAll();
