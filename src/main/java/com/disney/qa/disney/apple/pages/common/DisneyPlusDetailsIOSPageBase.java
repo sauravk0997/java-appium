@@ -254,6 +254,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
+    public void waitForLongMovieDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for long movie download to complete");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
     public boolean isDownloadPaused(DisneyLocalizationUtils dictionary) {
         return getStaticTextByLabel(dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_PAUSED.getText())).isElementPresent();
     }

@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
-    private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
@@ -422,6 +422,42 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.displayVideoController();
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75114"})
+    @Test(description = "Hulu Movie Download - download metadata and playable", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluMovieDownloadAsset() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.startDownload();
+        detailsPage.waitForLongMovieDownloadToComplete(350, 20);
+        detailsPage.clickDetailsTab();
+        detailsPage.clickDownloadsIcon();
+        downloads.isOpened();
+
+        //Downloaded movie asset metadata
+        sa.assertTrue(downloads.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
+        sa.assertTrue(downloads.getDownloadedAssetImage(PREY).isPresent(), "Downloaded movie asset image was not found.");
+        sa.assertTrue(downloads.getSizeAndRuntime().isPresent(), "Downloaded movie asset size and runtime are not found.");
+        sa.assertTrue(downloads.getRating().getText().toLowerCase().contains("r"), "Movie downloaded asset rating not found.");
+
+        //Playback of downloaded movie asset
+        downloads.tapDownloadedAsset(PREY);
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
         sa.assertAll();
     }
 
