@@ -280,6 +280,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
     protected ExtendedWebElement artworkBackground;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
+    protected ExtendedWebElement tabletWebviewAddressBar;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
+    protected ExtendedWebElement phoneWebviewAddressBar;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }

@@ -21,11 +21,15 @@ import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
+
+    private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String PREY = "Prey";
     private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
     private static final String HULU = "Hulu";
+    private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String ADULT_DOB = "1980-10-23";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -434,7 +438,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
@@ -457,6 +461,54 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         downloadsPage.tapDownloadedAsset(PREY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75248"})
+    @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyShopTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Tested this scenario with Disney content as we dont have any Hulu content with shop tab in PROD currently
+
+        //Primary Adult Profile
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickShopTab();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+
+        //Currently we dont have copy key and value in dictionary for Hulu content copy hence while validating passed full string text
+        //Once we will get copy key and value in Dictionary, we need to replace String text with copy key in below validation
+        sa.assertTrue(detailsPage.getShopTabImage().isPresent(), "Background Image was not found");
+        sa.assertTrue(detailsPage.isShopTabHeadingTextPresent(), "Shop Tab Header was not found");
+        sa.assertTrue(detailsPage.isShopTabSubHeadingTextPresent(), "Shop Tab Sub-Header was not found");
+        sa.assertTrue(detailsPage.isShopTabNavigateToWebTextPresent(), "Shop Tab Go to Disney Text was not found");
+        sa.assertTrue(detailsPage.isShopTabLegalTextPresent(), "Shop Tab Legal text was not found");
+
+        detailsPage.navigateToShopWebPage();
+        sa.assertTrue(detailsPage.isShopWebviewOpen(), "Shop web page not opened");
+        moreMenu.goBackToDisneyAppFromSafari();
+
+        //Secondary
+        homePage.clickMoreTab();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertFalse(detailsPage.getShopBtn().isPresent(), "Shop button was found on Secondary profile.");
         sa.assertAll();
     }
 
