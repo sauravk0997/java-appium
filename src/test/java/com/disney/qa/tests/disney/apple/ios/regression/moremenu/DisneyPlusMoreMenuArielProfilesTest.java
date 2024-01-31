@@ -172,7 +172,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         onboard();
-        whoIsWatching.clickProfile(KIDS_PROFILE);
+        whoIsWatching.clickProfileAfterRefresh(KIDS_PROFILE);
+//        whoIsWatching.clickProfile(KIDS_PROFILE);
         //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
         //Once bug is resolved, remove line 217
         moreMenu.clickMoreTab();

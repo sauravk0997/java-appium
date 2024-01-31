@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -84,6 +85,36 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
             profileIcon.click();
         }
+    }
+
+    public void clickProfileAfterRefresh(String name, boolean onboarding) {
+        LOGGER.info("Clicking profile name '{}'...", name);
+        ExtendedWebElement profileIcon;
+        if(onboarding) {
+            profileIcon = dynamicAccessProfileIcon.format(
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, name)));
+            if (profileIcon.isElementNotPresent(SHORT_TIMEOUT)) {
+                terminateApp(sessionBundles.get(DISNEY));
+                startApp(sessionBundles.get(DISNEY));
+                navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+            }
+            profileIcon.click();
+        } else {
+            profileIcon = dynamicAccessProfileIcon.format(
+                    getDictionary().formatPlaceholderString(
+                            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+            if (profileIcon.isElementNotPresent(SHORT_TIMEOUT)) {
+                terminateApp(sessionBundles.get(DISNEY));
+                startApp(sessionBundles.get(DISNEY));
+                navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+            }
+            profileIcon.click();
+        }
+    }
+
+    public void clickProfileAfterRefresh(String name) {
+        clickProfile(name, false);
     }
 
     public void clickProfile(String name) {
