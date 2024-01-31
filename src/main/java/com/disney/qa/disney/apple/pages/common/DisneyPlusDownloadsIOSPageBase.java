@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.lang.management.GarbageCollectorMXBean;
+import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
@@ -61,6 +61,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
 	}
 
+	public ExtendedWebElement getDownloadedAssetImage(String downloadedAsset) {
+		return dynamicBtnFindByLabelContains.format("Play " + downloadedAsset);
+	}
+
 	public void tapDownloadedAssetText(String downloadedAsset) {
 		staticTextLabelContains.format(downloadedAsset).click();
 	}
@@ -109,4 +113,18 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			downloadDelete24Button.click();
 		}
 	}
+
+	public ExtendedWebElement getSizeAndRuntime() {
+		String[] sizeRuntimeParts = getStaticTextByLabelContains("MB").getText().split(" ");
+		String size = sizeRuntimeParts[1] + " " + sizeRuntimeParts[2];
+		String runtime = sizeRuntimeParts[4] + " " + sizeRuntimeParts[5];
+		return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SIZE_RUNTIME_PLACEHOLDER.getText()), Map.of("S", size, "R", runtime)));
+	}
+
+	public ExtendedWebElement getRating() {
+		String[] ratingSizeRuntimeParts = getStaticTextByLabelContains("MB").getText().split(" ");
+		return getStaticTextByLabelContains(ratingSizeRuntimeParts[0]);
+	}
+
 }

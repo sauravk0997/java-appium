@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
@@ -84,6 +85,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
+    @FindBy(name = "serviceAttributionLabel")
+    private ExtendedWebElement serviceAttributionLabel;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -153,6 +157,20 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isTitleLabelVisible() {
         displayVideoController();
         return titleLabel.isElementPresent();
+    }
+    public boolean isSeekbarVisible() {
+        return seekBar.isPresent();
+    }
+
+
+    public boolean isServiceAttributionLabelVisible() {
+        return (fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "Service attribution didn't appear on video player")
+                .until(it -> serviceAttributionLabel.isPresent(LONG_TIMEOUT)));
+    }
+
+    public boolean isServiceAttributionLabelVisibleWithControls() {
+        displayVideoController();
+        return serviceAttributionLabel.isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {
