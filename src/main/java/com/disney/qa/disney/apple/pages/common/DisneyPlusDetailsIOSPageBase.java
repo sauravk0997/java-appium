@@ -36,6 +36,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
+    private static final String SHOP_WEB_URL = "shopdisney.com";
+    private static final String SHOP_TAB_HEADING = "Shop this Character";
+    private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
+    private static final String SHOP_TAB_LegalText = "Merchandise available while supplies last";
+    private static final String SHOP_TAB_NavigateToWebText = "Go to shop Disney";
 
     //LOCATORS
 
@@ -171,12 +176,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
     private ExtendedWebElement shopTabImage;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
-    protected ExtendedWebElement tabletWebviewAddressBar;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
-    private ExtendedWebElement phoneWebviewAddressBar;
 
     //FUNCTIONS
 
@@ -784,6 +783,26 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShopWebviewOpen() {
         ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
-        return addressbar.getText().contains("shopdisney.com");
+        return addressbar.getText().contains(SHOP_WEB_URL);
+    }
+
+    public boolean isShopTabHeadingTextPresent() {
+        return getStaticTextByLabel(SHOP_TAB_HEADING).isPresent();
+    }
+
+    public boolean isShopTabSubHeadingTextPresent() {
+        return getStaticTextByLabelContains(SHOP_TAB_SUBHEADING).isPresent();
+    }
+
+    public boolean isShopTabLegalTextPresent() {
+        return getStaticTextByLabel(SHOP_TAB_LegalText).isPresent();
+    }
+
+    public boolean isShopTabNavigateToWebTextPresent() {
+        return getTypeOtherByLabel(SHOP_TAB_NavigateToWebText).isPresent();
+    }
+
+    public void navigateToShopWebPage() {
+        getTypeOtherByLabel(SHOP_TAB_NavigateToWebText).click();
     }
 }
