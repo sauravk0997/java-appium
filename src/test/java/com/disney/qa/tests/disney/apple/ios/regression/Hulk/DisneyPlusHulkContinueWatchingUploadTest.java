@@ -14,8 +14,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -167,38 +165,29 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
     private void navigateToDeeplink(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
-        try {
-            launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
-        } catch (WebDriverException exception) {
-            LOGGER.info("Error launching deeplink. Restarting driver and trying again... " + exception.getMessage());
-            getDriver().navigate().refresh();
-            launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
-        }
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
         detailsPage.clickOpenButton();
     }
 
-//    private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
-//        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-//        if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
-//            takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
-//            Assert.fail("'This content is unavailable' error displayed on " + hulkContent.getTitle());
-//        }
-//    }
-
-//    private void recoverApp(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
-//        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-//        try {
-//            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
-//        } catch (TimeoutException e) {
-//            takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
-//            LOGGER.info("Timeout exception: {}", e.getMessage());
-//            Assert.fail("Disney app is not present.");
-//        }
-//    }
-
-    private boolean isContentUnavailableErrorPresent() {
+    private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        return detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT);
+        if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
+            takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
+            Assert.fail("'This content is unavailable' error displayed on " + hulkContent.getTitle());
+        }
+    }
+
+    private void recoverApp(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        try {
+            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        } catch (TimeoutException e) {
+            takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
+            LOGGER.info("Timeout exception: {}", e.getMessage());
+            Assert.fail("Disney app is not present.");
+        }
     }
 
     private void aliceS3Baseline(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
@@ -207,18 +196,17 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         navigateToDeeplink(hulkContent);
-//        recoverApp(hulkContent, platformType, s3DeviceName);
-//        isContentUnavailableErrorPresent(hulkContent, platformType, s3DeviceName);
+        recoverApp(hulkContent, platformType, s3DeviceName);
+        isContentUnavailableErrorPresent(hulkContent, platformType, s3DeviceName);
 
-        int count = 5;
-        while (isContentUnavailableErrorPresent() && count > 0) {
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            restart();
-            LOGGER.info("Was home page opened?: " + homePage.getHomeContentView().isPresent(5));
+        int count = 3;
+        while (!detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT) && count > 0) {
             navigateToDeeplink(hulkContent);
+            recoverApp(hulkContent, platformType, s3DeviceName);
             LOGGER.info("Count is at: " + count --);
         }
 
+        isContentUnavailableErrorPresent(hulkContent, platformType, s3DeviceName);
         detailsPage.isOpened();
         detailsPage.getPlayButton().click();
         videoPlayer.isOpened();
@@ -230,6 +218,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         homePage.isOpened();
+        System.out.println(getDriver().getPageSource());
         takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
         sa.assertAll();
     }

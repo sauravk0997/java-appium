@@ -91,6 +91,7 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
     private String getJsonPath() {
         if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             return "src/test/resources/json/hulk-continue-watching-handset.json";
+
         } else {
             return "src/test/resources/json/hulk-continue-watching-tablet.json";
         }
@@ -116,6 +117,8 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
     private void navigateToDeeplink(HulkContentS3 hulkContentS3) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
         try {
             launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
         } catch (WebDriverException exception) {
@@ -127,20 +130,23 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
     }
 
 
-//    private void recoverApp() {
-//        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-//        try {
-//            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
-//        } catch (TimeoutException e) {
-//            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-//            LOGGER.info("Timeout exception: {}", e.getMessage());
-//            Assert.fail("Disney app is not present.");
-//        }
-//    }
-
-    private boolean isContentUnavailableErrorPresent() {
+    private void recoverApp() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        return detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT);
+        try {
+            fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
+        } catch (TimeoutException e) {
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+            LOGGER.info("Timeout exception: {}", e.getMessage());
+            Assert.fail("Disney app is not present.");
+        }
+    }
+
+    private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContentS3 hulkContentS3) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+            Assert.fail("'This content is unavailable' error displayed on " + hulkContentS3.getTitle());
+        }
     }
 
     private void playContentAndNavigateToContinueWatching() {
@@ -162,20 +168,20 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
     private void aliceS3BaseCompareLatestCapture(HulkContentS3 hulkContentS3) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         SoftAssert sa = new SoftAssert();
         double imageSimilarityPercentageThreshold = 90.0;
 
         navigateToDeeplink(hulkContentS3);
+        recoverApp();
+        isContentUnavailableErrorPresent(hulkContentS3);
 
         int count = 3;
-        while (isContentUnavailableErrorPresent() && count > 0) {
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            restart();
+        while (!detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT) && count > 0) {
             navigateToDeeplink(hulkContentS3);
+            recoverApp();
             LOGGER.info("Count is at: " + count --);
         }
-
+        isContentUnavailableErrorPresent(hulkContentS3);
         playContentAndNavigateToContinueWatching();
 
         File srcFile = homePage.getDynamicCellByName(hulkContentS3.getContinueWatchingId()).getElement().getScreenshotAs(OutputType.FILE);
@@ -192,7 +198,7 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
 
         sa.assertTrue(
                 imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
-                "Similarity Percentage score was 90 or lower.");
+                "Similarity Percentage score was 95 or lower.");
         sa.assertAll();
     }
 }
