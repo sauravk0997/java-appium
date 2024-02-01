@@ -38,6 +38,18 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 
 public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
 
+    @Maintainer("csolmaz")
+    @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
+    public void continueWatchingAliceCompareHandsetTest(HulkContentS3 hulkContent) {
+        aliceS3BaselineVsLatestScreenshot(hulkContent);
+    }
+
+    @Maintainer("csolmaz")
+    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
+    public void continueWatchingAliceCompareTabletTest(HulkContentS3 hulkContent) {
+        aliceS3BaselineVsLatestScreenshot(hulkContent);
+    }
+
     public List<Object[]> parseHulkS3Json(DisneyPlusHulkDataProvider.PlatformType platformType) {
         List<Object[]> data = new ArrayList<>();
 
@@ -177,17 +189,5 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
                 imageSimilarityPercentage > ConfigProperties.getInstance().getPercentageOfSimilarity(),
                 "Similarity Percentage score was 95 or lower.");
         sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
-    public void aliceBaselineCompareS3HandsetTest(HulkContentS3 hulkContent) {
-        aliceS3BaselineVsLatestScreenshot(hulkContent);
-    }
-
-    @Maintainer("csolmaz")
-    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
-    public void aliceBaselineCompareS3TabletTest(HulkContentS3 hulkContent) {
-        aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 }

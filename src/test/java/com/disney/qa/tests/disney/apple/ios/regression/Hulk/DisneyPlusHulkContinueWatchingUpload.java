@@ -43,13 +43,13 @@ public class DisneyPlusHulkContinueWatchingUpload extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
-    public void aliceUploadBaseImagesHandset(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
+    public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
-    public void aliceUploadBaseImagesTablet(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
+    public void continueWatchingAliceUploadTabletTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
     }
 
