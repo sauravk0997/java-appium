@@ -131,8 +131,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void initiatePlaybackFromContinueWatching(String series) {
+        ExtendedWebElement continueWatchingLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText()));
         String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
-        swipeInContainerTillElementIsPresent(homeContentView, getDynamicAccessibilityId(continueWatchingText), 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(homeContentView, continueWatchingLabel, 3, Direction.UP);
         continueWatchingContentView.format(continueWatchingText, series).click();
     }
 
