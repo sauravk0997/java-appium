@@ -61,8 +61,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         //Initiate playback from 'continue watching' from Home
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-
-        homePage.swipeInContainer(null, Direction.UP, 1500);
         homePage.initiatePlaybackFromContinueWatching(SHORT_SERIES);
         detailsPage.clickContinueButton();
         videoPlayer.isOpened();

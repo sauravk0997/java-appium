@@ -29,7 +29,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String HULU = "Hulu";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ADULT_DOB = "1980-10-23";
-    private static final double PLAYER_PERCENTAGE_FOR_CONTINUE_WATCHING = 50;
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
