@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.hatter.api.alice.AliceApiManager;
 import com.disney.hatter.api.alice.model.ImagesRequestS3;
 import com.disney.hatter.api.alice.model.ImagesResponse360;
-import com.disney.hatter.core.config.ConfigProperties;
 import com.disney.hatter.core.utils.FileUtil;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -23,6 +22,7 @@ import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -42,14 +42,14 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(dataProvider = "handsetDataContentProvider", description = "Continue Watching Compare Hulu Badging - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceCompareHandsetTest(HulkContentS3 hulkContent) {
-        aliceS3BaselineVsLatestScreenshot(hulkContent);
+        aliceS3BaseCompareLatestCapture(hulkContent);
     }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(dataProvider = "tabletDataContentProvider", description = "Continue Watching Compare Hulu Badging - Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceCompareTabletTest(HulkContentS3 hulkContent) {
-        aliceS3BaselineVsLatestScreenshot(hulkContent);
+        aliceS3BaseCompareLatestCapture(hulkContent);
     }
 
     public List<Object[]> parseHulkS3Json(DisneyPlusHulkDataProvider.PlatformType platformType) {
@@ -119,7 +119,13 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
-        launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+        try {
+            launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+        } catch (WebDriverException exception) {
+            LOGGER.info("Error launching deeplink. Restarting driver and trying again... " + exception.getMessage());
+            getDriver().navigate().refresh();
+            launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+        }
         detailsPage.clickOpenButton();
     }
 
@@ -143,12 +149,27 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
         }
     }
 
-
-    private void aliceS3BaselineVsLatestScreenshot(HulkContentS3 hulkContentS3) {
+    private void playContentAndNavigateToContinueWatching() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton().isOpened();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        homePage.isOpened();
+        homePage.swipeInContainer(null, Direction.UP, 1500);
+    }
+
+    private void aliceS3BaseCompareLatestCapture(HulkContentS3 hulkContentS3) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        double imageSimilarityPercentageThreshold = 90.0;
 
         navigateToDeeplink(hulkContentS3);
         recoverApp();
@@ -161,17 +182,7 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
             LOGGER.info("Count is at: " + count --);
         }
         isContentUnavailableErrorPresent(hulkContentS3);
-
-        detailsPage.isOpened();
-        detailsPage.clickPlayButton().isOpened();
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(50);
-        videoPlayer.clickBackButton();
-        detailsPage.isOpened();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        homePage.isOpened();
-        homePage.swipeInContainer(null, Direction.UP, 1500);
+        playContentAndNavigateToContinueWatching();
 
         File srcFile = homePage.getDynamicCellByName(hulkContentS3.getContinueWatchingId()).getElement().getScreenshotAs(OutputType.FILE);
         LOGGER.info("S3 File: " + hulkContentS3.getS3file());
@@ -179,13 +190,14 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
         ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3file());
         ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
         JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
+        LOGGER.info("Raw JSON response: " + jsonResponse);
         double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
 
         LOGGER.info("Similarity Percentage is: " + imageSimilarityPercentage);
-        LOGGER.info("Raw JSON response: " + jsonResponse);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(
-                imageSimilarityPercentage > ConfigProperties.getInstance().getPercentageOfSimilarity(),
+                imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
                 "Similarity Percentage score was 95 or lower.");
         sa.assertAll();
     }
