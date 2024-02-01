@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Prey",
+    "entityId": "55349764-323e-4d0e-898f-a4c12c9bf615",
+    "continueWatchingId": "fb48d823-26b6-4637-9192-6378d00b028d",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Prey-2024_01_31_19_34_59"
+  },
+  {
+    "title": "Solar Opposites",
+    "entityId": "f089664b-1a87-433b-86a5-24e7da5a246a",
+    "continueWatchingId": "f089664b-1a87-433b-86a5-24e7da5a246a",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Solar_Opposites-2024_01_31_19_36_07"
+  },
+  {
+    "title": "The Handmaid's Tale",
+    "entityId": "565d8976-9d26-4e63-866c-40f8a137ce5f",
+    "continueWatchingId": "565d8976-9d26-4e63-866c-40f8a137ce5f",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/The_Handmaid's_Tale-2024_01_31_19_37_22"
+  },
+  {
+    "title": "Only Murders In The Building",
+    "entityId": "ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
+    "continueWatchingId": "ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Only_Murders_In_The_Building-2024_01_31_19_38_28"
+  },
+  {
+    "title": "The Bear",
+    "entityId": "05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+    "continueWatchingId": "05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/The_Bear-2024_01_31_19_40_10"
+  },
+  {
+    "title": "Futurama",
+    "entityId": "85bf4cc1-cd8b-4469-ad87-7289217a0b74",
+    "continueWatchingId": "85bf4cc1-cd8b-4469-ad87-7289217a0b74",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Futurama-2024_01_31_19_41_26"
+  },
+  {
+    "title": "Faraway Downs",
+    "entityId": "1d653aaa-7415-4eb7-9831-edf3eeaa55fa",
+    "continueWatchingId": "1d653aaa-7415-4eb7-9831-edf3eeaa55fa",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Faraway_Downs-2024_01_31_19_42_32"
+  },
+  {
+    "title": "The Great",
+    "entityId": "238db0d4-c476-47ed-9bee-d326fd302f7d",
+    "continueWatchingId": "238db0d4-c476-47ed-9bee-d326fd302f7d",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/The_Great-2024_01_31_19_43_38"
+  },
+  {
+    "title": "A Murder at the End of the World",
+    "entityId": "aa1adbb2-bfd6-4d88-b709-5455bf953f9e",
+    "continueWatchingId": "aa1adbb2-bfd6-4d88-b709-5455bf953f9e",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/A_Murder_at_the_End_of_the_World-2024_01_31_19_45_09"
+  },
+  {
+    "title": "Self Reliance",
+    "entityId": "b530df17-e123-4174-8d4d-75e6f422468f",
+    "continueWatchingId": "fa31d051-4e71-4f4c-95fd-f9109083e1a5",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/continue-watching/Self_Reliance-2024_01_31_19_46_14"
+  }
+]

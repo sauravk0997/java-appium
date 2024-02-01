@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -537,6 +538,41 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         sa.assertTrue(homePage.isContentVisibleInContinueWatching(PREY), "Hulu content was not found in continue watching");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
+    @Test(description = "Hulk - Home - Continue Watching Row - Upload Hulu Content", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
+    public void uploadHuluContinueWatchingBaselineToAlice() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.isOpened();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton().isOpened();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_CONTINUE_WATCHING);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        homePage.isOpened();
+        homePage.scrollToContinueWatching();
+        pause(4);
+        System.out.println(getDriver().getPageSource());
+
+        System.out.println(homePage.getAllCollectionCells(CollectionConstant.Collection.CONTINUE_WATCHING));
+
         sa.assertAll();
     }
 

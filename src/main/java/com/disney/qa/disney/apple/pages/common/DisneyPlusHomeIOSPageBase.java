@@ -135,7 +135,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(continueWatchingText);
     }
     public void scrollToContinueWatching(){
-        swipeInContainerTillElementIsPresent(homeContentView, getContinueWatchilngLabel(), 3, Direction.UP);
+        swipeInContainerTillElementIsPresent(null, getContinueWatchilngLabel(), 3, Direction.UP);
     }
     public void initiatePlaybackFromContinueWatching(String series) {
         scrollToContinueWatching();
