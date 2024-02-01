@@ -72,8 +72,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        //AlertButton.OK.getAlertbtn();
-        handleAlert(IOSUtils.AlertButtonCommand.OK);
+        paywallIOSPageBase.clickOkBtn();
         //acceptAlert();
         //acceptAlert();
         paywallIOSPageBase.dismissNotificationsPopUp();
