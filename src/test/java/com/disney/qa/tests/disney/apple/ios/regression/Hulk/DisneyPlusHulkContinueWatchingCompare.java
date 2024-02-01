@@ -15,6 +15,7 @@ import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -39,12 +40,14 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
     public void continueWatchingAliceCompareHandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
     @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
     public void continueWatchingAliceCompareTabletTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);

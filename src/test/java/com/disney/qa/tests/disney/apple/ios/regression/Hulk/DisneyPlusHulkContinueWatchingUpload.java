@@ -39,6 +39,7 @@ public class DisneyPlusHulkContinueWatchingUpload extends DisneyBaseTest {
     private static final List<String> s3ImageNames = new ArrayList<>();
     private static String jsonS3FilePath = "";
 
+//    XMOBQA-74621
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
     public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
