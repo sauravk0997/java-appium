@@ -40,13 +40,13 @@ public class DisneyPlusHulkContinueWatchingUpload extends DisneyBaseTest {
     private static String jsonS3FilePath = "";
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
+    @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
-    @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
+    @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceUploadTabletTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
     }

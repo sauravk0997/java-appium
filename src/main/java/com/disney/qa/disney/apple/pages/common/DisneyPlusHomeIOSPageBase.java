@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -132,6 +131,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void initiatePlaybackFromContinueWatching(String series) {
+        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
         continueWatchingContentView.format(continueWatchingText, series).click();
     }
 
@@ -155,9 +155,5 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNetworkLogoImageVisible(){
         return networkLogoImage.isPresent();
-    }
-
-    public boolean isContentVisibleInContinueWatching(String content) {
-        return continueWatchingContentView.format(continueWatchingText, content).isPresent();
     }
 }

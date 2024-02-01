@@ -40,14 +40,14 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
-    @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
+    @Test(dataProvider = "handsetDataContentProvider", description = "Continue Watching Compare Hulu Badging - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceCompareHandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
-    @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
+    @Test(dataProvider = "tabletDataContentProvider", description = "Continue Watching Compare Hulu Badging - Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceCompareTabletTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
