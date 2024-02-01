@@ -91,8 +91,6 @@ public enum DisneyParameters {
 
     private final String key;
     private static String runtimeEnvironment;
-    // ****** DO NOT MODIFY THE LIST OF IPs BELOW ******
-    private static ArrayList<String> elasticIpAddresses = new ArrayList<>(Arrays.asList("52.202.75.170", "52.203.210.143", "52.203.219.69","52.203.238.163","52.203.238.174","52.203.238.166"));
     private static final String INVALID_ENVIRONMENT = "'%s' is an invalid environment parameter for available";
 
     DisneyParameters(String key) {
@@ -419,10 +417,6 @@ public enum DisneyParameters {
         awsRegionalList.add("eu-west-1");
 
         return awsRegionalList;
-    }
-
-    public static List<String> returnQaAwsNatIps() {
-        return elasticIpAddresses;
     }
 
     public static String getOneIdProductClient() {
