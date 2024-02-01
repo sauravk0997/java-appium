@@ -124,7 +124,7 @@ public class DisneyPlusHulkContinueWatchingUpload extends DisneyBaseTest {
     private void setUp() {
         initialSetup("US", "en");
         handleAlert();
-//        disableBrazeConfig();
+        disableBrazeConfig();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         }

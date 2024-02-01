@@ -167,12 +167,10 @@ public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(50);
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
-
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         homePage.isOpened();
-
-        System.out.println(getDriver().getPageSource());
         homePage.swipeInContainer(null, Direction.UP, 1500);
+        sa.assertTrue(homePage.isContentVisibleInContinueWatching(hulkContentS3.getTitle()), "Content was not found in Continue Watching collection.");
 
         File srcFile = homePage.getDynamicCellByName(hulkContentS3.getContinueWatchingId()).getElement().getScreenshotAs(OutputType.FILE);
         LOGGER.info("S3 File: " + hulkContentS3.getS3file());

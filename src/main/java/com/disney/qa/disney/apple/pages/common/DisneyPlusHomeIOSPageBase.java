@@ -131,14 +131,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         brandTiles.get(new SecureRandom().nextInt(brandTiles.size() - 1)).click();
     }
 
-    public ExtendedWebElement getContinueWatchilngLabel() {
-        return getDynamicAccessibilityId(continueWatchingText);
-    }
-    public void scrollToContinueWatching(){
-        swipeInContainerTillElementIsPresent(null, getContinueWatchilngLabel(), 3, Direction.UP);
-    }
     public void initiatePlaybackFromContinueWatching(String series) {
-        scrollToContinueWatching();
         continueWatchingContentView.format(continueWatchingText, series).click();
     }
 
@@ -165,7 +158,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContentVisibleInContinueWatching(String content) {
-        scrollToContinueWatching();
         return continueWatchingContentView.format(continueWatchingText, content).isPresent();
     }
 }
