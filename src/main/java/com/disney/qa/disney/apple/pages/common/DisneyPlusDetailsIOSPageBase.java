@@ -27,6 +27,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private static final String PHONE = "Phone";
     private static final String DOWNLOAD_COMPLETED = "Download completed";
     private static final String WATCH = "WATCH";
     private static final String LOWER_CASE_WATCH = "watch";
@@ -618,7 +619,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSuggestedTabPresent() {
-        if (!suggestedTab.isPresent() && "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (!suggestedTab.isPresent() && PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1200);
         }
         return suggestedTab.isPresent();
@@ -630,7 +631,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeInContainer(null, Direction.UP, 1200);
         }
         clickSuggestedTab();
@@ -776,7 +777,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isShopWebviewOpen() {
-        ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+        ExtendedWebElement addressbar = PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
         return addressbar.getText().contains(SHOP_WEB_URL);
     }
 

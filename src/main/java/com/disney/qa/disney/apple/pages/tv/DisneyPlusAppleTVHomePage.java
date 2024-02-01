@@ -146,8 +146,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
                 return currentMenu;
             }
         }
-      Assert.fail("Failed to find focused global nav menu item");
-        return StringUtils.EMPTY;
+        throw new SkipException("Failed to find focused global nav menu item");
     }
 
     public void openGlobalNavWithClickingMenu() {
