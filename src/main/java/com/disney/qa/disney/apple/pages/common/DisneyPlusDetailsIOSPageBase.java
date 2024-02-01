@@ -324,6 +324,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         downloadSeasonButton.click();
     }
 
+    public ExtendedWebElement getDownloadAllSeasonButton() { return downloadSeasonButton; }
+
     public void clickSeasonsButton(String season) {
         if (!isSeasonButtonDisplayed(season)) {
             scrollDown();
@@ -466,8 +468,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return trailerButton;
     }
 
-    public boolean isDownloadButtonDisplayed() {
-        return movieDownloadButton.isElementPresent();
+    public boolean isMovieDownloadButtonDisplayed() {
+        return movieDownloadButton.isPresent();
     }
 
     public boolean doesOneOrMoreSeasonDisplayed() {
@@ -797,5 +799,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void navigateToShopWebPage() {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
+    }
+
+    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
+        return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
 }
