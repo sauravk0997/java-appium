@@ -32,7 +32,7 @@ import java.util.*;
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
-public class DisneyPlusHulkContinueWatchingUpload extends DisneyBaseTest {
+public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
 
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     private static final Map<File, String> imageS3UploadRequests = new LinkedHashMap<>();

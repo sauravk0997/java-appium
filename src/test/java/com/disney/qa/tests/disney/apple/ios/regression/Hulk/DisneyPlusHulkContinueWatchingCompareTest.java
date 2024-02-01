@@ -36,7 +36,7 @@ import java.util.*;
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
-public class DisneyPlusHulkContinueWatchingCompare extends DisneyBaseTest {
+public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
