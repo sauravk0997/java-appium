@@ -218,7 +218,6 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
         homePage.isOpened();
-        System.out.println(getDriver().getPageSource());
         takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
         sa.assertAll();
     }
