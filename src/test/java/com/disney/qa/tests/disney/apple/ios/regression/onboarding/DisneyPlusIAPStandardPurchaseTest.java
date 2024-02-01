@@ -73,8 +73,6 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
         paywallIOSPageBase.clickOkBtn();
-        //acceptAlert();
-        //acceptAlert();
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
@@ -84,9 +82,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
-        addProfilePage.clickPrimaryButton();
         pause(3);
-        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
@@ -134,8 +130,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        acceptAlert();
-        acceptAlert();
+        paywallIOSPageBase.clickOkBtn();
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
         addProfilePage.createProfileForNewUser(DEFAULT_PROFILE);
@@ -145,9 +140,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
-        addProfilePage.clickPrimaryButton();
         pause(3);
-        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
@@ -194,8 +187,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
-        acceptAlert();
-        acceptAlert();
+        paywallIOSPageBase.clickOkBtn();
         pause(3);
         paywallIOSPageBase.dismissNotificationsPopUp();
         //Create profile
@@ -206,10 +198,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         }
         //Not now button
         addProfilePage.clickSecondaryButtonByCoordinates();
-        pause(1);
-        addProfilePage.clickPrimaryButton();
         pause(3);
-        addProfilePage.clickPrimaryButton();
         addProfilePage.clickMoreTab();
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
         accountPage.isSingleSubHeaderPresent();
