@@ -119,4 +119,24 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265"})
+    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
+    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(true, deepLink, 10);
+        homePage.clickOpenButton();
+
+        sa.assertTrue(homePage.getUnavailableContentError().isPresent(), "Unavailable content error not present.");
+        sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
+
+        homePage.getUnavailableOkButton().click();
+        sa.assertTrue(homePage.isOpened(), "Home page not present");
+        sa.assertAll();
+    }
 }
