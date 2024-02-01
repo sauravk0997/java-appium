@@ -20,7 +20,6 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Hulk-Compare"/>
-    <!--<parameter name="scheduling" value="H 0 * * *"/>-->
 
     <test verbose="1" name="iOS Handset Hulk Continue Watching Upload" parallel="methods">
         <classes>
