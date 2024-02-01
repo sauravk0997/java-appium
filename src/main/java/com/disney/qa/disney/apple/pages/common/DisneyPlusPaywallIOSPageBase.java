@@ -51,6 +51,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
     private ExtendedWebElement alertFinishLaterBtn;
 
+    @ExtendedFindBy(accessibilityId = "OK")
+    private ExtendedWebElement alertOkBtn;
+
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
@@ -215,6 +218,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void tapFinishLaterButton() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         alertFinishLaterBtn.click();
+    }
+
+    public void clickOkBtn() {
+        alertOkBtn.clickIfPresent();
     }
 
     public void clickBasicPlan() {
