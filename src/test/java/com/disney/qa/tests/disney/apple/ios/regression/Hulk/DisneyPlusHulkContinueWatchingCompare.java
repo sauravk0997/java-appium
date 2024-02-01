@@ -10,7 +10,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDataProvider.HulkContentS3;
-import com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusAliceDataProvider;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
