@@ -10,6 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hatter-api.version>2.0.24</hatter-api.version>
         <carina-core_version>1.2.7.P3-SNAPSHOT</carina-core_version>
         <carina-appcenter.version>1.2.7.P1-SNAPSHOT</carina-appcenter.version>
         <byte-buddy.version>1.14.5</byte-buddy.version>
@@ -72,6 +73,33 @@
     <dependencies>
  <dependency>
             <groupId>com.disney</groupId>
+            <artifactId>hatter-api</artifactId>
+            <version>${hatter-api.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hulu.sidekick</groupId>
+                    <artifactId>locksmith</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.zebrunner</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.disney</groupId>
             <artifactId>disney-api-utils</artifactId>
             <version>${disney-api-utils-version}</version>
             <exclusions>
@@ -102,6 +130,10 @@
                 <exclusion>
                     <groupId>com.disney</groupId>
                     <artifactId>Google-sheets-wrapper</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
