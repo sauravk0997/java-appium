@@ -20,9 +20,15 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
+    public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String PREY = "Prey";
-    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
+    private static final String BLUEY = "Bluey";
+    private static final String HULU = "Hulu";
+    private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String ADULT_DOB = "1980-10-23";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
@@ -364,6 +370,173 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
         validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74916"})
+    @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileNoHulu() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        //No upsell
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        sa.assertFalse(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account option was available to a child account, upsell option possible");
+
+        //Home
+        moreMenu.clickHomeIcon();
+        homePage.isOpened();
+        homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
+                String.format("%s contains %s", element.getText(), HULU)));
+        sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Home page");
+
+        //Search
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Search page");
+
+        //Hulu Original Movie
+        searchPage.searchForMedia(PREY);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(PREY), PREY + " 'no results found' message not found.");
+
+        //Hulu Original Kids Series
+        searchPage.clearText();
+        searchPage.searchForMedia(THE_BRAVEST_KNIGHT);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(THE_BRAVEST_KNIGHT), THE_BRAVEST_KNIGHT + " 'no results found' message not found.");
+
+        //Details
+        searchPage.clearText();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Detail page");
+
+        //Ad badge
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75114"})
+    @Test(description = "Hulu Movie Download - download metadata and playable", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluMovieDownloadAsset() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.startDownload();
+        detailsPage.waitForMovieDownloadComplete(350, 20);
+        detailsPage.clickDownloadsIcon();
+        downloadsPage.isOpened();
+
+        //Downloaded movie asset metadata
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
+        sa.assertTrue(downloadsPage.getDownloadedAssetImage(PREY).isPresent(), "Downloaded movie asset image was not found.");
+        sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(), "Downloaded movie asset size and runtime are not found.");
+        sa.assertTrue(downloadsPage.getRating().getText().toLowerCase().contains("r"), "Movie downloaded asset rating not found.");
+
+        //Playback of downloaded movie asset
+        downloadsPage.tapDownloadedAsset(PREY);
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75248"})
+    @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyShopTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Tested this scenario with Disney content as we dont have any Hulu content with shop tab in PROD currently
+
+        //Primary Adult Profile
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickShopTab();
+        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+
+        //Currently we dont have copy key and value in dictionary for Hulu content copy hence while validating passed full string text
+        //Once we will get copy key and value in Dictionary, we need to replace String text with copy key in below validation
+        sa.assertTrue(detailsPage.getShopTabImage().isPresent(), "Background Image was not found");
+        sa.assertTrue(detailsPage.isShopTabHeadingTextPresent(), "Shop Tab Header was not found");
+        sa.assertTrue(detailsPage.isShopTabSubHeadingTextPresent(), "Shop Tab Sub-Header was not found");
+        sa.assertTrue(detailsPage.isShopTabNavigateToWebTextPresent(), "Shop Tab Go to Disney Text was not found");
+        sa.assertTrue(detailsPage.isShopTabLegalTextPresent(), "Shop Tab Legal text was not found");
+
+        detailsPage.navigateToShopWebPage();
+        sa.assertTrue(detailsPage.isShopWebviewOpen(), "Shop web page not opened");
+        moreMenu.goBackToDisneyAppFromSafari();
+
+        //Secondary
+        homePage.clickMoreTab();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertFalse(detailsPage.getShopBtn().isPresent(), "Shop button was found on Secondary profile.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75112"})
+    @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        //Movie
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertFalse(detailsPage.isMovieDownloadButtonDisplayed(), "Movie download button is not displayed.");
+
+        //Series
+        detailsPage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertFalse(detailsPage.getEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
+        sa.assertFalse(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all season button was found.");
         sa.assertAll();
     }
 

@@ -18,6 +18,7 @@ public class CollectionConstant {
         TRENDING,
         HULU_FEATURED,
         HULU_ORIGINALS,
+        KIDS_CAROUSEL, //Kids carousel rotating slides
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         KIDS_MICKEY_AND_FRIENDS,
         STUDIOS_AND_NETWORKS;
@@ -32,7 +33,7 @@ public class CollectionConstant {
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
             case CAROUSEL:
-                return "5c3a73f7-f06c-42c6-ab6c-525ba9af1327";
+                return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:
                 return "ed2d5ad2-cfc6-42c7-942e-aa539772f10c";
             case COMEDIES:
@@ -55,6 +56,8 @@ public class CollectionConstant {
                 return "6b62e9fa-5749-45a2-bde1-a7fbc49d4ae5";
             case HULU_ORIGINALS:
                 return "a55ccd44-a52f-486c-9aaa-29a19297aab4";
+            case KIDS_CAROUSEL:
+                return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:

@@ -42,8 +42,9 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
     protected static final String USER_PROFILE = "user_profile";
@@ -278,6 +279,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
     protected ExtendedWebElement artworkBackground;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
+    protected ExtendedWebElement tabletWebviewAddressBar;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
+    protected ExtendedWebElement phoneWebviewAddressBar;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1251,4 +1258,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
+
+    public boolean isDownloadsTabDisplayed() { return downloadTab.isPresent(); }
 }

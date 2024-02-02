@@ -36,6 +36,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
+    private static final String SHOP_WEB_URL = "shopdisney.com";
+    private static final String SHOP_TAB_HEADING = "Shop this Character";
+    private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
+    private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last";
+    private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
 
     //LOCATORS
 
@@ -70,7 +75,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "EXTRAS")
     protected ExtendedWebElement extrasTab;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Max Width View\"]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
 
     @FindBy(name = "titleLabel_0")
@@ -166,6 +171,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
     private ExtendedWebElement firstRunTimeLabel;
 
+    @ExtendedFindBy(accessibilityId = "SHOP")
+    protected ExtendedWebElement shopTab;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
+    private ExtendedWebElement shopTabImage;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -233,23 +244,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public void waitForSeriesDownloadToComplete() {
+    public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for series download to complete");
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
-                .until(it -> getDownloadCompleteButton().isPresent());
-        LOGGER.info(DOWNLOAD_COMPLETED);
-    }
-
-    public void waitForLongSeriesDownloadToComplete(int timeOut, int polling) {
-        LOGGER.info("Waiting for long series download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
-    public void waitForMovieDownloadComplete() {
+    public void waitForMovieDownloadComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for movie download to complete");
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Downloaded button is not present")
+        fluentWait(getDriver(), timeOut, polling, "Downloaded button is not present")
                 .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
@@ -319,6 +323,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void downloadAllOfSeason() {
         downloadSeasonButton.click();
     }
+
+    public ExtendedWebElement getDownloadAllSeasonButton() { return downloadSeasonButton; }
 
     public void clickSeasonsButton(String season) {
         if (!isSeasonButtonDisplayed(season)) {
@@ -462,8 +468,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return trailerButton;
     }
 
-    public boolean isDownloadButtonDisplayed() {
-        return movieDownloadButton.isElementPresent();
+    public boolean isMovieDownloadButtonDisplayed() {
+        return movieDownloadButton.isPresent();
     }
 
     public boolean doesOneOrMoreSeasonDisplayed() {
@@ -754,4 +760,48 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
 
     public ExtendedWebElement getShareBtn() { return shareBtn; }
+
+    public ExtendedWebElement getShopBtn() { return shopTab; }
+
+    public void clickShopTab() {
+        if (!shopTab.isPresent()) {
+            swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
+            swipeTabBar(Direction.LEFT, 1000);
+        }
+        shopTab.click();
+    }
+
+    public ExtendedWebElement getShopTabImage() {
+        return shopTabImage;
+    }
+
+    public boolean isShopWebviewOpen() {
+        ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+        return addressbar.getText().contains(SHOP_WEB_URL);
+    }
+
+    public boolean isShopTabHeadingTextPresent() {
+        return getStaticTextByLabel(SHOP_TAB_HEADING).isPresent();
+    }
+
+    public boolean isShopTabSubHeadingTextPresent() {
+        return getStaticTextByLabelContains(SHOP_TAB_SUBHEADING).isPresent();
+    }
+
+    public boolean isShopTabLegalTextPresent() {
+        return getStaticTextByLabel(SHOP_TAB_LEGALTEXT).isPresent();
+    }
+
+    public boolean isShopTabNavigateToWebTextPresent() {
+        return getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).isPresent();
+    }
+
+    public void navigateToShopWebPage() {
+        getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
+    }
+
+    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
+        return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
+    }
 }

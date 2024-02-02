@@ -147,7 +147,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
-        sa.assertTrue(detailsPage.isDownloadButtonDisplayed(), "Details page download button not present");
+        sa.assertTrue(detailsPage.isMovieDownloadButtonDisplayed(), "Details page download button not present");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1), "Metadata year does not contain details tab year.");
 
         sa.assertAll();
