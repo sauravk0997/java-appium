@@ -10,10 +10,12 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.config.Configuration;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.remote.options.SupportsAppOption;
 import io.appium.java_client.remote.options.SupportsFullResetOption;
 import io.appium.java_client.remote.options.SupportsNoResetOption;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
@@ -92,6 +94,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
+    @Getter
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 4)),
@@ -99,18 +102,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130));
 
-        DateHelper.Month month;
-        String day;
-        String year;
+        private final DateHelper.Month month;
+        private final String day;
+        private final String year;
 
         Person(DateHelper.Month month, String day, String year) {
             this.month = month;
             this.day = day;
             this.year = year;
-        }
-
-        public DateHelper.Month getMonth() {
-            return this.month;
         }
 
         public String getDay() {
@@ -125,9 +124,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
 
-        public String getYear() {
-            return this.year;
-        }
     }
 
     /**
@@ -319,7 +315,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void downloadApp(String version) {
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
             installApp(AppCenterManager.getInstance()
@@ -333,8 +330,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void downloadDisneyApp() {
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        String appVersion = R.CONFIG.get("appVersion");
+        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
+        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
             installApp(AppCenterManager.getInstance()
@@ -384,7 +382,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         jarvis.openOverrideSection("platformConfig");
         applePageBase.scrollToItem("oneTrustConfig").click();
         LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
-        boolean enableOneTrustConfig = Boolean.parseBoolean(R.CONFIG.get("enableOneTrustConfig"));
+        boolean enableOneTrustConfig = Configuration.get(DisneyConfiguration.Parameter.ENABLE_ONE_TRUST_CONFIG, Boolean.class).orElse(false);
         if (enableOneTrustConfig) {
             LOGGER.info("Navigating to domainIdentifier..");
             applePageBase.scrollToItem("domainIdentifier").click();
@@ -403,7 +401,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-                handleAlert();
+        handleAlert();
     }
 
     public void disableBrazeConfig() {

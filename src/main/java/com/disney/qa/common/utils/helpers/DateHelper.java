@@ -3,6 +3,7 @@ package com.disney.qa.common.utils.helpers;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import lombok.Getter;
 
 public class DateHelper {
 
@@ -20,8 +21,9 @@ public class DateHelper {
         NOVEMBER("November", "11"),
         DECEMBER("December", "12");
 
-        String monthName;
-        String num;
+        private final String monthName;
+        @Getter
+        private final String num;
 
         Month(String month, String num) {
             this.monthName = month;
@@ -32,9 +34,6 @@ public class DateHelper {
             return this.monthName;
         }
 
-        public String getNum() {
-            return this.num;
-        }
     }
 
     private DateHelper() {
@@ -43,30 +42,30 @@ public class DateHelper {
 
     public static String localizeMonth(Month month, DisneyLocalizationUtils dictionary) {
         switch (month) {
-            case JANUARY:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JANUARY.getText());
-            case FEBRUARY:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_FEBRUARY.getText());
-            case MARCH:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_MARCH.getText());
-            case APRIL:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_APRIL.getText());
-            case MAY:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_MAY.getText());
-            case JUNE:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JUNE.getText());
-            case JULY:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JULY.getText());
-            case AUGUST:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_AUGUST.getText());
-            case SEPTEMBER:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_SEPTEMBER.getText());
-            case OCTOBER:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_OCTOBER.getText());
-            case NOVEMBER:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_NOVEMBER.getText());
-            default:
-                return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_DECEMBER.getText());
+        case JANUARY:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JANUARY.getText());
+        case FEBRUARY:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_FEBRUARY.getText());
+        case MARCH:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_MARCH.getText());
+        case APRIL:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_APRIL.getText());
+        case MAY:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_MAY.getText());
+        case JUNE:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JUNE.getText());
+        case JULY:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_JULY.getText());
+        case AUGUST:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_AUGUST.getText());
+        case SEPTEMBER:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_SEPTEMBER.getText());
+        case OCTOBER:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_OCTOBER.getText());
+        case NOVEMBER:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_NOVEMBER.getText());
+        default:
+            return dictionary.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.COMMERCE, DictionaryKeys.MONTH_DECEMBER.getText());
         }
     }
 }

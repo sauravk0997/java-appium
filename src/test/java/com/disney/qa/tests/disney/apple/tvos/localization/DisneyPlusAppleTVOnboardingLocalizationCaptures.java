@@ -4,8 +4,10 @@ import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneyApiCommon;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.options.SupportsAppOption;
 import org.openqa.selenium.NoSuchElementException;
@@ -40,7 +42,8 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("unpinDictionaries"));
+        boolean unpinDictionaries = Configuration.get(DisneyConfiguration.Parameter.UNPIN_DICTIONARIES, Boolean.class)
+                .orElse(false);
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
         if (unpinDictionaries || displayDictionaryKeys || (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null"))) {

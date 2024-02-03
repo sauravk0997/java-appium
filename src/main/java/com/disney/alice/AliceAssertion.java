@@ -4,6 +4,7 @@ import com.disney.alice.model.RecognitionMetaType;
 import org.testng.asserts.SoftAssert;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,9 @@ public class AliceAssertion extends AliceAssert {
 
         List<RecognitionMetaType> assertColorContains = response
                 .stream()
-                .filter(c -> label.equals(c.getLabel()) && Arrays.stream(c.getColors().getNames()).collect(Collectors.toList()).containsAll(colors))
+                .filter(c -> label.equals(c.getLabel()) &&
+                        new HashSet<>(Arrays.stream(c.getColors().getNames()).collect(Collectors.toList()))
+                                .containsAll(colors))
                 .collect(Collectors.toList());
         sa.assertTrue(!assertColorContains.isEmpty(),"Colors not found for label " + label);
 

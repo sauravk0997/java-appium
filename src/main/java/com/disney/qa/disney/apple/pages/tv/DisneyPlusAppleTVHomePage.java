@@ -180,7 +180,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         ORIGINALS("Originals"),
         SETTINGS("settingsTab");
 
-        private String menu;
+        private final String menu;
 
         globalNavigationMenu(String menu) {
             this.menu = menu;
@@ -202,7 +202,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         ORIGINALS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText())),
         SETTINGS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText()));
 
-        private String menu;
+        private final String menu;
 
         globalNavigationMenuText(String menu) {
             this.menu = menu;

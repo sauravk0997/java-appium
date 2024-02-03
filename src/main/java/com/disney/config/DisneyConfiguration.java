@@ -3,12 +3,14 @@ package com.disney.config;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.config.IParameter;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Set;
 
 public final class DisneyConfiguration extends Configuration {
     private static final Set<String> PARTNERS = Set.of("disney", "star");
+    private static final Set<String> DEVICE_TYPES = Set.of("Phone", "Tablet", "tvOS");
 
     public enum Parameter implements IParameter {
 
@@ -23,7 +25,17 @@ public final class DisneyConfiguration extends Configuration {
 
         USE_MULTIVERSE("useMultiverse"),
 
-        ENABLE_HORA_VALIDATION("enable_hora_validation");
+        ENABLE_HORA_VALIDATION("enable_hora_validation"),
+
+        ENABLE_ONE_TRUST_CONFIG("enableOneTrustConfig"),
+
+        SAGEMAKER_ENDPOINT("sagemaker_endpoint"),
+
+        APP_VERSION("appVersion"),
+
+        UNPIN_DICTIONARIES("unpinDictionaries"),
+
+        OLD_APP_VERSION("oldAppVersion");
 
         private final String name;
 
@@ -44,5 +56,16 @@ public final class DisneyConfiguration extends Configuration {
                     partner, Parameter.PARTNER.getKey(), PARTNERS));
         }
         return partner;
+    }
+
+    public static String getDeviceType() {
+        String deviceType = WebDriverConfiguration.getZebrunnerCapability("deviceType").orElseThrow(() ->
+                new InvalidConfigurationException("Please add 'capabilities.deviceType' to the configuration. "
+                        + "Possible values: 'Phone', 'Tablet', 'tvOS'"));
+        if (!StringUtils.equalsAnyIgnoreCase(deviceType, DEVICE_TYPES.toArray(new String[0]))) {
+            throw new InvalidConfigurationException(String.format("Provided '%s' value for '%s' capability, but it could contains only: %s",
+                    deviceType, "deviceType", DEVICE_TYPES));
+        }
+        return deviceType;
     }
 }

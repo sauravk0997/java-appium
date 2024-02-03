@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.zebrunner.carina.utils.R;
+import com.disney.config.DisneyConfiguration;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -17,7 +17,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -619,7 +618,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSuggestedTabPresent() {
-        if (!suggestedTab.isPresent() && "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE))) {
+        if (!suggestedTab.isPresent() && "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipePageTillElementTappable(suggestedTab, 1, null, Direction.UP, 1200);
         }
         return suggestedTab.isPresent();
@@ -631,7 +630,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void compareSuggestedTitleToMediaTitle(SoftAssert sa) {
         Map<String, String> params = new HashMap<>();
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE))) {
+        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeInContainer(null, Direction.UP, 1200);
         }
         clickSuggestedTab();
@@ -777,7 +776,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isShopWebviewOpen() {
-        ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+        ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
         return addressbar.getText().contains(SHOP_WEB_URL);
     }
 

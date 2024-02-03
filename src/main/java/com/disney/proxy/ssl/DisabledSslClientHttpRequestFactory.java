@@ -35,10 +35,6 @@ public class DisabledSslClientHttpRequestFactory extends SimpleClientHttpRequest
             ((HttpsURLConnection) connection).setSSLSocketFactory(sslContext.getSocketFactory());
             ((HttpsURLConnection) connection).setHostnameVerifier(new NullHostnameVerifier());
         }
-
-//        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 8888));
-//        setProxy(proxy);
-
         super.prepareConnection(connection, httpMethod);
     }
 

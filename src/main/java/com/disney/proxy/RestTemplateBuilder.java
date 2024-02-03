@@ -33,7 +33,7 @@ public class RestTemplateBuilder {
 
 	protected RestTemplate restTemplate = new RestTemplate();
 
-	protected List<HttpMessageConverter<?>> httpMessageConverters = new ArrayList<HttpMessageConverter<?>>();
+	protected List<HttpMessageConverter<?>> httpMessageConverters = new ArrayList<>();
 
 	protected boolean isDisableSslChecking = false;
 
@@ -106,12 +106,7 @@ public class RestTemplateBuilder {
 
 			HttpMessageConverter<?> httpMessageConverter = Iterables.tryFind(
 					restTemplate.getMessageConverters(),
-					new Predicate<HttpMessageConverter<?>>() {
-						@Override
-						public boolean apply(HttpMessageConverter<?> input) {
-							return input instanceof MappingJackson2HttpMessageConverter;
-						}
-					}).orNull();
+					MappingJackson2HttpMessageConverter.class::isInstance).orNull();
 
 			restTemplate.getMessageConverters().remove(httpMessageConverter);
 		}

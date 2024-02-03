@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -10,6 +11,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.disney.util.ZipUtils;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.config.Configuration;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -33,7 +35,8 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
     @BeforeMethod(alwaysRun = true)
     public void proxySetUp() {
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("unpinDictionaries"));
+        boolean unpinDictionaries = Configuration.get(DisneyConfiguration.Parameter.UNPIN_DICTIONARIES, Boolean.class)
+                .orElse(false);
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
         if (unpinDictionaries || displayDictionaryKeys || (!globalizationVersion.isEmpty() && !globalizationVersion.equalsIgnoreCase("null"))) {

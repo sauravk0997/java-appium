@@ -31,7 +31,7 @@ import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
 import io.appium.java_client.remote.options.SupportsAppOption;
-import org.apache.commons.collections.MapUtils;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
@@ -77,7 +77,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
         protected DisneyContentApiChecker initialize() {
-            if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
+            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyContentApiChecker(MobilePlatform.TVOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                         DisneyConfiguration.getPartner());
             } else {
@@ -94,7 +94,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
                                     () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
                     .getVersion();
             LOGGER.info("version:{}", version);
-            if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
+            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
             } else {
                 return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
@@ -105,7 +105,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         @Override
         protected DisneyLocalizationUtils initialize() {
             DisneyLocalizationUtils disneyLocalizationUtils;
-            if (StringUtils.equalsIgnoreCase(R.CONFIG.get("capabilities.deviceType"), "tvOS")) {
+            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), "apple-tv", "prod",
                         DisneyConfiguration.getPartner());
             } else {
@@ -314,25 +314,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     //API Threads
 
+    @Getter
     public enum BuildType {
         ENTERPRISE("com.disney.disneyplus.enterprise", JarvisAppleParameters.getEnterpriseBundle()),
         AD_HOC("com.bamtech.dominguez", JarvisAppleParameters.getAdhocBundle()),
         IAP("com.disney.disneyplus", JarvisAppleParameters.getIapBundle());
 
-        private String disneyBundle;
-        private String jarvisBundle;
+        private final String disneyBundle;
+        private final String jarvisBundle;
 
         BuildType(String disneyBundle, String jarvisBundle) {
             this.disneyBundle = disneyBundle;
             this.jarvisBundle = jarvisBundle;
-        }
-
-        public String getDisneyBundle() {
-            return this.disneyBundle;
-        }
-
-        public String getJarvisBundle() {
-            return this.jarvisBundle;
         }
     }
 

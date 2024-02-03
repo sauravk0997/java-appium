@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
@@ -8,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -105,7 +105,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.clickSaveBtn();
         //User shouldn't see password screen, instead they should directly go to consent screen.
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             //For iPhone 8 or some other small devices need to scroll more time to read full consent/terms
             parentalConsent.scrollConsentContent(4);
@@ -146,7 +146,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), "Children's Privacy Policy Link is not present on Consent screen");
 
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
             parentalConsent.clickAlertConfirm();
@@ -228,7 +228,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         pause(2);
         editProfilePage.clickEditModeProfile(getAccount().getFirstName());
-        if (R.CONFIG.get("capabilities.deviceType").equals("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             swipeUp(400);
         }
         editProfilePage.waitForPresenceOfAnElement(editProfilePage.getSharePlay());
@@ -313,7 +313,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         addProfile.clickSaveProfileButton();
         //Consent authentication
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             scrollDown();
         }
@@ -426,7 +426,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         addProfile.clickSaveBtn();
         //minor consent is shown
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             scrollDown();
         }
@@ -517,7 +517,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not returned to the add profile page after navigating back from safari");
         addProfile.clickSaveBtn();
         //minor consent is shown
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             scrollDown();
         }

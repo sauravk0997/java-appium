@@ -99,6 +99,10 @@
                     <groupId>io.grpc</groupId>
                     <artifactId>grpc-netty</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.disney</groupId>
+                    <artifactId>Google-sheets-wrapper</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -181,6 +185,10 @@
                 <exclusion>
                     <groupId>com.zebrunner</groupId>
                     <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.disney</groupId>
+                    <artifactId>hatter-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

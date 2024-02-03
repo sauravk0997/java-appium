@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
