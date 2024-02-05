@@ -111,6 +111,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75264"})
     @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
     public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
@@ -144,6 +145,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265"})
     @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks")
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
@@ -201,6 +203,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
             huluPage.clickOnNetworkBackButton();
             sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
         });
+
         sa.assertAll();
     }
 }
