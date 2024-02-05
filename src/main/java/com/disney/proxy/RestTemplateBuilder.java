@@ -3,7 +3,6 @@ package com.disney.proxy;
 import com.disney.proxy.ssl.DisabledSslClientHttpRequestFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.apache.http.auth.AuthScope;
@@ -27,7 +26,6 @@ import java.util.List;
 
 /**
  * Created by mk on 6/30/15.
- * todo remove spring
  */
 public class RestTemplateBuilder {
 
