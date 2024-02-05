@@ -114,8 +114,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V1));
         setAppToHomeScreen(getAccount());
-
-
+        
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
