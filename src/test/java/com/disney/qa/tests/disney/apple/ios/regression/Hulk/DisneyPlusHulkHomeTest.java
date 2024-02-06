@@ -25,7 +25,7 @@ import java.util.*;
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
-    double imageSimilarityPercentageThreshold = 85.0;
+    double imageSimilarityPercentageThreshold = 90.0;
 
     private String buildS3BucketPath(String title) {
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
