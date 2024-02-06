@@ -216,10 +216,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("downloadComplete24");
     }
 
-    public ExtendedWebElement getHuluDownloadCompleteButton() {
-        return dynamicBtnFindByLabelContains.format("Offline Download Options");
-    }
-
     public boolean isContinueButtonPresent() {
         return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
     }
@@ -256,13 +252,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for series download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getDownloadCompleteButton().isPresent());
-        LOGGER.info(DOWNLOAD_COMPLETED);
-    }
-
-    public void waitForHuluSeriesDownloadToComplete(int timeOut, int polling) {
-        LOGGER.info("Waiting for series download to complete");
-        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
-                .until(it -> getHuluDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -816,7 +805,27 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
+    /**
+     * Use with hulu series content only - to get Hulu series episode download button
+     */
     public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
+    }
+
+    /**
+     * Use with hulu series content only - to get Hulu series download complete button
+     */
+    public ExtendedWebElement getHuluSeriesDownloadCompleteButton() {
+        return dynamicBtnFindByLabelContains.format("Offline Download Options");
+    }
+
+    /**
+     * Use with hulu series content only - to wait for hulu series download to complete
+     */
+    public void waitForHuluSeriesDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for series download to complete");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
     }
 }
