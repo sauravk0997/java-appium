@@ -32,16 +32,15 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyRecentSearchWhenNoSearchMade() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "search_button_selected");
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
         searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertAll();
     }
 }
