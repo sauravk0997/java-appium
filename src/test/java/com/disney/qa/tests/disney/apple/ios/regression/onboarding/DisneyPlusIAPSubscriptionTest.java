@@ -97,7 +97,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -133,6 +135,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
+        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
@@ -196,6 +199,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
 
+        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         DisneyAccount expiredAccount = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(expiredAccount);
@@ -225,6 +229,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
+        welcomePage.clickDontAllowBtn();
         welcomePage.dismissNotificationsPopUp();
         welcomePage.clickLogInButton();
         login(nonActiveAccount);
@@ -278,13 +283,15 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
+        verifySignUpButtonNavigation();
+        SoftAssert sa = new SoftAssert();
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.enterPasswordValue("1234AB!@");
@@ -314,7 +321,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
         setAccount(getAccountApi().createAccount(offerName, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+        welcomeScreen.clickDontAllowBtn();
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
@@ -332,6 +341,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase restartSubs = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        welcomeScreen.clickDontAllowBtn();
         welcomePage.dismissNotificationsPopUp();
         welcomePage.clickLogInButton();
         login(expired);
@@ -396,6 +407,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        welcomeScreen.clickDontAllowBtn();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
@@ -465,6 +478,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        welcomeScreen.clickDontAllowBtn();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_PREMIUM_22,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
@@ -528,6 +543,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        welcomeScreen.clickDontAllowBtn();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
