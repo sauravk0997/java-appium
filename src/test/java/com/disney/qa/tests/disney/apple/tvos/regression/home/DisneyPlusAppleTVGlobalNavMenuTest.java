@@ -237,7 +237,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(originalsPage.isOpened(), "Originals page did not launch");
                 break;
-            case "settingsTab":
+            case "settingstab":
                 sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
                 sa.assertTrue(
                         settingsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent(),

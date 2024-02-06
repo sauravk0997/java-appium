@@ -1,10 +1,9 @@
-package com.disney.qa.api.disney;
+package com.disney.config;
 
 import com.disney.qa.star.StarPlusParameters;
 import com.disney.util.disney.DisneyGlobalUtils;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.IDriverPool;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
 
 public enum DisneyParameters {
     API_PROD_ENVIRONMENT("disney_api_prod_service"),
@@ -92,12 +89,9 @@ public enum DisneyParameters {
     STAR_PROD_ORDER_CALL("star_prod_order_call"),
     JIRA_BASE_URL("jira_base_url");
 
-    private String key;
+    private final String key;
     private static String runtimeEnvironment;
-    // ****** DO NOT MODIFY THE LIST OF IPs BELOW ******
-    protected static ArrayList<String> elasticIpAddresses = new ArrayList<>(Arrays.asList("52.202.75.170", "52.203.210.143", "52.203.219.69","52.203.238.163","52.203.238.174","52.203.238.166"));
-    protected static final String INVALID_ENVIRONMENT = "is an invalid environment parameter for available";
-    private CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
+    private static final String INVALID_ENVIRONMENT = "'%s' is an invalid environment parameter for available";
 
     DisneyParameters(String key) {
         this.key = key;
@@ -121,10 +115,6 @@ public enum DisneyParameters {
         }
     }
 
-    public String getDecryptedValue() {
-        return cryptoTool.decrypt(getValue());
-    }
-
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     /**
@@ -132,7 +122,7 @@ public enum DisneyParameters {
      * or custom_env field specific to Disney+/Star+ (Mobile/Android TV)
      */
     private static void setEnv() {
-        String env = R.CONFIG.get("env");
+        String env = Configuration.getRequired(Configuration.Parameter.ENV);
         String jarvisEnv = R.CONFIG.get("capabilities.custom_env");
         if (!jarvisEnv.isEmpty()) {
             switch (jarvisEnv) {
@@ -396,7 +386,7 @@ public enum DisneyParameters {
 
 
     public static List<String> getRegionsForLocationHost(String partner) {
-        String environment = R.CONFIG.get("env");
+        String environment = Configuration.getRequired(Configuration.Parameter.ENV);
         List<String> awsRegionalList = retrieveAwsRegions();
         switch (getEnvironmentType(environment)) {
             case "PROD":
@@ -427,10 +417,6 @@ public enum DisneyParameters {
         awsRegionalList.add("eu-west-1");
 
         return awsRegionalList;
-    }
-
-    public static List<String> returnQaAwsNatIps() {
-        return elasticIpAddresses;
     }
 
     public static String getOneIdProductClient() {

@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import static com.disney.qa.common.utils.IOSUtils.DEVICE_TYPE;
-
+import com.disney.config.DisneyConfiguration;
 import com.disney.util.TestGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 
 import java.lang.invoke.MethodHandles;
 
@@ -402,7 +400,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getUpdatePaymentButton().isPresent(), "Update Payment Button not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getRefreshButton().isPresent(), "Refresh Button not present");
         //QCE-1253 Causes below to fail on iPhone. Otherwise test passes on iPad.
-        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(TABLET)) {
             LOGGER.info("Tablet");
             aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
         }

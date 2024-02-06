@@ -1,7 +1,5 @@
 package com.disney.qa.common.utils;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
-
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
@@ -11,11 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.disney.config.DisneyConfiguration;
 import com.zebrunner.carina.utils.messager.Messager;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.SupportsLegacyAppManagement;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -36,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.IDriverPool;
@@ -49,7 +49,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 @SuppressWarnings({"squid:S135"})
-public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
+public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
     String ELEMENT = "element";
@@ -65,21 +65,19 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         ON, OFF, INVALID
     }
 
+    @Getter
     enum AlertButtonCommand {
         ACCEPT("accept"),
         DISMISS("dismiss");
 
-        private String command;
+        private final String command;
 
         AlertButtonCommand(String command) {
             this.command = command;
         }
-
-        public String getCommand() {
-            return command;
-        }
     }
 
+    @Getter
     enum AlertButton {
         LATER("Later"),
         REMIND_ME_LATER("Remind Me Later"),
@@ -88,15 +86,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         OK("OK"),
         DONT_ALLOW("Don’t Allow");
 
-        private String alertbtn;
+        private final String alertbtn;
 
         AlertButton(String alertbtn) {
             this.alertbtn = alertbtn;
         }
 
-        public String getAlertbtn() {
-            return alertbtn;
-        }
     }
 
     enum Direction2 {
@@ -105,7 +100,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         LEFT("left"),
         RIGHT("right");
 
-        private String dir;
+        private final String dir;
 
         Direction2(String dir) {
             this.dir = dir;
@@ -131,7 +126,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         TERMINATE_APP("mobile: terminateApp"),
         ACTIVATE_APP("mobile: activateApp");
 
-        private String gesture;
+        private final String gesture;
 
         Gestures(String gesture) {
             this.gesture = gesture;
@@ -169,7 +164,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         WD_VALUE("wdValue"),
         WD_VISIBLE("wdVisible");
 
-        private String attribute;
+        private final String attribute;
 
         Attributes(String attribute) {
             this.attribute = attribute;
@@ -226,7 +221,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         WATCH("com.apple.Bridge"),
         WEATHER("com.apple.weather");
 
-        private String bundleId;
+        private final String bundleId;
 
         SystemBundles(String bundleId) {
             this.bundleId = bundleId;
@@ -367,6 +362,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      *
      * @return foundAlert
      */
+    @Override
     default boolean isAlertPresent() {
         if (!isDriverRegistered(IDriverPool.DEFAULT)) {
             // no need to verify alert if driver has not started yet
@@ -380,12 +376,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         } catch (final WebDriverException e) {
             if (e.getMessage().contains("An attempt was made to operate on a modal dialog when one was not open")) {
                 IOS_UTILS_LOGGER.error("Alert not found.", e);
-                foundAlert = false;
             }
         }
         return foundAlert;
     }
 
+    @Override
     default void acceptAlert() {
         WebDriver drv = getDriver();
         Wait<WebDriver> wait = new WebDriverWait(drv, Duration.ofSeconds(3), Duration.ofMillis(1));
@@ -398,6 +394,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
         }
     }
 
+    @Override
     default void cancelAlert() {
         WebDriver drv = getDriver();
         Wait<WebDriver> wait = new WebDriverWait(drv, Duration.ofSeconds(3), Duration.ofMillis(1));
@@ -527,7 +524,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      */
 
     default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
-        while (element.isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
+        while (element.isElementNotPresent(5) && count >= 0) {
             swipeInContainer(container, direction, 1, 900);
             count--;
         }
@@ -854,7 +851,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
             args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
             js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
-            String accessibilityID = "Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE)) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
+            String accessibilityID = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
             wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
             getDriver().findElement(urlField).click();
@@ -892,7 +889,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils {
      */
 
     default void swipePageTillElementPresent(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
-        while (!element.isPresent(SHORT_TIMEOUT) && swipes > 0) {
+        while (!element.isPresent(5) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }

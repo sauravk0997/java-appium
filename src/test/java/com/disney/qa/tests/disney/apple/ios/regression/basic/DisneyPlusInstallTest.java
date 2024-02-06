@@ -1,16 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.config.Configuration;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusInstallTest extends DisneyBaseTest {
-    private static final String oldAppVersion = R.CONFIG.get("oldAppVersion");
+    private static final String oldAppVersion = Configuration.getRequired(DisneyConfiguration.Parameter.OLD_APP_VERSION);
     private static final String KIDS_SHORT_SERIES = "Bluey";
     private static final String ADULTS_SHORT_MOVIE = "Purl";
     private static final String KIDS = "KIDS";
