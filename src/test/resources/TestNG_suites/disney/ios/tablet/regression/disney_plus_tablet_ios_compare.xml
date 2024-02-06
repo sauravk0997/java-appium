@@ -9,7 +9,7 @@
     <parameter name="jenkinsJobName" value="ios_tablet_hulk_compare"/>
     <parameter name="jenkinsEmail"
                value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000"/>
