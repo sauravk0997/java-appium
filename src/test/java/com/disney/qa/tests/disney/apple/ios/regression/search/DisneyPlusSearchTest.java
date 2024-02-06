@@ -41,6 +41,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "search_button_selected");
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
+        searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
     }
 }
