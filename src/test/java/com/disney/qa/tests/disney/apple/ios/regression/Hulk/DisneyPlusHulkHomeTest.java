@@ -28,8 +28,13 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     double imageSimilarityPercentageThreshold = 85.0;
 
     private String buildS3BucketPath(String title) {
-        return String.format(
-                S3_BASE_PATH + "apple-handset/default/hulu-network-logos/%s", title);
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            return String.format(
+                    S3_BASE_PATH + "apple-tablet/default/hulu-network-logos/%s", title);
+        } else {
+            return String.format(
+                    S3_BASE_PATH + "apple-handset/default/hulu-network-logos/%s", title);
+        }
     }
 
     private AliceApiManager getAliceApiManager() {
