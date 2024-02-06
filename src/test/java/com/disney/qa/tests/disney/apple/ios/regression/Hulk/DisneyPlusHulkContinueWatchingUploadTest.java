@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {

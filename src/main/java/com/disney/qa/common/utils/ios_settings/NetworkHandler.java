@@ -61,8 +61,8 @@ public  class NetworkHandler implements IOSUtils {
                     LOGGER.info("Different wifi network selected, need to pick correct wifi");
                     break;
                 } else {
-                    LOGGER.debug("Unable to verify 'checkmark' for '{}', due to:" +
-                            "\n Re-verifying, max attempts remaining: ", wifiName, e, maxAttempts);
+                    LOGGER.debug("Unable to verify 'checkmark' for '{}', due to: {}" +
+                            "\n Re-verifying, max attempts remaining: {}", wifiName, e, maxAttempts);
                 }
             }
         } while (maxAttempts-- > 0);
@@ -106,7 +106,7 @@ public  class NetworkHandler implements IOSUtils {
                 break; //TODO may need to replace with a check
             } catch (Exception e) {
                 LOGGER.debug("{} wifi could not be selected due to:\n{}" +
-                        "\nTrying again, max attempts remaining: ", wifiName, e, maxAttempts);
+                        "\nTrying again, max attempts remaining: {}", wifiName, e, maxAttempts);
             }
         }
         LOGGER.info("{} is set as current wifi", wifiName);

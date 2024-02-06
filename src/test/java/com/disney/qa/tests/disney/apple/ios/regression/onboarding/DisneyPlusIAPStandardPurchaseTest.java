@@ -1,9 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
-
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
@@ -22,8 +18,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBas
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 
 import java.lang.invoke.MethodHandles;
@@ -67,8 +61,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         paywallIOSPageBase.waitForSubscribeOverlay();
         paywallIOSPageBase.clickOverlaySubscribeButton();
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywallIOSPageBase.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywallIOSPageBase.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
@@ -125,8 +118,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         paywallIOSPageBase.waitForSubscribeOverlay();
         paywallIOSPageBase.clickOverlaySubscribeButton();
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywallIOSPageBase.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywallIOSPageBase.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
@@ -182,8 +174,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
         paywallIOSPageBase.waitForSubscribeOverlay();
         paywallIOSPageBase.clickOverlaySubscribeButton();
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywallIOSPageBase.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywallIOSPageBase.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }

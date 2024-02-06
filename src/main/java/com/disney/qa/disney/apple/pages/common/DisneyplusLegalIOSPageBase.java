@@ -4,9 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
