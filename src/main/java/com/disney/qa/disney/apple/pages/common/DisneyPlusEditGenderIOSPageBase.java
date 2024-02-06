@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -31,8 +32,9 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         GENDER_NOBINARY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText()), 3),
         GENDER_PREFERNOTTOSAY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText()), 4);
 
-        String genderValue;
-        int index;
+        private final String genderValue;
+        @Getter
+        private final int index;
 
         GenderOption(String genderValue, int index) {
             this.genderValue = genderValue;
@@ -41,10 +43,6 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
         public String getGenderOption() {
             return genderValue;
-        }
-
-        public int getIndex() {
-            return index;
         }
     }
 

@@ -7,7 +7,6 @@ import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -1030,8 +1029,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
                 performIapHoldProviderSubscriptionCheck(sa, provider, iap);
             } catch (URISyntaxException | JSONException e) {
-                e.printStackTrace();
-                LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider);
+                LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider, e);
             }
         }));
 
@@ -1094,8 +1092,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-        List<DisneyOrder> billingOrder = new LinkedList<>();
-        billingOrder.add(DisneyOrder.SET_BILLING_HOLD);
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
@@ -1203,8 +1199,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
             logout();
         } catch (NoSuchElementException e) {
             LOGGER.error("There was a navigation error. Iteration was not completed");
-            sa.fail(String.format("Something went wrong with navigation for the account with entitlement combo: %s/%s", activeProvider, heldIapService));
-            e.printStackTrace();
+            sa.fail(String.format("Something went wrong with navigation for the account with entitlement combo: %s/%s", activeProvider, heldIapService), e);
             restart();
         }
     }

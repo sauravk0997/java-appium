@@ -1,10 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
 import com.disney.alice.AliceDriver;
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
@@ -136,7 +136,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
                 "Expected - 'Edit Profiles' title should be present in Edit Profiles page");
 
         pause(3);
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             aliceDriver.screenshotAndRecognize()
                     .assertLabelContainsCaptionCaseInsensitive(softAssert, getAccount().getFirstName(), "round_tile", "round_tile_hovered");
 

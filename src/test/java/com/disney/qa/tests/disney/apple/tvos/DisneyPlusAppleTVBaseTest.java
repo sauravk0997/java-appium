@@ -6,6 +6,8 @@ import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourc
 
 import java.lang.invoke.MethodHandles;
 
+import com.disney.config.DisneyConfiguration;
+import com.zebrunner.carina.utils.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -13,7 +15,7 @@ import org.testng.annotations.BeforeMethod;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
-import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -79,7 +81,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
      */
     public void setJarvisOverrides() {
         JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
+        boolean unpinDictionaries = Configuration.get(DisneyConfiguration.Parameter.UNPIN_DICTIONARIES, Boolean.class)
+                .orElse(false);
         boolean displayDictionaryKeys = Boolean.parseBoolean(R.CONFIG.get("custom_string5"));
         String globalizationVersion = R.CONFIG.get("custom_string4");
 

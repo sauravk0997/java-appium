@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.ios.localization;
 import java.lang.invoke.MethodHandles;
 import java.util.TreeMap;
 
+import com.disney.config.DisneyConfiguration;
+import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.openqa.selenium.ScreenOrientation;
@@ -51,8 +53,8 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected void setPathToZip() {
         PATH_TO_ZIP.set(String.format("%s_%s_%s_%s.zip",
                 ZIP_TEST_NAME.get(),
-                R.CONFIG.get("locale"),
-                R.CONFIG.get("language"),
+                getCountry(),
+                getLanguage(),
                 DateUtils.now()));
     }
 
@@ -126,7 +128,8 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
 
     public void setJarvisOverrides() {
         TreeMap<String, Object> overrides = new TreeMap<>();
-        boolean unpinDictionaries = Boolean.parseBoolean(R.CONFIG.get("custom_string"));
+        boolean unpinDictionaries = Configuration.get(DisneyConfiguration.Parameter.UNPIN_DICTIONARIES, Boolean.class)
+                .orElse(false);
         String globalizationVersion = R.CONFIG.get("custom_string2");
 
         if (unpinDictionaries) {

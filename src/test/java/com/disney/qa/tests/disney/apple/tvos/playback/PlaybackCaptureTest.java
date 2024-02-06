@@ -1,18 +1,15 @@
 package com.disney.qa.tests.disney.apple.tvos.playback;
 
-import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
-import com.disney.util.HARUtils;
+import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.registrar.Artifact;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.nio.file.Path;
@@ -22,17 +19,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 
 public class PlaybackCaptureTest extends DisneyPlusAppleTVBaseTest {
 
-    @BeforeMethod(alwaysRun = true)
-    public void proxySetUp() {
-        DisneyCountryData countryData = new DisneyCountryData();
-        String fullCountryName = (String) countryData.searchAndReturnCountryData(getCountry(), "code", "country");
-        initiateProxy(fullCountryName, CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT,
-                CaptureType.REQUEST_COOKIES, CaptureType.RESPONSE_COOKIES, CaptureType.REQUEST_BINARY_CONTENT, CaptureType.RESPONSE_BINARY_CONTENT,
-                CaptureType.REQUEST_HEADERS, CaptureType.RESPONSE_HEADERS);
-        clearAppCache();
-    }
-
-    @Test
+    @Test(groups = TestGroup.PROXY)
     public void playbackCapture() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());

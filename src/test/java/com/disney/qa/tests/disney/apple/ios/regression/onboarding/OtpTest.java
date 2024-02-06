@@ -1,11 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.account.DisneyAccountApi;
-import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.config.Configuration;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class OtpTest {
                 .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
                 .partner("disney")
                 .useMultiverse(true)
-                .multiverseAccountsUrl(R.CONFIG.get("multiverseAccountsUrl"))
+                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
                 .build();
         DisneyAccountApi api = new DisneyAccountApi(apiConfiguration);
 

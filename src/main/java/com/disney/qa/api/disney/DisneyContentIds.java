@@ -12,9 +12,9 @@ public enum DisneyContentIds {
 
     private static final String PROGRAM_ID = "programId";
     private static final String SERIES_ID = "seriesId";
-    private String title;
-    private String contentId;
-    private String contentType;
+    private final String title;
+    private final String contentId;
+    private final String contentType;
 
     DisneyContentIds(String title, String contentId, String contentType) {
         this.title = title;

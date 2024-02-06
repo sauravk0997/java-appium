@@ -1,9 +1,8 @@
-package com.disney.qa.common.http.resttemplate;
+package com.disney.proxy;
 
-import com.disney.qa.common.http.resttemplate.ssl.DisabledSslClientHttpRequestFactory;
+import com.disney.proxy.ssl.DisabledSslClientHttpRequestFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.apache.http.auth.AuthScope;
@@ -32,7 +31,7 @@ public class RestTemplateBuilder {
 
 	protected RestTemplate restTemplate = new RestTemplate();
 
-	protected List<HttpMessageConverter<?>> httpMessageConverters = new ArrayList<HttpMessageConverter<?>>();
+	protected List<HttpMessageConverter<?>> httpMessageConverters = new ArrayList<>();
 
 	protected boolean isDisableSslChecking = false;
 
@@ -105,12 +104,7 @@ public class RestTemplateBuilder {
 
 			HttpMessageConverter<?> httpMessageConverter = Iterables.tryFind(
 					restTemplate.getMessageConverters(),
-					new Predicate<HttpMessageConverter<?>>() {
-						@Override
-						public boolean apply(HttpMessageConverter<?> input) {
-							return input instanceof MappingJackson2HttpMessageConverter;
-						}
-					}).orNull();
+					MappingJackson2HttpMessageConverter.class::isInstance).orNull();
 
 			restTemplate.getMessageConverters().remove(httpMessageConverter);
 		}
