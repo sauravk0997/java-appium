@@ -16,7 +16,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74938"})
     @Test(description = "Downloads are filtered out on Junior profile ", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
