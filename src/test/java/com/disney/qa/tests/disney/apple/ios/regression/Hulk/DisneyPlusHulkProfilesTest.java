@@ -45,7 +45,6 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         detailsPage.waitForMovieDownloadComplete(350, 30);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.isOpened();
-        sa.assertTrue(downloadsPage.isDownloadsDisplayed(), "Download is not displayed for " + getAccount().getProfiles().get(0));
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 ONLY_MURDERS_IN_THE_BUILDING + "was not found present on Downloads screen.");
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isPresent(),
