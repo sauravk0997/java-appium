@@ -39,7 +39,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_WEB_URL = "shopdisney.com";
     private static final String SHOP_TAB_HEADING = "Shop this Character";
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
-    private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last";
+    private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
     private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
 
     //LOCATORS
