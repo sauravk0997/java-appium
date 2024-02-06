@@ -213,7 +213,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getDownloadCompleteButton() {
-        return dynamicBtnFindByLabelContains.format("downloadComplete24");
+        return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
     public boolean isContinueButtonPresent() {
@@ -233,6 +233,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         } else {
             movieDownloadButton.click();
         }
+    }
+
+    public ExtendedWebElement getMovieDownloadButton() {
+        return movieDownloadButton;
     }
 
     public void pauseDownload() {

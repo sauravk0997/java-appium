@@ -57,6 +57,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		staticTextByLabel.format(downloadedAsset).click();
 	}
 
+	public ExtendedWebElement getDownloadAssetFromListView(String downloadAsset) {
+		return staticTextByLabel.format(downloadAsset);
+	}
+
 	public void tapDownloadedAsset(String downloadedAsset) {
 		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
 	}
@@ -126,5 +130,13 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		String[] ratingSizeRuntimeParts = getStaticTextByLabelContains("MB").getText().split(" ");
 		return getStaticTextByLabelContains(ratingSizeRuntimeParts[0]);
 	}
+
+	public void isDownloadCellPresent(String contentAsset) {
+		//		offlineContentCell[0, 0]
+
+//		return
+	}
+
+
 
 }

@@ -18,11 +18,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
-    private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
-    public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
