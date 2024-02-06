@@ -486,7 +486,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickShopTab();
         if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            detailsPage.swipeUp(1500);
+            detailsPage.swipeUp(2,1500);
         }
 
         //Currently we dont have copy key and value in dictionary for Hulu content copy hence while validating passed full string text
