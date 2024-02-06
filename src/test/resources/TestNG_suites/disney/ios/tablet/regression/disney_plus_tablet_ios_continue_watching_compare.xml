@@ -27,4 +27,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkContinueWatchingCompareTest"/>
         </classes>
     </test>
+    <test verbose="1" name="iOS Tablet Hulk Network Page" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
+        </classes>
+    </test>
 </suite>
