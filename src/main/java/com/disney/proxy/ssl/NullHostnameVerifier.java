@@ -1,4 +1,4 @@
-package com.disney.qa.common.http.resttemplate.ssl;
+package com.disney.proxy.ssl;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;

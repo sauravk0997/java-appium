@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_CONTINUE;
-import static com.disney.qa.tests.disney.apple.ios.DisneyBaseTest.DEFAULT_PROFILE;
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
 

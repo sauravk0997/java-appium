@@ -3,7 +3,6 @@ package com.disney.qa.common.utils;
 import com.disney.util.ZipUtils;
 import com.zebrunner.agent.core.registrar.Artifact;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.report.ReportContext;
 import com.zebrunner.carina.webdriver.IDriverPool;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -39,9 +38,8 @@ public interface UniversalUtils extends IDriverPool {
      */
     default BufferedImage getElementImage(ExtendedWebElement element) {
         element.assertElementPresent();
-        File elementScreenshot = Path.of(ReportContext.getTestDir().getAbsolutePath())
-                .resolve(Screenshot.capture(element.getElement(), ScreenshotType.EXPLICIT_VISIBLE)
-                        .orElseThrow())
+        File elementScreenshot = Screenshot.capture(element.getElement(), ScreenshotType.EXPLICIT_VISIBLE)
+                .orElseThrow()
                 .toFile();
         try {
             return ImageIO.read(elementScreenshot);
@@ -59,9 +57,8 @@ public interface UniversalUtils extends IDriverPool {
      * @return - cropped image
      */
     default BufferedImage getElementImage(Point point, int eleWidth, int eleHeight) {
-        File screenshot = Path.of(ReportContext.getTestDir().getAbsolutePath())
-                .resolve(Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE)
-                        .orElseThrow())
+        File screenshot = Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE)
+                .orElseThrow()
                 .toFile();
         try {
             // Crop the entire page screenshot to get only element screenshot
@@ -73,9 +70,8 @@ public interface UniversalUtils extends IDriverPool {
     }
 
     default BufferedImage getCurrentScreenView() {
-        File screenshot = Path.of(ReportContext.getTestDir().getAbsolutePath())
-                .resolve(Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE)
-                        .orElseThrow())
+        File screenshot = Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE)
+                .orElseThrow()
                 .toFile();
         try {
             // Crop the entire page screenshot to get only element screenshot

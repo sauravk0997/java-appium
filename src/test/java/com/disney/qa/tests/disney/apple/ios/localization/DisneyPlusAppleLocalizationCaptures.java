@@ -39,7 +39,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
 
         //Create an expired account
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-        List<DisneyOrder> orderList = new LinkedList();
+        List<DisneyOrder> orderList = new LinkedList<>();
         orderList.add(DisneyOrder.SET_EXPIRED);
         request.setOrderSettings(orderList);
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
@@ -117,7 +117,6 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
             pause(3);
             getScreenshots("SubscriberAgreement");
             legalPage.getBackArrow().click();
-        } else {
         }
 
         if (checkboxRequired) {

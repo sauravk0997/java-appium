@@ -5,6 +5,7 @@ import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneyApiCommon;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -229,7 +230,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90441", "XCDQA-90487", "XCDQA-90489", "XCDQA-90491"})
     @Test(description = "Email Sign Up: valid email Flow, Password Creation: No Input password + invalid password + common password", groups = {"Onboarding"})
     public void emailSignUpValidInput() {
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -263,7 +264,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90485"})
     @Test(description = "Email Sign Up: valid email takes to paywall screen Flow", groups = {"Onboarding"})
     public void emailSignUpValidInputTakesToPaywall() {
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -293,7 +294,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {"Onboarding"})
     public void passwordCreationScreenDetails() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -333,7 +334,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90497"})
     @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {"Onboarding"})
     public void passwordCreationOnScreenKeyboard() {
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
         SoftAssert sa = new SoftAssert();
@@ -365,7 +366,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     public void passwordCapturedAndEncrypted() {
         String expectedPassword = "••••••";
         String randomPassword = StringGenerator.generateWord(5) + StringGenerator.generateNumeric(1);
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -404,7 +405,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     public void createPasswordStrengthMeter() {
         selectAppleUpdateLaterAndDismissAppTracking();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        String validEmail = getContentApiChecker().getUniqueUserEmail();
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());

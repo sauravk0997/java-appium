@@ -42,7 +42,7 @@ public enum AliceLabels {
     VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR("vertical_menu_item_hovered_vert_separator"),
     WATCHLIST_ICON("plus_button");
 
-    private String label;
+    private final String label;
 
     AliceLabels(String label) {
         this.label = label;

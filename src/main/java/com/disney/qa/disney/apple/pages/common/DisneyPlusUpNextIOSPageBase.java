@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.zebrunner.carina.utils.Configuration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -48,14 +47,14 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     }
     public void tapSeeAllEpisodesButton() {
         LOGGER.info("Tapping on 'See All Episodes' button");
-        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "Unable to see 'See All Episodes' button")
+        fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see 'See All Episodes' button")
                 .until(it -> seeAllEpisodeButton.isElementPresent(SHORT_TIMEOUT));
         staticTextLabelName.format(seeAllEpisodeButton.getText()).click();
     }
 
     public void tapPlayIconOnUpNext() {
         LOGGER.info("Tapping on 'play' button");
-        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "Unable to see 'play' button")
+        fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see 'play' button")
                 .until(it -> playButton.isElementPresent(SHORT_TIMEOUT));
         playButton.click();
     }
@@ -65,12 +64,12 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForUpNextUIToDisappear() {
-        fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "Unable to start autoplay, check your autoplay settings in more menu")
+        fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to start autoplay, check your autoplay settings in more menu")
                 .until(it -> playButton.isElementNotPresent(LONG_TIMEOUT));
     }
 
     public boolean waitForUpNextUIToAppear() {
-       return (fluentWait(getDriver(), Configuration.getLong(Configuration.Parameter.EXPLICIT_TIMEOUT), 0, "upNext UI didn't appear on video player")
+       return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "upNext UI didn't appear on video player")
                 .until(it -> upNextImageView.isElementPresent(LONG_TIMEOUT)));
     }
 
