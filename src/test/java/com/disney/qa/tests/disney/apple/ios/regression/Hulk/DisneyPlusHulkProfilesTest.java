@@ -51,7 +51,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isPresent(),
                 PREY + "was not found present on Downloads screen.");
 
-        //Validate on Junior profile download asset not visible
+        //Validate on Junior profile downloaded assets not visible
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
