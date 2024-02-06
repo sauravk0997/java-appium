@@ -9,9 +9,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
-
 
 public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
 
