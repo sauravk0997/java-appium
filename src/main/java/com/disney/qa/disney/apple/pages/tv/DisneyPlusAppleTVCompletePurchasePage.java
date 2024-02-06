@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.api.disney.DisneyParameters;
-import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusCompletePurchaseIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;

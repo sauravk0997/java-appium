@@ -1,9 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class DisneyPlusiOSBVT extends DisneyBaseTest {
         moreMenu.clickBackArrowFromWatchlist();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         pause(1); //to handle transition
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             scrollDown();
         }

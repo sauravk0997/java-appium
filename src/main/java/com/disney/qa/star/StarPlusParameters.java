@@ -17,7 +17,7 @@ public enum StarPlusParameters {
     STAR_EDGE_DUST_QA("star_edge_dust_qa_service"),
     STAR_NAMESPACE_ID("star_namespace_id");
 
-    private String key;
+    private final String key;
 
     StarPlusParameters(String key) {
         this.key = key;

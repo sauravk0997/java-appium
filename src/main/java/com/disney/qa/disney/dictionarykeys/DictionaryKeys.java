@@ -429,7 +429,7 @@ public enum DictionaryKeys {
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
     WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message");
 
-    String dictionaryKey;
+    private final String dictionaryKey;
 
     DictionaryKeys(String dictionaryKey) {
         this.dictionaryKey = dictionaryKey;

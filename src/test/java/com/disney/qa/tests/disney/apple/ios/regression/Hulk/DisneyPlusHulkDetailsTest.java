@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
@@ -102,7 +102,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         detailsPage.clickDetailsTab();
         scrollDown();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
             detailsPage.swipeTillActorsElementPresent();;
         }
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
@@ -249,7 +249,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
 
         detailsPage.clickExtrasTab();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             detailsPage.swipeUp(1500);
         }
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
@@ -292,7 +292,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Messages").isPresent(), "Share action 'Messages' was not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(), "Share action 'Mail' was not found.");
 
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
             detailsPage.clickHomeIcon();
         } else {
             detailsPage.getTypeButtonByLabel("Close").click();
@@ -327,7 +327,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
                 Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
             } else {
                 Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
