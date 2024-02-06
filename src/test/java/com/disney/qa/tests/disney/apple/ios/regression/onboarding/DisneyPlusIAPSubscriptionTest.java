@@ -162,6 +162,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
 
+        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
+
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");

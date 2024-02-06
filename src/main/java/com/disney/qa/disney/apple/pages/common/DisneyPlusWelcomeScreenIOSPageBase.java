@@ -44,6 +44,9 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "Disney Plus Logo")
     private ExtendedWebElement disneyPlusLogo;
 
+    @ExtendedFindBy(accessibilityId = "Don’t Allow")
+    private ExtendedWebElement dontAllowbtn;
+
     //FUNCTIONS
 
     public DisneyPlusWelcomeScreenIOSPageBase(WebDriver driver) {
@@ -142,4 +145,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return signUpButton;
     }
 
+    public void clickDontAllowBtn() {
+        dontAllowbtn.clickIfPresent();
+    }
 }
