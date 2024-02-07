@@ -13,10 +13,10 @@ import org.testng.asserts.SoftAssert;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
+
 public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
-    private static final String PREY = "Prey";
-    private static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
-    Map<List<String>, List<String>> params = new HashMap<>();
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74626", "XMOBQA-75242", "XMOBQA-75325"})
@@ -66,6 +66,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
     }
 
     private List<String> getEpisodes() {
+        Map<List<String>, List<String>> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         params.put(Collections.singletonList("episodes"), detailsPage.findAllDownloadableEpisodesInCurrentView());
         swipeUp(1200);
