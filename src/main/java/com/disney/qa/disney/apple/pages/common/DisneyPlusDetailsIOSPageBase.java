@@ -1,9 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -804,4 +803,29 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
+
+    public ExtendedWebElement getMovieDownloadButton() {
+        return movieDownloadButton;
+    }
+//        public List<String> getContentItems(int startNum) {
+//        List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
+//        List<String> titles = new ArrayList<>();
+//        IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
+//        return titles;
+//    }
+    public List<String> findAllEpisodes() {
+        List<ExtendedWebElement> allEpisodes = findExtendedWebElements(getTypeButtonContainsLabel("Download season").getBy());
+        List<String> episodeToDownloadTitles = new ArrayList<>();
+        IntStream.range(0, allEpisodes.size()).forEach(i -> episodeToDownloadTitles.add(allEpisodes.get(i).getText()));
+        return episodeToDownloadTitles;
+    }
+
+//    public List<String> episodesInHashMap() {
+//        Map<List<String>, List<String>> params = new HashMap<>();
+//        params.put(Collections.singletonList("episodes"), findAllEpisodes());
+//
+//        return params.get(Collections.singletonList("episodes"));
+//
+//    }
+
 }
