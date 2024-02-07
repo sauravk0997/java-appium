@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1"  name="ios_handset_hulk_continue_watching_compare" annotations="JDK" configfailurepolicy="continue" thread-count="1" parallel="tests">
+<suite verbose="1"  name="ios_handset_hulk_compare" annotations="JDK" configfailurepolicy="continue" thread-count="1" parallel="tests">
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_hulk_continue_watching_compare"/>
+    <parameter name="jenkinsJobName" value="ios_handset_hulk_compare"/>
     <parameter name="jenkinsEmail"
                value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
@@ -24,6 +24,11 @@
     <test verbose="1" name="iOS Handset Hulk Continue Watching Compare" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkContinueWatchingCompareTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="iOS Handset Hulk Network Page" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
         </classes>
     </test>
 </suite>

@@ -16,6 +16,9 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeButton[@name=\"iconNavBack24Dark\"]/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageCollapsed;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24LightActive\"`]")
+    protected ExtendedWebElement networkBackButton;
+
     public DisneyPlusHuluIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -50,9 +53,11 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNetworkLogoPresent(String logoName) {
-        if (!typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT)) {
+        int count = 10;
+        while (!typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT) && count >= 0) {
             // studiosAndNetworkCollection element has visible attribute in false. This is a workaround
             swipeLeftInCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS);
+            count--;
         }
         return typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT);
     }
@@ -63,5 +68,13 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickOnNetworkLogo(String network){
         getNetworkLogo(network).click();
+    }
+
+    public void clickOnNetworkBackButton(){
+        networkBackButton.click();
+    }
+
+    public boolean isNetworkBackButtonPresent() {
+        return networkBackButton.isPresent();
     }
 }
