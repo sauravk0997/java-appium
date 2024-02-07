@@ -171,9 +171,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for EU based users", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Verify onboarding stepper for EU based users", groups = {"Onboarding", "DE", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY }, enabled = false)
     public void verifyOnboardingStepperEU() {
-        initiateProxy("Germany");
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
@@ -293,11 +292,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62379", "XMOBQA-62381", "XMOBQA-62383", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
-    @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {"Onboarding", "NL", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyEULegalHyperlinks() {
-        initiateProxy("Netherlands");
-        Assert.fail("Disabled initial setup and reused default PRE_CONFIGURATION. Please check, why we need NL here.");
-//        initialSetup("NL", "en");
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);

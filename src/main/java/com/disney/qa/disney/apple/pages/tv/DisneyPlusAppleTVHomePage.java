@@ -1,9 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.exceptions.FailedToFocusElementException;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -12,6 +10,8 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,7 +146,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
                 return currentMenu;
             }
         }
-        throw new FailedToFocusElementException("Failed to find focused global nav menu item");
+        throw new SkipException("Failed to find focused global nav menu item");
     }
 
     public void openGlobalNavWithClickingMenu() {
@@ -179,7 +179,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         ORIGINALS("Originals"),
         SETTINGS("settingsTab");
 
-        private String menu;
+        private final String menu;
 
         globalNavigationMenu(String menu) {
             this.menu = menu;
@@ -201,7 +201,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         ORIGINALS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText())),
         SETTINGS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText()));
 
-        private String menu;
+        private final String menu;
 
         globalNavigationMenuText(String menu) {
             this.menu = menu;

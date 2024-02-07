@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -18,7 +19,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -31,7 +31,6 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -43,7 +42,8 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
     public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
-
+    public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    public static final String PREY = "Prey";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
@@ -937,7 +937,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         DOWNLOADS("downloadsTab"),
         MORE_MENU("moreTab");
 
-        String tabName;
+        private final String tabName;
 
         FooterTabs(String tabName) {
             this.tabName = tabName;
@@ -950,7 +950,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void goBackToDisneyAppFromSafari() {
         Dimension size = getDriver().manage().window().getSize();
-        if (R.CONFIG.get(DEVICE_TYPE).equals("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
             pause(1);
             tapAtCoordinateNoOfTimes((int) (size.width * 0.2), (int) (size.height * 0.04), 1);
@@ -1174,7 +1174,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      */
     public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         swipeTillCollectionPresent(collection, count, container, direction);
-        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 0)).click();
+        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size())).click();
     }
 
     public List<ExtendedWebElement> getAllCollectionCells(CollectionConstant.Collection collection) {

@@ -1,6 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.google.common.collect.ImmutableMap;
 import com.zebrunner.carina.utils.appletv.RemoteControlKeyword;

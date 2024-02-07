@@ -33,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusHulkS3UploadTest.HULK_100_MOVIES_JSON_PATH;
 

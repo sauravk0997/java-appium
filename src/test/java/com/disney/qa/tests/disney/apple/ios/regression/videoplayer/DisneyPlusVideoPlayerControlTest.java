@@ -15,7 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 

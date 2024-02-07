@@ -3,6 +3,7 @@ package com.disney.qa.common.utils.helpers;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import lombok.Getter;
 
 public class DateHelper {
 
@@ -20,8 +21,9 @@ public class DateHelper {
         NOVEMBER("November", "11"),
         DECEMBER("December", "12");
 
-        String monthName;
-        String num;
+        private final String monthName;
+        @Getter
+        private final String num;
 
         Month(String month, String num) {
             this.monthName = month;
@@ -32,9 +34,6 @@ public class DateHelper {
             return this.monthName;
         }
 
-        public String getNum() {
-            return this.num;
-        }
     }
 
     private DateHelper() {
