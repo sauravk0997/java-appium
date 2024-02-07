@@ -63,6 +63,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         homePage.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //User made search
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
@@ -73,11 +75,23 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getCancelButton().click();
         homePage.clickSearchIcon();
         searchPage.getSearchBar().click();
-        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        searchPage.getCancelButton().click();
+        homePage.clickHomeIcon();
 
         //click x button to clear recent searches
+        homePage.clickSearchIcon();
+        searchPage.getSearchBar().click();
         searchPage.tapRecentSearchClearButton();
         searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+
+        //next time user select search bar, recent search is no longer displayed
+        searchPage.getCancelButton().click();
+        homePage.clickHomeIcon();
+        homePage.clickSearchIcon();
+        searchPage.getSearchBar().click();
+        sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertAll();
     }
 }
