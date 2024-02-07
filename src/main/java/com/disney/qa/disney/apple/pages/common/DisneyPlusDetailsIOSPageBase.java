@@ -819,25 +819,44 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Use with hulu series content only - to wait for hulu series download to complete
+     * Use with hulu series content only - to wait for hulu episode download to complete
      */
-    public void waitForHuluSeriesDownloadToComplete(int timeOut, int polling) {
-        LOGGER.info("Waiting for series download to complete");
+    public void waitForOneHuluEpisodeDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
-    
-    //        public List<String> getContentItems(int startNum) {
-//        List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
-//        List<String> titles = new ArrayList<>();
-//        IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
-//        return titles;
-//    }
-    public List<String> findAllEpisodes() {
+
+    /**
+     * Use with hulu series content only - to wait for 2 or more hulu episode downloads to complete
+     */
+    public void waitForTwoOrMoreHuluEpisodeDownloadsToComplete(String numberOfEpisodes, int timeOut, int polling) {
+        LOGGER.info("Waiting for episode downloads to complete..");
+        waitForPresenceOfAnElement(getTypeCellLabelContains(numberOfEpisodes + " downloads in progress"));
+        fluentWait(getDriver(), timeOut, polling, "2 downloads in progress text was found.")
+                .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
+        waitForPresenceOfAnElement(getTypeCellLabelContains("1 downloads in progress"));
+        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
+                .until(it -> getTypeCellLabelContains("1 download in progress").isPresent());
+        System.out.println(getDriver().getPageSource());
+        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
+                .until(it -> !getTypeCellLabelContains("1 download in progress").isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    /**
+     * Find all episodes within current view.
+     */
+    public List<String> findAllDownloadableEpisodesInCurrentView() {
         List<ExtendedWebElement> allEpisodes = findExtendedWebElements(getTypeButtonContainsLabel("Download season").getBy());
         List<String> episodeToDownloadTitles = new ArrayList<>();
         IntStream.range(0, allEpisodes.size()).forEach(i -> episodeToDownloadTitles.add(allEpisodes.get(i).getText()));
         return episodeToDownloadTitles;
+    }
+
+    public void clickDownloadSeasonAlertButton() {
+        LOGGER.info("Clicking download season alert button..");
+        clickAlertConfirm();
     }
 }
