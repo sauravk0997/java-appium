@@ -10,10 +10,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hatter.version>2.0.24</hatter.version>
-        <zebrunner-agent.version>1.9.7</zebrunner-agent.version>
-        <org.eclipse.persistence.version>2.5.1</org.eclipse.persistence.version>
-        <spring.version>4.1.1.RELEASE</spring.version>
+        <hatter-api.version>2.0.24</hatter-api.version>
+        <carina-core_version>1.2.7.P3-SNAPSHOT</carina-core_version>
+        <carina-appcenter.version>1.2.7.P1-SNAPSHOT</carina-appcenter.version>
+        <byte-buddy.version>1.14.5</byte-buddy.version>
+        <zebrunner-agent.version>1.9.8</zebrunner-agent.version>
         <alice-client.version>1.0.56</alice-client.version>
         <jarvis-utils-version>1.0.18</jarvis-utils-version>
         <hora-validator-version>1.0.16</hora-validator-version>
@@ -42,7 +43,7 @@
             <name>apiregistry-maven</name>
             <url>https://artifactory.us-east-1.bamgrid.net/apiregistry-maven</url>
         </repository>
-        <!--repository>
+        <repository>
             <id>zebrunner_snapshots</id>
             <name>zebrunner Snapshots</name>
             <url>https://nexus.zebrunner.dev/repository/ce-snapshots/</url>
@@ -52,7 +53,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository-->
+        </repository>
         <repository>
             <snapshots>
                 <enabled>false</enabled>
@@ -70,10 +71,10 @@
     </repositories>
 
     <dependencies>
-        <dependency>
+ <dependency>
             <groupId>com.disney</groupId>
             <artifactId>hatter-api</artifactId>
-            <version>${hatter.version}</version>
+            <version>${hatter-api.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.hulu.sidekick</groupId>
@@ -81,12 +82,20 @@
                 </exclusion>
                 <exclusion>
                     <groupId>com.zebrunner</groupId>
-                    <artifactId>agent-testng</artifactId>
+                    <artifactId>*</artifactId>
                 </exclusion>
-                <!--exclusion>
-                    <groupId>io.rest-assured</groupId>
-                    <artifactId>rest-assured</artifactId>
-                </exclusion-->
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -126,25 +135,36 @@
                     <groupId>io.grpc</groupId>
                     <artifactId>grpc-netty</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.disney</groupId>
+                    <artifactId>Google-sheets-wrapper</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.9.7</version>
+            <groupId>com.zebrunner</groupId>
+            <artifactId>carina-core</artifactId>
+            <version>${carina-core_version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-text</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>com.zebrunner</groupId>
+            <artifactId>carina-appcenter</artifactId>
+            <version>${carina-appcenter.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
-        </dependency>
-        <!-- Carina has a different version of the SageMaker dependency that we do no want -->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-sagemakerruntime</artifactId>
-            <version>1.12.94</version>
         </dependency>
         <dependency>
             <groupId>com.disney.alice</groupId>
@@ -159,47 +179,26 @@
                     <groupId>com.zebrunner</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <!-- to use zebrunner testng agent for webdriver sesssion(s) declaration KEEP THIS-->
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.12.18</version>
+            <version>${byte-buddy.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- needed for spring RestTemplate stuff -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <!-- For SHA1 hash generation -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.26</version>
         </dependency>
-
-        <dependency>
+        <!--TODO remove BrowserUp proxy from this dependency -->
+        <!--dependency>
             <groupId>com.disney.hora</groupId>
             <artifactId>hora-validator</artifactId>
             <version>${hora-validator-version}</version>
@@ -213,14 +212,7 @@
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
+        </dependency-->
         <dependency>
             <groupId>com.disney.jarvisutils</groupId>
             <artifactId>jarvis-utils</artifactId>
@@ -233,6 +225,10 @@
                 <exclusion>
                     <groupId>com.zebrunner</groupId>
                     <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.disney</groupId>
+                    <artifactId>hatter-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

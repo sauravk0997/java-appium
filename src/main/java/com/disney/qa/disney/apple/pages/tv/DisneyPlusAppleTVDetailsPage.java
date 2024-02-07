@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -91,11 +90,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         moveDown(2,1);
         String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         return currentEpisodeNum.contains(recentlyPlayedEpisode);
-    }
-
-    @Override
-    public boolean isWatchButtonPresent() {
-        return watchButton.isElementPresent();
     }
 
     @Override

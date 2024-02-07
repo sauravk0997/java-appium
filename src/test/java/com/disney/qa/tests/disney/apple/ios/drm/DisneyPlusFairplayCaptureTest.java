@@ -5,21 +5,16 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
 
-import com.browserup.bup.proxy.CaptureType;
 import com.disney.qa.api.client.requests.content.SetRequest;
-import com.disney.qa.api.disney.DisneyHttpHeaders;
-import com.disney.qa.api.disney.DisneyPlusOverrideKeys;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.carina.GeoedgeProxyServer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
@@ -34,11 +29,8 @@ public class DisneyPlusFairplayCaptureTest extends DisneyBaseTest {
 
     private static final String CONTENT_TITLES = "$..title.full..content";
 
-    @Test
+    @Test(groups = TestGroup.PROXY)
     public void fairplayPayloadCapture() throws IOException {
-        initiateProxy(new Locale("", getCountry()).getDisplayCountry(), R.CONFIG.get("proxy_port"),
-                CaptureType.REQUEST_BINARY_CONTENT, CaptureType.REQUEST_CONTENT,
-                CaptureType.RESPONSE_BINARY_CONTENT, CaptureType.RESPONSE_CONTENT);
         String slug = R.TESTDATA.get("disney_home_content_class");
 
         DisneyAccount disneyAccount = getAccountApi().createAccount("Yearly", getCountry(), getLanguage(), "V1");
@@ -80,16 +72,5 @@ public class DisneyPlusFairplayCaptureTest extends DisneyBaseTest {
 
         ZipUtils.zipDirectory(baseFile, pathToZip);
         Artifact.attachToTest(pathToZip, Path.of(pathToZip));
-    }
-
-    public void initiateProxy(String country, String devicePort, CaptureType... captureTypes) {
-        GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
-        geoedgeProxyFreshInstance.setProxyHostForSelenoid();
-        getDriver();
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY);
-        headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
-        headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
     }
 }

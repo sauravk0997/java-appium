@@ -7,7 +7,7 @@
                value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_alice_details"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"

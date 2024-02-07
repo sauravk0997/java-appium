@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -17,12 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
-    private static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
-    public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
@@ -102,7 +101,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         detailsPage.clickDetailsTab();
         scrollDown();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
             detailsPage.swipeTillActorsElementPresent();;
         }
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
@@ -249,7 +248,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
 
         detailsPage.clickExtrasTab();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             detailsPage.swipeUp(1500);
         }
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
@@ -292,7 +291,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Messages").isPresent(), "Share action 'Messages' was not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(), "Share action 'Mail' was not found.");
 
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Tablet")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
             detailsPage.clickHomeIcon();
         } else {
             detailsPage.getTypeButtonByLabel("Close").click();
@@ -327,7 +326,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
+            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
                 Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
             } else {
                 Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
@@ -535,8 +534,50 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        sa.assertFalse(detailsPage.getEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
+        sa.assertFalse(detailsPage.getHuluEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
         sa.assertFalse(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all season button was found.");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75291"})
+    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75291"})
+    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluDetailPagesFeaturedAreaAVBadgesNoAdsAccount() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+
         sa.assertAll();
     }
 

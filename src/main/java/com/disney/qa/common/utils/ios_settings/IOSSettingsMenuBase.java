@@ -1,7 +1,5 @@
 package com.disney.qa.common.utils.ios_settings;
 
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
-
 import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -14,8 +12,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -147,13 +143,11 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
-        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-
         swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
         try {
-            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
