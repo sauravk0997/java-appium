@@ -834,16 +834,41 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForTwoOrMoreHuluEpisodeDownloadsToComplete(String numberOfEpisodes, int timeOut, int polling) {
         LOGGER.info("Waiting for episode downloads to complete..");
         waitForPresenceOfAnElement(getTypeCellLabelContains(numberOfEpisodes + " downloads in progress"));
-        fluentWait(getDriver(), timeOut, polling, "2 downloads in progress text was found.")
-                .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
-        waitForPresenceOfAnElement(getTypeCellLabelContains("1 downloads in progress"));
-        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
-                .until(it -> !getTypeCellLabelContains("1 download in progress").isPresent());
+//        System.out.println(findAllStopOfflineDownloadInCurrentView());
+        fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
+                .until(it -> getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
+        swipeUp(800);
+        System.out.println(getDriver().getPageSource());
+        fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
+                .until(it -> getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
+//        int count = 5;
+//        while (getTypeCellLabelContains("downloads in progress").isPresent() && count >= 0) {
+//            fluentWait(getDriver(), timeOut, polling, "'2 downloads in progress' text wasn't found.")
+//                    .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
+//            count --;
+//        }
+//        fluentWait(getDriver(), timeOut, polling, "2 downloads in progress text wasn't found.")
+//                .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
+//        waitForPresenceOfAnElement(getTypeCellLabelContains("1 downloads in progress"));
+//        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
+//                .until(it -> !getTypeCellLabelContains("1 download in progress").isPresent());
+//        System.out.println(getTypeButtonContainsLabel("Stop the offline download for this title").isPresent());
+//        System.out.println(!getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
+//        fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
+//                .until(it -> !getTypeButtonContainsLabel("Stop the offline download for this title").isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
+    public String findAllStopOfflineDownloadInCurrentView() {
+        System.out.println(getTypeButtonByLabel("Stop the offline download for this title.").isPresent());
+        List<ExtendedWebElement> allOfflineDownloadMessage = findExtendedWebElements(getTypeButtonByLabel("Stop the offline download for this title.").getBy(), 20);
+//        List<String> allOfflineDownloadMessageStrings = new ArrayList<>();
+//        IntStream.range(0, allOfflineDownloadMessage.size()).forEach(i -> allOfflineDownloadMessageStrings.add(allOfflineDownloadMessage.get(i).getText()));
+        return String.valueOf(allOfflineDownloadMessage.size());
+    }
+
     /**
-     * Find all episodes within current view.
+     * Find all downloadable episodes within current view.
      */
     public List<String> findAllDownloadableEpisodesInCurrentView() {
         List<ExtendedWebElement> allEpisodes = findExtendedWebElements(getTypeButtonContainsLabel("Download season").getBy());
