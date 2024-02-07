@@ -92,9 +92,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -130,7 +128,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
@@ -159,8 +156,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
@@ -194,7 +189,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         DisneyAccount expiredAccount = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(expiredAccount);
@@ -224,7 +218,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusCompleteSubscriptionIOSPageBase CompleteSubsPage = initPage(DisneyPlusCompleteSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
-        welcomePage.clickDontAllowBtn();
         welcomePage.dismissNotificationsPopUp();
         welcomePage.clickLogInButton();
         login(nonActiveAccount);
@@ -283,8 +276,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        disneyPlusWelcomeScreenIOSPageBase.clickDontAllowBtn();
         verifySignUpButtonNavigation();
         SoftAssert sa = new SoftAssert();
 
@@ -336,8 +327,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusRestartSubscriptionIOSPageBase restartSubs = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
         DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        welcomeScreen.clickDontAllowBtn();
         welcomePage.dismissNotificationsPopUp();
         welcomePage.clickLogInButton();
         login(expired);

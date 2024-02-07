@@ -119,10 +119,12 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
+        clickDontAllowBtn();
         loginButton.click();
     }
 
     public void clickSignUpButton() {
+        clickDontAllowBtn();
         signUpButton.click();
     }
 
