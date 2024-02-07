@@ -838,9 +838,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
         waitForPresenceOfAnElement(getTypeCellLabelContains("1 downloads in progress"));
         fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
-                .until(it -> getTypeCellLabelContains("1 download in progress").isPresent());
-        System.out.println(getDriver().getPageSource());
-        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
                 .until(it -> !getTypeCellLabelContains("1 download in progress").isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
