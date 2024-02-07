@@ -85,9 +85,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.tapRecentSearchClearButton();
         searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        searchPage.getCancelButton().click();
 
         //next time user select search bar, recent search is no longer displayed
-        searchPage.getCancelButton().click();
         homePage.clickHomeIcon();
         homePage.clickSearchIcon();
         searchPage.getSearchBar().click();
