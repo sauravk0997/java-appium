@@ -234,6 +234,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public ExtendedWebElement getMovieDownloadButton() {
+        return movieDownloadButton;
+    }
+
     public void pauseDownload() {
         if (!movieDownloadButton.isElementPresent(DELAY)) {
             swipe(getDownloadButton());
@@ -800,14 +804,31 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
-    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
+    /**
+     * Use with hulu series content only - to get Hulu series episode download button
+     */
+    public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
 
-    public ExtendedWebElement getMovieDownloadButton() {
-        return movieDownloadButton;
+    /**
+     * Use with hulu series content only - to get Hulu series download complete button
+     */
+    public ExtendedWebElement getHuluSeriesDownloadCompleteButton() {
+        return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
-//        public List<String> getContentItems(int startNum) {
+
+    /**
+     * Use with hulu series content only - to wait for hulu series download to complete
+     */
+    public void waitForHuluSeriesDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for series download to complete");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+    
+    //        public List<String> getContentItems(int startNum) {
 //        List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
 //        List<String> titles = new ArrayList<>();
 //        IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
@@ -819,13 +840,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         IntStream.range(0, allEpisodes.size()).forEach(i -> episodeToDownloadTitles.add(allEpisodes.get(i).getText()));
         return episodeToDownloadTitles;
     }
-
-//    public List<String> episodesInHashMap() {
-//        Map<List<String>, List<String>> params = new HashMap<>();
-//        params.put(Collections.singletonList("episodes"), findAllEpisodes());
-//
-//        return params.get(Collections.singletonList("episodes"));
-//
-//    }
-
 }
