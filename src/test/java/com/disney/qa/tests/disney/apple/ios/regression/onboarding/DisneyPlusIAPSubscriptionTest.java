@@ -389,8 +389,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         IOSSettingsMenuBase iosSettings = initPage(IOSSettingsMenuBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        welcomeScreen.clickDontAllowBtn();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY_BASIC_22,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
