@@ -13,9 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
@@ -94,6 +92,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75264"})
     @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
     public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
@@ -144,6 +143,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         sa.assertTrue(homePage.isOpened(), "Home page not present");
+
         sa.assertAll();
     }
 }
