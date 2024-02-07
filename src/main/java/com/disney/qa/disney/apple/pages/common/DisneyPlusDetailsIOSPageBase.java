@@ -184,7 +184,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return getContentDetailsPage().isPresent();
+        return getDetailsTab().isPresent();
     }
 
     public boolean isOpened(long time) {
