@@ -235,6 +235,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public ExtendedWebElement getMovieDownloadButton() {
+        return movieDownloadButton;
+    }
+
     public void pauseDownload() {
         if (!movieDownloadButton.isElementPresent(DELAY)) {
             swipe(getDownloadButton());
@@ -801,7 +805,27 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
-    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
+    /**
+     * Use with hulu series content only - to get Hulu series episode download button
+     */
+    public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
+    }
+
+    /**
+     * Use with hulu series content only - to get Hulu series download complete button
+     */
+    public ExtendedWebElement getHuluSeriesDownloadCompleteButton() {
+        return dynamicBtnFindByLabelContains.format("Offline Download Options");
+    }
+
+    /**
+     * Use with hulu series content only - to wait for hulu series download to complete
+     */
+    public void waitForHuluSeriesDownloadToComplete(int timeOut, int polling) {
+        LOGGER.info("Waiting for series download to complete");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
     }
 }
