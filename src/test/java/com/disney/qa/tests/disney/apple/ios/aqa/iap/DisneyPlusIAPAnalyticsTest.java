@@ -1,0 +1,88 @@
+package com.disney.qa.tests.disney.apple.ios.aqa.iap;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import org.json.simple.JSONArray;
+import com.disney.qa.hora.validationservices.EventChecklist;
+
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.util.TestGroup;
+import org.openqa.selenium.NoSuchElementException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
+
+import com.zebrunner.agent.core.annotation.TestLabel;
+
+import java.lang.invoke.MethodHandles;
+
+public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
+    public void capturePurchaseFlow() {
+        if (buildType != BuildType.IAP) {
+            skipExecution("Test run is not against IAP compatible build.");
+        }
+        SoftAssert sa = new SoftAssert();
+        JSONArray checkList = new JSONArray();
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusAccountIsMinorIOSPageBase accountIsMinorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        CreateDisneyAccountRequest accountRequest = CreateDisneyAccountRequest.builder()
+                .country("US").isStarOnboarded(false).build();
+        setAccount(getAccountApi().createAccount(accountRequest));
+
+//        DisneyAccount account = getAccountApi().createAccount("US","en");
+
+        DisneyAccount account = getAccount();
+        addHoraValidationSku(account);
+
+
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        welcomeScreen.clickCompleteSubscriptionButton();
+
+
+
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+
+
+        paywallIOSPageBase.clickBasicPlan();
+
+        paywallIOSPageBase.isOpened();
+        paywallIOSPageBase.clickPurchaseButton();
+//        paywallIOSPageBase.isSusbscribed();
+        paywallIOSPageBase.waitForSubscribeOverlay();
+
+        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
+
+        paywallIOSPageBase.clickOverlaySubscribeButton();
+
+        try {
+            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
+        } catch (NoSuchElementException nse) {
+            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+        }
+
+        acceptAlert();
+        pause(10);
+        acceptAlert();
+
+        initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
+        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlementAQA("Disney+");
+        EventChecklist item1 = new EventChecklist("urn:dss:event:fed:purchase:completed-v2");
+        checkList.add(item1);
+        pause(5);
+        checkAssertions(sa,account.getAccountId(),checkList);
+
+    }
+}
