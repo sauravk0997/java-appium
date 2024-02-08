@@ -130,10 +130,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getSearchBar().click();
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
         searchPage.tapTitleUnderRecentSearch(media);
-        results = searchPage.getDisplayedTitles();
-        results.get(0).click();
+
+        //verify search is initiated using the selected Recent Search
+        sa.assertTrue(searchPage.getStaticTextByLabel(media).isPresent(), "search was not initiated using the selected Recent Search");
 
         //verify selected recent search item opened
+        results = searchPage.getDisplayedTitles();
+        results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
     }
