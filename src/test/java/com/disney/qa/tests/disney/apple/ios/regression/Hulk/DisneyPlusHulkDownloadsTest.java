@@ -7,7 +7,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -47,19 +46,19 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes().size());
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2500);
+            swipeUp(2500);
         }
+        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes("1"));
         detailsPage.clickSeasonsButton("1");
         List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
         seasons.get(1).click();
-        sa.assertTrue(String.valueOf(getEpisodes().size()).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
+        sa.assertTrue(String.valueOf(getEpisodes("2")).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
                 "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
-        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(150, 15);
+        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(250, 20);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloads.isOpened();
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
@@ -68,14 +67,36 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
          sa.assertAll();
     }
 
-    private List<String> getEpisodes() {
+    private Integer getEpisodes(String seasonButtonNumber) {
         Map<List<String>, List<String>> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        params.put(Collections.singletonList("episodes"), detailsPage.findAllDownloadableEpisodesInCurrentView());
-        swipeUp(1200);
-        params.put(Collections.singletonList("episodes"), detailsPage.findAllDownloadableEpisodesInCurrentView());
-        List<String> allEpisodesNoDuplicates = params.get(Collections.singletonList("episodes")).stream().distinct().collect(Collectors.toList());
-        swipeDown(1200);
-        return allEpisodesNoDuplicates;
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            int count = 3;
+            while (count > 0) {
+                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(600);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes3")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            swipePageTillElementPresent(detailsPage.getSeasonButton(seasonButtonNumber), 3, null, Direction.DOWN, 600);
+            return allEpisodeDownloadButtonsNoDupes.size();
+        } else {
+           int count = 2;
+            while (count > 0) {
+                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(1200);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            swipePageTillElementPresent(detailsPage.getSeasonButton(seasonButtonNumber), 3, null, Direction.DOWN, 600);
+            return allEpisodeDownloadButtonsNoDupes.size();
+        }
     }
 }

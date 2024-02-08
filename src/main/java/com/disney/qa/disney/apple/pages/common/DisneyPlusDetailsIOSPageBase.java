@@ -336,9 +336,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getDownloadAllSeasonButton() { return downloadSeasonButton; }
 
     public void clickSeasonsButton(String season) {
-        if (!isSeasonButtonDisplayed(season)) {
-            scrollDown();
-        }
+//        if (!isSeasonButtonDisplayed(season)) {
+//            scrollDown();
+//        }
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         getDynamicAccessibilityId(seasonsButton).click();
     }
@@ -383,6 +383,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton).isElementPresent();
+    }
+
+    public ExtendedWebElement getSeasonButton(String season) {
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
+        return getDynamicAccessibilityId(seasonsButton);
     }
 
     public void clickRemoveFromWatchlistButton() {
@@ -842,7 +848,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         waitForPresenceOfAnElement(stopOfflineDownload);
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
                 .until(it -> !stopOfflineDownload.isPresent());
-        swipeUp(800);
+        swipePageTillElementPresent(tenthTitleLabel, 3, null, Direction.UP, 500);
         waitForPresenceOfAnElement(tenthTitleLabel);
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
                 .until(it -> !stopOfflineDownload.isPresent());
@@ -850,9 +856,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Find all downloadable episodes within current view.
+     * Find all episode download buttons within current view.
      */
-    public List<String> findAllDownloadableEpisodesInCurrentView() {
+    public List<String> findAllEpisodeDownloadButtonsInCurrentView() {
         List<ExtendedWebElement> allEpisodes = findExtendedWebElements(getTypeButtonContainsLabel("Download season").getBy());
         List<String> episodeToDownloadTitles = new ArrayList<>();
         IntStream.range(0, allEpisodes.size()).forEach(i -> episodeToDownloadTitles.add(allEpisodes.get(i).getText()));
