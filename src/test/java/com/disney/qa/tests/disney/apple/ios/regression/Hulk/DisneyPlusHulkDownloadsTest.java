@@ -57,9 +57,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(String.valueOf(getEpisodes().size()).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
                 "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
 
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2500);
-        }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
         detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(300, 20);
