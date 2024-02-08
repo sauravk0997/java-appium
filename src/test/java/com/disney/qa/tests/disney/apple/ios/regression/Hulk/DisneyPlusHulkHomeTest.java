@@ -167,18 +167,19 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
+        handleAlert();
         login(getAccount());
-        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
                 , "Watchlist page did not open via deeplink.");
 
         homePage.clickHomeIcon();
         homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
+        sa.assertTrue(homePage.isOpened(), "Home page did not open.");
 
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
                 , "Watchlist page did not open via deeplink.");
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
@@ -186,7 +187,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         homePage.dismissAppTrackingPopUp(10);
 
-        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
                 , "Watchlist page did not open via deeplink.");
 
         sa.assertAll();
