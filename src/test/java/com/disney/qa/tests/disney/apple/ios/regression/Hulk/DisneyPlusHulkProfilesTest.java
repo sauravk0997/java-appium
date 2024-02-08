@@ -62,7 +62,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
             swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getHuluEpisodeToDownload("1", "1").click();
-        detailsPage.waitForOneHuluEpisodeDownloadToComplete(150, 15);
+        detailsPage.waitForOneHuluEpisodeDownloadToComplete(45, 15);
         searchPage.clickSearchIcon();
         searchPage.clearText();
         searchPage.searchForMedia(PREY);
