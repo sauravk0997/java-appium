@@ -23,6 +23,12 @@ public class DisneyPlusRestartSubscriptionIOSPageBase extends DisneyPlusApplePag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'paywallLandingRestart'`]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
     private ExtendedWebElement disneyPlusLogo;
 
+    @ExtendedFindBy(accessibilityId = "Welcome back! Resubscribe today.")
+    private ExtendedWebElement titleText;
+
+    @ExtendedFindBy(accessibilityId = "Don't miss out on the newest movies, shows, and more.")
+    private ExtendedWebElement descriptionText;
+
     // After clicking Log Out button once. Not the same Identifier as "dismissBtn".
     private ExtendedWebElement logOutConfirmationButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGOUT.getText()));
     private ExtendedWebElement logOutCancelButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()));
@@ -62,4 +68,12 @@ public class DisneyPlusRestartSubscriptionIOSPageBase extends DisneyPlusApplePag
     public ExtendedWebElement getLogOutConfirmationButton() { return logOutConfirmationButton; }
 
     public ExtendedWebElement getLogOutCancelButton() { return logOutCancelButton; }
+
+    public ExtendedWebElement getTitleText() {
+        return titleText;
+    }
+
+    public ExtendedWebElement getDescriptionText() {
+        return descriptionText;
+    }
 }
