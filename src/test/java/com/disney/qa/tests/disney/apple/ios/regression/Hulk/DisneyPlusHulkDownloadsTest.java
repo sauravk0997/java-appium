@@ -50,7 +50,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
             swipeUp(2500);
         }
         String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes("1"));
-        detailsPage.clickSeasonsButton("1");
+        detailsPage.getSeasonButton("1").click();
         List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
         seasons.get(1).click();
         sa.assertTrue(String.valueOf(getEpisodes("2")).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
