@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
