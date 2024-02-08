@@ -172,6 +172,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                 , "Watchlist page did not open via deeplink.");
 
         homePage.clickHomeIcon();
+        homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
 
         launchDeeplink(true, deepLink, 10);
