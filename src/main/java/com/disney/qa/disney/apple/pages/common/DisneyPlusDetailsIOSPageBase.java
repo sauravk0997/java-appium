@@ -850,7 +850,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Find all episode download buttons within current view.
+     * Use with hulu series content only - Find all episode download buttons within current view.
      */
     public List<String> findAllEpisodeDownloadButtonsInCurrentView() {
         List<ExtendedWebElement> allEpisodes = findExtendedWebElements(getTypeButtonContainsLabel("Download season").getBy());
