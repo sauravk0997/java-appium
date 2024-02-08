@@ -59,7 +59,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
-        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(300, 20);
+        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(150, 15);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloads.isOpened();
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
