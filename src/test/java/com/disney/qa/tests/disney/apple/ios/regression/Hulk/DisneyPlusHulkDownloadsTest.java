@@ -33,35 +33,33 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         //Movie download button
         homePage.isOpened();
         homePage.clickSearchIcon();
-//        searchPage.searchForMedia(PREY);
-//        searchPage.getDisplayedTitles().get(0).click();
-//        detailsPage.isOpened();
-//        sa.assertTrue(detailsPage.getMovieDownloadButton().isPresent(),
-//                "Movie download button was not found.");
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.getMovieDownloadButton().isPresent(),
+                "Movie download button was not found.");
 
         //Episode download buttons
-//        detailsPage.clickSearchIcon();
-//        searchPage.clearText();
+        detailsPage.clickSearchIcon();
+        searchPage.clearText();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-//        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes().size());
-//        detailsPage.clickSeasonsButton("1");
-//        List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
-//        seasons.get(1).click();
-//        sa.assertTrue(String.valueOf(getEpisodes().size()).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
-//                "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
+        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes().size());
+        detailsPage.clickSeasonsButton("1");
+        List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
+        seasons.get(1).click();
+        sa.assertTrue(String.valueOf(getEpisodes().size()).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
+                "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
-        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete("10", 600, 200);
+        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(300, 20);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloads.isOpened();
-        System.out.println(getDriver().getPageSource());
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
         downloads.clickSeriesMoreInfoButton();
-        System.out.println(getDriver().getPageSource());
-//        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 2").isPresent(), "Season 2 was not downloaded.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 2").isPresent(), "Season 2 was not downloaded.");
          sa.assertAll();
     }
 

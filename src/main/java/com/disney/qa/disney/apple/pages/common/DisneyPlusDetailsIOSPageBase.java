@@ -176,6 +176,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement shopTabImage;
 
+    @ExtendedFindBy(accessibilityId = "Stop the offline download for this title.")
+    private ExtendedWebElement stopOfflineDownload;
+
+    @ExtendedFindBy(accessibilityId = "titleLabel_9")
+    private ExtendedWebElement tenthTitleLabel;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -831,40 +837,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Use with hulu series content only - to wait for 2 or more hulu episode downloads to complete
      */
-    public void waitForTwoOrMoreHuluEpisodeDownloadsToComplete(String numberOfEpisodes, int timeOut, int polling) {
+    public void waitForTwoOrMoreHuluEpisodeDownloadsToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for episode downloads to complete..");
-        waitForPresenceOfAnElement(getTypeCellLabelContains(numberOfEpisodes + " downloads in progress"));
-//        System.out.println(findAllStopOfflineDownloadInCurrentView());
+        waitForPresenceOfAnElement(stopOfflineDownload);
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
-                .until(it -> getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
+                .until(it -> !stopOfflineDownload.isPresent());
         swipeUp(800);
-        System.out.println(getDriver().getPageSource());
+        waitForPresenceOfAnElement(tenthTitleLabel);
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
-                .until(it -> getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
-//        int count = 5;
-//        while (getTypeCellLabelContains("downloads in progress").isPresent() && count >= 0) {
-//            fluentWait(getDriver(), timeOut, polling, "'2 downloads in progress' text wasn't found.")
-//                    .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
-//            count --;
-//        }
-//        fluentWait(getDriver(), timeOut, polling, "2 downloads in progress text wasn't found.")
-//                .until(it -> getTypeCellLabelContains("2 downloads in progress").isPresent());
-//        waitForPresenceOfAnElement(getTypeCellLabelContains("1 downloads in progress"));
-//        fluentWait(getDriver(), timeOut, polling, "1 download in progress text was found.")
-//                .until(it -> !getTypeCellLabelContains("1 download in progress").isPresent());
-//        System.out.println(getTypeButtonContainsLabel("Stop the offline download for this title").isPresent());
-//        System.out.println(!getTypeButtonContainsLabel("Stop the offline download for this title").isElementNotPresent(SHORT_TIMEOUT));
-//        fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
-//                .until(it -> !getTypeButtonContainsLabel("Stop the offline download for this title").isPresent());
+                .until(it -> !stopOfflineDownload.isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
-    }
-
-    public String findAllStopOfflineDownloadInCurrentView() {
-        System.out.println(getTypeButtonByLabel("Stop the offline download for this title.").isPresent());
-        List<ExtendedWebElement> allOfflineDownloadMessage = findExtendedWebElements(getTypeButtonByLabel("Stop the offline download for this title.").getBy(), 20);
-//        List<String> allOfflineDownloadMessageStrings = new ArrayList<>();
-//        IntStream.range(0, allOfflineDownloadMessage.size()).forEach(i -> allOfflineDownloadMessageStrings.add(allOfflineDownloadMessage.get(i).getText()));
-        return String.valueOf(allOfflineDownloadMessage.size());
     }
 
     /**
