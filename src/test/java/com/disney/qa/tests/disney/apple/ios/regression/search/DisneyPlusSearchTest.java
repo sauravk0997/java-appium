@@ -139,5 +139,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
     }
 }
