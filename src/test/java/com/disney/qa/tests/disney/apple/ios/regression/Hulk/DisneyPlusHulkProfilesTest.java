@@ -22,6 +22,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+
         validateHuluDownloadsNotOnLowerMaturityProfile(sa);
         sa.assertAll();
     }
@@ -37,6 +38,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         getAccountApi().editContentRatingProfileSetting(getAccount(), getAccountApi().getDisneyProfiles(getAccount()).get(1).getProfileId(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(5));
+
         validateHuluDownloadsNotOnLowerMaturityProfile(sa);
         sa.assertAll();
     }
@@ -73,7 +75,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
 
         //Validate on lower maturity rating profile downloaded assets not visible
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        whoIsWatching.clickProfile(getAccount().getProfiles().get(1).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
                 ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
