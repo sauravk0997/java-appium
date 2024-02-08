@@ -59,20 +59,20 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2000);
+            swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getHuluEpisodeToDownload("1", "1").click();
-        detailsPage.waitForHuluSeriesDownloadToComplete(150, 15);
+        detailsPage.waitForHuluSeriesDownloadToComplete(45, 3);
         searchPage.clickSearchIcon();
         searchPage.clearText();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2000);
+            swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getMovieDownloadButton().click();
-        detailsPage.waitForMovieDownloadComplete(350, 30);
+        detailsPage.waitForMovieDownloadComplete(150, 15);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.isOpened();
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
