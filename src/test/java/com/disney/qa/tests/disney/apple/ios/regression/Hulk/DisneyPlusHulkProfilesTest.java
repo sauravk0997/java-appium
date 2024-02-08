@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -57,6 +58,9 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2000);
+        }
         detailsPage.getHuluEpisodeToDownload("1", "1").click();
         detailsPage.waitForHuluSeriesDownloadToComplete(150, 15);
         searchPage.clickSearchIcon();
@@ -64,6 +68,9 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2000);
+        }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.waitForMovieDownloadComplete(350, 30);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
