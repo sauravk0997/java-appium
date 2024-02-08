@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -46,6 +48,9 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes().size());
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2000);
+        }
         detailsPage.clickSeasonsButton("1");
         List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
         seasons.get(1).click();
