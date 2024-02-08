@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
@@ -135,15 +133,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getSearchBar().click();
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
         searchPage.tapTitleUnderRecentSearch(media);
-
-        //verify search is initiated using the selected Recent Search
-        sa.assertTrue(searchPage.getStaticTextByLabel(media).isPresent(), "");
-
-        //verify selected recent search item opened
         results = searchPage.getDisplayedTitles();
         results.get(0).click();
+
+        //verify selected recent search item opened
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
     }
 
     @Maintainer("hpatel7")
@@ -159,6 +155,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
+        //Add 11 search result in recent search list
         IntStream.range(0, getMedia().size()).forEach(i -> {
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
@@ -173,16 +170,17 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clearText();
         searchPage.getSearchBar().click();
 
-        //verify user has ability to scroll down
-        searchPage.swipeInRecentSearchResults(Direction.DOWN);
-        sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(1)).isPresent(), "Not able to scroll down");
-
-        //verify 10 most Recent Search results are displayed
-        hideKeyboard();
-        sa.assertTrue(searchPage.getRecentSearchCells().size()==10, "10 recent search was not displayed");
-        IntStream.range(1, getMedia().size()).forEach(i -> {
-            sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(i)).isPresent(), "recent search content was not displayed in recent search results");
-        });
+        //Verify that the after searching 11 content, only last latest 10 visible in list and the first one is not visible
+        sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
+        for(int j = getMedia().size()-1; j>0; j--){
+            sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent(), "recent search content was not displayed in recent search results");
+            boolean b = searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent();
+            if(j==getMedia().size()/2){
+                searchPage.swipeInRecentSearchResults(Direction.UP);
+                //After Swipe also verify that the first content is not visible
+                sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
+            }
+        }
         sa.assertAll();
     }
 
