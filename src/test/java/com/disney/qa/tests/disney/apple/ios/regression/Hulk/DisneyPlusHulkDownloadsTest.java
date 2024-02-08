@@ -49,7 +49,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         detailsPage.isOpened();
         String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes().size());
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2000);
+            swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.clickSeasonsButton("1");
         List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
@@ -58,7 +58,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
                 "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
 
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeInContainer(null, Direction.UP, 2000);
+            swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
