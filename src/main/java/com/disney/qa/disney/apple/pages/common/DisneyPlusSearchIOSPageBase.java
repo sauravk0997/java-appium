@@ -52,6 +52,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     private ExtendedWebElement headerViewTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeCollectionView")
+    protected ExtendedWebElement recentSearchResultsView;
+
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -163,5 +166,22 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
+    }
+
+    public List<ExtendedWebElement> getRecentSearchCells() {
+        int tries = 0;
+        List<ExtendedWebElement> recentSearchResults;
+        do {
+            pause(2);
+            recentSearchResults = findExtendedWebElements(cell.getBy());
+            recentSearchResults.subList(0, 4).clear();
+            LOGGER.info("Titles: {}", recentSearchResults);
+            tries++;
+        } while (tries < 3 && recentSearchResults.isEmpty());
+        return recentSearchResults;
+    }
+
+    public void swipeInRecentSearchResults(Direction direction) {
+        swipeInContainer(recentSearchResultsView, direction, 1500);
     }
 }
