@@ -168,19 +168,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
 
-    public List<ExtendedWebElement> getRecentSearchCells() {
-        int tries = 0;
-        List<ExtendedWebElement> recentSearchResults;
-        do {
-            pause(2);
-            recentSearchResults = findExtendedWebElements(cell.getBy());
-            recentSearchResults.subList(0, 4).clear();
-            LOGGER.info("Titles: {}", recentSearchResults);
-            tries++;
-        } while (tries < 3 && recentSearchResults.isEmpty());
-        return recentSearchResults;
-    }
-
     public void swipeInRecentSearchResults(Direction direction) {
         swipeInContainer(recentSearchResultsView, direction, 1500);
     }
