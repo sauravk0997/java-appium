@@ -146,4 +146,16 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+//     XMOBQA-67499
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
+    @Test(description = "No Hulu subscription - Only 5 brand tiles are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks")
+    public void verifyNoHuluSubscriptionFiveBrandTiles() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        sa.assertAll();
+    }
 }
