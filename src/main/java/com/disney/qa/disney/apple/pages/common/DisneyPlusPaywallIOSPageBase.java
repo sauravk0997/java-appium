@@ -54,18 +54,24 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
+    @FindBy(xpath = "//*[contains(@name, 'Basic')]")
+    private ExtendedWebElement BasicPurchaseBtn;
+
     @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
     private ExtendedWebElement purchasePlanBtn;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
     private ExtendedWebElement overlaySubscribeBtn;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"You’re currently subscribed to this.\"`]")
+    private ExtendedWebElement subscribedText;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
     private ExtendedWebElement sandboxPasswordBox;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField")
+    private ExtendedWebElement sandboxIdBox;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
     protected ExtendedWebElement sandboxSigninButton;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'OK'`]")
+    protected ExtendedWebElement sandboxOkButton;
     private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
 
     private ExtendedWebElement restartSubscriptionSubHeader = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUBSCRIBE_EXPIRED_COPY.getText()));
@@ -256,6 +262,13 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void submitSandboxPassword(String password) {
         sandboxPasswordBox.type(password);
         sandboxSigninButton.click();
+    }
+    public void fillSandboxId(String id,String password) {
+        if (sandboxIdBox.isPresent()) {
+            sandboxIdBox.type(id);
+            sandboxPasswordBox.type(password);
+            sandboxOkButton.click();
+        }
     }
 
     public void dismissPaywallErrorAlert() {
