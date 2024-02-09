@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
@@ -49,12 +50,17 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2500);
         }
-        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodes("1"));
+        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason("1"));
+        LOGGER.info("Season 1 Total number of episode downloads: " + season1NumberOfEpisodeDownloads);
         detailsPage.getSeasonButton("1").click();
         List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
         seasons.get(1).click();
-        sa.assertTrue(String.valueOf(getEpisodes("2")).equalsIgnoreCase(season1NumberOfEpisodeDownloads),
-                "Season 1 and 2 total number of episode download buttons are not the same. Total expected number for each season: 10");
+        String season2NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason("2"));
+        LOGGER.info("Season 2 Total number of episode downloads: " + season2NumberOfEpisodeDownloads);
+        sa.assertTrue(season2NumberOfEpisodeDownloads.equalsIgnoreCase(season1NumberOfEpisodeDownloads),
+                "Season 1 and 2 total number of episode download buttons are not the same. Expected Total number for each season: 10. " +
+                        "Actual - Season 1 total number of episode downloads: " + season1NumberOfEpisodeDownloads + ". " +
+                        "Actual - Season 2 total number of episode downloads: " + season2NumberOfEpisodeDownloads + ". ");
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
@@ -64,10 +70,10 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getStaticTextByLabelContains("Season 2").isPresent(), "Season 2 was not downloaded.");
-         sa.assertAll();
+        sa.assertAll();
     }
 
-    private Integer getEpisodes(String seasonButtonNumber) {
+    private Integer getEpisodeDownloadsOfSeason(String seasonButtonNumber) {
         Map<List<String>, List<String>> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
