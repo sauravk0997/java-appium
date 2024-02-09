@@ -94,4 +94,48 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
         sa.assertAll();
     }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62542"})
+    @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifyRecentSearchInitiatesValidSearch() {
+        String media = "Turning Red";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //User made different search
+        searchPage.searchForMedia(BLUEY);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        detailsPage.getBackArrow().click();
+        searchPage.searchForMedia(media);
+        results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        detailsPage.getBackArrow().click();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+
+        //user selects a Recent Search from the Recent Searches list
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.getSearchBar().click();
+        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        searchPage.tapTitleUnderRecentSearch(media);
+        results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+
+        //verify selected recent search item opened
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
+    }
 }
