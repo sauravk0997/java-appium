@@ -354,8 +354,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         // Restart Subscription Page loads
         softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getHeroImage().isPresent(), "hero not present");
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getTitleText().isPresent(), "primary text not present");
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getDescriptionText().isPresent(), "secondary text not present");
+        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getPrimaryText().isPresent(), "primary text not present");
+        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getSecondaryText().isPresent(), "secondary text not present");
         softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getRestartSubscriptionButton().isPresent(), "button not present");
         //TODO:https://jira.disneystreaming.com/browse/QCE-1253
         //aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
