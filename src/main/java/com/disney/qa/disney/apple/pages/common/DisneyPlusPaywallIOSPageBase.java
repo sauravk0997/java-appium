@@ -227,6 +227,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()),
                 DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()).click();
     }
+    public void clickBasicPlanButton(){
+        BasicPurchaseBtn.click();
+    }
 
     public void clickPremiumPlan() {
         purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText()),
