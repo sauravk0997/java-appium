@@ -52,6 +52,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     private ExtendedWebElement headerViewTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = 'titleLabel'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText")
+    protected ExtendedWebElement ratingAndYearDetailsOfContent;
+
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -164,4 +167,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
+
+    public boolean isRatingAndYearDetailsPresentInResults(){
+        return ratingAndYearDetailsOfContent.isPresent();
+    }
+
 }

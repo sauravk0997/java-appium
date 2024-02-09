@@ -138,4 +138,27 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
         sa.assertAll();
     }
+
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
+    @Test(description = "Search - Search Results with 1 Letter", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifySearchResultWithOneLetter() {
+        String media = "S";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //User made search with one letter
+        searchPage.searchForMedia(media);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        sa.assertTrue(results.size()>0, "Search result not displayed");
+        sa.assertTrue(searchPage.isRatingAndYearDetailsPresentInResults(), "Rating and Year details was not found");
+        sa.assertAll();
+    }
 }
