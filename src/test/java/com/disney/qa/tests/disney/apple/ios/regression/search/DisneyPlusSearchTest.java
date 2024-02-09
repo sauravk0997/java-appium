@@ -157,6 +157,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //User made search with one letter
         searchPage.searchForMedia(media);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        //Verify result with one letter and result have rating and year details
         sa.assertTrue(results.size()>0, "Search result not displayed");
         sa.assertTrue(searchPage.isRatingAndYearDetailsPresentInResults(), "Rating and Year details was not found");
         sa.assertAll();
