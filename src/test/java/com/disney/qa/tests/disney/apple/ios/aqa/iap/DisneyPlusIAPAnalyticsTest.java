@@ -25,7 +25,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
-    public void capturePurchaseFlow() {
+    public void testPurchaseFlowAnalytics() {
         if (buildType != BuildType.IAP) {
             LOGGER.info("buildtype {}",buildType);
             skipExecution("Test run is not against IAP compatible build.");
@@ -65,7 +65,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 //        paywallIOSPageBase.isSusbscribed();
         paywallIOSPageBase.waitForSubscribeOverlay();
 
-//        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
+        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
 
         paywallIOSPageBase.clickOverlaySubscribeButton();
 
