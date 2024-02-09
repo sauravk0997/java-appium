@@ -27,6 +27,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void capturePurchaseFlow() {
         if (buildType != BuildType.IAP) {
+            LOGGER.info("buildtype {}",buildType);
             skipExecution("Test run is not against IAP compatible build.");
         }
         SoftAssert sa = new SoftAssert();
