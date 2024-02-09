@@ -9,7 +9,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -144,6 +143,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
@@ -173,8 +173,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                 , "Watchlist page did not open via deeplink.");
 
         homePage.clickHomeIcon();
-        homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "Home page did not open.");
+        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
 
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
