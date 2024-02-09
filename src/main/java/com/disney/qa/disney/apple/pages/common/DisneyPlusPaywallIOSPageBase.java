@@ -54,7 +54,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
-    @FindBy(xpath = "//*[contains(@name, 'Basic')]")
+    @FindBy(xpath = "//XCUIElementTypeButton[@name=\"selectButton_Disney+ Basic\"]")
     private ExtendedWebElement BasicPurchaseBtn;
 
     @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
