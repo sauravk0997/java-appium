@@ -81,7 +81,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
             allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes3")));
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
             swipeDown(3, 600);
-            swipePageTillElementPresent(detailsPage.getSeasonButton(seasonButtonNumber), 3, null, Direction.DOWN, 600);
             return allEpisodeDownloadButtonsNoDupes.size();
         } else {
            int count = 2;
