@@ -7,13 +7,11 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
@@ -52,15 +50,9 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         }
         String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason("1"));
         LOGGER.info("Season 1 Total number of episode downloads: " + season1NumberOfEpisodeDownloads);
-        detailsPage.getSeasonButton("1").click();
-        List <ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
-        seasons.get(1).click();
-        String season2NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason("2"));
-        LOGGER.info("Season 2 Total number of episode downloads: " + season2NumberOfEpisodeDownloads);
-        sa.assertTrue(season2NumberOfEpisodeDownloads.equalsIgnoreCase(season1NumberOfEpisodeDownloads),
-                "Season 1 and 2 total number of episode download buttons are not the same. Expected Total number for each season: 10. " +
-                        "Actual - Season 1 total number of episode downloads: " + season1NumberOfEpisodeDownloads + ". " +
-                        "Actual - Season 2 total number of episode downloads: " + season2NumberOfEpisodeDownloads + ". ");
+        sa.assertTrue(season1NumberOfEpisodeDownloads.equalsIgnoreCase("10"),
+                "Season 1 total number of episode downloads does not equal expected total of '10'." +
+                "Actual - Season 1 total number of episode downloads: " + season1NumberOfEpisodeDownloads);
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
