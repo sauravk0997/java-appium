@@ -51,8 +51,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason("1"));
         LOGGER.info("Season 1 Total number of episode downloads: " + season1NumberOfEpisodeDownloads);
         sa.assertTrue(season1NumberOfEpisodeDownloads.equalsIgnoreCase("10"),
-                "Season 1 total number of episode downloads does not equal expected total of '10'." +
-                "Actual - Season 1 total number of episode downloads: " + season1NumberOfEpisodeDownloads);
+                "Season 1 total number of episode downloads does not equal expected total of '10'");
 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
