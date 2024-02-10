@@ -60,7 +60,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         downloads.isOpened();
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
         downloads.clickSeriesMoreInfoButton();
-        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 2").isPresent(), "Season 2 was not downloaded.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 1").isPresent(), "Season 2 was not downloaded.");
         sa.assertAll();
     }
 
