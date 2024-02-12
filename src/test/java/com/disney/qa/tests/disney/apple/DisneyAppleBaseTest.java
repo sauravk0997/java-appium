@@ -88,7 +88,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = "3.0.0";
+            String version = AppCenterManager.getInstance()
+                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                            .orElseThrow(
+                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
+                    .getVersion();
             LOGGER.info("version:{}", version);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
