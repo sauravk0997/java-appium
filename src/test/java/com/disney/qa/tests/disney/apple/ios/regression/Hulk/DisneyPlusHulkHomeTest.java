@@ -143,7 +143,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
@@ -164,16 +163,8 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
-
-        handleAlert();
-        login(getAccount());
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
-                , "Watchlist page did not open via deeplink.");
-
-        homePage.clickHomeIcon();
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
 
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
@@ -186,6 +177,26 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         homePage.dismissAppTrackingPopUp(10);
 
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
+                , "Watchlist page did not open via deeplink.");
+
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
+    @Test(description = "New URL Structure - Hulu Hub - Watchlist - Log Out", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHulkDeepLinkNewURLStructureWatchlistLogOut() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink_2"), 10);
+        homePage.clickOpenButton();
+
+        handleAlert();
+        login(getAccount());
+        pause(5);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
                 , "Watchlist page did not open via deeplink.");
 
