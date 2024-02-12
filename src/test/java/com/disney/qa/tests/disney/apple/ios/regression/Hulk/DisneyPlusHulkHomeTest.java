@@ -169,16 +169,14 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
-                , "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
         homePage.dismissAppTrackingPopUp(10);
 
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
-                , "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
 
         sa.assertAll();
     }
@@ -186,7 +184,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
     @Test(description = "New URL Structure - Hulu Hub - Watchlist - Log Out", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkDeepLinkNewURLStructureWatchlistLogOut() {
+    public void verifyHulkDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
@@ -197,8 +195,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         handleAlert();
         login(getAccount());
         pause(5);
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent()
-                , "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
 
         sa.assertAll();
     }
