@@ -271,13 +271,13 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        verifySignUpButtonNavigation();
+        SoftAssert sa = new SoftAssert();
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.enterPasswordValue("1234AB!@");
