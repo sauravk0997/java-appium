@@ -8,8 +8,10 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,6 +20,15 @@ import java.util.List;
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
+    private static final String MOVIES = "Movies";
+    private static final String SERIES = "Series";
+
+    @DataProvider(name = "contentName")
+    public Object[][] disneyPlanTypes() {
+        return new Object[][]{
+                {MOVIES}, {SERIES}
+        };
+    }
 
     @Maintainer("dconyers")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61083"})
@@ -136,6 +147,48 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //verify selected recent search item opened
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
+    }
+
+    @Maintainer("dconyers")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
+    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentName")
+    public void verifyScrollAndDropdownForSearchContentLandingPage(String contentName) {
+        String filterValue = "Comedy";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        if(contentName.equalsIgnoreCase("movies")){
+            searchPage.clickMoviesTab();
+        }else{
+            searchPage.clickSeriesTab();
+        }
+
+        //verify Header and Dropdown are at Top
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName + "header was not found");
+        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
+
+        scrollDown();
+        //verify after scrolling also Dropdown and for tablet header is visible
+        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName+ "header was not found");
+        }else{
+            sa.assertFalse(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName + "header was found");
+        }
+
+        //change the value of dropdown
+        searchPage.clickContentPageDropDown();
+        searchPage.selectInFilteredValueDropDown(filterValue);
+
+        //verify after scroll down if user change the value of dropdown, user is taken back to Top
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName+ "header was not found");
+        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
         sa.assertAll();
     }
 }

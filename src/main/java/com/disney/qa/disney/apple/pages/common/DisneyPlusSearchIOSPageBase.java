@@ -56,6 +56,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
 
+    @ExtendedFindBy(accessibilityId = "selectorButton")
+    private ExtendedWebElement contentPageDropDown;
+
+
     //FUNCTIONS
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
@@ -163,5 +167,16 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
+    }
+
+    public boolean isContentPageDropDownPresent(){
+        return contentPageDropDown.isPresent();
+    }
+    public void clickContentPageDropDown(){
+        contentPageDropDown.click();
+    }
+
+    public void selectInFilteredValueDropDown(String value){
+        getStaticTextByLabel(value).click();
     }
 }
