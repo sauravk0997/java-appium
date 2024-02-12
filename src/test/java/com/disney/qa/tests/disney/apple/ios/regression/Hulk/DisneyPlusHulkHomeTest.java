@@ -159,7 +159,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
     @Test(description = "New URL Structure - Hulu Hub - Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
-    public void verifyHulkDeepLinkNewURLStructureWatchlist(String deepLink) {
+    public void verifyHulkDeepLinkNewURLStructureWatchlistAuthenticatedUser(String deepLink) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
