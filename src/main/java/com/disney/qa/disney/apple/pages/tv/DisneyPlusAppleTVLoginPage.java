@@ -63,7 +63,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickLocalizationEnterNewBtn() {
-        moveDown(9,1);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
+        IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i ->
+                moveDown(1,1));
         clickSelect();
     }
 
