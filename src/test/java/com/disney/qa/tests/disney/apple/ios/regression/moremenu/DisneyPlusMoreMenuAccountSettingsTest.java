@@ -878,7 +878,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
     @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -889,7 +889,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Switch to Annual description and/or CTA was displayed unexpectedly");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Roku() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
