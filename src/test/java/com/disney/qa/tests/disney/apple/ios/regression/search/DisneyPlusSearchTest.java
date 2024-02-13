@@ -65,7 +65,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62552"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {"Search", TestGroup.PRE_CONFIGURATION })
-    public void clearRecentSearchs() {
+    public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -169,26 +169,30 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.clickSeriesTab();
         }
 
-        //verify Header and Dropdown are at Top
-        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName + "header was not found");
-        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
+        //Verify Page header is present
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
 
-        scrollDown();
-        //verify after scrolling also Dropdown and for tablet header is visible
-        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName+ "header was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            scrollDown();
+            //verify after scrolling down also, Page header and Filter header tabbar is present
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            //Verify after selecting any filter value also, Page header and Filter header tabbar is present
+            searchPage.getTypeButtonByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
         }else{
-            sa.assertFalse(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName + "header was found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            scrollDown();
+            //verify after scrolling down also, Filter dropdown is present
+            sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown not present after scroll");
+            //Verify after selecting any filter value also, it navigate to top and Filter dropdown is present
+            searchPage.clickContentPageFilterDropDownAtMiddleTop();
+            searchPage.getStaticTextByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
         }
-
-        //change the value of dropdown
-        searchPage.clickContentPageDropDown();
-        searchPage.selectInFilteredValueDropDown(filterValue);
-
-        //verify after scroll down if user change the value of dropdown, user is taken back to Top
-        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), contentName+ "header was not found");
-        sa.assertTrue(searchPage.isContentPageDropDownPresent(), "Content Page Dropdown wa not found");
         sa.assertAll();
     }
 }

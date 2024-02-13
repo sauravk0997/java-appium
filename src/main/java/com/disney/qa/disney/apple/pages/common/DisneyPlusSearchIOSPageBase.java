@@ -57,7 +57,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
 
     @ExtendedFindBy(accessibilityId = "selectorButton")
-    private ExtendedWebElement contentPageDropDown;
+    private ExtendedWebElement contentPageFilterDropDown;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'Back'$]/XCUIElementTypeOther/XCUIElementTypeButton[2]")
+    private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
+
+    @ExtendedFindBy(accessibilityId = "segmentedControl")
+    private ExtendedWebElement contentpageFilterHeader;
 
 
     //FUNCTIONS
@@ -169,14 +175,23 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
 
-    public boolean isContentPageDropDownPresent(){
-        return contentPageDropDown.isPresent();
-    }
-    public void clickContentPageDropDown(){
-        contentPageDropDown.click();
+    public boolean isContentPageFilterDropDownPresent(){
+        return contentPageFilterDropDown.isPresent();
     }
 
-    public void selectInFilteredValueDropDown(String value){
-        getStaticTextByLabel(value).click();
+    public void clickContentPageFilterDropDown(){
+        contentPageFilterDropDown.click();
+    }
+
+    public void clickContentPageFilterDropDownAtMiddleTop(){
+        contentPageFilterDropDownAtMiddleTop.click();
+    }
+
+    public boolean isContentPageFilterHeaderPresent(){
+        return contentpageFilterHeader.isPresent();
+    }
+
+    public boolean isContentPageFilterDropDownAtMiddleTopPresent(){
+        return contentPageFilterDropDownAtMiddleTop.isPresent();
     }
 }
