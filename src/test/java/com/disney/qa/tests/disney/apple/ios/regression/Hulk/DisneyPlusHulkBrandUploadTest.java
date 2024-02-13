@@ -1,29 +1,43 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.hatter.api.alice.AliceApiUtil;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.slack.api.model.Im;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import com.amazonaws.services.rekognition.model.BoundingBox;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.coordinates.Coords;
+import ru.yandex.qatools.ashot.shooting.CuttingDecorator;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategy;
+import ru.yandex.qatools.ashot.cropper.ImageCropper;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.validation.constraints.NotEmpty;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
@@ -35,13 +49,13 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Brand Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
-    public void brandAliceUploadHandsetTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) {
+    public void brandAliceUploadHandsetTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) throws IOException {
         aliceS3Baseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Brand Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
-    public void brandAliceUploadTabletTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) {
+    public void brandAliceUploadTabletTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) throws IOException {
         aliceS3Baseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
     }
 
@@ -96,13 +110,13 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
                 path = String.format(
                         S3_BASE_PATH + "apple-handset/" + deviceName + "/hulu-brand/%s" +
                                 pngFileType, brand);
-                jsonS3FilePath = DisneyPlusHulkContinueWatchingDataProvider.PlatformType.HANDSET.getS3Path();
+                jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET.getS3Path();
                 break;
             case TABLET:
                 path = String.format(
                         S3_BASE_PATH + "apple-tablet/" + deviceName + "/hulu-brand/%s" +
                                 pngFileType, brand);
-                jsonS3FilePath = DisneyPlusHulkContinueWatchingDataProvider.PlatformType.TABLET.getS3Path();
+                jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.TABLET.getS3Path();
                 break;
             default:
                 Assert.fail("Unrecognized platform type.");
@@ -163,15 +177,6 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
         brandPage.isOpened();
         takeScreenshotAndCompileS3Paths(hulkContent.getBrand().replace(' ', '_'), platformType, s3DeviceName);
         homePage.tapBackButton();
-//        IntStream.range(0, 5).forEach(i -> {
-//            sa.assertTrue(homePage.getBrandTile(brandTiles.get(i)).isPresent(), i + "brand tile was not found.");
-//            homePage.getBrandTile(brandTiles.get(i)).click();
-//            brandPage.isOpened();
-//            takeScreenshotAndCompileS3Paths(hulkContent.getBrand().replace(' ', '_'), platformType, s3DeviceName);
-//            homePage.tapBackButton();
-//        });
         sa.assertAll();
     }
-
-//    private List<String> brandTiles = new ArrayList<>(Arrays.asList("Disney", "Pixar", "Marvel", "National Geographic", "Star Wars"));
 }
