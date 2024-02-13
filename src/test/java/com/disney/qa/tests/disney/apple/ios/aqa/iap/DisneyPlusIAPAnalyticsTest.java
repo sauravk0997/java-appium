@@ -22,7 +22,9 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+    public void handleAlert() {
+        super.handleAlert();
+    }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
@@ -47,7 +49,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
 
-        welcomeScreen.handleAlert();
+        handleAlert();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
