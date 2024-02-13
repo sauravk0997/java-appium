@@ -875,11 +875,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      */
     public Integer getEpisodeDownloadsOfSeason() {
         Map<List<String>, List<String>> params = new HashMap<>();
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             int count = 3;
             while (count > 0) {
-                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                params.put(Collections.singletonList("episodes" + count), findAllEpisodeDownloadButtonsInCurrentView());
                 swipeUp(600);
                 count --;
             }
@@ -892,7 +891,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         } else {
             int count = 2;
             while (count > 0) {
-                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                params.put(Collections.singletonList("episodes" + count), findAllEpisodeDownloadButtonsInCurrentView());
                 swipeUp(1200);
                 count --;
             }
