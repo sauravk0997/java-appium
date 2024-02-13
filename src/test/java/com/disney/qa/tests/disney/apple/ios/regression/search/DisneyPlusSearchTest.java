@@ -150,7 +150,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("dconyers")
+    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
     @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentName")
     public void verifyScrollAndDropdownForSearchContentLandingPage(String contentName) {
