@@ -144,11 +144,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
     @Test(description = "Search - Search Results with 1 Letter", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifySearchResultWithOneLetter() {
-        String media = "S";
+        String media = "M";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
@@ -157,9 +156,18 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //User made search with one letter
         searchPage.searchForMedia(media);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        //Verify result with one letter and result have rating and year details
+
+        //Verify correct result are displayed after searching with one letter
         sa.assertTrue(results.size()>0, "Search result not displayed");
-        sa.assertTrue(searchPage.isRatingAndYearDetailsPresentInResults(), "Rating and Year details was not found");
+        sa.assertTrue(results.get(0).getText().startsWith(media), "Results dosent start with letter " + media);
+
+        String contentTitle = results.get(0).getText().split(",")[0];
+        String rating = getSearchApi().getMovie(contentTitle, getAccount()).getContentRatingsValue();
+        String releasedYear = getSearchApi().getMovie(contentTitle, getAccount()).getReleaseDate();
+
+        //Verify search result have Rating and released year details also
+        sa.assertTrue(searchPage.getRatingAndYearDetailsPresentInResults().contains(rating), "Rating details was not found in search results");
+        sa.assertTrue(searchPage.getRatingAndYearDetailsPresentInResults().contains(releasedYear), "Released Year details was not found in search results");
         sa.assertAll();
     }
 }
