@@ -10,10 +10,14 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 
 public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
+    private static final String SET = "set";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74626", "XMOBQA-75242", "XMOBQA-75325"})
@@ -45,7 +49,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2500);
         }
-        String season1NumberOfEpisodeDownloads = String.valueOf(detailsPage.getEpisodeDownloadsOfSeason());
+        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason());
         LOGGER.info("Season 1 Total number of episode downloads: " + season1NumberOfEpisodeDownloads);
         sa.assertTrue(season1NumberOfEpisodeDownloads.equalsIgnoreCase("10"),
                 "Season 1 total number of episode downloads does not equal expected total of '10'");
@@ -61,5 +65,36 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getStaticTextByLabelContains("Season 1").isPresent(), "Season 1 was not downloaded.");
         sa.assertAll();
+    }
+
+    private Integer getEpisodeDownloadsOfSeason() {
+        Map<List<String>, List<String>> params = new HashMap<>();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            int count = 3;
+            while (count > 0) {
+                params.put(Collections.singletonList(SET + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(600);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "3")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        } else {
+            int count = 2;
+            while (count > 0) {
+                params.put(Collections.singletonList(SET + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(1200);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        }
     }
 }

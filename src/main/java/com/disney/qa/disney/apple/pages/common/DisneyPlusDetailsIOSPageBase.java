@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
@@ -40,7 +39,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
     private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
     private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
-    private static final String SET = "set";
 
     //LOCATORS
 
@@ -293,6 +291,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * The images are added to a list, which are then purged if their .getText() return is empty, as the only image
      * with a text value on display is the details page's title graphic. This will eventually be replaced
      * when the iOS dev team adds static accessibility IDs to the elements on the page.
+     *
      * @return - Media title
      */
     public String getMediaTitle() {
@@ -313,9 +312,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForWatchlistButtonToAppear() {
-            LOGGER.info("Waiting for  WatchlistButton to appear");
-            fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Watchlist button is not present")
-                    .until(it -> watchlistButton.isPresent());
+        LOGGER.info("Waiting for  WatchlistButton to appear");
+        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Watchlist button is not present")
+                .until(it -> watchlistButton.isPresent());
     }
 
     public void addToWatchlist() {
@@ -334,7 +333,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         downloadSeasonButton.click();
     }
 
-    public ExtendedWebElement getDownloadAllSeasonButton() { return downloadSeasonButton; }
+    public ExtendedWebElement getDownloadAllSeasonButton() {
+        return downloadSeasonButton;
+    }
 
     public void clickSeasonsButton(String season) {
         if (!isSeasonButtonDisplayed(season)) {
@@ -343,6 +344,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         getDynamicAccessibilityId(seasonsButton).click();
     }
+
     public void clickExtrasTab() {
         if (!extrasTab.isPresent()) {
             swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, Direction.UP, 900);
@@ -398,7 +400,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
 
-    public void swipeTabBar (Direction direction, int duration) {
+    public void swipeTabBar(Direction direction, int duration) {
         swipeInContainer(tabBar, direction, duration);
     }
 
@@ -448,13 +450,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return metaDataLabel.isPresent();
     }
 
-    public ExtendedWebElement getReleaseDate() { return releaseDate; }
+    public ExtendedWebElement getReleaseDate() {
+        return releaseDate;
+    }
 
-    public ExtendedWebElement getDuration() { return duration; }
+    public ExtendedWebElement getDuration() {
+        return duration;
+    }
 
-    public ExtendedWebElement getGenre() { return genre; }
+    public ExtendedWebElement getGenre() {
+        return genre;
+    }
 
-    public ExtendedWebElement getRating() { return rating; }
+    public ExtendedWebElement getRating() {
+        return rating;
+    }
 
     public boolean isPlayButtonDisplayed() {
         return getPlayButton().isPresent();
@@ -464,7 +474,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return watchlistButton.isPresent();
     }
 
-    public void clickWatchlistButton() { watchlistButton.click(); }
+    public void clickWatchlistButton() {
+        watchlistButton.click();
+    }
 
     public String getWatchlistButtonText() {
         return watchlistButton.getText();
@@ -490,7 +502,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             return metadataLabelParts[3].contains(seasonsText[0]);
         } else {
             LOGGER.info("verifying multi seasons displayed");
-            String metaDataLabelSeasons = getParsedString(metaDataLabel, "1",",");
+            String metaDataLabelSeasons = getParsedString(metaDataLabel, "1", ",");
             String[] seasonParse = metaDataLabelSeasons.split(" ");
             String numberOfSeasons = seasonParse[0];
             String multiSeason = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_TOTAL_SEASONS.getText());
@@ -502,8 +514,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Method used to compare metadataLabel split string from main detail screen
      * feature area to a detail tab element's split string
-     * @param metadataPart Split part of metadataLabel for comparison
-     * @param element details tab element
+     *
+     * @param metadataPart   Split part of metadataLabel for comparison
+     * @param element        details tab element
      * @param detailsTabPart Split part of a details tab element for comparison
      * @return - Media title
      */
@@ -520,10 +533,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean compareEpisodeNum() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        swipePageTillElementPresent( getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
+        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
         LOGGER.info("Retrieving current episode number..");
         String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1,  contentDetailsPage, Direction.DOWN, 2000);
+        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.DOWN, 2000);
         clickWatchButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForContentToEnd(450, 15);
@@ -531,7 +544,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             videoPlayer.clickBackButton();
         }
         isOpened();
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()),1, contentDetailsPage, Direction.UP, 2000);
+        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
         LOGGER.info("Retrieving recently played episode number..");
         String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
         LOGGER.info("Comparing current episode number with recently played episode number..");
@@ -578,9 +591,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return actors;
     }
 
-    public ExtendedWebElement getContentDetailsPage() { return contentDetailsPage; }
+    public ExtendedWebElement getContentDetailsPage() {
+        return contentDetailsPage;
+    }
 
-    public ExtendedWebElement getFormats() { return formats; }
+    public ExtendedWebElement getFormats() {
+        return formats;
+    }
 
     public ExtendedWebElement getEpisodesTab() {
         return episodesTab;
@@ -617,6 +634,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     /**
      * This returns first tab cells in view. This can be used for Suggested or Extras tab.
+     *
      * @return - Tab cells
      */
     public List<String> getTabCells() {
@@ -765,13 +783,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return playIcon;
     }
 
-    public ExtendedWebElement getFirstDescriptionLabel() { return firstDescriptionLabel; }
+    public ExtendedWebElement getFirstDescriptionLabel() {
+        return firstDescriptionLabel;
+    }
 
-    public ExtendedWebElement getFirstRunTimeLabel() { return firstRunTimeLabel; }
+    public ExtendedWebElement getFirstRunTimeLabel() {
+        return firstRunTimeLabel;
+    }
 
-    public ExtendedWebElement getShareBtn() { return shareBtn; }
+    public ExtendedWebElement getShareBtn() {
+        return shareBtn;
+    }
 
-    public ExtendedWebElement getShopBtn() { return shopTab; }
+    public ExtendedWebElement getShopBtn() {
+        return shopTab;
+    }
 
     public void clickShopTab() {
         if (!shopTab.isPresent()) {
@@ -869,38 +895,5 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton);
-    }
-
-    /**
-     * Currently only to used with a series that has 10 episodes.
-     */
-    public Integer getEpisodeDownloadsOfSeason() {
-        Map<List<String>, List<String>> params = new HashMap<>();
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            int count = 3;
-            while (count > 0) {
-                params.put(Collections.singletonList(SET + count), findAllEpisodeDownloadButtonsInCurrentView());
-                swipeUp(600);
-                count --;
-            }
-            List<String> allEpisodeDownloadButtons = new ArrayList<>();
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "3")));
-            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
-            return allEpisodeDownloadButtonsNoDupes.size();
-        } else {
-            int count = 2;
-            while (count > 0) {
-                params.put(Collections.singletonList(SET + count), findAllEpisodeDownloadButtonsInCurrentView());
-                swipeUp(1200);
-                count --;
-            }
-            List<String> allEpisodeDownloadButtons = new ArrayList<>();
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
-            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
-            return allEpisodeDownloadButtonsNoDupes.size();
-        }
     }
 }
