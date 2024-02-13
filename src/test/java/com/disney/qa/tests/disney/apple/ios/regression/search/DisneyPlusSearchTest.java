@@ -1,8 +1,14 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
+import com.disney.qa.api.client.requests.content.CollectionRequest;
+import com.disney.qa.api.client.responses.content.ContentCollection;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.search.assets.DisneyStandardCollection;
+import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -136,6 +142,47 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //verify selected recent search item opened
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
+    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifyOriginalsLandingPage() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyAccount testAccount = getAccount();
+        setAppToHomeScreen(testAccount);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        searchPage.clickOriginalsTab();
+        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
+        //Verify Back button is present or not
+        sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
+
+        //verify all the content header present
+        CollectionRequest collectionRequest = CollectionRequest.builder()
+                .region(getLocalizationUtils().getLocale())
+                .audience("false")
+                .language(getLocalizationUtils().getUserLanguage())
+                .slug(DisneyStandardCollection.ORIGINALS.getSlug())
+                .contentClass(DisneyStandardCollection.ORIGINALS.getContentClass())
+                .account(testAccount)
+                .build();
+
+        ContentCollection contentCollection = getSearchApi().getCollection(collectionRequest);
+        List<DisneyCollectionSet> setInfo = contentCollection.getCollectionSetsInfo();
+
+        ExtendedWebElement currentElement;
+        for (DisneyCollectionSet set : setInfo) {
+            currentElement = searchPage.getTypeOtherByLabel(set.getContent());
+            swipe(currentElement);
+            sa.assertTrue(currentElement.isPresent(), currentElement + " content was not found");
+        }
         sa.assertAll();
     }
 }
