@@ -874,7 +874,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Currently only to used with a series that has 10 episodes.
      */
-    public Integer getEpisodeDownloadsOfSeason(String seasonButtonNumber) {
+    public Integer getEpisodeDownloadsOfSeason() {
         Map<List<String>, List<String>> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
