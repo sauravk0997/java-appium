@@ -40,6 +40,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
     private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
     private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
+    private static final String SET = set;
 
     //LOCATORS
 
@@ -878,26 +879,26 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             int count = 3;
             while (count > 0) {
-                params.put(Collections.singletonList("episodes" + count), findAllEpisodeDownloadButtonsInCurrentView());
+                params.put(Collections.singletonList(SET + count), findAllEpisodeDownloadButtonsInCurrentView());
                 swipeUp(600);
                 count --;
             }
             List<String> allEpisodeDownloadButtons = new ArrayList<>();
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes3")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "3")));
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
             return allEpisodeDownloadButtonsNoDupes.size();
         } else {
             int count = 2;
             while (count > 0) {
-                params.put(Collections.singletonList("episodes" + count), findAllEpisodeDownloadButtonsInCurrentView());
+                params.put(Collections.singletonList(SET + count), findAllEpisodeDownloadButtonsInCurrentView());
                 swipeUp(1200);
                 count --;
             }
             List<String> allEpisodeDownloadButtons = new ArrayList<>();
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
-            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
             return allEpisodeDownloadButtonsNoDupes.size();
         }
