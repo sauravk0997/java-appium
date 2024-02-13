@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
@@ -868,5 +869,39 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton);
+    }
+
+    /**
+     * Currently only to used with a series that has 10 episodes.
+     */
+    public Integer getEpisodeDownloadsOfSeason(String seasonButtonNumber) {
+        Map<List<String>, List<String>> params = new HashMap<>();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            int count = 3;
+            while (count > 0) {
+                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(600);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes3")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        } else {
+            int count = 2;
+            while (count > 0) {
+                params.put(Collections.singletonList("episodes" + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(1200);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        }
     }
 }
