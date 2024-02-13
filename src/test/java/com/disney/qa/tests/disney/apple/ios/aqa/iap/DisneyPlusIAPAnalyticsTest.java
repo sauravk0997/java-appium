@@ -30,6 +30,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 //            LOGGER.info("buildtype {}",buildType);
 //            skipExecution("Test run is not against IAP compatible build.");
 //        }
+
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -46,7 +47,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
 
-
+        welcomeScreen.dismissNotificationsPopUp();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
