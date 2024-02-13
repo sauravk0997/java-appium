@@ -54,6 +54,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
                 "Season 1 total number of episode downloads does not equal expected total of '10'");
 
         //Download all of season
+        swipePageTillElementTappable(detailsPage.getDownloadAllSeasonButton(), 2, null, Direction.DOWN, 900);
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDownloadSeasonAlertButton();
         detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(250, 25);
@@ -80,7 +81,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
             allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
             allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes3")));
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
-            swipeDown(3, 600);
             return allEpisodeDownloadButtonsNoDupes.size();
         } else {
            int count = 2;
@@ -93,7 +93,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
             allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes1")));
             allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList("episodes2")));
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
-            swipeDown(2, 1200);
             return allEpisodeDownloadButtonsNoDupes.size();
         }
     }
