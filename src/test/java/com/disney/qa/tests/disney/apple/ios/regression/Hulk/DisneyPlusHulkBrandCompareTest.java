@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class DisneyPlusHulkCompareTest extends DisneyBaseTest {
+public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     double imageSimilarityPercentageThreshold = 90.0;
     private List<String> brandTiles = new ArrayList<>(Arrays.asList("Disney", "Pixar", "Marvel", "National Geographic", "Star Wars"));
@@ -52,26 +52,18 @@ public class DisneyPlusHulkCompareTest extends DisneyBaseTest {
             homePage.getBrandTile(brandTiles.get(i)).click();
 
             System.out.println(getDriver().getPageSource());
-            homePage.clickOnCollectionBackButton();
+            homePage.tapBackButton();
         });
         sa.assertAll();
     }
 
-    private final List<String> networkLogos = new ArrayList<String>(
-            Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
-                    "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
-                    "Hulu Original Series", "Lifetime", "Lionsgate", "LMN", "Magnolia", "Moonbug Entertainment ",
-                    "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
-                    "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
-                    "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
-
     private String buildS3BucketPath(String title) {
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             return String.format(
-                    S3_BASE_PATH + "apple-tablet/" + getDeviceNameFromCapabilities() + "/hulu-network-logos/%s", title);
+                    S3_BASE_PATH + "apple-tablet/" + getDeviceNameFromCapabilities() + "/hulu-brand-collection/%s", title);
         } else {
             return String.format(
-                    S3_BASE_PATH + "apple-handset/" + getDeviceNameFromCapabilities() + "/hulu-network-logos/%s", title);
+                    S3_BASE_PATH + "apple-handset/" + getDeviceNameFromCapabilities() + "/hulu-brand-collection/%s", title);
         }
     }
 
@@ -84,7 +76,7 @@ public class DisneyPlusHulkCompareTest extends DisneyBaseTest {
     }
 
 
-    private void aliceS3BaseCompareLatestCapture(DisneyPlusHulkDataProvider.HulkContentS3 hulkContentS3, File originalFile) {
+    private void aliceS3BaseCompareLatestCapture(DisneyPlusHulkContinueWatchingDataProvider.HulkContentS3 hulkContentS3, File originalFile) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

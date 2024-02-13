@@ -8,7 +8,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDataProvider.HulkContentS3;
+import com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkContinueWatchingDataProvider.HulkContentS3;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +51,7 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
         aliceS3BaseCompareLatestCapture(hulkContent);
     }
 
-    public List<Object[]> parseHulkS3Json(DisneyPlusHulkDataProvider.PlatformType platformType) {
+    public List<Object[]> parseHulkS3Json(DisneyPlusHulkContinueWatchingDataProvider.PlatformType platformType) {
         List<Object[]> data = new ArrayList<>();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -79,12 +79,12 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
 
     @DataProvider
     public Iterator<Object[]> handsetDataContentProvider() {
-        return parseHulkS3Json(DisneyPlusHulkDataProvider.PlatformType.HANDSET).iterator();
+        return parseHulkS3Json(DisneyPlusHulkContinueWatchingDataProvider.PlatformType.HANDSET).iterator();
     }
 
     @DataProvider
     public Iterator<Object[]> tabletDataContentProvider() {
-        return parseHulkS3Json(DisneyPlusHulkDataProvider.PlatformType.TABLET).iterator();
+        return parseHulkS3Json(DisneyPlusHulkContinueWatchingDataProvider.PlatformType.TABLET).iterator();
     }
 
     private String getJsonPath() {
@@ -140,7 +140,7 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
         }
     }
 
-    private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContentS3 hulkContentS3) {
+    private void isContentUnavailableErrorPresent(DisneyPlusHulkContinueWatchingDataProvider.HulkContentS3 hulkContentS3) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);

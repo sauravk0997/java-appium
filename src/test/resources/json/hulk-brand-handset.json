@@ -1,0 +1,22 @@
+[
+  {
+    "brand": "Disney",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  },
+  {
+    "brand": "Pixar",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  },
+  {
+    "brand": "Marvel",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  },
+  {
+    "brand": "National Geographic",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  },
+  {
+    "brand": "Star Wars",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  }
+]
