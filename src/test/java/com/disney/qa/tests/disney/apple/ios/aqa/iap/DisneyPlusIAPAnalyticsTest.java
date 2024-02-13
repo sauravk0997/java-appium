@@ -26,10 +26,10 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
-        if (buildType != BuildType.IAP) {
-            LOGGER.info("buildtype {}",buildType);
-            skipExecution("Test run is not against IAP compatible build.");
-        }
+//        if (buildType != BuildType.IAP) {
+//            LOGGER.info("buildtype {}",buildType);
+//            skipExecution("Test run is not against IAP compatible build.");
+//        }
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
