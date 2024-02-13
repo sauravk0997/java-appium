@@ -41,6 +41,9 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
    public boolean isStudiosAndNetworkPresent() {
         ExtendedWebElement studiosLabel = getStudiosAndNetwork();
         swipePageTillElementPresent(studiosLabel, 3, brandLandingView, Direction.UP, 500);
+        if (!isAllElementVisibleOnScreen(studiosLabel)){
+            swipeInContainer(brandLandingView, Direction.UP, 500);
+        }
         return studiosLabel.isPresent();
     }
 

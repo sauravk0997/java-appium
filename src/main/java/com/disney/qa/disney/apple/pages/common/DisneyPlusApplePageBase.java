@@ -1270,4 +1270,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
         return getUnavailableContentErrorPopUpMessage().isPresent();
     }
+
+    public boolean isAllElementVisibleOnScreen(ExtendedWebElement element) {
+        Dimension size = getDriver().manage().window().getSize();
+        int screenHeight = size.getHeight();
+        int elementY = element.getLocation().getY();
+        int elementHeight = element.getSize().getHeight();
+        return (elementY >= 0 && elementY + elementHeight <= screenHeight);
+    }
 }

@@ -18,9 +18,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
@@ -75,7 +73,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
             sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
             pause(3);
             String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')));
-            File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);;
+            File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);
             ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
             ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
             JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
