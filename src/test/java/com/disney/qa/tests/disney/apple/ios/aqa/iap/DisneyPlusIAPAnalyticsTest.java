@@ -47,7 +47,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
 
-        welcomeScreen.dismissNotificationsPopUp();
+        welcomeScreen.handleAlert();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
