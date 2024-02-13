@@ -26,7 +26,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
     private static final String PHONE = "Phone";
     private static final String DOWNLOAD_COMPLETED = "Download completed";
     private static final String WATCH = "WATCH";
