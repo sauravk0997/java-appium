@@ -25,8 +25,10 @@ public interface DisneyPlusHulkBrandDataProvider {
     }
 
     enum PlatformType {
-        HANDSET("handsetS3FilePath"),
-        TABLET("tabletS3FilePath");
+        HANDSET_BRAND_FEATURED("handsetS3FilePath"),
+        HANDSET_BRAND_TILE("handsetS3TileFilePath"),
+        TABLET_BRAND_FEATURED("tabletS3FilePath"),
+        TABLET_BRAND_TILE("tabletS3TileFilePath");
 
         private final String s3Path;
         PlatformType(String s3path) {
