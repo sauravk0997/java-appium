@@ -23,7 +23,6 @@ public class DisneyPlusHomeUploadTest extends DisneyBaseTest {
     private static final Map<File, String> imageS3UploadRequests = new LinkedHashMap<>();
     private static final List<String> s3ImageNames = new ArrayList<>();
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61874"})
     @Test(description = "Upload Images for Originals - Disney+ Originals Badge Placement throughout Disney+", groups = {"Originals", TestGroup.PRE_CONFIGURATION})
     public void uploadOriginalsDisneyOriginalsBadgePlacementImages() {
         SoftAssert sa = new SoftAssert();
