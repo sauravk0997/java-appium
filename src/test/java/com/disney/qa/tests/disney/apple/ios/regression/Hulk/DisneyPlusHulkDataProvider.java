@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import lombok.Data;
 
-public interface DisneyPlusHulkContinueWatchingDataProvider {
+public interface DisneyPlusHulkDataProvider {
 
     @Data
     class HulkContent {

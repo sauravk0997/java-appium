@@ -40,14 +40,14 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
-    public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent) {
-        aliceS3Baseline(hulkContent, DisneyPlusHulkContinueWatchingDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
+    public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
+        aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
-    public void continueWatchingAliceUploadTabletTest(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent) {
-        aliceS3Baseline(hulkContent, DisneyPlusHulkContinueWatchingDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
+    public void continueWatchingAliceUploadTabletTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
+        aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
     }
 
     @DataProvider
@@ -61,7 +61,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
             JsonNode jsonObjects = objectMapper.readTree(jsonFile);
 
             jsonObjects.forEach((jsonObject) -> {
-                DisneyPlusHulkContinueWatchingDataProvider.HulkContent content = new DisneyPlusHulkContinueWatchingDataProvider.HulkContent(
+                DisneyPlusHulkDataProvider.HulkContent content = new DisneyPlusHulkDataProvider.HulkContent(
                         jsonObject.get("title").asText(),
                         jsonObject.get("entityId").asText(),
                         jsonObject.get("continueWatchingId").asText());
@@ -94,7 +94,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         return R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
     }
 
-    private String buildS3BucketPath(String contentTitle, DisneyPlusHulkContinueWatchingDataProvider.PlatformType platformType, String deviceName) {
+    private String buildS3BucketPath(String contentTitle, DisneyPlusHulkDataProvider.PlatformType platformType, String deviceName) {
         String pngFileType = ".png";
         String path = "";
 
@@ -103,13 +103,13 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
                 path = String.format(
                         S3_BASE_PATH + "apple-handset/" + deviceName + "/continue-watching/%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
-                jsonS3FilePath = DisneyPlusHulkContinueWatchingDataProvider.PlatformType.HANDSET.getS3Path();
+                jsonS3FilePath = DisneyPlusHulkDataProvider.PlatformType.HANDSET.getS3Path();
                 break;
             case TABLET:
                 path = String.format(
                         S3_BASE_PATH + "apple-tablet/" + deviceName + "/continue-watching/%s-%s" +
                                 pngFileType, contentTitle, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
-                jsonS3FilePath = DisneyPlusHulkContinueWatchingDataProvider.PlatformType.TABLET.getS3Path();
+                jsonS3FilePath = DisneyPlusHulkDataProvider.PlatformType.TABLET.getS3Path();
                 break;
             default:
                 Assert.fail("Unrecognized platform type.");
@@ -150,7 +150,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         LOGGER.info("S3 Storage image names: " + s3ImageNames);
     }
 
-    private void takeScreenshotAndCompileS3Paths(String title, String continueWatchingId, DisneyPlusHulkContinueWatchingDataProvider.PlatformType platform, String s3Device) {
+    private void takeScreenshotAndCompileS3Paths(String title, String continueWatchingId, DisneyPlusHulkDataProvider.PlatformType platform, String s3Device) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         LOGGER.info("Taking screenshot and compiling S3 upload image requests.");
         String s3BucketPath = buildS3BucketPath(title, platform, s3Device);
@@ -161,7 +161,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         s3ImageNames.add(s3BucketPath);
     }
 
-    private void navigateToDeeplink(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent) {
+    private void navigateToDeeplink(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
@@ -170,7 +170,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         detailsPage.clickOpenButton();
     }
 
-    private void isContentUnavailableErrorPresent(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent, DisneyPlusHulkContinueWatchingDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
+    private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         if (detailsPage.getTextViewByLabelContains("Sorry, this content is unavailable.").isPresent(SHORT_TIMEOUT)) {
             takeScreenshotAndCompileS3Paths(hulkContent.getTitle().replace(' ', '_'), hulkContent.getContinueWatchingId(), platformType, s3DeviceName);
@@ -178,7 +178,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         }
     }
 
-    private void recoverApp(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent, DisneyPlusHulkContinueWatchingDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
+    private void recoverApp(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         try {
             fluentWaitNoMessage(getDriver(), 20, 3).until(it -> detailsPage.isAppRunning(sessionBundles.get(DISNEY)));
@@ -189,7 +189,7 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
         }
     }
 
-    private void aliceS3Baseline(DisneyPlusHulkContinueWatchingDataProvider.HulkContent hulkContent, DisneyPlusHulkContinueWatchingDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
+    private void aliceS3Baseline(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
