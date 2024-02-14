@@ -1,22 +1,22 @@
 [
   {
     "brand": "Disney",
-    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/hulu-brand/Disney"
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_8_gen_1/five-brands-tile/Disney"
   },
   {
     "brand": "Pixar",
-    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/hulu-brand/Pixar"
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_8_gen_1/five-brands-tile/Pixar"
   },
   {
     "brand": "Marvel",
-    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/hulu-brand/Marvel"
-  },
-  {
-    "brand": "National Geographic",
-    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/hulu-brand/National_Geographic"
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_8_gen_1/five-brands-tile/Marvel"
   },
   {
     "brand": "Star Wars",
-    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_mini_6th_gen/hulu-brand/Star_Wars"
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_8_gen_1/five-brands-tile/Star_Wars"
+  },
+  {
+    "brand": "National Geographic",
+    "tabletS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-tablet/ipad_8_gen_1/five-brands-tile/National_Geographic"
   }
 ]
