@@ -56,6 +56,16 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
 
+    @ExtendedFindBy(accessibilityId = "selectorButton")
+    private ExtendedWebElement contentPageFilterDropDown;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'Back'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
+    private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
+
+    @ExtendedFindBy(accessibilityId = "segmentedControl")
+    private ExtendedWebElement contentpageFilterHeader;
+
+
     //FUNCTIONS
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
@@ -163,5 +173,25 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
+    }
+
+    public boolean isContentPageFilterDropDownPresent(){
+        return contentPageFilterDropDown.isPresent();
+    }
+
+    public void clickContentPageFilterDropDown(){
+        contentPageFilterDropDown.click();
+    }
+
+    public void clickContentPageFilterDropDownAtMiddleTop(){
+        contentPageFilterDropDownAtMiddleTop.click();
+    }
+
+    public boolean isContentPageFilterHeaderPresent(){
+        return contentpageFilterHeader.isPresent();
+    }
+
+    public boolean isContentPageFilterDropDownAtMiddleTopPresent(){
+        return contentPageFilterDropDownAtMiddleTop.isPresent();
     }
 }
