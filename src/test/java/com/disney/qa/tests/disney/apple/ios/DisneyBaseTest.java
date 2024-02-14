@@ -251,18 +251,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).click();
             tries++;
             switch (tab) {
-                case MORE_MENU:
-                    isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
-                    break;
-                case HOME:
-                    isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-                    break;
-                case SEARCH:
-                    isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
-                    break;
-                case DOWNLOADS:
-                    isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
-                    break;
+            case MORE_MENU:
+                isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
+                break;
+            case HOME:
+                isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
+                break;
+            case SEARCH:
+                isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
+                break;
+            case DOWNLOADS:
+                isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
+                break;
             }
         } while (!isOpened && tries < 3);
     }
