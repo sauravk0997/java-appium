@@ -83,7 +83,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         acceptAlert();
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
-        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
+        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlementAQA("Disney+");
         EventChecklist item1 = new EventChecklist("urn:dss:event:fed:purchase:completed-v2");
         checkList.add(item1);
         pause(5);
