@@ -257,7 +257,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             for(String Title : collectionSetTitles ){
                 originalsPage.getDynamicCellByLabel(Title).click();
-                //verify that correct movie/series of that collection opened
+                //verify that correct titles of that collection opened with 2 or 3 tiltles
                 sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
                 sa.assertTrue(detailsPage.getMediaTitle().equals(Title), "Different Content was opened");
                 detailsPage.clickCloseButton();
