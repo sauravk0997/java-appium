@@ -158,4 +158,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNetworkLogoImageVisible(){
         return networkLogoImage.isPresent();
     }
+
+    public ExtendedWebElement getBrandTile(String brand) {
+        return getElementTypeCellByLabel(brand);
+    }
 }
