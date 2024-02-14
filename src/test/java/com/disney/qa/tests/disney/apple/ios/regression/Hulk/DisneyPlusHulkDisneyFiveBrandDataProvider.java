@@ -25,7 +25,7 @@ public interface DisneyPlusHulkDisneyFiveBrandDataProvider {
     }
 
     enum PlatformType {
-        HANDSET_BRAND_TILE("handsetS3TilePath"),
+        HANDSET_BRAND_TILE("handsetS3FilePath"),
         TABLET_BRAND_TILE("tabletS3FilePath");
 
         private final String s3Path;

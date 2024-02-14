@@ -32,8 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class DisneyPlusHulkDisneyFiveBrandCompareTest extends DisneyBaseTest {
-    private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
-    double imageSimilarityPercentageThreshold = 90.0;
+
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
@@ -107,6 +106,7 @@ public class DisneyPlusHulkDisneyFiveBrandCompareTest extends DisneyBaseTest {
 
 
     private void validateBrandTileComparisonAndNoHulu(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContentS3) {
+        double imageSimilarityPercentageThreshold = 90.0;
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);

@@ -147,34 +147,4 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
-    @Test(description = "No Hulu subscription - Only 5 brand tiles are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
-    public void verifyNoHuluSubscriptionFiveBrandTiles() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
-
-        homePage.isOpened();
-//        sa.assertTrue(homePage.getBrandTile("Disney").isPresent(), "'Disney' brand tile was not found.");
-//        sa.assertTrue(homePage.getBrandTile("Pixar").isPresent(), "'Pixar' brand tile was not found.");
-//        sa.assertTrue(homePage.getBrandTile("Marvel").isPresent(), "'Marvel' brand tile was not found.");
-//        sa.assertTrue(homePage.getBrandTile("Star Wars").isPresent(), "'Star Wars' brand tile was not found.");
-//        sa.assertTrue(homePage.getBrandTile("National Geographic").isPresent(), "'National Geographic' brand tile was not found.");
-//        sa.assertFalse(homePage.getBrandTile("Hulu").isPresent(), "'Hulu' brand tile was not found.");
-
-        System.out.println(homePage.getBrandTile("Disney").isPresent());
-
-        IntStream.range(0, 5).forEach(i -> {
-            sa.assertTrue(homePage.getBrandTile(brandTiles.get(i)).isPresent(), i + "brand tile was not found.");
-            homePage.getBrandTile(brandTiles.get(i)).click();
-
-            System.out.println(getDriver().getPageSource());
-            homePage.clickOnCollectionBackButton();
-        });
-        sa.assertAll();
-    }
-
-    private List<String> brandTiles = new ArrayList<>(Arrays.asList("Disney", "Pixar", "Marvel", "National Geographic", "Star Wars"));
 }
