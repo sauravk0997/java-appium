@@ -26,31 +26,23 @@ import java.util.List;
 
 public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
 
-    private static final String HANDSET_S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/apple-handset/";
-    private static final String TABLET_S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/apple-tablet/";
+    private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     private static final Map<File, String> imageS3UploadRequests = new LinkedHashMap<>();
     private static final List<String> s3FeaturedImageNames = new ArrayList<>();
     private static final List<String> s3TileImageNames = new ArrayList<>();
     private static String jsonS3FilePath = "";
-    private static final String FIVE_BRANDS_TILE = "/five-brands/tile/%s";
-    private static final String FIVE_BRANDS_FEATURED = "/five-brands/featured/%s";
+    private static final String FIVE_BRANDS_TILE = "/five-brands-tile/%s";
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Brand Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void brandAliceUploadHandsetTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) {
-        SoftAssert sa = new SoftAssert();
-        aliceS3TileBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE, getDeviceNameFromCapabilities(), sa);
-        aliceS3FeaturedBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_FEATURED, getDeviceNameFromCapabilities(), sa);
-        sa.assertAll();
+        aliceS3TileBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE, getDeviceNameFromCapabilities());
     }
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Brand Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void brandAliceUploadTabletTest(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) {
-        SoftAssert sa = new SoftAssert();
-        aliceS3TileBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE, getDeviceNameFromCapabilities(), sa);
-        aliceS3FeaturedBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_FEATURED, getDeviceNameFromCapabilities(), sa);
-        sa.assertAll();
+        aliceS3TileBaseline(hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE, getDeviceNameFromCapabilities());
     }
 
     @DataProvider
@@ -95,29 +87,6 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
         return R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
     }
 
-    private String buildS3BucketFeaturedPath(String brandFeatured, DisneyPlusHulkBrandDataProvider.PlatformType platformType, String deviceName) {
-        String pngFileType = ".png";
-        String path = "";
-
-        switch (platformType) {
-            case HANDSET_BRAND_FEATURED:
-                path = String.format(
-                        HANDSET_S3_BASE_PATH + deviceName + FIVE_BRANDS_FEATURED +
-                                pngFileType, brandFeatured);
-                jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_FEATURED.getS3Path();
-                break;
-            case TABLET_BRAND_FEATURED:
-                path = String.format(
-                        TABLET_S3_BASE_PATH + deviceName + FIVE_BRANDS_FEATURED +
-                                pngFileType, brandFeatured);
-                jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_FEATURED.getS3Path();
-                break;
-            default:
-                Assert.fail("Unrecognized platform type.");
-        }
-        return path;
-    }
-
     private String buildS3BucketTilePath(String brandTile, DisneyPlusHulkBrandDataProvider.PlatformType platformType, String deviceName) {
         String pngFileType = ".png";
         String path = "";
@@ -125,13 +94,13 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
         switch (platformType) {
             case HANDSET_BRAND_TILE:
                 path = String.format(
-                        HANDSET_S3_BASE_PATH + deviceName + FIVE_BRANDS_TILE +
+                        S3_BASE_PATH + "apple-handset/" + deviceName + FIVE_BRANDS_TILE +
                                 pngFileType, brandTile);
                 jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE.getS3Path();
                 break;
             case TABLET_BRAND_TILE:
                 path = String.format(
-                        TABLET_S3_BASE_PATH + deviceName + FIVE_BRANDS_TILE +
+                        S3_BASE_PATH + "apple-tablet/" + deviceName + FIVE_BRANDS_TILE +
                                 pngFileType, brandTile);
                 jsonS3FilePath = DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE.getS3Path();
                 break;
@@ -172,15 +141,6 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
         LOGGER.info("S3 Storage image names: " + s3FeaturedImageNames);
     }
 
-    private void takeScreenshotAndCompileS3FeaturedPaths(String brandFeatured, DisneyPlusHulkBrandDataProvider.PlatformType platform, String s3Device) {
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        LOGGER.info("Taking screenshot and compiling S3 upload image requests.");
-        String s3FeaturedBucketPath = buildS3BucketFeaturedPath(brandFeatured, platform, s3Device);
-        File srcFeaturedFile = brandPage.getBrandFeaturedImage().getElement().getScreenshotAs(OutputType.FILE);
-        imageS3UploadRequests.put(srcFeaturedFile, s3FeaturedBucketPath);
-        s3FeaturedImageNames.add(s3FeaturedBucketPath);
-    }
-
     private void takeScreenshotAndCompileS3TilePaths(String brandTile, DisneyPlusHulkBrandDataProvider.PlatformType platform, @NotEmpty String s3Device,
                                                      DisneyPlusHulkBrandDataProvider.HulkContent hulkContent) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -191,20 +151,12 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
         s3TileImageNames.add(s3TileBucketPath);
     }
 
-    private void aliceS3FeaturedBaseline(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName, SoftAssert sa) {
+    private void aliceS3TileBaseline(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        homePage.getBrandTile(hulkContent.getBrand()).click();
-        brandPage.isOpened();
-        takeScreenshotAndCompileS3FeaturedPaths(hulkContent.getBrand().replace(' ', '_'), platformType, s3DeviceName);
-        homePage.tapBackButton();
-    }
-
-    private void aliceS3TileBaseline(DisneyPlusHulkBrandDataProvider.HulkContent hulkContent, DisneyPlusHulkBrandDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName, SoftAssert sa) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         sa.assertTrue(homePage.getBrandTile(hulkContent.getBrand()).isPresent(),
                 hulkContent.getBrand() + "brand tile was not found.");
-        sa.assertTrue(homePage.getStaticTextByLabel("Hulu").isElementNotPresent(SHORT_TIMEOUT), "Hulu brand was found on standard Disney account.");
         takeScreenshotAndCompileS3TilePaths(hulkContent.getBrand().replace(' ', '_'), platformType, s3DeviceName, hulkContent);
+        sa.assertAll();
     }
 }

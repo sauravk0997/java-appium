@@ -39,14 +39,14 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
     @Test(dataProvider = "handsetDataContentProvider", description = "Compare Brand Featured Images and No Hulu - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void brandAliceCompareHandsetTest(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContent) {
-        aliceS3BaseCompareLatestCapture(hulkContent);
+        validateBrandTileComparisonAndNoHulu(hulkContent);
     }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
     @Test(dataProvider = "tabletDataContentProvider", description = "Compare Brand Featured Images and No Hulu- Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
     public void brandAliceCompareTabletTest(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContent) {
-        aliceS3BaseCompareLatestCapture(hulkContent);
+        validateBrandTileComparisonAndNoHulu(hulkContent);
     }
 
     public List<Object[]> parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType platformType) {
@@ -80,60 +80,14 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
         }
     }
 
-//    @DataProvider
-//    public Iterator<Object[]> handsetDataContentProvider() {
-//        boolean featured = false;
-//        if (featured) {
-//            return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_FEATURED).iterator();
-//        } else {
-//            return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE).iterator();
-//        }
-//        return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_FEATURED).iterator() && parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE).iterator();
-//    }
     @DataProvider
-    public Object[][] handsetDataContentProvider() {
-        List<Object[]> content = new ArrayList<>();
-        content.add(handsetFeaturedContent());
-        content.add(handsetTileContent());
-        return content.toArray(new Object[0][]);
-    }
-
-    public Object[] handsetFeaturedContent() {
-        parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_FEATURED);
-        return new Object[0];
-    }
-
-    public Object[] handsetTileContent() {
-        parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE);
-        return new Object[0];
-    }
-
-    @DataProvider
-    public Iterator<Object[]> handsetTileDataContentProvider() {
+    public Iterator<Object[]> handsetDataContentProvider() {
         return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE).iterator();
     }
 
-    public Object[] tabletFeaturedContent() {
-        parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_FEATURED);
-        return new Object[0];
-    }
-
-    public Object[] tabletTileContent() {
-        parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE);
-        return new Object[0];
-    }
-
-//    @DataProvider
-//    public Iterator<Object[]> tabletDataContentProvider() {
-//        return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_FEATURED).iterator();
-//    }
-
     @DataProvider
-    public Object[][] tabletDataContentProvider() {
-        List<Object[]> content = new ArrayList<>();
-        content.add(tabletFeaturedContent());
-        content.add(tabletTileContent());
-        return content.toArray(new Object[0][]);
+    public Iterator<Object[]> tabletDataContentProvider() {
+        return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE).iterator();
     }
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
@@ -152,33 +106,32 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
     }
 
 
-    private void aliceS3BaseCompareLatestCapture(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContentS3) {
+    private void validateBrandTileComparisonAndNoHulu(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContentS3) {
+        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        double imageSimilarityPercentageThreshold = 90.0;
 
         sa.assertTrue(homePage.getBrandTile(hulkContentS3.getBrand()).isPresent(),
                 hulkContentS3.getBrand() + "brand tile was not found.");
+        sa.assertTrue(homePage.getStaticTextByLabel("Hulu").isElementNotPresent(SHORT_TIMEOUT), "Hulu brand was found on standard Disney account.");
+
+        File srcTileFile = homePage.getBrandTile(hulkContentS3.getBrand()).getElement().getScreenshotAs(OutputType.FILE);
+        LOGGER.info("S3 File: " + hulkContentS3.getS3file());
+        ImagesRequestS3 imagesTileComparisonRequest = new ImagesRequestS3(srcTileFile.getName(), FileUtil.encodeBase64File(srcTileFile), hulkContentS3.getS3file());
+        ImagesResponse360 imagesTileResponse360 = getAliceApiManager().compareImages360S3(imagesTileComparisonRequest);
+        JSONObject tileJsonResponse = new JSONObject(imagesTileResponse360.getData().toString());
+        LOGGER.info("Raw JSON response: " + tileJsonResponse);
+        double tileImageSimilarityPercentage = imagesTileResponse360.getSummary().getImageSimilarityPercentage();
+
+        LOGGER.info("Similarity Percentage is: " + tileImageSimilarityPercentage);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        sa.assertTrue(
+                tileImageSimilarityPercentage >= imageSimilarityPercentageThreshold,
+                "Similarity Percentage score was lower than 90%.");
 
         homePage.getBrandTile(hulkContentS3.getBrand()).click();
-        brandPage.isOpened();
-        File srcFile = brandPage.getBrandFeaturedImage().getElement().getScreenshotAs(OutputType.FILE);
+        sa.assertTrue(brandPage.isOpened(), "Brand page did not open.");
         homePage.tapBackButton();
-
-        LOGGER.info("S3 File: " + hulkContentS3.getS3file());
-        ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), hulkContentS3.getS3file());
-        ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
-        JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
-        LOGGER.info("Raw JSON response: " + jsonResponse);
-        double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
-
-        LOGGER.info("Similarity Percentage is: " + imageSimilarityPercentage);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-
-        sa.assertTrue(
-                imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
-                "Similarity Percentage score was lower than 90%.");
         sa.assertAll();
     }
 }
