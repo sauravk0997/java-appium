@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
+import com.disney.qa.api.client.requests.content.SetRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.search.assets.DisneyStandardCollection;
@@ -22,6 +23,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -210,18 +212,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyAccount testAccount = getAccount();
         setAppToHomeScreen(testAccount);
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-
         searchPage.clickOriginalsTab();
+
+        //Verify Original page opened
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
         //Verify Back button is present or not
         sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
 
-        //verify all the content header present
+        //To get the collections details of Original from API
         CollectionRequest collectionRequest = CollectionRequest.builder()
                 .region(getLocalizationUtils().getLocale())
                 .audience("false")
@@ -230,7 +234,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .contentClass(DisneyStandardCollection.ORIGINALS.getContentClass())
                 .account(testAccount)
                 .build();
-
         ContentCollection contentCollection = getSearchApi().getCollection(collectionRequest);
         List<DisneyCollectionSet> setInfo = contentCollection.getCollectionSetsInfo();
 
@@ -238,7 +241,26 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         for (DisneyCollectionSet set : setInfo) {
             currentElement = searchPage.getTypeOtherByLabel(set.getContent());
             swipe(currentElement);
+            //Verify that collection is present in page
             sa.assertTrue(currentElement.isPresent(), currentElement + " content was not found");
+
+            //To get the all movie/series title under collection from API
+            DisneyCollectionSet set1 = setInfo.stream().filter(s -> s.getContent().equals(set.getContent())).collect(Collectors.toList()).get(0);
+            SetRequest setRequest = SetRequest.builder()
+                    .region(getLocalizationUtils().getLocale())
+                    .language(getLanguage())
+                    .setId(set1.getRefId())
+                    .refType(set1.getRefType())
+                    .account(testAccount).build();
+            List<String> collectionSetTitles = getSearchApi().getAllSetPages(setRequest).getTitles();
+
+            for(String Title : collectionSetTitles ){
+                originalsPage.getDynamicCellByLabel(Title).click();
+                //verify that correct movie/series of that collection opened
+                sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+                sa.assertTrue(detailsPage.getMediaTitle().equals(Title), "Different Content was opened");
+                detailsPage.clickCloseButton();
+            }
         }
         sa.assertAll();
     }
