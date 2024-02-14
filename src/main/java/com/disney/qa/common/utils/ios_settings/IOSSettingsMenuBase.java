@@ -149,11 +149,13 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         launchSettings();
         swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
         appStoreTab.click();
-        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
+        manageSandboxAcct();
 
-        swipe(sandboxAccountaqa);
-        sandboxAccountaqa.click();
-        manageButton.click();
+//        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
+//
+//        swipe(sandboxAccountaqa);
+//        sandboxAccountaqa.click();
+//        manageButton.click();
         try {
             submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
         } catch (NoSuchElementException nse) {
