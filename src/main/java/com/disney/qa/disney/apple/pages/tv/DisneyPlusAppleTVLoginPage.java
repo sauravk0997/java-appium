@@ -64,12 +64,12 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void clickLocalizationEnterNewBtn() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
-        List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeOtherElements.getBy());
-        if (listOfOtherElements.get(listOfOtherElements.size() - 1).isPresent()) {
+        List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeCell.getBy());
+        if (!listOfOtherElements.isEmpty()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i ->
                     moveDown(1,1));
-                clickSelect();
-            }
+            clickSelect();
+        }
     }
 
     public boolean isEnterNewEmailBtnPresent() {
