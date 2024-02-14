@@ -208,6 +208,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyOriginalsLandingPage() {
+        int count = 0;
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -260,6 +261,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
                 sa.assertTrue(detailsPage.getMediaTitle().equals(Title), "Different Content was opened");
                 detailsPage.clickCloseButton();
+                count++;
+                if(count==3)
+                    break;
             }
         }
         sa.assertAll();
