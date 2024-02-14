@@ -39,7 +39,7 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
     @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Google() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));

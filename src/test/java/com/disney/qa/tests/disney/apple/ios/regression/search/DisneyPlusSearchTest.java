@@ -14,8 +14,10 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -24,6 +26,15 @@ import java.util.List;
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
+    private static final String MOVIES = "Movies";
+    private static final String SERIES = "Series";
+
+    @DataProvider(name = "contentName")
+    public Object[][] disneyPlanTypes() {
+        return new Object[][]{
+                {MOVIES}, {SERIES}
+        };
+    }
 
     @Maintainer("dconyers")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61083"})
@@ -60,7 +71,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62552"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {"Search", TestGroup.PRE_CONFIGURATION })
-    public void clearRecentSearchs() {
+    public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -142,6 +153,52 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //verify selected recent search item opened
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
+    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentName")
+    public void verifyScrollAndDropdownForSearchContentLandingPage(String contentName) {
+        String filterValue = "Comedy";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        if(contentName.equalsIgnoreCase("movies")){
+            searchPage.clickMoviesTab();
+        }else{
+            searchPage.clickSeriesTab();
+        }
+
+        //Verify Page header is present
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            scrollDown();
+            //verify after scrolling down also, Page header and Filter header tabbar is present
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            //Verify after selecting any filter value also, Page header and Filter header tabbar is present
+            searchPage.getTypeButtonByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+        }else{
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            scrollDown();
+            //verify after scrolling down also, Filter dropdown is present
+            sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown not present after scroll");
+            //Verify after selecting any filter value also, it navigate to top and Filter dropdown is present
+            searchPage.clickContentPageFilterDropDownAtMiddleTop();
+            searchPage.getStaticTextByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+        }
         sa.assertAll();
     }
 
