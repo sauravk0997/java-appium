@@ -208,7 +208,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyOriginalsLandingPage() {
-        int count = 0;
+        int position = 0;
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -255,14 +255,17 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                     .account(testAccount).build();
             List<String> collectionSetTitles = getSearchApi().getAllSetPages(setRequest).getTitles();
 
+            ++position;
+            int count = 0;
             for(String Title : collectionSetTitles ){
+                originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(Title), position);
+                Assert.assertTrue(originalsPage.getDynamicCellByLabel(Title).isPresent(), Title + " was not present for " + set.getContent() + " collection");
+                //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
                 originalsPage.getDynamicCellByLabel(Title).click();
-                //verify that correct titles of that collection opened with 2 or 3 tiltles
                 sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-                sa.assertTrue(detailsPage.getMediaTitle().equals(Title), "Different Content was opened");
+                sa.assertTrue(detailsPage.getMediaTitle().equals(Title), Title + " Content was not opened");
                 detailsPage.clickCloseButton();
-                count++;
-                if(count==3)
+                if(++count==3)
                     break;
             }
         }
