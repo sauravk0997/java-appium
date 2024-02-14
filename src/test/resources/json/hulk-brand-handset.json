@@ -13,10 +13,10 @@
   },
   {
     "brand": "National Geographic",
-    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/five-brands-tile/Star_Wars"
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/five-brands-tile/National_Geographic"
   },
   {
     "brand": "Star Wars",
-    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/five-brands-tile/National_Geographic"
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/five-brands-tile/Star_Wars"
   }
 ]
