@@ -31,25 +31,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
+public class DisneyPlusHulkDisneyFiveBrandCompareTest extends DisneyBaseTest {
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     double imageSimilarityPercentageThreshold = 90.0;
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
-    @Test(dataProvider = "handsetDataContentProvider", description = "Compare Brand Featured Images and No Hulu - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
-    public void brandAliceCompareHandsetTest(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContent) {
+    @Test(dataProvider = "handsetDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
+    public void brandAliceCompareHandsetTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContent) {
         validateBrandTileComparisonAndNoHulu(hulkContent);
     }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
-    @Test(dataProvider = "tabletDataContentProvider", description = "Compare Brand Featured Images and No Hulu- Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
-    public void brandAliceCompareTabletTest(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContent) {
+    @Test(dataProvider = "tabletDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu- Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
+    public void brandAliceCompareTabletTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContent) {
         validateBrandTileComparisonAndNoHulu(hulkContent);
     }
 
-    public List<Object[]> parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType platformType) {
+    public List<Object[]> parseHulkS3Json(DisneyPlusHulkDisneyFiveBrandDataProvider.PlatformType platformType) {
         List<Object[]> data = new ArrayList<>();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -58,7 +58,7 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
         try {
             JsonNode jsonObjects = objectMapper.readTree(jsonFile);
             jsonObjects.forEach((jsonObject) -> {
-                DisneyPlusHulkBrandDataProvider.HulkContentS3 content = new DisneyPlusHulkBrandDataProvider.HulkContentS3(
+                DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 content = new DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3(
                         jsonObject.get("brand").asText(),
                         jsonObject.get(platformType.getS3Path()).asText());
                 data.add(new Object[]{content});
@@ -82,12 +82,12 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
 
     @DataProvider
     public Iterator<Object[]> handsetDataContentProvider() {
-        return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.HANDSET_BRAND_TILE).iterator();
+        return parseHulkS3Json(DisneyPlusHulkDisneyFiveBrandDataProvider.PlatformType.HANDSET_BRAND_TILE).iterator();
     }
 
     @DataProvider
     public Iterator<Object[]> tabletDataContentProvider() {
-        return parseHulkS3Json(DisneyPlusHulkBrandDataProvider.PlatformType.TABLET_BRAND_TILE).iterator();
+        return parseHulkS3Json(DisneyPlusHulkDisneyFiveBrandDataProvider.PlatformType.TABLET_BRAND_TILE).iterator();
     }
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
@@ -106,7 +106,7 @@ public class DisneyPlusHulkBrandCompareTest extends DisneyBaseTest {
     }
 
 
-    private void validateBrandTileComparisonAndNoHulu(DisneyPlusHulkBrandDataProvider.HulkContentS3 hulkContentS3) {
+    private void validateBrandTileComparisonAndNoHulu(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContentS3) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
