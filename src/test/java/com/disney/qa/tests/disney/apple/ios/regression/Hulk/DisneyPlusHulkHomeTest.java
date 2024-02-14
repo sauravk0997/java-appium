@@ -14,7 +14,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
