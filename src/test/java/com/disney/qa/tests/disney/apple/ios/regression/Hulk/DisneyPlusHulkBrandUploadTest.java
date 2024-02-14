@@ -32,10 +32,8 @@ public class DisneyPlusHulkBrandUploadTest extends DisneyBaseTest {
     private static final List<String> s3FeaturedImageNames = new ArrayList<>();
     private static final List<String> s3TileImageNames = new ArrayList<>();
     private static String jsonS3FilePath = "";
-    private static final String HANDSET_PATH = "apple-handset/";
-    private static final String TABLET_PATH = "apple-tablet/";
     private static final String FIVE_BRANDS_TILE = "/five-brands/tile/%s";
-    private static final String FIVE_BRANDS_FEATURED = "five-brands/featured/%s";
+    private static final String FIVE_BRANDS_FEATURED = "/five-brands/featured/%s";
 
     @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Brand Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
