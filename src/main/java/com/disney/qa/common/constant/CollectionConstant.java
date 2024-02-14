@@ -14,6 +14,7 @@ public class CollectionConstant {
         DOCUMENTARIES_AND_REALITY,
         NEW_TO_DISNEY,
         ORIGINALS,
+        ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         TRENDING,
         HULU_FEATURED,
@@ -48,6 +49,8 @@ public class CollectionConstant {
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
                 return "a93c9e0b-96ef-4e57-a03d-1b780880e0b8";
+            case ORIGINALS_DISNEY_CAROUSEL:
+                return "c7e20abb-ff52-4d21-a2f6-46618c4118e8";
             case RECOMMENDED_FOR_YOU:
                 return "7894d9c6-43ab-4691-b349-cf72362095dd";
             case TRENDING:

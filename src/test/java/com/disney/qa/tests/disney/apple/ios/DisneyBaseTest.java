@@ -63,6 +63,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RATING_TV14 = "TV-14";
 
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
+    private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -250,18 +251,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).click();
             tries++;
             switch (tab) {
-            case MORE_MENU:
-                isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
-                break;
-            case HOME:
-                isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-                break;
-            case SEARCH:
-                isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
-                break;
-            case DOWNLOADS:
-                isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
-                break;
+                case MORE_MENU:
+                    isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
+                    break;
+                case HOME:
+                    isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
+                    break;
+                case SEARCH:
+                    isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
+                    break;
+                case DOWNLOADS:
+                    isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
+                    break;
             }
         } while (!isOpened && tries < 3);
     }
@@ -461,4 +462,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //            }
     //        }
     //    }
+
+    public String buildS3BucketPath(String title, String feature) {
+        String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            return String.format(
+                    S3_BASE_PATH + "apple-tablet/" + deviceName + "/" + feature + "/%s", title);
+        } else {
+            return String.format(
+                    S3_BASE_PATH + "apple-handset/" + deviceName + "/" + feature + "/%s", title);
+        }
+    }
 }
