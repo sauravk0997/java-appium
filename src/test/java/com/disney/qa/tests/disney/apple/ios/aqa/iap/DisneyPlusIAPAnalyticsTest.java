@@ -45,6 +45,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(accountRequest));
 
 //        DisneyAccount account = getAccountApi().createAccount("US","en");
+        handleAlert();
 
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
@@ -54,7 +55,6 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
         LOGGER.info("Nothing to cacnel");
         }
-        handleAlert();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
