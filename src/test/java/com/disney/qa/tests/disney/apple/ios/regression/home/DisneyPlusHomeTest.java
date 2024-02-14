@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.File;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
+    static final String DISNEY_ORIGINALS_CONTENT = "Choir";
     private static final AliceApiManager aliceManager = new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
     double imageSimilarityPercentageThreshold = 90.0;
 
@@ -38,25 +39,22 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61874"})
     @Test(description = "Originals - Disney+ Originals Badge Placement throughout Disney+", groups = {"Originals", TestGroup.PRE_CONFIGURATION})
     public void verifyOriginalsDisneyOriginalsBadgePlacement() {
-        String content = "Olaf Presents";
         SoftAssert sa = new SoftAssert();
-        String s3BucketPath = buildS3BucketPath(String.format("%s.png", "disney_originals"), "originals");
+        String s3BucketPath = buildS3BucketPath(String.format("%s.png", "disney_originals_badge"), "originals");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
         homePage.clickDisneyTile();
+        homePage.swipeTillCollectionPresent(CollectionConstant.Collection.ORIGINALS_DISNEY_CAROUSEL, 10);
 
-        sa.assertTrue(homePage.isContentPresent(content, CollectionConstant.Collection.ORIGINALS_DISNEY_CAROUSEL));
+        sa.assertTrue(homePage.isContentPresent(DISNEY_ORIGINALS_CONTENT, CollectionConstant.Collection.ORIGINALS_DISNEY_CAROUSEL));
 
-        File srcFile = homePage.getContentImage(content).getElement().getScreenshotAs(OutputType.FILE);;
+        File srcFile = homePage.getContentImage(DISNEY_ORIGINALS_CONTENT).getElement().getScreenshotAs(OutputType.FILE);;
         ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
         ImagesResponse360 imagesResponse360 = aliceManager.compareImages360S3(imagesComparisonRequest);
         JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
         LOGGER.info("Raw JSON response: " + jsonResponse);
         double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
-
-        LOGGER.info("Similarity Percentage is: " + imageSimilarityPercentage);
-
         sa.assertTrue(
                 imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
                 String.format("Similarity Percentage score was %,.2f or lower in disney_originals Network logo {%,.2f}.", imageSimilarityPercentageThreshold, imageSimilarityPercentage));
