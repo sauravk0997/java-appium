@@ -49,12 +49,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
-        try{
-            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
 
-        } catch (NoSuchElementException nse) {
-        LOGGER.info("Nothing to cacnel");
-        }
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
