@@ -171,6 +171,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             count--;
         }
         return typeCellLabelContains.format(name).isPresent(SHORT_TIMEOUT);
+    }
 
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
