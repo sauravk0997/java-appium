@@ -1203,6 +1203,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count) {
+        swipeTillCollectionPresent(collection, count, brandLandingView, Direction.UP);
+    }
+
     /**
      * Navigate to collection and clicks a tile in collection.
      * @param collection gets collection name from enum Collection
