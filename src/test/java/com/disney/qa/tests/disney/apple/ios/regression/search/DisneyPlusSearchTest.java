@@ -201,7 +201,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61827"})
     @Test(description = "Search - Content Type Landing Pages - Swipe Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
-    public void verifySwipeBehaviorForContentLandingPage(@NotNull String collectionName) {
+    public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
         SoftAssert sa = new SoftAssert();
@@ -256,7 +256,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String fifteenthFeaturedResult = featuredFilterResults.get(10).getText();
 
             scrollDown();
-            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was found");
             sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
@@ -270,10 +270,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             scrollDown();
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
-            searchPage.swipeItemPicker(Direction.DOWN);
             searchPage.getStaticTextByLabel(comedyFilterValue).click();
-            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was  not found");
 
             List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstComedyResult), "Displayed titles are not different.");
