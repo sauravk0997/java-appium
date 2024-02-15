@@ -17,6 +17,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -33,8 +34,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
 
-    @DataProvider(name = "contentName")
-    public Object[][] disneyPlanTypes() {
+    @DataProvider(name = "collectionNames")
+    public Object[][] collections() {
         return new Object[][]{
                 {MOVIES}, {SERIES}
         };
@@ -202,26 +203,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    protected ArrayList<String> getMedia() {
-        ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("Bluey");
-        contentList.add("Turning Red");
-        contentList.add("Presto");
-        contentList.add("Percy Jackson and the Olympians");
-        contentList.add("Dancing with the Stars");
-        contentList.add("The Incredible Hulk");
-        contentList.add("The Jungle Book");
-        contentList.add("Guardians of the Galaxy");
-        contentList.add("Jungle Cruise");
-        contentList.add("Fantastic Four");
-        contentList.add("Iron Man");
-        return contentList;
-    }
-
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
-    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentName")
-    public void verifyScrollAndDropdownForSearchContentLandingPage(String contentName) {
+    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
+    public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionName) {
         String filterValue = "Comedy";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -231,24 +216,24 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
-        if(contentName.equalsIgnoreCase("movies")){
+        if(collectionName.equalsIgnoreCase("movies")){
             searchPage.clickMoviesTab();
         }else{
             searchPage.clickSeriesTab();
         }
 
         //Verify Page header is present
-        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+        sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" +collectionName + "' was not found");
 
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
             scrollDown();
             //verify after scrolling down also, Page header and Filter header tabbar is present
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" +collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
             //Verify after selecting any filter value also, Page header and Filter header tabbar is present
             searchPage.getTypeButtonByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" +collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
         }else{
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
@@ -258,7 +243,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             //Verify after selecting any filter value also, it navigate to top and Filter dropdown is present
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.getStaticTextByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" +collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
         }
         sa.assertAll();
@@ -330,5 +315,99 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             }
         }
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61827"})
+    @Test(description = "Search - Content Type Landing Pages - Swipe Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
+    public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
+        String comedyFilterValue = "Comedy";
+        String kidsFilterValue = "Kids";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        searchPage.clickOriginalsTab();
+        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
+        sa.assertTrue(originalsPage.getBackButton().isPresent(), "Back button is not present.");
+        originalsPage.getBackButton().click();
+
+        if (collectionName.equalsIgnoreCase("movies")) {
+            searchPage.clickMoviesTab();
+        } else {
+            searchPage.clickSeriesTab();
+        }
+        sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+        sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+        List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
+        String tenthFeaturedResult = featuredFilterResults.get(10).getText();
+        scrollDown();
+
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+            searchPage.swipeContentPageFilter(Direction.LEFT);
+            searchPage.getTypeButtonByLabel(kidsFilterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+            List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
+            String firstKidsResult = kidsResults.get(0).getText();
+
+            searchPage.swipeContentPageFilter(Direction.RIGHT);
+            searchPage.getTypeButtonByLabel(comedyFilterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+            List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
+            sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
+            sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
+        } else {
+            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+            searchPage.clickContentPageFilterDropDownAtMiddleTop();
+            searchPage.swipeItemPicker(Direction.UP);
+            searchPage.getStaticTextByLabel(kidsFilterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
+            List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
+            String firstComedyResult = kidsResults.get(0).getText();
+
+            scrollDown();
+            searchPage.clickContentPageFilterDropDownAtMiddleTop();
+            searchPage.swipeItemPicker(Direction.DOWN);
+            searchPage.getStaticTextByLabel(comedyFilterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was  not found");
+
+            List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
+            sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstComedyResult), "Displayed titles are not different.");
+            sa.assertFalse(comedyResults.get(10).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
+        }
+        sa.assertAll();
+    }
+
+    protected ArrayList<String> getMedia() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Bluey");
+        contentList.add("Turning Red");
+        contentList.add("Presto");
+        contentList.add("Percy Jackson and the Olympians");
+        contentList.add("Dancing with the Stars");
+        contentList.add("The Incredible Hulk");
+        contentList.add("The Jungle Book");
+        contentList.add("Guardians of the Galaxy");
+        contentList.add("Jungle Cruise");
+        contentList.add("Fantastic Four");
+        contentList.add("Iron Man");
+        return contentList;
     }
 }

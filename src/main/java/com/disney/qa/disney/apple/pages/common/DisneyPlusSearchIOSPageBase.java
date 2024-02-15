@@ -66,7 +66,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
 
     @ExtendedFindBy(accessibilityId = "segmentedControl")
-    private ExtendedWebElement contentpageFilterHeader;
+    private ExtendedWebElement contentPageFilterHeader;
+
+    @ExtendedFindBy(accessibilityId = "itemPickerView")
+    private ExtendedWebElement itemPickerView;
 
 
     //FUNCTIONS
@@ -191,11 +194,21 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContentPageFilterHeaderPresent(){
-        return contentpageFilterHeader.isPresent();
+        return contentPageFilterHeader.isPresent();
+    }
+
+    public void swipeContentPageFilter(Direction direction) {
+        //To be used with tablet only
+        swipeInContainer(contentPageFilterHeader, direction, 500);
     }
 
     public boolean isContentPageFilterDropDownAtMiddleTopPresent(){
         return contentPageFilterDropDownAtMiddleTop.isPresent();
+    }
+
+    public void swipeItemPicker(Direction direction) {
+        //To be used with handset only
+        swipeInContainer(itemPickerView, direction, 500);
     }
 
     public void swipeInRecentSearchResults(Direction direction) {
