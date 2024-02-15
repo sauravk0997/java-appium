@@ -242,7 +242,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstKidsResult = kidsResults.get(0).getText();
 
-            scrollDown();
             searchPage.swipeContentPageFilter(Direction.RIGHT);
             searchPage.getStaticTextByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
