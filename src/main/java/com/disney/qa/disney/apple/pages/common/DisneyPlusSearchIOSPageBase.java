@@ -68,9 +68,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
 
-    @ExtendedFindBy(accessibilityId = "selectableTitle")
-    private ExtendedWebElement selectableTitle;
-
 
     //FUNCTIONS
 
@@ -198,6 +195,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeContentPageFilter(Direction direction) {
+        //To be used with tablet only
         swipeInContainer(contentPageFilterHeader, direction, 500);
     }
 
@@ -206,10 +204,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeItemPicker(Direction direction) {
+        //To be used with handset only
         swipeInContainer(itemPickerView, direction, 500);
-    }
-
-    public ExtendedWebElement getSelectableTitle() {
-        return selectableTitle;
     }
 }
