@@ -228,12 +228,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
         String tenthFeaturedResult = featuredFilterResults.get(10).getText();
-
         scrollDown();
-        sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-        sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
-        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
             searchPage.swipeContentPageFilter(Direction.LEFT);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
@@ -251,6 +251,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
         } else {
+            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
@@ -262,6 +265,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             scrollDown();
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
+            searchPage.swipeItemPicker(Direction.DOWN);
             searchPage.getStaticTextByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was  not found");
 
