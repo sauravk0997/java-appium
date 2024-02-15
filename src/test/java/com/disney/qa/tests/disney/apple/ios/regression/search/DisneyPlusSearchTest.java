@@ -26,7 +26,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String SERIES = "Series";
 
     @DataProvider(name = "collectionNames")
-    public Object[][] collectionNames() {
+    public Object[][] collections() {
         return new Object[][]{
                 {MOVIES}, {SERIES}
         };
@@ -155,7 +155,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
     @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentName")
-    public void verifyScrollAndDropdownForSearchContentLandingPage(String contentName) {
+    public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionNames) {
         String filterValue = "Comedy";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -165,24 +165,24 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
-        if(contentName.equalsIgnoreCase("movies")){
+        if(collectionNames.equalsIgnoreCase("movies")){
             searchPage.clickMoviesTab();
         }else{
             searchPage.clickSeriesTab();
         }
 
         //Verify Page header is present
-        sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+        sa.assertTrue(searchPage.getStaticTextByLabel(collectionNames).isPresent(), "Page header '" +collectionNames + "' was not found");
 
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
             scrollDown();
             //verify after scrolling down also, Page header and Filter header tabbar is present
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionNames).isPresent(), "Page header '" +collectionNames + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
             //Verify after selecting any filter value also, Page header and Filter header tabbar is present
             searchPage.getTypeButtonByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionNames).isPresent(), "Page header '" +collectionNames + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
         }else{
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
@@ -192,7 +192,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             //Verify after selecting any filter value also, it navigate to top and Filter dropdown is present
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.getStaticTextByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(collectionNames).isPresent(), "Page header '" +collectionNames + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
         }
         sa.assertAll();
@@ -201,7 +201,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61827"})
     @Test(description = "Search - Content Type Landing Pages - Swipe Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
-    public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
+    public void verifySwipeBehaviorForContentLandingPage(@NotNull String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
         SoftAssert sa = new SoftAssert();
