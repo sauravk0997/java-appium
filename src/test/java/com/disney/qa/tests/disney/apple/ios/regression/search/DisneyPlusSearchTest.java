@@ -185,7 +185,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
         for(int j = getMedia().size()-1; j>0; j--){
             sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent(), "recent search content was not displayed in recent search results");
-            boolean b = searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent();
             if(j==getMedia().size()/2){
                 searchPage.swipeInRecentSearchResults(Direction.UP);
                 //After Swipe also verify that the first content is not visible
