@@ -52,6 +52,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     private ExtendedWebElement headerViewTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
+    protected ExtendedWebElement recentSearchResultsView;
+
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -206,5 +209,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeItemPicker(Direction direction) {
         //To be used with handset only
         swipeInContainer(itemPickerView, direction, 500);
+    }
+
+    public void swipeInRecentSearchResults(Direction direction) {
+        swipeInContainer(recentSearchResultsView, direction, 1500);
     }
 }
