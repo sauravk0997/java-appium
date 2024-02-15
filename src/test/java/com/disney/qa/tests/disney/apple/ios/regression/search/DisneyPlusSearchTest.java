@@ -203,7 +203,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String firstComedyResult = comedyResults.get(0).getText();
 
             scrollDown();
-            searchPage.swipeContentPageFilter();
+            searchPage.swipeContentPageFilter(Direction.UP);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
@@ -234,7 +234,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             //Verify after selecting any filter value also, navigate to top and Filter dropdown is present
             scrollDown();
-            searchPage.swipeContentPageFilter();
+            searchPage.swipeItemPicker(Direction.UP);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
