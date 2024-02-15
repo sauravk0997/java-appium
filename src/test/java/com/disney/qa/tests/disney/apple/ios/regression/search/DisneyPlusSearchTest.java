@@ -158,7 +158,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
         sa.assertAll();
-        sa.assertAll();
     }
 
     @Maintainer("hpatel7")
@@ -283,7 +282,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         //Verify Original page opened
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
-        //Verify Back button is present or not
+        //Verify Back button is present
         sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
 
         //To get the collections details of Original from API
