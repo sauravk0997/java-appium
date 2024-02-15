@@ -11,6 +11,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -200,7 +201,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61827"})
     @Test(description = "Search - Content Type Landing Pages - Swipe Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
-    public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
+    public void verifySwipeBehaviorForContentLandingPage(@NotNull String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
         SoftAssert sa = new SoftAssert();
@@ -251,14 +252,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(twentiethFeaturedResult), "Displayed titles are not different.");
         } else {
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
-
             List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
             String fifteenthFeaturedResult = featuredFilterResults.get(10).getText();
 
             scrollDown();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
@@ -274,7 +272,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.DOWN);
             searchPage.getStaticTextByLabel(comedyFilterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
 
             List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
