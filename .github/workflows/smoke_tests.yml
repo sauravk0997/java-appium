@@ -74,7 +74,7 @@ jobs:
     steps:
       - name: Comment on Results
         id: pr_comment_fail_notifier
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@v2.8.1
         with:
           message: |
             🚨 Api Smoke tests have been run.  
