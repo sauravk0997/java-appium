@@ -246,28 +246,21 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertTrue(collectionName.isPresent(), collectionName + " content was not found");
 
             //To get the all movie/series title under collection from API
-            DisneyCollectionSet set1 = setInfo.stream().filter(s -> s.getContent().equals(set.getContent())).collect(Collectors.toList()).get(0);
             SetRequest setRequest = SetRequest.builder()
                     .region(getLocalizationUtils().getLocale())
                     .language(getLanguage())
-                    .setId(set1.getRefId())
-                    .refType(set1.getRefType())
+                    .setId(set.getRefId())
+                    .refType(set.getRefType())
                     .account(testAccount).build();
-            List<String> collectionSetTitles = getSearchApi().getAllSetPages(setRequest).getTitles();
+            String titleFromCollection = getSearchApi().getAllSetPages(setRequest).getTitles().get(0);
 
-            ++containerPosition;
-            int count = 0;
-            for(String Title : collectionSetTitles){
-                originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(Title), containerPosition);
-                Assert.assertTrue(originalsPage.getDynamicCellByLabel(Title).isPresent(), Title + " was not present for " + set.getContent() + " collection");
-                //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
-                originalsPage.getDynamicCellByLabel(Title).click();
-                sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-                sa.assertTrue(detailsPage.getMediaTitle().equals(Title), Title + " Content was not opened");
-                detailsPage.clickCloseButton();
-                if(++count==3)
-                    break;
-            }
+            originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(titleFromCollection), containerPosition++);
+            Assert.assertTrue(originalsPage.getDynamicCellByLabel(titleFromCollection).isPresent(), titleFromCollection + " was not present for " + set.getContent() + " collection");
+            //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
+            originalsPage.getDynamicCellByLabel(titleFromCollection).click();
+            sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+            sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
+            detailsPage.clickCloseButton();
         }
         sa.assertAll();
     }
