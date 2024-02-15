@@ -11,7 +11,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
 import org.testng.annotations.Test;
@@ -23,6 +22,7 @@ import java.util.*;
 public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
+    private static final AliceApiManager aliceManager = new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
     double imageSimilarityPercentageThreshold = 90.0;
 
     private final List<String> networkLogos = new ArrayList<String>(
@@ -32,24 +32,6 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
                     "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
-
-    private String buildS3BucketPath(String title) {
-        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            return String.format(
-                    S3_BASE_PATH + "apple-tablet/" + getDeviceNameFromCapabilities() + "/hulu-network-logos/%s", title);
-        } else {
-            return String.format(
-                    S3_BASE_PATH + "apple-handset/" + getDeviceNameFromCapabilities() + "/hulu-network-logos/%s", title);
-        }
-    }
-
-    private String getDeviceNameFromCapabilities() {
-        return R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
-    }
-
-    private AliceApiManager getAliceApiManager() {
-        return new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
-    }
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74598"})
@@ -72,10 +54,10 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
             huluPage.clickOnNetworkLogo(item);
             sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
             pause(3);
-            String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')));
+            String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
             File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);
             ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
-            ImagesResponse360 imagesResponse360 = getAliceApiManager().compareImages360S3(imagesComparisonRequest);
+            ImagesResponse360 imagesResponse360 = aliceManager.compareImages360S3(imagesComparisonRequest);
             JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
             LOGGER.info("Raw JSON response: " + jsonResponse);
             double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
