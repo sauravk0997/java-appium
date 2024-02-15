@@ -1,8 +1,15 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
+import com.disney.qa.api.client.requests.content.CollectionRequest;
+import com.disney.qa.api.client.requests.content.SetRequest;
+import com.disney.qa.api.client.responses.content.ContentCollection;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.search.assets.DisneyStandardCollection;
+import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -18,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -252,6 +260,74 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.getStaticTextByLabel(filterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(contentName).isPresent(), "Page header '" +contentName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+        }
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
+    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifyOriginalsLandingPageUI() {
+        int containerPosition = 0;
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyAccount testAccount = getAccount();
+        setAppToHomeScreen(testAccount);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.clickOriginalsTab();
+
+        //Verify Original page opened
+        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
+        //Verify Back button is present or not
+        sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
+
+        //To get the collections details of Original from API
+        CollectionRequest collectionRequest = CollectionRequest.builder()
+                .region(getLocalizationUtils().getLocale())
+                .audience("false")
+                .language(getLocalizationUtils().getUserLanguage())
+                .slug(DisneyStandardCollection.ORIGINALS.getSlug())
+                .contentClass(DisneyStandardCollection.ORIGINALS.getContentClass())
+                .account(testAccount)
+                .build();
+        ContentCollection contentCollection = getSearchApi().getCollection(collectionRequest);
+        List<DisneyCollectionSet> setInfo = contentCollection.getCollectionSetsInfo();
+
+        ExtendedWebElement collectionName;
+        for (DisneyCollectionSet set : setInfo) {
+            collectionName = searchPage.getTypeOtherByLabel(set.getContent());
+            swipe(collectionName);
+            //Verify that collection is present in page
+            sa.assertTrue(collectionName.isPresent(), collectionName + " content was not found");
+
+            //To get the all movie/series title under collection from API
+            DisneyCollectionSet set1 = setInfo.stream().filter(s -> s.getContent().equals(set.getContent())).collect(Collectors.toList()).get(0);
+            SetRequest setRequest = SetRequest.builder()
+                    .region(getLocalizationUtils().getLocale())
+                    .language(getLanguage())
+                    .setId(set1.getRefId())
+                    .refType(set1.getRefType())
+                    .account(testAccount).build();
+            List<String> collectionSetTitles = getSearchApi().getAllSetPages(setRequest).getTitles();
+
+            ++containerPosition;
+            int count = 0;
+            for(String Title : collectionSetTitles){
+                originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(Title), containerPosition);
+                Assert.assertTrue(originalsPage.getDynamicCellByLabel(Title).isPresent(), Title + " was not present for " + set.getContent() + " collection");
+                //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
+                originalsPage.getDynamicCellByLabel(Title).click();
+                sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+                sa.assertTrue(detailsPage.getMediaTitle().equals(Title), Title + " Content was not opened");
+                detailsPage.clickCloseButton();
+                if(++count==3)
+                    break;
+            }
         }
         sa.assertAll();
     }
