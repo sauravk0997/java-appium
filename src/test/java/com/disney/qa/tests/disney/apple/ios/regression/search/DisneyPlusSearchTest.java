@@ -15,7 +15,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -148,6 +150,64 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
         sa.assertAll();
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62540"})
+    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifyRecentSearchShowsMaxTenResults() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //Add 11 search result in recent search list
+        IntStream.range(0, getMedia().size()).forEach(i -> {
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(getMedia().get(i));
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+            detailsPage.getBackArrow().click();
+        });
+
+        searchPage.clearText();
+        searchPage.getSearchBar().click();
+
+        //Verify that the after searching 11 content, only last latest 10 visible in list and the first one is not visible
+        sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
+        for(int j = getMedia().size()-1; j>0; j--){
+            sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent(), "recent search content was not displayed in recent search results");
+            if(j==getMedia().size()/2){
+                searchPage.swipeInRecentSearchResults(Direction.UP);
+                //After Swipe also verify that the first content is not visible
+                sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
+            }
+        }
+        sa.assertAll();
+    }
+
+    protected ArrayList<String> getMedia() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Bluey");
+        contentList.add("Turning Red");
+        contentList.add("Presto");
+        contentList.add("Percy Jackson and the Olympians");
+        contentList.add("Dancing with the Stars");
+        contentList.add("The Incredible Hulk");
+        contentList.add("The Jungle Book");
+        contentList.add("Guardians of the Galaxy");
+        contentList.add("Jungle Cruise");
+        contentList.add("Fantastic Four");
+        contentList.add("Iron Man");
+        return contentList;
     }
 
     @Maintainer("hpatel7")
