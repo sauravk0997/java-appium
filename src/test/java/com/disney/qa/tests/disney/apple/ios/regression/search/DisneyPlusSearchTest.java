@@ -208,7 +208,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyOriginalsLandingPageUI() {
-        int position = 0;
+        int containerPosition = 0;
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -238,12 +238,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         ContentCollection contentCollection = getSearchApi().getCollection(collectionRequest);
         List<DisneyCollectionSet> setInfo = contentCollection.getCollectionSetsInfo();
 
-        ExtendedWebElement currentElement;
+        ExtendedWebElement collectionName;
         for (DisneyCollectionSet set : setInfo) {
-            currentElement = searchPage.getTypeOtherByLabel(set.getContent());
-            swipe(currentElement);
+            collectionName = searchPage.getTypeOtherByLabel(set.getContent());
+            swipe(collectionName);
             //Verify that collection is present in page
-            sa.assertTrue(currentElement.isPresent(), currentElement + " content was not found");
+            sa.assertTrue(collectionName.isPresent(), collectionName + " content was not found");
 
             //To get the all movie/series title under collection from API
             DisneyCollectionSet set1 = setInfo.stream().filter(s -> s.getContent().equals(set.getContent())).collect(Collectors.toList()).get(0);
@@ -255,10 +255,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                     .account(testAccount).build();
             List<String> collectionSetTitles = getSearchApi().getAllSetPages(setRequest).getTitles();
 
-            ++position;
+            ++containerPosition;
             int count = 0;
-            for(String Title : collectionSetTitles ){
-                originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(Title), position);
+            for(String Title : collectionSetTitles){
+                originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(Title), containerPosition);
                 Assert.assertTrue(originalsPage.getDynamicCellByLabel(Title).isPresent(), Title + " was not present for " + set.getContent() + " collection");
                 //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
                 originalsPage.getDynamicCellByLabel(Title).click();
