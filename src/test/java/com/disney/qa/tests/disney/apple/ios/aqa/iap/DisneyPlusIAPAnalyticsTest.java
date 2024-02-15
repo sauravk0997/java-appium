@@ -45,11 +45,11 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(accountRequest));
 
 //        DisneyAccount account = getAccountApi().createAccount("US","en");
-        handleAlert();
+
 
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
-
+        handleAlert();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
@@ -62,8 +62,8 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
 //        paywallIOSPageBase.clickBasicPlan();
 
-        paywallIOSPageBase.clickBasicPlan();
-//                clickBasicPlanButton();
+        paywallIOSPageBase.clickBasicPlanButton();
+//
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
 //        paywallIOSPageBase.isSusbscribed();
