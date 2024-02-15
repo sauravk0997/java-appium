@@ -235,7 +235,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
             searchPage.swipeContentPageFilter(Direction.LEFT);
-            searchPage.getStaticTextByLabel(kidsFilterValue).click();
+            searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
@@ -243,7 +243,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String firstKidsResult = kidsResults.get(0).getText();
 
             searchPage.swipeContentPageFilter(Direction.RIGHT);
-            searchPage.getStaticTextByLabel(comedyFilterValue).click();
+            searchPage.getTypeButtonByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
 
