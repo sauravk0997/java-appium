@@ -189,23 +189,23 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String twentiethFeaturedResult = featuredFilterResults.get(20).getText();
 
             scrollDown();
-            //verify after scrolling down also, Page header and Filter header tab bar is present
+            //verify after scrolling down, page header and filter header tab bar are present
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
 
             //Verify after selecting any filter value also, Page header and Filter header tab bar is present
             searchPage.swipeContentPageFilter(Direction.LEFT);
-            searchPage.getTypeButtonByLabel(kidsFilterValue).click();
+            searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
 
-            //Get comedy filter result text
+            //Get kids filter result text
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstKidsResult = kidsResults.get(0).getText();
 
             scrollDown();
             searchPage.swipeContentPageFilter(Direction.RIGHT);
-            searchPage.getTypeButtonByLabel(comedyFilterValue).click();
+            searchPage.getStaticTextByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
 
@@ -223,18 +223,19 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             //verify after scrolling down also, Filter dropdown is present
             sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown not present after scroll");
-            //Verify after selecting any filter value also, navigate to top and Filter dropdown is present
+
+            //Verify after selecting filter value also, navigate to top and Filter dropdown is present
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
 
-            //Get comedy filter result text
+            //Get kids filter result text
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstComedyResult = kidsResults.get(0).getText();
 
-            //Verify after selecting any filter value also, navigate to top and Filter dropdown is present
+            //Verify after selecting filter value, navigate to top and Filter dropdown is present
             scrollDown();
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.DOWN);
