@@ -154,7 +154,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829", "XMOBQA-61827"})
     @Test(description = "Search - Content Type Landing Pages - Scroll, Swipe & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames")
-    public void verifyScrollAndDropdownForSearchContentLandingPage(String collectionName) {
+    public void verifyScrollSwipeAndDropdownForSearchContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
         SoftAssert sa = new SoftAssert();
