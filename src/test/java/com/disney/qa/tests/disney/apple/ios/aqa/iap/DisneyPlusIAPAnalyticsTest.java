@@ -61,13 +61,11 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
 
-//        paywallIOSPageBase.clickBasicPlan();
 
         paywallIOSPageBase.clickBasicPlanButton();
-//
+
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
-//        paywallIOSPageBase.isSusbscribed();
         paywallIOSPageBase.waitForSubscribeOverlay();
 
 //        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
