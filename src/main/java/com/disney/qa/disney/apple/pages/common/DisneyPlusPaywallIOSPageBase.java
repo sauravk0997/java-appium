@@ -54,9 +54,6 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
-    @FindBy(xpath = "//XCUIElementTypeButton[@name=\"selectButton_Disney+ Basic\"]")
-    private ExtendedWebElement BasicPurchaseBtn;
-
     @FindBy(xpath = "//*[@name='%s' or name ='%s']/following-sibling::XCUIElementTypeButton")
     private ExtendedWebElement purchasePlanBtn;
 
@@ -72,6 +69,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement sandboxSigninButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'OK'`]")
     protected ExtendedWebElement sandboxOkButton;
+
+    private ExtendedWebElement BasicPurchaseBtn=dynamicBtnFindByNameContains.format("Basic");
+
     private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
 
     private ExtendedWebElement restartSubscriptionSubHeader = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUBSCRIBE_EXPIRED_COPY.getText()));
