@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.qoeplayback;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.EventChecklist;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -12,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,16 +23,14 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1578" })
-    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
-    public void testQoEStartupSequence(ITestContext context) {
+    public void testQoEStartupSequence() {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
 
         DisneyAccount account = loginAndStartPlayback();
 
-        Assert.fail("Disable Hora Validator logic.");
-        /*
         pause(10);
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:startup:v1");
         item1.addRequirement("exact", "startupActivity", "requested");
@@ -55,13 +53,12 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         EventChecklist item8 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item8.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item8);
-        */
 
         checkAssertions(sa, account.getAccountId(), checkList);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1577" })
-    @Test(description = "Smoke Test Playback QoE events", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "Smoke Test Playback QoE events", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEPlayback() {
         SoftAssert sa = new SoftAssert();
@@ -85,8 +82,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         LOGGER.info("Remaining time in pause mode fwd tap " + remainingTimeInPauseMode +
                 "remaining time after fwd tap " + remainingTimeAfterFwdTapInPauseMode);
 
-        Assert.fail("Disable Hora Validator logic.");
-        /*
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
@@ -119,11 +114,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkList.add(item4);
 
         checkAssertions(sa, account.getAccountId(), checkList);
-        */
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1094" })
-    @Test(description = "Test Pause/Resume QoE event", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "Test Pause/Resume QoE event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEPauseAndResume() {
         SoftAssert sa = new SoftAssert();
@@ -137,8 +131,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         videoPlayerPage.clickPauseButton();
         pause(10);
 
-        Assert.fail("Disable Hora Validator logic.");
-        /*
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
@@ -160,11 +152,10 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         pause(10);
 
         checkAssertions(sa, account.getAccountId(), checkList_resumed);
-         */
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-938" })
-    @Test(description = "Verify Hearbeat QoE Event", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "Verify Hearbeat QoE Event", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
     public void testQoEHeartBeat() {
         SoftAssert sa = new SoftAssert();
@@ -192,8 +183,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         videoPlayerPage.clickPlayButton();
         pause(10);
 
-        Assert.fail("Disable Hora Validator logic.");
-        /*
         EventChecklist item1 = new EventChecklist("urn:dss:event:client:playback:event:v1");
         item1.addRequirement("exact", "playbackActivity", "started");
         checkList.add(item1);
@@ -270,7 +259,6 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         checkList.add(item4);
 
         checkAssertions(sa, account.getAccountId(), checkList);
-        */
     }
 
     private DisneyAccount loginAndStartPlayback() {
