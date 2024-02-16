@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -58,7 +57,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
-    @Override
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
         getTypeButtonByName("play").click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -95,18 +93,12 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     @Override
-    public boolean isWatchButtonPresent() {
-        return watchButton.isElementPresent();
-    }
-
-    @Override
     public boolean isHeroImagePresent() {return heroImage.isPresent(); }
 
     public ExtendedWebElement getMetadataLabel() {
         return getStaticTextLabelName("metaDataLabel");
     }
 
-    @Override
     public boolean doesMetadataYearContainDetailsTabYear() {
         LOGGER.info("verifying season year range");
         Map<String, String> params = new HashMap<>();

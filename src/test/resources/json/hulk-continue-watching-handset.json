@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Prey",
+    "entityId": "55349764-323e-4d0e-898f-a4c12c9bf615",
+    "continueWatchingId": "fb48d823-26b6-4637-9192-6378d00b028d",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Prey-2024_02_01_01_38_48"
+  },
+  {
+    "title": "Solar Opposites",
+    "entityId": "f089664b-1a87-433b-86a5-24e7da5a246a",
+    "continueWatchingId": "f089664b-1a87-433b-86a5-24e7da5a246a",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Solar_Opposites-2024_02_01_01_40_35"
+  },
+  {
+    "title": "The Handmaid's Tale",
+    "entityId": "565d8976-9d26-4e63-866c-40f8a137ce5f",
+    "continueWatchingId": "565d8976-9d26-4e63-866c-40f8a137ce5f",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/The_Handmaid's_Tale-2024_02_01_01_42_37"
+  },
+  {
+    "title": "Only Murders In The Building",
+    "entityId": "ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
+    "continueWatchingId": "ef31c7e1-cd0f-4e07-848d-1cbfedb50ddf",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/Only_Murders_In_The_Building-2024_02_01_01_44_26"
+  },
+  {
+    "title": "The Bear",
+    "entityId": "05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+    "continueWatchingId": "05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+    "handsetS3FilePath": "bamtech-qa-alice/disney/recognition/alice/apple-handset/iphone_14/continue-watching/The_Bear-2024_02_01_01_46_24"
+  }
+]

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.disney.config.DisneyConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -16,10 +17,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.MobileUtilsExtended;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.slf4j.Logger;
@@ -64,12 +62,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Done\"`]")
 	protected ExtendedWebElement webviewDoneBtn;
 
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
-	protected ExtendedWebElement tabletWebviewAddressBar;
-
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
-	private ExtendedWebElement phoneWebviewAddressBar;
-
 	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
 	private ExtendedWebElement exitKidsProfileButton;
 
@@ -106,8 +98,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		HELP(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
 		LOG_OUT(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
 
-		String menuOption;
-		int index;
+		private final String menuOption;
+		private final int index;
 
 		MoreMenu(String menuOption, int index) {
 			this.menuOption = menuOption;
@@ -193,7 +185,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isHelpWebviewOpen() {
-		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(R.CONFIG.get(IOSUtils.DEVICE_TYPE)) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
 		return addressbar.getText().contains("help.disneyplus.com");
 	}
 

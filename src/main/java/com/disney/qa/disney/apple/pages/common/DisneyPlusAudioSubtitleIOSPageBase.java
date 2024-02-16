@@ -1,10 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-
-import com.disney.qa.common.utils.IOSUtils;
-import com.zebrunner.carina.utils.mobile.IMobileUtils.Direction;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.slf4j.Logger;

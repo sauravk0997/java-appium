@@ -50,7 +50,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBas
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
@@ -86,7 +85,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         setZipTestName("SubscriberUI_1_welcomePage");
         String localeForTravelling;
 
-        if (!R.CONFIG.get("locale").equals("US")) {
+        if (!getCountry().equalsIgnoreCase("US")) {
             localeForTravelling = "US";
         } else {
             localeForTravelling = "GB";

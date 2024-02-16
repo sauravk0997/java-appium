@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -18,7 +19,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -31,7 +31,6 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -42,8 +41,11 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
+    public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
+    public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
+    public static final String PREY = "Prey";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
     protected static final String USER_PROFILE = "user_profile";
@@ -80,6 +82,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement staticTextByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement staticTextLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
+    protected ExtendedWebElement imageLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
@@ -270,6 +274,21 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
+    @ExtendedFindBy(accessibilityId = "brandLandingView")
+    protected ExtendedWebElement brandLandingView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
+    protected ExtendedWebElement collectionBackButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
+    protected ExtendedWebElement artworkBackground;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Address'`]")
+    protected ExtendedWebElement tabletWebviewAddressBar;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
+    protected ExtendedWebElement phoneWebviewAddressBar;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -405,6 +424,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
         return staticTextLabelContains.format(label);
+    }
+    public ExtendedWebElement getImageLabelContains(String label) {
+        return imageLabelContains.format(label);
     }
 
     public ExtendedWebElement getStaticTextByNameContains(String name) {
@@ -921,7 +943,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         DOWNLOADS("downloadsTab"),
         MORE_MENU("moreTab");
 
-        String tabName;
+        private final String tabName;
 
         FooterTabs(String tabName) {
             this.tabName = tabName;
@@ -934,7 +956,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void goBackToDisneyAppFromSafari() {
         Dimension size = getDriver().manage().window().getSize();
-        if (R.CONFIG.get(DEVICE_TYPE).equals("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
             pause(1);
             tapAtCoordinateNoOfTimes((int) (size.width * 0.2), (int) (size.height * 0.04), 1);
@@ -1158,7 +1180,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      */
     public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
         swipeTillCollectionPresent(collection, count, container, direction);
-        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size() - 0)).click();
+        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size())).click();
     }
 
     public List<ExtendedWebElement> getAllCollectionCells(CollectionConstant.Collection collection) {
@@ -1181,6 +1203,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count) {
+        swipeTillCollectionPresent(collection, count, brandLandingView, Direction.UP);
+    }
+
     /**
      * Navigate to collection and clicks a tile in collection.
      * @param collection gets collection name from enum Collection
@@ -1192,10 +1218,65 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isCollectionPresent(CollectionConstant.Collection collection) {
-        return collectionCell.format(CollectionConstant.getCollectionName(collection)).isPresent();
+        return getCollection(collection).isPresent();
     }
 
     public ExtendedWebElement getUnavailableContentErrorPreview() {
         return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
+    }
+
+    public void swipeInHuluBrandPage(Direction direction) {
+        swipeInContainer(brandLandingView, direction, 500);
+    }
+
+
+    public ExtendedWebElement getCollection(CollectionConstant.Collection collection) {
+        return collectionCell.format(CollectionConstant.getCollectionName(collection));
+    }
+
+    public void swipeLeftInCollection(CollectionConstant.Collection collection) {
+        ExtendedWebElement collectionElement = getCollection(collection);
+        Point elementLocation = collectionElement.getLocation();
+        Dimension elementDimensions = collectionElement.getSize();
+
+        int endY;
+        int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+
+        this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
+        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
+        List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
+        swipeLeftInCollection(collection);
+        List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
+        return titles1 != titles2;
+    }
+
+    public boolean isBackButtonPresent() {
+        return collectionBackButton.isPresent();
+    }
+
+    public boolean isArtworkBackgroundPresent() {
+        return artworkBackground.isPresent();
+    }
+
+    public void clickOnCollectionBackButton() {
+        collectionBackButton.click();
+    }
+
+    public ExtendedWebElement getBackButton() { return backButton; }
+
+    public boolean isDownloadsTabDisplayed() { return downloadTab.isPresent(); }
+
+    public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
+        // This element has hardcoded the text in the app and there is not a dictionary key with the same content
+        return  findExtendedWebElement(AppiumBy.iOSClassChain("**/XCUIElementTypeTextView[`label == \"Sorry, this content is unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.\"`]"));
+    }
+
+    public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
+        return getUnavailableContentErrorPopUpMessage().isPresent();
     }
 }

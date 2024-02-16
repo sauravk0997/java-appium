@@ -55,6 +55,7 @@ public enum DictionaryKeys {
     BTN_SAVE("btn_save"),
     BTN_EDIT_PROFILE("btn_edit_profile"),
     BTN_GOT_IT("btn_got_it"),
+    BTN_PLAY("btn_play"),
     BTN_PLAYBACK_MODAL_BEGINNING("btn_playback_modal_beginning"),
     BTN_PLAYBACK_MODAL_DETAILS("btn_playback_modal_details"),
     BTN_PLAYBACK_MODAL_LIVE("btn_playback_modal_live"),
@@ -286,7 +287,6 @@ public enum DictionaryKeys {
     PAYWALL_SWITCH_ANNUAL_TITLE("switch_annual_confirmation_title"),
     PLAN_SWITCH_IAP_ANNUAL("plan_switch_iap_cta_annual"),
     PLAY("play"),
-    PLAY_BTN("btn_play"),
     PLAYBACK_LANGUAGE_HEADER("profile_settings_playback_language_header"),
     POSTPLAY_SNEAK_PEEK("postplay_sneakpeek"),
     POSTPLAY_UPNEXT("postplay_upnext"),
@@ -335,6 +335,7 @@ public enum DictionaryKeys {
     SIGN_UP_BTN("btn_welcome_signup_cta"),
     SIGN_UP_LOGIN_BTN("btn_signup"),
     SIGN_UP_TITLE("sign_up_title"),
+    SIZE_RUNTIME_PLACEHOLDER("size_runtime_placeholder"),
     STREAM_WIFI_ONLY("settings_datausage_wifionly"),
     SUB_SELECTOR_STANDALONE_ADS_CTA("sub_selector_standalone_ads_cta"),
     SUB_SELECTOR_STANDALONE_NOADS_CTA("sub_selector_standalone_noads_cta"),
@@ -428,7 +429,7 @@ public enum DictionaryKeys {
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
     WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message");
 
-    String dictionaryKey;
+    private final String dictionaryKey;
 
     DictionaryKeys(String dictionaryKey) {
         this.dictionaryKey = dictionaryKey;

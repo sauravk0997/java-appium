@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.tv;
 
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLiveEventModalIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;

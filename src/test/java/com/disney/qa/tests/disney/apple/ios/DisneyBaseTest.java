@@ -6,10 +6,18 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.config.DisneyConfiguration;
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
-import io.appium.java_client.remote.MobileCapabilityType;
+import com.zebrunner.carina.utils.config.Configuration;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import io.appium.java_client.remote.options.SupportsAppOption;
+import io.appium.java_client.remote.options.SupportsFullResetOption;
+import io.appium.java_client.remote.options.SupportsNoResetOption;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
@@ -27,7 +35,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
-import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
@@ -44,7 +51,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
-    public static final String KIDS_DOB = "2018-01-01";
+    public static final String KIDS_DOB = Person.MINOR.getYear() + "-" + Person.MINOR.getMonth().getNum() + "-" + Person.MINOR.getDay(true);
+    public static final String ADULT_DOB = Person.ADULT.getYear() + "-" + Person.ADULT.getMonth().getNum() + "-" + Person.ADULT.getDay(true);
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
@@ -55,101 +63,22 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RATING_TV14 = "TV-14";
 
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
-
-//    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PROXY)
-//    public void initProxy() {
-//        LOGGER.warn("Proxy logic disabled.");
-        /*
-        new GeoedgeProxyServer().setProxyHostForSelenoid();
-        String country = getLocalizationUtils().getCountryName();
-        GeoedgeProxyServer geoedgeProxyFreshInstance = new GeoedgeProxyServer();
-        geoedgeProxyFreshInstance.setProxyHostForSelenoid();
-        Map<String, String> headers = new HashMap<>();
-
-        String countryCode = new DisneyCountryData()
-                .searchAndReturnCountryData(country, "country", "code");
-        R.CONFIG.put("browserup_proxy", "true");
-        getDriver();
-        DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
-        DisneyProductData productData = new DisneyProductData();
-        boolean productHasLaunched = productData.searchAndReturnProductData("hasLaunched").equalsIgnoreCase("true");
-        boolean countryHasNotLaunched = disneyGlobalUtils.getBooleanFromCountries(countryCode, "hasNotLaunched");
-
-        if (DisneyParameters.getEnv().equalsIgnoreCase("prod")) {
-            headers.put(DisneyHttpHeaders.DISNEY_STAGING, TRUE);
-            if ((countryHasNotLaunched || !productHasLaunched)) {
-                headers.put(DisneyHttpHeaders.BAMTECH_CDN_BYPASS, BAMTECH_CDN_BYPASS_VALUE);
-            }
-        }
-
-        headers.put(DisneyHttpHeaders.BAMTECH_IS_TEST, "true");
-
-        boolean isStar = PARTNER.equalsIgnoreCase("star");
-
-        if (!isStar) {
-            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY);
-        } else  {
-            headers.put(DisneyHttpHeaders.BAMTECH_VPN_OVERRIDE, DisneyPlusOverrideKeys.OVERRIDE_KEY_STAR);
-        }
-
-        if ((countryHasNotLaunched || !productHasLaunched)) {
-            if (!isStar) {
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
-            } else {
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
-            }
-            headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_OVERRIDE_KEY);
-            headers.put(DisneyHttpHeaders.BAMTECH_CANONBALL_PREVIEW, BAMTECH_CANONBALL_PREVIEW_VALUE);
-        }
-
-        boolean isGeoEdgeUnsupportedRegion = disneyGlobalUtils.getBooleanFromCountries(countryCode, IS_GEOEDGE_UNSUPPORTED_REGION)
-                || disneyGlobalUtils.getBooleanFromCountries(countryCode, IS_GEOEDGE_SUPPORTED_REGION_WITH_ISSUES);
-        if (isGeoEdgeUnsupportedRegion) {
-            headers.put(DisneyHttpHeaders.BAMTECH_DSS_PHYSICAL_COUNTRY_OVERRIDE, countryCode);
-            if (isStar) {
-                headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
-                headers.put(DisneyHttpHeaders.BAMTECH_GEO_OVERRIDE, countryCode);
-                headers.put(DisneyHttpHeaders.BAMTECH_OVERRIDE_SUPPORTED_LOCATION, DisneyPlusOverrideKeys.SUPPORTED_LOCATION_STAR);
-                headers.put(DisneyHttpHeaders.BAMTECH_AKA_USER_GEO_OVERRIDE, countryCode);
-                headers.put(DisneyHttpHeaders.BAMTECH_PARTNER, PARTNER);
-            }
-        } else if (!countryCode.equals("US")) {
-            headers.put(DisneyHttpHeaders.BAMTECH_GEO_ALLOW, DisneyPlusOverrideKeys.GEO_ALLOW_KEY);
-        }
-
-        try {
-            ProxyPool.registerProxy(geoedgeProxyFreshInstance.getGeoedgeProxy(country));
-            proxy.set(ProxyPool.getProxy());
-            //            Set<CaptureType> captureTypeSet = new HashSet<>();
-            //            if(captureTypes != null) {
-            //                IntStream.range(0, captureTypes.length - 1).forEach(type -> captureTypeSet.add(captureTypes[type]));
-            //            } else {
-            //                proxy.get().setMitmDisabled(true);
-            //            }
-            proxy.get().addHeaders(headers);
-            proxy.get();
-            proxy.get().start(Integer.parseInt(getDevice().getProxyPort()));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            Assert.fail(String.format("Proxy Cannot be started for country '%s'. Manual validation is required.", country));
-        }
-         */
-//    }
+    private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
-        R.CONFIG.put(MobileCapabilityType.NO_RESET, "true", true);
-        R.CONFIG.put(MobileCapabilityType.FULL_RESET, "false", true);
+        R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
+        R.CONFIG.put("capabilities." + SupportsFullResetOption.FULL_RESET_OPTION, "false", true);
     }
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
     public void beforeAnyAppActions() {
         getDriver();
-        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        }
-        LOGGER.info("Starting API threads");
-        // Call getDriver to set platform variables
+        WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
+            if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
+                setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+            }
+        });
         setBuildType();
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
@@ -160,15 +89,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         try {
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
-            LOGGER.info("API threads started.");
         } catch (Exception e) {
             LOGGER.error(ExceptionUtils.getStackTrace(e));
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
-        //        clearAppCache();
         handleAlert();
     }
 
+    @Getter
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 4)),
@@ -176,18 +104,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130));
 
-        DateHelper.Month month;
-        String day;
-        String year;
+        private final DateHelper.Month month;
+        private final String day;
+        private final String year;
 
         Person(DateHelper.Month month, String day, String year) {
             this.month = month;
             this.day = day;
             this.year = year;
-        }
-
-        public DateHelper.Month getMonth() {
-            return this.month;
         }
 
         public String getDay() {
@@ -202,9 +126,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
 
-        public String getYear() {
-            return this.year;
-        }
     }
 
     /**
@@ -396,7 +317,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void downloadApp(String version) {
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
+        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
             installApp(AppCenterManager.getInstance()
@@ -410,8 +332,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void downloadDisneyApp() {
-        String appCenterAppName = R.CONFIG.get("capabilities.app");
-        String appVersion = R.CONFIG.get("appVersion");
+        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
+        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
         LOGGER.info("App Download: {}", appCenterAppName);
         if (appCenterAppName.contains("for_Automation")) {
             installApp(AppCenterManager.getInstance()
@@ -425,7 +348,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void addHoraValidationSku(DisneyAccount accountToEntitle) {
-        if (DisneyConfiguration.isHoraEnabled()) {
+        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             try {
                 getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
             } catch (URISyntaxException e) {
@@ -435,7 +358,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
-        if (DisneyConfiguration.isHoraEnabled()) {
+        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             HoraValidator hv = new HoraValidator(accountId);
             hv.assertValidation(softAssert);
             hv.checkListForPQOE(softAssert, checkList);
@@ -458,7 +381,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         jarvis.openOverrideSection("platformConfig");
         applePageBase.scrollToItem("oneTrustConfig").click();
         LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
-        boolean enableOneTrustConfig = Boolean.parseBoolean(R.CONFIG.get("enableOneTrustConfig"));
+        boolean enableOneTrustConfig = Configuration.get(DisneyConfiguration.Parameter.ENABLE_ONE_TRUST_CONFIG, Boolean.class).orElse(false);
         if (enableOneTrustConfig) {
             LOGGER.info("Navigating to domainIdentifier..");
             applePageBase.scrollToItem("domainIdentifier").click();
@@ -477,7 +400,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
-                handleAlert();
+        handleAlert();
     }
 
     public void disableBrazeConfig() {
@@ -536,4 +459,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //            }
     //        }
     //    }
+
+    public String buildS3BucketPath(String title, String feature) {
+        String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            return String.format(
+                    S3_BASE_PATH + "apple-tablet/" + deviceName + "/" + feature + "/%s", title);
+        } else {
+            return String.format(
+                    S3_BASE_PATH + "apple-handset/" + deviceName + "/" + feature + "/%s", title);
+        }
+    }
 }

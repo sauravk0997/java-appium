@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.disney.DisneyParameters;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -38,19 +38,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         return new String[]{"TUID: DE", "TUID: AT", "TUID: CH"};
     }
 
-    public void onboard(String locale, String language) {
-        LOGGER.info("Language in test: " + language);
-        LOGGER.info("Country in test: " + locale);
-        initialSetup(locale, language);
-        //setFlexWelcomeConfig();
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        setAppToHomeScreen(getAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-    }
-
     /**
      * Navigation is a required test case, so hard asserting it in each test provides coverage
      * and a readable error log in case navigation while opening the page in any test fails.
@@ -84,9 +71,21 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+        setAccount(getAccountApi().createAccount(offer, "US", lang, SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
 
-        onboard("US", lang);
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
+
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
@@ -111,7 +110,20 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void verifyUserTapsOnLink() {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = new DisneyplusLegalIOSPageBase(getDriver());
 
-        onboard("US", "en");
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+        setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
+        
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
+
         confirmLegalPageOpens();
         boolean hyperlinkFound = false;
 

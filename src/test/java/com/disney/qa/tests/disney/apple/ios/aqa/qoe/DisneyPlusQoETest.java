@@ -13,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -26,7 +25,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1578" })
     @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION)
     @Maintainer("isong1")
-    public void testQoEStartupSequence(ITestContext context) {
+    public void testQoEStartupSequence() {
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
 

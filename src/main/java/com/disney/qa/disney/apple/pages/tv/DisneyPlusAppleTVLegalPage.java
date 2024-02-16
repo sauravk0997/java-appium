@@ -1,8 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.disney.DisneyContentApiChecker;
-import com.disney.qa.common.utils.UniversalUtils;
+import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.factory.DeviceType;

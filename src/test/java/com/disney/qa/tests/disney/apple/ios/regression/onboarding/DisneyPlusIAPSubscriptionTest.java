@@ -1,8 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import static com.disney.qa.common.constant.TimeConstant.SHORT_TIMEOUT;
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
-
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -24,8 +21,6 @@ import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
@@ -276,13 +271,13 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
-        verifySignUpButtonNavigation();
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        verifySignUpButtonNavigation();
+        SoftAssert sa = new SoftAssert();
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
         disneyPlusCreatePasswordIOSPageBase.enterPasswordValue("1234AB!@");
@@ -421,8 +416,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywall.clickOverlaySubscribeButton();
         pause(3);
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywall.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
             }
@@ -488,8 +482,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY);
         paywall.clickOverlaySubscribeButton();
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywall.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
@@ -551,8 +544,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         paywall.clickPurchaseButton(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY);
         paywall.clickOverlaySubscribeButton();
         try {
-            CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-            paywall.submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            paywall.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }

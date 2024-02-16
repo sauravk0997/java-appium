@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -77,11 +76,13 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
             profileIcon = dynamicAccessProfileIcon.format(
                     getDictionary().formatPlaceholderString(
                             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, name)));
+            waitForPresenceOfAnElement(profileIcon);
             profileIcon.click();
         } else {
             profileIcon = dynamicAccessProfileIcon.format(
                     getDictionary().formatPlaceholderString(
                             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+            waitForPresenceOfAnElement(profileIcon);
             profileIcon.click();
         }
     }

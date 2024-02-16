@@ -1,12 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.account.CancellationReasons;
+import com.disney.qa.api.account.PatchType;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -122,7 +122,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
         DisneyAccount accountV2 = createV2Account();
@@ -141,7 +141,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
     @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyBundle() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -165,7 +165,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575"})
     @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_HuluBundle() {
         setAccount(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -185,7 +185,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577"})
     @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_GooglePlay() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -206,7 +206,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579"})
     @Test(description = "Verify that the correct description for Roku displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Roku() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -227,7 +227,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581"})
     @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Amazon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -248,7 +248,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583"})
     @Test(description = "Verify that the correct description for Verizon displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Verizon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -269,7 +269,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585"})
     @Test(description = "Verify that the correct description for O2 displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_O2() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -292,7 +292,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");*/
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587"})
     @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_TelecomTIM() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -313,7 +313,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589"})
     @Test(description = "Verify that the correct description for Movistar displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Movistar() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -334,7 +334,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591"})
     @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_DeutscheTelekom() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -355,7 +355,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593"})
     @Test(description = "Verify that the correct description for Sky is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Sky() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -376,7 +376,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609"})
     @Test(description = "Verify that the correct description Telmex is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Telmex() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -398,7 +398,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610"})
     @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Bradesco() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -419,7 +419,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611"})
     @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_BradescoNext() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -440,7 +440,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612"})
     @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_TelefonicaVivo() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -464,7 +464,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "App didn't redirect to the Vivo app in app store");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500"})
     @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_MercadoLibre() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -485,7 +485,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499"})
     @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Cablevision() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -506,7 +506,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.waitUntilWebviewUrlContains(CABLEVISION_URL);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502", "XMOBQA-61569"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502"})
     @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         SoftAssert sa = new SoftAssert();
@@ -529,7 +529,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62564", "XMOBQA-62566", "XMOBQA-62568", "XMOBQA-62570"})
     @Test(description = "Verify the 'Unverified email badge is displayed in the More Menu and Account submenu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyUnverifiedAccountFunctions() throws URISyntaxException {
+    public void verifyUnverifiedAccountFunctions() throws URISyntaxException, InterruptedException {
         SoftAssert sa = new SoftAssert();
         //Builds a DisneyAccount object with existing credentials that are already configured for test needs
         DisneyProfile profile = new DisneyProfile();
@@ -540,7 +540,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 .userPass("Mandalorian11!")
                 .profiles(List.of(profile))
                 .build();
-        getAccountApi().entitleAccount(externalAccount, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), "V1");
+        getAccountApi().entitleAccount(externalAccount, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, "V1");
+        getAccountApi().patchAccountVerified(externalAccount, false, PatchType.ACCOUNT);
         setAccount(externalAccount);
 
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -877,7 +878,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
     @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -888,7 +889,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Switch to Annual description and/or CTA was displayed unexpectedly");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Roku() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -1028,8 +1029,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
                 performIapHoldProviderSubscriptionCheck(sa, provider, iap);
             } catch (URISyntaxException | JSONException e) {
-                e.printStackTrace();
-                LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider);
+                LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider, e);
             }
         }));
 
@@ -1092,8 +1092,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-        List<DisneyOrder> billingOrder = new LinkedList<>();
-        billingOrder.add(DisneyOrder.SET_BILLING_HOLD);
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
@@ -1201,8 +1199,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
             logout();
         } catch (NoSuchElementException e) {
             LOGGER.error("There was a navigation error. Iteration was not completed");
-            sa.fail(String.format("Something went wrong with navigation for the account with entitlement combo: %s/%s", activeProvider, heldIapService));
-            e.printStackTrace();
+            sa.fail(String.format("Something went wrong with navigation for the account with entitlement combo: %s/%s", activeProvider, heldIapService), e);
             restart();
         }
     }
