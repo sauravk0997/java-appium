@@ -25,8 +25,8 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
     public void handleAlert() {
         super.handleAlert();
     }
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
-    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
         if (buildType != BuildType.IAP) {
             LOGGER.info("buildtype {}",buildType);
