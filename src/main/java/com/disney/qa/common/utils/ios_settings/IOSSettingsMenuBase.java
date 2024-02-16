@@ -129,6 +129,9 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         if(subscriptionsButton.isElementPresent()) {
             subscriptionsButton.click();
         }
+        if (retryButton.isPresent()) {
+            retryButton.click();
+        }
 
         if (cancelSubscriptionBtn.isElementPresent()) {
             cancelActiveSubscription();
@@ -142,50 +145,50 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
         terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
     }
-    public void cancelActiveEntitlementAQA(String appName) {
-        boolean waitForExpiryTime = false;
-        int appSubButtonIndex = 9999;
-        List<ExtendedWebElement> appSubButtons = new LinkedList<>();
-        launchSettings();
-        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
-        appStoreTab.click();
-        manageSandboxAcct();
-
+//    public void cancelActiveEntitlementAQA(String appName) {
+//        boolean waitForExpiryTime = false;
+//        int appSubButtonIndex = 9999;
+//        List<ExtendedWebElement> appSubButtons = new LinkedList<>();
+//        launchSettings();
+//        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
+//        appStoreTab.click();
+//        manageSandboxAcct();
+//
 //        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
 //
 //        swipe(sandboxAccountaqa);
 //        sandboxAccountaqa.click();
 //        manageButton.click();
-        try {
-            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
-        } catch (NoSuchElementException nse) {
-            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-        }
-
-        if(subscriptionsButton.isElementPresent()) {
-            subscriptionsButton.click();
-
-            while (retryButton.isPresent()){
-                retryButton.click();}
-        }
-
-        if (cancelSubscriptionBtn.isElementPresent()) {
-            cancelActiveSubscription();
-            pause(5);
-            if (!doneBtn.isPresent()){
-                tap(10,10);
-            }
-            else{
-            doneBtn.click();
-            waitForExpiryTime = true;}
-        }
-
-        if(waitForExpiryTime) {
-            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
-        }
-
-        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-    }
+//        try {
+//            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+//        } catch (NoSuchElementException nse) {
+//            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
+//        }
+//
+//        if(subscriptionsButton.isElementPresent()) {
+//            subscriptionsButton.click();
+//
+//            while (retryButton.isPresent()){
+//                retryButton.click();}
+//        }
+//
+//        if (cancelSubscriptionBtn.isElementPresent()) {
+//            cancelActiveSubscription();
+//            pause(5);
+//            if (!doneBtn.isPresent()){
+//                tap(10,10);
+//            }
+//            else{
+//            doneBtn.click();
+//            waitForExpiryTime = true;}
+//        }
+//
+//        if(waitForExpiryTime) {
+//            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+//        }
+//
+//        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+//    }
 
     public void navigateToManageSubscription() {
         launchSettings();
