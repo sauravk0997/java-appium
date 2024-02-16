@@ -285,7 +285,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Verify Back button is present
         sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
 
-        //To get the collections details of Original from API
+        //To get the collections details of Originals from API
         CollectionRequest collectionRequest = CollectionRequest.builder()
                 .region(getLocalizationUtils().getLocale())
                 .audience("false")
@@ -314,8 +314,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String titleFromCollection = getSearchApi().getAllSetPages(setRequest).getTitles().get(0);
 
             originalsPage.swipeInCollectionContainer(originalsPage.getDynamicCellByLabel(titleFromCollection), containerPosition++);
-            Assert.assertTrue(originalsPage.getDynamicCellByLabel(titleFromCollection).isPresent(), titleFromCollection + " was not present for " + set.getContent() + " collection");
-            //verify that correct titles of that collection opened in app, verify with 2 or 3 titles
+            Assert.assertTrue(originalsPage.getDynamicCellByLabel(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + set.getContent() + " collection");
+            //verify that correct titles of that collection opened in app, verify with 1 titles
             originalsPage.getDynamicCellByLabel(titleFromCollection).click();
             sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
             sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
