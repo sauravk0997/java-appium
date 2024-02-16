@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_handset_regression_dev" annotations="JDK" configfailurepolicy="continue" thread-count="100" parallel="tests">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="reporting.project-key" value="Development"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name"
                value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
