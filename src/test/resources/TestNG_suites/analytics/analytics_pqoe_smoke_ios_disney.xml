@@ -19,7 +19,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Handset Smoke PQoE" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.qoeplayback.DisneyPlusQoETest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.aqa.qoe.DisneyPlusQoETest"/>
         </classes>
     </test>
 </suite>
