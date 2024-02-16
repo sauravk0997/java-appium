@@ -28,10 +28,10 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
-//        if (buildType != BuildType.IAP) {
-//            LOGGER.info("buildtype {}",buildType);
-//            skipExecution("Test run is not against IAP compatible build.");
-//        }
+        if (buildType != BuildType.IAP) {
+            LOGGER.info("buildtype {}",buildType);
+            skipExecution("Test run is not against IAP compatible build.");
+        }
 
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
@@ -44,10 +44,6 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
                 .country("US").isStarOnboarded(false).build();
         setAccount(getAccountApi().createAccount(accountRequest));
 
-//        DisneyAccount account = getAccountApi().createAccount("US","en");
-//        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlementAQA("Disney+");
-
-
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
         handleAlert();
@@ -56,11 +52,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         passwordPage.submitPasswordForLogin(account.getUserPass());
         welcomeScreen.clickCompleteSubscriptionButton();
 
-
-
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-
-
 
         paywallIOSPageBase.clickBasicPlanButton();
 
@@ -68,7 +60,6 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
 
-//        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
 
         paywallIOSPageBase.clickOverlaySubscribeButton();
 
@@ -83,7 +74,6 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         acceptAlert();
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
-        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
         EventChecklist item1 = new EventChecklist("urn:dss:event:fed:purchase:completed-v2");
         checkList.add(item1);
         pause(5);
