@@ -51,6 +51,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
     private ExtendedWebElement alertFinishLaterBtn;
 
+    @ExtendedFindBy(accessibilityId = "OK")
+    private ExtendedWebElement alertOkBtn;
+
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
@@ -59,12 +62,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Subscribe'`]")
     private ExtendedWebElement overlaySubscribeBtn;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"You’re currently subscribed to this.\"`]")
-    private ExtendedWebElement subscribedText;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
     private ExtendedWebElement sandboxPasswordBox;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField")
-    private ExtendedWebElement sandboxIdBox;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
     protected ExtendedWebElement sandboxSigninButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'OK'`]")
@@ -223,6 +224,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         alertFinishLaterBtn.click();
     }
 
+    public void clickOkBtn() {
+        alertOkBtn.clickIfPresent();
+    }
+
     public void clickBasicPlan() {
         purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()),
                 DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()).click();
@@ -265,13 +270,6 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void submitSandboxPassword(String password) {
         sandboxPasswordBox.type(password);
         sandboxSigninButton.click();
-    }
-    public void fillSandboxId(String id,String password) {
-        if (sandboxIdBox.isPresent()) {
-            sandboxIdBox.type(id);
-            sandboxPasswordBox.type(password);
-            sandboxOkButton.click();
-        }
     }
 
     public void dismissPaywallErrorAlert() {
