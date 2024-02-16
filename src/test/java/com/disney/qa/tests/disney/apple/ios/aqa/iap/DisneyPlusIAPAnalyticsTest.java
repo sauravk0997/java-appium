@@ -45,14 +45,15 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(accountRequest));
 
 //        DisneyAccount account = getAccountApi().createAccount("US","en");
+//        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlementAQA("Disney+");
 
 
         DisneyAccount account = getAccount();
         addHoraValidationSku(account);
         handleAlert();
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(account.getEmail());
+        passwordPage.submitPasswordForLogin(account.getUserPass());
         welcomeScreen.clickCompleteSubscriptionButton();
 
 
@@ -69,7 +70,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 //        paywallIOSPageBase.isSusbscribed();
         paywallIOSPageBase.waitForSubscribeOverlay();
 
-        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
+//        paywallIOSPageBase.fillSandboxId("QADPlusIAPSG004@gmail.com","G0Disney!");
 
         paywallIOSPageBase.clickOverlaySubscribeButton();
 
@@ -84,7 +85,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         acceptAlert();
 
         initPage(DisneyPlusWhoseWatchingIOSPageBase.class).isOpened();
-        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlementAQA("Disney+");
+        initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
         EventChecklist item1 = new EventChecklist("urn:dss:event:fed:purchase:completed-v2");
         checkList.add(item1);
         pause(5);
