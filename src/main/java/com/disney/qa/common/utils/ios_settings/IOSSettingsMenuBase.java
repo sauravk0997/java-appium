@@ -1,7 +1,5 @@
 package com.disney.qa.common.utils.ios_settings;
 
-import static com.zebrunner.carina.crypto.Algorithm.AES_ECB_PKCS5_PADDING;
-
 import java.lang.invoke.MethodHandles;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -14,8 +12,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.utils.IOSUtils;
-import com.zebrunner.carina.crypto.CryptoTool;
-import com.zebrunner.carina.crypto.CryptoToolBuilder;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -36,12 +32,6 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     @FindBy(xpath = "//*[contains(@name, 'dsqaaiap')]")
     private ExtendedWebElement sandboxAccount;
-
-    @FindBy(xpath = "//*[contains(@name, 'qadplusiapsg004')]")
-    private ExtendedWebElement sandboxAccountaqa;
-
-    @FindBy(xpath = "//*[contains(@name, 'Retry')]")
-    private ExtendedWebElement retryButton;
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='Manage']")
     private ExtendedWebElement manageButton;
@@ -118,7 +108,6 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     public void cancelActiveEntitlement(String appName) {
         boolean waitForExpiryTime = false;
-
         int appSubButtonIndex = 9999;
         List<ExtendedWebElement> appSubButtons = new LinkedList<>();
         launchSettings();
@@ -129,9 +118,6 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         if(subscriptionsButton.isElementPresent()) {
             subscriptionsButton.click();
         }
-        if (retryButton.isPresent()) {
-            retryButton.click();
-        }
 
         if (cancelSubscriptionBtn.isElementPresent()) {
             cancelActiveSubscription();
@@ -140,55 +126,11 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
 
         if(waitForExpiryTime) {
-           waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
         terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
     }
-//    public void cancelActiveEntitlementAQA(String appName) {
-//        boolean waitForExpiryTime = false;
-//        int appSubButtonIndex = 9999;
-//        List<ExtendedWebElement> appSubButtons = new LinkedList<>();
-//        launchSettings();
-//        swipeInContainerTillElementIsPresent(settingsContainer, appStoreTab, 3, Direction.UP);
-//        appStoreTab.click();
-//        manageSandboxAcct();
-//
-//        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-//
-//        swipe(sandboxAccountaqa);
-//        sandboxAccountaqa.click();
-//        manageButton.click();
-//        try {
-//            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
-//        } catch (NoSuchElementException nse) {
-//            LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-//        }
-//
-//        if(subscriptionsButton.isElementPresent()) {
-//            subscriptionsButton.click();
-//
-//            while (retryButton.isPresent()){
-//                retryButton.click();}
-//        }
-//
-//        if (cancelSubscriptionBtn.isElementPresent()) {
-//            cancelActiveSubscription();
-//            pause(5);
-//            if (!doneBtn.isPresent()){
-//                tap(10,10);
-//            }
-//            else{
-//            doneBtn.click();
-//            waitForExpiryTime = true;}
-//        }
-//
-//        if(waitForExpiryTime) {
-//            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
-//        }
-//
-//        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-//    }
 
     public void navigateToManageSubscription() {
         launchSettings();
@@ -201,13 +143,11 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     }
 
     protected void manageSandboxAcct() {
-        CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(R.CONFIG.get("crypto_key_value")).build();
-
         swipe(sandboxAccount);
         sandboxAccount.click();
         manageButton.click();
         try {
-            submitSandboxPassword(cryptoTool.decrypt(R.TESTDATA.get("sandbox_pw")));
+            submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
