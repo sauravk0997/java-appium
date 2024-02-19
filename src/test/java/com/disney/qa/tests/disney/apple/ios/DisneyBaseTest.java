@@ -8,6 +8,7 @@ import java.util.Date;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
@@ -23,7 +24,6 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
@@ -359,12 +359,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            Assert.fail("Hora Validator disabled.");
-            /*
             HoraValidator hv = new HoraValidator(accountId);
             hv.assertValidation(softAssert);
             hv.checkListForPQOE(softAssert, checkList);
-             */
         }
     }
 

@@ -2,11 +2,11 @@
 <suite verbose="1" name="ios_tablet_install_rc" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="reporting.project-key" value="Development"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_install_rc"/>
     <parameter name="jenkinsEmail"
-               value="Lauren.Churus@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
