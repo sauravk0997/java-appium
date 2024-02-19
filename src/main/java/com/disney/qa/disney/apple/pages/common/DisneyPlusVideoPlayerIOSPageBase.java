@@ -263,10 +263,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int xOffset = 0;
         switch (control) {
             case REWIND:
-                xOffset = (int) (x - Math.round(x * 0.68));
+                xOffset = (int) (x - Math.round(x * 0.8));
                 break;
             case FAST_FORWARD:
-                xOffset = (int) (x - Math.round(x * 0.33));
+                xOffset = (int) (x - Math.round(x * 0.2));
                 break;
             default:
                 throw new IllegalArgumentException("Undefined player action");
