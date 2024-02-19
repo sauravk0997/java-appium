@@ -181,6 +181,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
     private ExtendedWebElement tenthTitleLabel;
 
+    @ExtendedFindBy(accessibilityId = "VERSIONS")
+    protected ExtendedWebElement versionsTab;
+
+    @ExtendedFindBy(accessibilityId = "titleLabel_0")
+    protected ExtendedWebElement iMaxEnhancedTitleHeader;
+
+    @ExtendedFindBy(accessibilityId = "titleLabel_1")
+    protected ExtendedWebElement wildScreenTitleHeader;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -895,5 +904,28 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton);
+    }
+
+    public void clickVersionsTab() {
+        if (!versionsTab.isPresent()) {
+            swipePageTillElementTappable(versionsTab, 1, contentDetailsPage, Direction.UP, 500);
+        }
+        versionsTab.click();
+    }
+
+    public boolean isIMAXEnhancedTitlePresent() {
+        String iMaxEnhancedTitle[] =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
+        swipePageTillElementTappable(iMaxEnhancedTitleHeader, 1, contentDetailsPage, Direction.UP, 500);
+        return iMaxEnhancedTitleHeader.getText().contains(iMaxEnhancedTitle[0]);
+    }
+
+    public boolean isIMAXEnhancedDescriptionPresent() {
+        String iMaxEnhancedDescription =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
+        return getStaticTextByLabel(iMaxEnhancedDescription).isPresent();
+    }
+
+    public boolean isWildScreenDescriptionPresent() {
+        String wildScreenDescription =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_WILDSCREEN_DESCRIPTION.getText());
+        return getStaticTextByLabel(wildScreenDescription).isPresent();
     }
 }

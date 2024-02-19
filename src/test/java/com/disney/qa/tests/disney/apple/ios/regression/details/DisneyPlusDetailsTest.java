@@ -10,6 +10,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -82,4 +83,33 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71123"})
+    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyIMAXEnhancedVersionTab() {
+        String filterValue = "IMAX Enhanced";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.clickMoviesTab();
+        searchPage.clickContentPageFilterDropDown();
+        swipe(searchPage.getStaticTextByLabel(filterValue));
+        searchPage.getStaticTextByLabel(filterValue).click();
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        detailsPage.isOpened();
+        detailsPage.clickVersionsTab();
+
+        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresent(), "IMAX Enhanced Title was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresent(), "IMAX Enhanced Description was not found");
+        sa.assertTrue(detailsPage.isWildScreenDescriptionPresent(), "Wildscreen Description was not found");
+        sa.assertAll();
+    }
+
 }
