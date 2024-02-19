@@ -8,6 +8,7 @@ import java.util.Date;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
@@ -23,7 +24,6 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
@@ -52,6 +52,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String KIDS_DOB = Person.MINOR.getYear() + "-" + Person.MINOR.getMonth().getNum() + "-" + Person.MINOR.getDay(true);
+    public static final String ADULT_DOB = Person.ADULT.getYear() + "-" + Person.ADULT.getMonth().getNum() + "-" + Person.ADULT.getDay(true);
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
@@ -62,6 +63,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RATING_TV14 = "TV-14";
 
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
+    private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -357,12 +359,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            Assert.fail("Hora Validator disabled.");
-            /*
             HoraValidator hv = new HoraValidator(accountId);
             hv.assertValidation(softAssert);
             hv.checkListForPQOE(softAssert, checkList);
-             */
         }
     }
 
@@ -460,4 +459,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //            }
     //        }
     //    }
+
+    public String buildS3BucketPath(String title, String feature) {
+        String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
+        if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
+            return String.format(
+                    S3_BASE_PATH + "apple-tablet/" + deviceName + "/" + feature + "/%s", title);
+        } else {
+            return String.format(
+                    S3_BASE_PATH + "apple-handset/" + deviceName + "/" + feature + "/%s", title);
+        }
+    }
 }

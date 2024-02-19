@@ -511,6 +511,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Kid Profile sub copy was not present");
         editProfilePage.clickJuniorModeLearnMoreLink();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
+        pause(3);
         Assert.assertTrue(addProfile.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
         moreMenu.goBackToDisneyAppFromSafari();
         moreMenu.dismissNotificationsPopUp();

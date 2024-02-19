@@ -42,6 +42,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_T
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
     public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     public static final String PREY = "Prey";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -81,6 +82,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement staticTextByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement staticTextLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
+    protected ExtendedWebElement imageLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
@@ -421,6 +424,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
         return staticTextLabelContains.format(label);
+    }
+    public ExtendedWebElement getImageLabelContains(String label) {
+        return imageLabelContains.format(label);
     }
 
     public ExtendedWebElement getStaticTextByNameContains(String name) {
@@ -1195,6 +1201,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             swipeInContainer(container, direction, 1, 1200);
             count--;
         }
+    }
+
+    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count) {
+        swipeTillCollectionPresent(collection, count, brandLandingView, Direction.UP);
     }
 
     /**

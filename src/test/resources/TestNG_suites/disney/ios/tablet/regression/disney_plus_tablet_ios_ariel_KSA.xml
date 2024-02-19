@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_tablet_ariel_KSA" annotations="JDK" configfailurepolicy="continue" thread-count="100" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="reporting.project-key" value="Regression"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_ariel_KSA"/>
     <parameter name="jenkinsEmail"

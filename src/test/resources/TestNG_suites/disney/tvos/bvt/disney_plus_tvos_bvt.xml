@@ -2,13 +2,13 @@
 <suite verbose="1" name="tvos_bvt_prod" annotations="JDK" configfailurepolicy="continue" thread-count="100" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="reporting.project-key" value="Regression"/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="tvos_bvt_prod"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsEmail"
-               value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="stringParam::githubPath::Github project path" value=""/>
     <parameter name="stringParam::gitSHA::Git commit hash" value=""/>
     <parameter name="provider" value="mcloud"/>
