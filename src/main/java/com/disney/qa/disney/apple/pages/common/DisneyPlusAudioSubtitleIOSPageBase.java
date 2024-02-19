@@ -84,7 +84,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     public void chooseSubtitlesLanguage(String language) {
         ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
-        element.click();
+        subtitleCollectionView.findExtendedWebElement(element.getBy()).click();
     }
 
     public boolean verifySelectedSubtitleLangIs(String language) {

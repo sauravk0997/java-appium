@@ -828,4 +828,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
+
+    public ExtendedWebElement getHuluContinueButton() {
+        return getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText()));
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickOnHuluContinueButton() {
+        getHuluContinueButton().click();
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }

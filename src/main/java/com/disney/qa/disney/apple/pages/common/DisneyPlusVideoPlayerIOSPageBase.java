@@ -3,6 +3,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -86,6 +87,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(name = "serviceAttributionLabel")
     private ExtendedWebElement serviceAttributionLabel;
+
+    @ExtendedFindBy (iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
+    private ExtendedWebElement networkWatermarkLogo;
 
     //FUNCTIONS
 
@@ -321,7 +325,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTime() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        int remainingTimeInSec = 0;
+        if (remainingTime.length == 2 ) {
+            remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        } else {
+            remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -3600) + ((Integer.parseInt(remainingTime[1]) * 60) + (Integer.parseInt(remainingTime[2])));
+        }
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -464,5 +473,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
+    }
+
+    public ExtendedWebElement getNetworkWatermarkLogo(String network) {
+        return format(networkWatermarkLogo, network);
+    }
+
+    public boolean isNetworkWatermarkLogoPresent (String network) {
+        return getNetworkWatermarkLogo(network).isElementPresent();
+    }
+
+    public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
+        return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
 }
