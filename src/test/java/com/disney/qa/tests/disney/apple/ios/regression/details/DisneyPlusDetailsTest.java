@@ -112,13 +112,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "XMOBQA-71124 - IMAX Enhanced Promo Label was not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "XMOBQA-71125 - IMAX Enhanced was not found in media features row");
-        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "XMOBQA-71125 - IMAX Enhanced was found before video or audio quality details in media featured rows");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "XMOBQA-71125 - IMAX Enhanced was not found before video or audio quality details in media featured rows");
 
         detailsPage.clickDetailsTab();
         scrollDown();
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentsInFormats(), "XMOBQA-71125 - IMAX Enhanced was not found in details tab formats");
-        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "XMOBQA-71125 - IMAX Enhanced was found before video or audio quality details in details tab formats");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "XMOBQA-71125 - IMAX Enhanced was not found before video or audio quality details in details tab formats");
         sa.assertAll();
     }
 }
