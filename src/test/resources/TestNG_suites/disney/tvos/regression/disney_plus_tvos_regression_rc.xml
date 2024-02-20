@@ -2,7 +2,7 @@
 <suite verbose="1" name="tvos_regression_rc" annotations="JDK" configfailurepolicy="continue" thread-count="13" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="Regression"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75031"/>
     <parameter name="jenkinsJobType" value="ios"/>

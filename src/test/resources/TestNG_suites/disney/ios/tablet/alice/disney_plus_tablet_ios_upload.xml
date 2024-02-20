@@ -2,11 +2,11 @@
 <suite verbose="1" name="ios_tablet_hulk_upload" annotations="JDK" configfailurepolicy="continue" thread-count="1" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="Development"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_tablet_hulk_upload"/>
+    <parameter name="jenkinsJobName" value="ios_tablet_upload"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
