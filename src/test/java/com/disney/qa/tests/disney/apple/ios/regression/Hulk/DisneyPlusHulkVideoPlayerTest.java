@@ -39,7 +39,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
-        int maxDelay = videoPlayer.getRemainingTime() / 100;
+        int maxDelay = videoPlayer.getRemainingTimeThreeIntegers() / 100;
         videoPlayer.scrubToPlaybackPercentage(50);
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));

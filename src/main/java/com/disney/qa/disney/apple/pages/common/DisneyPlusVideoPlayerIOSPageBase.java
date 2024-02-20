@@ -324,12 +324,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTime() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = 0;
-        if (remainingTime.length == 2 ) {
-            remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
-        } else {
-            remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -3600) + ((Integer.parseInt(remainingTime[1]) * 60) + (Integer.parseInt(remainingTime[2])));
-        }
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
