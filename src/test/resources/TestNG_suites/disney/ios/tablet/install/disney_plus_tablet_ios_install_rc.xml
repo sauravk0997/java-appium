@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_tablet_install_rc" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="Development"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_install_rc"/>
     <parameter name="jenkinsEmail"
