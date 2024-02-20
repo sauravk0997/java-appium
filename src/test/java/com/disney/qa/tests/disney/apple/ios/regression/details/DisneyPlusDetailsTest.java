@@ -87,8 +87,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71124", "XMOBQA-71125"})
-    @Test(description = "Details Page - IMAX Enhanced - Promo Labels", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyIMAXEnhancedPromoLabels() {
+    @Test(description = "Details Page - IMAX Enhanced - Promo Labels and Badges", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyIMAXEnhancedPromoLabelsAndBadges() {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
