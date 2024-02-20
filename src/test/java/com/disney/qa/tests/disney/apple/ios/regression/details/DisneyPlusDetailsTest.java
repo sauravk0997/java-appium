@@ -10,6 +10,8 @@ import com.disney.util.TestGroup;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.apache.commons.lang3.StringUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -80,6 +82,39 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         details.isOpened();
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71124", "XMOBQA-71125"})
+    @Test(description = "Details Page - IMAX Enhanced - Promo Labels", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyIMAXEnhancedPromoLabels() {
+        String filterValue = "IMAX Enhanced";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.clickMoviesTab();
+        searchPage.clickContentPageFilterDropDown();
+        swipe(searchPage.getStaticTextByLabel(filterValue));
+        searchPage.getStaticTextByLabel(filterValue).click();
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "XMOBQA-71124 - IMAX Enhanced Promo Label was not found");
+        sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "XMOBQA-71125 - IMAX Enhanced was not found in media features row");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "XMOBQA-71125 - IMAX Enhanced was found before video or audio quality details in media featured rows");
+
+        detailsPage.clickDetailsTab();
+        scrollDown();
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentsInFormats(), "XMOBQA-71125 - IMAX Enhanced was not found in details tab formats");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "XMOBQA-71125 - IMAX Enhanced was found before video or audio quality details in details tab formats");
         sa.assertAll();
     }
 }
