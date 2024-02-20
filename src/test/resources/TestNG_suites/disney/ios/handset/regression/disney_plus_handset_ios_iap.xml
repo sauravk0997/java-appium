@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_handset_iap_rc" annotations="JDK" configfailurepolicy="continue"  thread-count="20" parallel="tests">
 
     <parameter name="suiteOwner" value="gkrishna1"/>
-    <parameter name="reporting.project-key" value="Regression"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-IAP-Prod-AdHoc-for-Automation,Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_iap"/>
