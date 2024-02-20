@@ -7,6 +7,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -99,9 +100,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickMoviesTab();
-        searchPage.clickContentPageFilterDropDown();
-        swipe(searchPage.getStaticTextByLabel(filterValue));
-        searchPage.getStaticTextByLabel(filterValue).click();
+        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            searchPage.clickContentPageFilterDropDown();
+            swipe(searchPage.getStaticTextByLabel(filterValue));
+        }else{
+            searchPage.getTypeButtonByLabel(filterValue).click();
+        }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.isOpened();
