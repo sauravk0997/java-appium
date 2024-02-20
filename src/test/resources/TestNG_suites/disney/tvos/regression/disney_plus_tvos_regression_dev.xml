@@ -17,7 +17,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
 <!--    <parameter name="scheduling" value="H 17 * * *"/>-->
     <parameter name="scheduling" value="H 12 * * *"/>
-    <parameter name="overrideFields" value="groups=Smoke,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
         <classes>
