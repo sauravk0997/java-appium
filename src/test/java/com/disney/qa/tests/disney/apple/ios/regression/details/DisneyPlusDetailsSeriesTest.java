@@ -10,6 +10,8 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -246,8 +248,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getShareBtn().click();
         sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_SERIES)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_SERIES));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         detailsPage.getStaticTextByLabel("Copy").click();
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+
         detailsPage.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), "Search page did not open");
 

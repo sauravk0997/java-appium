@@ -2,6 +2,8 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -216,9 +218,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getClipboardContentBySearchInput() {
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         if (getClearText().isPresent(SHORT_TIMEOUT)) {
             clearText();
         }
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         searchBar.click(1);
         getStaticTextByLabel("Paste").click();
         return searchBar.getText();
