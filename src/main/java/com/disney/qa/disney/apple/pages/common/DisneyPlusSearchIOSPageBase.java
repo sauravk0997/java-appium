@@ -214,4 +214,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeInRecentSearchResults(Direction direction) {
         swipeInContainer(recentSearchResultsView, direction, 1500);
     }
+
+    public String getClipboardContentBySearchInput() {
+        clearText();
+        searchBar.click(1);
+        getStaticTextByLabel("Paste").click();
+        return searchBar.getText();
+    }
 }
