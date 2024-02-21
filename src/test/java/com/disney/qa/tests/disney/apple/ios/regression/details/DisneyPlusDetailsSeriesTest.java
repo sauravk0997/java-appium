@@ -253,6 +253,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getStaticTextByLabel("Copy").click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
+        if (detailsPage.getStaticTextByLabel("Copy").isPresent(2)){
+            detailsPage.clickSearchIcon();
+        }
         detailsPage.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), "Search page did not open");
 
