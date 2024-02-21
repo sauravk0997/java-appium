@@ -1,0 +1,76 @@
+package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
+
+import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.Maintainer;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
+
+    static final String NETWORK = "FX";
+    static final String NETWORK_CONTENT = "Pose";
+
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74874"})
+    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluVideoPlayerNetworkWatermark() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(NETWORK_CONTENT);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
+        detailsPage.clickPlayButton().isOpened();
+
+        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        videoPlayer.waitForVideoToStart();
+
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+        int maxDelay = videoPlayer.getRemainingTimeThreeIntegers() / 100;
+        videoPlayer.scrubToPlaybackPercentage(50);
+
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+        pause(maxDelay);
+        sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is present", NETWORK));
+
+        videoPlayer.clickBackButton();
+
+        sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
+        pause(5);
+        detailsPage.swipeDown(1000);
+
+        detailsPage.clickOnHuluContinueButton();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+
+        videoPlayer.tapAudioSubTitleMenu();
+        sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
+
+        subtitlePage.chooseSubtitlesLanguage("English");
+        subtitlePage.tapCloseButton();
+
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+
+        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 2);
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+
+        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+
+        sa.assertAll();
+    }
+}
