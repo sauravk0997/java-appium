@@ -186,6 +186,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         detailsPage.getStaticTextByLabel("Copy").click();
         detailsPage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
 
