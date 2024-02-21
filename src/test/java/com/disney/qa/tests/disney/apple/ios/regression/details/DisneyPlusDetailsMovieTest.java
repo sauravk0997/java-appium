@@ -185,6 +185,10 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
 
         detailsPage.getStaticTextByLabel("Copy").click();
+
+        if (detailsPage.getStaticTextByLabel("Copy").isPresent(2)){
+            detailsPage.clickSearchIcon();
+        }
         detailsPage.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), "Search page did not open");
 
