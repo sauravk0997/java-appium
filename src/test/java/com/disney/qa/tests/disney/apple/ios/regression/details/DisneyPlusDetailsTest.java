@@ -108,7 +108,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details pag was not opened");
+        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
         sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
         sa.assertAll();
@@ -137,13 +137,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details pag was not opened");
+        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "IMAX Enhanced was not found in media features row");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "IMAX Enhanced was not found before video or audio quality details in media featured rows");
 
         detailsPage.clickDetailsTab();
         scrollDown();
-        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Formats in detail tab not found");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Formats in details tab not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentsInFormats(), "IMAX Enhanced was not found in details tab formats");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "IMAX Enhanced was not found before video or audio quality details in details tab formats");
         sa.assertAll();
