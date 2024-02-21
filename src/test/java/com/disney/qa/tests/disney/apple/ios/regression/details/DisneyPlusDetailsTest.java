@@ -103,6 +103,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             swipe(searchPage.getStaticTextByLabel(filterValue));
+            searchPage.getStaticTextByLabel(filterValue).click();
         }else{
             searchPage.getTypeButtonByLabel(filterValue).click();
         }
