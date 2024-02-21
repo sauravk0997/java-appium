@@ -22,17 +22,10 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    public void handleAlert() {
-        super.handleAlert();
-    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
-//        if (buildType != BuildType.IAP) {
-//            LOGGER.info("buildtype {}",buildType);
-//            skipExecution("Test run is not against IAP compatible build.");
-//        }
-
         SoftAssert sa = new SoftAssert();
         JSONArray checkList = new JSONArray();
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -54,8 +47,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-//        paywallIOSPageBase.clickBasicPlanButton();
-        paywallIOSPageBase.clickBasicPlan();
+        paywallIOSPageBase.clickBasicPlanButton();
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
@@ -78,6 +70,5 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         checkList.add(item1);
         pause(5);
         checkAssertions(sa,account.getAccountId(),checkList);
-
     }
 }
