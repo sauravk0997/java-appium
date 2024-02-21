@@ -216,7 +216,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getClipboardContentBySearchInput() {
-        clearText();
+        if (getClearText().isPresent(SHORT_TIMEOUT)) {
+            clearText();
+        }
         searchBar.click(1);
         getStaticTextByLabel("Paste").click();
         return searchBar.getText();
