@@ -108,7 +108,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isOpened(), "Details pag was not opened");
         sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
         sa.assertAll();
@@ -137,7 +137,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isOpened(), "Details pag was not opened");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "IMAX Enhanced was not found in media features row");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "IMAX Enhanced was not found before video or audio quality details in media featured rows");
 
