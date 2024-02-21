@@ -920,9 +920,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(){
         String mediaFeaturesRow = imaxEnhancedmediaFeaturesRow.getText();
-        String afterImaxEnhancedLabel = StringUtils.substringAfter(mediaFeaturesRow, IMAX_ENHANCED).toString().replace(",", "'");
+        String[]  featuresRowAfterSplit = mediaFeaturesRow.split(IMAX_ENHANCED);
         for(String item : videoOrAudioQuality)
-            if(afterImaxEnhancedLabel.contains(item)){
+            if(!featuresRowAfterSplit[0].contains(item) && featuresRowAfterSplit[1].contains(item)){
                 return true;
             }
         return false;
