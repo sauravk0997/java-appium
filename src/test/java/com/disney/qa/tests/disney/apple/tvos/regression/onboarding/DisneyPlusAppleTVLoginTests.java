@@ -538,7 +538,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyAccount disneyAccount = getAccountApi().createExpiredAccount(ENTITLEMENT_LOOKUP, getCountry(), getLanguage(), "V2");
-        disneyPlusAppleTVWelcomeScreenPage.clickDontAllowBtn();
         logInWithoutHomeCheck(disneyAccount);
 
         sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isOpened(), "Restart subscription screen did not launch");
