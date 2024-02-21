@@ -8,7 +8,6 @@ import com.disney.config.DisneyConfiguration;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -870,6 +869,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
+    public ExtendedWebElement getHuluContinueButton() {
+        return getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText()));
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickOnHuluContinueButton() {
+        getHuluContinueButton().click();
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
     /**
      * Use with hulu series content only - to wait for 2 or more hulu episode downloads to complete
      */
