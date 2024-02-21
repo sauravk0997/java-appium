@@ -165,4 +165,34 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getMediaTitle().contains("Cars"),
                 "Cars Movie Details page did not open via deeplink.");
     }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61957"})
+    @Test(description = "Asset Detail Page > User taps Share Button", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieDetailsShare() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_MOVIE);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        detailsPage.getShareBtn().click();
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_MOVIE)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_MOVIE));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
+
+        detailsPage.getStaticTextByLabel("Copy").click();
+        detailsPage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
+        String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
+
+        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_MOVIE));
+
+        sa.assertAll();
+    }
 }
