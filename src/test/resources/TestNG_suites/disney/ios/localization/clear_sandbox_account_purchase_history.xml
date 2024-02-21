@@ -2,7 +2,7 @@
 <suite verbose="1" name="iOS Clear Sandbox Account Purchase History" annotations="JDK" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="jsilveti"/>
-    <parameter name="reporting.project-key" value="Development"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobName" value="iOS-Clear-Sandbox-Account-Purchase-History"/>
     <parameter name="scheduling" value="H 6 * * *"/>
     <parameter name="hiddenParam::groups::Group" value="clearAccounts"/>
