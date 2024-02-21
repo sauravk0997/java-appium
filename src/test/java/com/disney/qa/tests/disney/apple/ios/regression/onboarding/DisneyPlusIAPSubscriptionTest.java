@@ -548,8 +548,10 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
+        pause(10);
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
+        paywall.clickOkBtn();
         paywall.dismissNotificationsPopUp();
 
         //Validate no ad badge in player after switch

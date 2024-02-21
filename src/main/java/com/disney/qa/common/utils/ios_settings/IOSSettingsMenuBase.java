@@ -139,6 +139,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         manageSandboxAcct();
         if(subscriptionsButton.isElementPresent()) {
             subscriptionsButton.click();
+            scrollDown();
         }
     }
 
