@@ -21,17 +21,25 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     private ExtendedWebElement logoutAllDevicesChecked;
 
-    @ExtendedFindBy(accessibilityId = "Log out of all devices")
-    private ExtendedWebElement logoutAllDevicesTitle;
+    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
 
-    @ExtendedFindBy(accessibilityId = "Save")
-    private ExtendedWebElement newPasswordSaveBtn;
+    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
 
-    @ExtendedFindBy(accessibilityId = "You will be logged out of this device after changing your password. It may take up to 4 hours to log out of the remaining devices.")
-    private ExtendedWebElement logoutAllDevicesPasswordCopy;
+    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
+                    DictionaryKeys.CANCEL_LABEL.getText()),
+                    DictionaryKeys.CANCEL_LABEL.getText());
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"Cancel\"`]")
-    private ExtendedWebElement changePasswordCancelBtn;
+    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_SAVE.getText()),
+                    DictionaryKeys.BTN_SAVE.getText());
 
     ExtendedWebElement logOutOfThisDeviceMessage = getStaticTextByLabel(getDictionary().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGOUT_OF_ALL_DEVICES_TITLE.getText()));
