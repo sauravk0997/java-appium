@@ -944,4 +944,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String[] formatsDetails = availableformats.split(":, ");
         return formatsDetails[1].startsWith(IMAX_ENHANCED);
     }
+
+    public boolean isNegativeStereotypeAdvisoryLabelPresent(){
+        ExtendedWebElement contentAdvisoryText = getTypeOtherByLabel(String.format("%s, %s ",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText())).replaceAll("\n", "").replaceAll("\r", "").replaceAll("  ", " ").trim());
+
+        swipePageTillElementPresent(contentAdvisoryText, 1, contentDetailsPage, Direction.UP, 900);
+
+        return contentAdvisoryText.isPresent();
+    }
 }
