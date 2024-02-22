@@ -181,6 +181,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
     private ExtendedWebElement tenthTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
+    private ExtendedWebElement copyShareLink;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -903,5 +906,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton);
+    }
+
+    public ExtendedWebElement getCopyShareLink() {
+        return copyShareLink;
+    }
+
+    public void clickOnCopyShareLink() {
+        getCopyShareLink().click();
     }
 }

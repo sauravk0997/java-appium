@@ -249,7 +249,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_SERIES)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_SERIES));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
 
-        detailsPage.getStaticTextByLabel("Copy").click();
+        detailsPage.clickOnCopyShareLink();
 
         if (detailsPage.getStaticTextByLabel("Copy").isPresent(2)){
             detailsPage.clickSearchIcon();
