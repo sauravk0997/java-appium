@@ -2,7 +2,7 @@
 <suite verbose="1" name="iOS - Disney+ - Handset Playback Capture" annotations="JDK" configfailurepolicy="continue" thread-count="20" parallel="tests">
 
     <parameter name="suiteOwner" value="jsilveti"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="reporting.project-key" value="QAIT"/>
     <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Prod-Enterprise,Disney-Enterprise"/>
     <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="choiceParam::content_type::The type of media to be played. programId for a Movie. seriesId for a Series" value="programId,seriesId"/>

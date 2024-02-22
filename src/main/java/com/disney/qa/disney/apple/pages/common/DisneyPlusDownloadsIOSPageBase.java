@@ -130,4 +130,8 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		String[] ratingSizeRuntimeParts = getStaticTextByLabelContains("MB").getText().split(" ");
 		return getStaticTextByLabelContains(ratingSizeRuntimeParts[0]);
 	}
+
+	public void clickSeriesMoreInfoButton() {
+		getImageLabelContains("Double tap for more info").click();
+	}
 }

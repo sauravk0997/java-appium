@@ -52,12 +52,28 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     private ExtendedWebElement headerViewTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
+    protected ExtendedWebElement recentSearchResultsView;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = 'titleLabel'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
 
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
+
+    @ExtendedFindBy(accessibilityId = "selectorButton")
+    private ExtendedWebElement contentPageFilterDropDown;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'Back'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
+    private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
+
+    @ExtendedFindBy(accessibilityId = "segmentedControl")
+    private ExtendedWebElement contentPageFilterHeader;
+
+    @ExtendedFindBy(accessibilityId = "itemPickerView")
+    private ExtendedWebElement itemPickerView;
+
 
     //FUNCTIONS
 
@@ -166,6 +182,47 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
         return getDynamicAccessibilityId(dictVal).isPresent();
+    }
+
+    public boolean isContentPageFilterDropDownPresent(){
+        return contentPageFilterDropDown.isPresent();
+    }
+
+    public void clickContentPageFilterDropDown(){
+        contentPageFilterDropDown.click();
+    }
+
+    public void clickContentPageFilterDropDownAtMiddleTop(){
+        contentPageFilterDropDownAtMiddleTop.click();
+    }
+
+    public boolean isContentPageFilterHeaderPresent(){
+        return contentPageFilterHeader.isPresent();
+    }
+
+    public void swipeContentPageFilter(Direction direction) {
+        //To be used with tablet only
+        swipeInContainer(contentPageFilterHeader, direction, 500);
+    }
+
+    public boolean isContentPageFilterDropDownAtMiddleTopPresent(){
+        return contentPageFilterDropDownAtMiddleTop.isPresent();
+    }
+
+    public void swipeItemPicker(Direction direction) {
+        //To be used with handset only
+        swipeInContainer(itemPickerView, direction, 500);
+    }
+
+    public void swipeInRecentSearchResults(Direction direction) {
+        swipeInContainer(recentSearchResultsView, direction, 1500);
+    }
+
+    public String getClipboardContentBySearchInput() {
+        clearText();
+        searchBar.click(1);
+        getStaticTextByLabel("Paste").click();
+        return searchBar.getText();
     }
 
     public boolean isRatingAndYearDetailsPresentInResults(){

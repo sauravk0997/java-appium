@@ -87,6 +87,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "serviceAttributionLabel")
     private ExtendedWebElement serviceAttributionLabel;
 
+    @ExtendedFindBy (iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
+    private ExtendedWebElement networkWatermarkLogo;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -259,10 +262,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int xOffset = 0;
         switch (control) {
             case REWIND:
-                xOffset = (int) (x - Math.round(x * 0.68));
+                xOffset = (int) (x - Math.round(x * 0.8));
                 break;
             case FAST_FORWARD:
-                xOffset = (int) (x - Math.round(x * 0.33));
+                xOffset = (int) (x - Math.round(x * 0.2));
                 break;
             default:
                 throw new IllegalArgumentException("Undefined player action");
@@ -464,5 +467,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
                 "Watch from start did not return to beginning of live content.");
         params.clear();
+    }
+
+    public ExtendedWebElement getNetworkWatermarkLogo(String network) {
+        return format(networkWatermarkLogo, network);
+    }
+
+    public boolean isNetworkWatermarkLogoPresent (String network) {
+        return getNetworkWatermarkLogo(network).isElementPresent();
+    }
+
+    public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
+        return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
 }
