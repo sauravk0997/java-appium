@@ -33,27 +33,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"Cancel\"`]")
     private ExtendedWebElement changePasswordCancelBtn;
 
-
-//    private ExtendedWebElement logoutAllDevicesTitle = xpathNameOrName.format(getDictionary()
-//                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-//                            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
-//            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
-
-//    private ExtendedWebElement logoutAllDevicesPasswordCopy = xpathNameOrName.format(getDictionary()
-//                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-//                            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
-//            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
-
-//    private ExtendedWebElement changePasswordCancelBtn = xpathNameOrName.format(getDictionary()
-//                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-//                            DictionaryKeys.CANCEL_LABEL.getText()),
-//            DictionaryKeys.CANCEL_LABEL.getText());
-
-//    protected ExtendedWebElement newPasswordSaveBtn = xpathNameOrName.format(getDictionary()
-//                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-//                            DictionaryKeys.BTN_SAVE.getText()),
-//            DictionaryKeys.BTN_SAVE.getText());
-
     ExtendedWebElement logOutOfThisDeviceMessage = getStaticTextByLabel(getDictionary().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGOUT_OF_ALL_DEVICES_TITLE.getText()));
 
