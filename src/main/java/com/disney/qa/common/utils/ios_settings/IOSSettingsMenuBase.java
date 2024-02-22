@@ -126,7 +126,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         }
 
         if(waitForExpiryTime) {
-           waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
+            waitForEntitlementExpiration(appSubButtons, appName, appSubButtonIndex);
         }
 
         terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
