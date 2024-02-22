@@ -229,7 +229,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.isPresent();
     }
 
-    public String getRatingAndYearDetailsPresentInResults(){
+    public String getRatingAndYearDetailsFromSearchResults(){
         return ratingAndYearDetailsOfContent.getText();
     }
 
