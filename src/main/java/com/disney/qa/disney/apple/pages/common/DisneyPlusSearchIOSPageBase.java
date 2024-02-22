@@ -221,7 +221,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         if (getClearText().isPresent(SHORT_TIMEOUT)) {
             clearText();
         }
-        searchBar.click(1);
+        searchBar.click();
         getStaticTextByLabel("Paste").click();
         return searchBar.getText();
     }
