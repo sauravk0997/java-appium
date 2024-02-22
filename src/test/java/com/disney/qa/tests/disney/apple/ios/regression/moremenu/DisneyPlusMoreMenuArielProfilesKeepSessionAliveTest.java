@@ -76,7 +76,6 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
             softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
             parentalConsent.clickAlertConfirm();
             parentalConsent.scrollConsentContent(4);
-            //scrollDown();
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
