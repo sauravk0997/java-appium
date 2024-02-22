@@ -171,11 +171,16 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             searchPage.getTypeButtonByLabel(filterValue).click();
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        String title = results.get(0).getText();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
         detailsPage.clickVersionsTab();
+        sa.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions was not found");
         sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedThumbnailPresentInVersionTab(), "IMAX Enhanced Thumbnail was not found");
         sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
+        String duration = String.valueOf(getSearchApi().getMovie(title, getAccount()).getContentDuration());
+        sa.assertTrue(detailsPage.getDurationFromIMAXEnhancedHeader().contains(duration), "Duration detail was not found in IMAX Enhanced Header");
 
         sa.assertAll();
     }
