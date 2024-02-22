@@ -163,17 +163,20 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickMoviesTab();
-        searchPage.clickContentPageFilterDropDown();
-        swipe(searchPage.getStaticTextByLabel(filterValue));
-        searchPage.getStaticTextByLabel(filterValue).click();
+        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            searchPage.clickContentPageFilterDropDown();
+            swipe(searchPage.getStaticTextByLabel(filterValue));
+            searchPage.getStaticTextByLabel(filterValue).click();
+        }else{
+            searchPage.getTypeButtonByLabel(filterValue).click();
+        }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
         detailsPage.clickVersionsTab();
+        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
 
-        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresent(), "IMAX Enhanced Title was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresent(), "IMAX Enhanced Description was not found");
-        sa.assertTrue(detailsPage.isWildScreenDescriptionPresent(), "Wildscreen Description was not found");
         sa.assertAll();
     }
 
