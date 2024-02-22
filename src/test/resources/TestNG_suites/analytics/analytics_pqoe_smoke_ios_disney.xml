@@ -2,7 +2,7 @@
 <suite verbose="1" name="Analytics PQoE Smoke Test Runs iOS" annotations="JDK" thread-count="15" parallel="tests" configfailurepolicy="continue">
 
     <parameter name="suiteOwner" value="PQoE"/>
-    <parameter name="reporting.project-key" value="PQoE"/>
+    <parameter name="reporting.project-key" value="ANA01"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-Analytics-iOS-PQoE Smoke Run"/>

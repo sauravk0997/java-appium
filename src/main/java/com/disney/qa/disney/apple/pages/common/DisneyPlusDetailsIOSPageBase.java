@@ -39,6 +39,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
     private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
     private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
+    private static final String IMAX_ENHANCED = "IMAX Enhanced";
+    private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
+    private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
+    private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
 
     //LOCATORS
 
@@ -180,6 +184,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
     private ExtendedWebElement tenthTitleLabel;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
+    private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
@@ -870,6 +877,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
+    public ExtendedWebElement getHuluContinueButton() {
+        return getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText()));
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase clickOnHuluContinueButton() {
+        getHuluContinueButton().click();
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
     /**
      * Use with hulu series content only - to wait for 2 or more hulu episode downloads to complete
      */
@@ -904,6 +919,38 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton);
+    }
+
+    public boolean isImaxEnhancedPromoLabelPresent(){
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_IMAX_ENHANCED_PROMO_LABEL.getText())).isPresent();
+    }
+
+    public boolean isImaxEnhancedPromoSubHeaderPresent(){
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_IMAX_ENHANCED_PROMO_SUBHEADER.getText())).isPresent();
+    }
+
+    public boolean isImaxEnhancedPresentInMediaFeaturesRow(){
+        return imaxEnhancedmediaFeaturesRow.getText().contains(IMAX_ENHANCED);
+    }
+
+    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(){
+        String mediaFeaturesRow = imaxEnhancedmediaFeaturesRow.getText();
+        String[]  featuresRowAfterSplit = mediaFeaturesRow.split(IMAX_ENHANCED);
+        for(String item : videoOrAudioQuality)
+            if(!featuresRowAfterSplit[0].contains(item) && featuresRowAfterSplit[1].contains(item)){
+                return true;
+            }
+        return false;
+    }
+
+    public boolean isImaxEnhancedPresentsInFormats(){
+        return formats.getText().contains(IMAX_ENHANCED);
+    }
+
+    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats(){
+        String availableformats = formats.getText();
+        String[] formatsDetails = availableformats.split(":, ");
+        return formatsDetails[1].startsWith(IMAX_ENHANCED);
     }
 
     public void clickVersionsTab() {
