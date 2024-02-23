@@ -70,7 +70,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public void clickLogoutAllDevices() {
         logoutAllDevicesUnchecked.click();
-        //getDynamicXpathContainsName("checkbox").click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
