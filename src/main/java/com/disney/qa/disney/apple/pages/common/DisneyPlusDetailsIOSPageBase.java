@@ -185,6 +185,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
     private ExtendedWebElement tenthTitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
+    private ExtendedWebElement copyShareLink;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
     private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
@@ -913,6 +916,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(seasonsButton);
     }
 
+    public ExtendedWebElement getCopyShareLink() {
+        return copyShareLink;
+    }
+
+    public void clickOnCopyShareLink() {
+        getCopyShareLink().click();
+    }
     public boolean isImaxEnhancedPromoLabelPresent(){
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_IMAX_ENHANCED_PROMO_LABEL.getText())).isPresent();
     }
