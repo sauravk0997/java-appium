@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
@@ -179,9 +180,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
         sa.assertTrue(detailsPage.isIMAXEnhancedThumbnailPresentInVersionTab(), "IMAX Enhanced Thumbnail was not found");
         sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
-        String duration = String.valueOf(getSearchApi().getMovie(title, getAccount()).getContentDuration());
-        sa.assertTrue(detailsPage.getDurationFromIMAXEnhancedHeader().contains(duration), "Duration detail was not found in IMAX Enhanced Header");
 
+        //get Video duration from API and verify that its present at last in IMAX Enhance Header
+        int duration = getSearchApi().getMovie(title, getAccount()).getContentDuration();
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        String durationTime = String.format("%dh %dm",hours, minutes);
+        sa.assertTrue(detailsPage.getDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration detail was not found in IMAX Enhanced Header");
         sa.assertAll();
     }
 
