@@ -55,7 +55,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
     protected ExtendedWebElement recentSearchResultsView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = 'titleLabel'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[2]")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
 
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
@@ -229,8 +229,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.isPresent();
     }
 
-    public String getRatingAndYearDetailsFromSearchResults(){
-        return ratingAndYearDetailsOfContent.getText();
+    public String getRatingAndYearDetailsFromSearchResults(String title){
+        return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
 }
