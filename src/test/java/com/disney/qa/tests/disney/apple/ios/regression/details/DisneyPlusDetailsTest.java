@@ -21,6 +21,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String WORLDS_BEST = "World's Best";
+    private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
+    private static final String DUMBO = "Dumbo";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
@@ -161,7 +163,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //series
         home.clickSearchIcon();
-        search.searchForMedia("The Lion King Timon Pumbaa");
+        search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
@@ -171,7 +173,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //movie
         home.clickSearchIcon();
         search.clearText();
-        search.searchForMedia("Dumbo");
+        search.searchForMedia(DUMBO);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
