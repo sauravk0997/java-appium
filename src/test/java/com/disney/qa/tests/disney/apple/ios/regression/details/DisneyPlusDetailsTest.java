@@ -186,7 +186,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
         String durationTime = String.format("%dh %dm",hours, minutes);
-        sa.assertTrue(detailsPage.getDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration detail was not found in IMAX Enhanced Header");
+        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title+ " "+ durationTime), "Content name and duration was not found in IMAX Enhanced Header");
+        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
         sa.assertAll();
     }
 

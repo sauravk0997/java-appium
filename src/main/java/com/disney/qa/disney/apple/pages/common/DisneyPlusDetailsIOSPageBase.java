@@ -977,7 +977,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isIMAXEnhancedTitlePresentInVersionTab() {
         String iMaxEnhancedTitle[] =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
         swipePageTillElementTappable(iMaxEnhancedTitleHeader, 1, contentDetailsPage, Direction.UP, 500);
-        return iMaxEnhancedTitleHeader.getText().contains(iMaxEnhancedTitle[0]);
+        return iMaxEnhancedTitleHeader.getText().startsWith(iMaxEnhancedTitle[0]);
     }
 
     public boolean isIMAXEnhancedDescriptionPresentInVersionTab() {
@@ -989,8 +989,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return iMaxEnhancedThumbnail.isPresent();
     }
 
-    public String getDurationFromIMAXEnhancedHeader() {
-        String iMaxEnhancedTitle[] = iMaxEnhancedTitleHeader.getText().split("-");
+    public String getMovieNameAndDurationFromIMAXEnhancedHeader() {
+        String iMaxEnhancedTitle[] = iMaxEnhancedTitleHeader.getText().split(" - ");
         return iMaxEnhancedTitle[1];
     }
 
