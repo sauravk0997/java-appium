@@ -3,8 +3,8 @@
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name"
-               value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name"
+               value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_dev"/>
     <parameter name="jenkinsEmail"
@@ -13,7 +13,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_8_Gen_1,iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_2,iPad_Pro_2,iPad_5_Gen,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+               value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_2,iPad_Pro_2,iPad_5_Gen,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
@@ -25,6 +25,7 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,Onboarding,Search,Smoke,Video Player"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75493"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
         <classes>
