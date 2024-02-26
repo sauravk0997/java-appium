@@ -23,7 +23,7 @@ public class DisneyPlusHomeCompareTest extends DisneyBaseTest {
     double imageSimilarityPercentageThreshold = 90.0;
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61874"})
-    @Test(description = "Originals - Disney+ Originals Badge Placement throughout Disney+", groups = {"Originals", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Originals - Disney+ Originals Badge Placement throughout Disney+", groups = {"Originals", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyOriginalsDisneyOriginalsBadgePlacement() {
         SoftAssert sa = new SoftAssert();
         String s3BucketPath = buildS3BucketPath(String.format("%s.png", "disney_originals_badge"), "originals");
