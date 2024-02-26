@@ -209,7 +209,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         home.clickSearchIcon();
-        search.clearText();
         search.searchForMedia(WORLDS_BEST);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
