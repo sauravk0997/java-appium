@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -256,6 +258,45 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
 
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-TBD"})
+    @Test(description = "Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyExtrasTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.isOpened();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ORIGINALS_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
+
+        detailsPage.clickExtrasTab();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
+        sa.assertTrue(detailsPage.getFirstRunTimeLabel().isPresent(), "First extras runtime was not found");
+
+        detailsPage.getPlayIcon().click();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.fluentWait(getDriver(), 60, 5, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 130);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        detailsPage.clickSuggestedTab();
+        detailsPage.clickExtrasTab();
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
         sa.assertAll();
     }
 }
