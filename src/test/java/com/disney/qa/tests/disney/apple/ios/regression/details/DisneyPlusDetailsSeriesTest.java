@@ -263,8 +263,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-TBD"})
-    @Test(description = "Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyExtrasTab() {
+    @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
