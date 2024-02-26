@@ -28,6 +28,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String ASPECT_RATIO_SERIES = "The Simpsons";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
+    private static final String SECRET_INVASION = "Secret Invasion";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62441"})
@@ -256,6 +257,26 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
 
+        sa.assertAll();
+    }
+
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62616"})
+    @Test(description = "Series Detail Page > User taps on Suggested tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesSuggestedTab() {
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        home.clickSearchIcon();
+        search.searchForMedia(SECRET_INVASION);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
+        details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }
 }

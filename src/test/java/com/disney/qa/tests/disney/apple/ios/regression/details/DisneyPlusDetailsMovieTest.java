@@ -26,6 +26,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
     private static final String  DETAILS_TAB_METADATA_MOVIE = "Hocus Pocus";
     private static final String  ALL_METADATA_MOVIE = "Turning Red";
+    private static final String WORLDS_BEST = "World's Best";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
@@ -193,6 +194,27 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_MOVIE));
 
+        sa.assertAll();
+    }
+
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72420"})
+    @Test(description = "Movies Detail Page > User taps on Suggested tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMoviesSuggestedTab() {
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        home.clickSearchIcon();
+        search.clearText();
+        search.searchForMedia(WORLDS_BEST);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
+        details.compareSuggestedTitleToMediaTitle(sa);
         sa.assertAll();
     }
 }
