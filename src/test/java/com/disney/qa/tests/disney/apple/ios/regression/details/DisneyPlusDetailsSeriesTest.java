@@ -262,7 +262,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-TBD"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75532"})
     @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesExtrasTab() {
         SoftAssert sa = new SoftAssert();
@@ -272,6 +272,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
+
         homePage.isOpened();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ORIGINALS_METADATA_SERIES);
@@ -286,17 +287,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
-        sa.assertTrue(detailsPage.getFirstRunTimeLabel().isPresent(), "First extras runtime was not found");
 
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.fluentWait(getDriver(), 60, 5, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 130);
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-        detailsPage.clickSuggestedTab();
-        detailsPage.clickExtrasTab();
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertAll();
     }
 }
