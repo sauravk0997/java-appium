@@ -21,25 +21,25 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     private ExtendedWebElement logoutAllDevicesChecked;
 
-    private ExtendedWebElement logoutAllDevicesTitle = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
+    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
 
-    private ExtendedWebElement logoutAllDevicesPasswordCopy = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
+    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
+                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
 
-    private ExtendedWebElement changePasswordCancelBtn = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                            DictionaryKeys.CANCEL_LABEL.getText()),
-            DictionaryKeys.CANCEL_LABEL.getText());
+    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
+                    DictionaryKeys.CANCEL_LABEL.getText()),
+                    DictionaryKeys.CANCEL_LABEL.getText());
 
-    protected ExtendedWebElement newPasswordSaveBtn = xpathNameOrName.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.BTN_SAVE.getText()),
-            DictionaryKeys.BTN_SAVE.getText());
+    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_SAVE.getText()),
+                    DictionaryKeys.BTN_SAVE.getText());
 
     ExtendedWebElement logOutOfThisDeviceMessage = getStaticTextByLabel(getDictionary().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGOUT_OF_ALL_DEVICES_TITLE.getText()));
@@ -69,8 +69,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public void clickLogoutAllDevices() {
-//        logoutAllDevicesUnchecked.click();
-        getDynamicXpathContainsName("checkbox").click();
+        logoutAllDevicesUnchecked.click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
@@ -99,10 +98,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     //Need to remove below method once we replace it from all steps with clickCancelButton method
     @Override
     public void clickCancelBtn() {
-        xpathNameOrName.format(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                                DictionaryKeys.CANCEL_LABEL.getText()),
-                DictionaryKeys.CANCEL_LABEL.getText()).click();
+        changePasswordCancelBtn.click();
     }
 
     public void clickCancelButton() {
