@@ -1,18 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.requests.content.CollectionRequest;
-import com.disney.qa.api.client.responses.content.ContentCollection;
-import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.search.DisneySearchApi;
-import com.disney.qa.api.search.assets.DisneyStandardCollection;
-import com.disney.qa.api.search.sets.DisneyCollectionSet;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -23,9 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
 
-import static com.disney.qa.api.search.assets.DisneyCollectionType.PERSONALIZED_COLLECTION;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.SUB_VERSION;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
