@@ -263,7 +263,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement stepTitle;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"labelStepTitle\"`]")
-    protected ExtendedWebElement step45Title;
+    protected ExtendedWebElement step4of5Title;
 
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
@@ -312,8 +312,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return stepTitle.getText();
     }
 
-    public String getStep45TitleText() {
-        return step45Title.getText();
+    public String getStep4of5TitleText() {
+        return step4of5Title.getText();
     }
 
     public void tapBackButton() {

@@ -110,7 +110,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         pause(5);
         sa.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isChooseYourPlanHeaderPresent(),
                 "User was not directed to the choose your plan page");
-        sa.assertTrue(createPasswordPage.getStep45TitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("4","5")), "Onboarding stepper title '4 OF 5' is not as expected");
+        sa.assertTrue(createPasswordPage.getStep4of5TitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("4","5")), "Onboarding stepper title '4 OF 5' is not as expected");
         paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY));
         paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY).click(SHORT_TIMEOUT);
         sa.assertTrue(paywallIOSPageBase.isOpened(), "Paywall page did not open");
