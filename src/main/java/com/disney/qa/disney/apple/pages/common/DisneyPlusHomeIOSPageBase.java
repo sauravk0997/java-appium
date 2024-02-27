@@ -5,11 +5,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -18,7 +14,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.asserts.SoftAssert;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
@@ -29,7 +24,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "Disney Plus")
     private ExtendedWebElement disneyPlusLogo;
-
 
     @ExtendedFindBy(accessibilityId = "Mickey and Friends")
     private ExtendedWebElement mickeyAndFriends;
@@ -169,29 +163,21 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getElementTypeCellByLabel(brand);
     }
 
-    public void verifyBrands(List<String> brands, SoftAssert sa) {
-        brands.forEach(item -> {
-            System.out.println(getBrandTile(item).isPresent());
-            sa.assertTrue(getBrandTile(item).isPresent(), "The following brand tile was not found present " + item);
-        });
+    public boolean isAllCollectionsPresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("All Collections").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeLeftInCollection(CollectionConstant.Collection.DISNEY_ACCOUNT_COLLECTIONS);
+            count--;
+        }
+        return typeCellLabelContains.format("All Collections").isPresent(SHORT_TIMEOUT);
     }
 
-
-    public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {
-        for (int i=1; i<sets.size(); i++) {
-            var shelfTitle = sets.get(i).getSetName();
-            var getSetAssets = sets.get(i).getTitles();
-            System.out.println(shelfTitle);
-            System.out.println(getDriver().getPageSource());
-//            sa.assertTrue(isAIDElementPresentWithScreenshot(shelfTitle), "Following shelf container not found " + shelfTitle);
-
-            String item = getSetAssets.get(2);
-            System.out.println(dynamicCellByLabel.format(item).isPresent());
-            boolean isPresent = dynamicCellByLabel.format(item).isPresent();
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            sa.assertTrue(isPresent, "The following content was not found " + item);
-
-            swipePageTillElementPresent(dynamicBtnFindByLabel.format(item), 1,null, Direction.UP, 2000);
+    public boolean isBlackStoriesCollectionPresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("Black Stories").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeRightInCollection(CollectionConstant.Collection.DISNEY_ACCOUNT_COLLECTIONS);
+            count--;
         }
+        return typeCellLabelContains.format("Black Stories").isPresent(SHORT_TIMEOUT);
     }
 }

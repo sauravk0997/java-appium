@@ -1,30 +1,21 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.disney.qa.api.client.requests.content.CollectionRequest;
-import com.disney.qa.api.client.responses.content.ContentCollection;
-import com.disney.qa.api.client.responses.content.ContentSet;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.search.DisneySearchApi;
-import com.disney.qa.api.search.assets.DisneyStandardCollection;
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
-
-import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.SUB_VERSION;
+import java.awt.image.BufferedImage;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
-    private static final String PERSONALIZED_COLLECTION = "PersonalizedCollection";
+    private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
+    private static final String COLLECTIONS = "Collections";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -43,28 +34,39 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), "V1");
-        setAppToHomeScreen(entitledUser);
+        setAppToHomeScreen(getAccount());
 
+        //Validate Recommended For You is present at beginning of home.
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeUp(2000);
+        }
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        BufferedImage topOfHome = getCurrentScreenView();
 
-        List<ContentSet> allSets = getSearchApi().getAllSetsInHomeCollection(entitledUser, getCountry(), getLanguage(), PERSONALIZED_COLLECTION);
-        CollectionRequest collectionRequest = CollectionRequest.builder().region(getCountry()).collectionType(PERSONALIZED_COLLECTION).account(entitledUser).language(getLanguage()).slug(DisneyStandardCollection.HOME.getSlug()).contentClass(DisneyStandardCollection.HOME.getSlug()).build();
-        ContentCollection collection = getSearchApi().getCollection(collectionRequest);
-        List<String> brands = DisneySearchApi.parseValueFromJson(collection.getJsonNode().toString(), "$..[?(@.type == 'GridContainer')]..items..text..full..content");
-        LOGGER.info("All sets size: " + allSets.size());
-        LOGGER.info("Collection titles: " + collection.getCollectionTitle());
-        LOGGER.info("Collection set info: " + collection.getCollectionSetsInfo());
-        homePage.isOpened();
-        //validate recommended for you, new to disney+
-//        sa.assertTrue();
+        //Get bottom of image with first `collections` tile
+        BufferedImage bottomOfHomeWithFirstCollectionsTile = getCurrentScreenView();
 
-        homePage.verifyBrands(brands, sa);
+        //Validate Collections is present after swiping to end of home.
+        swipePageTillElementPresent(homePage.getTypeOtherContainsLabel(COLLECTIONS), 5,null, Direction.UP, 500);
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(COLLECTIONS).isPresent(), "'Collections' container was not found.");
 
-        System.out.println(getDriver().getPageSource());
+        //Get bottom of home with last 'collections' tile
+        BufferedImage bottomOfHomeWithLastCollectionsTile = getCurrentScreenView();
+        sa.assertTrue(areImagesDifferent(bottomOfHomeWithFirstCollectionsTile, bottomOfHomeWithLastCollectionsTile),
+                "Bottom of image with first `collections` tile is the same bottom of home with last 'collections' tile");
 
-        homePage.traverseAndVerifyHomepageLayout(allSets, brands, sa);
+        //Validate swiping through Collections
+        sa.assertTrue(homePage.isAllCollectionsPresent(), "`All Collections` was not found after swiping to end of Collection");
+        sa.assertTrue(homePage.isBlackStoriesCollectionPresent(), "`Black Stories Collection` was not found after swiping to beginning of Collection");
 
+        //Validate Recommended For You is present after swiping back to top of home.
+        swipePageTillElementPresent(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU), 5,null, Direction.DOWN, 500);
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+
+        //Get top of image second time
+        BufferedImage topOfHomeSecond = getCurrentScreenView();
+//        sa.assertTrue(areImagesTheSame(topOfHome, topOfHomeSecond, 10), "First topOfHome image is not the same as second topOfHome image.");
+        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithLastCollectionsTile), "Top of home image is the same as bottom of home image.");
         sa.assertAll();
     }
 }
