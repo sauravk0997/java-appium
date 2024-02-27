@@ -210,6 +210,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+    
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71123"})
     @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
