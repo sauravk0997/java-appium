@@ -151,4 +151,33 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72032"})
+    @Test(description = "Details Page - IMAX Enhanced - Deeplink to Details Screen", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void navigatIMAXEnhancedDetailsPagefromDeeplink() {
+        String title = "IMAX Enhanced";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH";
+        launchDeeplink(true, deeplinkFormat, 10);
+        //navigateToDeeplink("suggested");
+        homePage.clickOpenButton();
+
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
+        sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
+        sa.assertAll();
+    }
+
+    private void navigateToDeeplink(String tabName) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH";
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        launchDeeplink(true, deeplinkFormat + tabName.toLowerCase(), 10);
+        homePage.clickOpenButton();
+    }
 }
