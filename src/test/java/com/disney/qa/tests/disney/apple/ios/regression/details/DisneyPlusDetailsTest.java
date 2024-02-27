@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
@@ -151,6 +152,48 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71123"})
+    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyIMAXEnhancedVersionTab() {
+        String filterValue = "IMAX Enhanced";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.clickMoviesTab();
+        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            searchPage.clickContentPageFilterDropDown();
+            swipe(searchPage.getStaticTextByLabel(filterValue));
+            searchPage.getStaticTextByLabel(filterValue).click();
+        }else{
+            searchPage.getTypeButtonByLabel(filterValue).click();
+        }
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        String title = results.get(0).getText();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
+        detailsPage.clickVersionsTab();
+        sa.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedThumbnailPresentInVersionTab(), "IMAX Enhanced Thumbnail was not found");
+        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
+
+        //get Video duration from API and verify that its present at last in IMAX Enhance Header
+        int duration = getSearchApi().getMovie(title, getAccount()).getContentDuration();
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        String durationTime = String.format("%dh %dm",hours, minutes);
+        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title+ " "+ durationTime), "Content name and duration was not found in IMAX Enhanced Header");
+        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        sa.assertAll();
+    }
+
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72032"})
