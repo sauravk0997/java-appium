@@ -119,6 +119,7 @@ public enum DictionaryKeys {
     DELETE_MULTIPLE_DOWNLOADS("delete_all_downloads_alert_copy"),
     DELETE_ONE_DOWNLOAD("delete_one_download_alert_copy"),
     DETAILS_DOWNLOAD_REMOVE_BTN("details_download_remove"),
+    DETAILS_CONTENT_ADVISORY_TITLE("details_content_advisory_title"),
     DETAILS_FEATURE_AUDIO_DESCRIPTIONS("feature_audio_descriptions"),
     DETAILS_FEATURE_SDH("feature_sdh"),
     DETAILS_FULL_DETAILS("details_fulldetails"),

@@ -26,6 +26,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "Disney Plus")
     private ExtendedWebElement disneyPlusLogo;
 
+
     @ExtendedFindBy(accessibilityId = "Mickey and Friends")
     private ExtendedWebElement mickeyAndFriends;
 
@@ -158,19 +159,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNetworkLogoImageVisible(){
         return networkLogoImage.isPresent();
-    }
-
-    public ExtendedWebElement getContentImage(String name){
-        return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage", name)));
-    }
-
-    public boolean isContentPresent(String name, CollectionConstant.Collection collection) {
-        int count = 10;
-        while (!typeCellLabelContains.format(name).isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeLeftInCollection(collection);
-            count--;
-        }
-        return typeCellLabelContains.format(name).isPresent(SHORT_TIMEOUT);
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
