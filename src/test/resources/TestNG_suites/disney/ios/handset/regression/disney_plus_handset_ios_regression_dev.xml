@@ -100,30 +100,19 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
         </classes>
     </test>
-    <test verbose="1" name="iOS Handset Hulk" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Hulk Video Player" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Hulk2" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Hulk Watchlist" parallel="methods">
-        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Hulk Network" parallel="methods">
-        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Hulk Downloads" parallel="methods">
-        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
         </classes>
     </test>
