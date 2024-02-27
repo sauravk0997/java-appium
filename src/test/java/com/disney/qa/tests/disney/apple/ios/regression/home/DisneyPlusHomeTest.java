@@ -51,7 +51,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         BufferedImage topOfHome = getCurrentScreenView();
 
         //Validate bottom of home
-        swipePageTillElementPresent(homePage.getTypeOtherContainsName(COLLECTIONS), 10,null, Direction.UP, 300);
+        swipePageTillElementPresent(homePage.getTypeOtherContainsName(COLLECTIONS), 10, null, Direction.UP, 300);
         sa.assertTrue(homePage.getTypeOtherContainsName(COLLECTIONS).isPresent(), "'Collections' container was not found.");
         sa.assertFalse(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "Disney Plus image was found after swiping up.");
 
@@ -63,7 +63,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "`Black Stories Collection` was not found after swiping to beginning of Collection");
 
         //Validate back at top of home
-        swipePageTillElementPresent(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU), 10,null, Direction.DOWN, 300);
+        swipePageTillElementPresent(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU), 10, null, Direction.DOWN, 300);
         sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found after return to top of home.");
 
