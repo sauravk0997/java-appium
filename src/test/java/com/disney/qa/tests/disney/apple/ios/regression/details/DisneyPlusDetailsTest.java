@@ -19,6 +19,9 @@ import java.util.List;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
+    private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
+    private static final String DUMBO = "Dumbo";
+
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
@@ -114,6 +117,38 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Formats in details tab not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentsInFormats(), "IMAX Enhanced was not found in details tab formats");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "IMAX Enhanced was not found before video or audio quality details in details tab formats");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62360"})
+    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyNegativeStereotypeAdvisoryExpansion() {
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        //series
+        home.clickSearchIcon();
+        search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        details.clickDetailsTab();
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+
+        //movie
+        home.clickSearchIcon();
+        search.clearText();
+        search.searchForMedia(DUMBO);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        details.clickDetailsTab();
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+
         sa.assertAll();
     }
 }
