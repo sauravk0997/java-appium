@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String COLLECTIONS = "Collections";
+    private static final String DISNEY_PLUS = "Disney Plus";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -40,22 +41,28 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2000);
         }
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found.");
         sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(),
                 "'Recommend For You' collection was not found.");
-        BufferedImage topOfHome = getCurrentScreenView();
 
-        //Get bottom of image with first `collections` tile
-        BufferedImage bottomOfHomeWithFirstCollectionsTile = getCurrentScreenView();
+        //Get top of home image
+        BufferedImage topOfHome = getCurrentScreenView();
 
         //Validate Collections is present after swiping to end of home.
         swipePageTillElementPresent(homePage.getTypeOtherContainsLabel(COLLECTIONS), 5,null, Direction.UP, 500);
         sa.assertTrue(homePage.getTypeOtherContainsLabel(COLLECTIONS).isPresent(), "'Collections' container was not found.");
+        sa.assertFalse(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "Disney Plus image was found after swiping up.");
+
+        //Get bottom of image with first `collections` tile
+        BufferedImage bottomOfHomeWithFirstCollectionsTile = getCurrentScreenView();
+
+        //Validate swiping left through 'Collections'
+        sa.assertTrue(homePage.isAllCollectionsPresent(), "`All Collections` was not found after swiping to end of Collection");
 
         //Get bottom of home with last 'collections' tile
         BufferedImage bottomOfHomeWithLastCollectionsTile = getCurrentScreenView();
 
-        //Validate swiping through Collections
-        sa.assertTrue(homePage.isAllCollectionsPresent(), "`All Collections` was not found after swiping to end of Collection");
+        //Validate swiping right through 'Collections'
         sa.assertTrue(homePage.isBlackStoriesCollectionPresent(),
                 "`Black Stories Collection` was not found after swiping to beginning of Collection");
 
@@ -67,8 +74,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         //Validate images are different
         sa.assertTrue(areImagesDifferent(bottomOfHomeWithFirstCollectionsTile, bottomOfHomeWithLastCollectionsTile),
                 "Bottom of image with first `collections` tile is the same bottom of home with last 'collections' tile");
-        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithLastCollectionsTile),
+        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithFirstCollectionsTile),
                 "Top of home image is the same as bottom of home image.");
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found after return to top of home.");
         sa.assertAll();
     }
 }
