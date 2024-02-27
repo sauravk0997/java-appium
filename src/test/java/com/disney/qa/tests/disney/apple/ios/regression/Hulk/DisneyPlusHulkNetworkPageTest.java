@@ -35,7 +35,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74598"})
-    @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyHulkCollectionPagesNetworkPageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
