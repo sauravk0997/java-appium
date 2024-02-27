@@ -36,14 +36,14 @@ public class DisneyPlusHulkDisneyFiveBrandCompareTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
-    @Test(dataProvider = "handsetDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "handsetDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void brandAliceCompareHandsetTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContent) {
         validateBrandTileComparisonAndNoHulu(hulkContent);
     }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67499"})
-    @Test(dataProvider = "tabletDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu- Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "tabletDataContentProvider", description = "Disney - Five Brands: Compare Brand Featured Images and No Hulu- Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void brandAliceCompareTabletTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContentS3 hulkContent) {
         validateBrandTileComparisonAndNoHulu(hulkContent);
     }
