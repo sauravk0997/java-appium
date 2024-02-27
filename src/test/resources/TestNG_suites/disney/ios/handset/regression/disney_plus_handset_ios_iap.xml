@@ -5,8 +5,8 @@
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-IAP-Prod-AdHoc-for-Automation,Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_iap_rc"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disney.com,Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsJobName" value="ios_handset_iap"/>
+    <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -18,13 +18,11 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75029"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75492"/>
     <parameter name="scheduling" value="H 4 * * *"/>
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPSubscriptionTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
         </classes>
     </test>
 </suite>

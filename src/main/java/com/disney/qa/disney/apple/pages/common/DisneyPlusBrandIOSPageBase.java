@@ -18,6 +18,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24LightActive\"`]")
     protected ExtendedWebElement collectionBackButtonLight;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
+    private ExtendedWebElement brandFeaturedImage;
 
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
@@ -25,7 +27,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return brandLandingView.isElementPresent();
+        return brandLandingView.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
@@ -45,4 +47,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         swipeInContainer(brandLandingView, direction, 500);
     }
 
+    public ExtendedWebElement getBrandFeaturedImage() {
+        return brandFeaturedImage;
+    }
 }

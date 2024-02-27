@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="iOS - Disney+ - Api - Utils Test - Suite" annotations="JDK" configfailurepolicy="continue" thread-count="20" parallel="tests">
 
-    <parameter name="suiteOwner" value="fkhan"/>
-    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="suiteOwner" value="qait"/>
+    <parameter name="reporting.project-key" value="QAIT"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-iOS-Api-Utils-Run"/>

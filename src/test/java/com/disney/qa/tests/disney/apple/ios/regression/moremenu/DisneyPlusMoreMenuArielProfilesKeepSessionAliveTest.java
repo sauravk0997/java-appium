@@ -75,7 +75,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
             parentalConsent.clickAlertConfirm();
-            scrollDown();
+            parentalConsent.scrollConsentContent(4);
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }

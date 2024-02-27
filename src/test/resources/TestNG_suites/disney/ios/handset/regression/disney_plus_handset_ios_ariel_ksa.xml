@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="ios_handset_ariel_KSA" annotations="JDK" configfailurepolicy="continue" thread-count="100" parallel="tests">
+<suite verbose="1" name="ios_handset_ariel_ksa" annotations="JDK" configfailurepolicy="continue" thread-count="100" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_ariel_KSA"/>
-    <parameter name="jenkinsEmail" value="Lauren.Churus@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsJobName" value="ios_handset_ariel_ksa"/>
+    <parameter name="jenkinsEmail" value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -16,7 +16,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Only 'Ariel-More Menu-KSA' group to run" value="Ariel-More Menu-KSA"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75029"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75492"/>
     <parameter name="scheduling" value="H 3 * * *"/>
     <test verbose="1" name="DisneyPlus iOS Tablet Ariel Keep Session Alive" parallel="methods">
         <classes>

@@ -4,7 +4,7 @@
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75031"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75494"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="tvos_regression_rc"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
@@ -12,7 +12,7 @@
                value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="deviceName=ANY;platformName=iOS;deviceType=tvOS"/>
+               value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_11,ATV_4_Gen_12,ATV_4_Gen_13;platformName=iOS;deviceType=tvOS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.disney.qa.common.constant.CollectionConstant;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -24,6 +25,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "Disney Plus")
     private ExtendedWebElement disneyPlusLogo;
+
 
     @ExtendedFindBy(accessibilityId = "Mickey and Friends")
     private ExtendedWebElement mickeyAndFriends;
@@ -157,5 +159,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNetworkLogoImageVisible(){
         return networkLogoImage.isPresent();
+    }
+
+    public ExtendedWebElement getBrandTile(String brand) {
+        return getElementTypeCellByLabel(brand);
+
     }
 }

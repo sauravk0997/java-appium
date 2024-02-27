@@ -28,6 +28,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String ASPECT_RATIO_SERIES = "The Simpsons";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
+    private static final String SECRET_INVASION = "Secret Invasion";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62441"})
@@ -227,5 +228,54 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains("Avengers Assemble"),
                 "Avengers Assemble Details page did not open via deeplink.");
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67707"})
+    @Test(description = "Asset Detail Page > User taps Share Button", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsShare() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        detailsPage.getShareBtn().click();
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_SERIES)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_SERIES));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
+
+        detailsPage.clickOnCopyShareLink();
+        detailsPage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
+        String expectedUrl = R.TESTDATA.get("disney_prod_loki_share_link");
+
+        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
+
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62616"})
+    @Test(description = "Series Detail Page > User taps on Suggested tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesSuggestedTab() {
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        home.clickSearchIcon();
+        search.searchForMedia(SECRET_INVASION);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
+        details.compareSuggestedTitleToMediaTitle(sa);
+        sa.assertAll();
     }
 }
