@@ -40,7 +40,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2000);
         }
-        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(),
+                "'Recommend For You' collection was not found.");
         BufferedImage topOfHome = getCurrentScreenView();
 
         //Get bottom of image with first `collections` tile
@@ -52,21 +53,22 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Get bottom of home with last 'collections' tile
         BufferedImage bottomOfHomeWithLastCollectionsTile = getCurrentScreenView();
-        sa.assertTrue(areImagesDifferent(bottomOfHomeWithFirstCollectionsTile, bottomOfHomeWithLastCollectionsTile),
-                "Bottom of image with first `collections` tile is the same bottom of home with last 'collections' tile");
 
         //Validate swiping through Collections
         sa.assertTrue(homePage.isAllCollectionsPresent(), "`All Collections` was not found after swiping to end of Collection");
-        sa.assertTrue(homePage.isBlackStoriesCollectionPresent(), "`Black Stories Collection` was not found after swiping to beginning of Collection");
+        sa.assertTrue(homePage.isBlackStoriesCollectionPresent(),
+                "`Black Stories Collection` was not found after swiping to beginning of Collection");
 
         //Validate Recommended For You is present after swiping back to top of home.
         swipePageTillElementPresent(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU), 5,null, Direction.DOWN, 500);
-        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(RECOMMENDED_FOR_YOU).isPresent(),
+                "'Recommend For You' collection was not found.");
 
-        //Get top of image second time
-        BufferedImage topOfHomeSecond = getCurrentScreenView();
-//        sa.assertTrue(areImagesTheSame(topOfHome, topOfHomeSecond, 10), "First topOfHome image is not the same as second topOfHome image.");
-        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithLastCollectionsTile), "Top of home image is the same as bottom of home image.");
+        //Validate images are different
+        sa.assertTrue(areImagesDifferent(bottomOfHomeWithFirstCollectionsTile, bottomOfHomeWithLastCollectionsTile),
+                "Bottom of image with first `collections` tile is the same bottom of home with last 'collections' tile");
+        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithLastCollectionsTile),
+                "Top of home image is the same as bottom of home image.");
         sa.assertAll();
     }
 }
