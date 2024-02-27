@@ -20,11 +20,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
@@ -269,7 +266,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75532"})
     @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifySeriesExtrasTab() throws UnsupportedEncodingException {
+    public void verifySeriesExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -278,39 +275,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-
-
-        LOGGER.info("Series mystery Title? " + getSearchApi().getSeries("4FuQufaZQMGH", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("4FuQufaZQMGH", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION().getBytes("$default$EXTRAS_VIDEOS_DURATION()"));
-//    private static String $default$detailsPageVideosRuntimeMillis() {
-//        return "$..videos..runtimeMillis";
-//    }
-
-        LOGGER.info("Series mystery Title? " + getSearchApi().getSeries("1ry2z2HF6ad9", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("1ry2z2HF6ad9", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION().getBytes(StandardCharsets.UTF_8));
-
-
-        LOGGER.info("Series mystery Title? " + getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION().getBytes(StandardCharsets.UTF_8));
-
-
-        LOGGER.info("Series mystery Title? " + getSearchApi().getSeries("6JcIJJ2hqtFf", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("6JcIJJ2hqtFf", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION());
-
-
-        LOGGER.info("Series mystery Title? " + getSearchApi().getSeries("1nWYwypT962P", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("1nWYwypT962P", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION());
-
-        //THE SIMPSONS
-        LOGGER.info("Series suggested Titles? " + getSearchApi().getSeries("3ZoBZ52QHb4x", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesSuggestedTitles());
-        LOGGER.info("Series extras duration?" + getSearchApi().getSeries("3ZoBZ52QHb4x", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getEXTRAS_VIDEOS_DURATION());
-
 
         homePage.isOpened();
         homePage.clickSearchIcon();
@@ -326,24 +290,15 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
-        System.out.println(getDriver().getPageSource());
-        //        CollectionRequest collectionRequest = CollectionRequest.builder()
-        //                .region(getLocalizationUtils().getLocale())
-        //                .audience("false")
-        //                .language(getLocalizationUtils().getUserLanguage())
-        //                .slug(DisneyStandardCollection.ORIGINALS.getSlug())
-        //                .contentClass(DisneyStandardCollection.ORIGINALS.getContentClass())
-        //                .account(testAccount)
-        //                .build();
 
-
-//        List<String> allSeriesEncodedIds = getSearchApi().getAllSeriesEncodedSeriesId(getAccount(), getLocalizationUtils().getUserLanguage());
-//        LOGGER.info("get all series encoded? " + getSearchApi().getAllSeriesEncodedSeriesId(getAccount(), getLocalizationUtils().getUserLanguage()));
-//        Map<String, List<String>> params = new HashMap<>();
-//        params.put("seriesInfo", getSearchApi().getSeriesInfo(getAccount(), getLocalizationUtils().getUserLanguage()));
-
-//        LOGGER.info("Extras Title? " + getSearchApi().getSeries(ORIGINALS_METADATA_SERIES
-//        LOGGER.info("Moon Knight duration is: " + getSearchApi().getMovie(ORIGINALS_METADATA_SERIES, getAccount()).getExtrasVideosDuration());
+        //Get duration from search api
+        List<Integer> seriesExtrasDuration = getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoDurations();
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration.get(0));
+        //Get actual duration from trailer cell
+        String[] extrasCell = detailsPage.getTypeCellLabelContains("Trailer").getText().split(",");
+        String actualDuration = extrasCell[1].trim().split(" ")[0];
+        sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
+                "Series extra duration is not the same value as actual value returned on details page.");
 
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
