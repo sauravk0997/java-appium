@@ -191,6 +191,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
     private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
+    @ExtendedFindBy(accessibilityId = "VERSIONS")
+    protected ExtendedWebElement versionsTab;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
+    protected ExtendedWebElement iMaxEnhancedThumbnail;
 
     //FUNCTIONS
 
@@ -974,5 +979,35 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getRatingRestrictionDetailMessage() {
         String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_RESTRICTION_DETAIL_MESSAGE.getText());
         return getStaticTextByLabel(upcomingBadge);
+    }
+    public void clickVersionsTab() {
+        if (!versionsTab.isPresent()) {
+            swipePageTillElementTappable(versionsTab, 1, contentDetailsPage, Direction.UP, 500);
+        }
+        versionsTab.click();
+    }
+
+    public ExtendedWebElement getVersionTab() {
+        return versionsTab;
+    }
+
+    public boolean isIMAXEnhancedTitlePresentInVersionTab() {
+        String[] iMaxEnhancedTitle =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
+        swipePageTillElementTappable(firstTitleLabel, 1, contentDetailsPage, Direction.UP, 500);
+        return firstTitleLabel.getText().startsWith(iMaxEnhancedTitle[0]);
+    }
+
+    public boolean isIMAXEnhancedDescriptionPresentInVersionTab() {
+        String iMaxEnhancedDescription =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
+        return getStaticTextByLabel(iMaxEnhancedDescription).isPresent();
+    }
+
+    public boolean isIMAXEnhancedThumbnailPresentInVersionTab() {
+        return iMaxEnhancedThumbnail.isPresent();
+    }
+
+    public String getMovieNameAndDurationFromIMAXEnhancedHeader() {
+        String[] iMaxEnhancedTitle = firstTitleLabel.getText().split(" - ");
+        return iMaxEnhancedTitle[1];
     }
 }
