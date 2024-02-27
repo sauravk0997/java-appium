@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    public static final String recommendedForYouTitle = "Recommended For You";
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -65,6 +66,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement networkLogoImage;
+
+    @ExtendedFindBy(accessibilityId = recommendedForYouTitle)
+    private ExtendedWebElement recommendedForYou;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
+    private ExtendedWebElement firstCellElementFromCollection;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -165,4 +172,20 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getElementTypeCellByLabel(brand);
 
     }
+
+    public boolean isRecommendedForYouContainerPresent(){
+        return recommendedForYou.isPresent();
+    }
+
+    public void swipeInRecommendedForYouContainer(Direction direction) {
+            ExtendedWebElement collectionElement = getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+            swipeInContainer(collectionElement, direction, 2, 900);
+    }
+
+    public String getFirstCellTitleFromRecommendedForYouContainer() {
+        return firstCellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU)).getText();
+
+
+    }
+
 }
