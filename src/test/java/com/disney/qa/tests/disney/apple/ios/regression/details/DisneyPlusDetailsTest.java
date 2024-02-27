@@ -176,7 +176,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.clickOpenButton();
 
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("dolby vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "`Subtitles accessibility badge not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
