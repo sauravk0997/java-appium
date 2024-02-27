@@ -428,6 +428,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return contentDescription.isPresent();
     }
 
+    public ExtendedWebElement getContentDescription() {
+        return contentDescription;
+    }
+
     public boolean isReleaseDateDisplayed() {
         return releaseDate.isPresent();
     }
@@ -483,6 +487,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isWatchlistButtonDisplayed() {
         return watchlistButton.isPresent();
+    }
+
+    public ExtendedWebElement getWatchlistButton() {
+        return watchlistButton;
     }
 
     public void clickWatchlistButton() {
@@ -961,5 +969,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText())).replace("\n", "").replace("\r", "").replace("  ", " ").trim());
         swipePageTillElementPresent(contentAdvisoryText, 1, contentDetailsPage, Direction.UP, 900);
         return contentAdvisoryText.isPresent();
+    }
+
+    public ExtendedWebElement getRatingRestrictionDetailMessage() {
+        String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_RESTRICTION_DETAIL_MESSAGE.getText());
+        return getStaticTextByLabel(upcomingBadge);
     }
 }

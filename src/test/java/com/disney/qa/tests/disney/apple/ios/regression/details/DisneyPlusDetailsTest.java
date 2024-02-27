@@ -5,6 +5,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -17,12 +18,15 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String WORLDS_BEST = "World's Best";
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
     private static final String DUMBO = "Dumbo";
+    private static final String TV_Y7 = "TV-Y7";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
@@ -179,6 +183,61 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
         details.clickDetailsTab();
         sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61309"})
+    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyMaturityRatingRestrictionOnDetailPage() {
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), TV_Y7, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
+        DisneyProfile profile = getAccount().getProfile(TV_Y7);
+        getAccountApi().editContentRatingProfileSetting(getAccount(), getAccountApi().getDisneyProfiles(getAccount()).get(1).getProfileId(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
+
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
+
+        // Movies
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"), 10);
+        detailsPage.clickOpenButton();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("dolby vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "`Subtitles accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
+
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button is not found.");
+        sa.assertFalse(detailsPage.getContentDescription().isPresent(SHORT_TIMEOUT), "Content Description found.");
+
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
+
+        // Series
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_echo_deeplink"), 10);
+        detailsPage.clickOpenButton();
+
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Echo"), "Media title not found.");
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
+
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button is not found.");
+        sa.assertFalse(detailsPage.getContentDescription().isPresent(SHORT_TIMEOUT), "Content Description found.");
+
+        sa.assertFalse(detailsPage.getEpisodesTab().isPresent(SHORT_TIMEOUT), "Episodes CTA found.");
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
 
         sa.assertAll();
     }

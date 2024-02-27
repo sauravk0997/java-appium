@@ -308,6 +308,7 @@ public enum DictionaryKeys {
     PROFILE_SETTINGS_ENTRY_PIN_LABEL("profile_settings_entry_pin_label"),
     PROFILE_SETTINGS_GENERIC_TOAST("profile_settings_generic_toast"),
     RATED("rated"),
+    RATING_RESTRICTION_DETAIL_MESSAGE("rating_restriction_detail_message"),
     REMOVE_DOWNLOAD_BTN("btn_remove_download"),
     RESEND_EMAIL_COPY("resend_email_copy"),
     RESEND_EMAIL_COPY_2("resend_email_copy_2"),
