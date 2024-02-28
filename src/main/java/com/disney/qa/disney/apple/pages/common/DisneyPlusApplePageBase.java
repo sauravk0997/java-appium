@@ -1254,6 +1254,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         this.swipe(startX, startY, endX, endY, 500);
     }
 
+    public void swipeLeftInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
+        int count = number;
+        while (count >= 0) {
+            swipeLeftInCollection(collection);
+            count--;
+        }
+    }
+
     public void swipeRightInCollection(CollectionConstant.Collection collection) {
         ExtendedWebElement collectionElement = getCollection(collection);
         Point elementLocation = collectionElement.getLocation();
@@ -1266,6 +1274,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
 
         this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public void swipeRightInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
+        int count = number;
+        while (count >= 0) {
+            swipeRightInCollection(collection);
+            count--;
+        }
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {

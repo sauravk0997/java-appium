@@ -5,9 +5,9 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
-    private static final String END_TILE_NOT_FOUND_MESSAGE = "End tile of last collection not found";
-    private static final String FIRST_TILE_NOT_FOUND_MESSAGE = "First tile of last collection not found";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]")
     private ExtendedWebElement brandLandingView;
@@ -85,43 +85,49 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     public void validateBrand(Brand brand, SoftAssert sa) {
         switch (brand) {
             case DISNEY:
-                swipePageTillElementPresent(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_END_COLLECTION),
-                        10, null, Direction.UP, 300);
-                sa.assertTrue(isEndCollectionPresent(CollectionConstant.Collection.BRANDS_DISNEY_END_COLLECTION,
-                        "Pirates of the Caribbean: Dead Men Tell No Tales"), END_TILE_NOT_FOUND_MESSAGE);
-                sa.assertTrue(isFirstCollectionPresent(CollectionConstant.Collection.BRANDS_DISNEY_END_COLLECTION,
-                                "Jungle Cruise"), FIRST_TILE_NOT_FOUND_MESSAGE);
+                BufferedImage disneyOriginalsBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
+                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
+                BufferedImage disneyOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
+                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
+                BufferedImage disneyOriginalsBackToBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
+                sa.assertTrue(areImagesDifferent(disneyOriginalsBeginning, disneyOriginalsCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesTheSame(disneyOriginalsBeginning, disneyOriginalsBackToBeginning, 10), "Images are not the same");
                 break;
             case PIXAR:
-                swipePageTillElementPresent(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_END_COLLECTION),
-                        10, null, Direction.UP, 300);
-                sa.assertTrue(isEndCollectionPresent(CollectionConstant.Collection.BRANDS_PIXAR_END_COLLECTION,
-                        "Toy Story"), END_TILE_NOT_FOUND_MESSAGE);
-                sa.assertTrue(isFirstCollectionPresent(CollectionConstant.Collection.BRANDS_PIXAR_END_COLLECTION,
-                                "Cars"), FIRST_TILE_NOT_FOUND_MESSAGE);
+                BufferedImage pixarFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
+                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
+                BufferedImage pixarFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
+                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
+                BufferedImage pixarFeaturedBackToBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
+                sa.assertTrue(areImagesDifferent(pixarFeaturedBeginning, pixarFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesTheSame(pixarFeaturedBeginning, pixarFeaturedBackToBeginning, 10), "Images are not the same");
                 break;
             case MARVEL:
-                swipePageTillElementPresent(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_END_COLLECTION),
-                        10, null, Direction.UP, 300);
-                sa.assertTrue(isEndCollectionPresent(CollectionConstant.Collection.BRANDS_MARVEL_END_COLLECTION,
-                        "ONE SHOT"), END_TILE_NOT_FOUND_MESSAGE);
-                sa.assertTrue(isFirstCollectionPresent(CollectionConstant.Collection.BRANDS_MARVEL_END_COLLECTION,
-                        "X-MEN"), FIRST_TILE_NOT_FOUND_MESSAGE);
+                BufferedImage marvelFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
+                swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
+                BufferedImage marvelFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
+                swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
+                BufferedImage marvelFeaturedBackToBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
+                sa.assertTrue(areImagesDifferent(marvelFeaturedBeginning, marvelFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesTheSame(marvelFeaturedBeginning, marvelFeaturedBackToBeginning, 10), "Images are not the same");
                 break;
             case STAR_WARS:
-                swipePageTillElementPresent(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_END_COLLECTION),
-                        10, null, Direction.UP, 300);
-                sa.assertTrue(isEndCollectionPresent(CollectionConstant.Collection.BRANDS_STAR_WARS_END_COLLECTION,
-                        "Clone Wars"), END_TILE_NOT_FOUND_MESSAGE);
-                sa.assertTrue(isFirstCollectionPresent(CollectionConstant.Collection.BRANDS_STAR_WARS_END_COLLECTION,
-                        "Droids"), FIRST_TILE_NOT_FOUND_MESSAGE);
+                BufferedImage starWarsOriginalsBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
+                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
+                BufferedImage starWarsOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
+                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
+                BufferedImage starWarsOriginalsBackToBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
+                sa.assertTrue(areImagesDifferent(starWarsOriginalsBeginning, starWarsOriginalsCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesTheSame(starWarsOriginalsBeginning, starWarsOriginalsBackToBeginning, 10), "Images are not the same");
                 break;
             case NATIONAL_GEOGRAPHIC:
-                swipePageTillElementPresent(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_END_COLLECTION),
-                        10, null, Direction.UP, 300);
-                sa.assertTrue(isEndCollectionPresent(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_END_COLLECTION,
-                        "National Geographic Sharks"), END_TILE_NOT_FOUND_MESSAGE);
-                sa.assertTrue(isFirstCollectionPresent(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_END_COLLECTION, "Exploring Our World"));
+                BufferedImage nationalGeographicFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
+                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
+                BufferedImage nationalGeographicFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
+                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
+                BufferedImage nationalGeographicFeaturedBackToBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
+                sa.assertTrue(areImagesDifferent(nationalGeographicFeaturedBeginning, nationalGeographicFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesTheSame(nationalGeographicFeaturedBeginning, nationalGeographicFeaturedBackToBeginning, 10), "Images are not the same");
                 break;
             default:
                 throw new IllegalArgumentException(

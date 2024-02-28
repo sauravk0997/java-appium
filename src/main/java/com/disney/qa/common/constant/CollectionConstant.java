@@ -6,11 +6,11 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
-        BRANDS_DISNEY_END_COLLECTION,
-        BRANDS_PIXAR_END_COLLECTION,
-        BRANDS_NATIONAL_GEOGRAPHIC_END_COLLECTION,
-        BRANDS_MARVEL_END_COLLECTION,
-        BRANDS_STAR_WARS_END_COLLECTION,
+        BRANDS_DISNEY_ORIGINALS,
+        BRANDS_PIXAR_FEATURED,
+        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
+        BRANDS_MARVEL_FEATURED,
+        BRANDS_STAR_WARS_ORIGINALS,
         CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
@@ -38,16 +38,16 @@ public class CollectionConstant {
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
-            case BRANDS_DISNEY_END_COLLECTION:
-                return "752b5e7b-05bc-4920-a022-a9269683b65a";
-            case BRANDS_PIXAR_END_COLLECTION:
-                return "dcaa00af-6cc7-4907-9983-f1f71e7b9648";
-            case BRANDS_NATIONAL_GEOGRAPHIC_END_COLLECTION:
-                return "2b26890a-eab1-493f-8d49-953c1e062952";
-            case BRANDS_MARVEL_END_COLLECTION:
-                return "2ee7c39d-715a-4f34-868b-661f00662ada";
-            case BRANDS_STAR_WARS_END_COLLECTION:
-                return "ac98dcc2-0fc4-4097-8a60-0359f4011b16";
+            case BRANDS_DISNEY_ORIGINALS:
+                return "c7e20abb-ff52-4d21-a2f6-46618c4118e8";
+            case BRANDS_PIXAR_FEATURED:
+                return "e8f45e6e-7096-4f4f-aa8a-043c5c559a76";
+            case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
+                return "51d8560c-5706-4c5b-8eb6-d3bf7228ff77";
+            case BRANDS_MARVEL_FEATURED:
+                return "026a9900-634c-485b-9fbb-4f0b23be517e";
+            case BRANDS_STAR_WARS_ORIGINALS:
+                return "9fb4cc69-6d90-4d1f-ae5d-0c5dca626e3c";
             case CAROUSEL:
                 return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:

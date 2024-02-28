@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -53,12 +54,13 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         brandPage.validateBrand(brand, sa);
 
         //Capture end of brand page
+        swipeInContainer(null, Direction.UP, 5, 500);
         BufferedImage endOfBrandPage = getCurrentScreenView();
         sa.assertTrue(brandPage.areImagesDifferent(topOfBrandPage, endOfBrandPage));
         sa.assertFalse(brandPage.getBrandLogoImage().isPresent(), "Brand logo image was not suppressed after scrolling down page.");
         sa.assertTrue(brandPage.getBackButton().isPresent(), "Back button was not found when at bottom of brand page");
 
-        brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(), 10, null, Direction.DOWN, 300);
+        brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(), 5, null, Direction.DOWN, 500);
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         brandPage.getBackButton().click();
         sa.assertAll();
