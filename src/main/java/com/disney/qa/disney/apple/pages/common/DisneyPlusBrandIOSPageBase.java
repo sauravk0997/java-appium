@@ -75,9 +75,9 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
                 break;
             case PIXAR:
                 BufferedImage pixarFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
-                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
+                swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
                 BufferedImage pixarFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
-                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
+                swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
                 sa.assertTrue(areImagesDifferent(pixarFeaturedBeginning, pixarFeaturedCloseToEnd), "Images are the same.");
                 break;
             case MARVEL:
