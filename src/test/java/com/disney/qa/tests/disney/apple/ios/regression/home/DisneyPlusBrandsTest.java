@@ -55,8 +55,8 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
         //Capture end of brand page
         swipeInContainer(null, Direction.UP, 5, 500);
-        BufferedImage endOfBrandPage = getCurrentScreenView();
-        sa.assertTrue(brandPage.areImagesDifferent(topOfBrandPage, endOfBrandPage));
+        BufferedImage closeToEndOfBrandPage = getCurrentScreenView();
+        sa.assertTrue(brandPage.areImagesDifferent(topOfBrandPage, closeToEndOfBrandPage), "Top of brand page and close to end of brand page are the same.");
         sa.assertFalse(brandPage.getBrandLogoImage().isPresent(), "Brand logo image was not suppressed after scrolling down page.");
         sa.assertTrue(brandPage.getBackButton().isPresent(), "Back button was not found when at bottom of brand page");
 
