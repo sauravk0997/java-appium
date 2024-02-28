@@ -172,7 +172,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
 
         // Movies
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_avengers_age_of_ultron_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"), 10);
         detailsPage.clickOpenButton();
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
@@ -184,7 +184,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("Marvel Studios' Avengers: Age of Ultron"), "Media title not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
 
         // Series
         launchDeeplink(true, R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"), 10);
