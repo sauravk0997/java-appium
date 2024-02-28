@@ -1001,10 +1001,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isTabSelected(String tabName) {
         ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
-        if(!tabBar.isPresent()){
-            swipeInContainer(null, Direction.UP, 1200);
-        }
         if(!tabButton.isPresent()){
+            swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
             swipeTabBar(Direction.LEFT, 900);
         }
         return tabButton.getAttribute("value").equals("1");
