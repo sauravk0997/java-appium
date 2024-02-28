@@ -210,6 +210,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         IntStream.range(0, getTabname().size()).forEach(i -> {
             navigateToIMAXEnhancedDetaiPageFromDeeplink(getTabname().get(i));
+            detailsPage.dismissNotificationsPopUp();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             scrollUp();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
