@@ -200,9 +200,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
     protected ExtendedWebElement contentImageView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
-    private ExtendedWebElement runTimeLabel;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
     private ExtendedWebElement seasonItemPicker;
 
@@ -812,7 +809,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstDescriptionLabel;
     }
 
-    public ExtendedWebElement getFirstRunTimeLabel() {
+    public ExtendedWebElement getFirstDurationLabel() {
         return firstRunTimeLabel;
     }
 
@@ -1010,10 +1007,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContentImageViewPresent() {
         return contentImageView.isPresent();
-    }
-
-    public ExtendedWebElement getRunTimeLabel() {
-        return runTimeLabel;
     }
 
     public ExtendedWebElement getSeasonItemPicker() {

@@ -334,6 +334,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
@@ -341,6 +342,15 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
 
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not opened.");
+        pause(35);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present on Details page");
         detailsPage.getEpisodesTab().click();
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
@@ -349,16 +359,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getSeasonItemPicker().isPresent(), "Season Item not found");
         detailsPage.getItemPickerClose().click();
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all session not found on Episodes tab");
-
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-            detailsPage.swipeUp(1500);
-        }
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
-        sa.assertTrue(detailsPage.getRunTimeLabel().isPresent(), "Episode runtime was not found");
-        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent(), "Episode download button not found.");
+        sa.assertTrue(detailsPage.getFirstDurationLabel().isPresent(), "Episode duration was not found");
+        sa.assertTrue(detailsPage.getHuluEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
 
         sa.assertAll();
     }
