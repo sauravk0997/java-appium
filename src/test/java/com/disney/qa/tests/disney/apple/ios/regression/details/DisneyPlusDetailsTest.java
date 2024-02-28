@@ -212,7 +212,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             navigateToIMAXEnhancedDetaiPageFromDeeplink(getTabname().get(i));
             detailsPage.dismissNotificationsPopUp();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            scrollUp();
+            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+                scrollUp();
+            }
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
             sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
             sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
@@ -225,8 +227,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private void navigateToIMAXEnhancedDetaiPageFromDeeplink(String tabName) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
+        terminateApp("com.disney.disneyplus.enterprise");
+        startApp("com.disney.disneyplus.enterprise");
         if(tabName.equalsIgnoreCase("suggested")){
             tabName = "related";
         }
