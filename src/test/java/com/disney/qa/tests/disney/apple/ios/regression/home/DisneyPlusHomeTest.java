@@ -21,4 +21,5 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
     }
+
 }
