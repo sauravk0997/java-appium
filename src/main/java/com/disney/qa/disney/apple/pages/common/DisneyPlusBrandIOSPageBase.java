@@ -38,24 +38,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getBrandLogoImage() { return brandLogoImage; }
 
-    public boolean isEndCollectionPresent(CollectionConstant.Collection collection, String tileTitle) {
-        int count = 10;
-        while (!typeCellLabelContains.format(tileTitle).isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeLeftInCollection(collection);
-            count--;
-        }
-        return typeCellLabelContains.format(tileTitle).isPresent(SHORT_TIMEOUT);
-    }
-
-    public boolean isFirstCollectionPresent(CollectionConstant.Collection collection, String tileTitle) {
-        int count = 10;
-        while (!typeCellLabelContains.format(tileTitle).isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeRightInCollection(collection);
-            count--;
-        }
-        return typeCellLabelContains.format(tileTitle).isPresent(SHORT_TIMEOUT);
-    }
-
     public enum Brand {
         DISNEY,
         PIXAR,
