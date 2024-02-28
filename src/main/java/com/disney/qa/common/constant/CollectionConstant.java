@@ -10,7 +10,6 @@ public class CollectionConstant {
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
-        DISNEY_ACCOUNT_COLLECTIONS,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
         NEW_TO_DISNEY,
@@ -44,8 +43,6 @@ public class CollectionConstant {
                 return "76aed686-1837-49bd-b4f5-5d2a27c0c8d4";
             case DOCUMENTARIES_AND_REALITY:
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
-            case DISNEY_ACCOUNT_COLLECTIONS:
-                return "0d9a1606-a309-473f-84ba-c95d709dac26";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
             case NEW_TO_DISNEY:
