@@ -197,6 +197,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
     protected ExtendedWebElement iMaxEnhancedThumbnail;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
+    protected ExtendedWebElement contentImageView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
+    private ExtendedWebElement runTimeLabel;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
+    private ExtendedWebElement seasonItemPicker;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -999,4 +1008,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return iMaxEnhancedTitle[1];
     }
 
+    public boolean isContentImageViewPresent() {
+        return contentImageView.isPresent();
+    }
+
+    public ExtendedWebElement getRunTimeLabel() {
+        return runTimeLabel;
+    }
+
+    public ExtendedWebElement getSeasonItemPicker() {
+        return seasonItemPicker;
+    }
 }
