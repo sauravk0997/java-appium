@@ -163,21 +163,21 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getElementTypeCellByLabel(brand);
     }
 
-    public boolean isAllCollectionsPresent() {
+    public boolean isWizardsOfWaverlyPlaceTilePresent() {
         int count = 10;
-        while (!typeCellLabelContains.format("All Collections").isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeLeftInCollection(CollectionConstant.Collection.DISNEY_ACCOUNT_COLLECTIONS);
+        while (!typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeLeftInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
             count--;
         }
-        return typeCellLabelContains.format("All Collections").isPresent(SHORT_TIMEOUT);
+        return typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT);
     }
 
-    public boolean isBlackStoriesCollectionPresent() {
+    public boolean isBlueyTilePresent() {
         int count = 10;
-        while (!typeCellLabelContains.format("Black Stories").isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeRightInCollection(CollectionConstant.Collection.DISNEY_ACCOUNT_COLLECTIONS);
+        while (!typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeRightInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
             count--;
         }
-        return typeCellLabelContains.format("Black Stories").isPresent(SHORT_TIMEOUT);
+        return typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT);
     }
 }

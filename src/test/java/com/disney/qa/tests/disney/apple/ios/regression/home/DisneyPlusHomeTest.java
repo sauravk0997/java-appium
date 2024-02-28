@@ -45,30 +45,24 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         //Validate top of home
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found.");
         sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        sa.assertTrue(homePage.isWizardsOfWaverlyPlaceTilePresent(),
+                "`Wizards of Waverly Place` tile was not found after swiping to end of `Recommended For You`");
+        sa.assertTrue(homePage.isBlueyTilePresent(),
+                "`Bluey` was not found after swiping to beginning of `Recommended For You'");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
-        //Validate bottom of home
-        swipePageTillElementPresent(homePage.getTypeOtherContainsName(COLLECTIONS), 10, null, Direction.UP, 300);
-        sa.assertTrue(homePage.getTypeOtherContainsName(COLLECTIONS).isPresent(), "'Collections' container was not found.");
-        sa.assertFalse(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "Disney Plus image was found after swiping up.");
-
-        BufferedImage bottomOfHomeWithFirstCollectionsTile = getCurrentScreenView();
-        sa.assertTrue(homePage.isAllCollectionsPresent(), "`All Collections` was not found after swiping to end of Collection");
-
-        BufferedImage bottomOfHomeWithLastCollectionsTile = getCurrentScreenView();
-        sa.assertTrue(homePage.isBlackStoriesCollectionPresent(),
-                "`Black Stories Collection` was not found after swiping to beginning of Collection");
+        //Capture bottom of home
+        swipeInContainer(null, Direction.UP, 5, 500);
+        BufferedImage closeToBottomOfHome = getCurrentScreenView();
 
         //Validate back at top of home
-        swipePageTillElementPresent(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU), 10, null, Direction.DOWN, 300);
+        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS), 10, null, Direction.DOWN, 300);
         sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found after return to top of home.");
 
         //Validate images are different
-        sa.assertTrue(areImagesDifferent(bottomOfHomeWithFirstCollectionsTile, bottomOfHomeWithLastCollectionsTile),
-                "Bottom of image with first `collections` tile is the same bottom of home with last 'collections' tile");
-        sa.assertTrue(areImagesDifferent(topOfHome, bottomOfHomeWithFirstCollectionsTile),
+        sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
                 "Top of home image is the same as bottom of home image.");
         sa.assertAll();
     }
