@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.disney.qa.common.constant.CollectionConstant;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -160,21 +159,25 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return networkLogoImage.isPresent();
     }
 
-    public ExtendedWebElement getContentImage(String name){
-        return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage", name)));
-    }
-
-    public boolean isContentPresent(String name, CollectionConstant.Collection collection) {
-        int count = 10;
-        while (!typeCellLabelContains.format(name).isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeLeftInCollection(collection);
-            count--;
-        }
-        return typeCellLabelContains.format(name).isPresent(SHORT_TIMEOUT);
-    }
-
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
+    }
 
+    public boolean isWizardsOfWaverlyPlaceTilePresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeLeftInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+            count--;
+        }
+        return typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isBlueyTilePresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeRightInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+            count--;
+        }
+        return typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT);
     }
 }

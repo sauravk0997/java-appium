@@ -262,6 +262,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"labelStepTitle\"`]/XCUIElementTypeStaticText")
     protected ExtendedWebElement stepTitle;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"labelStepTitle\"`]")
+    protected ExtendedWebElement stepTitleText;
+
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
 
@@ -289,6 +292,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
     protected ExtendedWebElement phoneWebviewAddressBar;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
+    protected ExtendedWebElement stayUpToDatePopup;
+
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -307,6 +314,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getStepTitleText() {
         return stepTitle.getText();
+    }
+
+    public String getStepTitleTextLabel() {
+        return stepTitleText.getText();
     }
 
     public void tapBackButton() {
@@ -916,7 +927,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        if (notificationPopUp.isPresent(5)) {
+        if (notificationPopUp.isPresent(5) || stayUpToDatePopup.isPresent(5)) {
             getStaticTextByLabel("Not Now").click();
         }
     }
@@ -1243,6 +1254,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
         int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+
+        this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public void swipeRightInCollection(CollectionConstant.Collection collection) {
+        ExtendedWebElement collectionElement = getCollection(collection);
+        Point elementLocation = collectionElement.getLocation();
+        Dimension elementDimensions = collectionElement.getSize();
+
+        int startY;
+        int endY = startY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+
 
         this.swipe(startX, startY, endX, endY, 500);
     }

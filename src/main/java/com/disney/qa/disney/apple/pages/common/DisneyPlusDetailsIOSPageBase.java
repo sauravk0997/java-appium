@@ -34,11 +34,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
-    private static final String SHOP_WEB_URL = "shopdisney.com";
+    private static final String SHOP_WEB_URL = "disneystore.com";
     private static final String SHOP_TAB_HEADING = "Shop this Character";
     private static final String SHOP_TAB_SUBHEADING = "Bring your favorite Disney";
     private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
-    private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to shop Disney";
+    private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to Disney store.com";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
     private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
     private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
@@ -191,6 +191,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
     private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
+    @ExtendedFindBy(accessibilityId = "VERSIONS")
+    protected ExtendedWebElement versionsTab;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
+    protected ExtendedWebElement iMaxEnhancedThumbnail;
 
     //FUNCTIONS
 
@@ -428,6 +433,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return contentDescription.isPresent();
     }
 
+    public ExtendedWebElement getContentDescription() {
+        return contentDescription;
+    }
+
     public boolean isReleaseDateDisplayed() {
         return releaseDate.isPresent();
     }
@@ -483,6 +492,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isWatchlistButtonDisplayed() {
         return watchlistButton.isPresent();
+    }
+
+    public ExtendedWebElement getWatchlistButton() {
+        return watchlistButton;
     }
 
     public void clickWatchlistButton() {
@@ -953,5 +966,58 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String availableformats = formats.getText();
         String[] formatsDetails = availableformats.split(":, ");
         return formatsDetails[1].startsWith(IMAX_ENHANCED);
+    }
+
+    public boolean isNegativeStereotypeAdvisoryLabelPresent() {
+        ExtendedWebElement contentAdvisoryText = getTypeOtherByLabel(String.format("%s, %s ",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText())).replace("\n", "").replace("\r", "").replace("  ", " ").trim());
+        swipePageTillElementPresent(contentAdvisoryText, 1, contentDetailsPage, Direction.UP, 900);
+        return contentAdvisoryText.isPresent();
+    }
+
+    public ExtendedWebElement getRatingRestrictionDetailMessage() {
+        String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_RESTRICTION_DETAIL_MESSAGE.getText());
+        return getStaticTextByLabel(upcomingBadge);
+    }
+    public void clickVersionsTab() {
+        if (!versionsTab.isPresent()) {
+            swipePageTillElementTappable(versionsTab, 1, contentDetailsPage, Direction.UP, 500);
+        }
+        versionsTab.click();
+    }
+
+    public ExtendedWebElement getVersionTab() {
+        return versionsTab;
+    }
+
+    public boolean isIMAXEnhancedTitlePresentInVersionTab() {
+        String[] iMaxEnhancedTitle =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
+        swipePageTillElementTappable(firstTitleLabel, 1, contentDetailsPage, Direction.UP, 500);
+        return firstTitleLabel.getText().startsWith(iMaxEnhancedTitle[0]);
+    }
+
+    public boolean isIMAXEnhancedDescriptionPresentInVersionTab() {
+        String iMaxEnhancedDescription =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
+        return getStaticTextByLabel(iMaxEnhancedDescription).isPresent();
+    }
+
+    public boolean isIMAXEnhancedThumbnailPresentInVersionTab() {
+        return iMaxEnhancedThumbnail.isPresent();
+    }
+
+    public String getMovieNameAndDurationFromIMAXEnhancedHeader() {
+        String[] iMaxEnhancedTitle = firstTitleLabel.getText().split(" - ");
+        return iMaxEnhancedTitle[1];
+    }
+
+    public boolean isTabSelected(String tabName) {
+        ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
+        if(!tabButton.isPresent()){
+            swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
+            swipeTabBar(Direction.LEFT, 900);
+        }
+        return tabButton.getAttribute("value").equals("1");
     }
 }
