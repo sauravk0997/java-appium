@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -38,10 +39,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         //Validate top of home
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found.");
         sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
-        sa.assertTrue(homePage.isWizardsOfWaverlyPlaceTilePresent(),
-                "`Wizards of Waverly Place` tile was not found after swiping to end of `Recommended For You`");
-        sa.assertTrue(homePage.isBlueyTilePresent(),
-                "`Bluey` was not found after swiping to beginning of `Recommended For You'");
+        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+        BufferedImage recommendedForYouLastTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+        BufferedImage recommendedForYouFirstTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        sa.assertTrue(areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView), "Recommended For You first tile in view and last tile in view images are the same.");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
