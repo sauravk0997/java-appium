@@ -9,6 +9,8 @@ import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -16,8 +18,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
@@ -244,5 +248,51 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title+ " "+ durationTime), "Content name and duration was not found in IMAX Enhanced Header");
         sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
         sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72032"})
+    @Test(description = "Details Page - IMAX Enhanced - Deeplink to Details Screen", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void navigatIMAXEnhancedDetailsPagefromDeeplink() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        IntStream.range(0, getTabname().size()).forEach(i -> {
+            navigateToIMAXEnhancedDetaiPageFromDeeplink(getTabname().get(i));
+            detailsPage.dismissNotificationsPopUp();
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+                scrollUp();
+            }
+            sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+            sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
+            sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
+            sa.assertTrue(detailsPage.isTabSelected(getTabname().get(i).toUpperCase()),getTabname().get(i) + "Tab was not selected");
+        });
+
+        sa.assertAll();
+    }
+
+    private void navigateToIMAXEnhancedDetaiPageFromDeeplink(String tabName) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
+        terminateApp("com.disney.disneyplus.enterprise");
+        startApp("com.disney.disneyplus.enterprise");
+        if(tabName.equalsIgnoreCase("suggested")){
+            tabName = "related";
+        }
+        launchDeeplink(true, deeplinkFormat + tabName.toLowerCase(), 10);
+        homePage.clickOpenButton();
+    }
+
+    protected ArrayList<String> getTabname() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Suggested");
+        contentList.add("Extras");
+        contentList.add("Versions");
+        contentList.add("Details");
+        return contentList;
     }
 }
