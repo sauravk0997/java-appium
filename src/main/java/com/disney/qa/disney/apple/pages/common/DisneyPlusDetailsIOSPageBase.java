@@ -1012,4 +1012,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getSeasonItemPicker() {
         return seasonItemPicker;
     }
+
+    public boolean isTabSelected(String tabName) {
+        ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
+        if(!tabButton.isPresent()){
+            swipeInContainer(null, Direction.UP, 1200);
+            pause(2); //transition
+            swipeTabBar(Direction.LEFT, 900);
+        }
+        return tabButton.getAttribute("value").equals("1");
+    }
 }

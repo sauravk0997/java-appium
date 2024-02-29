@@ -292,6 +292,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
     protected ExtendedWebElement phoneWebviewAddressBar;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
+    protected ExtendedWebElement stayUpToDatePopup;
+
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -923,7 +927,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissNotificationsPopUp() {
-        if (notificationPopUp.isPresent(5)) {
+        if (notificationPopUp.isPresent(5) || stayUpToDatePopup.isPresent(5)) {
             getStaticTextByLabel("Not Now").click();
         }
     }
