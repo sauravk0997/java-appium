@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.aqa.iap;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.json.simple.JSONArray;
 import com.disney.qa.hora.validationservices.EventChecklist;
 
@@ -23,6 +25,8 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
+    protected ExtendedWebElement dynamicBtnFindByNameContains;
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
@@ -53,6 +57,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
         paywallIOSPageBase.clickBasicPlanButton();
+        dynamicBtnFindByNameContains.format("Basic").click();
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
