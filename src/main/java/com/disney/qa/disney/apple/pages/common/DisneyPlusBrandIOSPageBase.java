@@ -65,7 +65,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public void validateNavigation(CollectionConstant.Collection collection, SoftAssert sa) {
+    public void validateSwipeNavigation(CollectionConstant.Collection collection, SoftAssert sa) {
         BufferedImage beginningOfCollection = getElementImage(getCollection(collection));
         swipeLeftInCollectionNumOfTimes(5, collection);
         BufferedImage closeToEndOfCollection = getElementImage(getCollection(collection));
@@ -76,19 +76,19 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     public void validateBrand(Brand brand, SoftAssert sa) {
         switch (brand) {
             case DISNEY:
-                validateNavigation(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS, sa);
+                validateSwipeNavigation(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS, sa);
                 break;
             case PIXAR:
-                validateNavigation(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED, sa);
+                validateSwipeNavigation(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED, sa);
                 break;
             case MARVEL:
-                validateNavigation(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED, sa);
+                validateSwipeNavigation(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED, sa);
                 break;
             case STAR_WARS:
-                validateNavigation(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS, sa);
+                validateSwipeNavigation(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS, sa);
                 break;
             case NATIONAL_GEOGRAPHIC:
-                validateNavigation(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED, sa);
+                validateSwipeNavigation(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED, sa);
                 break;
             default:
                 throw new IllegalArgumentException(
