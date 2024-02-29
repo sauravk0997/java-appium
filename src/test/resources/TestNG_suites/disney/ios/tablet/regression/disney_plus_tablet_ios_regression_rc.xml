@@ -2,9 +2,9 @@
 <suite verbose="1" name="ios_tablet_regression_rc" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="Regression"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75030"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_rc"/>
     <parameter name="jenkinsEmail"
@@ -12,7 +12,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Tablet;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_2,iPad_Pro_2,iPad_5_Gen,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
@@ -70,7 +70,7 @@
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Handset Tablet Player Acceptance" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Player Acceptance" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
@@ -82,11 +82,20 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
         </classes>
     </test>
-    <test verbose="1" name="iOS Handset Hulk" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
         </classes>
     </test>
 </suite>

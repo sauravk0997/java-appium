@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -19,15 +21,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
     private static final String DETAILS_TAB_METADATA_SERIES = "Loki";
-    private static final String ORIGINALS_METADATA_SERIES = "Moon Knight";
+    private static final String MOON_KNIGHT = "Moon Knight";
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
-    private static final String ASPECT_RATIO_SERIES = "The Simpsons";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
+    private static final String SECRET_INVASION = "Secret Invasion";
+    private static final String FOUR_EVER = "4Ever";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62441"})
@@ -203,7 +207,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Navigate to Originals Series
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(ORIGINALS_METADATA_SERIES);
+        searchPage.searchForMedia(MOON_KNIGHT);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickDetailsTab();
 
@@ -227,5 +231,98 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains("Avengers Assemble"),
                 "Avengers Assemble Details page did not open via deeplink.");
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67707"})
+    @Test(description = "Asset Detail Page > User taps Share Button", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsShare() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        detailsPage.getShareBtn().click();
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_SERIES)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_SERIES));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
+
+        detailsPage.clickOnCopyShareLink();
+        detailsPage.clickSearchIcon();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
+        String expectedUrl = R.TESTDATA.get("disney_prod_loki_share_link");
+
+        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
+
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62616"})
+    @Test(description = "Series Detail Page > User taps on Suggested tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesSuggestedTab() {
+        DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        home.clickSearchIcon();
+        search.searchForMedia(SECRET_INVASION);
+        search.getDisplayedTitles().get(0).click();
+        details.isOpened();
+        sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
+        details.compareSuggestedTitleToMediaTitle(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75532"})
+    @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesExtrasTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.isOpened();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(FOUR_EVER);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found.");
+
+        detailsPage.clickExtrasTab();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
+
+        //Get duration from search api
+        List<Integer> seriesExtrasDuration = getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoDurations();
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration.get(0));
+        //Get actual duration from trailer cell
+        String[] extrasCell = detailsPage.getTypeCellLabelContains("Trailer").getText().split(",");
+        String actualDuration = extrasCell[1].trim().split(" ")[0];
+        sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
+                "Series extra duration is not the same value as actual value returned on details page.");
+
+        detailsPage.getPlayIcon().click();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertAll();
     }
 }

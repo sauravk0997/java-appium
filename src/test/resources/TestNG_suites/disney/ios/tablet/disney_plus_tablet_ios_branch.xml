@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_tablet_branch" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
-    <parameter name="reporting.project-key" value="Development"/>
+    <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_branch"/>
@@ -75,21 +75,30 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
         </classes>
     </test>
-    <test verbose="1" name="iOS Handset Hulk" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
         </classes>
     </test>
 </suite>
