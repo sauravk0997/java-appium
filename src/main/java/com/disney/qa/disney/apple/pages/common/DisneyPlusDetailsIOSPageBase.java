@@ -203,6 +203,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
     private ExtendedWebElement seasonItemPicker;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
+    private ExtendedWebElement durationTimeLabel;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -1023,6 +1026,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getSeasonItemPicker() {
         return seasonItemPicker;
+    }
+
+    public ExtendedWebElement getDurationTimeLabel() {
+        return durationTimeLabel;
     }
 
     public boolean isTabSelected(String tabName) {
