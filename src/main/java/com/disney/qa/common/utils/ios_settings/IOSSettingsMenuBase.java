@@ -66,6 +66,8 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @FindBy(id = "Subscriptions")
     protected ExtendedWebElement subscriptionsButton;
 
+    @FindBy(id = "Retry")
+    protected ExtendedWebElement retryButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"13.99 ✓\"`]")
     private ExtendedWebElement premiumMonthlyPriceCheckmark;
 
@@ -139,6 +141,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         manageSandboxAcct();
         if(subscriptionsButton.isElementPresent()) {
             subscriptionsButton.click();
+            retryButton.clickIfPresent(5);
             scrollDown();
         }
     }
