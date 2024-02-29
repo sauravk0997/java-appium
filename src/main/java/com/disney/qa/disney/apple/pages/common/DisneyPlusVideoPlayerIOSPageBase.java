@@ -480,4 +480,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForVideoPlayerReproduceContentByTime(int timeToWait, int polling) {
+        int startTime = getRemainingTime();
+        fluentWait(getDriver(), timeToWait, polling, "Time remaining not found").until(it ->  startTime - getRemainingTime() >= timeToWait);
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }

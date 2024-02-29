@@ -344,8 +344,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not opened.");
-        pause(35);
-        videoPlayer.clickBackButton();
+        videoPlayer.waitForVideoPlayerReproduceContentByTime(35, 3)
+                .clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
 
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
