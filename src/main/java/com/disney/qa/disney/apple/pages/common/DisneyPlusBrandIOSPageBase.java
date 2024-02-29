@@ -8,6 +8,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
+    private static final String IMAGES_ARE_THE_SAME_ERROR_MESSAGE = "Images are the same";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]")
     private ExtendedWebElement brandLandingView;
@@ -71,35 +72,35 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
                 swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
                 BufferedImage disneyOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
                 swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
-                sa.assertTrue(areImagesDifferent(disneyOriginalsBeginning, disneyOriginalsCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesDifferent(disneyOriginalsBeginning, disneyOriginalsCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
                 break;
             case PIXAR:
                 BufferedImage pixarFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
                 swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
                 BufferedImage pixarFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
                 swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
-                sa.assertTrue(areImagesDifferent(pixarFeaturedBeginning, pixarFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesDifferent(pixarFeaturedBeginning, pixarFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
                 break;
             case MARVEL:
                 BufferedImage marvelFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
                 swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
                 BufferedImage marvelFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
                 swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
-                sa.assertTrue(areImagesDifferent(marvelFeaturedBeginning, marvelFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesDifferent(marvelFeaturedBeginning, marvelFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
                 break;
             case STAR_WARS:
                 BufferedImage starWarsOriginalsBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
                 swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
                 BufferedImage starWarsOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
                 swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
-                sa.assertTrue(areImagesDifferent(starWarsOriginalsBeginning, starWarsOriginalsCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesDifferent(starWarsOriginalsBeginning, starWarsOriginalsCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
                 break;
             case NATIONAL_GEOGRAPHIC:
                 BufferedImage nationalGeographicFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
                 swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
                 BufferedImage nationalGeographicFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
                 swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
-                sa.assertTrue(areImagesDifferent(nationalGeographicFeaturedBeginning, nationalGeographicFeaturedCloseToEnd), "Images are the same.");
+                sa.assertTrue(areImagesDifferent(nationalGeographicFeaturedBeginning, nationalGeographicFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
                 break;
             default:
                 throw new IllegalArgumentException(
