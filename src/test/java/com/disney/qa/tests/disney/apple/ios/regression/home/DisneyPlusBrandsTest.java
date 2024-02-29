@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -25,7 +24,8 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
     @DataProvider(name = "brands")
     public Object[][] brandTypes() {
-        return new Object[][]{{DisneyPlusBrandIOSPageBase.Brand.DISNEY},
+        return new Object[][]{
+                {DisneyPlusBrandIOSPageBase.Brand.DISNEY},
                 {DisneyPlusBrandIOSPageBase.Brand.PIXAR},
                 {DisneyPlusBrandIOSPageBase.Brand.MARVEL},
                 {DisneyPlusBrandIOSPageBase.Brand.STAR_WARS},
