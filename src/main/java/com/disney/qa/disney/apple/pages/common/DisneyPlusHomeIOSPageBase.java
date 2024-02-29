@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.disney.qa.common.constant.CollectionConstant;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -25,7 +24,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "Disney Plus")
     private ExtendedWebElement disneyPlusLogo;
-
 
     @ExtendedFindBy(accessibilityId = "Mickey and Friends")
     private ExtendedWebElement mickeyAndFriends;
@@ -163,6 +161,23 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
+    }
 
+    public boolean isWizardsOfWaverlyPlaceTilePresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeLeftInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+            count--;
+        }
+        return typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isBlueyTilePresent() {
+        int count = 10;
+        while (!typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT) && count >= 0) {
+            swipeRightInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+            count--;
+        }
+        return typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT);
     }
 }
