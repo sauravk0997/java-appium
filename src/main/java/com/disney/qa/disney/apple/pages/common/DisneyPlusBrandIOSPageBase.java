@@ -65,42 +65,30 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public void validateNavigation(CollectionConstant.Collection collection, SoftAssert sa) {
+        BufferedImage beginningOfCollection = getElementImage(getCollection(collection));
+        swipeLeftInCollectionNumOfTimes(5, collection);
+        BufferedImage closeToEndOfCollection = getElementImage(getCollection(collection));
+        swipeRightInCollectionNumOfTimes(5, collection);
+        sa.assertTrue(areImagesDifferent(beginningOfCollection, closeToEndOfCollection), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+    }
+
     public void validateBrand(Brand brand, SoftAssert sa) {
         switch (brand) {
             case DISNEY:
-                BufferedImage disneyOriginalsBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
-                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
-                BufferedImage disneyOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS));
-                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
-                sa.assertTrue(areImagesDifferent(disneyOriginalsBeginning, disneyOriginalsCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+                validateNavigation(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS, sa);
                 break;
             case PIXAR:
-                BufferedImage pixarFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
-                swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
-                BufferedImage pixarFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED));
-                swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
-                sa.assertTrue(areImagesDifferent(pixarFeaturedBeginning, pixarFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+                validateNavigation(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED, sa);
                 break;
             case MARVEL:
-                BufferedImage marvelFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
-                swipeLeftInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
-                BufferedImage marvelFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED));
-                swipeRightInCollectionNumOfTimes(3, CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
-                sa.assertTrue(areImagesDifferent(marvelFeaturedBeginning, marvelFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+                validateNavigation(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED, sa);
                 break;
             case STAR_WARS:
-                BufferedImage starWarsOriginalsBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
-                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
-                BufferedImage starWarsOriginalsCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS));
-                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
-                sa.assertTrue(areImagesDifferent(starWarsOriginalsBeginning, starWarsOriginalsCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+                validateNavigation(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS, sa);
                 break;
             case NATIONAL_GEOGRAPHIC:
-                BufferedImage nationalGeographicFeaturedBeginning = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
-                swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
-                BufferedImage nationalGeographicFeaturedCloseToEnd = getElementImage(getCollection(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED));
-                swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
-                sa.assertTrue(areImagesDifferent(nationalGeographicFeaturedBeginning, nationalGeographicFeaturedCloseToEnd), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+                validateNavigation(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED, sa);
                 break;
             default:
                 throw new IllegalArgumentException(
