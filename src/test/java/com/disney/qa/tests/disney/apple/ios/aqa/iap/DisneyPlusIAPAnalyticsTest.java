@@ -25,10 +25,10 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
-    protected ExtendedWebElement dynamicBtnFindByNameContains;
-
-    private ExtendedWebElement BasicPurchaseBtn=dynamicBtnFindByNameContains.format("Basic");
+//    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
+//    protected ExtendedWebElement dynamicBtnFindByNameContains;
+//
+//    private ExtendedWebElement BasicPurchaseBtn=dynamicBtnFindByNameContains.format("Basic");
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
@@ -59,9 +59,9 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
-//        paywallIOSPageBase.clickBasicPlanButton();
+        paywallIOSPageBase.basicbutton();
 
-        BasicPurchaseBtn.click();
+//        BasicPurchaseBtn.click();
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
