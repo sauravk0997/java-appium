@@ -224,7 +224,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        //getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        getTypeButtonByLabel("CONTINUE").click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
