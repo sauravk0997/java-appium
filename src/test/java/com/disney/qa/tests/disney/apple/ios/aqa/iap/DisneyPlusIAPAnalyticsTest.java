@@ -27,6 +27,9 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByNameContains;
+
+    private ExtendedWebElement BasicPurchaseBtn=dynamicBtnFindByNameContains.format("Basic");
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
     @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
     public void testPurchaseFlowAnalytics() {
@@ -57,7 +60,8 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
 
 //        paywallIOSPageBase.clickBasicPlanButton();
-        dynamicBtnFindByNameContains.format("Basic").click();
+
+        BasicPurchaseBtn.click();
         paywallIOSPageBase.isOpened();
         paywallIOSPageBase.clickPurchaseButton();
         paywallIOSPageBase.waitForSubscribeOverlay();
