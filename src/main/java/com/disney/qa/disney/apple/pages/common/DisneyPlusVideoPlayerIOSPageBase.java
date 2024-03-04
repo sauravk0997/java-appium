@@ -480,4 +480,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
+
+    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
+        Map<String, Integer> params = new HashMap<>();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        scrubToPlaybackPercentage(30);
+        params.put("scrubbedTimeRemaining", getRemainingTime());
+        clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        detailsPage.clickContinueButton();
+        sa.assertTrue(isOpened(), "Video player did not open after clicking continue button.");
+        sa.assertTrue(params.get("scrubbedTimeRemaining") > getRemainingTime(),
+                "Returned to play-head position before scrubbedTimeRemaining, resume did not work.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }

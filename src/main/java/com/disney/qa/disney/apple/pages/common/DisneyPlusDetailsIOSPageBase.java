@@ -224,7 +224,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        getContinueButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -237,7 +237,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContinueButtonPresent() {
-        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
+        return getContinueButton().isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -630,6 +630,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getPlayButton() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_PLAY.getText()));
+    }
+
+    public ExtendedWebElement getContinueButton() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_CONTINUE.getText()));
     }
 
     public ExtendedWebElement getSeasonSelectorButton() {
