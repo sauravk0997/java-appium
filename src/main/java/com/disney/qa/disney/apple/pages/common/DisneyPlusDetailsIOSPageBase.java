@@ -1041,4 +1041,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
         return tabButton.getAttribute("value").equals("1");
     }
+
+    public boolean isDurationTimeLabelPresent() {
+        return getFirstDurationLabel().isPresent(SHORT_TIMEOUT) || getDurationTimeLabel().isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
+        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getHuluEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
+    }
 }
