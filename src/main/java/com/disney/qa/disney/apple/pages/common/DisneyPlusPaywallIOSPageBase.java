@@ -280,7 +280,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void clickBundleSelectButton() {
         dynamicBtnFindByNameContains.format("selectButton").click();
     }
-    public void basicbutton() {
+    public void clickBasicPlanButton() {
         dynamicBtnFindByNameContains.format("Basic").click();
     }
     public void clickPremiumYearlyRowButton() {
