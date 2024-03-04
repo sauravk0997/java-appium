@@ -224,7 +224,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        getContinueButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -237,7 +237,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContinueButtonPresent() {
-        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
+        return getContinueButton().isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -632,6 +632,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 BTN_PLAY.getText()));
     }
 
+    public ExtendedWebElement getContinueButton() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_CONTINUE.getText()));
+    }
+
     public ExtendedWebElement getSeasonSelectorButton() {
         return seasonSelectorButton;
     }
@@ -861,10 +866,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
-    /**
-     * Use with hulu series content only - to get Hulu series episode download button
-     */
-    public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
+    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
 
@@ -875,10 +877,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
-    /**
-     * Use with hulu series content only - to wait for hulu episode download to complete
-     */
-    public void waitForOneHuluEpisodeDownloadToComplete(int timeOut, int polling) {
+    public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());

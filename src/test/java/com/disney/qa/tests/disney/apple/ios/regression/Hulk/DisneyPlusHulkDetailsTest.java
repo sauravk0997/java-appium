@@ -534,7 +534,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        sa.assertFalse(detailsPage.getHuluEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
+        sa.assertFalse(detailsPage.getEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
         sa.assertFalse(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all season button was found.");
         sa.assertAll();
     }
