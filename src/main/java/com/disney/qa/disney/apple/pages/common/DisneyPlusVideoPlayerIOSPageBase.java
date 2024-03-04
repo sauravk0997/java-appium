@@ -492,7 +492,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitForVideoToStart();
         sa.assertTrue(isOpened(), "Video player did not open after clicking continue button.");
         sa.assertTrue(params.get("scrubbedTimeRemaining") > getRemainingTime(),
-                "Returned to play-head position before scrubbedTimeRemaining, resume did not work.");
+                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }
