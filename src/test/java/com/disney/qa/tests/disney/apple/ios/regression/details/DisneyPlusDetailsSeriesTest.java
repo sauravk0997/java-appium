@@ -327,7 +327,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75532"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
     @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesResumeBehavior() {
         SoftAssert sa = new SoftAssert();
