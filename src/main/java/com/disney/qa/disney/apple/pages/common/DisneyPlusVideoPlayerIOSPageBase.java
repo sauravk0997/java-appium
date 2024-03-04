@@ -482,16 +482,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
-        Map<String, Integer> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         scrubToPlaybackPercentage(30);
-        params.put("scrubbedTimeRemaining", getRemainingTime());
+        int scrubbedTimeRemaining = getRemainingTime();
         clickBackButton();
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
         detailsPage.clickContinueButton();
         waitForVideoToStart();
         sa.assertTrue(isOpened(), "Video player did not open after clicking continue button.");
-        sa.assertTrue(params.get("scrubbedTimeRemaining") > getRemainingTime(),
+        sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
                 "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
