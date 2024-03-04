@@ -489,6 +489,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         clickBackButton();
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
         detailsPage.clickContinueButton();
+        waitForVideoToStart();
         sa.assertTrue(isOpened(), "Video player did not open after clicking continue button.");
         sa.assertTrue(params.get("scrubbedTimeRemaining") > getRemainingTime(),
                 "Returned to play-head position before scrubbedTimeRemaining, resume did not work.");
