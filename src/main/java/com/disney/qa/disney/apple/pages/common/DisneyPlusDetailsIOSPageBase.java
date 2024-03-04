@@ -866,9 +866,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
-    /**
-     * Use with hulu series content only - to get Hulu series episode download button
-     */
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
@@ -880,9 +877,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
-    /**
-     * Use with hulu series content only - to wait for hulu episode download to complete
-     */
     public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
