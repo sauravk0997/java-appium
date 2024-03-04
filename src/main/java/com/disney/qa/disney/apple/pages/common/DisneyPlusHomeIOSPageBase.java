@@ -162,22 +162,4 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
     }
-
-    public boolean isWizardsOfWaverlyPlaceTilePresent() {
-        int count = 10;
-        while (!typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeLeftInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-            count--;
-        }
-        return typeCellLabelContains.format("Wizards of Waverly Place").isPresent(SHORT_TIMEOUT);
-    }
-
-    public boolean isBlueyTilePresent() {
-        int count = 10;
-        while (!typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT) && count >= 0) {
-            swipeRightInCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-            count--;
-        }
-        return typeCellLabelContains.format("Bluey").isPresent(SHORT_TIMEOUT);
-    }
 }
