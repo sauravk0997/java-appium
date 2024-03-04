@@ -869,7 +869,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Use with hulu series content only - to get Hulu series episode download button
      */
-    public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
+    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
 
@@ -883,7 +883,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Use with hulu series content only - to wait for hulu episode download to complete
      */
-    public void waitForOneHuluEpisodeDownloadToComplete(int timeOut, int polling) {
+    public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
