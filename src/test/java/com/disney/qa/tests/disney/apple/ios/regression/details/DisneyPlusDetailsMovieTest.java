@@ -262,7 +262,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` audio quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles").isPresent(), "`Subtitles` audio quality is not found.");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image is not present.");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image is not present.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description is not present.");
