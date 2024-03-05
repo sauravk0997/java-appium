@@ -481,15 +481,28 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa, int timeRemaining) {
+    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         scrubToPlaybackPercentage(30);
-        int scrubbedTimeRemaining = timeRemaining;
+        int scrubbedTimeRemaining = getRemainingTime();
         clickBackButton();
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
         detailsPage.clickContinueButton();
         waitForVideoToStart();
-        sa.assertTrue(scrubbedTimeRemaining > timeRemaining,
+        sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
+                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeThreeIntegerRemaining(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        scrubToPlaybackPercentage(30);
+        int scrubbedTimeRemaining = getRemainingTimeThreeIntegers();
+        clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        detailsPage.clickContinueButton();
+        waitForVideoToStart();
+        sa.assertTrue(scrubbedTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -498,6 +511,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int previousTimeRemaining = getRemainingTime();
         pause(5);
         sa.assertTrue(previousTimeRemaining > getRemainingTime(),
+                "Video is not playing, new time remaining is not less than previous time remaining");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyThreeIntegerVideoPlaying(SoftAssert sa) {
+        int previousTimeRemaining = getRemainingTimeThreeIntegers();
+        pause(5);
+        sa.assertTrue(previousTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Video is not playing, new time remaining is not less than previous time remaining");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
