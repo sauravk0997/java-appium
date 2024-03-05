@@ -31,7 +31,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOWER_CASE_WATCH = "watch";
     private static final String BOOKMARKED = "BOOKMARKED";
     private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
-    private static final String CONTINUE = "CONTINUE";
     private static final String LOWER_CASED_PLAY = "play";
     private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
