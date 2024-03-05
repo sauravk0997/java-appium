@@ -39,6 +39,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "changePasswordCell")
     private ExtendedWebElement changePasswordCell;
 
+    @ExtendedFindBy(accessibilityId = "subscriptionChange")
+    private ExtendedWebElement subscriptionChange;
+
     public boolean isMovistarSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
         return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
@@ -499,11 +502,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public void clickPausedDirectBillingContainer(DisneyPlusPaywallIOSPageBase.PlanType planName) {
         switch(planName) {
             case PREMIUM_MONTHLY:
-                 directBillingMonthlyPausedContainer.click();
-                 break;
+                directBillingMonthlyPausedContainer.click();
+                break;
             case PREMIUM_YEARLY:
-                 directBillingYearlyPausedContainer.click();
-                 break;
+                directBillingYearlyPausedContainer.click();
+                break;
             default: throw new IllegalArgumentException(
                     String.format("Invalid plan name '%s'", planName));
         }
@@ -607,7 +610,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void clickChangePremiumMonthlyPlan() {
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_PREMIUM.getText())).click();
+        subscriptionChange.click();
     }
 
     public boolean isWebPlanNameDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
