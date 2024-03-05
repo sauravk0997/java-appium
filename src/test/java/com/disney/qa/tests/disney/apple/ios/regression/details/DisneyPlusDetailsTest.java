@@ -35,33 +35,34 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
         //search movies
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickMoviesTab();
-        List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.clickSearchIcon();
+        searchPage.clickMoviesTab();
+        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
         movies.get(0).click();
-        String firstMovieTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        String firstMovieTitle = detailPage.getMediaTitle();
+        detailPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
 
         //search series
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        List<ExtendedWebElement> series = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        searchPage.clickSeriesTab();
+        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
         series.get(2).click();
         String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        detailPage.addToWatchlist();
 
         //titles added to watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(firstMovieTitle).isPresent(), firstMovieTitle + "Title was not added to watchlist.");
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(firstSeriesTitle).isPresent(), firstSeriesTitle + "Title was not added to watchlist.");
         sa.assertAll();
     }
 
