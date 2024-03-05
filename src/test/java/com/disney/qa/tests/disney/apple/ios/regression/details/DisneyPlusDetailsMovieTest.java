@@ -218,4 +218,71 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         videoPlayer.validateResumeTimeThreeIntegerRemaining(sa);
         sa.assertAll();
     }
+
+//    *Elements*
+// # < Back Button
+// # Social Share CTA
+// # Title Treatment (note centered alignment for Handset)
+// # Streamlined Media Features: (note centered alignment for Handset)
+// ## Rating
+// ## Audio/Video/Format Quality (Dolby, HD, 5.1, etc.)
+// ### Video Resolution: HD
+// ### Video Range: Dolby Vision
+// ## Accessibility Badges
+// ### CC
+// ### SDH
+// ### AD
+// ## Release Date
+// ## Duration (Movies only)
+// # Genres (center alignment for Handset)
+// # CONTINUE
+// # Progress Bar + #m remaining
+// # Product Features Row (center alignment for Handset):
+// ## Add to Watchlist CTA
+// ## Trailer CTA
+// ## Download CTA
+// ## Restart CTA
+// # Tabs:
+// ## Suggested
+// ## Extras
+// ## Details
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69960"})
+    @Test(description = "Movie Details verify resume UI", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieResumeUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present.");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
+        sa.assertTrue(detailsPage.isMovieDownloadButtonDisplayed(), "Details page download button not present");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1), "Metadata year does not contain details tab year.");
+        sa.assertAll();
+    }
 }
