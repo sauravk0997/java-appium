@@ -509,7 +509,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlaying(SoftAssert sa) {
         int previousTimeRemaining = getRemainingTime();
-        pause(5);
+        pause(10);
         sa.assertTrue(previousTimeRemaining > getRemainingTime(),
                 "Video is not playing, new time remaining is not less than previous time remaining");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -517,7 +517,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase verifyThreeIntegerVideoPlaying(SoftAssert sa) {
         int previousTimeRemaining = getRemainingTimeThreeIntegers();
-        pause(5);
+        pause(10);
         sa.assertTrue(previousTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Video is not playing, new time remaining is not less than previous time remaining");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
