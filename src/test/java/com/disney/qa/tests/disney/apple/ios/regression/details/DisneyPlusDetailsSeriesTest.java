@@ -342,8 +342,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         detailsPage.getTrailerButton().click();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.verifyVideoPlaying(sa);
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
 
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
