@@ -219,34 +219,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-//    *Elements*
-// # < Back Button
-// # Social Share CTA
-// # Title Treatment (note centered alignment for Handset)
-// # Streamlined Media Features: (note centered alignment for Handset)
-// ## Rating
-// ## Audio/Video/Format Quality (Dolby, HD, 5.1, etc.)
-// ### Video Resolution: HD
-// ### Video Range: Dolby Vision
-// ## Accessibility Badges
-// ### CC
-// ### SDH
-// ### AD
-// ## Release Date
-// ## Duration (Movies only)
-// # Genres (center alignment for Handset)
-// # CONTINUE
-// # Progress Bar + #m remaining
-// # Product Features Row (center alignment for Handset):
-// ## Add to Watchlist CTA
-// ## Trailer CTA
-// ## Download CTA
-// ## Restart CTA
-// # Tabs:
-// ## Suggested
-// ## Extras
-// ## Details
-
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69960"})
     @Test(description = "Movie Details verify resume UI", groups = {"Details", TestGroup.PRE_CONFIGURATION})

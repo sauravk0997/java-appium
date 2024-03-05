@@ -8,6 +8,7 @@ import com.disney.config.DisneyConfiguration;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -29,10 +30,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DOWNLOAD_COMPLETED = "Download completed";
     private static final String WATCH = "WATCH";
     private static final String LOWER_CASE_WATCH = "watch";
-    private static final String BOOKMARKED = "BOOKMARKED";
-    private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
-    private static final String LOWER_CASED_PLAY = "play";
-    private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String SHOP_WEB_URL = "disneystore.com";
     private static final String SHOP_TAB_HEADING = "Shop this Character";
@@ -1018,5 +1015,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             swipeTabBar(Direction.LEFT, 900);
         }
         return tabButton.getAttribute("value").equals("1");
+    }
+
+    public String getContinueWatchingHours() {
+        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        return time[0].split("h")[0];
+    }
+
+    public String getContinueWatchingMinutes() {
+        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        return time[1].split("m")[0];
+    }
+
+    public ExtendedWebElement getContinueWatchingTimeRemaining() {
+        String continueWatchingHours = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CONTINUE_WATCHING_HOURS.getText()),
+                Map.of("hours_remaining", getContinueWatchingHours(), "minutes_remaining", getContinueWatchingMinutes()));
+        return getDynamicAccessibilityId(continueWatchingHours);
     }
 }
