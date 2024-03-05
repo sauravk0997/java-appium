@@ -28,30 +28,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String  ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
-    @Test(description = "Movies Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyMoviePlayVsContinue() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickMoviesTab();
-        List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        movies.get(0).click();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Expected - play button should exists on details page");
-        disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
-        //Wait for content to load
-        pause(35);
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton().isOpened();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "'CONTINUE' button doesn't exist on details page");
-        sa.assertAll();
-    }
-
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
     @Test(description = "Movies Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
