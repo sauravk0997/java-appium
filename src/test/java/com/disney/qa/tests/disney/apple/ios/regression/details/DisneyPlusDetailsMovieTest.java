@@ -239,7 +239,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.verifyVideoPlaying(sa);
-        videoPlayer.validateResumeTimeRemaining(sa);
+        videoPlayer.validateResumeTimeRemaining(sa, videoPlayer.getRemainingTimeThreeIntegers());
         sa.assertAll();
     }
 }
