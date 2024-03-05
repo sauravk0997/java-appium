@@ -223,4 +223,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         getStaticTextByLabel("Paste").click();
         return searchBar.getText();
     }
+
+    public String getSearchBarText() {
+        return searchBar.getText();
+    }
 }
