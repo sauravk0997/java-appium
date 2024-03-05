@@ -326,6 +326,50 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75166"})
+    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyResumeStateSeriesEpisodesTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not opened.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present on Details page");
+        detailsPage.getEpisodesTab().click();
+        sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
+        detailsPage.getSeasonSelectorButton().click();
+        sa.assertTrue(detailsPage.getItemPickerClose().isPresent(), "Season Item picker close CTA not found");
+        sa.assertTrue(detailsPage.getSeasonItemPicker().isPresent(), "Season Item not found");
+        detailsPage.getItemPickerClose().click();
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all session not found on Episodes tab");
+        sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
+        sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
+        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Season button 1 button is was found.");
+        sa.assertAll();
+    }
+
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
     @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})

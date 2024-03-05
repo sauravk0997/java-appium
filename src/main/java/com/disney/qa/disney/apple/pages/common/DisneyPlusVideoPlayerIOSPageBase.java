@@ -481,6 +481,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
 
+    public ExtendedWebElement getPlayerView() {
+        return playerView;
+    }
+  
     public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         scrubToPlaybackPercentage(30);
