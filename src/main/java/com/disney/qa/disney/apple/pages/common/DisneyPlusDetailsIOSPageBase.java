@@ -1046,6 +1046,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
-        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getHuluEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
+        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
 }
