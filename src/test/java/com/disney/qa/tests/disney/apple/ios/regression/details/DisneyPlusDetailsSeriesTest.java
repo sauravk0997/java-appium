@@ -314,8 +314,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         List<Integer> seriesExtrasDuration = getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoDurations();
         long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration.get(0));
         //Get actual duration from trailer cell
-        String[] extrasCell = detailsPage.getTypeCellLabelContains("Trailer").getText().split(",");
-        String actualDuration = extrasCell[1].trim().split(" ")[0];
+        String actualDuration = detailsPage.getFirstDurationLabel().getText().split("m")[0];
         sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
                 "Series extra duration is not the same value as actual value returned on details page.");
 
@@ -452,6 +451,27 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present.");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72418"})
+    @Test(description = "Series Details verify playback behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesPlayBehavior() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.clickSeriesTab();
+        searchPage.selectRandomTitle();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyVideoPlayingFromBeginning(sa);
         sa.assertAll();
     }
 }
