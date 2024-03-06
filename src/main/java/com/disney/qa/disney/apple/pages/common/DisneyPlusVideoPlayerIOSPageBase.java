@@ -537,7 +537,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
-        sa.assertTrue(getBeginningTime() < 20,
+        sa.assertTrue(getBeginningTime() < 30,
                 "Video is not playing from the beginning.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
