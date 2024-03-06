@@ -5,15 +5,10 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static String seelingSharingLegalPageHeader = "Selling, Sharing, Targeted Advertising";
     private static String optOutFormLink = "opt-out form";
     private static String iabOptOutListLink = "IAB opt-out list";
