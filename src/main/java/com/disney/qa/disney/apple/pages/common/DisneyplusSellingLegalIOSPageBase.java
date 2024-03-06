@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -62,8 +63,12 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isIABOptOutListLinkLinkPresent() {
-        scrollDown();
+        scrollInSellingSharingLegalPage(1);
         return customHyperlinkByLabel.format(iabOptOutListLink).isPresent();
+    }
+
+    public void scrollInSellingSharingLegalPage(int times){
+        swipeInContainer(legalText, IMobileUtils.Direction.UP,times,500);
     }
 
     public boolean isTargatedAdvertisingOptOutRightsLinkPresent() {
