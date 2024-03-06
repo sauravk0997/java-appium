@@ -179,6 +179,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         displayVideoController();
         return currentTimeLabel.isPresent();
     }
+
     public boolean isRemainingTimeLabelVisible() {
         displayVideoController();
         return timeRemainingLabel.isPresent();
@@ -519,17 +520,25 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
-        sa.assertTrue(getRemainingTime() < 20,
-                "Video is not playing from the beginning.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public DisneyPlusVideoPlayerIOSPageBase verifyThreeIntegerVideoPlaying(SoftAssert sa) {
         int previousTimeRemaining = getRemainingTimeThreeIntegers();
         pause(10);
         sa.assertTrue(previousTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Video is not playing, new time remaining is not less than previous time remaining");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public int getBeginningTime() {
+        displayVideoController();
+        String[] currentTime = currentTimeLabel.getText().split(":");
+        int currentTimeInSec = Integer.parseInt(currentTime[1]);
+        LOGGER.info("Playback current {} seconds...", currentTimeInSec);
+        return currentTimeInSec;
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
+        sa.assertTrue(getBeginningTime() < 20,
+                "Video is not playing from the beginning.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }
