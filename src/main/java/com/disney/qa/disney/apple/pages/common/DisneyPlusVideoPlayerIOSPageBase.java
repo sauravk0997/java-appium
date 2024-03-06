@@ -484,7 +484,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getPlayerView() {
         return playerView;
     }
-  
+
     public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         scrubToPlaybackPercentage(30);
@@ -516,6 +516,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         pause(10);
         sa.assertTrue(previousTimeRemaining > getRemainingTime(),
                 "Video is not playing, new time remaining is not less than previous time remaining");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
+        sa.assertTrue(getRemainingTime() < 20,
+                "Video is not playing from the beginning.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 

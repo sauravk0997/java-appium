@@ -413,7 +413,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.isOpened();
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.verifyVideoPlayingFromBeginning(sa);
         sa.assertAll();
     }
 }
