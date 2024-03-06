@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -40,6 +41,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
     private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
     private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
+    private final List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
+    private final List<String> noDolbyVisionDeviceNames = Arrays.asList("iPad_8_Gen_1");
 
     //LOCATORS
 
@@ -1060,5 +1063,19 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
         return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
+    }
+
+    public void isDolbyVisionPresent(SoftAssert sa) {
+        for (String item : dolbyVisionDeviceNames)
+            if (R.CONFIG.get("capabilities.deviceName").equalsIgnoreCase(item)) {
+                sa.assertTrue(getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+        }
+    }
+
+    public void isDolbyVisionNotPresent(SoftAssert sa) {
+        for (String item : noDolbyVisionDeviceNames)
+            if (R.CONFIG.get("capabilities.deviceName").equalsIgnoreCase(item)) {
+                sa.assertFalse(getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+            }
     }
 }
