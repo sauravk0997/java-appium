@@ -1048,4 +1048,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
         return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
+
+    public ExtendedWebElement getEpisodeTitle(String season, String episode){
+        return staticTextLabelContains.format(String.format("Season %s Episode %s", season, episode));
+    }
 }
