@@ -28,6 +28,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
+    private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
+    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String DUMBO = "Dumbo";
     private static final String TV_Y7 = "TV-Y7";
 
@@ -44,7 +46,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //search movies
         homePage.clickSearchIcon();
-        searchPage.clickMoviesTab();
+        searchPage.searchForMedia(HOCUS_POCUS);
         List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
         movies.get(0).click();
         String firstMovieTitle = detailPage.getMediaTitle();
@@ -52,9 +54,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
 
         //search series
-        searchPage.clickSeriesTab();
+        searchPage.clearText();
+        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
         List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
-        series.get(2).click();
+        series.get(0).click();
         String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
         detailPage.addToWatchlist();
 
