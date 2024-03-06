@@ -194,6 +194,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
     protected ExtendedWebElement iMaxEnhancedThumbnail;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
+    protected ExtendedWebElement contentImageView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
+    private ExtendedWebElement seasonItemPicker;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
+    private ExtendedWebElement durationTimeLabel;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -813,7 +822,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstDescriptionLabel;
     }
 
-    public ExtendedWebElement getFirstRunTimeLabel() {
+    public ExtendedWebElement getFirstDurationLabel() {
         return firstRunTimeLabel;
     }
 
@@ -1007,6 +1016,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return iMaxEnhancedTitle[1];
     }
 
+    public boolean isContentImageViewPresent() {
+        return contentImageView.isPresent();
+    }
+
+    public ExtendedWebElement getSeasonItemPicker() {
+        return seasonItemPicker;
+    }
+
+    public ExtendedWebElement getDurationTimeLabel() {
+        return durationTimeLabel;
+    }
+
     public boolean isTabSelected(String tabName) {
         ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
         if(!tabButton.isPresent()){
@@ -1031,5 +1052,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String continueWatchingHours = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CONTINUE_WATCHING_HOURS.getText()),
                 Map.of("hours_remaining", getContinueWatchingHours(), "minutes_remaining", getContinueWatchingMinutes()));
         return getDynamicAccessibilityId(continueWatchingHours);
+    }
+
+    public boolean isDurationTimeLabelPresent() {
+        return getFirstDurationLabel().isPresent(SHORT_TIMEOUT) || getDurationTimeLabel().isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
+        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
 }
