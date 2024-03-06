@@ -258,6 +258,9 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         //Media features
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        System.out.println(getDriver().getPageSource());
+        LOGGER.info("is audio / video quality visible? " + detailsPage.getStaticTextByLabelContains(",HD,Dolby Vision,5.1,Subtitles / CC,Audio Description").isPresent());
+
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` audio quality is not found.");
