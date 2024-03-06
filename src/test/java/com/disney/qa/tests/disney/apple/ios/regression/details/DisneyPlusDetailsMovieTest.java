@@ -258,13 +258,14 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         //Media features
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        System.out.println(getDriver().getPageSource());
-        LOGGER.info("is audio / video quality visible? " + detailsPage.getStaticTextByLabelContains(",HD,Dolby Vision,5.1,Subtitles / CC,Audio Description").isPresent());
-
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` audio quality is not found.");
+        //Dolby vision is only available on certain devices
+        LOGGER.info("Is Dolby Vision present? " + detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent());
+//        if (detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent()) {
+//            sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
+//        }
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image is not present.");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image is not present.");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description is not present.");
