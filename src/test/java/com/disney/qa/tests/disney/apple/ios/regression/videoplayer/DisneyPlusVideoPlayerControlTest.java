@@ -49,8 +49,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "'Details' page is not shown closing the video player");
 
         //Initiate playback from 'downloads'
-        detailsPage.startDownload();
-        detailsPage.waitForSeriesDownloadToComplete(60, 3);
+        detailsPage.getEpisodeToDownload("1","1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(60, 3);
         homePage.clickDownloadsIcon();
         downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
         downloadsPage.tapDownloadedAsset(SHORT_SERIES);

@@ -24,33 +24,9 @@ import java.util.List;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
-    private static final String  DETAILS_TAB_METADATA_MOVIE = "Hocus Pocus";
+    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String  ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
-
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
-    @Test(description = "Movies Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyMoviePlayVsContinue() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickMoviesTab();
-        List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        movies.get(0).click();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Expected - play button should exists on details page");
-        disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
-        //Wait for content to load
-        pause(35);
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton().isOpened();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "'CONTINUE' button doesn't exist on details page");
-        sa.assertAll();
-    }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
@@ -109,7 +85,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         //Navigate to All Metadata Movie
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(DETAILS_TAB_METADATA_MOVIE);
+        searchPage.searchForMedia(HOCUS_POCUS);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickDetailsTab();
         detailsPage.swipeTillActorsElementPresent();
@@ -178,11 +154,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(DETAILS_TAB_METADATA_MOVIE);
+        searchPage.searchForMedia(HOCUS_POCUS);
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", DETAILS_TAB_METADATA_MOVIE)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", DETAILS_TAB_METADATA_MOVIE));
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", HOCUS_POCUS)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", HOCUS_POCUS));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found.");
 
         detailsPage.clickOnCopyShareLink();
@@ -192,7 +168,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
 
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_MOVIE));
+        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", HOCUS_POCUS));
 
         sa.assertAll();
     }
@@ -213,6 +189,33 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         details.isOpened();
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
+    @Test(description = "Movie Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieResumeBehavior() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
+        videoPlayer.validateResumeTimeThreeIntegerRemaining(sa);
         sa.assertAll();
     }
 }

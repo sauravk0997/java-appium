@@ -61,8 +61,8 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeInContainer(null, Direction.UP, 2500);
         }
-        detailsPage.getHuluEpisodeToDownload("1", "1").click();
-        detailsPage.waitForOneHuluEpisodeDownloadToComplete(45, 3);
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(45, 3);
         searchPage.clickSearchIcon();
         searchPage.clearText();
         searchPage.searchForMedia(PREY);

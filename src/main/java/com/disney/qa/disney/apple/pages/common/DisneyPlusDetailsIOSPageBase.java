@@ -197,6 +197,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
     protected ExtendedWebElement iMaxEnhancedThumbnail;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
+    protected ExtendedWebElement contentImageView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
+    private ExtendedWebElement seasonItemPicker;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
+    private ExtendedWebElement durationTimeLabel;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -224,7 +233,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickContinueButton() {
-        getTypeButtonByName(LOWER_CASE_BOOKMARKED).click();
+        getContinueButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -237,7 +246,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContinueButtonPresent() {
-        return getTypeButtonByName(LOWER_CASE_BOOKMARKED).isElementPresent();
+        return getContinueButton().isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -632,6 +641,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 BTN_PLAY.getText()));
     }
 
+    public ExtendedWebElement getContinueButton() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_CONTINUE.getText()));
+    }
+
     public ExtendedWebElement getSeasonSelectorButton() {
         return seasonSelectorButton;
     }
@@ -811,7 +825,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstDescriptionLabel;
     }
 
-    public ExtendedWebElement getFirstRunTimeLabel() {
+    public ExtendedWebElement getFirstDurationLabel() {
         return firstRunTimeLabel;
     }
 
@@ -861,10 +875,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getTypeOtherByLabel(SHOP_TAB_NAVIGATETOWEBTEXT).click();
     }
 
-    /**
-     * Use with hulu series content only - to get Hulu series episode download button
-     */
-    public ExtendedWebElement getHuluEpisodeToDownload(String seasonNumber, String episodeNumber) {
+    public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download season " + seasonNumber + ", episode " + episodeNumber);
     }
 
@@ -875,10 +886,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
-    /**
-     * Use with hulu series content only - to wait for hulu episode download to complete
-     */
-    public void waitForOneHuluEpisodeDownloadToComplete(int timeOut, int polling) {
+    public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
@@ -1011,6 +1019,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return iMaxEnhancedTitle[1];
     }
 
+    public boolean isContentImageViewPresent() {
+        return contentImageView.isPresent();
+    }
+
+    public ExtendedWebElement getSeasonItemPicker() {
+        return seasonItemPicker;
+    }
+
+    public ExtendedWebElement getDurationTimeLabel() {
+        return durationTimeLabel;
+    }
+
     public boolean isTabSelected(String tabName) {
         ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
         if(!tabButton.isPresent()){
@@ -1019,5 +1039,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             swipeTabBar(Direction.LEFT, 900);
         }
         return tabButton.getAttribute("value").equals("1");
+    }
+
+    public boolean isDurationTimeLabelPresent() {
+        return getFirstDurationLabel().isPresent(SHORT_TIMEOUT) || getDurationTimeLabel().isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
+        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
 }
