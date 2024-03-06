@@ -63,7 +63,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isIABOptOutListLinkLinkPresent() {
-        scrollDown();
+        scrollInSellingSharingLegalPage(1);
         return customHyperlinkByLabel.format(iabOptOutListLink).isPresent();
     }
 
