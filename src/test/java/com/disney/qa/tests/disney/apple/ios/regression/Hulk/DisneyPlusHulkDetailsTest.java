@@ -592,7 +592,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         contentList.add("Palm Springs");
         contentList.add("Home Economics");
         contentList.add("Cruel Summer");
-        contentList.add("Praise Petey");
+        contentList.add("Devs");
         return contentList;
     }
 
