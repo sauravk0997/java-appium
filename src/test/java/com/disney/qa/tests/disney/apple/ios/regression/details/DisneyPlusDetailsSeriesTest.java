@@ -416,4 +416,50 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.verifyVideoPlayingFromBeginning(sa);
         sa.assertAll();
     }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
+    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present.");
+
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        detailsPage.clickContinueButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+
+        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
+    }
 }
