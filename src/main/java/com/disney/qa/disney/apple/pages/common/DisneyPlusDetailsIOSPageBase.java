@@ -1063,6 +1063,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
 
+    public ExtendedWebElement getEpisodeTitle(String season, String episode) {
+        return staticTextLabelContains.format(String.format("Season %s Episode %s", season, episode));
+    }
+
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
         List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
         List<String> noDolbyVisionDeviceNames = Arrays.asList("iPad_8_Gen_1");
