@@ -179,6 +179,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         displayVideoController();
         return currentTimeLabel.isPresent();
     }
+
     public boolean isRemainingTimeLabelVisible() {
         displayVideoController();
         return timeRemainingLabel.isPresent();
@@ -479,5 +480,65 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
+    }
+
+    public ExtendedWebElement getPlayerView() {
+        return playerView;
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        scrubToPlaybackPercentage(30);
+        int scrubbedTimeRemaining = getRemainingTime();
+        clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        detailsPage.clickContinueButton();
+        waitForVideoToStart();
+        sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
+                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeThreeIntegerRemaining(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        scrubToPlaybackPercentage(30);
+        int scrubbedTimeRemaining = getRemainingTimeThreeIntegers();
+        clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        detailsPage.clickContinueButton();
+        waitForVideoToStart();
+        sa.assertTrue(scrubbedTimeRemaining > getRemainingTimeThreeIntegers(),
+                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlaying(SoftAssert sa) {
+        int previousTimeRemaining = getRemainingTime();
+        pause(10);
+        sa.assertTrue(previousTimeRemaining > getRemainingTime(),
+                "Video is not playing, new time remaining is not less than previous time remaining");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyThreeIntegerVideoPlaying(SoftAssert sa) {
+        int previousTimeRemaining = getRemainingTimeThreeIntegers();
+        pause(10);
+        sa.assertTrue(previousTimeRemaining > getRemainingTimeThreeIntegers(),
+                "Video is not playing, new time remaining is not less than previous time remaining");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public int getBeginningTime() {
+        displayVideoController();
+        String[] currentTime = currentTimeLabel.getText().split(":");
+        int currentTimeInSec = Integer.parseInt(currentTime[1]);
+        LOGGER.info("Playback current {} seconds...", currentTimeInSec);
+        return currentTimeInSec;
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
+        sa.assertTrue(getBeginningTime() < 30,
+                "Video is not playing from the beginning.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }

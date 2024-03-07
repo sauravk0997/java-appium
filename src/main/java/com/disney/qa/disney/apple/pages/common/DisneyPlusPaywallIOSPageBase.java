@@ -242,9 +242,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickPurchaseButton(PlanType planType) {
         if (planType.equals(PlanType.PREMIUM_MONTHLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.monthly.premium.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.monthly.dpluspremium22.apple").click();
         } else if (planType.equals(PlanType.PREMIUM_YEARLY)) {
-            dynamicBtnFindByName.format("productButton-com.disney.yearly.premium.apple").click();
+            dynamicBtnFindByName.format("productButton-com.disney.yearly.dpluspremium22.apple").click();
         } else {
             productPurchaseBtn.click();
         }
@@ -284,7 +284,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByNameContains.format("Basic").click();
     }
     public void clickPremiumYearlyRowButton() {
-            getDynamicRowButtonLabel(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PLAN_SWITCH_IAP_ANNUAL.getText()),2).click();
+        getDynamicRowButtonLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PLAN_SWITCH_IAP_ANNUAL.getText()),2).click();
     }
 }
