@@ -54,7 +54,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //search series
         disneyPlusSearchIOSPageBase.clickSeriesTab();
         List<ExtendedWebElement> series = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        series.get(0).click();
+        series.get(2).click();
         String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
         disneyPlusDetailsIOSPageBase.addToWatchlist();
 
