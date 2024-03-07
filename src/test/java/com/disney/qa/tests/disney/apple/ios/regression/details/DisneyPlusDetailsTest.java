@@ -28,6 +28,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
+    private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
+    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String DUMBO = "Dumbo";
     private static final String TV_Y7 = "TV-Y7";
 
@@ -35,33 +37,34 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
         //search movies
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickMoviesTab();
-        List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
         movies.get(0).click();
-        String firstMovieTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        String firstMovieTitle = detailsPage.getMediaTitle();
+        detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
 
         //search series
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        List<ExtendedWebElement> series = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        series.get(2).click();
+        searchPage.clearText();
+        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
+        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
+        series.get(0).click();
         String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        detailsPage.addToWatchlist();
 
         //titles added to watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
         sa.assertAll();
     }
 
