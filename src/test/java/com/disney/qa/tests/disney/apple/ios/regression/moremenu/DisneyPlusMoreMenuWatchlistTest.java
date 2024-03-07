@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -33,6 +34,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62610"})
     @Test(description = "Verify populated Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyPopulatedWatchlistDisplay() {
