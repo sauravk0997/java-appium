@@ -36,40 +36,41 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62610"})
     @Test(description = "Verify populated Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyPopulatedWatchlistDisplay() {
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase disneyPlusBrandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         onboard();
         //Adding a Pixar item to Watchlist
-        disneyPlusHomeIOSPageBase.clickPixarTile();
-        disneyPlusBrandIOSPageBase.isOpened();
-        disneyPlusBrandIOSPageBase.clickFirstCarouselPoster();
-        String firstTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        homePage.clickPixarTile();
+        brandPage.isOpened();
+        brandPage.clickFirstCarouselPoster();
+        String firstTitle = detailsPage.getMediaTitle();
+        detailsPage.addToWatchlist();
         //Adding a Disney item to Watchlist
-        disneyPlusDetailsIOSPageBase.getHomeNav().click();
-        disneyPlusHomeIOSPageBase.clickDisneyTile();
-        disneyPlusBrandIOSPageBase.isOpened();
-        disneyPlusBrandIOSPageBase.clickFirstCarouselPoster();
-        String secondTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        detailsPage.getHomeNav().click();
+        homePage.clickDisneyTile();
+        brandPage.isOpened();
+        brandPage.clickFirstCarouselPoster();
+        String secondTitle = detailsPage.getMediaTitle();
+        detailsPage.addToWatchlist();
         //Adding a Marvel item to Watchlist
-        disneyPlusDetailsIOSPageBase.getHomeNav().click();
-        disneyPlusHomeIOSPageBase.clickMarvelTile();
-        disneyPlusBrandIOSPageBase.isOpened();
-        disneyPlusBrandIOSPageBase.clickFirstCarouselPoster();
-        String thirdTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        detailsPage.getHomeNav().click();
+        homePage.clickMarvelTile();
+        brandPage.isOpened();
+        brandPage.clickFirstCarouselPoster();
+        String thirdTitle = detailsPage.getMediaTitle();
+        detailsPage.addToWatchlist();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
 
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesDisplayed(firstTitle, secondTitle, thirdTitle),
+        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstTitle, secondTitle, thirdTitle),
                 "Titles were not added to the Watchlist");
 
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
+        Assert.assertTrue(moreMenu.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
                 "Titles were not placed in the correct order");
     }
 

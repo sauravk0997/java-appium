@@ -272,7 +272,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		List<String> items = Arrays.asList(titles);
 		List<ExtendedWebElement> entryCells = new ArrayList<>();
 		List<Boolean> validations = new ArrayList<>();
-		items.forEach(title -> entryCells.add(getDynamicCellByLabel(title)));
+		items.forEach(title -> entryCells.add(getTypeCellLabelContains(title)));
 
 		entryCells.forEach(entry -> validations.add(entry.isElementPresent()));
 		return !validations.contains(false);
@@ -284,7 +284,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		List<Boolean> validations = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
 			try {
-				validations.add(entryCells.get(i).getText().equals(titles[i]));
+				String entryCellTextOnlyTitle = entryCells.get(i).getText().split(",")[0];
+				validations.add(entryCellTextOnlyTitle.equals(titles[i]));
 			} catch (IndexOutOfBoundsException e) {
 				return false;
 			}
