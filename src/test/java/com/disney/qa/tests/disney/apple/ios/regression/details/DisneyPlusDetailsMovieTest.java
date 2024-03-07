@@ -218,4 +218,65 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         videoPlayer.validateResumeTimeThreeIntegerRemaining(sa);
         sa.assertAll();
     }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69960"})
+    @Test(description = "Movie Details verify resume UI", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMovieResumeUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        //Validate resume UI
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present.");
+        sa.assertTrue(detailsPage.getProgressBar().isPresent(), "Progress bar is not present.");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching time remaining is not present.");
+
+        //Validate detail page UI is same after change to Continue state
+        //share, back arrow
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button is not present.");
+        sa.assertTrue(detailsPage.getBackArrow().isPresent(), "Back arrow button is not present.");
+
+        //Validate Dolby Vision present / not present on certain devices
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+
+        //Media features
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` audio quality is not found.");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image is not present.");
+        sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image is not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description is not present.");
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label is not present.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button is not present.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button is not present.");
+        sa.assertTrue(detailsPage.isMovieDownloadButtonDisplayed(), "Details page download button is not present.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1), "Metadata year does not contain details tab year.");
+
+        //Tabs
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab is not present.");
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras tab is not present.");
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Suggested tab is not present.");
+        sa.assertAll();
+    }
 }
