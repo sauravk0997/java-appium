@@ -257,8 +257,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getBackArrow().isPresent(), "Back arrow button is not present.");
 
         //Validate Dolby Vision present / not present on certain devices
-        detailsPage.isDolbyVisionPresent(sa);
-        detailsPage.isDolbyVisionNotPresent(sa);
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         //Media features
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");

@@ -557,8 +557,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
 
         //Validate Dolby Vision present / not present on certain devices
-        detailsPage.isDolbyVisionPresent(sa);
-        detailsPage.isDolbyVisionNotPresent(sa);
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         sa.assertAll();
     }
@@ -580,8 +579,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         //Validate Dolby Vision present / not present on certain devices
-        detailsPage.isDolbyVisionPresent(sa);
-        detailsPage.isDolbyVisionNotPresent(sa);
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         sa.assertAll();
     }
@@ -615,8 +613,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
 
         //Validate Dolby Vision present / not present on certain devices
-        detailsPage.isDolbyVisionPresent(sa);
-        detailsPage.isDolbyVisionNotPresent(sa);
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         //back button, share button, title, description
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
