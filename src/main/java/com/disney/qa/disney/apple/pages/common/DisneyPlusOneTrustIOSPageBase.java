@@ -22,12 +22,16 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement logo;
     @ExtendedFindBy(accessibilityId = "pcTitle")
     private ExtendedWebElement pageTitle;
+    @ExtendedFindBy(accessibilityId = "pcDescription")
+    private ExtendedWebElement legalText;
     @ExtendedFindBy(accessibilityId = "pcEditableConsentCellConsentSwitch")
     private ExtendedWebElement consentSwitch;
     @ExtendedFindBy(accessibilityId = "pcEditableConsentCellGroupName")
     private ExtendedWebElement consentSwitchTitle;
     @ExtendedFindBy(accessibilityId = "pcConfirmMyChoiceButton")
     private ExtendedWebElement confirmMyChoiceButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"pcEditableConsentCell\"`]/XCUIElementTypeImage")
+    protected ExtendedWebElement sellingSharingTargatedAdvertisingArrow;
 
     @Override
     public boolean isOpened() {
@@ -48,6 +52,46 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getValueOfConsentSwitch(){
         return consentSwitch.getAttribute("value");
+    }
+
+    public boolean isCloseIconPresent() {
+        return closeButton.isPresent();
+    }
+
+    public boolean isWaltDisneyLogoPresent() {
+        return logo.isPresent();
+    }
+
+    public boolean isNoticeOfRightToOptOutOfSaleTitlePresent() {
+        return staticTypeTextViewValue.format(pageTitleText).isPresent();
+    }
+
+    public boolean isLegalTextPresent() {
+        return legalText.isPresent() && !legalText.getText().isEmpty();
+    }
+
+    public boolean isUSStatePrivacyRightsLinkPresent() {
+        return customHyperlinkByLabel.format(usPrivacyRights).isPresent();
+    }
+
+    public boolean isYourCaliforniaPrivacyRightsLinkPresent() {
+        return customHyperlinkByLabel.format(californiaPrivacyRights).isPresent();
+    }
+
+    public boolean isSellingSharingTargatedAdvertisingConsentTitlePresent() {
+        return consentSwitchTitle.getText().trim().equals(consentCellGroupNameTitle);
+    }
+
+    public boolean isArrowIconToRightOfTooglePresent() {
+        return sellingSharingTargatedAdvertisingArrow.isPresent();
+    }
+
+    public boolean isConfirmMyChoceButtonPresent() {
+        return confirmMyChoiceButton.isPresent();
+    }
+
+    public void clickSellingSharingTargatedAdvertisingArrow(){
+        sellingSharingTargatedAdvertisingArrow.click();
     }
 
 }
