@@ -160,6 +160,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusSignUpIOSPageBase.clickUncheckedBoxes();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
         dobCollectionPage.isOpened();
         dobCollectionPage.enterDOB(DOB_ADULT);

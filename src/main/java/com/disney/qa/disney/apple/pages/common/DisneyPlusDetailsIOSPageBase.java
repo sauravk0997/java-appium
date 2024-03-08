@@ -302,11 +302,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean doesContinueButtonExist() {
-        return continueButton.isPresent();
+        return getContinueButton().isPresent();
     }
 
     public boolean doesPlayButtonExist() {
-        return playButton.isPresent();
+        return getPlayButton().isPresent();
     }
 
     /**
