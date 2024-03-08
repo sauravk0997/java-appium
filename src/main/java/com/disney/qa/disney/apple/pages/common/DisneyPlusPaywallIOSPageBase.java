@@ -54,6 +54,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "OK")
     private ExtendedWebElement alertOkBtn;
 
+    @ExtendedFindBy(accessibilityId = "Disney+ Premium")
+    private ExtendedWebElement disneyPlusPremiumText;
+
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
@@ -121,6 +124,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isCancelAnytimeTextDisplayed() {
         return cancelAnytimeText.isElementPresent();
+    }
+
+    public boolean isDisneyPlusPremiumTextDisplayed() {
+        return disneyPlusPremiumText.isElementPresent();
     }
 
     public boolean isRestartsSubscriptionHeaderDisplayed() {
