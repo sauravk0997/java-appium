@@ -74,8 +74,24 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
         return customHyperlinkByLabel.format(usPrivacyRights).isPresent();
     }
 
+    public void clickYourUSStatePrivacyRightsLink(){
+        customHyperlinkByLabel.format(usPrivacyRights).click();
+    }
+
+    public boolean isYourUSStatePrivacyRightsPageOpened(int timeout){
+        return staticTextByLabel.format(usPrivacyRights.toUpperCase()).isPresent(timeout);
+    }
+
     public boolean isYourCaliforniaPrivacyRightsLinkPresent() {
         return customHyperlinkByLabel.format(californiaPrivacyRights).isPresent();
+    }
+
+    public void clickYourCaliforniaPrivacyRightsLink(){
+        customHyperlinkByLabel.format(californiaPrivacyRights).click();
+    }
+
+    public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
+        return dynamicBtnFindByLabelContains.format("CALIFORNIA").isPresent(timeout);
     }
 
     public boolean isSellingSharingTargatedAdvertisingConsentTitlePresent() {

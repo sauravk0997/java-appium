@@ -13,6 +13,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static String optOutFormLink = "opt-out form";
     private static String iabOptOutListLink = "IAB opt-out list";
     private static String learnMoreText = "Do Not Sell or Share My Personal Information\\\" and \\\"Targeted Advertising\\\" Opt-Out Rights";
+    private static String iabOptOutPageURL = "iabprivacy.com";
 
     @ExtendedFindBy(accessibilityId = "purposeDetailsConsentLabel")
     private ExtendedWebElement pageHeader;
@@ -29,6 +30,12 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement learnMoreTextLink;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Privacy Web Form\"`]")
+    protected ExtendedWebElement optOutFormPage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
+    protected ExtendedWebElement iabOptOutListPage;
 
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -57,6 +64,14 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         return customHyperlinkByLabel.format(optOutFormLink).isPresent();
     }
 
+    public void clickOptOutFormLink(){
+        customHyperlinkByLabel.format(optOutFormLink).click();
+    }
+
+    public boolean isOptOutFormLinkOpened(int timeout){
+        return optOutFormPage.isPresent(timeout);
+    }
+
     public boolean isIABOptOutListLinkLinkPresent() {
         scrollInSellingSharingLegalPage(1);
         return customHyperlinkByLabel.format(iabOptOutListLink).isPresent();
@@ -66,8 +81,24 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         swipeInContainer(legalText, IMobileUtils.Direction.UP,times,500);
     }
 
+    public void clickIABOptOutListLink(){
+        customHyperlinkByLabel.format(iabOptOutListLink).click();
+    }
+
+    public boolean isIABOptOutListLinkPageOpened(){
+        return iabOptOutListPage.getText().contains(iabOptOutPageURL);
+    }
+
     public boolean isTargatedAdvertisingOptOutRightsLinkPresent() {
         return learnMoreTextLink.format(learnMoreText).isPresent();
+    }
+
+    public void clickTargatedAdvertisingOptOutRightsLink(){
+        learnMoreTextLink.format(learnMoreText).click();
+    }
+
+    public boolean isTargatedAdvertisingOptOutRightsLinkPageOpened(int timeout){
+        return dynamicBtnFindByLabelContains.format(learnMoreText.toUpperCase()).isPresent(timeout);
     }
 
     public void clickBackbutton(){
