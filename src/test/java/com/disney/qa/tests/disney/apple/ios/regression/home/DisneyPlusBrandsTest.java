@@ -44,7 +44,8 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         homePage.isOpened();
         sa.assertTrue(homePage.getDynamicCellByLabel(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
-        homePage.getBrandTile(brandPage.getBrand(brand)).click();
+
+        homePage.clickBrandTile(brand);
         sa.assertTrue(brandPage.isOpened(), brandPage.getBrand(brand) + "Brand page did not open.");
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), brandPage.getBrand(brand) + "Brand featured image is not present");
