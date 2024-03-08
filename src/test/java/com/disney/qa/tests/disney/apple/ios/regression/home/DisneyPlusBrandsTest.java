@@ -35,7 +35,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})
-    @Test(description = "Home - Brands UI", dataProvider = "brands", groups = {"Home", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "brands", description = "Home - Brands UI", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyBrandUI(DisneyPlusBrandIOSPageBase.Brand brand) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

@@ -160,7 +160,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
-        return getElementTypeCellByLabel(brand);
+        return getTypeCellLabelContains(brand);
     }
 
     public boolean isHomePageLoadPresent() {
