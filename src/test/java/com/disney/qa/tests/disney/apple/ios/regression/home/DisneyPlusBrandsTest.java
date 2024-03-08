@@ -14,7 +14,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
-    @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
+    @BeforeTest(alwaysRun = true)
     private void setUp() {
         initialSetup("US", "en");
         handleAlert();
@@ -41,6 +41,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
+        homePage.isOpened();
         sa.assertTrue(homePage.getDynamicCellByLabel(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
         homePage.getBrandTile(brandPage.getBrand(brand)).click();
@@ -63,8 +64,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(), 5, null, Direction.DOWN, 500);
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         brandPage.getBackButton().click();
-        homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "Brand page was not closed and returned to home page.");
+        sa.assertTrue(homePage.isHomePageLoadPresent(), "Brand page was not closed and returned to home page.");;
         sa.assertAll();
     }
 }

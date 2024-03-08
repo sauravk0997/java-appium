@@ -162,4 +162,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
     }
+
+    public boolean isHomePageLoadPresent() {
+        String homePageLoad = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.HOME_PAGE_LOAD.getText());
+        return getDynamicAccessibilityId(homePageLoad).isPresent();
+    }
 }
