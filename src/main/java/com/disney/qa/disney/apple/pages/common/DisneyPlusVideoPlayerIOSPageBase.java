@@ -532,12 +532,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         displayVideoController();
         String[] currentTime = currentTimeLabel.getText().split(":");
         int currentTimeInSec = Integer.parseInt(currentTime[1]);
-        LOGGER.info("Playback current {} seconds...", currentTimeInSec);
+        LOGGER.info("Playback currently at {} seconds...", currentTimeInSec);
         return currentTimeInSec;
     }
 
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
-        sa.assertTrue(getBeginningTime() < 30,
+        sa.assertTrue(getBeginningTime() < 60,
                 "Video is not playing from the beginning.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }

@@ -370,6 +370,64 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
+    @Test(description = "Details Page - Resume State - Series", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyResumeStateSeries() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not present");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Prey media title not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present.");
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present.");
+
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present.");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not present.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not present.");
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
+        sa.assertAll();
+    }
+
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72418"})
     @Test(description = "Series Details verify playback behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})

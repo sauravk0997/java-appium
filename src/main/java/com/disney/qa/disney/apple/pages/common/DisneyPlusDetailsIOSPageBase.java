@@ -186,7 +186,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
     private ExtendedWebElement copyShareLink;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
     private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
     @ExtendedFindBy(accessibilityId = "VERSIONS")
@@ -1061,6 +1061,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
         return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
+    }
+
+    public ExtendedWebElement getEpisodeTitle(String season, String episode) {
+        return staticTextLabelContains.format(String.format("Season %s Episode %s", season, episode));
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
