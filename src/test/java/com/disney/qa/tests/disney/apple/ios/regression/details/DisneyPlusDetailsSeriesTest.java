@@ -83,32 +83,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62435"})
-    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifySeriesPlayVsContinue() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        disneyPlusSearchIOSPageBase.selectRandomTitle();
-        //waiting for group watch pop-up to dismiss
-        pause(3);
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Play button doesn't exist on details page.");
-        disneyPlusDetailsIOSPageBase.clickPlayButton();
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video player was not opened.");
-        pause(35);
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(), "Video player was not closed.");
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "Continue button doesn't exist on details page.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
     @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyRemoveSeriesFromWatchlist() {
@@ -393,6 +367,64 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.verifyVideoPlaying(sa);
         videoPlayer.validateResumeTimeRemaining(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
+    @Test(description = "Details Page - Resume State - Series", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyResumeStateSeries() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not present");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Prey media title not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present.");
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present.");
+
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present.");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not present.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not present.");
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
         sa.assertAll();
     }
 
