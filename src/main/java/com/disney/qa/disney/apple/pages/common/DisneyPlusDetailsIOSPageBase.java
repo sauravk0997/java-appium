@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -30,10 +31,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DOWNLOAD_COMPLETED = "Download completed";
     private static final String WATCH = "WATCH";
     private static final String LOWER_CASE_WATCH = "watch";
-    private static final String BOOKMARKED = "BOOKMARKED";
-    private static final String LOWER_CASE_BOOKMARKED = "bookmarked";
-    private static final String LOWER_CASED_PLAY = "play";
-    private static final String PLAY = "PLAY";
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String SHOP_WEB_URL = "disneystore.com";
     private static final String SHOP_TAB_HEADING = "Shop this Character";
@@ -41,6 +38,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_TAB_LEGALTEXT = "Merchandise available while supplies last.";
     private static final String SHOP_TAB_NAVIGATETOWEBTEXT = "Go to Disney store.com";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
+    private static final String DOLBY_VISION = "Dolby Vision";
     private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
     private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
     private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
@@ -1042,6 +1040,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return tabButton.getAttribute("value").equals("1");
     }
 
+    public String getContinueWatchingHours() {
+        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        return time[0].split("h")[0];
+    }
+
+    public String getContinueWatchingMinutes() {
+        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        return time[1].split("m")[0];
+    }
+
+    public ExtendedWebElement getContinueWatchingTimeRemaining() {
+        String continueWatchingHours = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CONTINUE_WATCHING_HOURS.getText()),
+                Map.of("hours_remaining", getContinueWatchingHours(), "minutes_remaining", getContinueWatchingMinutes()));
+        return getDynamicAccessibilityId(continueWatchingHours);
+    }
+
     public boolean isDurationTimeLabelPresent() {
         return getFirstDurationLabel().isPresent(SHORT_TIMEOUT) || getDurationTimeLabel().isPresent(SHORT_TIMEOUT);
     }
@@ -1050,7 +1064,19 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
     }
 
-    public ExtendedWebElement getEpisodeTitle(String season, String episode){
+    public ExtendedWebElement getEpisodeTitle(String season, String episode) {
         return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeStaticText[`label CONTAINS \"Season %s Episode %s\"`]", season, episode)));
+    }
+
+    public void isDolbyVisionPresentOrNot(SoftAssert sa) {
+        List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
+        List<String> noDolbyVisionDeviceNames = Arrays.asList("iPad_8_Gen_1");
+        if (dolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
+            LOGGER.info("Validating Dolby Vision is present..");
+            sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+        } else if (noDolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
+            LOGGER.info("Validating Dolby Vision is not present..");
+            sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+        }
     }
 }
