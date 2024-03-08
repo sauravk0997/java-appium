@@ -467,7 +467,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
-        videoPlayer.scrubToPlaybackPercentage(30);
+        videoPlayer.scrubToPlaybackPercentage(5);
 
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
@@ -492,6 +492,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(99);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        detailsPage.tapBackButton();
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
     }
 }
