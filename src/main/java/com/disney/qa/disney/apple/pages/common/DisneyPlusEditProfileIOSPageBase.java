@@ -169,9 +169,19 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
-    public void clickJuniorModeLearnMoreLink() {
+    public ExtendedWebElement getLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
-        ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
+        return customHyperlinkByLabel.format(learnMoreText);
+    }
+
+    public boolean isLearnMoreLinkPresent() {
+        ExtendedWebElement learnMoreLink = getLearnMoreLink();
+        swipe(learnMoreLink);
+        return learnMoreLink.isPresent(SHORT_TIMEOUT);
+    }
+
+    public void clickJuniorModeLearnMoreLink() {
+        ExtendedWebElement learnMoreLink = getLearnMoreLink();
         swipe(learnMoreLink);
         learnMoreLink.click(SHORT_TIMEOUT);
     }
