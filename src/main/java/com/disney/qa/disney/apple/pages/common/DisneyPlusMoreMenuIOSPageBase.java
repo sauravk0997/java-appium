@@ -194,7 +194,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isAppVersionDisplayed() {
-		return appVersion.isElementPresent();
+		return getTypeCellLabelContains("Version").isPresent();
 	}
 
 	public String getAppVersionText() {
