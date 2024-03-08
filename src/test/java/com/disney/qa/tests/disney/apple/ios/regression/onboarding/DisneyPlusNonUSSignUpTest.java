@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
+    private static final String DOB_ADULT = "01/01/1983";
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
     @Test(description = "Verify onboarding stepper for US based users", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyOnboardingStepperUS() {
@@ -67,32 +68,32 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-
+        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusSignUpIOSPageBase.clickUncheckedBoxes();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
+        dobCollectionPage.isOpened();
+        dobCollectionPage.enterDOB(DOB_ADULT);
+        paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
 
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isYearlySkuButtonPresent(),
+        sa.assertTrue(paywallIOSPageBase.isYearlySkuButtonPresent(),
                 "Yearly SKU button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isMonthlySkuButtonPresent(),
+        sa.assertTrue(paywallIOSPageBase.isMonthlySkuButtonPresent(),
                 "Monthly SKU button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isPaywallCancelButtonDisplayed(),
+        sa.assertTrue(paywallIOSPageBase.isPaywallCancelButtonDisplayed(),
                 "Cancel button is not displayed.");
+        sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
 
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isStartStreamingTextDisplayed(),
-                "Start Streaming Text is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
                 "Cancel anytime text is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.restoreBtn.isElementPresent(),
+        sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
                 "Restore Purchase button is not displayed.");
-
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
         sa.assertAll();
     }
