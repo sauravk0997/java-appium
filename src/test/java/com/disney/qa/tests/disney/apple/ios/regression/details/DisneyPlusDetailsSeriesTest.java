@@ -496,5 +496,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
+        sa.assertAll();
     }
 }
