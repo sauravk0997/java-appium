@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.aqa.iap;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.json.simple.JSONArray;
@@ -64,7 +65,7 @@ public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
         paywallIOSPageBase.clickOverlaySubscribeButton();
 
         try {
-            paywallIOSPageBase.submitSandboxPassword("G0Disney!");
+            paywallIOSPageBase.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
