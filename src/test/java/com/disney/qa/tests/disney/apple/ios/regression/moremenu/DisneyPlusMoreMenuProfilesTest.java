@@ -213,10 +213,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Add Profile - Seventh Profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySeventhProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+
+        //Add Profiles
         getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
                 RAYA, false, true);
         getAccountApi().addProfile(getAccount(), "Third", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
@@ -227,13 +228,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 BABY_YODA, false, true);
         getAccountApi().addProfile(getAccount(), "Sixth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
                 RAYA, false, true);
+
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        System.out.println(getDriver().getPageSource());
+        swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         moreMenu.clickAddProfile();
-        sa.assertTrue(chooseAvatar.isOpened(), "Choose avatar screen did not open");
+        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
 
-
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
         sa.assertAll();
     }
 }

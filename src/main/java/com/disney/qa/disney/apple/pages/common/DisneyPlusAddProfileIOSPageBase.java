@@ -71,6 +71,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    @Override
+    public boolean isOpened() {
+        return addProfileAvatar.isPresent();
+    }
+
     public ExtendedWebElement getAddProfileAvatar() {
         return addProfileAvatar;
     }
