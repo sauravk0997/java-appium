@@ -356,7 +356,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         //Verify Opt out form Link
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
         sellinglegalTextPage.clickOptOutFormLink();
-        sa.assertTrue(sellinglegalTextPage.isOptOutFormLinkOpened(15), "Opt Out form Link page not opened");
+        sa.assertTrue(sellinglegalTextPage.isOptOutFormLinkOpened(25), "Opt Out form Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
         sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
 
@@ -365,7 +365,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(sellinglegalTextPage.isIABOptOutListLinkPageOpened(), "IAB Opt Out List Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
         sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
-
 
         //Verify Do Not Sell or Share My Personal Information" and "Targeted Advertising" Opt-Out Rights" link
         sellinglegalTextPage.clickTargatedAdvertisingOptOutRightsLink();

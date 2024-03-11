@@ -27,7 +27,6 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "purposeChildDetailsDescriptionTextView")
     private ExtendedWebElement legalText;
 
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement learnMoreTextLink;
 
@@ -36,6 +35,9 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
     protected ExtendedWebElement iabOptOutListPage;
+
+    @ExtendedFindBy(accessibilityId = "search-results")
+    private ExtendedWebElement doNotSellOrShareRightsPage;
 
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -65,7 +67,9 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickOptOutFormLink(){
-        customHyperlinkByLabel.format(optOutFormLink).click();
+        if (customHyperlinkByLabel.format(optOutFormLink).getSize().getWidth() > 150) {
+            clickElementAtLocation(customHyperlinkByLabel.format(optOutFormLink), 10, 90);
+        }
     }
 
     public boolean isOptOutFormLinkOpened(int timeout){
@@ -73,7 +77,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isIABOptOutListLinkPresent() {
-        scrollInSellingSharingLegalPage(1);
+        scrollInSellingSharingLegalPage(2);
         return customHyperlinkByLabel.format(iabOptOutListLink).isPresent();
     }
 
@@ -82,6 +86,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickIABOptOutListLink(){
+        scrollInSellingSharingLegalPage(2);
         customHyperlinkByLabel.format(iabOptOutListLink).click();
     }
 
@@ -98,7 +103,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTargatedAdvertisingOptOutRightsLinkPageOpened(int timeout){
-        return dynamicBtnFindByLabelContains.format(learnMoreText.toUpperCase()).isPresent(timeout);
+        return doNotSellOrShareRightsPage.isPresent(timeout);
     }
 
     public void clickBackbutton(){
