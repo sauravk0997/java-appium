@@ -266,7 +266,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(sellinglegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "Blue toggle was not Turned ON by default");
         sa.assertTrue(sellinglegalTextPage.isLegaltextPresent(), "Legal text was not found for selling, sharing");
         sa.assertTrue(sellinglegalTextPage.isOptOutFormLinkPresent(), "Opt-out-form link in the body text was not found");
-        sa.assertTrue(sellinglegalTextPage.isIABOptOutListLinkLinkPresent(), "IAB opt-out list in the body text was not found");
+        sa.assertTrue(sellinglegalTextPage.isIABOptOutListLinkPresent(), "IAB opt-out list in the body text was not found");
         sa.assertTrue(sellinglegalTextPage.isTargatedAdvertisingOptOutRightsLinkPresent(), "Do Not Sell or Share my Personal Information\" and \"Targeted Advertising\" Opt-out Rights link in the body text was not found");
         sa.assertAll();
     }
@@ -308,7 +308,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
 
-        //Toggle switch to OFF on  "Notice of Right to Opt-Out of Sale/Sharing" Page reflect on Salling Sharing" Page
+        //Toggle switch to OFF on  "Notice of Right to Opt-Out of Sale/Sharing" Page reflect on Selling Sharing" Page
         oneTrustPage.tapConsentSwitch();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
