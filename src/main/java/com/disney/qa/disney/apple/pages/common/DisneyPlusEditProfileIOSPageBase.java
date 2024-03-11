@@ -188,6 +188,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         for (DateHelper.Month e : DateHelper.Month.values()) {
             if (e.getNum().equals(num)) {
                 monthName = e.getText();
+                break;
             }
         }
         return monthName;
