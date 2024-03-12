@@ -204,6 +204,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
     private ExtendedWebElement durationTimeLabel;
 
+    @ExtendedFindBy(accessibilityId = "contentAdvisory")
+    private ExtendedWebElement contentAdvisory;
+
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -975,11 +978,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
-        ExtendedWebElement contentAdvisoryText = getTypeOtherByLabel(String.format("%s, %s ",
+        String contentAdvisoryText = String.format("%s, %s ",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText())).replace("\n", "").replace("\r", "").replace("  ", " ").trim());
-        swipePageTillElementPresent(contentAdvisoryText, 1, contentDetailsPage, Direction.UP, 900);
-        return contentAdvisoryText.isPresent();
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim());
+        swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
+        return contentAdvisoryText.contains(contentAdvisory.getText());
     }
 
     public ExtendedWebElement getRatingRestrictionDetailMessage() {

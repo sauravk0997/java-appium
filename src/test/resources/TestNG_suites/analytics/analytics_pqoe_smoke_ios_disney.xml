@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="Analytics PQoE Smoke Test Runs iOS" annotations="JDK" thread-count="15" parallel="tests" configfailurepolicy="continue">
 
-    <parameter name="suiteOwner" value="PQoE"/>
+    <parameter name="suiteOwner" value="isong1"/>
     <parameter name="reporting.project-key" value="ANA01"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise,Disney-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-Analytics-iOS-PQoE Smoke Run"/>
     <parameter name="jenkinsEmail" value="insung.song@disneystreaming.com"/>
@@ -19,7 +19,7 @@
 
     <test verbose="1" name="DisneyPlus iOS Handset Smoke PQoE" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.qoeplayback.DisneyPlusQoETest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.aqa.qoe.DisneyPlusQoETest"/>
         </classes>
     </test>
 </suite>
