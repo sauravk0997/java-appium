@@ -445,7 +445,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         searchPage.searchForMedia(title);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        //Verify correct result are displayed after searching with one letter
+        //Verify correct result are displayed after search
         Assert.assertTrue(results.size()>0, "Search result not displayed");
         return results.get(0).getText().split(",")[0];
     }
