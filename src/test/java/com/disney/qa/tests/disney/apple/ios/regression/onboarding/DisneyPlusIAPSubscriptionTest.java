@@ -176,7 +176,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "Cancel button is not displayed.");
         sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
 
-        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+        sa.assertTrue(paywallIOSPageBase.isDisneyPlusPremiumTextDisplayed(),
                 "Cancel anytime text is not displayed.");
         sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
                 "Restore Purchase button is not displayed.");
