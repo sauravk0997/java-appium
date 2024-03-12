@@ -28,7 +28,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
-    private static final String DUMBO = "Dumbo";
+    private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
 
     @Maintainer("csolmaz")
@@ -151,7 +151,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //movie
         home.clickSearchIcon();
         search.clearText();
-        search.searchForMedia(DUMBO);
+        search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
