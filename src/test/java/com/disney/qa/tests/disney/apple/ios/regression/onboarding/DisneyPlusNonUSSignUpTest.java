@@ -68,32 +68,32 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusSignUpIOSPageBase.clickUncheckedBoxes();
-        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
-        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
-        dobCollectionPage.isOpened();
-        dobCollectionPage.enterDOB(DOB_ADULT);
-        paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
 
-        sa.assertTrue(paywallIOSPageBase.isYearlySkuButtonPresent(),
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isYearlySkuButtonPresent(),
                 "Yearly SKU button is not displayed.");
-        sa.assertTrue(paywallIOSPageBase.isMonthlySkuButtonPresent(),
-                "Monthly SKU button is not displayed.");
-        sa.assertTrue(paywallIOSPageBase.isPaywallCancelButtonDisplayed(),
-                "Cancel button is not displayed.");
-        sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
 
-        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isMonthlySkuButtonPresent(),
+                "Monthly SKU button is not displayed.");
+
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isPaywallCancelButtonDisplayed(),
+                "Cancel button is not displayed.");
+
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isStartStreamingTextDisplayed(),
+                "Start Streaming Text is not displayed.");
+
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.isCancelAnytimeTextDisplayed(),
                 "Cancel anytime text is not displayed.");
-        sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
+
+        sa.assertTrue(disneyPlusPaywallIOSPageBase.restoreBtn.isElementPresent(),
                 "Restore Purchase button is not displayed.");
+
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
         sa.assertAll();
     }
