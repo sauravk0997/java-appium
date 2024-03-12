@@ -68,7 +68,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickOptOutFormLink(){
         if (customHyperlinkByLabel.format(optOutFormLink).getSize().getWidth() > 150) {
-            clickElementAtLocation(customHyperlinkByLabel.format(optOutFormLink), 10, 90);
+            clickElementAtLocation(customHyperlinkByLabel.format(optOutFormLink), 10, 95);
         }
     }
 
