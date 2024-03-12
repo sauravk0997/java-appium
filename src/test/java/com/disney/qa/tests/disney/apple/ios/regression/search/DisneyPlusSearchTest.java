@@ -403,43 +403,24 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
             //User made search with one letter
-            searchPage.searchForMedia(media);
-            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-            //Verify correct result are displayed after searching with one letter
-            sa.assertTrue(results.size()>0, "Search result not displayed");
-            String contentTitle = results.get(0).getText().split(",")[0];
+            String contentTitle = getFirstSearchResults(media);
             sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
-            String rating = getSearchApi().getMovie(contentTitle, getAccount()).getContentRatingsValue();
-            String releasedYear = getSearchApi().getMovie(contentTitle, getAccount()).getReleaseDate();
             //Verify search result have Rating and released year details also
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(rating), "Rating details was not found in search results");
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(releasedYear), "Released Year details was not found in search results");
+            validateRatingAndReleasedYearDetails(contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
 
             //User made search with movie name
-            searchPage.searchForMedia(movie);
-            results = searchPage.getDisplayedTitles();
-            //Verify correct result are displayed after searching movie
-            sa.assertTrue(results.size()>0, "Search result not displayed");
-            contentTitle = results.get(0).getText().split(",")[0];
+            contentTitle = getFirstSearchResults(movie);
             sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
-            rating = getSearchApi().getMovie(contentTitle, getAccount()).getContentRatingsValue();
-            releasedYear = getSearchApi().getMovie(contentTitle, getAccount()).getReleaseDate();
             //Verify search result have Rating and released year details also
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(rating), "Rating details was not found in search results");
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(releasedYear), "Released Year details was not found in search results");
+            validateRatingAndReleasedYearDetails(contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
 
             //User made search with series name
-            searchPage.searchForMedia(series);
-            results = searchPage.getDisplayedTitles();
-            //Verify correct result are displayed after searching series
-            sa.assertTrue(results.size()>0, "Search result not displayed");
-            contentTitle = results.get(0).getText().split(",")[0];
+            contentTitle = getFirstSearchResults(series);
             sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
-            rating = getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getSeriesRatingsValue();
-            releasedYear = String.valueOf(getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getReleaseYear());
+            String rating = getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getSeriesRatingsValue();
+            String releasedYear = String.valueOf(getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getReleaseYear());
             //Verify search result have Rating and released year details also
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(rating), "Rating details was not found in search results");
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(contentTitle).contains(releasedYear), "Released year details was not found in search results");
+            validateRatingAndReleasedYearDetails(contentTitle, rating, releasedYear);
             sa.assertAll();
         }
     }
@@ -458,5 +439,29 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         contentList.add("Fantastic Four");
         contentList.add("Iron Man");
         return contentList;
+    }
+
+    private String getFirstSearchResults(String title){
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        searchPage.searchForMedia(title);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        //Verify correct result are displayed after searching with one letter
+        sa.assertTrue(results.size()>0, "Search result not displayed");
+        return results.get(0).getText().split(",")[0];
+    }
+
+    private String getMovieRatingDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getContentRatingsValue();
+    }
+
+    private String getMovieReleasedYearDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getReleaseDate();
+    }
+    private void validateRatingAndReleasedYearDetails(String title, String rating, String releasedYear){
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
+        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
     }
 }
