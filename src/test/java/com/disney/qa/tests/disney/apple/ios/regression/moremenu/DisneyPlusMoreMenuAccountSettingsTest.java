@@ -784,7 +784,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         disneyPlusChangeEmailIOSPageBase.clickLogoutAllDevices();
         String newEmail = generateGmailAccount();
-        getAccount().setEmail(newEmail);
+        testAccount.setEmail(newEmail);
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
 
