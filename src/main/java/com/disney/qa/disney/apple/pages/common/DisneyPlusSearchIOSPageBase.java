@@ -231,10 +231,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchBar.getText();
     }
 
-    public boolean isRatingAndYearDetailsPresentInResults(){
-        return ratingAndYearDetailsOfContent.isPresent();
-    }
-
     public String getRatingAndYearDetailsFromSearchResults(String title){
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
