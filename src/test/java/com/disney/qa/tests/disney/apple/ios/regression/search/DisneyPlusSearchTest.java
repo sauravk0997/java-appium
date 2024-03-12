@@ -406,13 +406,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String contentTitle = getFirstSearchResults(media);
             sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
 
             //User made search with movie name
             contentTitle = getFirstSearchResults(movie);
             sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
 
             //User made search with series name
             contentTitle = getFirstSearchResults(series);
@@ -420,7 +420,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String rating = getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getSeriesRatingsValue();
             String releasedYear = String.valueOf(getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getReleaseYear());
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(contentTitle, rating, releasedYear);
+            validateRatingAndReleasedYearDetails(sa, contentTitle, rating, releasedYear);
             sa.assertAll();
         }
     }
@@ -442,26 +442,25 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     private String getFirstSearchResults(String title){
-        SoftAssert sa = new SoftAssert();
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         searchPage.searchForMedia(title);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         //Verify correct result are displayed after searching with one letter
-        sa.assertTrue(results.size()>0, "Search result not displayed");
+        Assert.assertTrue(results.size()>0, "Search result not displayed");
         return results.get(0).getText().split(",")[0];
     }
 
-    private String getMovieRatingDetails(String title){
-        return getSearchApi().getMovie(title, getAccount()).getContentRatingsValue();
-    }
-
-    private String getMovieReleasedYearDetails(String title){
-        return getSearchApi().getMovie(title, getAccount()).getReleaseDate();
-    }
-    private void validateRatingAndReleasedYearDetails(String title, String rating, String releasedYear){
-        SoftAssert sa = new SoftAssert();
+    private void validateRatingAndReleasedYearDetails(SoftAssert sa, String title, String rating, String releasedYear){
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
+    }
+
+    public String getMovieRatingDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getContentRatingsValue();
+    }
+
+    public String getMovieReleasedYearDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getReleaseDate();
     }
 }
