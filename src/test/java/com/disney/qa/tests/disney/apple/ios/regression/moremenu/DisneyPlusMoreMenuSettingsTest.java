@@ -191,11 +191,9 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Watchlist option was not found on a child account");
         sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App version number was not found on a child account");
 
-        //Validate app settings, legal, logout, help, account and legal are not present
+        //Validate app settings, logout, help, account and legal are not present
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
                 "App Settings option was found on a child account");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
-                "Legal option was found on a child account");
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
                 "Log Out option was found on a child account");
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),

@@ -338,6 +338,7 @@ public enum DictionaryKeys {
     SECURE_PROFILE_PIN_TOAST("secure_profile_pin_toast"),
     SELECT_ALL_LABEL("select_all_label"),
     SELECT_CONTENT_REMOVE("select_content_remove"),
+    SETTINGS_DATE_OF_BIRTH("settings_date_of_birth"),
     SETTINGS_GENDER("settings_gender"),
     SETTINGS_PAUSED("settings_paused"),
     SETTINGS_TITLE("settings_title"),

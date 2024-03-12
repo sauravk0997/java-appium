@@ -31,6 +31,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
     private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String DUMBO = "Dumbo";
+    private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
 
     @Maintainer("csolmaz")
@@ -154,7 +155,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //movie
         home.clickSearchIcon();
         search.clearText();
-        search.searchForMedia(DUMBO);
+        search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
