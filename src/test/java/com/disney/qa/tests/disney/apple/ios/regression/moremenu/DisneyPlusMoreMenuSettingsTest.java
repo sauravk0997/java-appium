@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPinIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -30,9 +32,9 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
         getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
-        onboard(TEST_USER);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
+        onboard(TEST_USER);
         softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
                         && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Profile Switcher was not displayed for all profiles");
@@ -42,6 +44,16 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                     menuItem + " option was not be present");
         }
 
+        //verify that Profile Selector/Switch does NOT scroll if user scroll above element
+        scrollUp();
+        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
+                        && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+                "Profile Switcher was not displayed for all profiles");
+
+        //verify if profile has pin lock then lock icon is displayed under profile name
+        enableProfilePINLock(DEFAULT_PROFILE);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
         softAssert.assertAll();
     }
 
@@ -209,4 +221,23 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), profile);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
+
+    private void enableProfilePINLock(String profileName) {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(profileName);
+        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
+        editProfilePage.getPinSettingsCell().click();
+        passwordPage.typePassword(getAccount().getUserPass());
+        passwordPage.clickPrimaryButton();
+        pinPage.getPinCheckBox().click();
+        pinPage.getPinInputField().click();
+        pinPage.getPinInputField().type("1111");
+        editProfilePage.clickSaveBtn();
+        editProfilePage.clickSaveProfileButton();
+    }
+
 }

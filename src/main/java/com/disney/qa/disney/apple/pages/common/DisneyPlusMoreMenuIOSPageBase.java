@@ -351,4 +351,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		//TEMP solution for bugged watchlist
 		return getTypeButtonByLabel("iconNavBack24LightActive").isPresent();
 	}
+
+	public boolean isPinLockOnProfileDisplayed(String profileName) {
+		return pinProtectedProfileLock.format(profileName).isPresent();
+	}
 }
