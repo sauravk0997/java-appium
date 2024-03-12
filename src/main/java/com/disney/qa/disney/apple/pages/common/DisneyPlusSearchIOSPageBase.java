@@ -227,6 +227,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchBar.getText();
     }
 
+    public String getSearchBarText() {
+        return searchBar.getText();
+    }
+
     public boolean isRatingAndYearDetailsPresentInResults(){
         return ratingAndYearDetailsOfContent.isPresent();
     }

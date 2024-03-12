@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -58,7 +60,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     protected ExtendedWebElement sharePlayHyperLink;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"SharePlay\"`]")
-    private  ExtendedWebElement sharePlay;
+    private ExtendedWebElement sharePlay;
 
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement doneBtn;
@@ -127,7 +129,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return getDynamicAccessibilityId(toastText);
     }
 
-    public boolean isEditProfilesTitlePresent() {return collectionHeadlineTitle.isElementPresent();}
+    public boolean isEditProfilesTitlePresent() {
+        return collectionHeadlineTitle.isElementPresent();
+    }
 
     public boolean isBackBtnPresent() {
         return getBackArrow().isElementPresent();
@@ -147,10 +151,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.MATURITY_RATING_DESCRIPTION_VALUE.getText()),
                 Map.of(USER_RATING_KEY, rating));
-        swipe(staticTextByLabel.format(contentRatingText),1);
+        swipe(staticTextByLabel.format(contentRatingText), 1);
         return staticTextByLabel.format(contentRatingText).isPresent();
 
     }
+
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
@@ -160,8 +165,32 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         profileIcon.click();
     }
 
+    public boolean isBirthdateHeaderDisplayed() {
+        String birthdateHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, SETTINGS_DATE_OF_BIRTH.getText());
+        return staticTextByLabel.format(birthdateHeader).isPresent();
+    }
+
+    public boolean isBirthdateDisplayed(DisneyProfile profile) {
+        String dob = profile.getAttributes().getDateOfBirth();
+        String monthName = getMonthName(dob.split("-")[1]);
+        String date = dob.split("-")[2].startsWith("0") ? dob.split("-")[2].replace("0", "") : dob.split("-")[2];
+        String displayedDOB = monthName + " " + date + "," + " " + dob.split("-")[0];
+        return staticTextByLabel.format(displayedDOB).isPresent();
+    }
+
     public boolean isProfileTitlePresent(String username) {
         return getDynamicAccessibilityId(username).isElementPresent();
+    }
+
+    public String getMonthName(String num) {
+        String monthName = "";
+        for (DateHelper.Month e : DateHelper.Month.values()) {
+            if (e.getNum().equals(num)) {
+                monthName = e.getText();
+                break;
+            }
+        }
+        return monthName;
     }
 
     public void selectInfoHyperlink() {
@@ -169,9 +198,19 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
-    public void clickJuniorModeLearnMoreLink() {
+    public ExtendedWebElement getLearnMoreLink() {
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
-        ExtendedWebElement learnMoreLink = customHyperlinkByLabel.format(learnMoreText);
+        return customHyperlinkByLabel.format(learnMoreText);
+    }
+
+    public boolean isLearnMoreLinkPresent() {
+        ExtendedWebElement learnMoreLink = getLearnMoreLink();
+        swipe(learnMoreLink);
+        return learnMoreLink.isPresent(SHORT_TIMEOUT);
+    }
+
+    public void clickJuniorModeLearnMoreLink() {
+        ExtendedWebElement learnMoreLink = getLearnMoreLink();
         swipe(learnMoreLink);
         learnMoreLink.click(SHORT_TIMEOUT);
     }
@@ -209,16 +248,17 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isProfilePinReminderDisplayed() {
-       return  staticTextByLabel.format(getDictionary().
+        return staticTextByLabel.format(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_REMINDER.getText())).isPresent();
     }
 
-    /** This method toggles the 'autoplay' switch to the requested state for the
+    /**
+     * This method toggles the 'autoplay' switch to the requested state for the
      * given profile name and brings back the UI to the 'Edit profile' screen
      * where the bottom tab bar is visible
      **/
 
-    public void toggleAutoplay(String profileName,String requestedState) {
+    public void toggleAutoplay(String profileName, String requestedState) {
         isOpened();
         clickEditModeProfile(profileName);
         toggleAutoplayButton(requestedState);
@@ -241,7 +281,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         }
     }
 
-    public String getAutoplayState(){
+    public String getAutoplayState() {
         return autoplayToggleCell.getText();
     }
 
@@ -305,9 +345,16 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
      * click gender button to select gender value
      */
     public void clickGenderButton() {
-        staticTextByLabel.format(genderTitle).click(); }
+        staticTextByLabel.format(genderTitle).click();
+    }
 
     public boolean isGenderButtonPresent() {
         return staticTextByLabel.format(genderTitle).isElementPresent();
     }
+
+    public boolean isGenderValuePresent(DisneyProfile profile) {
+        String genderValue = getDynamicCellByName("Gender Selection").getText().split(",")[1].toLowerCase().replace(" ", "");
+        return genderValue.equalsIgnoreCase(profile.getAttributes().getGender().toLowerCase());
+    }
+
 }

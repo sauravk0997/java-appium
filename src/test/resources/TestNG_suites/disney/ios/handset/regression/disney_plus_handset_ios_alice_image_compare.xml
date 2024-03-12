@@ -17,7 +17,7 @@
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="scheduling" value="H 5 * * *"/>
+<!--    <parameter name="scheduling" value="H 5 * * *"/>-->
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Hulk-Compare"/>

@@ -3,8 +3,8 @@
 
     <parameter name="suiteOwner" value="gkrishna1"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name"
-               value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name"
+               value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_regression_dev"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
@@ -12,8 +12,8 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPhone_8,iPhone_X,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_12,iPhone_13_Pro,iPhone_14;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
-    <parameter name="jenkinsDefaultRetryCount" value="0"/>
+               value="platformName=iOS;deviceName=iPhone_8,iPhone_X,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_12,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
@@ -21,10 +21,11 @@
     <parameter name="scheduling" value="H 0 * * *"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,Onboarding,Search,Smoke,Video Player"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75492"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
         <classes>
@@ -97,13 +98,23 @@
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusBrandsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="iOS Handset Hulk" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Hulk2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
         </classes>
     </test>
 </suite>

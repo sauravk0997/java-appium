@@ -254,7 +254,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
-        sa.assertTrue(detailsPage.getFirstRunTimeLabel().isPresent(), "First extras runtime was not found");
+        sa.assertTrue(detailsPage.getFirstDurationLabel().isPresent(), "First extras runtime was not found");
 
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
@@ -534,7 +534,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
-        sa.assertFalse(detailsPage.getHuluEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
+        sa.assertFalse(detailsPage.getEpisodeToDownload("1", "1").isPresent(), "Season button 1 button is was found.");
         sa.assertFalse(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all season button was found.");
         sa.assertAll();
     }
@@ -554,8 +554,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+
+        //Validate Dolby Vision present / not present on certain devices
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         sa.assertAll();
     }
@@ -575,8 +577,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        //Validate Dolby Vision present / not present on certain devices
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         sa.assertAll();
     }
@@ -587,7 +590,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         contentList.add("Palm Springs");
         contentList.add("Home Economics");
         contentList.add("Cruel Summer");
-        contentList.add("Praise Petey");
+        contentList.add("Devs");
         return contentList;
     }
 
@@ -605,10 +608,12 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Dolby Vision").isPresent(), "`Dolby Vision` video quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //Validate Dolby Vision present / not present on certain devices
+        detailsPage.isDolbyVisionPresentOrNot(sa);
 
         //back button, share button, title, description
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
