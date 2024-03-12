@@ -12,7 +12,6 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
-    private static final String DOB_ADULT = "01/01/1983";
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
     @Test(description = "Verify onboarding stepper for US based users", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyOnboardingStepperUS() {
