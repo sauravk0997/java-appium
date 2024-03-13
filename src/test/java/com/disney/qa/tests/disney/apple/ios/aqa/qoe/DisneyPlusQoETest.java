@@ -1,4 +1,4 @@
-package com.disney.qa.tests.disney.apple.ios.qoeplayback;
+package com.disney.qa.tests.disney.apple.ios.aqa.qoe;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
