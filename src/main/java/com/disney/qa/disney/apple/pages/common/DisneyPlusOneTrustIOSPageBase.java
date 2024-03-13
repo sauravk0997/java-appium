@@ -75,9 +75,7 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourUSStatePrivacyRightsLink(){
-        if (customHyperlinkByLabel.format(usPrivacyRights).getSize().getWidth() > 150) {
-            clickElementAtLocation(customHyperlinkByLabel.format(usPrivacyRights), 10, 80);
-        }
+        clickElementAtLocation(customHyperlinkByLabel.format(usPrivacyRights), 10, 80);
     }
 
     public boolean isYourUSStatePrivacyRightsPageOpened(int timeout){
@@ -89,9 +87,7 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourCaliforniaPrivacyRightsLink(){
-        if (customHyperlinkByLabel.format(californiaPrivacyRights).getSize().getWidth() > 150) {
-            clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 80);
-        }
+        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 80);
     }
 
     public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
