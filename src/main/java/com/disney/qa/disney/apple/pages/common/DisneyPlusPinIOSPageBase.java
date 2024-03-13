@@ -12,10 +12,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    private ExtendedWebElement pinInputField = getDynamicXpath(String.format("(//*[@name='%s' or @name='%s'])[%s]", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+    private ExtendedWebElement pinInputField = dynamicRowOtherLabel.format( getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                     DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()),
             DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText(),
-            1));
+            1);
 
     @FindBy(id = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
@@ -26,6 +26,9 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(id = "cancelBarButton")
     private ExtendedWebElement pinCancelButton;
+
+    @FindBy(id = "saveButton")
+    private ExtendedWebElement pinSaveButton;
 
     public ExtendedWebElement getPinCheckBox() {
         return pinCheckBox;
@@ -41,5 +44,9 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getPinInputField() {
         return pinInputField;
+    }
+
+    public ExtendedWebElement getPinSaveButton() {
+        return pinSaveButton;
     }
 }

@@ -162,4 +162,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getBrandTile(String brand) {
         return getElementTypeCellByLabel(brand);
     }
+
+    public ExtendedWebElement getMoreMenuTab() {
+        return moreTab;
+    }
 }
