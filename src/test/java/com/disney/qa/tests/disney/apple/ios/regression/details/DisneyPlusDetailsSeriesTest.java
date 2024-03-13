@@ -474,7 +474,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
 
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present.");
-        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present.");
 
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab.");
@@ -496,6 +495,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
+        detailsPage.clickDetailsTab();
+        detailsPage.swipeTillActorsElementPresent();
+
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
     }
 }
