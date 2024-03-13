@@ -228,7 +228,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
         sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(),"Maturity Rating section is not as expected");
-        sa.assertTrue(editProfile.getDeleteProfileButton().isPresent(),"Delete profile button is not displayed");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
         sa.assertTrue(editProfile.getDoneButton().isPresent(),"Done button is not displayed");
         addProfile.updateUserName("updated_profile");
         editProfile.getDoneButton().click();
@@ -238,6 +238,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile("updated_profile");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
         editProfile.getDeleteProfileButton().click();
         editProfile.clickConfirmDeleteButton();
         sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");

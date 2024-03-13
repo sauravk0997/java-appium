@@ -108,6 +108,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return deleteProfileButton;
     }
 
+    public boolean isDeleteProfileButtonPresent() {
+        swipe(deleteProfileButton);
+        return deleteProfileButton.isPresent();
+    }
+
     public ExtendedWebElement getDoneButton() {
         String button = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_PROFILE_SETTINGS_DONE.getText());
         return dynamicBtnFindByLabel.format(button);

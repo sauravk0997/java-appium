@@ -1181,6 +1181,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeAlertByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
     }
 
+    public ExtendedWebElement getTypeAlertByLabel(String label){
+        return typeAlertByLabel.format(label);
+    }
     /**
      * Select random tile, scroll to specific collection, then selects random tile
      *
