@@ -7,6 +7,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBas
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -176,33 +177,32 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Displayed App Version was not correct");
     }
 
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61669"})
     @Test(description = "Verify: Simplified Kids More Menu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySimplifiedKidsMoreMenu() {
-        SoftAssert softAssert = new SoftAssert();
+        SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),DARTH_MAUL,true,true);
         onboard(KIDS_PROFILE);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST),
-                "Watchlist option was not available to a child account");
+        //Validate watchlist and app version are present
+        sa.assertTrue(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST),
+                "Watchlist option was not found on a child account");
+        sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App version number was not found on a child account");
 
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
-                "App Settings option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
-                "Legal option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
-                "Log Out option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
-                "Help option was available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
-                "Account option was available to a child account");
-
-        softAssert.assertAll();
+        //Validate app settings, logout, help, account and legal are not present
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
+                "App Settings option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
+                "Log Out option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
+                "Help option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
+                "Legal option was found on a child account");
+        sa.assertAll();
     }
 
     private void onboard(String profile) {

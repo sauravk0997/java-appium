@@ -193,6 +193,7 @@ public enum DictionaryKeys {
     GENDER_WOMAN("gender_woman"),
     GENERIC_PLAYBACK_ERROR("error_genericplaybackfailure"),
     GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER("groupwatch_shareplay_settings_subheader"),
+    HOME_PAGE_LOAD("home_pageload"),
     HIDDEN_PASSWORD("login_hide_password_asterisk"),
     SHOW_PASSWORD("onboardingpw_btn_showpassword"),
     HIDE_PASSWORD("onboarding_password_hidepassword"),
