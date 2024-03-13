@@ -270,7 +270,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
         sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default");
-        disneyPlusAppleTVHomePage.moveRight(1, 1);
+        disneyPlusAppleTVHomePage.moveRight(2, 1);
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), "Global Nav menu is present");
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());

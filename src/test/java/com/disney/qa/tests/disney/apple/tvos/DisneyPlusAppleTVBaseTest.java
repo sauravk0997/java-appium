@@ -176,10 +176,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
 
     public void collapseGlobalNav() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        if (!homePage.isGlobalNavPresent()) {
-            homePage.moveDown(1,1);
-            homePage.moveUp(1,1);
-        }
         if (homePage.isGlobalNavExpanded()) {
             LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
