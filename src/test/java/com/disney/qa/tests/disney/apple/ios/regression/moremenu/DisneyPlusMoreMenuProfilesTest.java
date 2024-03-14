@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -231,7 +232,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        }
         moreMenu.clickAddProfile();
         sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
 
