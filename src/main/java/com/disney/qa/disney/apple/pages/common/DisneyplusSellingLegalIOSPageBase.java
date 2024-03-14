@@ -36,7 +36,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
     protected ExtendedWebElement iabOptOutListPage;
 
-    @ExtendedFindBy(accessibilityId = "search-results")
+    @ExtendedFindBy(accessibilityId = "document")
     private ExtendedWebElement doNotSellOrShareRightsPage;
 
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
