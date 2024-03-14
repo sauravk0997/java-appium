@@ -98,6 +98,13 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return isFocused(profileNameTextFieldIdentifier);
     }
 
+    public void updateUserName(String userName) {
+        if(profileNameTextFieldIdentifier.isElementNotPresent(10)) {
+            swipeInContainer(null, Direction.DOWN, 200);
+            profileNameTextFieldIdentifier.click();
+            profileNameTextFieldIdentifier.type(userName);
+        }
+    }
     public boolean kidsProfileToggleCellFocused() {
         return isFocused(kidsProfileToggleCell);
     }
