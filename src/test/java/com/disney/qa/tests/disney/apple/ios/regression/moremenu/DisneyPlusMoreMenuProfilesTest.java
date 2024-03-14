@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -15,6 +16,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -202,6 +206,41 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         pause(2);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_TV14), "U18 profile rating is not as expected");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66770"})
+    @Test(description = "Add Profile - Seventh Profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifySeventhProfile() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        //Add Profiles
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Third", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fourth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fifth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Sixth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        }
+        moreMenu.clickAddProfile();
+        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
         sa.assertAll();
     }
 
