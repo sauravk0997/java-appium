@@ -98,15 +98,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return isFocused(profileNameTextFieldIdentifier);
     }
 
-    public ExtendedWebElement getProfileNameTextField() {
-        return profileNameTextFieldIdentifier;
-    }
-
     public void updateUserName(String userName) {
-        if(getProfileNameTextField().isElementNotPresent(10)) {
+        if(profileNameTextFieldIdentifier.isElementNotPresent(10)) {
             swipeInContainer(null, Direction.DOWN, 200);
-            getProfileNameTextField().click();
-            getProfileNameTextField().type(userName);
+            profileNameTextFieldIdentifier.click();
+            profileNameTextFieldIdentifier.type(userName);
         }
     }
     public boolean kidsProfileToggleCellFocused() {
