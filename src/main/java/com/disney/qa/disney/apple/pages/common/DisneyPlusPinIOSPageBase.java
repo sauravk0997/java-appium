@@ -32,7 +32,9 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getForgotPinButton() {
-        return forgotPinButton;
+        return dynamicBtnFindByLabel.format(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.PROFILE_ENTRY_PIN_FORGOT_PIN.getText()));
     }
 
     public ExtendedWebElement getPinCancelButton() {
