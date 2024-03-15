@@ -29,6 +29,8 @@ public final class TestGroup {
     public static final String DISNEY_COMMERCE_SMOKE = "disney_commerce_smoke";
     public static final String STAR_COMMERCE_SMOKE = "star_commerce_smoke";
 
+    public static final String HORA_SMOKE = "hora_smoke";
+
     //Feature Groups
     public static final String WEB_HOME = "web_home";
     public static final String WEB_DETAILS = "web_details";
