@@ -450,7 +450,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61463"})
     @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
