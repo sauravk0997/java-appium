@@ -77,6 +77,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS '%s'$]")
 	private ExtendedWebElement deleteOneDownload;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
+	private ExtendedWebElement profileSelectionCollectionView;
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
@@ -355,5 +358,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public boolean isBackArrowInWatchlistPresent() {
 		//TEMP solution for bugged watchlist
 		return getTypeButtonByLabel("iconNavBack24LightActive").isPresent();
+	}
+
+	public ExtendedWebElement getProfileSelectionCollectionView() {
+		return profileSelectionCollectionView;
 	}
 }

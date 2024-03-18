@@ -71,6 +71,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    @Override
+    public boolean isOpened() {
+        return addProfileAvatar.isPresent();
+    }
+
     public ExtendedWebElement getAddProfileAvatar() {
         return addProfileAvatar;
     }
@@ -98,6 +103,13 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return isFocused(profileNameTextFieldIdentifier);
     }
 
+    public void updateUserName(String userName) {
+        if(profileNameTextFieldIdentifier.isElementNotPresent(10)) {
+            swipeInContainer(null, Direction.DOWN, 200);
+            profileNameTextFieldIdentifier.click();
+            profileNameTextFieldIdentifier.type(userName);
+        }
+    }
     public boolean kidsProfileToggleCellFocused() {
         return isFocused(kidsProfileToggleCell);
     }
