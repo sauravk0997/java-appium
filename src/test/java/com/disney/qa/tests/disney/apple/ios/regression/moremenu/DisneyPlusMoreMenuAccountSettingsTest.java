@@ -7,6 +7,7 @@ import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
+import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -534,16 +535,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         //Builds a DisneyAccount object with existing credentials that are already configured for test needs
         DisneyProfile profile = new DisneyProfile();
         profile.setProfileName("Profile");
-        DisneyAccount externalAccount = DisneyAccount.builder()
-                .email("dssproducttest+o2_z77mhgfgtezqn6mm@gmail.com")
-                .accountId("3167b40f-4066-485b-99f7-110bb891b4e1")
-                .userPass("Mandalorian11!")
-                .countryCode("US")
-                .profiles(List.of(profile))
-                .build();
-        getAccountApi().entitleAccount(externalAccount, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, "V3");
-        getAccountApi().patchAccountVerified(externalAccount, false, PatchType.ACCOUNT);
-        setAccount(externalAccount);
+        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        DisneyOffer offer = getAccountApi().lookupOfferToUse("monthly");
+        request.addEntitlement(new DisneyEntitlement().setOffer(offer));
+        DisneyAccount unverifiedAccount = getAccountApi().createAccount(request);
+        getAccountApi().patchAccountVerified(unverifiedAccount, false, PatchType.ACCOUNT);
+        //Add pause cause patch takes a little while
+        pause(15);
+        setAccount(unverifiedAccount);
 
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
