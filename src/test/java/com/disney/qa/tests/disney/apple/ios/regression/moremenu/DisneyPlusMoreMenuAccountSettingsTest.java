@@ -540,7 +540,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 .userPass("Mandalorian11!")
                 .profiles(List.of(profile))
                 .build();
-        getAccountApi().entitleAccount(externalAccount, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, "V1");
+        getAccountApi().entitleAccount(externalAccount, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, "V3");
         getAccountApi().patchAccountVerified(externalAccount, false, PatchType.ACCOUNT);
         setAccount(externalAccount);
 
