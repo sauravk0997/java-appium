@@ -231,9 +231,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_loki_share_link");
-
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
-
+        //There is limitation of char that can be displayed in search bar
+        sa.assertTrue(expectedUrl.contains(url), "String.format(\"Share link for movie %s is not the expected\", DETAILS_TAB_METADATA_SERIES)");
         sa.assertAll();
     }
 
