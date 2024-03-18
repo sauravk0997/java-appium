@@ -23,7 +23,7 @@ public enum DictionaryKeys {
     AGREE_AND_CONTINUE_BTN("btn_agree_continue"),
     AUTH_INVALID_CREDENTIALS("auth_invalidcredentials"),
     AUTH_MINOR_PASSWORD("auth_minor_password_body"),
-    AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY("auth_password_body"),
+    AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY("auth_password_kidsprofile_off_body"),
     AUTOPLAY_SUBCOPY("autoplay_subcopy"),
     APP_SETTINGS_TITLE("app_settings_title"),
     ATTRIBUTE_VALIDATION("attributeValidation"),
