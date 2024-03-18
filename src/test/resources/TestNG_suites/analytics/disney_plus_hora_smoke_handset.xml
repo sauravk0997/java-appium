@@ -1,0 +1,29 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" thread-count="1" name="iOS Handset - Disney+ - Hora Test - Suite" annotations="JDK" configfailurepolicy="continue">
+
+    <parameter name="suiteOwner" value="EDS"/>
+    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="Disney-Plus-Apple-iOS-Handset-Hora-Smoke"/>
+    <parameter name="scheduling" value="0 14 * * 1-5"/>
+    <parameter name="jenkinsEmail" value="tony.wang@disney.com"/>
+    <parameter name="jenkinsEnvironments" value="Prod,QA"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="choiceParam::groups::Group" value="hora_smoke"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="maxNumberKeepBuilds" value="500"/>
+    <parameter name="reporting.notification.slack-channels" value="eds-test-automation"/>
+    <parameter name="overrideFields"
+               value="capabilities.locale=${locale},capabilities.language=${language},capabilities.custom_env=${custom_env},JOB_MAX_RUN_TIME=600,enable_hora_validation=true"/>
+    <parameter name="choiceParam::custom_env::App Environment" value="PROD,QA,EDITORIAL"/>
+    <parameter name="stringParam::hora_non_critical_failures::Hora non-critical failures override" value="null"/>
+
+    <test parallel="methods" name="Disney Plus Smoke Device Test">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.eds.DisneyPlusHoraSmokeTest"/>
+        </classes>
+    </test>
+
+</suite>
