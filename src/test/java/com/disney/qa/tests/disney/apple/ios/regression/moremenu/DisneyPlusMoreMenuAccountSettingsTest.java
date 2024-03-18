@@ -538,6 +538,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 .email("dssproducttest+o2_z77mhgfgtezqn6mm@gmail.com")
                 .accountId("3167b40f-4066-485b-99f7-110bb891b4e1")
                 .userPass("Mandalorian11!")
+                .countryCode("US")
                 .profiles(List.of(profile))
                 .build();
         getAccountApi().entitleAccount(externalAccount, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, "V3");
