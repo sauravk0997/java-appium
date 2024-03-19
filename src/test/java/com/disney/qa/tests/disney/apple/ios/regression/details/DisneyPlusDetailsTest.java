@@ -267,15 +267,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             navigateToIMAXEnhancedDetailPageFromDeeplink(getTabname().get(i));
             detailsPage.dismissNotificationsPopUp();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-                scrollUp();
-            }
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
             sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
             sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
+            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+                swipeUp(1500);
+            }
             sa.assertTrue(detailsPage.isTabSelected(getTabname().get(i).toUpperCase()),getTabname().get(i) + "Tab was not selected");
         });
-
         sa.assertAll();
     }
 
