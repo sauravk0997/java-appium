@@ -53,17 +53,17 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return pinInputField;
     }
 
-    public ExtendedWebElement getForgotPinInputFieldNew() {
+    public ExtendedWebElement getForgotPinInputField() {
         return getTypeOtherContainsLabel(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()));
     }
 
     public void clickProfilePin() {
-        getForgotPinInputFieldNew().click();
+        getForgotPinInputField().click();
     }
 
     public void enterProfilePin(String pin) {
-        getForgotPinInputFieldNew().type(pin);
+        getForgotPinInputField().type(pin);
     }
 
     public void clearPin() {
