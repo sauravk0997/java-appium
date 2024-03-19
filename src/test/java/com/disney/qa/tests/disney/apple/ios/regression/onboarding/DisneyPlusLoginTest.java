@@ -398,10 +398,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusAccountOnHoldIOSPageBase disneyPlusAccountOnHoldIOSPageBase = initPage(DisneyPlusAccountOnHoldIOSPageBase.class);
 
         CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        request.setLanguage(getLanguage());
+        request.setCountry(getCountry());
         request.setSkus(Arrays.asList(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY));
         List<DisneyOrder> orderList = new LinkedList();
         orderList.add(DisneyOrder.SET_BILLING_HOLD);
+        request.setOrderSettings(orderList);
         DisneyAccount accountWithBillingHold = getAccountApi().createAccount(request);
+
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(accountWithBillingHold);
 
