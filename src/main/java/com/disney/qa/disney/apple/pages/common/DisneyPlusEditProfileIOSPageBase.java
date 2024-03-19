@@ -100,9 +100,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
 
-    private ExtendedWebElement contentRatingHeader = getDynamicXpath(String.format("//*[@name=\"%s\" or @name=\"%s\"]",
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, MATURITY_RATING_SETTINGS_LABEL.getText()),
-            MATURITY_RATING_SETTINGS_LABEL.getText()));
+    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public ExtendedWebElement getDeleteProfileButton() {
         return deleteProfileButton;
