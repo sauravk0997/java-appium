@@ -264,7 +264,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         IntStream.range(0, getTabname().size()).forEach(i -> {
-            navigateToIMAXEnhancedDetaiPageFromDeeplink(getTabname().get(i));
+            navigateToIMAXEnhancedDetailPageFromDeeplink(getTabname().get(i));
             detailsPage.dismissNotificationsPopUp();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
@@ -279,11 +279,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void navigateToIMAXEnhancedDetaiPageFromDeeplink(String tabName) {
+    private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
-        terminateApp("com.disney.disneyplus.enterprise");
-        startApp("com.disney.disneyplus.enterprise");
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
         if(tabName.equalsIgnoreCase("suggested")){
             tabName = "related";
         }
