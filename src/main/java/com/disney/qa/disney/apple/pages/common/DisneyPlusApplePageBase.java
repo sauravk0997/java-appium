@@ -216,6 +216,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement keyboard;
     @FindBy(xpath = "//*[contains(@type, 'XCUIElementTypeKeyboard')]")
     protected ExtendedWebElement localizedKeyboard;
+    @ExtendedFindBy(accessibilityId = "delete")
+    private ExtendedWebElement keyboardDelete;
     @ExtendedFindBy(accessibilityId = "buttonLogout")
     protected ExtendedWebElement logoutButton;
     @ExtendedFindBy(accessibilityId = "customButton")
@@ -907,6 +909,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickPrimaryButton();
     }
 
+    public void enterPasswordNoAccount(String password) {
+        passwordEntryField.type(password);
+        clickPrimaryButton();
+    }
+
+
     public boolean doesAiringBadgeContainLive() {
         return airingBadgeLabel.getText().toLowerCase().contains("live");
     }
@@ -1321,5 +1329,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
         return getUnavailableContentErrorPopUpMessage().isPresent();
+    }
+
+    public ExtendedWebElement getKeyboardDelete() {
+        return keyboardDelete;
     }
 }

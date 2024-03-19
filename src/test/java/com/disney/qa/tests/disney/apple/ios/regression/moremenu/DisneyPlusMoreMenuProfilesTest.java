@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -21,13 +22,15 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
-import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.SUB_VERSION;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String ADULT_DOB = "1923-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    private static final String PROFILE_PIN = "1111";
+    private static final String NEW_PROFILE_PIN = "1234";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -289,35 +292,84 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61261"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61305"})
     @Test(description = "Profile - Forgot Profile PIN", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyForgotPin() {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         DisneyAccount account = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage(), "V2");
         try {
-            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
         setAppToHomeScreen(account);
-        pause(4);
-        System.out.println(getDriver().getPageSource());
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
-        System.out.println(getDriver().getPageSource());
-        System.out.println(pinPage.getForgotPinButton().isPresent());
+
+        //Confirm forgot PIN? is present
         sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button not found");
+
+        //Enter in wrong password
         pinPage.getForgotPinButton().click();
-        pause(5);
-        System.out.println(getDriver().getPageSource());
+        pinPage.enterPasswordNoAccount("M0us3#M1ck3y");
+        sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
 
+        //Enter correct password
+        passwordPage.enterPassword(account);
 
+        //Validate buttons and text present on Forgot PIN page
+        sa.assertTrue(pinPage.isOpened(), "Profile pin title label was not found.");
+        sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Pin check box was not found.");
+        sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Profile pin limit access messaging not found.");
+        sa.assertTrue(pinPage.getCancelButton().isPresent(), "Cancel button was not found.");
+        sa.assertTrue(pinPage.getSaveButton().isPresent(), "Save button was not found.");
+
+        //Validate cancel button action
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getCancelButton().click();
+        sa.assertTrue(pinPage.isOpened(), "Did not return to profile pin page");
+
+        pinPage.getForgotPinButton().click();
+        sa.assertTrue(pinPage.getAccountPasswordRequiredMessaging().isPresent(), "'To retrieve pin, account password required' messaging not found.");
+
+        //Enter in new pin and save
+        passwordPage.enterPassword(account);
+        sa.assertTrue(pinPage.isOpened(), "Pin page was not opened after entering password.");
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getSaveButton().click();
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile icon not present.");
+
+        //Enter in new pin and home screen appears
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        //refresh app to present who's watching page
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Remove profile pin via forgot PIN
+        whoIsWatching.isOpened();
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.getForgotPinButton().click();
+        passwordPage.enterPassword(account);
+        pinPage.getPinCheckBox().click();
+        pinPage.getSaveButton().click();
+        sa.assertFalse(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was found.");
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open.");
         sa.assertAll();
     }
 }
