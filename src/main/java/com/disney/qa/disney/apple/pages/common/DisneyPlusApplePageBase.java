@@ -38,6 +38,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
@@ -217,7 +218,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @FindBy(xpath = "//*[contains(@type, 'XCUIElementTypeKeyboard')]")
     protected ExtendedWebElement localizedKeyboard;
     @ExtendedFindBy(accessibilityId = "delete")
-    private ExtendedWebElement keyboardDelete;
+    private ExtendedWebElement iPadKeyboardDelete;
+    @ExtendedFindBy(accessibilityId = "Delete")
+    private ExtendedWebElement iPhoneKeyboardDelete;
     @ExtendedFindBy(accessibilityId = "buttonLogout")
     protected ExtendedWebElement logoutButton;
     @ExtendedFindBy(accessibilityId = "customButton")
@@ -1332,6 +1335,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getKeyboardDelete() {
-        return keyboardDelete;
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            return iPhoneKeyboardDelete;
+        } else {
+            return iPadKeyboardDelete;
+        }
     }
 }
