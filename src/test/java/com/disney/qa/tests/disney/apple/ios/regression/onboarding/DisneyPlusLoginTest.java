@@ -100,7 +100,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62046"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75711"})
     @Test(description = "Log in - Verify valid password - Multiple Profiles", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testValidPasswordMultipleProfiles() {
         SoftAssert softAssert = new SoftAssert();
