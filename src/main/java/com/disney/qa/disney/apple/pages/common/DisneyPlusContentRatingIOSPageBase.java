@@ -17,12 +17,12 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "saveButton")
     protected ExtendedWebElement saveButton;
 
+    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
+
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
     }
-
-    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     @Override
     public boolean isOpened() {
