@@ -87,6 +87,15 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         }
     }
 
+    public boolean isProfileIconPresent(String profileName) {
+        ExtendedWebElement profileIcon;
+        profileIcon = dynamicAccessProfileIcon.format(
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, profileName)));
+        return profileIcon.isPresent();
+
+    }
+    
     public void clickProfile(String name) {
         clickProfile(name, false);
     }
@@ -96,6 +105,12 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
                 .click();
+    }
+
+    public boolean isPinProtectedProfileIconPresent(String name) {
+        return dynamicAccessProfileIcon.format(
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name))).isPresent();
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {

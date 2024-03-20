@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -11,6 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -19,11 +22,15 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
+import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String ADULT_DOB = "1923-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    private static final String PROFILE_PIN = "1111";
+    private static final String NEW_PROFILE_PIN = "1234";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -211,7 +218,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66770"})
-    @Test(description = "Add Profile - Seventh Profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Add Profile - Seventh Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySeventhProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
@@ -246,7 +253,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61261"})
-    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileSecondaryProfileUIElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
@@ -281,6 +288,108 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getDeleteProfileButton().click();
         editProfile.clickConfirmDeleteButton();
         sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61305"})
+    @Test(description = "Profile - Forgot Profile PIN", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyForgotPin() {
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        DisneyAccount account = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage(), "V2");
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+
+        //Confirm forgot PIN? is present
+        sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button not found");
+
+        //Enter in wrong password
+        pinPage.getForgotPinButton().click();
+        pinPage.enterPasswordNoAccount("M0us3#M1ck3y");
+        sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+
+        //Enter correct password
+        passwordPage.enterPassword(account);
+
+        //Validate buttons and text present on Forgot PIN page
+        sa.assertTrue(pinPage.isOpened(), "Profile pin title label was not found.");
+        sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Pin check box was not found.");
+        sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Profile pin limit access messaging not found.");
+        sa.assertTrue(pinPage.getCancelButton().isPresent(), "Cancel button was not found.");
+        sa.assertTrue(pinPage.getSaveButton().isPresent(), "Save button was not found.");
+
+        //Validate cancel button action
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getCancelButton().click();
+        sa.assertTrue(pinPage.isOpened(), "Did not return to profile pin page");
+
+        pinPage.getForgotPinButton().click();
+        sa.assertTrue(pinPage.getAccountPasswordRequiredMessaging().isPresent(), "'To retrieve pin, account password required' messaging not found.");
+
+        //Enter in new pin and save
+        passwordPage.enterPassword(account);
+        sa.assertTrue(pinPage.isOpened(), "Pin page was not opened after entering password.");
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getSaveButton().click();
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile icon not present.");
+
+        //Enter in new pin and home screen appears
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        //refresh app to present who's watching page
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Remove profile pin via forgot PIN
+        whoIsWatching.isOpened();
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.getForgotPinButton().click();
+        passwordPage.enterPassword(account);
+        pinPage.getPinCheckBox().click();
+        pinPage.getSaveButton().click();
+        sa.assertFalse(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was found.");
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open.");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61245"})
+    @Test(description = "Profile Selection Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfileSelectionPageUI() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(),SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(),"Edit Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.isAddProfileButtonPresent(),"Add Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(SECONDARY_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(DEFAULT_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE),"Profile icon cell wasn't displayed for default profile");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE),"Profile icon cell wasn't displayed for secondary profile");
         sa.assertAll();
     }
 }
