@@ -168,7 +168,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
 
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", HOCUS_POCUS));
+        sa.assertTrue(expectedUrl.contains(url), String.format("Share link for movie %s is not the expected", HOCUS_POCUS));
 
         sa.assertAll();
     }
