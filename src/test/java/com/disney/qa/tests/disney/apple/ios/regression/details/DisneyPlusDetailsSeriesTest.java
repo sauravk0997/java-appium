@@ -231,9 +231,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_loki_share_link");
-
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
-
+        //There is limitation of char that can be displayed in search bar
+        sa.assertTrue(expectedUrl.contains(url), "String.format(\"Share link for movie %s is not the expected\", DETAILS_TAB_METADATA_SERIES)");
         sa.assertAll();
     }
 
@@ -446,6 +445,59 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.verifyVideoPlayingFromBeginning(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61463"})
+    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(5);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present.");
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        detailsPage.clickContinueButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+
+        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        detailsPage.tapBackButton();
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        detailsPage.clickDetailsTab();
+        detailsPage.swipeTillActorsElementPresent();
+
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
     }
 }
