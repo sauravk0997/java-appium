@@ -152,6 +152,39 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61267"})
+    @Test(description = "Autoplay toggle is Saved if User saves", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAutoplayToggleForKidsAndAdultProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(),getAccount().getFirstName());
+        //Verify autoplay is turned on by default for adult profile
+        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"On",sa);
+        //Turn off autoplay for adult profile
+        editProfile.toggleAutoplayButton("OFF");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.getAutoplayState().equals("Off"), "Autoplay wasn't turned Off for primary profile");
+        //wait for updated toast to disappear before tapping on done button
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        //Verify autoplay is turned off for adult profile
+        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"Off",sa);
+        editProfile.clickDoneBtn();
+        //Verify autoplay is turned OFF by default for kids profile
+        verifyAutoPlayStateForProfile(KIDS_PROFILE,"Off",sa);
+        //Turn on autoplay for adult profile
+        editProfile.toggleAutoplayButton("ON");
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        //Verify autoplay is turned on for kids profile
+        sa.assertAll();
+    }
+
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74793"})
     @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
@@ -391,5 +424,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE),"Profile icon cell wasn't displayed for default profile");
         sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE),"Profile icon cell wasn't displayed for secondary profile");
         sa.assertAll();
+    }
+
+    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(profile);
+        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
     }
 }

@@ -290,6 +290,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText())).isPresent();
     }
 
+    public void waitForUpdatedToastToDisappear() {
+        ExtendedWebElement updatedToast = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText()));
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
+                .until(it -> updatedToast.isElementNotPresent(SHORT_TIMEOUT));
+    }
     public void toggleAutoplayButton(String newState) {
         String currentState = autoplayToggleCell.getText();
         LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);
