@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -304,4 +305,32 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61257"})
+    @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDeleteProfileUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount accountV2 = createV2Account();
+        getAccountApi().addProfile(accountV2, SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        setAppToHomeScreen(accountV2);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button was not found.");
+
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            editProfile.swipeUp(500);
+        }
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete button is not present on Edit profile.");
+
+        editProfile.getDeleteProfileButton().click();
+        sa.assertTrue(editProfile.getDeleteProfileCancelButton().isPresent(), "Delete Profile cancel button was not found.");
+        sa.assertTrue(editProfile.getDeleteProfileDeleteButton().isPresent(), "Delete Profile delete button was not found.");
+        sa.assertTrue(editProfile.getDeleteProfileTitle(SECONDARY_PROFILE).isPresent(), "Delete Profile title waas not found.");
+        sa.assertTrue(editProfile.getDeleteProfileCopy().isPresent(), "Delete Profile copy was not found.");
+        sa.assertAll();
+    }
 }

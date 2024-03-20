@@ -434,4 +434,21 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText())).isPresent() &&
                 profilePinLabel.isPresent();
     }
+
+    public ExtendedWebElement getDeleteProfileCancelButton() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
+    }
+
+    public ExtendedWebElement getDeleteProfileDeleteButton() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DELETE.getText()));
+    }
+
+    public ExtendedWebElement getDeleteProfileTitle(String profileName) {
+        String deleteProfileTitle = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_TITLE.getText()), Map.of("user_profile", profileName));
+        return getStaticTextByLabel(deleteProfileTitle);
+    }
+
+    public ExtendedWebElement getDeleteProfileCopy() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
+    }
 }
