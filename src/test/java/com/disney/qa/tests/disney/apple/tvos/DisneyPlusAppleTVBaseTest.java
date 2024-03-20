@@ -5,8 +5,10 @@ import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.*;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +43,16 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
+    }
+
+    public void addHoraValidationSku(DisneyAccount accountToEntitle) {
+        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
+            try {
+                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void installJarvis() {
@@ -176,6 +188,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
 
     public void collapseGlobalNav() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        pause(3);
         if (homePage.isGlobalNavExpanded()) {
             LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();

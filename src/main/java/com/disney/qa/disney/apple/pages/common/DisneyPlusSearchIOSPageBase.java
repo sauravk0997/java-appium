@@ -55,6 +55,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
     protected ExtendedWebElement recentSearchResultsView;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText")
+    protected ExtendedWebElement ratingAndYearDetailsOfContent;
+
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -223,4 +226,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         getStaticTextByLabel("Paste").click();
         return searchBar.getText();
     }
+
+    public String getSearchBarText() {
+        return searchBar.getText();
+    }
+
+    public String getRatingAndYearDetailsFromSearchResults(String title){
+        return ratingAndYearDetailsOfContent.format(title).getText();
+    }
+
 }

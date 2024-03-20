@@ -30,7 +30,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     private static final String DOB_ADULT = "01/01/1983";
     private static final String DOB_CHILD = "01/01/2018";
     private static final String PRETTY_FREEKIN_SCARY = "Pretty Freekin Scary";
-//    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
+    //    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyPlanTypes() {
         return new Object[][]{{DisneyPlusPaywallIOSPageBase.PlanType.BASIC},
@@ -160,6 +160,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusSignUpIOSPageBase.clickUncheckedBoxes();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
         dobCollectionPage.isOpened();
         dobCollectionPage.enterDOB(DOB_ADULT);
@@ -173,7 +176,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "Cancel button is not displayed.");
         sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
 
-        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+        sa.assertTrue(paywallIOSPageBase.isDisneyPlusPremiumTextDisplayed(),
                 "Cancel anytime text is not displayed.");
         sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
                 "Restore Purchase button is not displayed.");
@@ -420,9 +423,8 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
             paywall.submitSandboxPassword(R.TESTDATA.getDecrypted("sandbox_pw"));
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
-            }
+        }
         pause(5);
-        handleAlert();
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
@@ -430,7 +432,11 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
-        details.clickPlayButton();
+        if(details.getPlayButton().isPresent()) {
+            details.clickPlayButton();
+        } else {
+            details.clickContinueButton();
+        }
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
@@ -487,13 +493,19 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
+        pause(10);
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
 
         //Validate no ad badge in player after switch
+        pause(2);
         home.clickSearchIcon();
-        details.clickContinueButton();
+        if(details.getPlayButton().isPresent()) {
+            details.clickPlayButton();
+        } else {
+            details.clickContinueButton();
+        }
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
@@ -549,13 +561,18 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         } catch (NoSuchElementException nse) {
             LOGGER.info("Sandbox password was not prompted. Device may have it cached from a prior test run.");
         }
+        pause(10);
         acceptAlert();
         sa.assertTrue(account.isSubscriptionChangeFlashMessagePresent(), "Subscription change flash message did not appear");
         paywall.dismissNotificationsPopUp();
 
         //Validate no ad badge in player after switch
         home.clickSearchIcon();
-        details.clickPlayButton();
+        if(details.getPlayButton().isPresent()) {
+            details.clickPlayButton();
+        } else {
+            details.clickContinueButton();
+        }
         sa.assertFalse(video.isAdBadgeLabelPresent(), "Ad badge label present after video began");
         video.clickBackButton();
         details.isOpened();
@@ -654,7 +671,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
             sa.assertTrue(paywallIOSPageBase.isOpened(), "paywall screen didn't load");
         }
         sa.assertTrue(paywallPage.isOpened(),
-                    "Paywall Page did not open.");
+                "Paywall Page did not open.");
         sa.assertAll();
     }
 
@@ -695,7 +712,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         passwordPage.tapBackButton();
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         sa.assertTrue(accountIsMinorPage.isOpened(),
-                    "Account Minor Page did not open.");
+                "Account Minor Page did not open.");
         sa.assertAll();
     }
 }

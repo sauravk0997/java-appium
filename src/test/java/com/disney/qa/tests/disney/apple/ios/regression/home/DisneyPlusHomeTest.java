@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -11,7 +12,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+
 public class DisneyPlusHomeTest extends DisneyBaseTest {
+    private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
+    private static final String DISNEY_PLUS = "Disney Plus";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -22,6 +27,40 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         launchDeeplink(true, R.TESTDATA.get("disney_prod_home_deeplink"), 10);
         homePage.clickOpenButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
+    @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
+    public void verifyHomeUIElements() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        //Validate top of home
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found.");
+        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+        BufferedImage recommendedForYouLastTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+        BufferedImage recommendedForYouFirstTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        sa.assertTrue(areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView), "Recommended For You first tile in view and last tile in view images are the same.");
+
+        BufferedImage topOfHome = getCurrentScreenView();
+
+        //Capture bottom of home
+        swipeInContainer(null, Direction.UP, 5, 500);
+        BufferedImage closeToBottomOfHome = getCurrentScreenView();
+
+        //Validate back at top of home
+        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS), 10, null, Direction.DOWN, 300);
+        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found after return to top of home.");
+
+        //Validate images are different
+        sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
+                "Top of home image is the same as bottom of home image.");
+        sa.assertAll();
     }
 
     @Maintainer("hpatel7")

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.disney.qa.common.constant.CollectionConstant;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -26,7 +25,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "Disney Plus")
     private ExtendedWebElement disneyPlusLogo;
-
 
     @ExtendedFindBy(accessibilityId = "Mickey and Friends")
     private ExtendedWebElement mickeyAndFriends;
@@ -169,8 +167,35 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
-        return getElementTypeCellByLabel(brand);
+        return getTypeCellLabelContains(brand);
+    }
 
+    public boolean isHomePageLoadPresent() {
+        String homePageLoad = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.HOME_PAGE_LOAD.getText());
+        return getDynamicAccessibilityId(homePageLoad).isPresent();
+    }
+
+    public void clickBrandTile(DisneyPlusBrandIOSPageBase.Brand brand) {
+        switch (brand) {
+            case DISNEY:
+                clickDisneyTile();
+                break;
+            case PIXAR:
+                clickPixarTile();
+                break;
+            case MARVEL:
+                clickMarvelTile();
+                break;
+            case STAR_WARS:
+                clickStarWarsTile();
+                break;
+            case NATIONAL_GEOGRAPHIC:
+                clickNatGeoTile();
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' Brand is not a valid option", brand));
+        }
     }
 
     public boolean isRecommendedForYouContainerPresent(){

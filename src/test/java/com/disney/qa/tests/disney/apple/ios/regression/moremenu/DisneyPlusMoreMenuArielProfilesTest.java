@@ -283,6 +283,36 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
+    @Test(description = "Profiles - Add Profile - Kids Profile / Junior Mode UI", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileJuniorProfileUI() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on add profile page");
+        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Profile sub copy is not present");
+        sa.assertTrue(editProfilePage.isLearnMoreLinkPresent(), "learn more hyper link is not found");
+        addProfile.tapJuniorModeToggle();
+        addProfile.clickSaveProfileButton();
+        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            parentalConsent.scrollConsentContent(4);
+        }
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        sa.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
+        sa.assertAll();
+    }
+
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
     @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
@@ -638,6 +668,24 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
+        sa.assertAll();
+    }
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72348"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Primary Profile - DOB & Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyPrimaryProfilesEditProfileDOBGender() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+
+        editProfiles.clickEditModeProfile(getAccount().getProfile(DEFAULT_PROFILE).getProfileName());
+        sa.assertTrue(editProfiles.isBirthdateHeaderDisplayed(), "Birthdate header is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isBirthdateDisplayed(getAccount().getProfile(DEFAULT_PROFILE)),"Birthdate is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderButtonPresent(), "Gender header is not displayed on edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderValuePresent(getAccount().getProfile(DEFAULT_PROFILE)), "Gender value is not as expected on the edit profiles screen");
         sa.assertAll();
     }
 

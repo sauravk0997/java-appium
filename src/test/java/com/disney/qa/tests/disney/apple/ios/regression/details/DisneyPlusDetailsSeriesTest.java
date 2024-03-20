@@ -83,32 +83,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62435"})
-    @Test(description = "Series Details Screen - Play vs Continue", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifySeriesPlayVsContinue() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        disneyPlusSearchIOSPageBase.selectRandomTitle();
-        //waiting for group watch pop-up to dismiss
-        pause(3);
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesPlayButtonExist(), "Play button doesn't exist on details page.");
-        disneyPlusDetailsIOSPageBase.clickPlayButton();
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video player was not opened.");
-        pause(35);
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(), "Video player was not closed.");
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.doesContinueButtonExist(), "Continue button doesn't exist on details page.");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
     @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyRemoveSeriesFromWatchlist() {
@@ -257,9 +231,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_loki_share_link");
-
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", DETAILS_TAB_METADATA_SERIES));
-
+        //There is limitation of char that can be displayed in search bar
+        sa.assertTrue(expectedUrl.contains(url), "String.format(\"Share link for movie %s is not the expected\", DETAILS_TAB_METADATA_SERIES)");
         sa.assertAll();
     }
 
@@ -314,8 +287,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         List<Integer> seriesExtrasDuration = getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoDurations();
         long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration.get(0));
         //Get actual duration from trailer cell
-        String[] extrasCell = detailsPage.getTypeCellLabelContains("Trailer").getText().split(",");
-        String actualDuration = extrasCell[1].trim().split(" ")[0];
+        String actualDuration = detailsPage.getFirstDurationLabel().getText().split("m")[0];
         sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
                 "Series extra duration is not the same value as actual value returned on details page.");
 
@@ -323,6 +295,209 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75166"})
+    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyResumeStateSeriesEpisodesTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not opened.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present on Details page");
+        detailsPage.getEpisodesTab().click();
+        sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
+        detailsPage.getSeasonSelectorButton().click();
+        sa.assertTrue(detailsPage.getItemPickerClose().isPresent(), "Season Item picker close CTA not found");
+        sa.assertTrue(detailsPage.getSeasonItemPicker().isPresent(), "Season Item not found");
+        detailsPage.getItemPickerClose().click();
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download all session not found on Episodes tab");
+        sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
+        sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
+        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Season button 1 button is was found.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
+    @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesResumeBehavior() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SECRET_INVASION);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        detailsPage.getTrailerButton().click();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+
+        videoPlayer.clickBackButton();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.validateResumeTimeRemaining(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
+    @Test(description = "Details Page - Resume State - Series", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyResumeStateSeries() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(30);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not present");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Prey media title not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present.");
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present.");
+
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present.");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not present.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not present.");
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72418"})
+    @Test(description = "Series Details verify playback behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesPlayBehavior() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.clickSeriesTab();
+        searchPage.selectRandomTitle();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyVideoPlayingFromBeginning(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61463"})
+    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+        videoPlayer.scrubToPlaybackPercentage(5);
+
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present.");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present.");
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present.");
+
+        detailsPage.clickContinueButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not present.");
+
+        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        detailsPage.tapBackButton();
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        detailsPage.clickDetailsTab();
+        detailsPage.swipeTillActorsElementPresent();
+
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
     }
 }

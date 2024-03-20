@@ -295,7 +295,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
     protected ExtendedWebElement stayUpToDatePopup;
 
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1182,6 +1181,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeAlertByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ERROR_COLLECTION_UNAVAILABLE.getText()));
     }
 
+    public ExtendedWebElement getTypeAlertByLabel(String label){
+        return typeAlertByLabel.format(label);
+    }
     /**
      * Select random tile, scroll to specific collection, then selects random tile
      *
@@ -1256,6 +1258,36 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
         this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public void swipeLeftInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
+        int count = number;
+        while (count >= 0) {
+            swipeLeftInCollection(collection);
+            count--;
+        }
+    }
+
+    public void swipeRightInCollection(CollectionConstant.Collection collection) {
+        ExtendedWebElement collectionElement = getCollection(collection);
+        Point elementLocation = collectionElement.getLocation();
+        Dimension elementDimensions = collectionElement.getSize();
+
+        int startY;
+        int endY = startY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+
+
+        this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public void swipeRightInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
+        int count = number;
+        while (count >= 0) {
+            swipeRightInCollection(collection);
+            count--;
+        }
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {

@@ -6,6 +6,11 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
+        BRANDS_DISNEY_ORIGINALS,
+        BRANDS_PIXAR_FEATURED,
+        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
+        BRANDS_MARVEL_FEATURED,
+        BRANDS_STAR_WARS_ORIGINALS,
         CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
@@ -33,6 +38,16 @@ public class CollectionConstant {
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
+            case BRANDS_DISNEY_ORIGINALS:
+                return "c7e20abb-ff52-4d21-a2f6-46618c4118e8";
+            case BRANDS_PIXAR_FEATURED:
+                return "e1aa64e4-a3aa-4fe8-b9d7-82e5c390d7ba";
+            case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
+                return "4deffc6a-e93d-4720-8aee-cbed79784b46";
+            case BRANDS_MARVEL_FEATURED:
+                return "15194ee1-cc3d-47ae-a54e-869c64da2e10";
+            case BRANDS_STAR_WARS_ORIGINALS:
+                return "9fb4cc69-6d90-4d1f-ae5d-0c5dca626e3c";
             case CAROUSEL:
                 return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:

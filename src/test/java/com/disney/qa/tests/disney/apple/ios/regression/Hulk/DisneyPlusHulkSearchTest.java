@@ -298,4 +298,28 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
                 "Empty Watchlist text/logo was not displayed");
         sa.assertAll();
     }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74649"})
+    @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyMaxLimitSearchQuery() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String searchLimitQuery = "automationsearchlongqueryformaximumSixtyfourcharacterlimittest!!";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(searchLimitQuery);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
+        sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
+              "Maximum number of characters is not allowed in search field.");
+        searchPage.searchForMedia(searchLimitQuery+"D");
+        sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
+                "character after 64 char is accepted in search bar");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
+        sa.assertAll();
+    }
 }
