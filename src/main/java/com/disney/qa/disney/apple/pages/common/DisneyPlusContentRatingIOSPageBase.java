@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final String ratingDescription = "Features titles rated %s and below.";
+    private static String ratingDescription = "Features titles rated %s and below.";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeStaticText' AND label = 'Content Rating'$]/XCUIElementTypeButton")
     private ExtendedWebElement contentRatingInfoButton;
