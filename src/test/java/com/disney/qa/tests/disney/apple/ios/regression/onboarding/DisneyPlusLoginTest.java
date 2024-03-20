@@ -406,6 +406,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         request.setOrderSettings(orderList);
         DisneyAccount accountWithBillingHold = getAccountApi().createAccount(request);
 
+        restart();
+
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(accountWithBillingHold);
 
