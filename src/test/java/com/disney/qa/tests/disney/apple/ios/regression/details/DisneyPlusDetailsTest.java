@@ -68,35 +68,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
         sa.assertAll();
     }
-    @Deprecated
-    @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71124"})
-    @Test(description = "Details Page - IMAX Enhanced - Promo Labels", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyIMAXEnhancedPromoLabels() {
-        String filterValue = "IMAX Enhanced";
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.clickMoviesTab();
-        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            searchPage.clickContentPageFilterDropDown();
-            swipe(searchPage.getStaticTextByLabel(filterValue));
-            searchPage.getStaticTextByLabel(filterValue).click();
-        }else{
-            searchPage.getTypeButtonByLabel(filterValue).click();
-        }
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
-        sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
-        sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
-        sa.assertAll();
-    }
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71125"})
