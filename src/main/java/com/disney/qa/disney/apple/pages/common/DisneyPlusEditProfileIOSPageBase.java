@@ -46,7 +46,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @FindBy(xpath = "//XCUIElementTypeCell[@name=\"kidProofExitToggleCell\"]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement kidProofExitLabel;
 
-    @FindBy(xpath = "//XCUIElementTypeCell[@name=\"kidProofExitToggleCell\"]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"kidsProfileToggleCell\"`]/**/XCUIElementTypeOther[`name == \"toggleView\"`]")
     private ExtendedWebElement kidProofExitToggleSwitch;
 
     //Visibility set to false
