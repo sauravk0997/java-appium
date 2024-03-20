@@ -121,7 +121,7 @@ public enum DictionaryKeys {
     DATE_OF_BIRTH_TITLE("date_of_birth_title"),
     DELETE_ACCOUNT_MENU_ITEM("delete_account_menu_item"),
     DELETE_PROFILE_TITLE("delete_profile_title"),
-    DELETE_PROFILE_COPY("delete_profile-copy"),
+    DELETE_PROFILE_COPY("delete_profile_copy"),
     DELETE_DOWNLOADS_DELETE_BTN("btn_delete_all_downloads_delete"),
     DELETE_DOWNLOADS_LABEL("delete_downloads_label"),
     DELETE_MULTIPLE_DOWNLOADS("delete_all_downloads_alert_copy"),

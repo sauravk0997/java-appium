@@ -400,10 +400,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyAccount accountV2 = createV2Account();
         getAccountApi().addProfile(accountV2, SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         setAppToHomeScreen(accountV2);
 
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button was not found.");
 
@@ -417,7 +419,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getDeleteProfileButton().click();
         sa.assertTrue(editProfile.getDeleteProfileCancelButton().isPresent(), "Delete Profile cancel button was not found.");
         sa.assertTrue(editProfile.getDeleteProfileDeleteButton().isPresent(), "Delete Profile delete button was not found.");
-        sa.assertTrue(editProfile.getDeleteProfileTitle(SECONDARY_PROFILE).isPresent(), "Delete Profile title waas not found.");
+        sa.assertTrue(editProfile.getDeleteProfileTitle(SECONDARY_PROFILE).isPresent(), "Delete Profile page load (title and copy) was not found");
         sa.assertTrue(editProfile.getDeleteProfileCopy().isPresent(), "Delete Profile copy was not found.");
         sa.assertAll();
     }
