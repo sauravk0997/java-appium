@@ -409,7 +409,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         restart();
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(accountWithBillingHold);
+        DisneyAccount sanityCheck = new DisneyAccount();
+        sanityCheck.setEmail("testguid+17109427658371c38@gsuite.disneyplustesting.com");
+        sanityCheck.setUserPass("M1ck3yM0us3#");
+        login(sanityCheck);
 
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), "Logout button not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldTitle().isPresent(), "Account Hold Title not present");
