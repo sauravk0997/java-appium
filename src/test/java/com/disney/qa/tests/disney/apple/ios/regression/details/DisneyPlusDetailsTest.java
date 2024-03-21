@@ -283,7 +283,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
     @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyShopPromoLabelInDetailPage() {
+    public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -298,6 +298,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
         sa.assertAll();
     }
 
