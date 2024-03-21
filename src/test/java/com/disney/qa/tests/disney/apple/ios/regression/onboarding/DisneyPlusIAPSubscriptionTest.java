@@ -299,6 +299,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         dobCollectionPage.isOpened();
         dobCollectionPage.enterDOB(DOB_ADULT);
 
+        paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.BASIC));
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "XMOBQA-62241-Choose your plan card 'title' is not as expected");
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "XMOBQA-62241-Choose your plan card 'subtitle' is not as expected");
 
