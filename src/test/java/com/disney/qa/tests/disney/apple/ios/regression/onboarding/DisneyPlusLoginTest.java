@@ -1,6 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.pojos.DisneyOrder;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +31,9 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -390,7 +397,15 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusAccountOnHoldIOSPageBase disneyPlusAccountOnHoldIOSPageBase = initPage(DisneyPlusAccountOnHoldIOSPageBase.class);
 
-        DisneyAccount accountWithBillingHold = getAccountApi().createAccountWithBillingHold("Yearly", "US", "en", "V2");
+        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        request.setLanguage(getLanguage());
+        request.setCountry(getCountry());
+        request.setSkus(Arrays.asList(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY));
+        List<DisneyOrder> orderList = new LinkedList();
+        orderList.add(DisneyOrder.SET_BILLING_HOLD);
+        request.setOrderSettings(orderList);
+        DisneyAccount accountWithBillingHold = getAccountApi().createAccount(request);
+
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(accountWithBillingHold);
 

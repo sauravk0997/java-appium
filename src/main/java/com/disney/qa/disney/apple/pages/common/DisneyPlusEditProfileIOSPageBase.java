@@ -46,7 +46,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @FindBy(xpath = "//XCUIElementTypeCell[@name=\"kidProofExitToggleCell\"]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement kidProofExitLabel;
 
-    @FindBy(xpath = "//XCUIElementTypeCell[@name=\"kidProofExitToggleCell\"]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"kidsProfileToggleCell\"`]/**/XCUIElementTypeOther[`name == \"toggleView\"`]")
     private ExtendedWebElement kidProofExitToggleSwitch;
 
     //Visibility set to false
@@ -100,9 +100,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
 
-    private ExtendedWebElement contentRatingHeader = getDynamicXpath(String.format("//*[@name=\"%s\" or @name=\"%s\"]",
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, MATURITY_RATING_SETTINGS_LABEL.getText()),
-            MATURITY_RATING_SETTINGS_LABEL.getText()));
+    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public ExtendedWebElement getDeleteProfileButton() {
         return deleteProfileButton;
@@ -290,6 +289,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText())).isPresent();
     }
 
+    public void waitForUpdatedToastToDisappear() {
+        ExtendedWebElement updatedToast = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText()));
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
+                .until(it -> updatedToast.isElementNotPresent(SHORT_TIMEOUT));
+    }
     public void toggleAutoplayButton(String newState) {
         String currentState = autoplayToggleCell.getText();
         LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);

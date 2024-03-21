@@ -181,7 +181,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61993", "XMOBQA-61165", "XMOBQA-61271", "XMOBQA-61267"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61993", "XMOBQA-61165", "XMOBQA-61271"})
     @Test(description = "Autoplay does not autoplay if disabled", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
