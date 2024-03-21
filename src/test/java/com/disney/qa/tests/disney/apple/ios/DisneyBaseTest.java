@@ -54,6 +54,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    public static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
