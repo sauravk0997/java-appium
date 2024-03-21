@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,6 +48,8 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -56,6 +60,7 @@ import org.testng.annotations.BeforeSuite;
 @SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
+    private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
     protected static final String CHECKED = "Checked";
@@ -353,6 +358,32 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
 
+    private void limitDevicePoolForIOS17() {
+        LOGGER.warn("Limiting device pool for IOS 17 only...");
+        List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
+        String subset = localContext.get().getCurrentXmlTest().getParameter("iapDevices");
+        LOGGER.info("Config Devices: {}", devices);
+        if (devices.get(0).equals("any")) {
+            LOGGER.info("deviceName set to 'any.' Using full subset.");
+            R.CONFIG.put("capabilities.deviceName", subset, true);
+        } else {
+            LOGGER.info("Specific device found. Checking for matching entry");
+            List<String> iOS17Subset = List.of(subset.split(","));
+            List<String> customList = new LinkedList<>();
+            devices.forEach(device -> {
+                if (iOS17Subset.contains(device)) {
+                    customList.add(device);
+                }
+            });
+
+            if (customList.isEmpty()) {
+                Assert.fail("No valid devices were provided for IAP test. Leave deviceName=any or set to valid devices: " + subset);
+            } else {
+                R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
+            }
+        }
+    }
+
     /**
      * Executes a launchApp command depending on the bundle being used in test.
      */
@@ -390,20 +421,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
 
         switch (buildType) {
-        case ENTERPRISE:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
-                    .getDirectLink());
-            break;
-        case AD_HOC:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
-                    .getDirectLink());
-            break;
-        case IAP:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
-                    .getDirectLink());
+            case ENTERPRISE:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
+                        .getDirectLink());
+                break;
+            case AD_HOC:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
+                break;
+            case IAP:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
         }
     }
 
@@ -414,14 +445,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     public JarvisAppleBase getJarvisPageFactory() {
         switch (currentDevice.get().getDeviceType()) {
-        case APPLE_TV:
-            return new JarvisAppleTV(getDriver());
-        case IOS_PHONE:
-            return new JarvisHandset(getDriver());
-        case IOS_TABLET:
-            return new JarvisTablet(getDriver());
-        default:
-            throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
+            case APPLE_TV:
+                return new JarvisAppleTV(getDriver());
+            case IOS_PHONE:
+                return new JarvisHandset(getDriver());
+            case IOS_TABLET:
+                return new JarvisTablet(getDriver());
+            default:
+                throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
         }
     }
 
