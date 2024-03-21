@@ -90,7 +90,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
             }
         });
-        if (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)) {
+        if (context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)) {
             limitDevicePoolForIOS17();
         }
         setBuildType();
