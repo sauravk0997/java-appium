@@ -546,6 +546,54 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61310"})
+    @Test(description = "Profiles > Profile PIN - Manage", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyManageProfilePIN() {
+        SoftAssert sa = new SoftAssert();
+//        DisneyAccount account = createV2Account();
+//        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+//        try {
+//            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+//        } catch (Exception e) {
+//            throw new SkipException("Failed to update Profile pin: {}", e);
+//        }
+//        setAppToHomeScreen(account);
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+171105856681006ae@gsuite.disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        sa.assertTrue(pinPage.isOpened(), "Pin title was not found.");
+        IntStream.range(1, 4).forEach(i -> {
+            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present.");
+        });
+        sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin Protected profile avatar and lock was not found.");
+        sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Limit access messaging was not found.");
+
+
+        //navigate to second profile to validate existing profile - no profile pin
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            editProfile.swipeUp(500);
+        }
+        editProfile.getPinSettingsCell().click();
+//        passwordPage.enterPassword(account);
+        passwordPage.enterPasswordNoAccount("M1ck3yM0us3#");
+        pinPage.getPinCheckBox().click();
+        //validate keyboard pops up and checkbox fills
+
+        sa.assertAll();
+    }
+
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);

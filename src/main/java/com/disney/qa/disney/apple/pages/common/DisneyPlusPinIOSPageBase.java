@@ -25,6 +25,12 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "pinInputTitle")
     private ExtendedWebElement pinInputTitle;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Pin input field is empty\"`][%s]")
+    private ExtendedWebElement pinInputNumber;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
+    private ExtendedWebElement pinInputNumberWithKey;
+
     @Override
     public boolean isOpened() {
         return pinInputTitle.isPresent();
@@ -87,5 +93,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getLimitAccessMessaging(String profileName) {
         String profilePinDescription = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.SET_PROFILE_ENTRY_PIN_BODY.getText()), Map.of("profile_name", profileName));
         return getDynamicAccessibilityId(profilePinDescription);
+    }
+
+    public ExtendedWebElement getPinFieldNumber(int number) {
+        String pinInputEmpty = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText());
+        return dynamicRowOtherLabel.format(pinInputEmpty, number);
     }
 }
