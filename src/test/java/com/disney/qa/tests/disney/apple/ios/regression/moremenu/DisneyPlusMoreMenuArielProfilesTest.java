@@ -813,6 +813,37 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69503"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Kids Mode - Require Password to Disable Junior Mode Profile", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileKidsModeDisableJuniorMode() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
+        setAppToHomeScreen(getAccount());
+
+        whoIsWatching.clickProfile("Test");
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            editProfilePage.swipeUp(1500);
+        }
+        sa.assertTrue(editProfilePage.isJuniorModeTextPresent(), "Junior mode text was not present on edit profile page");
+
+        editProfilePage.getKidProofExitToggleSwitch().click();
+        sa.assertTrue(passwordPage.isAuthPasswordKidsProfileBodyDisplayed(), "Password Kids profile body is not displayed");
+
+        passwordPage.typePassword(getAccount().getUserPass());
+        passwordPage.clickPrimaryButton();
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
