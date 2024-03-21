@@ -813,6 +813,40 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61284"})
+    @Test(description = "Ariel: Profiles - Edit Profile - App UI Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileAppUILanguage() {
+        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfiles.clickEditModeProfile(getAccount().getFirstName());
+        editProfiles.clickAppLanguage();
+
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        sa.assertTrue(appLanguage.appLanguageHeaderIsPresent(), "App Language header is not present");
+        sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
+        sa.assertTrue(appLanguage.isLanguageSelected("English (US)"), "Language selected doesn't have the check mark");
+        sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present on alphabetical order");
+        swipeDown(1500);
+        swipeDown(1500);
+        appLanguage.getBackArrow().click();
+
+        sa.assertTrue(editProfiles.isEditTitleDisplayed(), "Edit profile page is not opened");
+        editProfiles.clickAppLanguage();
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+
+        appLanguage.selectLanguage("Español");
+        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Actualizado").isPresent(), "Language was changed to Spanish");
+        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Idioma").isPresent(), "Language was changed to Spanish");
+        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Español").isPresent(), "Language was changed to Spanish");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
