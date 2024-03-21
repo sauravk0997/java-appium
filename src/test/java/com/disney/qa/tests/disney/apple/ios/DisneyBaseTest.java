@@ -54,6 +54,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
     private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     private static final String TEST_XML_PLAYER_OBJECT = "Player";
+    private static final String TEST_XML_DEVICE_TYPE_ANY = "ANY";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
@@ -111,7 +112,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
         String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
         LOGGER.info("Config Devices: {}", devices);
-        if (devices.get(0).equals("any")) {
+        if (devices.get(0).equals(TEST_XML_DEVICE_TYPE_ANY)) {
             LOGGER.info("deviceName set to 'any.' Using full subset.");
             R.CONFIG.put("capabilities.deviceName", subset, true);
         } else {
@@ -125,7 +126,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             });
 
             if (customList.isEmpty()) {
-                Assert.fail("No valid devices were provided for IOS 17 only. Leave deviceName=any or set to valid devices: " + subset);
+                Assert.fail("No valid devices were provided for IOS 17 only. Leave deviceName=ANY or set to valid devices: " + subset);
             } else {
                 LOGGER.info("setting tablet devices to custom list {}",customList);
                 R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
