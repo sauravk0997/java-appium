@@ -27,9 +27,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(id = "cancelBarButton")
     private ExtendedWebElement pinCancelButton;
 
-    @FindBy(id = "saveButton")
-    private ExtendedWebElement pinSaveButton;
-
     @ExtendedFindBy(accessibilityId = "pinInputTitle")
     private ExtendedWebElement pinInputTitle;
 
@@ -94,9 +91,5 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getLimitAccessMessaging(String profileName) {
         String profilePinDescription = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.SET_PROFILE_ENTRY_PIN_BODY.getText()), Map.of("profile_name", profileName));
         return getDynamicAccessibilityId(profilePinDescription);
-    }
-
-    public ExtendedWebElement getPinSaveButton() {
-        return pinSaveButton;
     }
 }

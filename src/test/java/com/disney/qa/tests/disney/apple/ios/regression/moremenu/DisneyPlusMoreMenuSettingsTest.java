@@ -38,14 +38,15 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount(), TEST_USER);
 
-        File srcFile = homePage.getMoreMenuTab().getElement().getScreenshotAs(OutputType.FILE);
-        aliceDriver.recognizeScreenshot(srcFile);
+        softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not dispalyed");
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+            softAssert.assertTrue(homePage.isProfileNameDisplayed(TEST_USER), "Profile Name is not dispalyed");
+        }
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
@@ -56,6 +57,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
             softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(menuItem),
                     menuItem + " option was not be present");
         }
+        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
+                "App Version was not displayed");
 
         //verify that Profile Selector/Switch does NOT scroll if user scroll above element
         scrollUp();
@@ -248,7 +251,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         pinPage.getPinCheckBox().click();
         pinPage.getPinInputField().click();
         pinPage.getPinInputField().type("1111");
-        pinPage.getPinSaveButton().click();
+        pinPage.getSaveButton().click();
         editProfilePage.clickSaveProfileButton();
     }
 }

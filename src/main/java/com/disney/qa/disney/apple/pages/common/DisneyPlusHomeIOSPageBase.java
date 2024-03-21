@@ -194,4 +194,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getMoreMenuTab() {
         return moreTab;
     }
+
+    public boolean isProfileNameDisplayed(String name) {
+        return getTypeButtonByLabel(name).isPresent();
+    }
 }
