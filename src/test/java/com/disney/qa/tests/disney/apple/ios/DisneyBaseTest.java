@@ -61,6 +61,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RESTRICTED = "Restricted";
     public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
+    public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
 
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";

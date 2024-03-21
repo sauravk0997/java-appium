@@ -19,6 +19,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
+import java.security.SecureRandom;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -31,6 +33,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PROFILE_PIN = "1111";
     private static final String NEW_PROFILE_PIN = "1234";
+    private static final String SECONDARY_PROFILE_PIN = "4321";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -423,6 +426,92 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.getStaticTextByLabel(DEFAULT_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
         sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE),"Profile icon cell wasn't displayed for default profile");
         sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE),"Profile icon cell wasn't displayed for secondary profile");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61310"})
+    @Test(description = "Profiles > Profile PIN - Profile Access", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfilePinProfileAccess() {
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount account = createV2Account();
+        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getAccountApi().updateProfilePin(account, account.getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        //Validate UI
+        sa.assertTrue(pinPage.isOpened(), "'Enter your profile PIN` title was not found.");
+        sa.assertTrue(pinPage.getCancelButton().isPresent(), "Cancel button was not found.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Input field is not present.");
+        sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found on Profile PIN Page.");
+        sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin? button was not found.");
+
+        //Validate incorrect pin error
+        SecureRandom random = new SecureRandom();
+        int min=1000;
+        int max=9999;
+        IntStream.range(0, 10).forEach(i -> {
+            pinPage.clickProfilePin();
+            pinPage.enterProfilePin(String.valueOf(random.nextInt(max-min+1)+min));
+            sa.assertTrue(pinPage.getProfilePinInvalidErrorMessage().isPresent(), "Profile PIN Invalid Error message was not found.");
+            pinPage.clearPin();
+        });
+
+        //Validate correct pin
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(PROFILE_PIN);
+        sa.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
+
+        //Validate selecting pin protected profile from More Menu
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickPinProtectedProfile(SECONDARY_PROFILE);
+        sa.assertTrue(pinPage.isOpened(), "Profile pin page was not opened after clicking secondary pin protected profile.");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71782"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Maturity Rating Slider", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileMaturityRatingSlider() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusContentRatingIOSPageBase contentRatingPage = new DisneyPlusContentRatingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
+        editProfile.getContentRatingHeader().click();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(contentRatingPage.isOpened(), "Content rating page was not opened");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_R), RATING_R + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_MATURE), RATING_MATURE + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.verifyLastContentRating(RATING_MATURE), RATING_MATURE + " rating was not displayed at last");
+
+        //User select Rating R
+        contentRatingPage.selectContentRating(RATING_R);
+        contentRatingPage.clickSaveButton();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_R), "profile rating is not as expected");
+
+        //User select Rating TV-MA
+        editProfile.getContentRatingHeader().click();
+        passwordPage.enterPassword(getAccount());
+        contentRatingPage.selectContentRating(RATING_MATURE);
+        contentRatingPage.clickSaveButton();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
         sa.assertAll();
     }
 
