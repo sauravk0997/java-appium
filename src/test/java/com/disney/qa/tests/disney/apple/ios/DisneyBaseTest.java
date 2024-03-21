@@ -52,7 +52,8 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
-
+    private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
+    private static final String TEST_XML_PLAYER_OBJECT = "Player";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
@@ -85,12 +86,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
             if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
-                if (!context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES).isEmpty()) {
-                    limitDevicePoolForIOS17();
-                }
                 setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
             }
         });
+        if (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)) {
+            limitDevicePoolForIOS17();
+        }
         setBuildType();
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
@@ -105,7 +106,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void limitDevicePoolForIOS17() {
+    private void limitDevicePoolForIOS17() {
         LOGGER.warn("Limiting device pool for IOS 17 only...");
         List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
         String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
