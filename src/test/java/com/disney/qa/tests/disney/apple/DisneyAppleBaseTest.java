@@ -61,6 +61,7 @@ import org.testng.annotations.BeforeSuite;
 public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
+    public static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
     protected static final String CHECKED = "Checked";
@@ -358,10 +359,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
 
-    private void limitDevicePoolForIOS17() {
+    public void limitDevicePoolForIOS17() {
         LOGGER.warn("Limiting device pool for IOS 17 only...");
         List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
-        String subset = localContext.get().getCurrentXmlTest().getParameter("iapDevices");
+        String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
         LOGGER.info("Config Devices: {}", devices);
         if (devices.get(0).equals("any")) {
             LOGGER.info("deviceName set to 'any.' Using full subset.");
@@ -377,8 +378,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             });
 
             if (customList.isEmpty()) {
-                Assert.fail("No valid devices were provided for IAP test. Leave deviceName=any or set to valid devices: " + subset);
+                Assert.fail("No valid devices were provided for IOS 17 only. Leave deviceName=any or set to valid devices: " + subset);
             } else {
+                LOGGER.info("setting tablet devices to custom list {}",customList);
                 R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
             }
         }

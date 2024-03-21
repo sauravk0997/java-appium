@@ -24,6 +24,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
@@ -74,19 +75,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
-    public void beforeAnyAppActions() {
+    public void beforeAnyAppActions(ITestContext context) {
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
             if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
+                if (!context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES).isEmpty()) {
+                    limitDevicePoolForIOS17();
+                }
                 setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
             }
         });
         setBuildType();
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
-            //initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-            //relaunch();
-            //handleAlert();
         }
 
         try {
