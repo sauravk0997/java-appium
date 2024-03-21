@@ -339,7 +339,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             removeAdHocApps();
             removePurchaseApps();
         } else if (sessionBundles.get(APP).contains("Disney-Ad-Hoc") || sessionBundles.get(APP).contains("Disney_IAP") || sessionBundles.get(APP)
-                .contains("Disney_iOS_AdHoc")) {
+                .contains("Disney_iOS_AdHoc") || sessionBundles.get(APP).contains("Disney-IAP-Prod-AdHoc-for-Automation")) {
             buildType = BuildType.IAP;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getIapBundle());
             removeEnterpriseApps();
