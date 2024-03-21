@@ -113,7 +113,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
         String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
         LOGGER.info("Config Devices: {}", devices);
-        if (devices.get(0).equals("any")) {
+        if (devices.get(0).equals("ANY")) {
             LOGGER.info("deviceName set to 'any.' Using full subset.");
             R.CONFIG.put("capabilities.deviceName", subset, true);
         } else {
