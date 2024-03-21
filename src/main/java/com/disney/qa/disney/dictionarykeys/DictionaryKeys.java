@@ -321,6 +321,7 @@ public enum DictionaryKeys {
     PRODUCT_PLACEMENT_DISCLAIMER("product_placement_disclaimer"),
     PROFILE_ENTRY_PIN_CANCEL("profile_entry_pin_cancel"),
     PROFILE_ENTRY_PIN_FORGOT_PIN("profile_entry_pin_forgot_pin"),
+    PROFILE_PIN_INVALID("profilepininvalid"),
     PROFILE_PIN_MISSING("profilepinmissing"),
     PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION("profile_settings_entry_pin_description"),
     PROFILE_SETTINGS_ENTRY_PIN_LABEL("profile_settings_entry_pin_label"),

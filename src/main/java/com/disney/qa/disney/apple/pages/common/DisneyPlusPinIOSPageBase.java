@@ -16,11 +16,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    private ExtendedWebElement pinInputField = getDynamicXpath(String.format("(//*[@name='%s' or @name='%s'])[%s]", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                    DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()),
-            DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText(),
-            1));
-
     @FindBy(id = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
 
@@ -50,20 +45,21 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getPinInputField() {
-        return pinInputField;
-    }
-
-    public ExtendedWebElement getForgotPinInputField() {
         return getTypeOtherContainsLabel(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()));
     }
 
+    public ExtendedWebElement getProfilePinInvalidErrorMessage() {
+        return getStaticTextByLabel(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.PROFILE_PIN_INVALID.getText()));
+    }
+
     public void clickProfilePin() {
-        getForgotPinInputField().click();
+        getPinInputField().click();
     }
 
     public void enterProfilePin(String pin) {
-        getForgotPinInputField().type(pin);
+        getPinInputField().type(pin);
     }
 
     public void clearPin() {
