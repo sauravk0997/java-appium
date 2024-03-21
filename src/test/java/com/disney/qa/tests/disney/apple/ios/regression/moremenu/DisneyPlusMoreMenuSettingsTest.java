@@ -1,8 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.alice.AliceDriver;
-import com.disney.hatter.api.alice.model.ImagesRequestS3;
-import com.disney.hatter.core.utils.FileUtil;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -16,12 +13,10 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.openqa.selenium.OutputType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
