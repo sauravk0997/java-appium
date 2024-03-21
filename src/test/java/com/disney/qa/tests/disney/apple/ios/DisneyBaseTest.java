@@ -4,6 +4,8 @@ import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
@@ -24,6 +26,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -47,6 +50,8 @@ import com.zebrunner.carina.utils.factory.DeviceType;
  */
 @SuppressWarnings("squid:S2187")
 public class DisneyBaseTest extends DisneyAppleBaseTest {
+
+    private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
@@ -76,6 +81,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
     public void beforeAnyAppActions(ITestContext context) {
+        localContext.set(context);
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
             if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
@@ -97,6 +103,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
         handleAlert();
+    }
+
+    public void limitDevicePoolForIOS17() {
+        LOGGER.warn("Limiting device pool for IOS 17 only...");
+        List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
+        String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
+        LOGGER.info("Config Devices: {}", devices);
+        if (devices.get(0).equals("any")) {
+            LOGGER.info("deviceName set to 'any.' Using full subset.");
+            R.CONFIG.put("capabilities.deviceName", subset, true);
+        } else {
+            LOGGER.info("Specific device found. Checking for matching entry");
+            List<String> iOS17Subset = List.of(subset.split(","));
+            List<String> customList = new LinkedList<>();
+            devices.forEach(device -> {
+                if (iOS17Subset.contains(device)) {
+                    customList.add(device);
+                }
+            });
+
+            if (customList.isEmpty()) {
+                Assert.fail("No valid devices were provided for IOS 17 only. Leave deviceName=any or set to valid devices: " + subset);
+            } else {
+                LOGGER.info("setting tablet devices to custom list {}",customList);
+                R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
+            }
+        }
     }
 
     @Getter
