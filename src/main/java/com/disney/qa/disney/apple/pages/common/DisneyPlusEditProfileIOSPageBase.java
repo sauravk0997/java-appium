@@ -440,6 +440,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isErrorDuplicateProfileNamePresent() {
-        return staticTextLabelName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText())).isPresent();
+        String message =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
+        LOGGER.info("Error Message by dictionary: {}", message);
+        return staticTextLabelName.format(message).isPresent();
     }
 }
