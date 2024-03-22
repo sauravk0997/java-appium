@@ -41,7 +41,9 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
-        homePage.isOpened();
+        if (!homePage.isOpened()) {
+            brandPage.getBackButton().click();
+        }
         sa.assertTrue(homePage.getDynamicCellByLabel(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
 
