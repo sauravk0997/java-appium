@@ -53,7 +53,9 @@ import org.testng.annotations.BeforeSuite;
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
  */
+@SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
     protected static final String CHECKED = "Checked";
