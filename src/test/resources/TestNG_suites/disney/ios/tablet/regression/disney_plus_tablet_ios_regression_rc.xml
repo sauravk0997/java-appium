@@ -100,10 +100,16 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk2 Video Player" parallel="methods">
+        <parameter name="iOS17TabletDevices"
+                   value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
         </classes>
     </test>
 </suite>

@@ -109,7 +109,6 @@
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-
         </classes>
     </test>
 </suite>
