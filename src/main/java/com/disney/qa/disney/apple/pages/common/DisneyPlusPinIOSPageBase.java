@@ -16,11 +16,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    private ExtendedWebElement pinInputField = dynamicRowOtherLabel.format( getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                    DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()),
-            DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText(),
-            1);
-
     @FindBy(id = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
 
