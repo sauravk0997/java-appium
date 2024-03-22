@@ -51,8 +51,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     private static final String TEST_XML_PLAYER_OBJECT = "Player";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    public static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
@@ -102,40 +100,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-<<<<<<< HEAD
-    private void limitDevicePoolForIOS17() {
-        LOGGER.warn("Limiting device pool for IOS 17 only...");
-        List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
-        String subset = localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES);
-        LOGGER.info("Config Devices: {}", devices);
-        if (devices.get(0).equals("ANY")) {
-            LOGGER.info("deviceName set to 'any.' Using full subset.");
-            R.CONFIG.put("capabilities.deviceName", subset, true);
-        } else {
-            LOGGER.info("Specific device found. Checking for matching entry");
-            List<String> iOS17Subset = List.of(subset.split(","));
-            List<String> customList = new LinkedList<>();
-            devices.forEach(device -> {
-                if (iOS17Subset.contains(device)) {
-                    customList.add(device);
-                }
-            });
-
-            if (customList.isEmpty()) {
-                Assert.fail("No valid devices were provided for IOS 17 only. Leave deviceName=any or set to valid devices: " + subset);
-            } else {
-                LOGGER.info("setting tablet devices to custom list {}",customList);
-                R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
-            }
-=======
     private void limitTabletDevicePoolToIOS17(ITestContext context) {
         LOGGER.info("Checking to limit tablet player tests to iOS 17...");
         if (context.getCurrentXmlTest().getParameter("jenkinsJobName") == null ||
                 (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)
-                && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) != null)) {
+                        && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) != null)) {
             LOGGER.info("Bypassing setting tablet player tests to iOS 17.");
             return;
->>>>>>> f4b7f05c74fb60cbe2bab3ad8fa948b71bbd3185
         }
 
         LOGGER.warn("Limiting tablet device pool to iOS 17 only...");
@@ -299,18 +270,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).click();
             tries++;
             switch (tab) {
-            case MORE_MENU:
-                isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
-                break;
-            case HOME:
-                isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-                break;
-            case SEARCH:
-                isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
-                break;
-            case DOWNLOADS:
-                isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
-                break;
+                case MORE_MENU:
+                    isOpened = initPage(DisneyPlusMoreMenuIOSPageBase.class).isOpened();
+                    break;
+                case HOME:
+                    isOpened = initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
+                    break;
+                case SEARCH:
+                    isOpened = initPage(DisneyPlusSearchIOSPageBase.class).isOpened();
+                    break;
+                case DOWNLOADS:
+                    isOpened = initPage(DisneyPlusDownloadsIOSPageBase.class).isOpened();
+                    break;
             }
         } while (!isOpened && tries < 3);
     }
