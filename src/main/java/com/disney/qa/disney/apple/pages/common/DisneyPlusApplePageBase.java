@@ -232,7 +232,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @FindBy(xpath = "//*[contains(@label, \"%s\")]")
     private ExtendedWebElement dynamicXpathContainslabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[%s]/XCUIElementTypeCell[%s]")
-    private ExtendedWebElement dynamicRowColumnContent;
+    protected ExtendedWebElement dynamicRowColumnContent;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
     private ExtendedWebElement keyboardContinue;
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
@@ -1338,6 +1338,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             return iPhoneKeyboardDelete;
         } else {
             return iPadKeyboardDelete;
+        }
+    }
+
+public ExtendedWebElement getPinProtectedProfileIcon(String name) {
+    return getDynamicAccessibilityId(
+            getDictionary().formatPlaceholderString(
+                    getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+}
+
+    public ExtendedWebElement getCellPinProtectedProfileIcon(String name) {
+        return dynamicCellByLabel.format(
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+    }
+
+    public boolean isPinProtectedProfileIconPresent(String name) {
+        if (getCellPinProtectedProfileIcon(name).isPresent(SHORT_TIMEOUT)) {
+            return getCellPinProtectedProfileIcon(name).isPresent();
+        } else {
+            return getPinProtectedProfileIcon(name).isPresent();
         }
     }
 }

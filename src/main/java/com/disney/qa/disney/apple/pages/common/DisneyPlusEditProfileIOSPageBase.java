@@ -100,9 +100,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
 
-    private ExtendedWebElement contentRatingHeader = getDynamicXpath(String.format("//*[@name=\"%s\" or @name=\"%s\"]",
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, MATURITY_RATING_SETTINGS_LABEL.getText()),
-            MATURITY_RATING_SETTINGS_LABEL.getText()));
+    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public ExtendedWebElement getDeleteProfileButton() {
         return deleteProfileButton;
@@ -438,5 +437,22 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText())).isPresent() &&
                 profilePinLabel.isPresent();
+    }
+
+    public ExtendedWebElement getDeleteProfileCancelButton() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
+    }
+
+    public ExtendedWebElement getDeleteProfileDeleteButton() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DELETE.getText()));
+    }
+
+    public ExtendedWebElement getDeleteProfileTitle(String profileName) {
+        String deleteProfileTitle = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_TITLE.getText()), Map.of("user_profile", profileName));
+        return getStaticTextByLabel(deleteProfileTitle);
+    }
+
+    public ExtendedWebElement getDeleteProfileCopy() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
     }
 }
