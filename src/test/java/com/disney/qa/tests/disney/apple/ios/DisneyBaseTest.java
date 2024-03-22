@@ -3,9 +3,7 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
@@ -26,7 +24,6 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -36,7 +33,6 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
@@ -54,6 +50,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
     private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
     private static final String TEST_XML_PLAYER_OBJECT = "Player";
+    private static final String TEST_XML_DEVICE_TYPE_ANY = "ANY";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
@@ -85,15 +82,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
     public void beforeAnyAppActions(ITestContext context) {
         localContext.set(context);
+        limitTabletDevicePoolToIOS17(context);
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
             if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
                 setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
             }
         });
-        if (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)) {
-            limitDevicePoolForIOS17();
-        }
         setBuildType();
         if (buildType == BuildType.IAP) {
             LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
@@ -108,6 +103,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
+<<<<<<< HEAD
     private void limitDevicePoolForIOS17() {
         LOGGER.warn("Limiting device pool for IOS 17 only...");
         List<String> devices = List.of(R.CONFIG.get("capabilities.deviceName").split(","));
@@ -132,7 +128,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 LOGGER.info("setting tablet devices to custom list {}",customList);
                 R.CONFIG.put("capabilities.deviceName", String.join(",", customList), true);
             }
+=======
+    private void limitTabletDevicePoolToIOS17(ITestContext context) {
+        LOGGER.info("Checking to limit tablet player tests to iOS 17...");
+        if (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)
+                && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) != null) {
+            LOGGER.info("Bypassing setting tablet player tests to iOS 17.");
+            return;
+>>>>>>> f4b7f05c74fb60cbe2bab3ad8fa948b71bbd3185
         }
+
+        LOGGER.warn("Limiting tablet device pool to iOS 17 only...");
+        List<String> OS13devices = Collections.singletonList(localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES));
+        LOGGER.info("Setting tablet devices to custom list {}", OS13devices);
+        R.CONFIG.put("capabilities.deviceName", String.join(",", OS13devices), true);
     }
 
     @Getter
