@@ -183,6 +183,7 @@ public enum DictionaryKeys {
     ENTER_YOUR_PASSWORD("enter_your_password"),
     EPISODE_PLACEHOLDER("episode_placeholder"),
     ERROR_COLLECTION_UNAVAILABLE("error_collection_unavailable"),
+    ERROR_DUPLICATE_PROFILE_NAME("error_duplicate_profile_name"),
     EU_PRIVACY("footer_eup_login_eu_privacy_rights"),
     EXISTING_SUBS_DATE_OF_BIRTH_TITLE("existing_subs_date_of_birth_title"),
     EXISTING_SUBS_DATE_OF_BIRTH_DESCRIPTION("existing_subs_date_of_birth_description"),

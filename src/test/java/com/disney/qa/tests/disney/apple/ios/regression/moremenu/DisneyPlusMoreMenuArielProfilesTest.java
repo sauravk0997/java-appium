@@ -9,6 +9,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -841,6 +842,29 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.typePassword(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDuplicateProfileError() {
+        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+
+        editProfilePage.enterProfileName("Test");
+        editProfilePage.clickSaveBtn();
+        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error Duplicate Profile Name is not present");
         sa.assertAll();
     }
 

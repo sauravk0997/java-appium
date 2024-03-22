@@ -438,4 +438,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText())).isPresent() &&
                 profilePinLabel.isPresent();
     }
+
+    public boolean isErrorDuplicateProfileNamePresent() {
+        return staticTextLabelName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText())).isPresent();
+    }
 }
