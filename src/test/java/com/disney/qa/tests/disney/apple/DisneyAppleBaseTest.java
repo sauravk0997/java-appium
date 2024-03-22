@@ -3,8 +3,6 @@ package com.disney.qa.tests.disney.apple;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,8 +46,6 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
-import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -354,8 +350,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
-
-
 
     /**
      * Executes a launchApp command depending on the bundle being used in test.
