@@ -95,7 +95,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         return profileIcon.isPresent();
 
     }
-    
+
     public void clickProfile(String name) {
         clickProfile(name, false);
     }

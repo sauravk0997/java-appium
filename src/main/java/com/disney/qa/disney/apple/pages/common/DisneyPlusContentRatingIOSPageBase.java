@@ -3,19 +3,31 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase {
+
+    private static String ratingDescription = "Features titles rated %s and below.";
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeStaticText' AND label = 'Content Rating'$]/XCUIElementTypeButton")
+    private ExtendedWebElement contentRatingInfoButton;
+
+    @ExtendedFindBy(accessibilityId = "saveButton")
+    protected ExtendedWebElement saveButton;
+
+    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(xpath = "//XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton")
-    private ExtendedWebElement contentRatingInfoButton;
-
+    @Override
+    public boolean isOpened() {
+        return contentRatingHeader.isPresent(SHORT_TIMEOUT);
+    }
 
     private ExtendedWebElement gotItButton = xpathNameOrName.format(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
@@ -27,5 +39,28 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
 
     public ExtendedWebElement getContentRatingInfoButton() {
         return contentRatingInfoButton;
+    }
+
+    public void scrollToRatingValue(String rating){
+        scrollToItem((String.format(ratingDescription, rating)));
+    }
+
+    public boolean isContentRatingDisplyed(String rating){
+        scrollToRatingValue(rating);
+        return getStaticTextByLabel(String.format(ratingDescription, rating)).isPresent();
+    }
+
+    public boolean verifyLastContentRating(String rating){
+        scrollToRatingValue(rating);
+        return dynamicRowColumnContent.format(2, -1).getText().contains((String.format(ratingDescription, rating)));
+    }
+
+    public void selectContentRating(String rating){
+        scrollToRatingValue(rating);
+        getStaticTextByLabel(String.format(ratingDescription, rating)).click();
+    }
+
+    public void clickSaveButton(){
+        saveButton.click();
     }
 }

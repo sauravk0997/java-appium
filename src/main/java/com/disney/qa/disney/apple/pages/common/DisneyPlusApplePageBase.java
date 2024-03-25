@@ -38,6 +38,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
@@ -216,6 +217,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement keyboard;
     @FindBy(xpath = "//*[contains(@type, 'XCUIElementTypeKeyboard')]")
     protected ExtendedWebElement localizedKeyboard;
+    @ExtendedFindBy(accessibilityId = "delete")
+    private ExtendedWebElement iPadKeyboardDelete;
+    @ExtendedFindBy(accessibilityId = "Delete")
+    private ExtendedWebElement iPhoneKeyboardDelete;
     @ExtendedFindBy(accessibilityId = "buttonLogout")
     protected ExtendedWebElement logoutButton;
     @ExtendedFindBy(accessibilityId = "customButton")
@@ -227,7 +232,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @FindBy(xpath = "//*[contains(@label, \"%s\")]")
     private ExtendedWebElement dynamicXpathContainslabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[%s]/XCUIElementTypeCell[%s]")
-    private ExtendedWebElement dynamicRowColumnContent;
+    protected ExtendedWebElement dynamicRowColumnContent;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
     private ExtendedWebElement keyboardContinue;
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
@@ -907,6 +912,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickPrimaryButton();
     }
 
+    public void enterPasswordNoAccount(String password) {
+        passwordEntryField.type(password);
+        clickPrimaryButton();
+    }
+
     public boolean doesAiringBadgeContainLive() {
         return airingBadgeLabel.getText().toLowerCase().contains("live");
     }
@@ -1321,5 +1331,33 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
         return getUnavailableContentErrorPopUpMessage().isPresent();
+    }
+
+    public ExtendedWebElement getKeyboardDelete() {
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            return iPhoneKeyboardDelete;
+        } else {
+            return iPadKeyboardDelete;
+        }
+    }
+
+public ExtendedWebElement getPinProtectedProfileIcon(String name) {
+    return getDynamicAccessibilityId(
+            getDictionary().formatPlaceholderString(
+                    getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+}
+
+    public ExtendedWebElement getCellPinProtectedProfileIcon(String name) {
+        return dynamicCellByLabel.format(
+                getDictionary().formatPlaceholderString(
+                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+    }
+
+    public boolean isPinProtectedProfileIconPresent(String name) {
+        if (getCellPinProtectedProfileIcon(name).isPresent(SHORT_TIMEOUT)) {
+            return getCellPinProtectedProfileIcon(name).isPresent();
+        } else {
+            return getPinProtectedProfileIcon(name).isPresent();
+        }
     }
 }
