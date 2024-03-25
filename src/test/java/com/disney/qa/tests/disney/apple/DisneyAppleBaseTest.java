@@ -390,20 +390,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
 
         switch (buildType) {
-        case ENTERPRISE:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
-                    .getDirectLink());
-            break;
-        case AD_HOC:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
-                    .getDirectLink());
-            break;
-        case IAP:
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
-                    .getDirectLink());
+            case ENTERPRISE:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
+                        .getDirectLink());
+                break;
+            case AD_HOC:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
+                break;
+            case IAP:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
         }
     }
 
@@ -414,14 +414,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     public JarvisAppleBase getJarvisPageFactory() {
         switch (currentDevice.get().getDeviceType()) {
-        case APPLE_TV:
-            return new JarvisAppleTV(getDriver());
-        case IOS_PHONE:
-            return new JarvisHandset(getDriver());
-        case IOS_TABLET:
-            return new JarvisTablet(getDriver());
-        default:
-            throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
+            case APPLE_TV:
+                return new JarvisAppleTV(getDriver());
+            case IOS_PHONE:
+                return new JarvisHandset(getDriver());
+            case IOS_TABLET:
+                return new JarvisTablet(getDriver());
+            default:
+                throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
         }
     }
 
