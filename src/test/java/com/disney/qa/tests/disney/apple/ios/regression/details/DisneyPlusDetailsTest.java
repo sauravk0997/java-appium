@@ -34,6 +34,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String ASHOKA = "Ashoka";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
@@ -261,14 +262,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.searchForMedia(SPIDERMAN_THREE);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+
+        //Verify Shop Promo for Series
+        searchPage.searchForMedia(ASHOKA);
+        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-
         sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
         sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+
+        //Verify SHop Promo for Movie
+        detailsPage.getBackArrow().click();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
+        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+
         sa.assertAll();
     }
 
