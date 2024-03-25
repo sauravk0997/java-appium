@@ -570,17 +570,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Turn off junior mode toggle
         editProfile.toggleJuniorMode();
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to GA");
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
         //Verify kids proof exit is not tappable
         editProfile.toggleKidsProofExit();
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"),"Kid proof exit toggle value was not retained from previous setting");
-        //Change GA account back to kids profile
+        //Change non-primary(general audience) profile back to kids profile
         editProfile.toggleJuniorMode();
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "Kid proof exit toggle value was not retained from previous setting");
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
-        //7.Create new kids profile
+        //Create new kids profile
         createKidsProfile();
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
