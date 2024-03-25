@@ -33,9 +33,13 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
-        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+
+        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
         setAppToHomeScreen(getAccount(), TEST_USER);
 
         softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
@@ -44,27 +48,37 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         }
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
-                        && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Profile Switcher was not displayed for all profiles");
 
         for (DisneyPlusMoreMenuIOSPageBase.MoreMenu menuItem : DisneyPlusMoreMenuIOSPageBase.MoreMenu.values()) {
-            softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(menuItem),
+            softAssert.assertTrue(moreMenuPage.isMenuOptionPresent(menuItem),
                     menuItem + " option was not be present");
         }
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
+        Assert.assertTrue(moreMenuPage.isAppVersionDisplayed(),
                 "App Version was not displayed");
 
         //verify that Profile Selector/Switch does NOT scroll if user scroll above element
         scrollUp();
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
-                        && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Profile Switcher was not displayed for all profiles");
 
         //verify if profile has pin lock then lock icon is displayed under profile name
-        enableProfilePINLock(DEFAULT_PROFILE);
-        disneyPlusMoreMenuIOSPageBase.clickMoreTab();
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
+        moreMenuPage.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
+        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
+        editProfilePage.getPinSettingsCell().click();
+        passwordPage.typePassword(getAccount().getUserPass());
+        passwordPage.clickPrimaryButton();
+        pinPage.getPinCheckBox().click();
+        pinPage.getPinInputField().click();
+        pinPage.getPinInputField().type("1111");
+        pinPage.getSaveButton().click();
+        editProfilePage.clickSaveProfileButton();
+        moreMenuPage.clickMoreTab();
+        softAssert.assertTrue(moreMenuPage.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
         softAssert.assertAll();
     }
 
@@ -230,23 +244,5 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     private void onboard(String profile) {
         setAppToHomeScreen(getAccount(), profile);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-    }
-
-    private void enableProfilePINLock(String profileName) {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
-        moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(profileName);
-        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
-        editProfilePage.getPinSettingsCell().click();
-        passwordPage.typePassword(getAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pinPage.getPinCheckBox().click();
-        pinPage.getPinInputField().click();
-        pinPage.getPinInputField().type("1111");
-        pinPage.getSaveButton().click();
-        editProfilePage.clickSaveProfileButton();
     }
 }
