@@ -38,9 +38,9 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount(), TEST_USER);
 
-        softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not dispalyed");
+        softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
-            softAssert.assertTrue(homePage.isProfileNameDisplayed(TEST_USER), "Profile Name is not dispalyed");
+            softAssert.assertTrue(homePage.isProfileNameDisplayed(TEST_USER), "Profile Name is not displayed");
         }
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
