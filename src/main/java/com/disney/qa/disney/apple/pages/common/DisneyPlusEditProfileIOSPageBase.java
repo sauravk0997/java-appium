@@ -315,6 +315,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public String getKidProofExitToggleValue() {
+        swipe(kidProofExitToggleCell);
         return kidProofExitToggleCell.getText();
     }
 
