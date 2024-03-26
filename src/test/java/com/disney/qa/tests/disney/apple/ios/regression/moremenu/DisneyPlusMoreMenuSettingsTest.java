@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -14,6 +15,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -39,8 +41,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
 
-        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
-        setAppToHomeScreen(getAccount(), TEST_USER);
+        DisneyAccount account = getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
+        setAppToHomeScreen(account, TEST_USER);
 
         softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
@@ -66,17 +68,12 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Profile Switcher was not displayed for all profiles");
 
         //verify if profile has pin lock then lock icon is displayed under profile name
-        moreMenuPage.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
-        swipePageTillElementTappable(editProfilePage.getPinSettingsCell(), 3, null, Direction.UP, 1000);
-        editProfilePage.getPinSettingsCell().click();
-        passwordPage.typePassword(getAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pinPage.getPinCheckBox().click();
-        pinPage.getPinInputField().click();
-        pinPage.getPinInputField().type("1111");
-        pinPage.getSaveButton().click();
-        editProfilePage.clickSaveProfileButton();
+        moreMenuPage.clickHome();
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
         moreMenuPage.clickMoreTab();
         softAssert.assertTrue(moreMenuPage.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
         softAssert.assertAll();
