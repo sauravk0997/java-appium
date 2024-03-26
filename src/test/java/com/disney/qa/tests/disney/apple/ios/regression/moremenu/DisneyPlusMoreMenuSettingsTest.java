@@ -37,9 +37,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
 
         DisneyAccount account = getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
         setAppToHomeScreen(account, TEST_USER);
@@ -68,7 +65,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Profile Switcher was not displayed for all profiles");
 
         //verify if profile has pin lock then lock icon is displayed under profile name
-        moreMenuPage.clickHome();
+        moreMenuPage.clickHomeIcon();
         try {
             getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
         } catch (Exception e) {
