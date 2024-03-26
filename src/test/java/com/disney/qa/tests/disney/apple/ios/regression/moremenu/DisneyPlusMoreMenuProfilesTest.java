@@ -184,7 +184,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
-        //Verify autoplay is turned on for kids profile
         sa.assertAll();
     }
 
@@ -614,7 +613,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         pinPage.enterProfilePin("3");
         System.out.println(getDriver().getPageSource());
-        sa.assertTrue(pinPage.getTypeOtherByLabel("3").isPresent(), "'3' was not inputted into field.");;
+        sa.assertTrue(pinPage.getTypeOtherByLabel("3").isPresent(), "'3' was not inputted into field.");
+        ;
         verifyPinFieldEmpty(1, sa);
 
         pinPage.getSaveButton();
@@ -625,6 +625,50 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isElementNotPresent(SHORT_TIMEOUT), "Profile PIN missing error message was not found");
         pinPage.getPinCancelButton().click();
         sa.assertTrue(editProfile.isOpened(), "Not returned to Edit Profile.");
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69579"})
+    @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitSettings() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        //Verify line items for kid proof exit
+        sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids proof exit label wasn't present");
+        sa.assertTrue(editProfile.getKidProofDescription().isPresent(),"Kids proof exit description wasn't present");
+        //Kid proof exit is off by default
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
+        editProfile.toggleKidsProofExit();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "kids exit toggle is not 'On'");
+        editProfile.waitForUpdatedToastToDisappear();
+        //Turn off junior mode toggle
+        editProfile.toggleJuniorMode();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
+        //Verify kids proof exit is not tappable
+        editProfile.toggleKidsProofExit();
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"),"Kid proof exit toggle value was not retained from previous setting");
+        //Change non-primary(general audience) profile back to kids profile
+        editProfile.toggleJuniorMode();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "Kid proof exit toggle value was not retained from previous setting");
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        //Create new kids profile
+        createKidsProfile();
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
         sa.assertAll();
     }
 
@@ -642,5 +686,24 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         IntStream.range(1, rangeEndNumber).forEach(i -> {
             sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present.");
         });
+    }
+
+    private void createKidsProfile() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        addProfile.tapJuniorModeToggle();
+        addProfile.clickSaveProfileButton();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            parentalConsent.scrollConsentContent(4);
+        }
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
     }
 }
