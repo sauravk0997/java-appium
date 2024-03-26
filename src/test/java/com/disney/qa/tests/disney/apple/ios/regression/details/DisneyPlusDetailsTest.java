@@ -264,25 +264,24 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
         //Verify Shop Promo for Series
-        searchPage.searchForMedia(ASHOKA);
+        vailidateShopPromoLabelHeaderAndSubHeader(sa, ASHOKA);
+
+        //Verify Shop Promo for Movie
+        detailsPage.getBackArrow().click();
+        vailidateShopPromoLabelHeaderAndSubHeader(sa, SPIDERMAN_THREE);
+        sa.assertAll();
+    }
+
+    private void vailidateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        searchPage.searchForMedia(titleName);
         List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
         sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
-
-        //Verify SHop Promo for Movie
-        detailsPage.getBackArrow().click();
-        searchPage.searchForMedia(SPIDERMAN_THREE);
-        results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
-        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
-
-        sa.assertAll();
     }
 
     private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
