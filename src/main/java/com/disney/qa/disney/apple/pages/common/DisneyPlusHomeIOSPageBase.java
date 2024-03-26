@@ -202,15 +202,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return recommendedForYou.isPresent();
     }
 
-    public void swipeInRecommendedForYouContainer(Direction direction) {
-            ExtendedWebElement collectionElement = getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-            swipeInContainer(collectionElement, direction, 2, 900);
+    public ExtendedWebElement getRecommendedForYouContainer(){
+        return getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
     }
 
     public String getFirstCellTitleFromRecommendedForYouContainer() {
         return firstCellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU)).getText();
-
-
     }
-
 }
