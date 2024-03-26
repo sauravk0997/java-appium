@@ -78,8 +78,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
     public void beforeAnyAppActions(ITestContext context) {
-        localContext.set(context);
-        limitTabletDevicePoolToIOS17(context);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            localContext.set(context);
+            limitTabletDevicePoolToIOS17(context);
+        }
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
             if (StringUtils.equalsIgnoreCase(type, "Tablet")) {
@@ -104,7 +106,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Checking to limit tablet player tests to iOS 17...");
         if (context.getCurrentXmlTest().getParameter("jenkinsJobName") == null ||
                 (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)
-                        && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) != null)) {
+                        && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) == null)) {
             LOGGER.info("Bypassing setting tablet player tests to iOS 17.");
             return;
         }
