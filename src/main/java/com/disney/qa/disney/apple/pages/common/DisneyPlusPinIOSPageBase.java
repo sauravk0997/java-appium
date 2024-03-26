@@ -19,7 +19,7 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(id = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
 
-    @FindBy(id = "cancelBarButton")
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement pinCancelButton;
 
     @ExtendedFindBy(accessibilityId = "pinInputTitle")
@@ -98,5 +98,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getPinFieldNumber(int number) {
         String pinInputEmpty = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText());
         return dynamicRowOtherLabel.format(pinInputEmpty, number);
+    }
+
+    public ExtendedWebElement getProfilePinMissingErrorMessage() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.SDK_ERROR_PROFILE_PIN_MISSING.getText()));
     }
 }

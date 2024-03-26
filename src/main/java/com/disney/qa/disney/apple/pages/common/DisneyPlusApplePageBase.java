@@ -299,6 +299,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
     protected ExtendedWebElement stayUpToDatePopup;
+    @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
+    private ExtendedWebElement checkboxUnchecked;
+    @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
+    private ExtendedWebElement checkboxChecked;
+    @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeKeyboard\"")
+    private ExtendedWebElement keyboardByPredicate;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1359,5 +1365,17 @@ public ExtendedWebElement getPinProtectedProfileIcon(String name) {
         } else {
             return getPinProtectedProfileIcon(name).isPresent();
         }
+    }
+
+    public ExtendedWebElement getCheckboxUnchecked() {
+        return checkboxUnchecked;
+    }
+
+    public ExtendedWebElement getCheckboxChecked() {
+        return checkboxChecked;
+    }
+
+    public ExtendedWebElement getKeyboardByPredicate() {
+        return keyboardByPredicate;
     }
 }

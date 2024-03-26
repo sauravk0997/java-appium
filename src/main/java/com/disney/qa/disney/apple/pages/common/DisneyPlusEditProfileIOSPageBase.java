@@ -455,4 +455,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public ExtendedWebElement getDeleteProfileCopy() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
     }
+
+    public ExtendedWebElement getEditProfilePinSettingCell(){
+        return getStaticTextByLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
+    }
 }
