@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    public static final String recommendedForYouTitle = "Recommended For You";
+    public static final String RECOMMENDED_FOR_YOU_TITLE = "Recommended For You";
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -65,7 +65,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement networkLogoImage;
 
-    @ExtendedFindBy(accessibilityId = recommendedForYouTitle)
+    @ExtendedFindBy(accessibilityId = RECOMMENDED_FOR_YOU_TITLE)
     private ExtendedWebElement recommendedForYou;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
