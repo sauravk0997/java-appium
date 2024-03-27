@@ -363,4 +363,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public ExtendedWebElement getProfileSelectionCollectionView() {
 		return profileSelectionCollectionView;
 	}
+
+	public boolean isPinLockOnProfileDisplayed(String profileName) {
+		return pinProtectedProfileLock.format(profileName).isPresent();
+	}
 }
