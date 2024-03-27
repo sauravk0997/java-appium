@@ -565,9 +565,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
         setAppToHomeScreen(account);
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+1711572526471b80e@gsuite.disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
 
         //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
