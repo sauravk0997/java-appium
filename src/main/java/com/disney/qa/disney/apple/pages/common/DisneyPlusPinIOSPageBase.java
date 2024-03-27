@@ -113,7 +113,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public void verifyPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         IntStream.range(1, rangeEndNumber).forEach(i ->
-            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present.");
-        });
+            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present."));
     }
 }
