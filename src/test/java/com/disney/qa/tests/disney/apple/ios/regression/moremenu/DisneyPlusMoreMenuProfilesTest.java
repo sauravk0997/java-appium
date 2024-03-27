@@ -34,6 +34,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String PROFILE_PIN = "1111";
     private static final String NEW_PROFILE_PIN = "1234";
     private static final String SECONDARY_PROFILE_PIN = "4321";
+    private static final String ONE = "1";
+    private static final String TWO = "2";
+    private static final String THREE = "3";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -547,35 +550,34 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61300"})
-    @Test(description = "Profiles > Profile PIN - Manage", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Profiles > Manage Profile PIN", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyManageProfilePIN() {
         SoftAssert sa = new SoftAssert();
-//        DisneyAccount account = createV2Account();
-//        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-//        try {
-//            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-//        } catch (Exception e) {
-//            throw new SkipException("Failed to update Profile pin: {}", e);
-//        }
-//        setAppToHomeScreen(account);
+        DisneyAccount account = createV2Account();
+        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+1711396725742a661@gsuite.disneyplustesting.com");
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("testguid+1711572526471b80e@gsuite.disneyplustesting.com");
         initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
 
+        //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
         sa.assertTrue(pinPage.isOpened(), "Pin title was not found.");
-        verifyPinFieldEmpty(4, sa);
+        pinPage.verifyPinFieldEmpty(4, sa);
         sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin Protected profile avatar and lock was not found.");
         sa.assertTrue(pinPage.getPinCancelButton().isPresent(), "Pin cancel button was not found.");
         sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button was not found.");
 
-        //navigate to second profile to validate existing profile - no profile pin
+        //Verify existing profile - no profile pin
         pinPage.getPinCancelButton().click();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
@@ -583,46 +585,38 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             editProfile.swipeUp(500);
         }
         editProfile.getEditProfilePinSettingCell().click();
-//        passwordPage.enterPassword(account);
-        passwordPage.enterPasswordNoAccount("M1ck3yM0us3#");
-        pause(5);
-        System.out.println(getDriver().getPageSource());
-//        passwordPage.clickPrimaryButtonByCoordinates();
+        passwordPage.enterPassword(account);
+        sa.assertTrue(pinPage.getCheckboxUnchecked().isPresent(), "Unchecked checkbox was not found on no pin profile.");
 
-        //validate pin is unchecked by default
-        sa.assertTrue(pinPage.getCheckboxUnchecked().isPresent(), "Unchecked checkbox was not found.");
-
+        //Verify clicking pin checkbox
         pressByElement(pinPage.getPinCheckBox(), 1);
         sa.assertTrue(pinPage.getCheckboxChecked().isPresent(), "Checked checkbox was not found.");
-        //validate keyboard pops up and checkbox fills
-        verifyPinFieldEmpty(4, sa);
+        pinPage.verifyPinFieldEmpty(4, sa);
         sa.assertTrue(pinPage.getKeyboardByPredicate().isPresent(), "Keyboard did not pop up.");
         sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Limit access messaging was not found.");
 
-        pinPage.enterProfilePin("1");
-        pause(4);
-        System.out.println(getDriver().getPageSource());
-        sa.assertTrue(pinPage.getTypeOtherByLabel("1").isPresent(), "'1' was not inputted into field.");
-        verifyPinFieldEmpty(3, sa);
+        //Verify after each pin number entered
+        pinPage.enterProfilePin(ONE);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(ONE), ONE + " was not inputted into field.");
+        pinPage.verifyPinFieldEmpty(3, sa);
 
-        pinPage.enterProfilePin("2");
-        pause(5);
-        System.out.println(getDriver().getPageSource());
-        sa.assertTrue(pinPage.getTypeOtherByLabel("2").isPresent(), "'2' was not inputted into field.");
-        verifyPinFieldEmpty(3, sa);
+        pinPage.enterProfilePin(TWO);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(TWO), TWO + " was not inputted into field.");
+        pinPage.verifyPinFieldEmpty(2, sa);
 
-        pinPage.enterProfilePin("3");
-        System.out.println(getDriver().getPageSource());
-        sa.assertTrue(pinPage.getTypeOtherByLabel("3").isPresent(), "'3' was not inputted into field.");
-        ;
-        verifyPinFieldEmpty(1, sa);
+        pinPage.enterProfilePin(THREE);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(THREE), THREE + " was not inputted into field.");
+        pinPage.verifyPinFieldEmpty(1, sa);
 
+        //Validate save after only three numbers entered
         pinPage.getSaveButton();
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isPresent(), "Profile PIN missing error message was not found");
-        verifyPinFieldEmpty(4, sa);
+        pinPage.verifyPinFieldEmpty(4, sa);
 
+        //Verify error message not present after new number entered
         pinPage.enterProfilePin("4");
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isElementNotPresent(SHORT_TIMEOUT), "Profile PIN missing error message was not found");
+        //Validate clicking cancel button
         pinPage.getPinCancelButton().click();
         sa.assertTrue(editProfile.isOpened(), "Not returned to Edit Profile.");
     }
@@ -701,12 +695,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
     }
 
-    private void verifyPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
-        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
-        IntStream.range(1, rangeEndNumber).forEach(i -> {
-            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present.");
-        });
-    }
+
 
     private void createKidsProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

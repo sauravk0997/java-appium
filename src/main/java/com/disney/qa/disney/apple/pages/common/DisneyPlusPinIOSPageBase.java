@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -103,5 +104,16 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getProfilePinMissingErrorMessage() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.SDK_ERROR_PROFILE_PIN_MISSING.getText()));
+    }
+
+    public boolean isPinFieldNumberPresent(String number) {
+        return getTypeOtherByLabel(number).isPresent();
+    }
+
+    public void verifyPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        IntStream.range(1, rangeEndNumber).forEach(i -> {
+            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present.");
+        });
     }
 }
