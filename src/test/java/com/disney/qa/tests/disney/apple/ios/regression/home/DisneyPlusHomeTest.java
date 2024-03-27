@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.proxy.RestTemplateBuilder;
+import com.disney.qa.api.client.requests.content.DisneyContentParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -36,7 +37,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String BEARER = "bearer ";
     private static final String API_ERROR = "Request failed with the following exception: {}";
-
+    private static final String DISNEY_CONTENT_BAMGRID_URL = "https://disney.content.edge.bamgrid.com/";
+    private static final String RECOMMENDATION_SET_NODE = "RecommendationSet";
+    private static final String GENERIC_PATH = "version/6.1/region/%s/audience/false/maturity/1830/language/%s/setId/%s/pageSize/60/page/1";
+    private static final String RECOMMENDATION_SET = DisneyContentParameters.getContentService(RECOMMENDATION_SET_NODE);
     private final RestTemplate restTemplate = RestTemplateBuilder
             .newInstance()
             .withSpecificJsonMessageConverter()
@@ -92,7 +96,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyHomeRecommendedForYou() {
-        int page =2;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -102,12 +105,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
         List<String> tilesFromApi = new ArrayList<>();
 
-        for(int i=1; i<=page;i++){
-            JsonNode js = getRecommendationSet(account, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(),
-                    CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), i);
-            js.findPath("data").findPath("RecommendationSet").findPath("items")
-                    .forEach(item -> tilesFromApi.add(getMediaTitle(item)));
-        }
+        JsonNode js = getRecommendationSet(account, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(),
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        js.findPath("data").findPath(RECOMMENDATION_SET_NODE).findPath("items")
+                .forEach(item -> tilesFromApi.add(getMediaTitle(item)));
 
         int size = tilesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer();
@@ -131,16 +132,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId, int page){
-        //https://disney.content.edge.bamgrid.com/svc/content/RecommendationSet/version/6.1/region/US/audience/k-false,l-true/maturity/1830/language/en/setId/7894d9c6-43ab-4691-b349-cf72362095dd/pageSize/15/page/1
-        //STANDARD_PARAMETERS("version/%s/region/%s/audience/%s/maturity/%s/language/%s/");
-        String recommendationPath = "/RecommendationSet/version/6.1/region/%s/audience/false/maturity/1830/language/%s/setId/%s/pageSize/60/page/" + page;
-
+    private JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId){
         try {
             HttpHeaders headers = new HttpHeaders();
-            String genericSetPath = String.format(recommendationPath, locale, language, setId);
-            URI uri = new URI("https://disney.content.edge.bamgrid.com/svc/content" + genericSetPath);
-
+            String genericSetPath = String.format(GENERIC_PATH, locale, language, setId);
+            URI uri = new URI(DISNEY_CONTENT_BAMGRID_URL + RECOMMENDATION_SET + genericSetPath);
             headers.add(HttpHeaders.AUTHORIZATION, BEARER + getAccount().getAccountToken());
             UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
             RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
