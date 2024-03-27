@@ -190,4 +190,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                         String.format("'%s' Brand is not a valid option", brand));
         }
     }
+
+    public boolean isProfileNameDisplayed(String name) {
+        return getTypeButtonByLabel(name).isPresent();
+    }
 }

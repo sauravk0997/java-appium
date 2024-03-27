@@ -104,7 +104,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
-    private ExtendedWebElement pinSettingsCell = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
