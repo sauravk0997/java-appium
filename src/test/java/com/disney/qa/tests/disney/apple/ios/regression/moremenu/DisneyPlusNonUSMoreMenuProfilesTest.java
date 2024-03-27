@@ -28,9 +28,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup("JP", "ja");
         handleAlert();
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = getAccountApi().lookupOfferToUse("JP", BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, "JP", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
