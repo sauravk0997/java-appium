@@ -579,7 +579,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         editProfile.swipeUp(500);
-        editProfile.getEditProfilePinSettingCell().click();
+        editProfile.getEditProfilePinSettingLabel().click();
         passwordPage.enterPassword(account);
         sa.assertTrue(pinPage.getCheckboxUnchecked().isPresent(), "Unchecked checkbox was not found on no pin profile.");
 
