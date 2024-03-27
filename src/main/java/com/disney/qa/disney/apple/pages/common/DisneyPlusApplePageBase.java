@@ -1378,4 +1378,8 @@ public ExtendedWebElement getPinProtectedProfileIcon(String name) {
     public ExtendedWebElement getKeyboardByPredicate() {
         return keyboardByPredicate;
     }
+
+    public ExtendedWebElement getMoreMenuTab() {
+        return moreTab;
+    }
 }

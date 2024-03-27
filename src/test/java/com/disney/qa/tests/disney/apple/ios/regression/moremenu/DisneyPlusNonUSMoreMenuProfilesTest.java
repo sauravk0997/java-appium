@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -7,18 +9,74 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
 
-    @Maintainer("mboulogne1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
+    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"More Menu"})
+    public void verifyAddProfileFlow() {
+        initialSetup("JP", "ja");
+        handleAlert();
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        //Add Profiles
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Third", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fourth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fifth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Sixth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        handleAlert();
+        moreMenu.clickMoreTab();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        }
+        moreMenu.clickAddProfile();
+        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        addProfile.enterProfileName("Seventh");
+        addProfile.clickSaveBtn();
+        pause(2);
+        //Not now button
+        addProfile.clickSecondaryButtonByCoordinates();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        }
+        sa.assertFalse(moreMenu.isAddProfileButtonPresent(), "Add profile button was present when the account had seven profiles on it");
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.getDoneButton().click();
+        pause(2);
+        sa.assertTrue(whoIsWatching.isOpened(), "who is watching page didn't open");
+        sa.assertFalse(moreMenu.isAddProfileButtonPresent(), "Add profile button was present on who is watching screen when the account had seven profiles on it");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
