@@ -347,6 +347,7 @@ public enum DictionaryKeys {
     RESTRICT_PROFILE_CREATION_DESCRIPTION("account_restrict_profile_creation_description"),
     RESTRICT_PROFILE_CREATION_TITLE("account_restrict_profile_creation_title"),
     RESUME_BTN("btn_resume"),
+    SDK_ERROR_PROFILE_PIN_MISSING("sdk_error_profilepinmissing"),
     SEARCH_CALL_TO_ACTION("search_call_to_action"),
     SEARCH_NO_RESULTS("search_noresults"),
     SEASON_EPISODE_TITLE_PLACEHOLDER("season_episode_title_placeholder"),
