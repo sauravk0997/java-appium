@@ -5,13 +5,9 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 import java.util.stream.IntStream;
-
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
