@@ -140,6 +140,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        addProfile.waitForPresenceOfAnElement(addProfile.getAddProfileAvatar());
         sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
         sa.assertTrue(addProfile.isAddProfilePageOpened(), "Add Profile header was not found");
         sa.assertTrue(addProfile.isProfileNamefieldPresent(), "Profile Name field was not found");
