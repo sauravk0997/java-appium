@@ -149,7 +149,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicRowButtonLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByNameContains;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\" or label == \"%s\"`][%s]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
     protected ExtendedWebElement dynamicRowOtherLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabel;
@@ -300,6 +300,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
     protected ExtendedWebElement stayUpToDatePopup;
+    @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeKeyboard\"")
+    private ExtendedWebElement keyboardByPredicate;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1364,6 +1366,10 @@ public ExtendedWebElement getPinProtectedProfileIcon(String name) {
         } else {
             return getPinProtectedProfileIcon(name).isPresent();
         }
+    }
+
+    public ExtendedWebElement getKeyboardByPredicate() {
+        return keyboardByPredicate;
     }
 
     public ExtendedWebElement getMoreMenuTab() {

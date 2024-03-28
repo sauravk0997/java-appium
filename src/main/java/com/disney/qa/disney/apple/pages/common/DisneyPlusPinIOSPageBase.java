@@ -5,7 +5,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -16,14 +15,20 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    @FindBy(id = "marketingCheckbox")
+    @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
 
-    @FindBy(id = "cancelBarButton")
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement pinCancelButton;
 
     @ExtendedFindBy(accessibilityId = "pinInputTitle")
     private ExtendedWebElement pinInputTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Pin input field is empty\"`][%s]")
+    private ExtendedWebElement pinInputNumber;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
+    private ExtendedWebElement pinInputNumberWithKey;
 
     @Override
     public boolean isOpened() {
@@ -67,13 +72,13 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getCancelButton() {
-        return staticTextByLabel.format(getDictionary()
+        return getDynamicAccessibilityId(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_CANCEL_SET_PROFILE_ENTRY_PIN.getText()));
     }
 
     public ExtendedWebElement getSaveButton() {
-        return staticTextByLabel.format(getDictionary()
+        return getDynamicAccessibilityId(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_SET_PROFILE_ENTRY_PIN.getText()));
     }
@@ -87,5 +92,14 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getLimitAccessMessaging(String profileName) {
         String profilePinDescription = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.SET_PROFILE_ENTRY_PIN_BODY.getText()), Map.of("profile_name", profileName));
         return getDynamicAccessibilityId(profilePinDescription);
+    }
+
+    public ExtendedWebElement getProfilePinMissingErrorMessage() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.SDK_ERROR_PROFILE_PIN_MISSING.getText()));
+    }
+
+    public boolean isPinFieldNumberPresent(String number) {
+        return getTypeOtherByLabel(number).isPresent();
     }
 }
