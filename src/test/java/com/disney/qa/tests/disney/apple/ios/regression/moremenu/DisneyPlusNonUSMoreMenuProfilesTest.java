@@ -120,6 +120,37 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"More Menu"})
+    public void verifyAddProfilePageUI() {
+        initialSetup("JP", "ja");
+        handleAlert();
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        handleAlert();
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        sa.assertTrue(addProfile.isAddProfilePageOpened(), "Add Profile header was not found");
+        sa.assertTrue(addProfile.isProfileNamefieldPresent(), "Profile Name field was not found");
+        sa.assertTrue(addProfile.iskidsProfileToggleCellPresent(), " Kids profile toogle was not found");
+        sa.assertTrue(addProfile.getkidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by defult");
+        sa.assertTrue(addProfile.isSaveBtnPresent(), "Save button was not found");
+        sa.assertTrue(addProfile.isCancelButtonPresent(), "Cancel button was not found");
+        sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender field was found");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

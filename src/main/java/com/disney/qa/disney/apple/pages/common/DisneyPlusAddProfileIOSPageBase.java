@@ -99,6 +99,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return profileSelectionBtn.isPresent();
     }
 
+    public boolean isProfileNamefieldPresent() {
+        return profileNameTextFieldIdentifier.isPresent();
+    }
+
     public boolean profileNameTextFieldIdentifierFocused() {
         return isFocused(profileNameTextFieldIdentifier);
     }
@@ -112,6 +116,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
     public boolean kidsProfileToggleCellFocused() {
         return isFocused(kidsProfileToggleCell);
+    }
+
+    public boolean iskidsProfileToggleCellPresent() {
+        return kidsProfileToggleCell.isPresent();
+    }
+
+    public String getkidsProfileToggleCellValue() {
+        return kidsProfileToggleCell.getAttribute("value");
     }
 
     public void tapJuniorModeToggle() {
@@ -185,10 +197,17 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabel.format(genderPlaceholder).getAttribute("enabled").equals("true");
     }
 
+    public boolean isGenderFieldPresent() {
+        return dynamicBtnFindByLabel.format(genderPlaceholder).isPresent();
+    }
+
     public void tapCancelButton() {
         cancelButton.click();
     }
 
+    public boolean isCancelButtonPresent(){
+        return cancelButton.isPresent();
+    }
     /**
      * checks if Kid Profile sub copy present or not
      * @return true/false
