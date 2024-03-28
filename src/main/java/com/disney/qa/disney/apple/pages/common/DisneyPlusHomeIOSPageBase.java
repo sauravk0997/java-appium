@@ -160,6 +160,38 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
-        return getElementTypeCellByLabel(brand);
+        return getTypeCellLabelContains(brand);
+    }
+
+    public boolean isHomePageLoadPresent() {
+        String homePageLoad = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.HOME_PAGE_LOAD.getText());
+        return getDynamicAccessibilityId(homePageLoad).isPresent();
+    }
+
+    public void clickBrandTile(DisneyPlusBrandIOSPageBase.Brand brand) {
+        switch (brand) {
+            case DISNEY:
+                clickDisneyTile();
+                break;
+            case PIXAR:
+                clickPixarTile();
+                break;
+            case MARVEL:
+                clickMarvelTile();
+                break;
+            case STAR_WARS:
+                clickStarWarsTile();
+                break;
+            case NATIONAL_GEOGRAPHIC:
+                clickNatGeoTile();
+                break;
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' Brand is not a valid option", brand));
+        }
+    }
+
+    public boolean isProfileNameDisplayed(String name) {
+        return getTypeButtonByLabel(name).isPresent();
     }
 }

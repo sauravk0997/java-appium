@@ -28,69 +28,46 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
+    private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
+    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String DUMBO = "Dumbo";
+    private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
+    private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String ASHOKA = "Ashoka";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        //search movies
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickMoviesTab();
-        List<ExtendedWebElement> movies = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        movies.get(0).click();
-        String firstMovieTitle = disneyPlusDetailsIOSPageBase.getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
-
-        //search series
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        List<ExtendedWebElement> series = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        series.get(2).click();
-        String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
-
-        //titles added to watchlist
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
-        sa.assertAll();
-    }
-
-    @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71124"})
-    @Test(description = "Details Page - IMAX Enhanced - Promo Labels", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyIMAXEnhancedPromoLabels() {
-        String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
+        //search movies
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.clickMoviesTab();
-        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            searchPage.clickContentPageFilterDropDown();
-            swipe(searchPage.getStaticTextByLabel(filterValue));
-            searchPage.getStaticTextByLabel(filterValue).click();
-        }else{
-            searchPage.getTypeButtonByLabel(filterValue).click();
-        }
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
-        sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
-        sa.assertTrue(detailsPage.isImaxEnhancedPromoSubHeaderPresent(), "IMAX Enhanced Promo sub header was not found");
+        searchPage.searchForMedia(HOCUS_POCUS);
+        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
+        movies.get(0).click();
+        String firstMovieTitle = detailsPage.getMediaTitle();
+        detailsPage.addToWatchlist();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
+
+        //search series
+        searchPage.clearText();
+        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
+        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
+        series.get(0).click();
+        String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
+        detailsPage.addToWatchlist();
+
+        //titles added to watchlist
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
         sa.assertAll();
     }
 
@@ -151,7 +128,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //movie
         home.clickSearchIcon();
         search.clearText();
-        search.searchForMedia(DUMBO);
+        search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
         sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
@@ -260,26 +237,58 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         IntStream.range(0, getTabname().size()).forEach(i -> {
-            navigateToIMAXEnhancedDetaiPageFromDeeplink(getTabname().get(i));
+            navigateToIMAXEnhancedDetailPageFromDeeplink(getTabname().get(i));
             detailsPage.dismissNotificationsPopUp();
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-                scrollUp();
-            }
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
             sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
             sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
+            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+                swipeUp(1500);
+            }
             sa.assertTrue(detailsPage.isTabSelected(getTabname().get(i).toUpperCase()),getTabname().get(i) + "Tab was not selected");
         });
-
         sa.assertAll();
     }
 
-    private void navigateToIMAXEnhancedDetaiPageFromDeeplink(String tabName) {
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
+    @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //Verify Shop Promo for Series
+        vailidateShopPromoLabelHeaderAndSubHeader(sa, ASHOKA);
+
+        //Verify Shop Promo for Movie
+        detailsPage.getBackArrow().click();
+        vailidateShopPromoLabelHeaderAndSubHeader(sa, SPIDERMAN_THREE);
+        sa.assertAll();
+    }
+
+    private void vailidateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        searchPage.searchForMedia(titleName);
+        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
+        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+    }
+
+    private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
-        terminateApp("com.disney.disneyplus.enterprise");
-        startApp("com.disney.disneyplus.enterprise");
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
         if(tabName.equalsIgnoreCase("suggested")){
             tabName = "related";
         }

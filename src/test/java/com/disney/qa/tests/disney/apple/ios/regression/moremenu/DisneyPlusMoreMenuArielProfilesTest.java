@@ -9,6 +9,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -28,6 +29,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String NEW_PROFILE_NAME = "New Name";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -670,6 +672,24 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
         sa.assertAll();
     }
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72348"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Primary Profile - DOB & Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyPrimaryProfilesEditProfileDOBGender() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+
+        editProfiles.clickEditModeProfile(getAccount().getProfile(DEFAULT_PROFILE).getProfileName());
+        sa.assertTrue(editProfiles.isBirthdateHeaderDisplayed(), "Birthdate header is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isBirthdateDisplayed(getAccount().getProfile(DEFAULT_PROFILE)),"Birthdate is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderButtonPresent(), "Gender header is not displayed on edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderValuePresent(getAccount().getProfile(DEFAULT_PROFILE)), "Gender value is not as expected on the edit profiles screen");
+        sa.assertAll();
+    }
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72335"})
@@ -792,6 +812,66 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         //Verify add profile banner is not displayed if user already have maximum amount of profiles, namely 7
         sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69503"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Kids Mode - Require Password to Disable Junior Mode Profile", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileKidsModeDisableJuniorMode() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
+        setAppToHomeScreen(getAccount());
+
+        whoIsWatching.clickProfile("Test");
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            editProfilePage.swipeUp(1500);
+        }
+        sa.assertTrue(editProfilePage.isJuniorModeTextPresent(), "Junior mode text was not present on edit profile page");
+
+        editProfilePage.getKidProofExitToggleSwitch().click();
+        sa.assertTrue(passwordPage.isAuthPasswordKidsProfileBodyDisplayed(), "Password Kids profile body is not displayed");
+
+        passwordPage.typePassword(getAccount().getUserPass());
+        passwordPage.clickPrimaryButton();
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDuplicateProfileError() {
+        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+
+        editProfilePage.enterProfileName(DEFAULT_PROFILE);
+        editProfilePage.clickSaveBtn();
+        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
+
+        editProfilePage.enterProfileName(NEW_PROFILE_NAME);
+        editProfilePage.clickSaveBtn();
+        homePage.clickMoreTab();
+        sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
     }
 

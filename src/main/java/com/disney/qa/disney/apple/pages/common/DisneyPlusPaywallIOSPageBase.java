@@ -54,6 +54,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "OK")
     private ExtendedWebElement alertOkBtn;
 
+    @ExtendedFindBy(accessibilityId = "Disney+ Premium")
+    private ExtendedWebElement disneyPlusPremiumText;
+
     @FindBy(xpath = "//*[contains(@name, 'productButton')]")
     private ExtendedWebElement productPurchaseBtn;
 
@@ -68,6 +71,8 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Sign In'`]")
     protected ExtendedWebElement sandboxSigninButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'OK'`]")
+    protected ExtendedWebElement sandboxOkButton;
 
     private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
 
@@ -121,6 +126,10 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isCancelAnytimeTextDisplayed() {
         return cancelAnytimeText.isElementPresent();
+    }
+
+    public boolean isDisneyPlusPremiumTextDisplayed() {
+        return disneyPlusPremiumText.isElementPresent();
     }
 
     public boolean isRestartsSubscriptionHeaderDisplayed() {
@@ -278,7 +287,9 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     public void clickBundleSelectButton() {
         dynamicBtnFindByNameContains.format("selectButton").click();
     }
-
+    public void clickBasicPlanButton() {
+        dynamicBtnFindByNameContains.format("Basic").click();
+    }
     public void clickPremiumYearlyRowButton() {
         getDynamicRowButtonLabel(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PLAN_SWITCH_IAP_ANNUAL.getText()),2).click();

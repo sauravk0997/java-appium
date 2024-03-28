@@ -1,15 +1,21 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPinIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,19 +35,44 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
-        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
-        onboard(TEST_USER);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
-                        && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+        DisneyAccount account = getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
+        setAppToHomeScreen(account, TEST_USER);
+
+        softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+            softAssert.assertTrue(homePage.isProfileNameDisplayed(TEST_USER), "Profile Name is not displayed");
+        }
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Profile Switcher was not displayed for all profiles");
 
         for (DisneyPlusMoreMenuIOSPageBase.MoreMenu menuItem : DisneyPlusMoreMenuIOSPageBase.MoreMenu.values()) {
-            softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(menuItem),
+            softAssert.assertTrue(moreMenuPage.isMenuOptionPresent(menuItem),
                     menuItem + " option was not be present");
         }
+        Assert.assertTrue(moreMenuPage.isAppVersionDisplayed(),
+                "App Version was not displayed");
 
+        //verify that Profile Selector/Switch does NOT scroll if user scroll above element
+        scrollUp();
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+                "Profile Switcher was not displayed for all profiles");
+
+        //verify if profile has pin lock then lock icon is displayed under profile name
+        moreMenuPage.clickHomeIcon();
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        moreMenuPage.clickMoreTab();
+        softAssert.assertTrue(moreMenuPage.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
         softAssert.assertAll();
     }
 
@@ -176,33 +207,32 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Displayed App Version was not correct");
     }
 
+    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61669"})
     @Test(description = "Verify: Simplified Kids More Menu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySimplifiedKidsMoreMenu() {
-        SoftAssert softAssert = new SoftAssert();
+        SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),DARTH_MAUL,true,true);
         onboard(KIDS_PROFILE);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST),
-                "Watchlist option was not available to a child account");
+        //Validate watchlist and app version are present
+        sa.assertTrue(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST),
+                "Watchlist option was not found on a child account");
+        sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App version number was not found on a child account");
 
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
-                "App Settings option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
-                "Legal option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
-                "Log Out option was not available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
-                "Help option was available to a child account");
-
-        softAssert.assertFalse(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
-                "Account option was available to a child account");
-
-        softAssert.assertAll();
+        //Validate app settings, logout, help, account and legal are not present
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
+                "App Settings option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
+                "Log Out option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
+                "Help option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account option was found on a child account");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
+                "Legal option was found on a child account");
+        sa.assertAll();
     }
 
     private void onboard(String profile) {

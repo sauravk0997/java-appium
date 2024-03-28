@@ -160,6 +160,9 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
         disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
+        disneyPlusSignUpIOSPageBase.clickUncheckedBoxes();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
+        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
         dobCollectionPage.isOpened();
         dobCollectionPage.enterDOB(DOB_ADULT);
@@ -173,7 +176,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "Cancel button is not displayed.");
         sa.assertTrue(paywallIOSPageBase.isStartStreamingTextDisplayed(), "Start Streaming Text is not displayed.");
 
-        sa.assertTrue(paywallIOSPageBase.isCancelAnytimeTextDisplayed(),
+        sa.assertTrue(paywallIOSPageBase.isDisneyPlusPremiumTextDisplayed(),
                 "Cancel anytime text is not displayed.");
         sa.assertTrue(paywallIOSPageBase.restoreBtn.isElementPresent(),
                 "Restore Purchase button is not displayed.");
@@ -296,6 +299,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         dobCollectionPage.isOpened();
         dobCollectionPage.enterDOB(DOB_ADULT);
 
+        paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.BASIC));
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanHeaderPresent(), "XMOBQA-62241-Choose your plan card 'title' is not as expected");
         sa.assertTrue(paywallIOSPageBase.isChooseYourPlanSubHeaderPresent(), "XMOBQA-62241-Choose your plan card 'subtitle' is not as expected");
 

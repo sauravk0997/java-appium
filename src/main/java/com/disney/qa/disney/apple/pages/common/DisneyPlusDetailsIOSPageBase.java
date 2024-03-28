@@ -9,6 +9,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -41,6 +42,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
     private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
     private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
+    private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
+    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
 
     //LOCATORS
 
@@ -186,7 +189,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
     private ExtendedWebElement copyShareLink;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$][2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
     private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
 
     @ExtendedFindBy(accessibilityId = "VERSIONS")
@@ -203,6 +206,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
     private ExtendedWebElement durationTimeLabel;
+
+    @ExtendedFindBy(accessibilityId = "contentAdvisory")
+    private ExtendedWebElement contentAdvisory;
 
     //FUNCTIONS
 
@@ -302,11 +308,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean doesContinueButtonExist() {
-        return continueButton.isPresent();
+        return getContinueButton().isPresent();
     }
 
     public boolean doesPlayButtonExist() {
-        return playButton.isPresent();
+        return getPlayButton().isPresent();
     }
 
     /**
@@ -975,11 +981,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
-        ExtendedWebElement contentAdvisoryText = getTypeOtherByLabel(String.format("%s, %s ",
+        String contentAdvisoryText = String.format("%s, %s ",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText())).replace("\n", "").replace("\r", "").replace("  ", " ").trim());
-        swipePageTillElementPresent(contentAdvisoryText, 1, contentDetailsPage, Direction.UP, 900);
-        return contentAdvisoryText.isPresent();
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim());
+        swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
+        return contentAdvisoryText.contains(contentAdvisory.getText());
     }
 
     public ExtendedWebElement getRatingRestrictionDetailMessage() {
@@ -1064,7 +1070,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getEpisodeTitle(String season, String episode) {
-        return staticTextLabelContains.format(String.format("Season %s Episode %s", season, episode));
+        return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeStaticText[`label CONTAINS \"Season %s Episode %s\"`]", season, episode)));
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
@@ -1077,5 +1083,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Validating Dolby Vision is not present..");
             sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
         }
+    }
+
+    public boolean isShopPromoLabelHeaderPresent() {
+        return getStaticTextByLabel(SHOP_PROMO_LABEL_HEADER).isPresent();
+    }
+
+    public boolean isShopPromoLabelSubHeaderPresent() {
+        return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
 }

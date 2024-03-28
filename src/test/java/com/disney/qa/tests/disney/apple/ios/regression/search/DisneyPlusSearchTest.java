@@ -386,6 +386,45 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62189"})
+    @Test(description = "Search - Search Results Contains Rating And Released Year details (Handset Only)", groups = {"Search", TestGroup.PRE_CONFIGURATION })
+    public void verifySearchResultContainsRatingAndYearDetails() {
+        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)){
+            String media = "M";
+            String movie = "The Marvels";
+            String series = "The Simpsons";
+            String seriesID = "3ZoBZ52QHb4x";
+            SoftAssert sa = new SoftAssert();
+            DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+            DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+            setAppToHomeScreen(getAccount());
+            homePage.clickSearchIcon();
+            Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+            //User made search with one letter
+            String contentTitle = getFirstSearchResults(media);
+            sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
+            //Verify search result have Rating and released year details also
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
+
+            //User made search with movie name
+            contentTitle = getFirstSearchResults(movie);
+            sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
+            //Verify search result have Rating and released year details also
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getMovieRatingDetails(contentTitle), getMovieReleasedYearDetails(contentTitle));
+
+            //User made search with series name
+            contentTitle = getFirstSearchResults(series);
+            sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
+            String rating = getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getSeriesRatingsValue();
+            String releasedYear = String.valueOf(getSearchApi().getSeries(seriesID, getAccount().getCountryCode(), getAccount().getProfileLang()).getReleaseYear());
+            //Verify search result have Rating and released year details also
+            validateRatingAndReleasedYearDetails(sa, contentTitle, rating, releasedYear);
+            sa.assertAll();
+        }
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Bluey");
@@ -400,5 +439,28 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         contentList.add("Fantastic Four");
         contentList.add("Iron Man");
         return contentList;
+    }
+
+    private String getFirstSearchResults(String title){
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        searchPage.searchForMedia(title);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        //Verify correct result are displayed after search
+        Assert.assertTrue(results.size()>0, "Search result not displayed");
+        return results.get(0).getText().split(",")[0];
+    }
+
+    private void validateRatingAndReleasedYearDetails(SoftAssert sa, String title, String rating, String releasedYear){
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
+        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
+    }
+
+    public String getMovieRatingDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getContentRatingsValue();
+    }
+
+    public String getMovieReleasedYearDetails(String title){
+        return getSearchApi().getMovie(title, getAccount()).getReleaseDate();
     }
 }

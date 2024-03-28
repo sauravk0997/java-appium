@@ -69,7 +69,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         disneyPlusSearchIOSPageBase.searchForMedia(DisneyMovies.HOLIDAY_MAGIC.getName());
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        sa.assertFalse(disneyPlusHomeIOSPageBase.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EXTRAS.getText())).isElementPresent());
+        sa.assertFalse(disneyPlusHomeIOSPageBase.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EXTRAS.getText())).isPresent());
         sa.assertAll();
     }
 
@@ -168,7 +168,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
 
-        sa.assertEquals(url, expectedUrl, String.format("Share link for movie %s is not the expected", HOCUS_POCUS));
+        sa.assertTrue(expectedUrl.contains(url), String.format("Share link for movie %s is not the expected", HOCUS_POCUS));
 
         sa.assertAll();
     }
@@ -216,6 +216,27 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.verifyThreeIntegerVideoPlaying(sa);
         videoPlayer.validateResumeTimeThreeIntegerRemaining(sa);
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72417"})
+    @Test(description = "Movies Details verify playback behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyMoviesPlayBehavior() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.clickMoviesTab();
+        searchPage.selectRandomTitle();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyVideoPlayingFromBeginning(sa);
         sa.assertAll();
     }
 

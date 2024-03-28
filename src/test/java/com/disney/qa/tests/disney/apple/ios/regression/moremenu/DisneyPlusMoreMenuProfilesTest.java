@@ -1,5 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -10,16 +13,27 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
+import java.security.SecureRandom;
+import java.util.stream.IntStream;
+
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
+import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String ADULT_DOB = "1923-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    private static final String PROFILE_PIN = "1111";
+    private static final String NEW_PROFILE_PIN = "1234";
+    private static final String SECONDARY_PROFILE_PIN = "4321";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -141,6 +155,38 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61267"})
+    @Test(description = "Autoplay toggle is Saved if User saves", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyAutoplayToggleForKidsAndAdultProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(),getAccount().getFirstName());
+        //Verify autoplay is turned on by default for adult profile
+        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"On",sa);
+        //Turn off autoplay for adult profile
+        editProfile.toggleAutoplayButton("OFF");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.getAutoplayState().equals("Off"), "Autoplay wasn't turned Off for primary profile");
+        //wait for updated toast to disappear before tapping on done button
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        //Verify autoplay is turned off for adult profile
+        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"Off",sa);
+        editProfile.clickDoneBtn();
+        //Verify autoplay is turned OFF by default for kids profile
+        verifyAutoPlayStateForProfile(KIDS_PROFILE,"Off",sa);
+        //Turn on autoplay for adult profile
+        editProfile.toggleAutoplayButton("ON");
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        sa.assertAll();
+    }
+
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74793"})
     @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
@@ -203,5 +249,391 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_TV14), "U18 profile rating is not as expected");
         sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66770"})
+    @Test(description = "Add Profile - Seventh Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifySeventhProfile() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        //Add Profiles
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Third", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fourth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), "Fifth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                BABY_YODA, false, true);
+        getAccountApi().addProfile(getAccount(), "Sixth", ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
+        }
+        moreMenu.clickAddProfile();
+        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61261"})
+    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileSecondaryProfileUIElements() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(),SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD),"profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"pencil icon is not displayed");
+        sa.assertTrue(editProfile.isPersonalInformationSectionDisplayed(),"Personal information section is not as expected");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(),"Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(),"Done button is not displayed");
+        addProfile.updateUserName("updated_profile");
+        editProfile.getDoneButton().click();
+        moreMenu.clickMoreTab();
+        sa.assertTrue(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "updated profile name is not displayed");
+        whoIsWatching.clickProfile("updated_profile");
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile("updated_profile");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
+        editProfile.getDeleteProfileButton().click();
+        editProfile.clickConfirmDeleteButton();
+        sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61305"})
+    @Test(description = "Profile - Forgot Profile PIN", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyForgotPin() {
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        DisneyAccount account = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage(), "V2");
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+
+        //Confirm forgot PIN? is present
+        sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button not found");
+
+        //Enter in wrong password
+        pinPage.getForgotPinButton().click();
+        pinPage.enterPasswordNoAccount("M0us3#M1ck3y");
+        sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+
+        //Enter correct password
+        passwordPage.enterPassword(account);
+
+        //Validate buttons and text present on Forgot PIN page
+        sa.assertTrue(pinPage.isOpened(), "Profile pin title label was not found.");
+        sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Pin check box was not found.");
+        sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Profile pin limit access messaging not found.");
+        sa.assertTrue(pinPage.getCancelButton().isPresent(), "Cancel button was not found.");
+        sa.assertTrue(pinPage.getSaveButton().isPresent(), "Save button was not found.");
+
+        //Validate cancel button action
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getCancelButton().click();
+        sa.assertTrue(pinPage.isOpened(), "Did not return to profile pin page");
+
+        pinPage.getForgotPinButton().click();
+        sa.assertTrue(pinPage.getAccountPasswordRequiredMessaging().isPresent(), "'To retrieve pin, account password required' messaging not found.");
+
+        //Enter in new pin and save
+        passwordPage.enterPassword(account);
+        sa.assertTrue(pinPage.isOpened(), "Pin page was not opened after entering password.");
+        pinPage.clearPin();
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        pinPage.getSaveButton().click();
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile icon not present.");
+
+        //Enter in new pin and home screen appears
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(NEW_PROFILE_PIN);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        //refresh app to present who's watching page
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Remove profile pin via forgot PIN
+        whoIsWatching.isOpened();
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.getForgotPinButton().click();
+        passwordPage.enterPassword(account);
+        pinPage.getPinCheckBox().click();
+        pinPage.getSaveButton().click();
+        sa.assertFalse(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was found.");
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open.");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61245"})
+    @Test(description = "Profile Selection Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfileSelectionPageUI() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(),SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(),"Edit Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.isAddProfileButtonPresent(),"Add Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(SECONDARY_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(DEFAULT_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE),"Profile icon cell wasn't displayed for default profile");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE),"Profile icon cell wasn't displayed for secondary profile");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61257"})
+    @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDeleteProfileUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount accountV2 = createV2Account();
+        getAccountApi().addProfile(accountV2, SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        setAppToHomeScreen(accountV2);
+
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button was not found.");
+
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            editProfile.swipeUp(500);
+        }
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete button is not present on Edit profile.");
+
+        editProfile.getDeleteProfileButton().click();
+        sa.assertTrue(editProfile.getDeleteProfileCancelButton().isPresent(), "Delete Profile cancel button was not found.");
+        sa.assertTrue(editProfile.getDeleteProfileDeleteButton().isPresent(), "Delete Profile delete button was not found.");
+        sa.assertTrue(editProfile.getDeleteProfileTitle(SECONDARY_PROFILE).isPresent(), "Delete Profile page load (title and copy) was not found");
+        sa.assertTrue(editProfile.getDeleteProfileCopy().isPresent(), "Delete Profile copy was not found.");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61310"})
+    @Test(description = "Profiles > Profile PIN - Profile Access", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfilePinProfileAccess() {
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount account = createV2Account();
+        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getAccountApi().updateProfilePin(account, account.getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
+        sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        //Validate UI
+        sa.assertTrue(pinPage.isOpened(), "'Enter your profile PIN` title was not found.");
+        sa.assertTrue(pinPage.getCancelButton().isPresent(), "Cancel button was not found.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Input field is not present.");
+        sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found on Profile PIN Page.");
+        sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin? button was not found.");
+
+        //Validate incorrect pin error
+        SecureRandom random = new SecureRandom();
+        int min=1000;
+        int max=9999;
+        IntStream.range(0, 10).forEach(i -> {
+            pinPage.clickProfilePin();
+            pinPage.enterProfilePin(String.valueOf(random.nextInt(max-min+1)+min));
+            sa.assertTrue(pinPage.getProfilePinInvalidErrorMessage().isPresent(), "Profile PIN Invalid Error message was not found.");
+            pinPage.clearPin();
+        });
+
+        //Validate correct pin
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(PROFILE_PIN);
+        sa.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
+
+        //Validate selecting pin protected profile from More Menu
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickPinProtectedProfile(SECONDARY_PROFILE);
+        sa.assertTrue(pinPage.isOpened(), "Profile pin page was not opened after clicking secondary pin protected profile.");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71782"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Maturity Rating Slider", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileMaturityRatingSlider() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusContentRatingIOSPageBase contentRatingPage = new DisneyPlusContentRatingIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
+        editProfile.getContentRatingHeader().click();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(contentRatingPage.isOpened(), "Content rating page was not opened");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_R), RATING_R + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_MATURE), RATING_MATURE + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.verifyLastContentRating(RATING_MATURE), RATING_MATURE + " rating was not displayed at last");
+
+        //User select Rating R
+        contentRatingPage.selectContentRating(RATING_R);
+        contentRatingPage.clickSaveButton();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_R), "profile rating is not as expected");
+
+        //User select Rating TV-MA
+        editProfile.getContentRatingHeader().click();
+        passwordPage.enterPassword(getAccount());
+        contentRatingPage.selectContentRating(RATING_MATURE);
+        contentRatingPage.clickSaveButton();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69579"})
+    @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitSettings() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        //Verify line items for kid proof exit
+        sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids proof exit label wasn't present");
+        sa.assertTrue(editProfile.getKidProofDescription().isPresent(),"Kids proof exit description wasn't present");
+        //Kid proof exit is off by default
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
+        editProfile.toggleKidsProofExit();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "kids exit toggle is not 'On'");
+        editProfile.waitForUpdatedToastToDisappear();
+        //Turn off junior mode toggle
+        editProfile.toggleJuniorMode();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
+        //Verify kids proof exit is not tappable
+        editProfile.toggleKidsProofExit();
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"),"Kid proof exit toggle value was not retained from previous setting");
+        //Change non-primary(general audience) profile back to kids profile
+        editProfile.toggleJuniorMode();
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "Kid proof exit toggle value was not retained from previous setting");
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+        //Create new kids profile
+        createKidsProfile();
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66809"})
+    @Test(description = "Profiles - Edit Profile - Saving an empty Name Error", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileSavingEmptyNameError() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        editProfile.enterProfileName("");
+        editProfile.clickDoneBtn();
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
+        //Keys.SPACE is not working as expected
+        editProfile.enterProfileName("     ");
+        editProfile.clickDoneBtn();
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
+        sa.assertAll();
+    }
+
+    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(profile);
+        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
+    }
+
+    private void createKidsProfile() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        addProfile.tapJuniorModeToggle();
+        addProfile.clickSaveProfileButton();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            parentalConsent.scrollConsentContent(4);
+        }
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
     }
 }
