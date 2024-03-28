@@ -25,7 +25,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "profileNameTextFieldIdentifier")
     protected ExtendedWebElement profileNameTextFieldIdentifier;
 
-    @FindBy(xpath = "//XCUIElementTypeImage[@name='badgeIcon']/preceding-sibling::*")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeImage' AND name='badgeIcon'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[1]")
     protected ExtendedWebElement addProfileAvatar;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")

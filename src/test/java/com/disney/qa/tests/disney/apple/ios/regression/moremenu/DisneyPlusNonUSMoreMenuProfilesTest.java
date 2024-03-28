@@ -123,7 +123,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"More Menu"})
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS More Menu"})
     public void verifyAddProfilePageUI() {
         initialSetup("JP", "ja");
         handleAlert();
