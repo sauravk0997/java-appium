@@ -92,6 +92,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
+    public boolean isAddProfileHeaderPresent(){
+        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        return staticTextByLabel.format(addProfileHeader).isPresent();
+    }
+
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
