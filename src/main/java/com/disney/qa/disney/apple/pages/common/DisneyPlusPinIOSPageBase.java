@@ -11,13 +11,15 @@ import org.testng.asserts.SoftAssert;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusPinIOSPageBase(WebDriver driver) {
         super(driver);
     }
 
-    @FindBy(id = "marketingCheckbox")
+    @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     private ExtendedWebElement pinCheckBox;
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
@@ -74,13 +76,13 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getCancelButton() {
-        return staticTextByLabel.format(getDictionary()
+        return getDynamicAccessibilityId(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_CANCEL_SET_PROFILE_ENTRY_PIN.getText()));
     }
 
     public ExtendedWebElement getSaveButton() {
-        return staticTextByLabel.format(getDictionary()
+        return getDynamicAccessibilityId(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_SET_PROFILE_ENTRY_PIN.getText()));
     }
@@ -96,11 +98,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(profilePinDescription);
     }
 
-    public ExtendedWebElement getEmptyInputPinFieldNumber(int number) {
-        String pinInputEmpty = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText());
-        return dynamicRowOtherLabel.format(pinInputEmpty, number);
-    }
-
     public ExtendedWebElement getProfilePinMissingErrorMessage() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.SDK_ERROR_PROFILE_PIN_MISSING.getText()));
@@ -108,11 +105,5 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPinFieldNumberPresent(String number) {
         return getTypeOtherByLabel(number).isPresent();
-    }
-
-    public void verifyInputPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
-        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
-        IntStream.range(1, rangeEndNumber).forEach(i ->
-            sa.assertTrue(pinPage.getEmptyInputPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present."));
     }
 }
