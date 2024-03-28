@@ -225,7 +225,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId){
+    public JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId) {
         try {
             HttpHeaders headers = new HttpHeaders();
             String genericSetPath = String.format(GENERIC_PATH, locale, language, setId);
@@ -234,7 +234,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
             RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
             return restTemplate.exchange(request, JsonNode.class).getBody();
-        } catch (URISyntaxException | MalformedURLException e) {
+        } catch (URISyntaxException  e) {
+            LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
+            throw new RuntimeException("API Error attempting to fetch set ID", e);
+        } catch (MalformedURLException e){
             LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
             throw new RuntimeException("API Error attempting to fetch set ID", e);
         }
