@@ -308,7 +308,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(),"Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"),"Maturity Rating section is not as expected");
         sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
         sa.assertTrue(editProfile.getDoneButton().isPresent(),"Done button is not displayed");
         addProfile.updateUserName("updated_profile");

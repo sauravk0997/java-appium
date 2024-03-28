@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -16,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
@@ -23,7 +23,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWENTY_EIGHTEEN = "2018";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
-    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"More Menu"})
+    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
     public void verifyAddProfileFlow() {
         initialSetup("JP", "ja");
         handleAlert();
@@ -75,8 +75,70 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66792"})
+    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {"NonUS-More Menu"})
+    public void verifyEditProfileUIPrimaryProfile() {
+        initialSetup("JP", "ja");
+        handleAlert();
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        handleAlert();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT),"Done button is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"profile icon is not displayed");
+        sa.assertTrue(editProfile.getPrimaryProfileExplainer().isPresent(SHORT_TIMEOUT),"Primary profile explainer is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"pencil icon is not displayed");
+        sa.assertTrue(editProfile.getTextEntryField().getText().equals(DEFAULT_PROFILE),"Profile name is not displayed");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlHeadingDisplayed(),"Parental control section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("PG"),"Maturity Rating section is not as expected");
+        sa.assertFalse(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is displayed");
+        sa.assertFalse(editProfile.getKidProofExitLabel().isPresent(SHORT_TIMEOUT),"Kid proof exit label is displayed");
+        sa.assertFalse(editProfile.getKidProofDescription().isPresent(SHORT_TIMEOUT),"Kid proof description is displayed");
+        sa.assertAll();
+    }
+
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
+    public void verifyAddProfilePageUI() {
+        initialSetup("JP", "ja");
+        handleAlert();
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        handleAlert();
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
+        sa.assertTrue(addProfile.isProfileNamefieldPresent(), "Profile Name field was not found");
+        sa.assertTrue(addProfile.iskidsProfileToggleCellPresent(), " Kids profile toogle was not found");
+        sa.assertTrue(addProfile.getkidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by default");
+        sa.assertTrue(addProfile.isSaveBtnPresent(), "Save button was not found");
+        sa.assertTrue(addProfile.isCancelButtonPresent(), "Cancel button was not found");
+        sa.assertFalse(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field was found");
+        sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender field was found");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION},enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
@@ -119,39 +181,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 "Profile created after submitting credentials was not saved");
         sa.assertAll();
     }
-
-
-    @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS More Menu"})
-    public void verifyAddProfilePageUI() {
-        initialSetup("JP", "ja");
-        handleAlert();
-        SoftAssert sa = new SoftAssert();
-        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-
-        setAppToHomeScreen(getAccount());
-        handleAlert();
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
-        sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
-        sa.assertTrue(addProfile.isProfileNamefieldPresent(), "Profile Name field was not found");
-        sa.assertTrue(addProfile.iskidsProfileToggleCellPresent(), " Kids profile toogle was not found");
-        sa.assertTrue(addProfile.getkidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by default");
-        sa.assertTrue(addProfile.isSaveBtnPresent(), "Save button was not found");
-        sa.assertTrue(addProfile.isCancelButtonPresent(), "Cancel button was not found");
-        sa.assertFalse(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field was found");
-        sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender field was found");
-        sa.assertAll();
-    }
-
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
