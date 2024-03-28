@@ -29,6 +29,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String NEW_PROFILE_NAME = "New Name";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -867,9 +868,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickSaveBtn();
         sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
 
-        editProfilePage.enterProfileName("Unique Name");
+        editProfilePage.enterProfileName(NEW_PROFILE_NAME);
         editProfilePage.clickSaveBtn();
-        sa.assertTrue(homePage.isOpened(), "Profile name was not updated.");
+        homePage.clickMoreTab();
+        sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
     }
 
