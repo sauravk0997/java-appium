@@ -9,6 +9,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -30,6 +31,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String TWENTY_EIGHTEEN = "2018";
     private static final String ESPAÑOL = "Español";
     private static final String ENGLISH_US = "English (US)";
+    private static final String NEW_PROFILE_NAME = "New Name";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -876,6 +878,35 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.typePassword(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDuplicateProfileError() {
+        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+
+        editProfilePage.enterProfileName(DEFAULT_PROFILE);
+        editProfilePage.clickSaveBtn();
+        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
+
+        editProfilePage.enterProfileName(NEW_PROFILE_NAME);
+        editProfilePage.clickSaveBtn();
+        homePage.clickMoreTab();
+        sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
     }
 
