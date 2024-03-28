@@ -104,7 +104,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         //There is no dict key available for this element
-        return dynamicCellByLabel.format("Disney, Select for details on this title.").isPresent();
+        return dynamicCellByLabel.format("Disney, , Select for details on this title.").isPresent();
     }
 
     public void waitForHomePageToOpen() {
