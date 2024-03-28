@@ -10,6 +10,7 @@ import java.text.Collator;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.UI_LANGUAGE_COPY;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.UI_LANGUAGE_SETTING;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -22,9 +23,6 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"appLanguage\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell/**/XCUIElementTypeStaticText")
     List<ExtendedWebElement> appLanguageItems;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
-    ExtendedWebElement languageCell;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/**/XCUIElementTypeImage")
     ExtendedWebElement languageSelectedCheckMark;
 
@@ -33,9 +31,14 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() { return appLanguageView.isElementPresent(); }
 
-    public boolean appLanguageHeaderIsPresent() {
+    public boolean isAppLanguageHeaderPresent() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 UI_LANGUAGE_SETTING.getText())).isPresent();
+    }
+
+    public boolean isAppLanguageCopyPresent() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                UI_LANGUAGE_COPY.getText())).isPresent();
     }
 
     public boolean isLanguageListShownInAlphabeticalOrder() {
@@ -54,9 +57,9 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
         List<String> languages = appLanguageItems.stream()
                 .map(element -> element.getElement().getText())
                 .collect(Collectors.toList());
-        Collator collatorSpanish = Collator.getInstance(new Locale("en", "US"));
+        Collator collator = Collator.getInstance(new Locale("en", "US"));
         List<String> languagesSorted = languages;
-        languagesSorted.sort(collatorSpanish);
+        languagesSorted.sort(collator);
         return languages.equals(languagesSorted);
     }
 
@@ -70,13 +73,9 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
         return languageSelectedCheckMark.format(language).getElement().isEnabled();
     }
 
-    public ExtendedWebElement swipeUntilLanguageIsPresent (String language) {
-        ExtendedWebElement languageElement = languageCell.format(language);
-        int tries = 0;
-        while (tries < 3 && languageElement.isElementPresent(SHORT_TIMEOUT)) {
-            swipeUp(1500);
-            tries++;
-        }
+    public ExtendedWebElement swipeUntilLanguageIsPresent(String language) {
+        ExtendedWebElement languageElement = dynamicCellByLabel.format(language);
+        swipePageTillElementPresent(languageElement, 3, null, Direction.UP, 1500);
         return languageElement;
     }
 }

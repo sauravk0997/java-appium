@@ -28,6 +28,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String ESPAÑOL = "Español";
+    private static final String ENGLISH_US = "English (US)";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -817,33 +819,33 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61284"})
     @Test(description = "Ariel: Profiles - Edit Profile - App UI Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileAppUILanguage() {
-        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        editProfiles.clickEditModeProfile(getAccount().getFirstName());
-        editProfiles.clickAppLanguage();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickAppLanguage();
 
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
-        sa.assertTrue(appLanguage.appLanguageHeaderIsPresent(), "App Language header is not present");
+        sa.assertTrue(appLanguage.isAppLanguageHeaderPresent(), "App Language header is not present");
+        sa.assertTrue(appLanguage.isAppLanguageCopyPresent(), "App Language copy is not present");
         sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
-        sa.assertTrue(appLanguage.isLanguageSelected("English (US)"), "Language selected doesn't have the check mark");
-        sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present on alphabetical order");
-        swipeDown(1500);
-        swipeDown(1500);
+        sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
+        sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
         appLanguage.getBackArrow().click();
 
-        sa.assertTrue(editProfiles.isEditTitleDisplayed(), "Edit profile page is not opened");
-        editProfiles.clickAppLanguage();
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
+        editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
 
-        appLanguage.selectLanguage("Español");
-        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Actualizado").isPresent(), "Language was changed to Spanish");
-        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Idioma").isPresent(), "Language was changed to Spanish");
-        sa.assertTrue(editProfiles.getStaticTextByLabelContains("Español").isPresent(), "Language was changed to Spanish");
+        appLanguage.selectLanguage(ESPAÑOL);
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
+
+        editProfile.clickAppLanguage();
+        sa.assertTrue(appLanguage.isLanguageSelected(ESPAÑOL), "Language was not changed to Spanish");
     }
 
     @Maintainer("mparra5")
