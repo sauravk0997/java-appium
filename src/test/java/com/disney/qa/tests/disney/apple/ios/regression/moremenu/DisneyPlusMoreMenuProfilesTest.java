@@ -569,7 +569,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
         sa.assertTrue(pinPage.isOpened(), "Pin title was not found.");
-        pinPage.verifyPinFieldEmpty(4, sa);
+        pinPage.verifyInputPinFieldEmpty(4, sa);
         sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin Protected profile avatar and lock was not found.");
         sa.assertTrue(pinPage.getPinCancelButton().isPresent(), "Pin cancel button was not found.");
         sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button was not found.");
@@ -586,27 +586,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Verify clicking pin checkbox
         pressByElement(pinPage.getPinCheckBox(), 1);
         sa.assertTrue(pinPage.getCheckboxChecked().isPresent(), "Checked checkbox was not found.");
-        pinPage.verifyPinFieldEmpty(4, sa);
+        pinPage.verifyInputPinFieldEmpty(4, sa);
         sa.assertTrue(pinPage.getKeyboardByPredicate().isPresent(), "Keyboard did not pop up.");
         sa.assertTrue(pinPage.getLimitAccessMessaging(DEFAULT_PROFILE).isPresent(), "Limit access messaging was not found.");
 
         //Verify after each pin number entered
         pinPage.enterProfilePin(ONE);
         sa.assertTrue(pinPage.isPinFieldNumberPresent(ONE), ONE + " was not inputted into field.");
-        pinPage.verifyPinFieldEmpty(3, sa);
+        pinPage.verifyInputPinFieldEmpty(3, sa);
 
         pinPage.enterProfilePin(TWO);
         sa.assertTrue(pinPage.isPinFieldNumberPresent(TWO), TWO + " was not inputted into field.");
-        pinPage.verifyPinFieldEmpty(2, sa);
+        pinPage.verifyInputPinFieldEmpty(2, sa);
 
         pinPage.enterProfilePin(THREE);
         sa.assertTrue(pinPage.isPinFieldNumberPresent(THREE), THREE + " was not inputted into field.");
-        pinPage.verifyPinFieldEmpty(1, sa);
+        pinPage.verifyInputPinFieldEmpty(1, sa);
 
         //Validate save after only three numbers entered
         pinPage.getSaveButton();
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isPresent(), "Profile PIN missing error message was not found");
-        pinPage.verifyPinFieldEmpty(4, sa);
+        pinPage.verifyInputPinFieldEmpty(4, sa);
 
         //Verify error message not present after new number entered
         pinPage.enterProfilePin("4");
@@ -614,6 +614,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Validate clicking cancel button
         pinPage.getPinCancelButton().click();
         sa.assertTrue(editProfile.isOpened(), "Not returned to Edit Profile.");
+        sa.assertAll();
     }
 
     @Maintainer("gkrishna1")

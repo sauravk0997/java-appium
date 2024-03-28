@@ -96,7 +96,7 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(profilePinDescription);
     }
 
-    public ExtendedWebElement getPinFieldNumber(int number) {
+    public ExtendedWebElement getEmptyInputPinFieldNumber(int number) {
         String pinInputEmpty = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText());
         return dynamicRowOtherLabel.format(pinInputEmpty, number);
     }
@@ -110,9 +110,9 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByLabel(number).isPresent();
     }
 
-    public void verifyPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
+    public void verifyInputPinFieldEmpty(int rangeEndNumber, SoftAssert sa) {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         IntStream.range(1, rangeEndNumber).forEach(i ->
-            sa.assertTrue(pinPage.getPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present."));
+            sa.assertTrue(pinPage.getEmptyInputPinFieldNumber(i).isPresent(), "Pin field number: " + i + " was not present."));
     }
 }
