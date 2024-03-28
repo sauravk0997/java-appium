@@ -181,6 +181,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     }
 
+    public DisneyAccount createAccountFor(String country, String language) {
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(country, BUNDLE_PREMIUM);
+        return getAccountApi().createAccount(offer, country, language, SUBSCRIPTION_V2);
+    }
+
     /**
      * Setup method intended to be used either in a @BeforeMethod annotation or manually
      * called in a test to set the device back to the HOME/Discover page for navigation purposes.

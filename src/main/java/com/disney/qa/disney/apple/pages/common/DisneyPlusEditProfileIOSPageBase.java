@@ -22,6 +22,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
+    protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -103,7 +104,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
-    private ExtendedWebElement pinSettingsCell = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
@@ -250,6 +251,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isEditTextFieldPresent() {
         return textEntryField.isElementPresent();
+    }
+
+    public boolean isEmptyProfileNameErrorDisplayed(){
+        return staticTextByLabel.format(EMPTY_PROFILE_NAME_ERROR).isPresent();
     }
 
 
