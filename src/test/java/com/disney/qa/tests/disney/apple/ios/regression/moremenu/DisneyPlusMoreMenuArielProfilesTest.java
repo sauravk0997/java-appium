@@ -835,7 +835,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
         sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
         sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
-        appLanguage.getBackArrow().click();
+        pressByElement(appLanguage.getBackArrow(), 1);
 
         sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
         editProfile.clickAppLanguage();
