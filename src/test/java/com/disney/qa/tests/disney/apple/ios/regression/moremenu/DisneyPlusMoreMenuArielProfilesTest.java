@@ -848,6 +848,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isLanguageSelected(ESPAÑOL), "Language was not changed to Spanish");
+        sa.assertAll();
     }
 
     @Maintainer("mparra5")
