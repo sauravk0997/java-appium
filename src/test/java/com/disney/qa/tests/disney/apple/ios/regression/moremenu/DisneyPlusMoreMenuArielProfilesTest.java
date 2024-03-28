@@ -862,9 +862,13 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
-        editProfilePage.enterProfileName("Test");
+        editProfilePage.enterProfileName(DEFAULT_PROFILE);
         editProfilePage.clickSaveBtn();
-        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error Duplicate Profile Name is not present");
+        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
+
+        editProfilePage.enterProfileName("Unique Name");
+        editProfilePage.clickSaveBtn();
+        sa.assertTrue(whoIsWatching.isOpened(), "Profile name was not updated.");
         sa.assertAll();
     }
 
