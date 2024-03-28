@@ -8,6 +8,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
+    protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -30,6 +32,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(accessibilityId = "badgeIcon")
     protected ExtendedWebElement badgeIcon;
+
+    @ExtendedFindBy(accessibilityId = "kidProofExitToggleCell")
+    protected ExtendedWebElement kidProofExitToggleCell;
+
+    @ExtendedFindBy(accessibilityId = "kidsProfileToggleCell")
+    protected ExtendedWebElement juniorModeToggleCell;
+
 
     private ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
     private final ExtendedWebElement editProfileTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE.getText()));
@@ -95,7 +104,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
-    private ExtendedWebElement pinSettingsCell = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
@@ -244,6 +253,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return textEntryField.isElementPresent();
     }
 
+    public boolean isEmptyProfileNameErrorDisplayed(){
+        return staticTextByLabel.format(EMPTY_PROFILE_NAME_ERROR).isPresent();
+    }
+
 
     public boolean isServiceEnrollmentAccessFullCatalogPagePresent() {
         return serviceEnrollmentAccessFullCatalogPage.isElementPresent();
@@ -306,6 +319,25 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return autoplayToggleCell.getText();
     }
 
+    public String getKidProofExitToggleValue() {
+        swipe(kidProofExitToggleCell);
+        return kidProofExitToggleCell.getText();
+    }
+
+    public String getJuniorModeToggleValue() {
+        return juniorModeToggleCell.getText();
+    }
+
+    public void toggleKidsProofExit(){
+        kidProofExitToggleCell.getElement().findElement(By.name("toggleView")).click();
+    }
+
+    public void toggleJuniorMode(){
+        LOGGER.info("tapping on junior mode toggle");
+        WebElement juniorModeToggle = juniorModeToggleCell.getElement().findElement(By.name("toggleView"));
+        juniorModeToggle.click();
+    }
+
     public boolean isAutoplayToggleFocused() {
         return isFocused(autoplayToggleCell);
     }
@@ -359,7 +391,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getKidProofExitLabel() {
+        swipeInContainer(null, Direction.UP, 2500);
         return kidProofExitLabel;
+    }
+
+    public ExtendedWebElement getKidProofDescription() {
+        swipeInContainer(null, Direction.UP, 2500);
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                PROFILE_SETTINGS_KIDPROOF_EXIT_DESCRIPTION.getText()));
     }
 
     /**
@@ -415,16 +454,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isParentalControlSectionDisplayed() {
-        ExtendedWebElement kidsProofExit = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                PROFILE_SETTINGS_KIDPROOF_EXIT_DESCRIPTION.getText()));
+        ExtendedWebElement kidsProofExit = getKidProofDescription();
         swipePageTillElementPresent(kidsProofExit, 3, null, Direction.UP, 500);
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_HEADER.getText())).isPresent() &&
                 textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         KIDS_PROFILE_SUBCOPY.getText())).isPresent() &&
                 isLearnMoreLinkPresent() &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_KIDPROOF_EXIT_LABEL.getText())).isPresent() &&
+                getKidProofExitLabel().isPresent() &&
                 kidsProofExit.isPresent();
     }
 

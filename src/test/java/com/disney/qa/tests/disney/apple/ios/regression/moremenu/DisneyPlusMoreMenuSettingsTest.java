@@ -1,8 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusPinIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -11,6 +15,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -30,19 +35,44 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
-        getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
-        onboard(TEST_USER);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(TEST_USER)
-                        && disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+        DisneyAccount account = getAccountApi().addProfile(getAccount(),TEST_USER,ADULT_DOB,getAccount().getProfileLang(),DARTH_MAUL,false,true);
+        setAppToHomeScreen(account, TEST_USER);
+
+        softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
+        if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
+            softAssert.assertTrue(homePage.isProfileNameDisplayed(TEST_USER), "Profile Name is not displayed");
+        }
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Profile Switcher was not displayed for all profiles");
 
         for (DisneyPlusMoreMenuIOSPageBase.MoreMenu menuItem : DisneyPlusMoreMenuIOSPageBase.MoreMenu.values()) {
-            softAssert.assertTrue(disneyPlusMoreMenuIOSPageBase.isMenuOptionPresent(menuItem),
+            softAssert.assertTrue(moreMenuPage.isMenuOptionPresent(menuItem),
                     menuItem + " option was not be present");
         }
+        Assert.assertTrue(moreMenuPage.isAppVersionDisplayed(),
+                "App Version was not displayed");
 
+        //verify that Profile Selector/Switch does NOT scroll if user scroll above element
+        scrollUp();
+        softAssert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(TEST_USER)
+                        && moreMenuPage.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+                "Profile Switcher was not displayed for all profiles");
+
+        //verify if profile has pin lock then lock icon is displayed under profile name
+        moreMenuPage.clickHomeIcon();
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        moreMenuPage.clickMoreTab();
+        softAssert.assertTrue(moreMenuPage.isPinLockOnProfileDisplayed(DEFAULT_PROFILE), "Lock icon under the profile name is not displayed");
         softAssert.assertAll();
     }
 
