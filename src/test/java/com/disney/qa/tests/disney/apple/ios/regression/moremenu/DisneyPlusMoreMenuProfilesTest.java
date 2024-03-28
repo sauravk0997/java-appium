@@ -691,8 +691,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
     }
 
-
-
     private void createKidsProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
