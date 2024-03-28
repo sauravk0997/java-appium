@@ -181,6 +181,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dismissPickerWheelKeyboard();
     }
 
+    public boolean isDateOfBirthFieldPresent(){
+        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).isPresent();
+    }
+
     public void chooseGender() {
         clickGenderDropDown();
         dynamicBtnFindByLabel.format(genderPreferNotToSay).click();
