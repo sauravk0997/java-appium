@@ -859,7 +859,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
 
         setAppToHomeScreen(getAccount());
-        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
