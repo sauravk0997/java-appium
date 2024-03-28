@@ -103,7 +103,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return homeContentView.isElementPresent(SHORT_TIMEOUT);
+        //There is no dict key available for this element
+        return dynamicCellByLabel.format("Disney, Select for details on this title.").isPresent();
     }
 
     public void waitForHomePageToOpen() {
