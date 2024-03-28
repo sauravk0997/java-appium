@@ -38,8 +38,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String RECOMMENDATION_SET_NODE = "RecommendationSet";
     private static final String GENERIC_PATH = "version/6.1/region/%s/audience/false/maturity/1830/language/%s/setId/%s/pageSize/60/page/1";
     private static final String RECOMMENDATION_SET = DisneyContentParameters.getContentService(RECOMMENDATION_SET_NODE);
-    private static final String seriesPath = "/text/title/full/" + "series" + "/default/content";
-    private static final String moviePath = "/text/title/full/" + "program" + "/default/content";
+    private static final String SERIES_PATH = "/text/title/full/" + "series" + "/default/content";
+    private static final String MOVIE_PATH = "/text/title/full/" + "program" + "/default/content";
     private final RestTemplate restTemplate = RestTemplateBuilder
             .newInstance()
             .withSpecificJsonMessageConverter()
@@ -241,10 +241,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getMediaTitle(JsonNode item) {
-        if(item.at(seriesPath).isTextual()){
-            return item.at(seriesPath).asText();
+        if(item.at(SERIES_PATH).isTextual()){
+            return item.at(SERIES_PATH).asText();
         }
-        return item.at(moviePath).asText();
+        return item.at(MOVIE_PATH).asText();
     }
 
     public List<String> getTitleFromRecommendationSet(DisneyAccount account, String locale, String language){
