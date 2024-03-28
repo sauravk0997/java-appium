@@ -105,7 +105,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertFalse(editProfile.getKidProofDescription().isPresent(SHORT_TIMEOUT),"Kid proof description is displayed");
         sa.assertAll();
     }
-    
+
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
     @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
