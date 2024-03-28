@@ -38,6 +38,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String RECOMMENDATION_SET_NODE = "RecommendationSet";
     private static final String GENERIC_PATH = "version/6.1/region/%s/audience/false/maturity/1830/language/%s/setId/%s/pageSize/60/page/1";
     private static final String RECOMMENDATION_SET = DisneyContentParameters.getContentService(RECOMMENDATION_SET_NODE);
+    private static final String seriesPath = "/text/title/full/" + "series" + "/default/content";
+    private static final String moviePath = "/text/title/full/" + "program" + "/default/content";
     private final RestTemplate restTemplate = RestTemplateBuilder
             .newInstance()
             .withSpecificJsonMessageConverter()
@@ -231,17 +233,17 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
             RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
             return restTemplate.exchange(request, JsonNode.class).getBody();
-        } catch (MalformedURLException | URISyntaxException e) {
+        } catch (URISyntaxException | MalformedURLException e) {
             LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("API Error attempting to fetch set ID", e);
         }
     }
 
     public String getMediaTitle(JsonNode item) {
-        if(item.at("/text/title/full/" + "series" + "/default/content").isTextual()){
-            return item.at("/text/title/full/" + "series" + "/default/content").asText();
+        if(item.at(seriesPath).isTextual()){
+            return item.at(seriesPath).asText();
         }
-        return item.at("/text/title/full/" + "program" + "/default/content").asText();
+        return item.at(moviePath).asText();
     }
 
     public List<String> getTitleFromRecommendationSet(DisneyAccount account, String locale, String language){
