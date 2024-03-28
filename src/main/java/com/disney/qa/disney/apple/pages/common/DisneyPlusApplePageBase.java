@@ -1360,4 +1360,8 @@ public ExtendedWebElement getPinProtectedProfileIcon(String name) {
             return getPinProtectedProfileIcon(name).isPresent();
         }
     }
+
+    public ExtendedWebElement getMoreMenuTab() {
+        return moreTab;
+    }
 }

@@ -198,6 +198,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public boolean isProfileNameDisplayed(String name) {
+        return getTypeButtonByLabel(name).isPresent();
+    }
+
     public boolean isRecommendedForYouContainerPresent(){
         return recommendedForYou.isPresent();
     }
