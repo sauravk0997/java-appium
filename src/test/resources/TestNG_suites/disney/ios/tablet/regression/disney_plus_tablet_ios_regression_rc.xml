@@ -30,6 +30,7 @@
     </test>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding1" parallel="methods">
+        <parameter name="iOS17TabletDevices" value="iPad_Gen_9,iPad_8_Gen_1,iPad_Mini_5_Gen,iPad_Air_4_Gen,iPad_mini_4"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
