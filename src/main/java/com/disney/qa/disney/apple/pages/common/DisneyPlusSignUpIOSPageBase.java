@@ -17,7 +17,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText()));
 
-    @FindBy(xpath = "//*[contains(@label, 'Yes!')]")
+    @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     protected ExtendedWebElement optInCheckbox;
 
     @FindBy(xpath = "//*[contains(@label, 'Disney will use your data')]")
