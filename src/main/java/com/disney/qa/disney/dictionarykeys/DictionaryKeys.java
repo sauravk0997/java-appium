@@ -440,6 +440,7 @@ public enum DictionaryKeys {
     UPDATE_OTHERS_DESC("update_others_description"),
     UPDATE_OTHERS_SET_TO("update_others_profile_setto"),
     UPDATE_OTHERS_TITLE("update_others_title"),
+    UI_LANGUAGE_COPY("ui_language_copy"),
     UI_LANGUAGE_SETTING("ui_language_setting"),
     VERIFY_ACCOUNT_CTA("verify_account_cta"),
     VERIFY_ACCOUNT_HEADER("verify_account_banner"),
