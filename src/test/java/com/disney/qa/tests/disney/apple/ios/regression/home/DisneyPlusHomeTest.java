@@ -82,9 +82,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 (account, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
 
         int size = recommendationTitlesFromApi.size();
-        String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer();
-        ExtendedWebElement firstTitle = homePage.getStaticCellByLabel(recommendationTitlesFromApi.get(0));
-        ExtendedWebElement lastTitle = homePage.getStaticCellByLabel(recommendationTitlesFromApi.get(size-1));
+        String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
+        ExtendedWebElement firstTitle = homePage.getTypeCellLabelContains(recommendationTitlesFromApi.get(0));
+        ExtendedWebElement lastTitle = homePage.getTypeCellLabelContains(recommendationTitlesFromApi.get(size-1));
         Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI Title value not matched with API Title value ");
 
         homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 20, Direction.LEFT );
