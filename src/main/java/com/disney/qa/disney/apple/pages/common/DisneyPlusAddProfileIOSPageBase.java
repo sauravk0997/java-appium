@@ -25,7 +25,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "profileNameTextFieldIdentifier")
     protected ExtendedWebElement profileNameTextFieldIdentifier;
 
-    @FindBy(xpath = "//XCUIElementTypeImage[@name='badgeIcon']/preceding-sibling::*")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeImage' AND name='badgeIcon'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[1]")
     protected ExtendedWebElement addProfileAvatar;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
@@ -92,11 +92,20 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
+    public boolean isAddProfileHeaderPresent(){
+        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        return staticTextByLabel.format(addProfileHeader).isPresent();
+    }
+
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profileName)));
         return profileSelectionBtn.isPresent();
+    }
+
+    public boolean isProfileNamefieldPresent() {
+        return profileNameTextFieldIdentifier.isPresent();
     }
 
     public boolean profileNameTextFieldIdentifierFocused() {
@@ -112,6 +121,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
     public boolean kidsProfileToggleCellFocused() {
         return isFocused(kidsProfileToggleCell);
+    }
+
+    public boolean iskidsProfileToggleCellPresent() {
+        return kidsProfileToggleCell.isPresent();
+    }
+
+    public String getkidsProfileToggleCellValue() {
+        return kidsProfileToggleCell.getAttribute("value");
     }
 
     public void tapJuniorModeToggle() {
@@ -164,6 +181,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dismissPickerWheelKeyboard();
     }
 
+    public boolean isDateOfBirthFieldPresent(){
+        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).isPresent();
+    }
+
     public void chooseGender() {
         clickGenderDropDown();
         dynamicBtnFindByLabel.format(genderPreferNotToSay).click();
@@ -185,10 +206,17 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabel.format(genderPlaceholder).getAttribute("enabled").equals("true");
     }
 
+    public boolean isGenderFieldPresent() {
+        return dynamicBtnFindByLabel.format(genderPlaceholder).isPresent();
+    }
+
     public void tapCancelButton() {
         cancelButton.click();
     }
 
+    public boolean isCancelButtonPresent(){
+        return cancelButton.isPresent();
+    }
     /**
      * checks if Kid Profile sub copy present or not
      * @return true/false
