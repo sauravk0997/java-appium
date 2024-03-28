@@ -234,10 +234,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
             RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
             return restTemplate.exchange(request, JsonNode.class).getBody();
-        } catch (URISyntaxException  e) {
-            LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
-            throw new RuntimeException("API Error attempting to fetch set ID", e);
-        } catch (MalformedURLException e){
+        } catch (URISyntaxException | MalformedURLException e) {
             LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
             throw new RuntimeException("API Error attempting to fetch set ID", e);
         }
