@@ -1,11 +1,18 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.disney.proxy.RestTemplateBuilder;
+import com.disney.qa.api.client.requests.content.DisneyContentParameters;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -14,11 +21,28 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String RECOMMENDED_FOR_YOU_TITLE = "Recommended For You";
+    private static final String BEARER = "bearer ";
+    private static final String API_ERROR = "Request failed with the following exception: {}";
+    private static final String DISNEY_CONTENT_BAMGRID_URL = "https://disney.content.edge.bamgrid.com/";
+    protected static final String RECOMMENDATION_SET_NODE = "RecommendationSet";
+    private static final String GENERIC_PATH = "version/6.1/region/%s/audience/false/maturity/1830/language/%s/setId/%s/pageSize/60/page/1";
+    private static final String RECOMMENDATION_SET = DisneyContentParameters.getContentService(RECOMMENDATION_SET_NODE);
+    private final RestTemplate restTemplate = RestTemplateBuilder
+            .newInstance()
+            .withSpecificJsonMessageConverter()
+            .withUtf8EncodingMessageConverter()
+            .build();
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -196,6 +220,39 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));
         }
+    }
+
+    public JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId){
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            String genericSetPath = String.format(GENERIC_PATH, locale, language, setId);
+            URI uri = new URI(DISNEY_CONTENT_BAMGRID_URL + RECOMMENDATION_SET + genericSetPath);
+            headers.add(HttpHeaders.AUTHORIZATION, BEARER + account.getAccountToken());
+            UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
+            RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
+            return restTemplate.exchange(request, JsonNode.class).getBody();
+        } catch (MalformedURLException | URISyntaxException e) {
+            LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getMediaTitle(JsonNode item) {
+        if(item.at("/text/title/full/" + "series" + "/default/content").isTextual()){
+            return item.at("/text/title/full/" + "series" + "/default/content").asText();
+        }
+        return item.at("/text/title/full/" + "program" + "/default/content").asText();
+    }
+
+    public List<String> getTitleFromRecommendationSet(DisneyAccount account, String locale, String language){
+        List<String> titlesFromApi = new ArrayList<>();
+        JsonNode js =  getRecommendationSet(account, locale, language,
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+
+        js.findPath("data").findPath(RECOMMENDATION_SET_NODE).findPath("items")
+                .forEach(item -> titlesFromApi.add(getMediaTitle(item)));
+
+        return titlesFromApi;
     }
 
     public boolean isProfileNameDisplayed(String name) {
