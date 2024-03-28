@@ -316,6 +316,7 @@ public enum DictionaryKeys {
     PSE_DISCLAIMER("pse_disclaimer"),
     PREMIER_ACCESS_HEADLINE_MOVIE("ea_headline_neutral_movie"),
     PREVIEW_FEATURED("preview_featured"),
+    PRIMARY_PROFILE_EXPLAINER("primaryprofileexplainer"),
     PRIVACY_POLICY("footer_eup_login_privacy_policy"),
     PRIVACY_CHOICES_LINK("communication_settings_link_1_text"),
     PRIVACY_TERMS_BTN("btn_terms_privacy"),
