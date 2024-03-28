@@ -69,7 +69,7 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isLanguageSelected(String language) {
         swipeUntilLanguageIsPresent(language);
-        // Check mar image has visible attribute on false
+        // Check mark image has visible attribute on false
         return languageSelectedCheckMark.format(language).getElement().isEnabled();
     }
 
