@@ -83,7 +83,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        return staticTextLabelContains.format("Or signup from Disney+").isPresent();
+        return staticTextNameContains.format("Or signup from Disney+").isPresent();
     }
 
     public boolean isSignUpButtonDisplayed() {
