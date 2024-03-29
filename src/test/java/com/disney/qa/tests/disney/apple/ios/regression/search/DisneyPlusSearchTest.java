@@ -325,8 +325,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
-        sa.assertTrue(originalsPage.getBackButton().isPresent(), "Back button is not present.");
-        originalsPage.getBackButton().click();
+        sa.assertTrue(originalsPage.getNewBackButton().isPresent(), "Back button is not present.");
+        originalsPage.getNewBackButton().click();
 
         if (collectionName.equalsIgnoreCase("movies")) {
             searchPage.clickMoviesTab();

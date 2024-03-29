@@ -259,6 +259,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backButton;
 
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
+    protected ExtendedWebElement newBackButton;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
@@ -1328,6 +1331,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
+
+    public ExtendedWebElement getNewBackButton() { return newBackButton; }
 
     public boolean isDownloadsTabDisplayed() { return downloadTab.isPresent(); }
 
