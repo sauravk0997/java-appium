@@ -18,7 +18,7 @@ public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTe
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        rotateScreen(ScreenOrientation.LANDSCAPE); // setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
+        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.PORTRAIT, ScreenOrientation.LANDSCAPE);
 
 
         sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
