@@ -42,16 +42,16 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @Test(description = "Verify Home/Discover", groups = { "Smoke", TestGroup.PRE_CONFIGURATION })
     public void testHome() {
         SoftAssert softAssert = new SoftAssert();
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.HOME),
                 "Expected: Home button should be present in nav bar");
 
-        disneyPlusHomeIOSPageBase.getHomeNav().click();
+        homePage.getHomeNav().click();
 
-        softAssert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
+        softAssert.assertTrue(homePage.isOpened(),
                 "Expected: Home Screen should be opened");
 
         softAssert.assertAll();

@@ -112,7 +112,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         return dynamicAccessProfileIcon.format(
                 getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
-                .isElementPresent();
+                .isPresent();
     }
 
     public void waitForProfileButton(String username) {

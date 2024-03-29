@@ -101,16 +101,19 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    public ExtendedWebElement getHomePageMainElement(){
+        return  dynamicCellByLabel.format("Disney, , Select for details on this title.");
+    }
     @Override
     public boolean isOpened() {
         //There is no dict key available for this element
-        return dynamicCellByLabel.format("Disney, , Select for details on this title.").isPresent();
+        return getHomePageMainElement().isPresent();
     }
 
     public void waitForHomePageToOpen() {
         LOGGER.info("Waiting for Home page to load");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Home page is not opened")
-                .until(it -> homeContentView.isPresent(SHORT_TIMEOUT));
+                .until(it -> getHomePageMainElement().isPresent(SHORT_TIMEOUT));
     }
 
     public boolean isKidsHomePageOpen() {

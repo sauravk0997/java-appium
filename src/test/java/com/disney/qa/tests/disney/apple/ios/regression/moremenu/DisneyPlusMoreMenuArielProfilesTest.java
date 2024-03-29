@@ -9,6 +9,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -28,6 +29,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String ESPAÑOL = "Español";
+    private static final String ENGLISH_US = "English (US)";
+    private static final String NEW_PROFILE_NAME = "New Name";
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
@@ -814,6 +818,40 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61284"})
+    @Test(description = "Ariel: Profiles - Edit Profile - App UI Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileAppUILanguage() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickAppLanguage();
+
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        sa.assertTrue(appLanguage.isAppLanguageHeaderPresent(), "App Language header is not present");
+        sa.assertTrue(appLanguage.isAppLanguageCopyPresent(), "App Language copy is not present");
+        sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
+        sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
+        sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
+        pressByElement(appLanguage.getBackArrow(), 1);
+
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
+        editProfile.clickAppLanguage();
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+
+        appLanguage.selectLanguage(ESPAÑOL);
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
+
+        editProfile.clickAppLanguage();
+        sa.assertTrue(appLanguage.isLanguageSelected(ESPAÑOL), "Language was not changed to Spanish");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69503"})
     @Test(description = "Ariel: Profiles - Edit Profile - Kids Mode - Require Password to Disable Junior Mode Profile", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileKidsModeDisableJuniorMode() {
@@ -841,6 +879,35 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.typePassword(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("mparra5")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileDuplicateProfileError() {
+        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+
+        editProfilePage.enterProfileName(DEFAULT_PROFILE);
+        editProfilePage.clickSaveBtn();
+        sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
+
+        editProfilePage.enterProfileName(NEW_PROFILE_NAME);
+        editProfilePage.clickSaveBtn();
+        homePage.clickMoreTab();
+        sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
     }
 

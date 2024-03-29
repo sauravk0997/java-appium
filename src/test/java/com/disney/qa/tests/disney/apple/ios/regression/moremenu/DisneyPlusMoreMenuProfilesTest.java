@@ -34,6 +34,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String PROFILE_PIN = "1111";
     private static final String NEW_PROFILE_PIN = "1234";
     private static final String SECONDARY_PROFILE_PIN = "4321";
+    private static final String ONE = "1";
+    private static final String TWO = "2";
+    private static final String THREE = "3";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -308,7 +311,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(),"Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"),"Maturity Rating section is not as expected");
         sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
         sa.assertTrue(editProfile.getDoneButton().isPresent(),"Done button is not displayed");
         addProfile.updateUserName("updated_profile");
@@ -545,6 +548,76 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61300"})
+    @Test(description = "Profiles > Manage Profile PIN", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyManageProfilePIN() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyAccount account = createV2Account();
+        getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
+        try {
+            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(account);
+
+        //Verify pin protected profile
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        sa.assertTrue(pinPage.isOpened(), "Pin title was not found.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+        sa.assertTrue(pinPage.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin Protected profile avatar and lock was not found.");
+        sa.assertTrue(pinPage.getPinCancelButton().isPresent(), "Pin cancel button was not found.");
+        sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button was not found.");
+
+        //Verify existing profile - no profile pin
+        pressByElement(pinPage.getPinCancelButton(), 1);
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        editProfile.swipeUp(500);
+        editProfile.getEditProfilePinSettingLabel().click();
+        passwordPage.enterPassword(account);
+
+        //Verify clicking pin checkbox
+        sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Checked checkbox was not found.");
+        pressByElement(pinPage.getPinCheckBox(), 1);
+        sa.assertTrue(pinPage.getLimitAccessMessaging(SECONDARY_PROFILE).isPresent(), "Profile pin limit access messaging not found.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+        sa.assertTrue(pinPage.getKeyboardByPredicate().isPresent(), "Keyboard did not pop up.");
+
+        //Verify after each pin number entered
+        pinPage.enterProfilePin(ONE);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(ONE), ONE + " was not inputted into field.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+
+        pinPage.enterProfilePin(TWO);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(TWO), TWO + " was not inputted into field.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+
+        pinPage.enterProfilePin(THREE);
+        sa.assertTrue(pinPage.isPinFieldNumberPresent(THREE), THREE + " was not inputted into field.");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+
+        //Validate save after only three numbers entered
+        pressByElement(pinPage.getSaveButton(), 1);
+        sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isPresent(), "Profile PIN missing error message was not found");
+        sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
+
+        //Verify error message not present after new number entered
+        pinPage.enterProfilePin("4");
+        sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isElementNotPresent(SHORT_TIMEOUT), "Profile PIN missing error message was found");
+
+        //Validate clicking cancel button
+        pressByElement(pinPage.getCancelButton(), 1);
+        sa.assertTrue(editProfile.getEditProfilePinSettingLabel().isPresent(), "Did not return to Edit Profile screen, Profile pin setting label not present");
+        sa.assertAll();
+    }
+
+    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69579"})
     @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyKidProofExitSettings() {
