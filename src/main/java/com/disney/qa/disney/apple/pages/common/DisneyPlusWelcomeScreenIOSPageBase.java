@@ -83,7 +83,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        return staticTextLabelContains.format("Start streaming Disney+ starting from --/--.").isPresent();
+        return staticTextLabelContains.format("Or signup from Disney+").isPresent();
     }
 
     public boolean isSignUpButtonDisplayed() {
