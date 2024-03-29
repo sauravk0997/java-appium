@@ -30,6 +30,9 @@ public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTe
         sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isMainTextDisplayed(),
                 "XMOBQA-62333 - 'Marketing Copy' was not displayed as expected");
 
+        swipeDown(1000);
+        //swipePageTillElementPresent(isSubCopyDirectTextPresent(), 5, null, Direction.UP, 1);
+
         sa.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isSubCopyDirectTextPresent(),
                 "XMOBQA-62333 - 'Sign Up CTA' text was not displayed as expected");
 
