@@ -72,6 +72,9 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
         } else {
             System.out.println("Testing 1:");
+            System.out.println(DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText());
+            System.out.println("Testing 2:");
+            // staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
             System.out.println(staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())));
             return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
         }
