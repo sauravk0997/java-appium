@@ -71,6 +71,8 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
             return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.WELCOME_TAGLINE_COPY.getText())).isPresent();
 
         } else {
+            System.out.println("Testing 1:");
+            System.out.println(staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())));
             return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
         }
     }
@@ -83,7 +85,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        return staticTextNameContains.format("Or signup from Disney+").isPresent();
+        return staticTextLabelContains.format("Start streaming Disney+ starting from --/--.").isPresent();
     }
 
     public boolean isSignUpButtonDisplayed() {
