@@ -15,6 +15,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -35,6 +36,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ASHOKA = "Ashoka";
+    private static final String SHOP = "Shop";
+
+    @DataProvider(name = "disneyPlanTypes")
+    public Object[][] disneyWebPlanTypes() {
+        return new Object[][]{{"Disney+ With Ads, Hulu with Ads, and ESPN+"},
+                {"Disney+, Hulu No Ads, and ESPN+"}
+        };
+    }
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
@@ -272,6 +281,29 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("hpatel7")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72730"})
+    @Test(description = "Details Page - ShopDisney - Shop Tab - Primary Profile (Ad Tier & Non Ad Tier)", dataProvider = "disneyPlanTypes", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    public void verifyShopTabInDetailsPage(String planType) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), planType),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        //verify Shop Tab button is present and after clicking it focused or not
+        validateShopTabButton(sa, SPIDERMAN_THREE);
+
+        //Verify Shop tab bitton for series
+        detailsPage.getBackArrow().click();
+        validateShopTabButton(sa, ASHOKA);
+        sa.assertAll();
+    }
+
     private void vailidateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -282,6 +314,18 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
         sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+    }
+
+    private void validateShopTabButton(SoftAssert sa, String titleName){
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        searchPage.searchForMedia(titleName);
+        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+        detailsPage.clickShopTab();
+        sa.assertTrue(detailsPage.isTabSelected(SHOP.toUpperCase()), "Shop tab is not focused");
     }
 
     private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
