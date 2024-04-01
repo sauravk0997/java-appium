@@ -6,7 +6,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,14 +13,6 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
-    @BeforeTest(alwaysRun = true)
-    private void setUp() {
-        initialSetup("US", "en");
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-    }
-
     @DataProvider(name = "brands")
     public Object[][] brandTypes() {
         return new Object[][]{
@@ -40,14 +31,12 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
 
-        if (!homePage.isOpened()) {
-            brandPage.clickOnCollectionBackButton();
-        }
-        sa.assertTrue(homePage.getDynamicCellByLabel(String.format("%s, , Select for details on this title.", brandPage.getBrand(brand))).isPresent(),
+        sa.assertTrue(homePage.getBrandCell(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
 
-        homePage.getDynamicCellByLabel(String.format("%s, , Select for details on this title.", brandPage.getBrand(brand))).click();
+        homePage.clickOnBrandCell(brandPage.getBrand(brand));
         sa.assertTrue(brandPage.isOpened(), brandPage.getBrand(brand) + "Brand page did not open.");
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), brandPage.getBrand(brand) + "Brand featured image is not present");
