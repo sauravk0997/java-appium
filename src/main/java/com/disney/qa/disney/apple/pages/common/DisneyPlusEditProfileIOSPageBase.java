@@ -460,15 +460,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 sharePlaySubheader.isPresent();
     }
 
-    public boolean isParentalControlSectionDisplayed() {
-        ExtendedWebElement kidsProofExit = getKidProofDescription();
-        swipePageTillElementPresent(kidsProofExit, 3, null, Direction.UP, 500);
-        return isParentalControlHeadingDisplayed() &&
-                textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        KIDS_PROFILE_SUBCOPY.getText())).isPresent() &&
-                isLearnMoreLinkPresent() &&
-                getKidProofExitLabel().isPresent() &&
-                kidsProofExit.isPresent();
+    public ExtendedWebElement getJuniorModeDescription() {
+        return textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                KIDS_PROFILE_SUBCOPY.getText()));
     }
 
     public boolean isParentalControlHeadingDisplayed() {
@@ -477,15 +471,36 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 PROFILE_SETTINGS_HEADER.getText())).isPresent();
     }
 
-    public boolean isMaturityRatingSectionDisplayed(String rating) {
-        ExtendedWebElement profilePinLabel = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION.getText()));
+    public boolean isParentalControlSectionDisplayed() {
+        ExtendedWebElement kidsProofExit = getKidProofDescription();
+        swipePageTillElementPresent(kidsProofExit, 3, null, Direction.UP, 500);
+        return isParentalControlHeadingDisplayed() &&
+                getJuniorModeDescription().isPresent() &&
+                isLearnMoreLinkPresent() &&
+                getKidProofExitLabel().isPresent() &&
+                kidsProofExit.isPresent();
+    }
+
+    public ExtendedWebElement getProfilePinHeader() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                PROFILE_SETTINGS_MATURITY_RATING_LABEL.getText())).isPresent() &&
+                PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
+    }
+
+    public ExtendedWebElement getProfilePinDescription() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION.getText()));
+    }
+
+    public ExtendedWebElement getMaturityRatingLabel() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                PROFILE_SETTINGS_MATURITY_RATING_LABEL.getText()));
+    }
+
+    public boolean isMaturityRatingSectionDisplayed(String rating) {
+        return getMaturityRatingLabel().isPresent() &&
                 verifyProfileSettingsMaturityRating(rating) &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText())).isPresent() &&
-                profilePinLabel.isPresent();
+                getProfilePinHeader().isPresent() &&
+                getProfilePinDescription().isPresent();
     }
 
     public boolean isErrorDuplicateProfileNamePresent() {
