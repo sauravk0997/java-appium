@@ -1,8 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.alice.AliceDriver;
+import com.disney.alice.labels.AliceLabels;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -17,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
@@ -216,6 +221,37 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         whoIsWatching.clickProfile(KIDS_PROFILE);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
+    @Maintainer("hpatel7")
+    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION })
+    public void verifyProfileSelectionScreenBehaviourBeforeLimit() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        IOSSettingsMenuBase iOSSettingPage = initPage(IOSSettingsMenuBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
+                RAYA, false, true);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE), SECONDARY_PROFILE + " profile was not found");
+        moreMenu.clickSearchIcon();
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        moreMenu.keepSessionAlive(15, iOSSettingPage.getSettingsheaderTab());
+        launchApp(buildType.getDisneyBundle());
+        sa.assertTrue(searchPage.isOpened(), "search page did not open");
+        sa.assertFalse(whoIsWatching.isOpened(), "Select Profile Page was opened");
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE), SECONDARY_PROFILE + " profile was not found");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " was not selected");
+        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DEFAULT_PROFILE, AliceLabels.BUTTON_HOVERED.getText());
+        sa.assertAll();
     }
 
     private void createKidsProfile() {
