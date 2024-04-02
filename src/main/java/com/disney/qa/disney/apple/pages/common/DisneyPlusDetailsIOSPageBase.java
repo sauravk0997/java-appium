@@ -1092,4 +1092,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isShopPromoLabelSubHeaderPresent() {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
+
+    public boolean isContentAvailableWithHuluSubscriptionPresent() {
+        return getStaticTextByLabel("This title is available with a Hulu subscription.").isPresent();
+    }
 }
