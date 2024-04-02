@@ -65,7 +65,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'Back'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeStaticText[`name == \"Featured\"`]")
     private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
 
     @ExtendedFindBy(accessibilityId = "segmentedControl")
@@ -193,6 +193,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickContentPageFilterDropDownAtMiddleTop(){
+        System.out.println("Testing 1:" +contentPageFilterDropDownAtMiddleTop);
         contentPageFilterDropDownAtMiddleTop.click();
     }
 
