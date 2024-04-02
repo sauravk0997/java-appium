@@ -247,10 +247,10 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         launchApp(buildType.getDisneyBundle());
         sa.assertTrue(searchPage.isOpened(), "search page did not open");
         sa.assertFalse(whoIsWatching.isOpened(), "Select Profile Page was opened");
-        moreMenu.clickMoreTab();
+        searchPage.clickMoreTab();
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE), SECONDARY_PROFILE + " profile was not found");
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " was not selected");
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DEFAULT_PROFILE, AliceLabels.BUTTON_HOVERED.getText());
+        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DEFAULT_PROFILE, AliceLabels.ROUND_TILE_HOVERED.getText());
         sa.assertAll();
     }
 
