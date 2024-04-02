@@ -16,6 +16,9 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView[%s]")
     protected ExtendedWebElement collectionContainer;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Originals\"`]")
+    protected ExtendedWebElement originalLabel;
+
     //FUNCTIONS
 
     public DisneyPlusOriginalsIOSPageBase(WebDriver driver) {
@@ -28,5 +31,9 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeInCollectionContainer(ExtendedWebElement element, int position){
         swipePageTillElementPresent(element, 10, collectionContainer.format(position), Direction.LEFT, 1500);
+    }
+
+    public ExtendedWebElement getOriginalLabel(){
+        return originalLabel;
     }
 }
