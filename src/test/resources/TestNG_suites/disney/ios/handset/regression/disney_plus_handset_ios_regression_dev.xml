@@ -69,7 +69,7 @@
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Handset More Menu4" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset More Menu Non US" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusNonUSMoreMenuProfilesTest"/>
         </classes>
