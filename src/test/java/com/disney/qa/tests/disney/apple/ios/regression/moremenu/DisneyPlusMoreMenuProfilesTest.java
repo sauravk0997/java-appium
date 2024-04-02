@@ -697,7 +697,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
-        String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06";
+        String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06"; // \u codes left to right: cat heart emoji, z circle symbol, green heart emoji, laughing emoji
         editProfile.enterProfileName(allCharacters);
         editProfile.clickDoneBtn();
         sa.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home.");
