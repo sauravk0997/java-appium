@@ -106,6 +106,35 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73708"})
+    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {"NonUS-More Menu"})
+    public void verifyEditProfileUIKidsProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        initialSetup("JP", "ja");
+        handleAlert();
+        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        handleAlert();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT),"Done button is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(),"profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"pencil icon is not displayed");
+        sa.assertTrue(editProfile.getTextEntryField().getText().equals(KIDS_PROFILE),"Profile name is not displayed");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("On"), "Junior mode toggle was not present");
+        sa.assertTrue(editProfile.getProfilePinHeader().isPresent(), "Profile pin header is not displayed");
+        sa.assertTrue(editProfile.getProfilePinDescription().isPresent(), "Profile pin description is not displayed");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is displayed");
+        sa.assertAll();
+    }
+
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
     @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
