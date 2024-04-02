@@ -298,7 +298,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //verify Shop Tab button is present and after clicking it focused or not
         validateShopTabButton(sa, SPIDERMAN_THREE);
 
-        //Verify Shop tab bitton for series
+        //Verify Shop tab button for series
         detailsPage.getBackArrow().click();
         validateShopTabButton(sa, ASHOKA);
         sa.assertAll();
