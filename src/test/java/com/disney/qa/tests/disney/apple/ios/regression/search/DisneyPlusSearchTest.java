@@ -363,13 +363,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
         } else {
             sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNewBackButton().isPresent(), "Back button is not present.");
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNewBackButton().isPresent(), "Back button is not present.");
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstComedyResult = kidsResults.get(0).getText();

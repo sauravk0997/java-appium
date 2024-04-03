@@ -193,7 +193,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickContentPageFilterDropDownAtMiddleTop(){
-        System.out.println("Testing 1:" +contentPageFilterDropDownAtMiddleTop);
         contentPageFilterDropDownAtMiddleTop.click();
     }
 
