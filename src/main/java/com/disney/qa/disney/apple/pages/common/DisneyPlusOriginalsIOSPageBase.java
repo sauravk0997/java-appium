@@ -36,4 +36,8 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getOriginalLabel(){
         return originalLabel;
     }
+
+    public boolean isOriginalLabelPresent() {
+        return originalLabel.isElementPresent();
+    }
 }
