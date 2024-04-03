@@ -65,7 +65,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeStaticText[`name == \"Featured\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther/XCUIElementTypeButton/XCUIElementTypeStaticText")
     private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
 
     @ExtendedFindBy(accessibilityId = "segmentedControl")
