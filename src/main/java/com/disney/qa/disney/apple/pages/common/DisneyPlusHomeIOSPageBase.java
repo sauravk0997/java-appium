@@ -68,15 +68,19 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
+    public ExtendedWebElement getHomePageMainElement(){
+        return  dynamicCellByLabel.format("Disney, , Select for details on this title.");
+    }
     @Override
     public boolean isOpened() {
-        return homeContentView.isElementPresent(SHORT_TIMEOUT);
+        //There is no dict key available for this element
+        return getHomePageMainElement().isPresent();
     }
 
     public void waitForHomePageToOpen() {
         LOGGER.info("Waiting for Home page to load");
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Home page is not opened")
-                .until(it -> homeContentView.isPresent(SHORT_TIMEOUT));
+                .until(it -> getHomePageMainElement().isPresent(SHORT_TIMEOUT));
     }
 
     public boolean isKidsHomePageOpen() {
@@ -189,6 +193,14 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));
         }
+    }
+
+    public ExtendedWebElement getBrandCell(String brand) {
+        return getDynamicCellByLabel(String.format("%s, , Select for details on this title.", brand));
+    }
+
+    public void clickOnBrandCell(String brand) {
+        getBrandCell(brand).click();
     }
 
     public boolean isProfileNameDisplayed(String name) {
