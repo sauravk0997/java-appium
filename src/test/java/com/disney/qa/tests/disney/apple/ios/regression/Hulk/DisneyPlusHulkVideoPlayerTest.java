@@ -33,6 +33,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         searchPage.searchForMedia(NETWORK_CONTENT);
         searchPage.getDisplayedTitles().get(0).click();
 
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
         detailsPage.clickPlayButton().isOpened();
 
@@ -50,8 +51,8 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
-        pause(5);
-        detailsPage.swipeDown(1000);
+        detailsPage.swipePageTillElementPresent(detailsPage.getContinueButton(), 3, null, Direction.DOWN, 500);
+        //detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
 
         detailsPage.clickOnHuluContinueButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
@@ -97,6 +98,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
         videoPlayer.waitForVideoToStart();
+
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
         int maxDelay = videoPlayer.getRemainingTimeThreeIntegers() / 100;
