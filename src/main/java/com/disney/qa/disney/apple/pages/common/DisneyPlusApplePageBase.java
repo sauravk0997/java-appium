@@ -43,6 +43,7 @@ import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
     public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    public static final String MICKEY_MOUSE = "442af7db-85f7-5e1d-96f0-b2c517be4085";
     public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     public static final String PREY = "Prey";
@@ -148,7 +149,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicRowButtonLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByNameContains;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\" or label == \"%s\"`][%s]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
     protected ExtendedWebElement dynamicRowOtherLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabel;
@@ -299,6 +300,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Stay up to date\"`]")
     protected ExtendedWebElement stayUpToDatePopup;
+    @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeKeyboard\"")
+    private ExtendedWebElement keyboardByPredicate;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1028,6 +1031,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicTextEntryFieldByName.format(name);
     }
 
+    public ExtendedWebElement getTextEntryField() {
+        return textEntryField;
+    }
+
     /**
      * @param min     session to be kept alive for these many minutes
      * @param element check on this element to make sure session is alive
@@ -1359,6 +1366,10 @@ public ExtendedWebElement getPinProtectedProfileIcon(String name) {
         } else {
             return getPinProtectedProfileIcon(name).isPresent();
         }
+    }
+
+    public ExtendedWebElement getKeyboardByPredicate() {
+        return keyboardByPredicate;
     }
 
     public ExtendedWebElement getMoreMenuTab() {
