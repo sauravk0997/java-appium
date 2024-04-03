@@ -66,7 +66,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[label == \"%s\"][1]")
     private ExtendedWebElement asset;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Disney\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Disney\"`]")
     private ExtendedWebElement disneyBrandTile;
 
     @ExtendedFindBy(accessibilityId = "viewAlert")
