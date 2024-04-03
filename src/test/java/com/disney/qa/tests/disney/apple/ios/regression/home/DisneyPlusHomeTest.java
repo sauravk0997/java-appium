@@ -1,11 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.config.DisneyParameters;
+import com.disney.qa.api.explore.ExploreApi;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.explore.response.ExploreSearchResponse;
+import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -15,11 +21,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
+    private static final String PARTNER = "disney";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -69,7 +77,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
-    public void verifyRecommendedForYouContainer() {
+    public void verifyRecommendedForYouContainer() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -77,6 +85,31 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
+
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .partner(PARTNER)
+                .environment(DisneyParameters.getEnv())
+                .build();
+
+        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
+
+        ExploreSearchRequest request = ExploreSearchRequest.builder()
+                .language(getLocalizationUtils().getUserLanguage())
+                .profileId(account.getProfileId())
+                .contentEntitlements("disney_plus_sub:base")
+                .entityId("page-4a8e20b7-1848-49e1-ae23-d45624f4498a")
+                .build();
+
+        ExploreSearchResponse response = exploreApi.search(request);
+
+        exploreApi.getPage(request)
+                .getData()
+                .getPage()
+                .getContainers()
+                .get(2)
+                .getPagination()
+                .getTotalCount();
 
         List<String> recommendationTitlesFromApi = homePage.getTitleFromRecommendationSet
                 (account, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
