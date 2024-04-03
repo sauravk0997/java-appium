@@ -290,7 +290,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), planType),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
