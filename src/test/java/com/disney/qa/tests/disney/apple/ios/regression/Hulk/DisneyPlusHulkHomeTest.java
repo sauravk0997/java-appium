@@ -1,10 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -13,9 +15,14 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 import java.util.*;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
+
+    String UNENTITLED_SERIES_ID = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
+    String PLATFORM = "apple";
+    String ENVIRONMENT = "PROD";
 
     private List<String> networkLogos = new ArrayList<String>(
             Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
@@ -127,22 +134,24 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265", "XMOBQA-75488"})
     @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks")
-    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
+    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), "Unavailable content error not present.");
-        sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
-
-        homePage.getUnavailableOkButton().click();
-        sa.assertTrue(homePage.isOpened(), "Home page not present");
+        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), ENVIRONMENT, PLATFORM, UNENTITLED_SERIES_ID, "disney_plus_sub:base"),
+                "\"This content requires a Hulu subscription.\" message is displayed");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
 
         sa.assertAll();
     }
