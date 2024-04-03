@@ -683,7 +683,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61421"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66780"})
     @Test(description = "Edit Profile - All Characters allowed for Profile name", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileAllCharacters() {
         SoftAssert sa = new SoftAssert();
