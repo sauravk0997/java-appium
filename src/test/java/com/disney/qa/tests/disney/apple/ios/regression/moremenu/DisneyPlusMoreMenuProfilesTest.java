@@ -682,6 +682,32 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66780"})
+    @Test(description = "Edit Profile - All Characters allowed for Profile name", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileAllCharacters() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyAccount account = createV2Account();
+        setAppToHomeScreen(account);
+
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06"; //u codes left to right: cat heart emoji, z circle symbol, green heart emoji, laughing emoji
+        editProfile.enterProfileName(allCharacters);
+        editProfile.clickDoneBtn();
+        sa.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home.");
+
+        homePage.clickMoreTab();
+        moreMenu.isOpened();
+        sa.assertTrue(moreMenu.getProfileCell(allCharacters, false).isPresent(), allCharacters + " profile name was not found.");
+        sa.assertAll();
+    }
+
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);

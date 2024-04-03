@@ -171,7 +171,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return initPage(DisneyPlusEditProfileIOSPageBase.class);
 	}
 
-	private ExtendedWebElement getProfileCell(String profile, boolean secured) {
+	public ExtendedWebElement getProfileCell(String profile, boolean secured) {
 		if(secured) {
 			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		} else {
