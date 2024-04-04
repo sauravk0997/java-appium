@@ -51,7 +51,6 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
-        // detailsPage.swipePageTillElementPresent(detailsPage.getContinueButton(), 3, null, Direction.DOWN, 500);
 
         detailsPage.clickOnHuluContinueButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
