@@ -348,6 +348,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.scrubToPlaybackPercentage(99);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button present after completing playback");
