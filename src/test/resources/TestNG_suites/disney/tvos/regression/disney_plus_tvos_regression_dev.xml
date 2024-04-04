@@ -19,6 +19,7 @@
     <parameter name="scheduling" value="H 12 * * *"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75494"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
         <classes>
