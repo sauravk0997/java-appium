@@ -21,7 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
@@ -226,31 +226,30 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
     @Maintainer("hpatel7")
     @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION })
-    public void verifyProfileSelectionScreenBehaviourBeforeLimit() {
+    public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         IOSSettingsMenuBase iOSSettingPage = initPage(IOSSettingsMenuBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
-        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getLocalizationUtils().getUserLanguage(),
-                RAYA, false, true);
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA,
+                true, true);
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE), SECONDARY_PROFILE + " profile was not found");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " profile was not found");
         moreMenu.clickSearchIcon();
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        moreMenu.keepSessionAlive(15, iOSSettingPage.getSettingsheaderTab());
+        moreMenu.keepSessionAlive(2, iOSSettingPage.getSettingsheaderTab());
         launchApp(buildType.getDisneyBundle());
         sa.assertTrue(searchPage.isOpened(), "search page did not open");
         sa.assertFalse(whoIsWatching.isOpened(), "Select Profile Page was opened");
         searchPage.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE), SECONDARY_PROFILE + " profile was not found");
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " was not selected");
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, DEFAULT_PROFILE, AliceLabels.ROUND_TILE_HOVERED.getText());
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " profile was not found");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " profile was not found");
+        sa.assertFalse(moreMenu.isExitKidsProfileButtonPresent(), DEFAULT_PROFILE + " profile was not selected");
         sa.assertAll();
     }
 
