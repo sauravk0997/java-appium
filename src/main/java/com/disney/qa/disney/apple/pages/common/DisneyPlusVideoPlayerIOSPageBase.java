@@ -331,9 +331,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapAudioSubTitleMenu() {
-        displayVideoController();
-        pause(1);
-        audioSubtitleMenuButton.click();
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "subtitle menu overlay didn't open")
+                .until(it -> {
+                    displayVideoController();
+                    audioSubtitleMenuButton.click();
+                    return initPage(DisneyPlusAudioSubtitleIOSPageBase.class).isOpened();
+                });
     }
 
     public boolean isSkipIntroButtonPresent() { return skipIntroButton.isElementPresent(); }

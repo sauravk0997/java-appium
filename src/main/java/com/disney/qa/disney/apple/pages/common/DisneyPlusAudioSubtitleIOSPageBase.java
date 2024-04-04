@@ -76,6 +76,11 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
         element.click();
     }
 
+    public boolean isLanguagePresent(String language) {
+        ExtendedWebElement audioLanguage = languageCell.format(language);
+        return audioLanguage.isPresent();
+    }
+
     //Subtitle related functions
     public boolean isSubtitleHeadingPresent() {
         return subtitlesHeading.isElementPresent() && subtitleCollectionView.isElementPresent();
