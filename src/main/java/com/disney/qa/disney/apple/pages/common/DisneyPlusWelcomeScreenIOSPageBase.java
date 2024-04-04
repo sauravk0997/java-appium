@@ -12,6 +12,8 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String HOME_PAGE_SUB_COPY =  "Or sign up for Disney+ only. 18+ only.";
+
     //LOCATORS
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
@@ -83,8 +85,11 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        //return staticTextLabelContains.format("Start streaming Disney+ starting from --/--.").isPresent();
-        return staticTextNameContains.format("Or sign up for Disney+ only. 18+ only.").isPresent();
+        return staticTextNameContains.format(HOME_PAGE_SUB_COPY).isPresent();
+    }
+
+    public ExtendedWebElement getSubCopyDirectText(){
+        return staticTextNameContains.format(HOME_PAGE_SUB_COPY);
     }
 
     public boolean isSignUpButtonDisplayed() {
