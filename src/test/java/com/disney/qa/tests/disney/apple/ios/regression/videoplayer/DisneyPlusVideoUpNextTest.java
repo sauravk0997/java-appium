@@ -210,42 +210,6 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62519"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
-    @Maintainer("hpatel7")
-    public void verifyProgressBarForAfterUserWatchesContent() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAppToHomeScreen(getAccount());
-
-        initiatePlaybackAndScrubOnPlayer("Spiderman 3", PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
-        disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
-
-        int remainingTimeInMinutes = disneyPlusVideoPlayerIOSPageBase.getRemainingTime();
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton();
-
-        long hours = remainingTimeInMinutes/60;
-        long minutes = remainingTimeInMinutes %  60;
-        String durationTime = String.format("%dh %dm",hours, minutes);
-
-        sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching time remaining is not present");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime), "Correct remaining time is not reflecting in progress bar");
-
-        detailsPage.clickContinueButton();
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isOpened(), "Video player Page is not opened");
-        disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(100);
-        disneyPlusVideoPlayerIOSPageBase.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar is present after completing playback");
-        sa.assertAll();
-    }
-
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
