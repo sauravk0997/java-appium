@@ -6,7 +6,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,14 +13,6 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
-    @BeforeTest(alwaysRun = true)
-    private void setUp() {
-        initialSetup("US", "en");
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-        initPage(DisneyPlusHomeIOSPageBase.class).isOpened();
-    }
-
     @DataProvider(name = "brands")
     public Object[][] brandTypes() {
         return new Object[][]{
@@ -40,14 +31,12 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
 
-        if (!homePage.isOpened()) {
-            brandPage.getBackButton().click();
-        }
-        sa.assertTrue(homePage.getDynamicCellByLabel(brandPage.getBrand(brand)).isPresent(),
+        sa.assertTrue(homePage.getBrandCell(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
 
-        homePage.clickBrandTile(brand);
+        homePage.clickOnBrandCell(brandPage.getBrand(brand));
         sa.assertTrue(brandPage.isOpened(), brandPage.getBrand(brand) + "Brand page did not open.");
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), brandPage.getBrand(brand) + "Brand featured image is not present");
@@ -62,11 +51,11 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         BufferedImage closeToEndOfBrandPage = getCurrentScreenView();
         sa.assertTrue(brandPage.areImagesDifferent(topOfBrandPage, closeToEndOfBrandPage), "Top of brand page and close to end of brand page are the same.");
         sa.assertFalse(brandPage.getBrandLogoImage().isPresent(), "Brand logo image was not suppressed after scrolling down page.");
-        sa.assertTrue(brandPage.getBackButton().isPresent(), "Back button was not found when at bottom of brand page");
+        sa.assertTrue(brandPage.isBackButtonPresent(), "Back button was not found when at bottom of brand page");
 
         brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(), 5, null, Direction.DOWN, 500);
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
-        brandPage.getBackButton().click();
+        brandPage.clickOnCollectionBackButton();
         sa.assertTrue(homePage.isHomePageLoadPresent(), "Brand page was not closed and returned to home page.");;
         sa.assertAll();
     }
