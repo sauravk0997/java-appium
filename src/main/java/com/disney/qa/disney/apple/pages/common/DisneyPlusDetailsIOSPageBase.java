@@ -1,10 +1,17 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.explore.ExploreApi;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.explore.response.ExplorePageResponse;
+import com.disney.qa.api.pojos.ApiConfiguration;
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -1091,5 +1098,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShopPromoLabelSubHeaderPresent() {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
+    }
+
+    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId, String contentEntitlements) throws URISyntaxException, JsonProcessingException {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(platform)
+                .environment(environment).build();
+        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
+        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(seriesId)
+                .profileId(account.getProfileId()).contentEntitlements(contentEntitlements).build();
+        ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
+        String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
+        return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
     }
 }
