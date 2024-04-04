@@ -326,6 +326,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton().isOpened();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
+        videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPlayButton();
+        videoPlayerPage.clickPauseButton();
 
         int remainingTimeInMinutes = videoPlayerPage.getRemainingTime();
         videoPlayerPage.clickBackButton();
