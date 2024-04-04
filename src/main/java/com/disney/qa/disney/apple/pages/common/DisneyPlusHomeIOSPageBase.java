@@ -32,20 +32,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String RECOMMENDED_FOR_YOU_TITLE = "Recommended For You";
-    private static final String BEARER = "bearer ";
-    private static final String API_ERROR = "Request failed with the following exception: {}";
-    private static final String DISNEY_CONTENT_BAMGRID_URL = "https://disney.content.edge.bamgrid.com/";
-    protected static final String RECOMMENDATION_SET_NODE = "RecommendationSet";
-    private static final String GENERIC_PATH = "version/6.1/region/%s/audience/false/maturity/1450/language/%s/setId/%s/pageSize/60/page/1";
-    private static final String GENERIC_EXPLORE_PATH = "https://disney.api.edge.bamgrid.com/explore/v1.3/page/page-4a8e20b7-1848-49e1-ae23-d45624f4498a?limit=60";
-    private static final String RECOMMENDATION_SET = DisneyContentParameters.getContentService(RECOMMENDATION_SET_NODE);
-    private static final String SERIES_PATH = "/text/title/full/" + "series" + "/default/content";
-    private static final String MOVIE_PATH = "/text/title/full/" + "program" + "/default/content";
-    private final RestTemplate restTemplate = RestTemplateBuilder
-            .newInstance()
-            .withSpecificJsonMessageConverter()
-            .withUtf8EncodingMessageConverter()
-            .build();
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -235,48 +221,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickOnBrandCell(String brand) {
         getBrandCell(brand).click();
-    }
-
-    public JsonNode getRecommendationSet(DisneyAccount account, String locale, String language, String setId) {
-        try {
-            /*HttpHeaders headers = new HttpHeaders();
-            String genericSetPath = String.format(GENERIC_PATH, locale, language, setId);
-            URI uri = new URI(DISNEY_CONTENT_BAMGRID_URL + RECOMMENDATION_SET + genericSetPath);
-            headers.add(HttpHeaders.AUTHORIZATION, BEARER + account.getAccountToken());
-            UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
-            RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
-            return restTemplate.exchange(request, JsonNode.class).getBody();*/
-
-            HttpHeaders headers = new HttpHeaders();
-            String genericSetPath = String.format(GENERIC_EXPLORE_PATH, setId);
-            URI uri = new URI(genericSetPath);
-            headers.add(HttpHeaders.AUTHORIZATION, BEARER + account.getAccountToken());
-            UriComponents builder = UriComponentsBuilder.fromHttpUrl(uri.toURL().toString()).build();
-            RequestEntity<JsonNode> request = new RequestEntity<>(headers, HttpMethod.GET, builder.toUri());
-            return restTemplate.exchange(request, JsonNode.class).getBody();
-
-        } catch (URISyntaxException | MalformedURLException e) {
-            LOGGER.error("API Error attempting to fetch set ID {}. {}: {}", setId, API_ERROR, e);
-            throw new RuntimeException("API Error attempting to fetch set ID", e);
-        }
-    }
-
-    public String getMediaTitle(JsonNode item) {
-        if(item.at(SERIES_PATH).isTextual()){
-            return item.at(SERIES_PATH).asText();
-        }
-        return item.at(MOVIE_PATH).asText();
-    }
-
-    public List<String> getTitleFromRecommendationSet(DisneyAccount account, String locale, String language){
-        List<String> titlesFromApi = new ArrayList<>();
-        JsonNode js =  getRecommendationSet(account, locale, language,
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-
-        js.findPath("data").findPath(RECOMMENDATION_SET_NODE).findPath("items")
-                .forEach(item -> titlesFromApi.add(getMediaTitle(item)));
-
-        return titlesFromApi;
     }
 
     public boolean isProfileNameDisplayed(String name) {

@@ -3,7 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.home;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExploreSearchResponse;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -22,12 +22,14 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String PARTNER = "disney";
+    private static final String HOME_PAGE_ENTITY_ID = "page-4a8e20b7-1848-49e1-ae23-d45624f4498a";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -91,28 +93,25 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .partner(PARTNER)
                 .environment(DisneyParameters.getEnv())
                 .build();
-
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-
         ExploreSearchRequest request = ExploreSearchRequest.builder()
                 .language(getLocalizationUtils().getUserLanguage())
                 .profileId(account.getProfileId())
                 .contentEntitlements("disney_plus_sub:base")
-                .entityId("page-4a8e20b7-1848-49e1-ae23-d45624f4498a")
+                .entityId(HOME_PAGE_ENTITY_ID)
                 .build();
 
-        ExploreSearchResponse response = exploreApi.search(request);
-
-        exploreApi.getPage(request)
+        ArrayList<Item> recommendationSetItemsFromApi = exploreApi.getPage(request)
                 .getData()
                 .getPage()
                 .getContainers()
                 .get(2)
-                .getPagination()
-                .getTotalCount();
+                .getItems();
 
-        List<String> recommendationTitlesFromApi = homePage.getTitleFromRecommendationSet
-                (account, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        List<String> recommendationTitlesFromApi = new ArrayList<>();
+
+        recommendationSetItemsFromApi.forEach(item ->
+                recommendationTitlesFromApi.add(item.getVisuals().getTitle()));
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
