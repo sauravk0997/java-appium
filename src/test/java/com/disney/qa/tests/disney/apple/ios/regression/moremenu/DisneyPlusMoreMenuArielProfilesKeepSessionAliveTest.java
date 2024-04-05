@@ -247,7 +247,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         searchPage.clickMoreTab();
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " profile was not found");
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " profile was not found");
-        //if Other profile then default profile means KiDS profile selected, then Exit Junior mode shold be displayed on more menu page
+        //if Other profile then default profile means KiDS profile selected, then Exit Junior mode button should be displayed on more menu page
         sa.assertFalse(moreMenu.isExitKidsProfileButtonPresent(), DEFAULT_PROFILE + " profile was not selected");
         sa.assertAll();
     }
