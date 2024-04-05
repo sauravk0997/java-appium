@@ -326,19 +326,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.clickPlayButton().isOpened();
-        videoPlayerPage.clickPauseButton();
+        videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
         videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.clickPlayButton();
         videoPlayerPage.clickPauseButton();
-
-        int remainingTimeInMinutes = videoPlayerPage.getRemainingTime();
+        String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
         videoPlayerPage.clickBackButton();
-        long hours = remainingTimeInMinutes/60;
-        long minutes = remainingTimeInMinutes %  60;
-        String durationTime = String.format("%dh %dm",hours, minutes);
 
-        sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
+        detailsPage.waitForProgressBarToAppear();
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
         sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
