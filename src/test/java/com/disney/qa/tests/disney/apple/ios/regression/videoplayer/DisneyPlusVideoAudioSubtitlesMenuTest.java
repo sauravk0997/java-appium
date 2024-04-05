@@ -17,6 +17,8 @@ import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.Disney
 
 public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String DEUTSCH = "Deutsch";
+    private static final String AUDIO_SUBTITLE_MENU_DID_NOT_OPEN = "Audio subtitle menu didn't open";
+    private static final String VIDEO_NOT_PAUSED = "Video was not paused";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62343"})
     @Test(description = " Verify Menu, Languages and UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
@@ -111,14 +113,14 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         detailsPage.clickPlayButton().isOpened();
         videoPlayer.tapAudioSubTitleMenu();
-        sa.assertTrue(subtitlePage.isOpened(), "audio subtitle menu didn't open");
+        sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         lockDevice(Duration.ofSeconds(5));
         handleAlert();
-        sa.assertTrue(subtitlePage.isOpened(), "audio subtitle menu didn't open");
+        sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         subtitlePage.chooseAudioLanguage(DEUTSCH);
         subtitlePage.chooseSubtitlesLanguage(DEUTSCH);
         subtitlePage.tapCloseButton();
-        videoPlayer.verifyVideoPaused();
+        sa.assertTrue(videoPlayer.verifyVideoPaused(), VIDEO_NOT_PAUSED);
         videoPlayer.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(DEUTSCH), "Checkmark was not present for the selected lang");
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH), "Selected subtitle language is not as expected");

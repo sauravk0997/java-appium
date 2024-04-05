@@ -70,7 +70,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void chooseAudioLanguage(String language) {
-        LOGGER.info("selecting audio language: {}", language);
+        LOGGER.info("Selecting audio language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
         waitForPresenceOfAnElement(element);
@@ -88,7 +88,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void chooseSubtitlesLanguage(String language) {
-        LOGGER.info("selecting subtitles language: {}", language);
+        LOGGER.info("Selecting subtitles language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         waitForPresenceOfAnElement(element);
