@@ -12,14 +12,14 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
-    <parameter name="jenkinsDefaultRetryCount" value="1"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Group" value="Ariel-IAP"/>
-    <parameter name="scheduling" value="H 2 * * *"/>
+    <parameter name="scheduling" value="H 2 * * 6-7"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
         <classes>
