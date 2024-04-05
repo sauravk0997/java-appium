@@ -333,7 +333,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
         videoPlayerPage.clickBackButton();
 
-        detailsPage.waitForProgressBarToAppear();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
         sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
@@ -343,8 +343,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.scrubToPlaybackPercentage(99);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button present after completing playback");
         sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar is present after completing playback");

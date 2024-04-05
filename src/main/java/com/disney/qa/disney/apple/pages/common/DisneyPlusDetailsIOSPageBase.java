@@ -1110,9 +1110,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
     }
-
-    public boolean waitForProgressBarToAppear() {
-        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Progress bar didn't appear on detail page")
-                .until(it -> progressBar.isElementPresent(LONG_TIMEOUT)));
-    }
 }
