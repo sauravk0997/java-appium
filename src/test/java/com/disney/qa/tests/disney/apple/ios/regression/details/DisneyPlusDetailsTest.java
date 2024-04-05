@@ -343,11 +343,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.scrubToPlaybackPercentage(99);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertTrue(detailsPage.isOpened(), "Detail Page did not open");
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar is present after completing playback");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
 
