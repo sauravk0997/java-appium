@@ -19,6 +19,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String DEUTSCH = "Deutsch";
     private static final String AUDIO_SUBTITLE_MENU_DID_NOT_OPEN = "Audio subtitle menu didn't open";
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62343"})
     @Test(description = " Verify Menu, Languages and UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
@@ -111,7 +112,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         launchDeeplink(true, R.TESTDATA.get("disney_prod_mulan_2020_deeplink"), 10);
         homePage.clickOpenButton();
-        detailsPage.clickPlayButton().isOpened();
+        sa.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         lockDevice(Duration.ofSeconds(5));
