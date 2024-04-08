@@ -21,6 +21,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPa
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
+
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
         return new Object[][]{{DisneyPlusApplePageBase.contentType.MOVIE.toString(), "Ice Age"},
@@ -71,7 +72,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61185"})
-    @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
+    @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     @Maintainer("gkrishna1")
     public void verifyRewindButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -95,7 +96,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61179"})
-    @Test(description = " Video Player > Tap on screen to Forward", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = " Video Player > Tap on screen to Forward", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyForwardButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -104,7 +105,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         int remainingTimeAfterFwdTapInPauseMode = videoPlayer.tapForwardButton(1).getRemainingTime();
-        sa.assertTrue( remainingTimeInPauseMode > remainingTimeAfterFwdTapInPauseMode,
+        sa.assertTrue(remainingTimeInPauseMode > remainingTimeAfterFwdTapInPauseMode,
                 "Remaining time in pause mode before fwd tap " + remainingTimeInPauseMode +
                         " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPauseMode);
         //TODO: IOS-3974 - blocks the below scenario, commenting it out till bug is resolved.
@@ -117,7 +118,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContent() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -133,7 +134,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72788"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyCloseButtonForDeepLinkingContentMovie() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -149,7 +150,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61195"})
-    @Test(description = "Video Player > Player Controls UI - Confirm Program Title for Movies / Series / Extras", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, dataProvider = "contentType", enabled = false)
+    @Test(description = "Video Player > Player Controls UI - Confirm Program Title for Movies / Series / Extras", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType", enabled = false)
     @Maintainer("gkrishna1")
     public void verifyProgramTitleOnPlayer(String contentType, String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -187,7 +188,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61191"})
-    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Video Player > Player Controls UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyPlayerControlUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -229,7 +230,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-        private void loginAndStartPlayback(String content) {
+    private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
