@@ -246,8 +246,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void clickDoneBtn() {
-        System.out.println(getDriver().getPageSource());
-        System.out.println(doneBtn.getAttribute("name"));
         clickElementAtLocation(doneBtn, 50, 50);
     }
 
