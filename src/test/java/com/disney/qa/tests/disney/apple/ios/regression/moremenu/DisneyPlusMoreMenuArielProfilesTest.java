@@ -929,7 +929,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         appLanguage.selectLanguage(ESPAÑOL);
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
         sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
-        editProfile.clickSaveProfileButton();
+        editProfile.clickDoneBtn();
         sa.assertTrue(editProfile.getStaticTextByLabel(recommendedForYouInInSpanish).isPresent(), "UI language for Home page is not updated after language change");
         sa.assertAll();
     }
