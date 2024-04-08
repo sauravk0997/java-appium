@@ -198,7 +198,7 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         return basicMonthlyPriceCheckmark.isElementPresent();
     }
 
-    public ExtendedWebElement getSettingsheaderTab(){
+    public ExtendedWebElement getSettingsheaderTab() {
         return header;
     }
 }
