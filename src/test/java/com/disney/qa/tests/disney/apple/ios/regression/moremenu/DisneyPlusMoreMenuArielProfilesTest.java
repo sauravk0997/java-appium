@@ -135,7 +135,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(KIDS_PROFILE);
         //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
         //Once bug is resolved, remove line 177
-        fluentWait(getDriver(),2,2,"More tab is not present").until(it -> moreMenu.isOpened());
+        pause(2);
         moreMenu.clickMoreTab();
         softAssert.assertTrue(updateProfilePage.isOpened(), "Update your profile page is not shown after selecting kids profile");
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
