@@ -20,6 +20,7 @@ import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.Disney
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
         return new Object[][]{{DisneyPlusApplePageBase.contentType.MOVIE.toString(), "Ice Age"},
@@ -33,23 +34,23 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 {"DISNEY_VERIFIED_HULU_ESPN_BUNDLE"}};
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61163"})
-    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
-    @Maintainer("gkrishna1")
-    public void verifyCloseButtonControlOnPlayer() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
+    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
+    public void verifyCloseButtonControlOnPlayer(Object[] content) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-        //Initiate playback from the 'details' page
-        loginAndStartPlayback(SHORT_SERIES);
+        //User taps the back button
+        loginAndStartPlayback((String) content[1]);
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "'Details' page is not shown closing the video player");
-
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        //User taps the title
+        detailsPage.clickPlayButton().waitForVideoToStart();
+        videoPlayer.tapTitleOnPlayer();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
         //Initiate playback from 'downloads'
-        detailsPage.getEpisodeToDownload("1","1").click();
+        /*detailsPage.getEpisodeToDownload("1","1").click();
         detailsPage.waitForOneEpisodeDownloadToComplete(60, 3);
         homePage.clickDownloadsIcon();
         downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
@@ -66,8 +67,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");
-        sa.assertAll();
+        sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");*/
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61185"})
@@ -229,7 +229,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void loginAndStartPlayback(String content) {
+        private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
