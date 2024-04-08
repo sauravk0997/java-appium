@@ -30,5 +30,4 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeInCollectionContainer(ExtendedWebElement element, int position){
         swipePageTillElementPresent(element, 10, collectionContainer.format(position), Direction.LEFT, 1500);
     }
-
 }
