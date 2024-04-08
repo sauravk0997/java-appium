@@ -224,6 +224,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
     @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
+        String errorMsg = "profile was not found";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -244,8 +245,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         sa.assertTrue(searchPage.isOpened(), "search page did not open");
         sa.assertFalse(whoIsWatching.isOpened(), "Select Profile Page was opened");
         searchPage.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " profile was not found");
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " profile was not found");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " " + errorMsg);
         LOGGER.info("If Other profile then default profile means KiDS profile selected, then Exit Junior mode button should be displayed on more menu page");
         sa.assertFalse(moreMenu.isExitKidsProfileButtonPresent(), DEFAULT_PROFILE + " profile was not selected");
         sa.assertAll();
