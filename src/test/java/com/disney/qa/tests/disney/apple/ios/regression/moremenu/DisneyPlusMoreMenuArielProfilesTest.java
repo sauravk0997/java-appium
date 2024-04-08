@@ -915,6 +915,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUIAppAbilityToChangeLanguage() {
         String editProfileInSpanish = "Editar perfil";
+        String doneInSpanish = "Listo";
         String recommendedForYouInInSpanish = "Recomendadas para ti";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -928,7 +929,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(ESPAÑOL);
         sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
-        editProfile.clickDoneBtn();
+        editProfile.clickSpanishDoneButton(doneInSpanish);
         sa.assertTrue(editProfile.getStaticTextByLabel(recommendedForYouInInSpanish).isPresent(), "UI language for Home page is not updated after language change");
         sa.assertAll();
     }
