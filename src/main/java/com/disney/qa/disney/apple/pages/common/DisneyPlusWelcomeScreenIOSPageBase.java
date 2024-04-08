@@ -12,8 +12,6 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
 
-    //private static final String HOME_PAGE_SUB_COPY =  "Or sign up for Disney+ only. 18+ only.";
-
     //LOCATORS
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
