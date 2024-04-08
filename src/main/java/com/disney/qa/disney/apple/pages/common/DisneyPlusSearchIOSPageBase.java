@@ -238,5 +238,4 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBackButtonOnContentPage() { return backButtonOnContentPage; }
-
 }
