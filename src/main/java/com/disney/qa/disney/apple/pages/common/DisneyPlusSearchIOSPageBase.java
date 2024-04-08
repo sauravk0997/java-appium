@@ -77,7 +77,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement backButtonOnContentPage;
 
-
     //FUNCTIONS
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {

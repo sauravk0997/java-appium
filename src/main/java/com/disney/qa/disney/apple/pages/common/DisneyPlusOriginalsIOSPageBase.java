@@ -17,7 +17,6 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView[%s]")
     protected ExtendedWebElement collectionContainer;
 
-
     //FUNCTIONS
 
     public DisneyPlusOriginalsIOSPageBase(WebDriver driver) {
