@@ -11,13 +11,11 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
 
-    private final ExtendedWebElement originalsPageLoad = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.ORIGINALS_PAGE_LOAD.getText()));
+    private final ExtendedWebElement originalLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView[%s]")
     protected ExtendedWebElement collectionContainer;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Originals\"`]")
-    protected ExtendedWebElement originalLabel;
 
     //FUNCTIONS
 
@@ -26,18 +24,11 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOriginalPageLoadPresent() {
-        return originalsPageLoad.isElementPresent();
+        return originalLabel.isElementPresent();
     }
 
     public void swipeInCollectionContainer(ExtendedWebElement element, int position){
         swipePageTillElementPresent(element, 10, collectionContainer.format(position), Direction.LEFT, 1500);
     }
 
-    public ExtendedWebElement getOriginalLabel(){
-        return originalLabel;
-    }
-
-    public boolean isOriginalLabelPresent() {
-        return originalLabel.isElementPresent();
-    }
 }

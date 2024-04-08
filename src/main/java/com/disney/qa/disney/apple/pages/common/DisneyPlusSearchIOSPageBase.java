@@ -65,7 +65,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther/XCUIElementTypeButton/XCUIElementTypeStaticText")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
     private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
 
     @ExtendedFindBy(accessibilityId = "segmentedControl")
@@ -73,6 +73,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
+
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
+    protected ExtendedWebElement backButtonOnContentPage;
 
 
     //FUNCTIONS
@@ -234,5 +237,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public String getRatingAndYearDetailsFromSearchResults(String title){
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
+
+    public ExtendedWebElement getBackButtonOnContentPage() { return backButtonOnContentPage; }
 
 }
