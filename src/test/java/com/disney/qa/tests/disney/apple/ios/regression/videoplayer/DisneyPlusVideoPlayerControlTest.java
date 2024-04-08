@@ -36,8 +36,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
-    @Test(description = "Video Player > User taps to close Video Player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
-    public void verifyCloseButtonControlOnPlayer(Object[] content) {
+    @Test(description = "Video Player > Title and Back Button to Close", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
+    public void verifyTitleAndBackButtonToClose(Object[] content) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
