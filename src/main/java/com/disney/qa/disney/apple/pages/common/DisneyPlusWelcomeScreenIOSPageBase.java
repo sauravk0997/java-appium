@@ -12,7 +12,7 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final String HOME_PAGE_SUB_COPY =  "Or sign up for Disney+ only. 18+ only.";
+    //private static final String HOME_PAGE_SUB_COPY =  "Or sign up for Disney+ only. 18+ only.";
 
     //LOCATORS
 
@@ -85,11 +85,13 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        return staticTextNameContains.format(HOME_PAGE_SUB_COPY).isPresent();
+        String subCopyDirectText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        System.out.println("subCopyDirectText: " + subCopyDirectText);
+        return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
     public ExtendedWebElement getSubCopyDirectText(){
-        return staticTextNameContains.format(HOME_PAGE_SUB_COPY);
+        return staticTextNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
     }
 
     public boolean isSignUpButtonDisplayed() {
