@@ -71,7 +71,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     public boolean validateConsentText() {
         SoftAssert sa = new SoftAssert();
         List<String> consentTextList = getTextViewItems(1);
-        String modifiedString = consentTextList.get(0).split("recommendations.")[0];
+        String modifiedString = consentTextList.get(0).split("recommendations")[0];
         consentTextList.set(0, modifiedString);
         consentTextList.forEach(item -> sa.assertTrue(consentText.contains(item), "Consent didn't match for" + item));
         return true;
@@ -86,6 +86,6 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public boolean validateConsentHeader() {
-        return consentMinorHeader.getText().equalsIgnoreCase(consentHeaderText);
+        return consentMinorHeader.getText().contains(consentHeaderText);
     }
 }

@@ -142,7 +142,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
 
         //Consent screen validation
-        fluentWait(getDriver(),2,2,"Consent header is not been displayed").until(it -> parentalConsent.isConsentHeaderPresent());
+        pause(1);
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
         softAssert.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected dict values");
