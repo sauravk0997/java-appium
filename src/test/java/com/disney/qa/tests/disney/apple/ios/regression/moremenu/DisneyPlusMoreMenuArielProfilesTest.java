@@ -911,6 +911,29 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68341"})
+    @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyUIAppAbilityToChangeLanguage() {
+        String editProfileInSpanish = "Editar perfil";
+        String recommendedForYouInInSpanish = "Recomendadas para ti";
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickAppLanguage();
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        appLanguage.selectLanguage(ESPAÑOL);
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
+        sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
+        editProfile.clickSaveProfileButton();
+        sa.assertTrue(editProfile.getStaticTextByLabel(recommendedForYouInInSpanish).isPresent(), "UI language for Home page is not updated after language change");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
