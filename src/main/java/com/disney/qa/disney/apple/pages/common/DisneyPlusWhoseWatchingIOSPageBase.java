@@ -32,6 +32,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "addProfileCell")
     private ExtendedWebElement addProfile;
 
+    private String kidsHomeNotOpened = "";
+
     public DisneyPlusWhoseWatchingIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -122,5 +124,9 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+    }
+
+    public String getKidsHomeNotOpened() {
+        return kidsHomeNotOpened;
     }
 }

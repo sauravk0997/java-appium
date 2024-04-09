@@ -311,6 +311,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public boolean isAddProfileButtonPresent() {
 		return addProfileBtn.isElementPresent();
 	}
+	public ExtendedWebElement getAddProfileButton() {
+		return addProfileBtn;
+	}
 
 	public void clickAddProfile() {
 		addProfileBtn.click();

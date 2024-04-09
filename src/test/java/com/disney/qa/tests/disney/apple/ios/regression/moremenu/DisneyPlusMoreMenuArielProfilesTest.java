@@ -133,16 +133,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         onboard();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
-        //Once bug is resolved, remove line 177
-        pause(2);
+        //TODO:Bug: IOS-9145 DOB enter screen should be populated here.
+        whoIsWatching.waitForPresenceOfAnElement(moreMenu.getAddProfileButton());
         moreMenu.clickMoreTab();
         softAssert.assertTrue(updateProfilePage.isOpened(), "Update your profile page is not shown after selecting kids profile");
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
 
         //Consent screen validation
-        pause(1);
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
         softAssert.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected dict values");
@@ -160,7 +158,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         softAssert.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
         moreMenu.clickHomeIcon();
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isElementPresent(), whoIsWatching.getKidsHomeNotOpened());
         softAssert.assertAll();
     }
 
@@ -176,15 +174,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         onboard();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
-        //Once bug is resolved, remove line 217
+        //TODO:Bug: IOS-9145 DOB enter screen should be populated here.
+        whoIsWatching.waitForPresenceOfAnElement(moreMenu.getAddProfileButton());
         moreMenu.clickMoreTab();
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isPresent(), whoIsWatching.getKidsHomeNotOpened());
         softAssert.assertAll();
     }
 
