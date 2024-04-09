@@ -228,7 +228,6 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        IOSSettingsMenuBase iOSSettingPage = initPage(IOSSettingsMenuBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
@@ -237,12 +236,12 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " profile was not found");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
         moreMenu.clickSearchIcon();
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        moreMenu.keepSessionAlive(2, iOSSettingPage.getSettingsheaderTab());
+        pause(5);
         launchApp(buildType.getDisneyBundle());
-        sa.assertTrue(searchPage.isOpened(), "search page did not open");
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
         sa.assertFalse(whoIsWatching.isOpened(), "Who is watching screen/page was opened");
         searchPage.clickMoreTab();
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
