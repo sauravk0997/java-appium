@@ -25,12 +25,9 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     String ENVIRONMENT = "PROD";
 
     private List<String> networkLogos = new ArrayList<String>(
-            Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
-                    "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
-                    "Hulu Original Series", "Lifetime", "Lionsgate", "LMN", "Magnolia", "Moonbug Entertainment ",
-                    "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
-                    "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
-                    "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
+            Arrays.asList("A&E", "ABC", "ABC News", "Andscape", "Disney XD", "FOX", "Freeform", "FX", "FYI",
+                    "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
+                    "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
 
     @DataProvider(name = "huluDeepLinks")
     public Object[][] huluDeepLinks() {

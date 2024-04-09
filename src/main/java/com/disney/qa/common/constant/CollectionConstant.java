@@ -73,7 +73,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "84b7169a-efd4-4b7a-a1e8-84d0f2d07315";
+                return "5537ebed-8f56-40ea-a01a-c6f14d34002c";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
@@ -81,7 +81,7 @@ public class CollectionConstant {
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
-                return "917351f3-45cf-4251-b425-c8fd1b18434d";
+                return "6e48d2c9-2ee3-476c-91d7-deb779bcfb6e";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
