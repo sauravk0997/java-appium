@@ -81,6 +81,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstCellElementFromCollection;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s'$]")
+    private ExtendedWebElement cellElementFromCollection;
+
+
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -234,5 +238,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getFirstCellTitleFromRecommendedForYouContainer() {
         return firstCellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU)).getText();
+    }
+
+    public ExtendedWebElement getCellElementFromRecommendedForYouContainer(String title){
+        return cellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), title);
     }
 }

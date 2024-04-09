@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.home;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -29,7 +30,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String PARTNER = "disney";
-    private static final String HOME_PAGE_ENTITY_ID = "page-4a8e20b7-1848-49e1-ae23-d45624f4498a";
+    private static final String RECOMMENDATIONS_SET_ID = "7894d9c6-43ab-4691-b349-cf72362095dd";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62276"})
@@ -80,6 +81,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() throws URISyntaxException, JsonProcessingException {
+        int limit = 30;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -87,46 +89,37 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
-
+        homePage.swipeInContainer(null, Direction.UP, 2500);
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
                 .environment(DisneyParameters.getEnv())
                 .build();
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        ExploreSearchRequest request = ExploreSearchRequest.builder()
-                .language(getLocalizationUtils().getUserLanguage())
+        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(RECOMMENDATIONS_SET_ID)
                 .profileId(account.getProfileId())
-                .contentEntitlements("disney_plus_sub:base")
-                .entityId(HOME_PAGE_ENTITY_ID)
+                .limit(limit)
                 .build();
-
-        ArrayList<Item> recommendationSetItemsFromApi = exploreApi.getPage(request)
-                .getData()
-                .getPage()
-                .getContainers()
-                .get(2)
-                .getItems();
-
+        ExploreSetResponse recommendedSet = exploreApi.getSet(exploreSetRequest);
+        ArrayList<Item> recommendationSetItemsFromApi = recommendedSet.getData().getSet().getItems();
         List<String> recommendationTitlesFromApi = new ArrayList<>();
-
         recommendationSetItemsFromApi.forEach(item ->
                 recommendationTitlesFromApi.add(item.getVisuals().getTitle()));
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
-        ExtendedWebElement firstTitle = homePage.getTypeCellLabelContains(recommendationTitlesFromApi.get(0));
-        ExtendedWebElement lastTitle = homePage.getTypeCellLabelContains(recommendationTitlesFromApi.get(size-1));
+        ExtendedWebElement firstTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(0));
+        ExtendedWebElement lastTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(size-1));
         Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI Title value not matched with API Title value ");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 20, Direction.LEFT );
+        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 30, Direction.LEFT );
         Assert.assertTrue(lastTitle.isPresent(), "User is not able to swipe through end of container");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), firstTitle, 20, Direction.RIGHT);
+        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), firstTitle, 30, Direction.RIGHT);
         Assert.assertTrue(firstTitle.isPresent(), "User is not able to swipe to the begining of container");
 
         firstTitle.click();
-        sa.assertTrue(detailsPage.isOpened(), "Detais Page was not opened");
+        sa.assertTrue(detailsPage.isOpened(), "Detail Page was not opened");
         sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle), "Different details page opened");
         detailsPage.clickCloseButton();
         sa.assertTrue(homePage.isOpened(), "Home page did not open.");
