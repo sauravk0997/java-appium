@@ -532,7 +532,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
 
-    public void clickSpanishDoneButton(String label){
+    public void clickDoneButton(String label){
         ExtendedWebElement doneButton = getStaticTextByLabel(label);
         clickElementAtLocation(doneButton, 50, 50);
     }

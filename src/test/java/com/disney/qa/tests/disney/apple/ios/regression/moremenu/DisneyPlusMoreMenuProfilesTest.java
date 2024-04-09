@@ -5,6 +5,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
@@ -24,6 +25,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
@@ -37,6 +39,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String ONE = "1";
     private static final String TWO = "2";
     private static final String THREE = "3";
+    private static final String ESPAÑOL = "Español";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -705,6 +708,34 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.isOpened();
         sa.assertTrue(moreMenu.getProfileCell(allCharacters, false).isPresent(), allCharacters + " profile name was not found.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68341"})
+    @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyUIAppAbilityToChangeLanguage() {
+        //String editProfileInSpanish = "Editar perfil";
+        //String doneInSpanish = "Listo";
+        //String recommendedForYouInInSpanish = "Recomendadas para ti";
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickAppLanguage();
+        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        appLanguage.selectLanguage(ESPAÑOL);
+        getDictionary().setLanguageCode("es");
+        getLocalizationUtils().setLanguageCode("es");
+        String editProfileInSpanish = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE_2.getText());
+        String doneInSpanish = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
+        String recommendedForYouInInSpanish = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HOME_PAGE_RECOMMENDED_FOR_YOU.getText());
+        sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
+        editProfile.clickDoneButton(doneInSpanish);
+        sa.assertTrue(editProfile.getStaticTextByLabel(recommendedForYouInInSpanish).isPresent(), "UI language for Home page is not updated after language change");
         sa.assertAll();
     }
 
