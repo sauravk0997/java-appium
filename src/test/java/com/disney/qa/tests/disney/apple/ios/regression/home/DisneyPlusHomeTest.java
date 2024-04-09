@@ -110,7 +110,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
         ExtendedWebElement firstTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(0));
         ExtendedWebElement lastTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(size-1));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI Title value not matched with API Title value ");
+        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI Title value not matched with API Title value");
 
         homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 30, Direction.LEFT );
         Assert.assertTrue(lastTitle.isPresent(), "User is not able to swipe through end of container");
