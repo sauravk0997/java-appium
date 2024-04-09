@@ -89,7 +89,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
-        homePage.swipeInContainer(null, Direction.UP, 2500);
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
