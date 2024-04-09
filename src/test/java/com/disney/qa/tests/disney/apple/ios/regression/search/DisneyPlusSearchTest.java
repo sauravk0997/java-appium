@@ -325,8 +325,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
-        sa.assertTrue(originalsPage.getBackButton().isPresent(), "Back button is not present.");
-        originalsPage.getBackButton().click();
+        sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
+        searchPage.getBackButtonOnContentPage().click();
 
         if (collectionName.equalsIgnoreCase("movies")) {
             searchPage.clickMoviesTab();
@@ -334,7 +334,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.clickSeriesTab();
         }
         sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-        sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+        sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
         List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
         String tenthFeaturedResult = featuredFilterResults.get(10).getText();
@@ -342,12 +342,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
             searchPage.swipeContentPageFilter(Direction.LEFT);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstKidsResult = kidsResults.get(0).getText();
@@ -355,20 +355,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.swipeContentPageFilter(Direction.RIGHT);
             searchPage.getTypeButtonByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
             List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
         } else {
             sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getBackButton().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getBackButtonOnContentPage().isPresent(), "Back button is not present.");
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstComedyResult = kidsResults.get(0).getText();
