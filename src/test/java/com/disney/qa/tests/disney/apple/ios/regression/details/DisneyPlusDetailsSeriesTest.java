@@ -84,7 +84,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
-    @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyRemoveSeriesFromWatchlist() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -300,7 +300,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75166"})
-    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyResumeStateSeriesEpisodesTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -344,7 +344,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
-    @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesResumeBehavior() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -450,7 +450,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61463"})
-    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

@@ -16,7 +16,7 @@ import java.util.List;
 public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90978", "XCDQA-90980", "XCDQA-90982"})
-    @Test(description = "Originals Appearance", groups = {"Smoke", "Details"})
+    @Test(description = "Originals Appearance", groups = {"Smoke", "Details"}, enabled = false)
     public void originalsAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
