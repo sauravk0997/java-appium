@@ -243,7 +243,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         moreMenu.keepSessionAlive(2, iOSSettingPage.getSettingsheaderTab());
         launchApp(buildType.getDisneyBundle());
         sa.assertTrue(searchPage.isOpened(), "search page did not open");
-        sa.assertFalse(whoIsWatching.isOpened(), "Select Profile Page was opened");
+        sa.assertFalse(whoIsWatching.isOpened(), "Who is watching screen/page was opened");
         searchPage.clickMoreTab();
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
         sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " " + errorMsg);
