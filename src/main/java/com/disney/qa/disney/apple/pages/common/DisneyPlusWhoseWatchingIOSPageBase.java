@@ -31,9 +31,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     @ExtendedFindBy(accessibilityId = "addProfileCell")
     private ExtendedWebElement addProfile;
-
-    private String kidsHomeNotOpened = "";
-
+    
     public DisneyPlusWhoseWatchingIOSPageBase(WebDriver driver) {
         super(driver);
     }
