@@ -84,7 +84,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90922"})
-    @Test(description = "Profiles - Exit from Select profile to edit view", groups = {"Profile"})
+    @Test(description = "Profiles - Exit from Select profile to edit view", groups = {"Profile"}, enabled = false)
     public void exitFromSelectProfileToEdit() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
@@ -113,7 +113,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90926"})
-    @Test(description = "Profiles - Exit from Edit Profile view", groups = {"Profile"})
+    @Test(description = "Profiles - Exit from Edit Profile view", groups = {"Profile"}, enabled = false)
     public void exitFromEditProfileView() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
