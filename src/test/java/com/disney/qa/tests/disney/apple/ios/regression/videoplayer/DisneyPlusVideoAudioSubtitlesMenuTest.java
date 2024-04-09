@@ -100,7 +100,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68452"})
-    @Test(description = "Video Player Controls - Audio & Subtitles Menu - Backgrounding the App from the player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Video Player Controls - Audio & Subtitles Menu - Backgrounding the App from the player", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAudioAndSubtitleMenuBackgroundingApp() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);

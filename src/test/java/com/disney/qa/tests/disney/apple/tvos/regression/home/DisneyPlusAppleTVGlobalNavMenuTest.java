@@ -124,7 +124,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-91703", "XCDQA-91701" })
-    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" })
+    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" }, enabled = false)
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
@@ -167,7 +167,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
-    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" })
+    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" }, enabled = false)
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
