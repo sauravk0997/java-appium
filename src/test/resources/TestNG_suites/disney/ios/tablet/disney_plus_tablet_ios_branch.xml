@@ -30,16 +30,10 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTabletTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusForgotPasswordTest"/>
-        </classes>
-    </test>
-
-    <test verbose="1" name="DisneyPlus iOS Tablet Welcome Test" parallel="methods">
-        <parameter name="iOS17TabletDevices" value="iPad_Gen_9,iPad_8_Gen_1,iPad_Mini_5_Gen,iPad_Air_4_Gen"/>
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTabletTest"/>
         </classes>
     </test>
 
