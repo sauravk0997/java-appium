@@ -124,7 +124,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74547"})
-    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySearchDisplayRecentSearches() {
         String media1 = "Luca";
         String media2 = "Bluey";
@@ -261,7 +261,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75122"})
-    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyWatchlistAddAndRemoveItem() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

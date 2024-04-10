@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
-    @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"})
+    @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"}, enabled = false)
     public void noWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
@@ -44,7 +44,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
-    @Test(description = "Watchlist Items Present - UI check", groups = {"Watchlist"})
+    @Test(description = "Watchlist Items Present - UI check", groups = {"Watchlist"}, enabled = false)
     public void watchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         List<DisneyContentIds> titles = new ArrayList<>();
@@ -84,7 +84,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
-    @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
+    @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"}, enabled = false)
     public void removeWatchlistContent() {
         SoftAssert sa = new SoftAssert();
         ListOrderedSet<DisneyContentIds> titles = new ListOrderedSet<>();

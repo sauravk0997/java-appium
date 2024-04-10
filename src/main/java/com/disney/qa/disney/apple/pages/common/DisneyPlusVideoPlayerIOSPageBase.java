@@ -276,6 +276,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public DisneyPlusDetailsIOSPageBase tapTitleOnPlayer() {
+        displayVideoController();
+        titleLabel.click();
+        return initPage(DisneyPlusDetailsIOSPageBase.class);
+    }
+    
     /**
      * Scrubs on the seek bar to the given percentage. Returns the object of
      * DisneyPlusVideoPlayerIOSPageBase.
@@ -331,9 +337,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapAudioSubTitleMenu() {
-        displayVideoController();
-        pause(1);
-        audioSubtitleMenuButton.click();
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "subtitle menu overlay didn't open")
+                .until(it -> {
+                    displayVideoController();
+                    audioSubtitleMenuButton.click();
+                    return initPage(DisneyPlusAudioSubtitleIOSPageBase.class).isOpened();
+                });
     }
 
     public boolean isSkipIntroButtonPresent() { return skipIntroButton.isElementPresent(); }

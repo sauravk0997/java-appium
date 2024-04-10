@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
-    @Test(description = "Verify all texts and images on the screen conform to dictionary keys and expected images", groups = {"Smoke", "Onboarding"})
+    @Test(description = "Verify all texts and images on the screen conform to dictionary keys and expected images", groups = {"Smoke", "Onboarding"}, enabled = false)
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());

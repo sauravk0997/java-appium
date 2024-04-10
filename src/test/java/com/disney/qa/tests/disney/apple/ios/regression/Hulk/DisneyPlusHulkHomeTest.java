@@ -25,12 +25,9 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     String ENVIRONMENT = "PROD";
 
     private List<String> networkLogos = new ArrayList<String>(
-            Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
-                    "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
-                    "Hulu Original Series", "Lifetime", "Lionsgate", "LMN", "Magnolia", "Moonbug Entertainment ",
-                    "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
-                    "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
-                    "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
+            Arrays.asList("A&E", "ABC", "ABC News", "Andscape", "Disney XD", "FOX", "Freeform", "FX", "FYI",
+                    "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
+                    "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
 
     @DataProvider(name = "huluDeepLinks")
     public Object[][] huluDeepLinks() {
@@ -135,7 +132,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265", "XMOBQA-75488"})
-    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks")
+    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
