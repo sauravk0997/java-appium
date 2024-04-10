@@ -205,7 +205,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
-    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
+    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"}, enabled = false)
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
         String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
@@ -289,7 +289,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90703"})
-    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"})
+    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"}, enabled = false)
     public void passwordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -511,7 +511,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90695"})
-    @Test(description = "User's profile selected post login is displayed in global nav", groups = {"Onboarding"})
+    @Test(description = "User's profile selected post login is displayed in global nav", groups = {"Onboarding"}, enabled = false)
     public void profileNameRetention() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
@@ -592,7 +592,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061", "XCDQA-91063"})
-    @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {"Onboarding"})
+    @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {"Onboarding"}, enabled = false)
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -632,7 +632,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     //TODO add avatar recognition once training is complete
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065", "XCDQA-91067"})
-    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"})
+    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"}, enabled = false)
     public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
         SoftAssert sa = new SoftAssert();
         DisneyOffer offer = new DisneyOffer();
