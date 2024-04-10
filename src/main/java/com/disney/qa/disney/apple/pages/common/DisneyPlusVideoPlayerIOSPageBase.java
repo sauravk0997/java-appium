@@ -550,4 +550,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 "Video is not playing from the beginning.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
+
+    public String getRemainingTimeInStringWithHourAndMinutes() {
+        int remainingTimeInMinutes = getRemainingTime();
+        long hours = remainingTimeInMinutes / 60;
+        long minutes = remainingTimeInMinutes % 60;
+        return String.format("%dh %dm", hours, minutes);
+    }
 }
