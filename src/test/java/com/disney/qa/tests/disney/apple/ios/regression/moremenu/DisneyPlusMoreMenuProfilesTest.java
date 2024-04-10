@@ -715,8 +715,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68341"})
-    @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUIAppAbilityToChangeLanguage() {
+        String spanishLanguageCode = "es";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
@@ -729,7 +730,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(ESPAÑOL);
 
-        getLocalizationUtils().setLanguageCode("es");
+        getLocalizationUtils().setLanguageCode(spanishLanguageCode);
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
