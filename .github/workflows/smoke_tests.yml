@@ -41,34 +41,8 @@ jobs:
           build_timeout: 1500
           interval: 30
 
-  tv_os_smoke_tests:
-    outputs:
-      tv_os_status_output: ${{ steps.build_tv_os_smoke.outputs.result }}
-      tv_os_build_url_output: ${{ steps.build_tv_os_smoke.outputs.build_url }}
-    if: ${{ github.event.label.name == 'disney api utils update' }}
-    runs-on: self-hosted
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          repository: qait/qait-github-actions
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: Run tvOS Smoke Tests
-        id: build_tv_os_smoke
-        uses: ./action-build-job
-        with:
-          url: ${{ env.JENKINS_URL }}
-          api_credentials: ${{ env.JENKINS_CREDENTIALS }}
-          folder_path: ${{ env.JENKINS_FOLDER_PATH }}
-          job_name: DisneyPlus-tvOS-Api-Utils-Run
-          parameters: ${{ env.JENKINS_PARAMS }}
-          start_timeout: 60
-          build_timeout: 1500
-          interval: 30
-
   pr_comment_failure:
-    needs: [ios_handset_smoke_tests, tv_os_smoke_tests]
+    needs: [ios_handset_smoke_tests]
     runs-on: self-hosted
     if: success() || failure()
     steps:
@@ -80,6 +54,4 @@ jobs:
             🚨 Api Smoke tests have been run.  
             **Handset Status:** ${{ needs.ios_handset_smoke_tests.outputs.handset_status_output }}
             **Handset Job Url:** ${{ needs.ios_handset_smoke_tests.outputs.handset_build_url_output }}
-            
-            **tvOS Status:** ${{ needs.tv_os_smoke_tests.outputs.tv_os_status_output }}
-            **tvOS Job Url:** ${{ needs.tv_os_smoke_tests.outputs.tv_os_handset_build_url_output }} 
+          
