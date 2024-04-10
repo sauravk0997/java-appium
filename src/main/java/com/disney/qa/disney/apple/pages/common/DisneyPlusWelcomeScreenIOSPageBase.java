@@ -83,7 +83,12 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        return staticTextLabelContains.format("Start streaming Disney+ starting from --/--.").isPresent();
+        String subCopyDirectText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        return staticTextNameContains.format(subCopyDirectText).isPresent();
+    }
+
+    public ExtendedWebElement getSubCopyDirectText(){
+        return staticTextNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
     }
 
     public boolean isSignUpButtonDisplayed() {
