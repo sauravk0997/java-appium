@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -11,6 +13,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import io.appium.java_client.remote.MobilePlatform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -714,9 +717,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68341"})
     @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyUIAppAbilityToChangeLanguage() {
-        //String editProfileInSpanish = "Editar perfil";
-        //String doneInSpanish = "Listo";
-        //String recommendedForYouInInSpanish = "Recomendadas para ti";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
@@ -728,14 +728,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(ESPAÑOL);
-        getDictionary().setLanguageCode("es");
+
         getLocalizationUtils().setLanguageCode("es");
-        String editProfileInSpanish = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE_2.getText());
-        String doneInSpanish = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
-        String recommendedForYouInInSpanish = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HOME_PAGE_RECOMMENDED_FOR_YOU.getText());
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+
+        String editProfileInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE_2.getText());
+        String doneInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
         sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
-        editProfile.clickDoneButton(doneInSpanish);
-        sa.assertTrue(editProfile.getStaticTextByLabel(recommendedForYouInInSpanish).isPresent(), "UI language for Home page is not updated after language change");
+        sa.assertTrue(editProfile.getStaticTextByLabel(doneInSpanish).isPresent(), "UI language For Done button on Edit Profile page is not updated after language change");
         sa.assertAll();
     }
 

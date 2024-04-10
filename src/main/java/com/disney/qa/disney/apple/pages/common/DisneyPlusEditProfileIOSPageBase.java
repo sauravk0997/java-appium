@@ -531,9 +531,4 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
-
-    public void clickDoneButton(String label){
-        ExtendedWebElement doneButton = getStaticTextByLabel(label);
-        clickElementAtLocation(doneButton, 50, 50);
-    }
 }
