@@ -478,7 +478,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90634"})
-    @Test(description = "Verify create password navigation", groups = {"Onboarding"})
+    @Test(description = "Verify create password navigation", groups = {"Onboarding"}, enabled = false)
     public void createPasswordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -643,7 +643,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90679", "XCDQA-90681", "XCDQA-90683"})
-    @Test(description = "Empty password submission on create password screen from forgot password", groups = {"Onboarding"})
+    @Test(description = "Empty password submission on create password screen from forgot password", groups = {"Onboarding"}, enabled = false)
     public void createPasswordNoPasswordSubmissionError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());

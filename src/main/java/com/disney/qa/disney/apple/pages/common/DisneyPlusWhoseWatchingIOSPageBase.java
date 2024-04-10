@@ -110,8 +110,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isAccessModeProfileIconPresent(String username) {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return dynamicAccessProfileIcon.format(
-                getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
                 .isPresent();
     }
 
