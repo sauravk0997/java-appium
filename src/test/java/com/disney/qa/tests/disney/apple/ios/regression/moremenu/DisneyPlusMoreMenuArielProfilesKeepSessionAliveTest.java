@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -17,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
@@ -216,6 +218,36 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         whoIsWatching.clickProfile(KIDS_PROFILE);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
+    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
+        String errorMsg = "profile was not found";
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA,
+                true, true);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
+        moreMenu.clickSearchIcon();
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        pause(5);
+        launchApp(buildType.getDisneyBundle());
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        sa.assertFalse(whoIsWatching.isOpened(), "Who is watching screen/page was opened");
+        searchPage.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " " + errorMsg);
+        LOGGER.info("If Other profile then default profile means Kids profile selected, then Exit Junior mode button should be displayed on more menu page");
+        sa.assertFalse(moreMenu.isExitKidsProfileButtonPresent(), DEFAULT_PROFILE + " profile was not selected");
+        sa.assertAll();
     }
 
     private void createKidsProfile() {
