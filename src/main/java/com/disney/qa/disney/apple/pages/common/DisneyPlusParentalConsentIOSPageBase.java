@@ -65,7 +65,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
 
     public boolean validateScrollPopup() {
         return getSystemAlertText().equalsIgnoreCase(consentMinorScrollHeader) &&
-        getStaticTextByLabel(consentMinorScrollBody).isPresent();
+                getStaticTextByLabel(consentMinorScrollBody).isPresent();
     }
 
     public boolean validateConsentText() {

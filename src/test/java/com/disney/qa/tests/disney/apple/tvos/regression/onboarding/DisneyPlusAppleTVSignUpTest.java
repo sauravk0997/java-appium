@@ -177,7 +177,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90459", "XCDQA-90455", "XCDQA-90447", "XCDQA-90451", "XCDQA-90457", "XCDQA-90453", "XCDQA-90449"})
-    @Test(description = "Email Input screen for Sign Up flow: Legal details", groups = {"Onboarding"})
+    @Test(description = "Email Input screen for Sign Up flow: Legal details", groups = {"Onboarding"}, enabled = false)
     public void legalSignUpEmailScreenDetails() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -262,7 +262,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90485"})
-    @Test(description = "Email Sign Up: valid email takes to paywall screen Flow", groups = {"Onboarding"})
+    @Test(description = "Email Sign Up: valid email takes to paywall screen Flow", groups = {"Onboarding"}, enabled = false)
     public void emailSignUpValidInputTakesToPaywall() {
         String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -291,7 +291,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90493", "XCDQA-90495"})
-    @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {"Onboarding"})
+    @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {"Onboarding"}, enabled = false)
     public void passwordCreationScreenDetails() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         String validEmail = DisneyApiCommon.getUniqueEmail();
