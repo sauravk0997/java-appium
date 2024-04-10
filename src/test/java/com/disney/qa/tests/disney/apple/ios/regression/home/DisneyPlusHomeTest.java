@@ -17,6 +17,7 @@ import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -117,7 +118,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) throws URISyntaxException, JsonProcessingException {
+    private ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
@@ -128,7 +129,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .profileId(account.getProfileId())
                 .limit(limit)
                 .build();
-        ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
-        return containerSet.getData().getSet().getItems();
+        try{
+            ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
+            return containerSet.getData().getSet().getItems();
+        } catch (URISyntaxException | JsonProcessingException e){
+            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
+            return ExceptionUtils.rethrow(e);
+        }
     }
 }
