@@ -207,7 +207,6 @@ public enum DictionaryKeys {
     GROUPWATCH_SHAREPLAY_SETTINGS_HEADER("groupwatch_shareplay_settings_header"),
     GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER("groupwatch_shareplay_settings_subheader"),
     HOME_PAGE_LOAD("home_pageload"),
-    HOME_PAGE_RECOMMENDED_FOR_YOU("tv_channel_recommended_title"),
     HIDDEN_PASSWORD("login_hide_password_asterisk"),
     SHOW_PASSWORD("onboardingpw_btn_showpassword"),
     HIDE_PASSWORD("onboarding_password_hidepassword"),
