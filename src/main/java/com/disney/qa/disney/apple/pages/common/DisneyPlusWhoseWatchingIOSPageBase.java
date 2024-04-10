@@ -36,6 +36,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         super(driver);
     }
 
+    private String KIDS_HOME_NOT_OPENED_ERROR_MESSAGE = "";
+
     @Override
     public boolean isOpened() {
         boolean isPresent = whosWatchingTitle.isElementPresent();
@@ -125,6 +127,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public String getKidsHomeNotOpened() {
-        return kidsHomeNotOpened;
+        return KIDS_HOME_NOT_OPENED_ERROR_MESSAGE;
     }
 }
