@@ -31,12 +31,10 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     @ExtendedFindBy(accessibilityId = "addProfileCell")
     private ExtendedWebElement addProfile;
-    
+
     public DisneyPlusWhoseWatchingIOSPageBase(WebDriver driver) {
         super(driver);
     }
-
-    private String KIDS_HOME_NOT_OPENED_ERROR_MESSAGE = "";
 
     @Override
     public boolean isOpened() {
@@ -112,8 +110,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isAccessModeProfileIconPresent(String username) {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return dynamicAccessProfileIcon.format(
-                getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
+                        getDictionary().formatPlaceholderString(
+                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
                 .isPresent();
     }
 
@@ -124,9 +122,5 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-    }
-
-    public String getKidsHomeNotOpened() {
-        return KIDS_HOME_NOT_OPENED_ERROR_MESSAGE;
     }
 }

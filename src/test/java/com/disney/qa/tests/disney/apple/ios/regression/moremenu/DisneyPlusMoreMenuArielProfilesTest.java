@@ -21,8 +21,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -124,6 +124,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileU13MinorConsentAgree() {
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -133,8 +134,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         onboard();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO:Bug: IOS-9145 DOB enter screen should be populated here.
-        whoIsWatching.waitForPresenceOfAnElement(moreMenu.getAddProfileButton());
+        //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
+        //Once bug is resolved, remove line 177
         moreMenu.clickMoreTab();
         softAssert.assertTrue(updateProfilePage.isOpened(), "Update your profile page is not shown after selecting kids profile");
         editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
@@ -152,13 +153,13 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
             parentalConsent.clickAlertConfirm();
-            parentalConsent.scrollConsentContent(1);
+            scrollDown();
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
         softAssert.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
         moreMenu.clickHomeIcon();
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isElementPresent(), whoIsWatching.getKidsHomeNotOpened());
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 
@@ -166,6 +167,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72378"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileU13MinorConsentDecline() {
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -174,15 +176,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         onboard();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO:Bug: IOS-9145 DOB enter screen should be populated here.
-        whoIsWatching.waitForPresenceOfAnElement(moreMenu.getAddProfileButton());
+        //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
+        //Once bug is resolved, remove line 217
         moreMenu.clickMoreTab();
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabelContains("Mickey Mouse and Friends").isPresent(), whoIsWatching.getKidsHomeNotOpened());
+        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
 
