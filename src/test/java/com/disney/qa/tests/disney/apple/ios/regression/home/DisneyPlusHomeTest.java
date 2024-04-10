@@ -89,18 +89,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .partner(PARTNER)
-                .environment(DisneyParameters.getEnv())
-                .build();
-        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(RECOMMENDATIONS_SET_ID)
-                .profileId(account.getProfileId())
-                .limit(limit)
-                .build();
-        ExploreSetResponse recommendedSet = exploreApi.getSet(exploreSetRequest);
-        ArrayList<Item> recommendationSetItemsFromApi = recommendedSet.getData().getSet().getItems();
+
+        ArrayList<Item> recommendationSetItemsFromApi = getContainerDetailsFromAPI(account, RECOMMENDATIONS_SET_ID, limit);
         List<String> recommendationTitlesFromApi = new ArrayList<>();
         recommendationSetItemsFromApi.forEach(item ->
                 recommendationTitlesFromApi.add(item.getVisuals().getTitle()));
@@ -125,5 +115,20 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
         sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
+    }
+
+    private ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) throws URISyntaxException, JsonProcessingException {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .partner(PARTNER)
+                .environment(DisneyParameters.getEnv())
+                .build();
+        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
+        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
+                .profileId(account.getProfileId())
+                .limit(limit)
+                .build();
+        ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
+        return containerSet.getData().getSet().getItems();
     }
 }
