@@ -18,7 +18,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74874"})
-    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermark() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
