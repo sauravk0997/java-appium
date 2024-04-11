@@ -50,7 +50,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return languageSettingsView.isPresent();
+        return languageSettingsView.isPresent(HALF_TIMEOUT);
     }
 
     public void tapCloseButton() {
@@ -70,10 +70,16 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void chooseAudioLanguage(String language) {
-        LOGGER.info("selecting audio language: {}", language);
+        LOGGER.info("Selecting audio language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
+        waitForPresenceOfAnElement(element);
         element.click();
+    }
+
+    public boolean isLanguagePresent(String language) {
+        ExtendedWebElement audioLanguage = languageCell.format(language);
+        return audioLanguage.isPresent();
     }
 
     //Subtitle related functions
@@ -82,8 +88,10 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void chooseSubtitlesLanguage(String language) {
+        LOGGER.info("Selecting subtitles language: {}", language);
         ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
+        waitForPresenceOfAnElement(element);
         subtitleCollectionView.findExtendedWebElement(element.getBy()).click();
     }
 

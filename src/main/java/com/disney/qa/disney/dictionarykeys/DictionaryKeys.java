@@ -171,6 +171,7 @@ public enum DictionaryKeys {
     DOWNLOAD_STOP_IOS("download_stop"),
     DOWNLOAD_WIFI_ONLY("wifionly_label"),
     EDIT("edit"),
+    EDIT_PROFILE_DONE_BUTTON("done_editing_profile_title"),
     EDIT_PROFILE_EDIT("editprofiles_edit"),
     EDIT_PROFILE_TITLE("edit_profile_title"),
     EDIT_PROFILE_TITLE_2("edit_profile_title_2"),

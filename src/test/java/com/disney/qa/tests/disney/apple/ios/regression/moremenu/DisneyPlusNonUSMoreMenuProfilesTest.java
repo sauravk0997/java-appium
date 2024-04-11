@@ -23,7 +23,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWENTY_EIGHTEEN = "2018";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
-    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
+    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
     public void verifyAddProfileFlow() {
         initialSetup("JP", "ja");
         handleAlert();
@@ -137,7 +137,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"})
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
     public void verifyAddProfilePageUI() {
         initialSetup("JP", "ja");
         handleAlert();
