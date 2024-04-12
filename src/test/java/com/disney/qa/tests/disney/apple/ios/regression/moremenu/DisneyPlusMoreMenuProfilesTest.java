@@ -743,6 +743,26 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
+    @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyTapEditProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button is not present.");
+        moreMenu.clickEditProfilesBtn();
+        sa.assertTrue(whoIsWatching.isEditProfileButtonDisplayed(), "Edit Profile button is not present.");
+
+        whoIsWatching.clickEditProfile();
+        sa.assertTrue(editProfile.isOpened(), "Tapping on edit profile did not open profile to edit.");
+        sa.assertAll();
+    }
+
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
