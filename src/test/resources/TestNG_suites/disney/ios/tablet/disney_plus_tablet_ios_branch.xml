@@ -56,7 +56,7 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Video Player" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Player" parallel="methods">
         <parameter name="iOS17TabletDevices"
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
@@ -64,7 +64,7 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Video Player2" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Player2" parallel="methods">
         <parameter name="iOS17TabletDevices"
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
