@@ -35,7 +35,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
-    @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION})
     public void verifyU13AutoplayAndBackgroundVideoOff() {
         DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
