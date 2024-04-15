@@ -243,7 +243,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), title);
     }
 
-    public ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
+    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
@@ -264,10 +264,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public List<String> getContainerTitlesFromApi(DisneyAccount account, String setID, int limit) {
-        ArrayList<Item> SetItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
-        List<String> TitlesFromApi = new ArrayList<>();
-        SetItemsFromApi.forEach(item ->
-                TitlesFromApi.add(item.getVisuals().getTitle()));
-        return TitlesFromApi;
+        List<Item> setItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
+        List<String> titlesFromApi = new ArrayList<>();
+        setItemsFromApi.forEach(item ->
+                titlesFromApi.add(item.getVisuals().getTitle()));
+        return titlesFromApi;
     }
 }
