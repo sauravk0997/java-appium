@@ -6,6 +6,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -37,6 +39,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ASHOKA = "Ashoka";
     private static final String SHOP = "Shop";
+    private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -301,6 +304,48 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //Verify Shop tab button for series
         detailsPage.getBackArrow().click();
         validateShopTabButton(sa, ASHOKA);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62519"})
+    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    public void verifyProgressBarAfterUserWatchesContent() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), "Video player is not opened");
+        videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
+        videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
+        String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
+        videoPlayerPage.clickBackButton();
+
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime), "Correct remaining time is not reflecting in progress bar");
+
+        detailsPage.clickContinueButton();
+        sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
+        videoPlayerPage.scrubToPlaybackPercentage(99);
+        disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
+        videoPlayerPage.clickPauseButton();
+        videoPlayerPage.clickBackButton();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
 
