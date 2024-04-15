@@ -15,8 +15,8 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
 
 @Maintainer("csolmaz")
 @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
-@Test(description = "Video Player > Title and Back Button to Close", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
-public void verifyArielAdsSubsDubsSelector() {
+@Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+public void verifyArielAdsPlayerAudioSubtitleButton() {
     DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
     DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
     DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -31,12 +31,13 @@ public void verifyArielAdsSubsDubsSelector() {
     searchPage.searchForMedia("Ms. Marvel");
     List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
     results.get(0).click();
-    detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
+    detailsPage.clickPlayButton().isOpened();
     videoPlayer.displayVideoController();
+    sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
     sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON), "Audio Subtitle button was not found.");
 
     videoPlayer.tapAudioSubTitleMenu();
-    sa.assertTrue(audioSubtitlePage.isOpened(), "Audio / Subtitle menu was not displayed.");
+    sa.assertTrue(audioSubtitlePage.isOpened(), "Audio / Subtitle menu was not opened during first ad.");
     sa.assertAll();
 }
 }

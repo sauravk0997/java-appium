@@ -281,7 +281,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         titleLabel.click();
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
-    
+
     /**
      * Scrubs on the seek bar to the given percentage. Returns the object of
      * DisneyPlusVideoPlayerIOSPageBase.
