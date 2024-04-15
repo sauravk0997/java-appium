@@ -758,8 +758,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         sa.assertTrue(whoIsWatching.isEditProfileButtonDisplayed(), "Edit Profile button is not present.");
 
-        whoIsWatching.clickEditProfile();
-        sa.assertTrue(editProfile.isOpened(), "Tapping on edit profile did not open profile to edit.");
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Tapping on edit profile did not open profile to edit.");
         sa.assertAll();
     }
 
