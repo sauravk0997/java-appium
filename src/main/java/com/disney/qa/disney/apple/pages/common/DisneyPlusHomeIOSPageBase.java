@@ -1,11 +1,21 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.disney.config.DisneyParameters;
+import com.disney.qa.api.explore.ExploreApi;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.explore.response.ExploreSetResponse;
+import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.pojos.ApiConfiguration;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -229,5 +239,35 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getCellElementFromRecommendedForYouContainer(String title){
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), title);
+    }
+
+    public ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
+        String APPLE = "apple";
+        String PARTNER = "disney";
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .partner(PARTNER)
+                .environment(DisneyParameters.getEnv())
+                .build();
+        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
+        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
+                .profileId(account.getProfileId())
+                .limit(limit)
+                .build();
+        try{
+            ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
+            return containerSet.getData().getSet().getItems();
+        } catch (URISyntaxException | JsonProcessingException e){
+            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public List<String> getContainerTitlesFromApi(DisneyAccount account, String setID, int limit) {
+        ArrayList<Item> SetItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
+        List<String> TitlesFromApi = new ArrayList<>();
+        SetItemsFromApi.forEach(item ->
+                TitlesFromApi.add(item.getVisuals().getTitle()));
+        return TitlesFromApi;
     }
 }
