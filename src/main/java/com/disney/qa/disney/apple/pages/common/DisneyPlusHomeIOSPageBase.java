@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String RECOMMENDED_FOR_YOU_TITLE = "Recommended For You";
+    private static final String APPLE = "apple";
+    private static final String PARTNER = "disney";
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -242,8 +244,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ArrayList<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
-        String APPLE = "apple";
-        String PARTNER = "disney";
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
