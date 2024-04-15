@@ -21,7 +21,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
+               value=",Ariel,Ariel-More Menu,Ariel-Video Player,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
         <classes>
@@ -79,16 +79,16 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
         </classes>
     </test>
-
     <test verbose="1" name="DisneyPlus iOS Handset Video Player" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerArielAdsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">

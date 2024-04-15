@@ -24,7 +24,7 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
+               value=",Ariel,Ariel-More Menu,Ariel-Video Player,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75886"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
@@ -82,20 +82,18 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
         </classes>
     </test>
-
-    <test verbose="1" name="DisneyPlus iOS Handset Video Player" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
-        </classes>
-    </test>
-
     <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
     </test>
-
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerArielAdsTest"/>
+        </classes>
+    </test>
     <test verbose="1" name="DisneyPlus iOS Handset Search" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>

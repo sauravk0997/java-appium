@@ -15,7 +15,7 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
-    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"Ariel-Video Player", TestGroup.PRE_CONFIGURATION})
     public void verifyArielAdsPlayerAudioSubtitleButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
