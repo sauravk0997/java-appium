@@ -18,7 +18,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74874"})
-    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermark() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -33,6 +33,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         searchPage.searchForMedia(NETWORK_CONTENT);
         searchPage.getDisplayedTitles().get(0).click();
 
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
         detailsPage.clickPlayButton().isOpened();
 
@@ -49,9 +50,8 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
         videoPlayer.clickBackButton();
 
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
         sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
-        pause(5);
-        detailsPage.swipeDown(1000);
 
         detailsPage.clickOnHuluContinueButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
