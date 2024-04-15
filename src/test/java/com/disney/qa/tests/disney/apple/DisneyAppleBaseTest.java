@@ -64,6 +64,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     protected static final String FALSE = "false";
     public static final String APPLE = "apple";
     public static final String DISNEY = "disney";
+    public static final String LANGUAGE = "language";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
@@ -235,6 +236,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
         DISNEY_ACCOUNT.remove();
+        getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
     }
 
     public static String getCountry() {
