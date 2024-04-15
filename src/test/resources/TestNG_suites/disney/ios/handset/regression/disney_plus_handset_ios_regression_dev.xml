@@ -82,13 +82,13 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Player" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Player2" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerArielAdsTest"/>
