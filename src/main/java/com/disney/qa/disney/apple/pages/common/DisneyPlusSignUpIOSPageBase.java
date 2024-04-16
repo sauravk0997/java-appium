@@ -38,6 +38,9 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedFocused")
     protected ExtendedWebElement uncheckedBox;
 
+    @ExtendedFindBy(accessibilityId = "Disney+ Subscriber Agreement")
+    protected ExtendedWebElement disneySuscriberAgreement;
+
     public DisneyPlusSignUpIOSPageBase(WebDriver driver) {
 
         super(driver);
@@ -111,7 +114,8 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void openSubscriberAgreement() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+        disneySuscriberAgreement.click();
+        //openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
@@ -144,7 +148,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
         return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
     }
-    
+
     private void openHyperlink(ExtendedWebElement link) {
         if (link.getSize().getWidth() > 150) {
             clickElementAtLocation(link, 10, 80);

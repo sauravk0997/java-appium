@@ -19,8 +19,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
-    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "Your US State Privacy Rights";
-    static final String SUBSCRIBER_AGREEMENT = "Subscriber Agreement";
+    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "US State Privacy Rights Notice";
+    static final String SUBSCRIBER_AGREEMENT = "Disney+ Subscriber Agreement";
     static final String PRIVACY_POLICY = "Privacy Policy";
     static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
 
@@ -422,9 +422,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        swipePageTillElementPresent(legal.getTypeButtonByLabel(PRIVACY_POLICY), 8, null, Direction.DOWN, 25);
+        swipePageTillElementPresent(legal.getTypeButtonByLabel(legalHeader), 8, null, Direction.DOWN, 25);
 
         pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
+
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalHeader + " was not collapsed");
     }
