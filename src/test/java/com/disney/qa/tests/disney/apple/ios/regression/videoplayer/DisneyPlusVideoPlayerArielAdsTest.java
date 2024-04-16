@@ -33,7 +33,8 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
         searchPage.searchForMedia("Ms. Marvel");
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.clickPlayButton().isOpened();
+        detailsPage.clickPlayButton();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON),
                 "Audio Subtitle button was not found.");
