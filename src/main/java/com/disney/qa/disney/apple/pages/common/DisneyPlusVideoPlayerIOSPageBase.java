@@ -557,4 +557,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         long minutes = remainingTimeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
     }
+
+    public String getRestartButtonStatus(){
+        displayVideoController();
+        return restartButton.getAttribute(Attributes.ENABLED.getAttribute());
+    }
+
+    public void clickRestartButton(){
+        displayVideoController();
+        restartButton.click();
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForAdToComplete(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Ad did not end after " + timeout).until(it ->  !isAdBadgeLabelPresent());
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }
