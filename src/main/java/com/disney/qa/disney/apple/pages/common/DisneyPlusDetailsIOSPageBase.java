@@ -1,21 +1,21 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.IntStream;
-
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.ExplorePageResponse;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -23,11 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
@@ -48,172 +47,118 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DOLBY_VISION = "Dolby Vision";
     private static final String DEAF_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_SDH.getText());
     private static final String AUDIO_FEATURE_DESCRIPTION = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_FEATURE_AUDIO_DESCRIPTIONS.getText());
-    private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
     private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
     private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
+    private final List<String> videoOrAudioQuality = Arrays.asList("HD", "4K", "Ultra HD", "dolby vision", "5.1", DEAF_FEATURE_DESCRIPTION, AUDIO_FEATURE_DESCRIPTION);
 
     //LOCATORS
-
-    @ExtendedFindBy(accessibilityId = "shareButton")
-    private ExtendedWebElement shareBtn;
-
-    @ExtendedFindBy(accessibilityId = "play")
-    protected ExtendedWebElement playButton;
-
-    @ExtendedFindBy(accessibilityId = "bookmarked")
-    protected ExtendedWebElement continueButton;
-
-    @ExtendedFindBy(accessibilityId = "watchlistButton")
-    private ExtendedWebElement watchlistButton;
-
-    @ExtendedFindBy(accessibilityId = "titleLabel")
-    protected ExtendedWebElement titleLabel;
-
-    @ExtendedFindBy(accessibilityId = "downloadSeasonButton")
-    protected ExtendedWebElement downloadSeasonButton;
-
-    @ExtendedFindBy(accessibilityId = "DETAILS")
-    protected ExtendedWebElement detailsTab;
-
-    @ExtendedFindBy(accessibilityId = "restartButton")
-    protected ExtendedWebElement restartButton;
-
-    private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
-    private ExtendedWebElement suggestedTab;
-    @ExtendedFindBy(accessibilityId = "EXTRAS")
-    protected ExtendedWebElement extrasTab;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
-    protected ExtendedWebElement tabBar;
-
-    @FindBy(name = "titleLabel_0")
-    private ExtendedWebElement firstTitleLabel;
-
-    @ExtendedFindBy(accessibilityId = "contentDescription")
-    protected ExtendedWebElement contentDescription;
-
-    @ExtendedFindBy(accessibilityId = "releaseDate")
-    protected ExtendedWebElement releaseDate;
-
-    @ExtendedFindBy(accessibilityId = "genre")
-    protected ExtendedWebElement genre;
-
-    @ExtendedFindBy(accessibilityId = "rating")
-    protected ExtendedWebElement rating;
-
-    @ExtendedFindBy(accessibilityId = "formats")
-    protected ExtendedWebElement formats;
-
-    @ExtendedFindBy(accessibilityId = "suits")
-    protected ExtendedWebElement suits;
-
-    @ExtendedFindBy(accessibilityId = "actors")
-    protected ExtendedWebElement actors;
-
-    @ExtendedFindBy(accessibilityId = "duration")
-    protected ExtendedWebElement duration;
-
-    @ExtendedFindBy(accessibilityId = "metaDataLabel")
-    protected ExtendedWebElement metaDataLabel;
-
-    @ExtendedFindBy(accessibilityId = "trailerButton")
-    protected ExtendedWebElement trailerButton;
-
-    @ExtendedFindBy(accessibilityId = "downloadButton")
-    protected ExtendedWebElement movieDownloadButton;
-
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
     public ExtendedWebElement contentDetailsPage;
-
     @ExtendedFindBy(accessibilityId = "additionalContentView")
     public ExtendedWebElement additionalContentView;
-
+    @ExtendedFindBy(accessibilityId = "play")
+    protected ExtendedWebElement playButton;
+    @ExtendedFindBy(accessibilityId = "bookmarked")
+    protected ExtendedWebElement continueButton;
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    protected ExtendedWebElement titleLabel;
+    @ExtendedFindBy(accessibilityId = "downloadSeasonButton")
+    protected ExtendedWebElement downloadSeasonButton;
+    @ExtendedFindBy(accessibilityId = "DETAILS")
+    protected ExtendedWebElement detailsTab;
+    @ExtendedFindBy(accessibilityId = "restartButton")
+    protected ExtendedWebElement restartButton;
+    @ExtendedFindBy(accessibilityId = "EXTRAS")
+    protected ExtendedWebElement extrasTab;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
+    protected ExtendedWebElement tabBar;
+    @ExtendedFindBy(accessibilityId = "contentDescription")
+    protected ExtendedWebElement contentDescription;
+    @ExtendedFindBy(accessibilityId = "releaseDate")
+    protected ExtendedWebElement releaseDate;
+    @ExtendedFindBy(accessibilityId = "genre")
+    protected ExtendedWebElement genre;
+    @ExtendedFindBy(accessibilityId = "rating")
+    protected ExtendedWebElement rating;
+    @ExtendedFindBy(accessibilityId = "formats")
+    protected ExtendedWebElement formats;
+    @ExtendedFindBy(accessibilityId = "suits")
+    protected ExtendedWebElement suits;
+    @ExtendedFindBy(accessibilityId = "actors")
+    protected ExtendedWebElement actors;
+    @ExtendedFindBy(accessibilityId = "duration")
+    protected ExtendedWebElement duration;
+    @ExtendedFindBy(accessibilityId = "metaDataLabel")
+    protected ExtendedWebElement metaDataLabel;
+    @ExtendedFindBy(accessibilityId = "trailerButton")
+    protected ExtendedWebElement trailerButton;
+    @ExtendedFindBy(accessibilityId = "downloadButton")
+    protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
-
-    @ExtendedFindBy(accessibilityId = "infoInactive24")
-    private ExtendedWebElement infoView;
-
-    @FindBy(id = "itemPickerClose")
-    private ExtendedWebElement itemPickerClose;
-
-    @ExtendedFindBy(accessibilityId = "flashAlertView")
-    private ExtendedWebElement flashAlertView;
-
-    @ExtendedFindBy(accessibilityId = "informationTitleLabel")
-    private ExtendedWebElement informationTitleLabel;
-
-    @ExtendedFindBy(accessibilityId = "informationDescriptionLabel")
-    private ExtendedWebElement informationDescriptionLabel;
-
-    @ExtendedFindBy(accessibilityId = "Widescreen format")
-    private ExtendedWebElement widescreenFormat;
-
-    @ExtendedFindBy(accessibilityId = "Original format")
-    private ExtendedWebElement originalFormat;
-
-    @FindBy(id = "seasonSelectorButton")
-    private ExtendedWebElement seasonSelectorButton;
-
-    @ExtendedFindBy(accessibilityId = "seasonRating")
-    private ExtendedWebElement seasonRating;
-
-    @ExtendedFindBy(accessibilityId = "progressBar")
-    private ExtendedWebElement progressBar;
-
-    @ExtendedFindBy(accessibilityId = "playIcon")
-    private ExtendedWebElement playIcon;
-
-    @ExtendedFindBy(accessibilityId = "title")
-    private ExtendedWebElement detailsTabTitle;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
-    private ExtendedWebElement handsetNetworkAttributionImage;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
-    private ExtendedWebElement tabletNetworkAttributionImage;
-
-    @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
-    private ExtendedWebElement firstDescriptionLabel;
-
-    @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
-    private ExtendedWebElement firstRunTimeLabel;
-
     @ExtendedFindBy(accessibilityId = "SHOP")
     protected ExtendedWebElement shopTab;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
-    private ExtendedWebElement shopTabImage;
-
-    @ExtendedFindBy(accessibilityId = "Stop the offline download for this title.")
-    private ExtendedWebElement stopOfflineDownload;
-
-    @ExtendedFindBy(accessibilityId = "titleLabel_9")
-    private ExtendedWebElement tenthTitleLabel;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
-    private ExtendedWebElement copyShareLink;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
-    private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
-
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
     protected ExtendedWebElement iMaxEnhancedThumbnail;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
     protected ExtendedWebElement contentImageView;
-
+    @ExtendedFindBy(accessibilityId = "shareButton")
+    private ExtendedWebElement shareBtn;
+    @ExtendedFindBy(accessibilityId = "watchlistButton")
+    private ExtendedWebElement watchlistButton;
+    private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
+    private ExtendedWebElement suggestedTab;
+    @FindBy(name = "titleLabel_0")
+    private ExtendedWebElement firstTitleLabel;
+    @ExtendedFindBy(accessibilityId = "infoInactive24")
+    private ExtendedWebElement infoView;
+    @FindBy(id = "itemPickerClose")
+    private ExtendedWebElement itemPickerClose;
+    @ExtendedFindBy(accessibilityId = "flashAlertView")
+    private ExtendedWebElement flashAlertView;
+    @ExtendedFindBy(accessibilityId = "informationTitleLabel")
+    private ExtendedWebElement informationTitleLabel;
+    @ExtendedFindBy(accessibilityId = "informationDescriptionLabel")
+    private ExtendedWebElement informationDescriptionLabel;
+    @ExtendedFindBy(accessibilityId = "Widescreen format")
+    private ExtendedWebElement widescreenFormat;
+    @ExtendedFindBy(accessibilityId = "Original format")
+    private ExtendedWebElement originalFormat;
+    @FindBy(id = "seasonSelectorButton")
+    private ExtendedWebElement seasonSelectorButton;
+    @ExtendedFindBy(accessibilityId = "seasonRating")
+    private ExtendedWebElement seasonRating;
+    @ExtendedFindBy(accessibilityId = "progressBar")
+    private ExtendedWebElement progressBar;
+    @ExtendedFindBy(accessibilityId = "playIcon")
+    private ExtendedWebElement playIcon;
+    @ExtendedFindBy(accessibilityId = "title")
+    private ExtendedWebElement detailsTabTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
+    private ExtendedWebElement handsetNetworkAttributionImage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
+    private ExtendedWebElement tabletNetworkAttributionImage;
+    @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
+    private ExtendedWebElement firstDescriptionLabel;
+    @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
+    private ExtendedWebElement firstRunTimeLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
+    private ExtendedWebElement shopTabImage;
+    @ExtendedFindBy(accessibilityId = "Stop the offline download for this title.")
+    private ExtendedWebElement stopOfflineDownload;
+    @ExtendedFindBy(accessibilityId = "titleLabel_9")
+    private ExtendedWebElement tenthTitleLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
+    private ExtendedWebElement copyShareLink;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
+    private ExtendedWebElement imaxEnhancedmediaFeaturesRow;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"selectableTitle\"`]")
     private ExtendedWebElement seasonItemPicker;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
     private ExtendedWebElement durationTimeLabel;
-
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
     private ExtendedWebElement contentAdvisory;
 
@@ -912,6 +857,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getHuluContinueButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
+
     /**
      * Use with hulu series content only - to wait for 2 or more hulu episode downloads to complete
      */
@@ -955,33 +901,34 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void clickOnCopyShareLink() {
         getCopyShareLink().click();
     }
-    public boolean isImaxEnhancedPromoLabelPresent(){
+
+    public boolean isImaxEnhancedPromoLabelPresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_IMAX_ENHANCED_PROMO_LABEL.getText())).isPresent();
     }
 
-    public boolean isImaxEnhancedPromoSubHeaderPresent(){
+    public boolean isImaxEnhancedPromoSubHeaderPresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_IMAX_ENHANCED_PROMO_SUBHEADER.getText())).isPresent();
     }
 
-    public boolean isImaxEnhancedPresentInMediaFeaturesRow(){
+    public boolean isImaxEnhancedPresentInMediaFeaturesRow() {
         return imaxEnhancedmediaFeaturesRow.getText().contains(IMAX_ENHANCED);
     }
 
-    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(){
+    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow() {
         String mediaFeaturesRow = imaxEnhancedmediaFeaturesRow.getText();
-        String[]  featuresRowAfterSplit = mediaFeaturesRow.split(IMAX_ENHANCED);
-        for(String item : videoOrAudioQuality)
-            if(!featuresRowAfterSplit[0].contains(item) && featuresRowAfterSplit[1].contains(item)){
+        String[] featuresRowAfterSplit = mediaFeaturesRow.split(IMAX_ENHANCED);
+        for (String item : videoOrAudioQuality)
+            if (!featuresRowAfterSplit[0].contains(item) && featuresRowAfterSplit[1].contains(item)) {
                 return true;
             }
         return false;
     }
 
-    public boolean isImaxEnhancedPresentsInFormats(){
+    public boolean isImaxEnhancedPresentsInFormats() {
         return formats.getText().contains(IMAX_ENHANCED);
     }
 
-    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats(){
+    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats() {
         String availableformats = formats.getText();
         String[] formatsDetails = availableformats.split(":, ");
         return formatsDetails[1].startsWith(IMAX_ENHANCED);
@@ -999,6 +946,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String upcomingBadge = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_RESTRICTION_DETAIL_MESSAGE.getText());
         return getStaticTextByLabel(upcomingBadge);
     }
+
     public void clickVersionsTab() {
         if (!versionsTab.isPresent()) {
             swipePageTillElementTappable(versionsTab, 1, contentDetailsPage, Direction.UP, 500);
@@ -1011,13 +959,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isIMAXEnhancedTitlePresentInVersionTab() {
-        String[] iMaxEnhancedTitle =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
+        String[] iMaxEnhancedTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
         swipePageTillElementTappable(firstTitleLabel, 1, contentDetailsPage, Direction.UP, 500);
         return firstTitleLabel.getText().startsWith(iMaxEnhancedTitle[0]);
     }
 
     public boolean isIMAXEnhancedDescriptionPresentInVersionTab() {
-        String iMaxEnhancedDescription =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
+        String iMaxEnhancedDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
         return getStaticTextByLabel(iMaxEnhancedDescription).isPresent();
     }
 
@@ -1044,7 +992,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isTabSelected(String tabName) {
         ExtendedWebElement tabButton = getDynamicRowButtonLabel(tabName.toUpperCase(), 1);
-        if(!tabButton.isPresent()){
+        if (!tabButton.isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
             swipeTabBar(Direction.LEFT, 900);
