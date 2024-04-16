@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -23,9 +24,8 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        setAppToHomeScreen(getAccount());
+        DisneyAccount basicAccount = createAccount(BUNDLE_BASIC);
+        setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Ms. Marvel");
