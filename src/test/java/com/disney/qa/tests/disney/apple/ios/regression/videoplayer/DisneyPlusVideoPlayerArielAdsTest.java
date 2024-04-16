@@ -12,6 +12,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
+
 public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
@@ -32,12 +34,16 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.clickPlayButton().isOpened();
-        videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
-        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON), "Audio Subtitle button was not found.");
+        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON),
+                "Audio Subtitle button was not found.");
 
         videoPlayer.tapAudioSubTitleMenu();
         sa.assertTrue(audioSubtitlePage.isOpened(), "Audio / Subtitle menu was not opened during first ad.");
+        audioSubtitlePage.chooseAudioLanguage(DEUTSCH);
+        audioSubtitlePage.chooseSubtitlesLanguage(DEUTSCH);
+        sa.assertTrue(audioSubtitlePage.verifySelectedAudioIs(DEUTSCH), DEUTSCH + " audio was not selected.");
+        sa.assertTrue(audioSubtitlePage.verifySelectedSubtitleLangIs(DEUTSCH), DEUTSCH + " subtitle was not selected.");
         sa.assertAll();
     }
 }
