@@ -36,7 +36,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing again after clicking Restart button");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Restart button not worked");
         sa.assertAll();
     }
 
