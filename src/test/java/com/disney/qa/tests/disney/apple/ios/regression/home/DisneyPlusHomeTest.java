@@ -20,7 +20,6 @@ import java.util.List;
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
-    private static final String RECOMMENDATIONS_SET_ID = "7894d9c6-43ab-4691-b349-cf72362095dd";
     private static final String HOME_PAGE_ERROR = "Home page did not open";
 
     @Maintainer("csolmaz")
@@ -80,7 +79,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
         sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
 
-        List<String> recommendationTitlesFromApi = homePage.getContainerTitlesFromApi(account, RECOMMENDATIONS_SET_ID, limit);
+        List<String> recommendationTitlesFromApi = homePage.getContainerTitlesFromApi
+                (account, CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), limit);
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
