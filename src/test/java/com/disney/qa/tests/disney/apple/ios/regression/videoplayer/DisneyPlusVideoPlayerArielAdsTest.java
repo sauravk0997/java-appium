@@ -30,7 +30,7 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("&");
+        searchPage.searchForMedia("Ms. Marvel");
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.clickPlayButton();
