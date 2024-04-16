@@ -24,7 +24,7 @@ public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        DisneyAccount basicAccount = createAccount(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
