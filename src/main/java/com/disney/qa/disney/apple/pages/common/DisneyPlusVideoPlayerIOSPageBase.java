@@ -157,10 +157,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return timeRemainingLabel.isPresent();
     }
 
-    public ExtendedWebElement getTimeRemainingLabel() {
-        return timeRemainingLabel;
-    }
-
     public boolean verifyVideoPaused() {
         displayVideoController();
         return getPlayButton().isElementPresent();
