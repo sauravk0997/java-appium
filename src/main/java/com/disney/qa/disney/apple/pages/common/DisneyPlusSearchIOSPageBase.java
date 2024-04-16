@@ -17,10 +17,11 @@ import java.util.List;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
-    protected ExtendedWebElement recentSearchResultsView;
 
     //LOCATORS
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
+    protected ExtendedWebElement recentSearchResultsView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
