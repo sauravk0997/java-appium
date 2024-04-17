@@ -24,10 +24,10 @@
     <parameter name="jenkinsBuild" value="3.2.0.67604"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
+               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75885"/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Basic" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest"/>
         </classes>
@@ -76,25 +76,29 @@
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet Details Acceptance" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Details" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsSeriesTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
         </classes>
     </test>
-
-    <test verbose="1" name="DisneyPlus iOS Tablet Video Player Acceptance" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player" parallel="methods">
         <parameter name="iOS17TabletDevices"
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player2" parallel="methods">
+        <parameter name="iOS17TabletDevices"
+                   value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
         </classes>
     </test>
-
     <test verbose="1" name="DisneyPlus iOS Tablet Search" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>

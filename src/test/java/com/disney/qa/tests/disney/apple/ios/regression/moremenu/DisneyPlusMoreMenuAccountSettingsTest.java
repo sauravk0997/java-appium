@@ -84,7 +84,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61547"})
     @Test(description = "Verify the Account submenu display elements are present", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
-        DisneyAccount accountV2 = createV2Account();
+        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
         setAppToAccountSettings(accountV2);
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -126,7 +126,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
-        DisneyAccount accountV2 = createV2Account();
+        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
         setAppToAccountSettings(accountV2);
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
