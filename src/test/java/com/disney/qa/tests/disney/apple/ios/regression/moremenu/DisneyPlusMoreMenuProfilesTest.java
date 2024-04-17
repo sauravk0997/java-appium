@@ -28,7 +28,6 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
@@ -740,6 +739,26 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String doneInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
         sa.assertTrue(editProfile.getStaticTextByLabel(editProfileInSpanish).isPresent(), "UI language for Edit Profile page is not updated after language change");
         sa.assertTrue(editProfile.getStaticTextByLabel(doneInSpanish).isPresent(), "UI language For Done button on Edit Profile page is not updated after language change");
+        sa.assertAll();
+    }
+
+    @Maintainer("csolmaz")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
+    @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyTapEditProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button is not present.");
+        moreMenu.clickEditProfilesBtn();
+        sa.assertTrue(whoIsWatching.isEditProfileButtonDisplayed(), "Edit Profile button is not present.");
+
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Tapping on edit profile did not open profile to edit.");
         sa.assertAll();
     }
 
