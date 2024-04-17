@@ -1,8 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import org.openqa.selenium.WebDriver;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

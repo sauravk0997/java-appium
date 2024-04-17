@@ -1,4 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
+
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -19,14 +20,12 @@ import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
     protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
     protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
-
     @ExtendedFindBy(accessibilityId = "ucp.playerView")
     protected ExtendedWebElement playerView;
 
@@ -38,56 +37,41 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
-
-    @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
-    private ExtendedWebElement currentTimeLabel;
-
-    @ExtendedFindBy(accessibilityId = "ucp.fastRewind")
-    private ExtendedWebElement rewindButton;
-
-    @ExtendedFindBy(accessibilityId = "ucp.fastForward")
-    private ExtendedWebElement forwardButton;
-
-    @FindBy(xpath = "//*[@name='ucp.playerView']/following-sibling::*//XCUIElementTypeImage")
-    private ExtendedWebElement ucpLoadSpinner;
-
-    @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
-    private ExtendedWebElement audioSubtitleMenuButton;
-
-    @ExtendedFindBy(accessibilityId = "GCKUICastButton")
-    private ExtendedWebElement chromecastButton;
-
-    @ExtendedFindBy(accessibilityId = "ucp.audioOutput")
-    private ExtendedWebElement airplayButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
-    private ExtendedWebElement currentlyPlayingTitle;
-
-    @ExtendedFindBy(accessibilityId = "brandImageView")
-    private ExtendedWebElement brandImageView;
-
-    @ExtendedFindBy(accessibilityId = "advisoryLabel")
-    private ExtendedWebElement advisoryLabel;
-
-    @ExtendedFindBy(accessibilityId = "skipIntroButton")
-    private ExtendedWebElement skipIntroButton;
-
-    @ExtendedFindBy(accessibilityId = "restartButton")
-    private ExtendedWebElement restartButton;
-
-    @ExtendedFindBy(accessibilityId = "youAreLiveButton")
-    private ExtendedWebElement youAreLiveButton;
-
     @FindBy(name = "titleLabel")
     protected ExtendedWebElement titleLabel;
-
+    @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
+    private ExtendedWebElement currentTimeLabel;
+    @ExtendedFindBy(accessibilityId = "ucp.fastRewind")
+    private ExtendedWebElement rewindButton;
+    @ExtendedFindBy(accessibilityId = "ucp.fastForward")
+    private ExtendedWebElement forwardButton;
+    @FindBy(xpath = "//*[@name='ucp.playerView']/following-sibling::*//XCUIElementTypeImage")
+    private ExtendedWebElement ucpLoadSpinner;
+    @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
+    private ExtendedWebElement audioSubtitleMenuButton;
+    @ExtendedFindBy(accessibilityId = "GCKUICastButton")
+    private ExtendedWebElement chromecastButton;
+    @ExtendedFindBy(accessibilityId = "ucp.audioOutput")
+    private ExtendedWebElement airplayButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
+    private ExtendedWebElement currentlyPlayingTitle;
+    @ExtendedFindBy(accessibilityId = "brandImageView")
+    private ExtendedWebElement brandImageView;
+    @ExtendedFindBy(accessibilityId = "advisoryLabel")
+    private ExtendedWebElement advisoryLabel;
+    @ExtendedFindBy(accessibilityId = "skipIntroButton")
+    private ExtendedWebElement skipIntroButton;
+    @ExtendedFindBy(accessibilityId = "restartButton")
+    private ExtendedWebElement restartButton;
+    @ExtendedFindBy(accessibilityId = "youAreLiveButton")
+    private ExtendedWebElement youAreLiveButton;
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
     @FindBy(name = "serviceAttributionLabel")
     private ExtendedWebElement serviceAttributionLabel;
 
-    @ExtendedFindBy (iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
 
     //FUNCTIONS
@@ -99,18 +83,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return playerView.isPresent();
-    }
-
-    public enum PlayerControl {
-        AIRPLAY,
-        AUDIO_SUBTITLE_BUTTON,
-        BACK,
-        CHROMECAST,
-        FAST_FORWARD,
-        PLAY,
-        PAUSE,
-        RESTART,
-        REWIND
     }
 
     public ExtendedWebElement getPlayButton() {
@@ -160,10 +132,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         displayVideoController();
         return titleLabel.isElementPresent();
     }
+
     public boolean isSeekbarVisible() {
         return seekBar.isPresent();
     }
-
 
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
@@ -221,7 +193,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         //TODO: work around due to bug IOS-6425
-        if(!getPlayButton().isElementPresent()) {
+        if (!getPlayButton().isElementPresent()) {
             displayVideoController();
         }
         getPlayButton().click();
@@ -281,7 +253,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         titleLabel.click();
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
-    
+
     /**
      * Scrubs on the seek bar to the given percentage. Returns the object of
      * DisneyPlusVideoPlayerIOSPageBase.
@@ -295,7 +267,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int seekBarWidth = seekBar.getSize().getWidth();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
-        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(),3);
+        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -319,7 +291,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getCurrentPositionOnPlayer() {
         displayVideoController();
-       return currentTimeMarker.getLocation().getX();
+        return currentTimeMarker.getLocation().getX();
     }
 
     /**
@@ -345,7 +317,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 });
     }
 
-    public boolean isSkipIntroButtonPresent() { return skipIntroButton.isElementPresent(); }
+    public boolean isSkipIntroButtonPresent() {
+        return skipIntroButton.isElementPresent();
+    }
 
     public boolean isYouAreLiveButtonPresent() {
         displayVideoController();
@@ -355,17 +329,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
+     *
      * @param timeout
      * @param polling
      */
     public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it ->  getRemainingTime() == 0);
+        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it -> getRemainingTime() == 0);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     /**
      * Waits for trailer to end in player until video player is not open.
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
+     *
      * @param timeout
      * @param polling
      */
@@ -402,6 +378,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * Opens the player overlay, reads remaining time that has 3 integers
      * (hours, minutes, seconds) on the seekbar and converts it to seconds
+     *
      * @return Playback remaining time in seconds
      */
 
@@ -483,11 +460,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return format(networkWatermarkLogo, network);
     }
 
-    public boolean isNetworkWatermarkLogoPresent (String network) {
+    public boolean isNetworkWatermarkLogoPresent(String network) {
         return getNetworkWatermarkLogo(network).isElementPresent();
     }
 
-    public boolean isNetworkWatermarkIsNotLogoPresent (String network) {
+    public boolean isNetworkWatermarkIsNotLogoPresent(String network) {
         return getNetworkWatermarkLogo(network).isElementNotPresent(2);
     }
 
@@ -556,5 +533,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         long hours = remainingTimeInMinutes / 60;
         long minutes = remainingTimeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
+    }
+
+    public enum PlayerControl {
+        AIRPLAY,
+        AUDIO_SUBTITLE_BUTTON,
+        BACK,
+        CHROMECAST,
+        FAST_FORWARD,
+        PLAY,
+        PAUSE,
+        RESTART,
+        REWIND
     }
 }
