@@ -14,12 +14,12 @@ import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 
-public class DisneyPlusVideoPlayerArielAdsTest extends DisneyBaseTest {
+public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
     @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
-    public void verifyArielAdsPlayerAudioSubtitleButton() {
+    public void verifyAdsPlayerAudioSubtitleButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
