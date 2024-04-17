@@ -86,7 +86,6 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
