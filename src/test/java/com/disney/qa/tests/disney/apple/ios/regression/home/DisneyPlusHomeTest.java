@@ -71,6 +71,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
+        String RecommendedContainerNotFound = "Recommended For You container was not found";
+        String RecommendedHeaderNotFound = "Recommended For You Header was not found";
         CollectionConstant.Collection collection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -79,8 +81,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
-        sa.assertTrue(homePage.isCollectionPresent(collection), "Recommended For You container was not found");
-        sa.assertTrue(homePage.isCollectionTitlePresent(collection), "Recommended For You Header was not found");
+        sa.assertTrue(homePage.isCollectionPresent(collection), RecommendedContainerNotFound);
+        sa.assertTrue(homePage.isCollectionTitlePresent(collection), RecommendedHeaderNotFound);
 
         List<String> recommendationTitlesFromApi = homePage.getContainerTitlesFromApi
                 (account, CollectionConstant.getCollectionName(collection), limit);
@@ -102,8 +104,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle), "Content title not matched");
         detailsPage.clickCloseButton();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
-        sa.assertTrue(homePage.isCollectionPresent(collection), "Recommended For You container was not found");
-        sa.assertTrue(homePage.isCollectionTitlePresent(collection), "Recommended For You Header was not found");
+        sa.assertTrue(homePage.isCollectionPresent(collection), RecommendedContainerNotFound);
+        sa.assertTrue(homePage.isCollectionTitlePresent(collection), RecommendedHeaderNotFound);
         sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
     }
