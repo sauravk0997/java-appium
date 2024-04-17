@@ -207,8 +207,4 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isCollectionTitlePresent(CollectionConstant.Collection collection){
         return getDynamicAccessibilityId(CollectionConstant.getCollectionTitle(collection)).isPresent();
     }
-
-    public ExtendedWebElement getRecommendedForYouContainer(){
-        return getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-    }
 }

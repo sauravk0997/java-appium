@@ -91,10 +91,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(size-1));
         Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI title value not matched with API title value");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 30, Direction.LEFT );
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection), lastTitle, 30, Direction.LEFT );
         Assert.assertTrue(lastTitle.isPresent(), "User is not able to swipe through end of container");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), firstTitle, 30, Direction.RIGHT);
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection), firstTitle, 30, Direction.RIGHT);
         Assert.assertTrue(firstTitle.isPresent(), "User is not able to swipe to the begining of container");
 
         firstTitle.click();

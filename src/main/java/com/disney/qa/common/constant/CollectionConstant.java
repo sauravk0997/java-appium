@@ -89,6 +89,10 @@ public class CollectionConstant {
 
     public static String getCollectionTitle(Collection collection) {
         switch (collection) {
+            case COMEDIES:
+                return "Comedies";
+            case CONTINUE_WATCHING:
+                return "Continue Watching";
             case RECOMMENDED_FOR_YOU:
                 return "Recommended For You";
             default:
