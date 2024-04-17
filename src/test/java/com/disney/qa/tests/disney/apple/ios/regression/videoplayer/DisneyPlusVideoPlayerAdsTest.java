@@ -17,12 +17,11 @@ import java.util.List;
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     //Test constants
-    public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final double PLAYER_PERCENTAGE_FOR_RANDOM_MOVING = 10;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73630"})
-    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
