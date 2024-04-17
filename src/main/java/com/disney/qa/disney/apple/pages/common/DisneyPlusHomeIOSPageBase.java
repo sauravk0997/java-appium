@@ -1,21 +1,11 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.explore.ExploreApi;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
-import com.disney.qa.api.explore.response.Item;
-import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.WebDriver;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -28,9 +18,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    public static final String RECOMMENDED_FOR_YOU_TITLE = "Recommended For You";
-    private static final String APPLE = "apple";
-    private static final String PARTNER = "disney";
 
     @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
     private ExtendedWebElement disneyTile;
@@ -73,16 +60,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement networkLogoImage;
-
-    @ExtendedFindBy(accessibilityId = RECOMMENDED_FOR_YOU_TITLE)
-    private ExtendedWebElement recommendedForYou;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
-    private ExtendedWebElement firstCellElementFromCollection;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s'$]")
-    private ExtendedWebElement cellElementFromCollection;
-
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -227,47 +204,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(name).isPresent();
     }
 
-    public boolean isRecommendedForYouContainerPresent(){
-        return recommendedForYou.isPresent();
+    public boolean isCollectionTitlePresent(CollectionConstant.Collection collection){
+        return getDynamicAccessibilityId(CollectionConstant.getCollectionTitle(collection)).isPresent();
     }
 
     public ExtendedWebElement getRecommendedForYouContainer(){
         return getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-    }
-
-    public String getFirstCellTitleFromRecommendedForYouContainer() {
-        return firstCellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU)).getText();
-    }
-
-    public ExtendedWebElement getCellElementFromRecommendedForYouContainer(String title){
-        return cellElementFromCollection.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), title);
-    }
-
-    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .partner(PARTNER)
-                .environment(DisneyParameters.getEnv())
-                .build();
-        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
-                .profileId(account.getProfileId())
-                .limit(limit)
-                .build();
-        try{
-            ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
-            return containerSet.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e){
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            return ExceptionUtils.rethrow(e);
-        }
-    }
-
-    public List<String> getContainerTitlesFromApi(DisneyAccount account, String setID, int limit) {
-        List<Item> setItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
-        List<String> titlesFromApi = new ArrayList<>();
-        setItemsFromApi.forEach(item ->
-                titlesFromApi.add(item.getVisuals().getTitle()));
-        return titlesFromApi;
     }
 }

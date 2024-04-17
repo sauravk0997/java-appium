@@ -71,21 +71,24 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
+        CollectionConstant.Collection collection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         DisneyAccount account = getAccount();
         setAppToHomeScreen(account);
+
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
-        sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
+        sa.assertTrue(homePage.isCollectionPresent(collection), "Recommended For You container was not found");
+        sa.assertTrue(homePage.isCollectionTitlePresent(collection), "Recommended For You Header was not found");
 
         List<String> recommendationTitlesFromApi = homePage.getContainerTitlesFromApi
-                (account, CollectionConstant.getCollectionName(CollectionConstant.Collection.RECOMMENDED_FOR_YOU), limit);
+                (account, CollectionConstant.getCollectionName(collection), limit);
 
         int size = recommendationTitlesFromApi.size();
-        String firstCellTitle = homePage.getFirstCellTitleFromRecommendedForYouContainer().split(",")[0];
-        ExtendedWebElement firstTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(0));
-        ExtendedWebElement lastTitle = homePage.getCellElementFromRecommendedForYouContainer(recommendationTitlesFromApi.get(size-1));
+        String firstCellTitle = homePage.getFirstCellTitleFromContainer(collection).split(",")[0];
+        ExtendedWebElement firstTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(0));
+        ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(size-1));
         Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI title value not matched with API title value");
 
         homePage.swipeInContainerTillElementIsPresent(homePage.getRecommendedForYouContainer(), lastTitle, 30, Direction.LEFT );
@@ -99,7 +102,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle), "Content title not matched");
         detailsPage.clickCloseButton();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
-        sa.assertTrue(homePage.isRecommendedForYouContainerPresent(), "Recommended For You header was not found");
+        sa.assertTrue(homePage.isCollectionPresent(collection), "Recommended For You container was not found");
+        sa.assertTrue(homePage.isCollectionTitlePresent(collection), "Recommended For You Header was not found");
         sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
     }
