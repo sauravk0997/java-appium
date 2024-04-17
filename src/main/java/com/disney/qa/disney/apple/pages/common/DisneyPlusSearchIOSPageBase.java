@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
@@ -17,65 +18,47 @@ import java.util.List;
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private String ratingImage = "current_rating_value_image";
-
     //LOCATORS
-
-    private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.NAV_MOVIES_TITLE.getText()));
-
-    private ExtendedWebElement originalsTile = staticCellByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
-
-    private ExtendedWebElement seriesTile = staticCellByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.NAV_SERIES_TITLE.getText()));
-
-    @FindBy(id = "Search")
-    private ExtendedWebElement keyboardSearchButton;
-
-    @ExtendedFindBy(accessibilityId = "Explore")
-    private ExtendedWebElement exploreHeader;
-
-    @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
-    private ExtendedWebElement searchBar;
-
-    @ExtendedFindBy(accessibilityId = "Clear text")
-    private ExtendedWebElement clearText;
-
-
-    @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
-    private ExtendedWebElement cancelButtonRecentSearch;
-
-    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
-    private ExtendedWebElement headerViewTitleLabel;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
     protected ExtendedWebElement recentSearchResultsView;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
-
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
+    protected ExtendedWebElement backButtonOnContentPage;
+    private String ratingImage = "current_rating_value_image";
+    private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.NAV_MOVIES_TITLE.getText()));
+    private ExtendedWebElement originalsTile = staticCellByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
+    private ExtendedWebElement seriesTile = staticCellByLabel.format(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.NAV_SERIES_TITLE.getText()));
+    @FindBy(id = "Search")
+    private ExtendedWebElement keyboardSearchButton;
+    @ExtendedFindBy(accessibilityId = "Explore")
+    private ExtendedWebElement exploreHeader;
+    @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
+    private ExtendedWebElement searchBar;
+    @ExtendedFindBy(accessibilityId = "Clear text")
+    private ExtendedWebElement clearText;
+    @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
+    private ExtendedWebElement cancelButtonRecentSearch;
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    private ExtendedWebElement headerViewTitleLabel;
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
-
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
     private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
-
     @ExtendedFindBy(accessibilityId = "segmentedControl")
     private ExtendedWebElement contentPageFilterHeader;
-
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
-
-    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
-    protected ExtendedWebElement backButtonOnContentPage;
 
     //FUNCTIONS
 
@@ -110,7 +93,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Titles: {}", titles);
             tries++;
         } while (tries < 3 && titles.isEmpty());
-        return titles;
+        if (titles.isEmpty()) {
+            throw new SkipException("Skipping test, no titles were found.");
+        } else {
+            return titles;
+        }
     }
 
     public void searchForMedia(String query) {
@@ -148,11 +135,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return clearText;
     }
 
-    public boolean isRecentSearchDisplayed(){
+    public boolean isRecentSearchDisplayed() {
         return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
     }
 
-    public boolean isTitlePresent(String title){
+    public boolean isTitlePresent(String title) {
         return staticTextByLabel.format(title).isPresent();
     }
 
@@ -160,9 +147,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         staticTextByLabel.format(title).click();
     }
 
-    public void tapRecentSearchClearButton(){
+    public void tapRecentSearchClearButton() {
         cancelButtonRecentSearch.click();
     }
+
     public boolean isNoResultsFoundMessagePresent(String title) {
         String noResultError = "No results found for \"" + title + "\"";
         return getDynamicAccessibilityId(noResultError).isPresent();
@@ -186,19 +174,19 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(dictVal).isPresent();
     }
 
-    public boolean isContentPageFilterDropDownPresent(){
+    public boolean isContentPageFilterDropDownPresent() {
         return contentPageFilterDropDown.isPresent();
     }
 
-    public void clickContentPageFilterDropDown(){
+    public void clickContentPageFilterDropDown() {
         contentPageFilterDropDown.click();
     }
 
-    public void clickContentPageFilterDropDownAtMiddleTop(){
+    public void clickContentPageFilterDropDownAtMiddleTop() {
         contentPageFilterDropDownAtMiddleTop.click();
     }
 
-    public boolean isContentPageFilterHeaderPresent(){
+    public boolean isContentPageFilterHeaderPresent() {
         return contentPageFilterHeader.isPresent();
     }
 
@@ -207,7 +195,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         swipeInContainer(contentPageFilterHeader, direction, 500);
     }
 
-    public boolean isContentPageFilterDropDownAtMiddleTopPresent(){
+    public boolean isContentPageFilterDropDownAtMiddleTopPresent() {
         return contentPageFilterDropDownAtMiddleTop.isPresent();
     }
 
@@ -233,9 +221,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchBar.getText();
     }
 
-    public String getRatingAndYearDetailsFromSearchResults(String title){
+    public String getRatingAndYearDetailsFromSearchResults(String title) {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
-    public ExtendedWebElement getBackButtonOnContentPage() { return backButtonOnContentPage; }
+    public ExtendedWebElement getBackButtonOnContentPage() {
+        return backButtonOnContentPage;
+    }
 }

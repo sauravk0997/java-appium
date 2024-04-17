@@ -13,10 +13,10 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.List;
 
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 
 public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
-    private static final String DEUTSCH = "Deutsch";
     private static final String AUDIO_SUBTITLE_MENU_DID_NOT_OPEN = "Audio subtitle menu didn't open";
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";

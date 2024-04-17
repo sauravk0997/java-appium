@@ -441,7 +441,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDeleteProfileUI() {
         SoftAssert sa = new SoftAssert();
-        DisneyAccount accountV2 = createV2Account();
+        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
         getAccountApi().addProfile(accountV2, SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -472,7 +472,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Profile PIN - Profile Access", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfilePinProfileAccess() {
         SoftAssert sa = new SoftAssert();
-        DisneyAccount account = createV2Account();
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
         getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
@@ -562,7 +562,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyAccount account = createV2Account();
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
         getAccountApi().addProfile(account,SECONDARY_PROFILE,ADULT_DOB,getAccount().getProfileLang(),THE_CHILD,false,true);
         try {
             getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -696,7 +696,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyAccount account = createV2Account();
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
         setAppToHomeScreen(account);
 
         homePage.clickMoreTab();

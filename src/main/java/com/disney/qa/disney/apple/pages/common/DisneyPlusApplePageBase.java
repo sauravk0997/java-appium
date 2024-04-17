@@ -56,6 +56,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     public static final String PREY = "Prey";
+    public static final String DEUTSCH = "Deutsch";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
