@@ -424,7 +424,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         swipePageTillElementPresent(legal.getTypeButtonByLabel(legalHeader), 8, null, Direction.DOWN, 25);
 
-        pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
+        pressByElement(legal.getTypeButtonByLabel(PRIVACY_POLICY), 1); //collapse
 
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalHeader + " was not collapsed");
