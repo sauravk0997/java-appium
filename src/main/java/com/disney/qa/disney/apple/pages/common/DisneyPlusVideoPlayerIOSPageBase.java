@@ -535,6 +535,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return String.format("%dh %dm", hours, minutes);
     }
 
+    public DisneyPlusVideoPlayerIOSPageBase waitForPreRollAdToComplete(int timeout, int polling) {
+        LOGGER.info("Waiting for pre roll ad to complete...");
+        fluentWait(getDriver(), timeout, polling, "Pre roll ad still present after " + timeout).
+                until(it -> !isAdBadgeLabelPresent());
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForCertainAmountOfPlayback(int timeout, int polling) {
+        LOGGER.info("Waiting for video to play for {} seconds...", timeout);
+        int timeRemainingMinusTimeOut = getRemainingTime() - timeout;
+        fluentWait(getDriver(), timeout, polling, "Time remaining did not reduce after " + timeout).
+                until(it -> getRemainingTime() < timeRemainingMinusTimeOut);
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
     public enum PlayerControl {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
