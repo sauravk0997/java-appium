@@ -561,6 +561,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
+    public boolean isAdBadgeLabelPresentWhenControlDisplay() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        displayVideoController();
+        return getDynamicAccessibilityId(adLabel).isElementPresent();
+    }
+
     public enum PlayerControl {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
