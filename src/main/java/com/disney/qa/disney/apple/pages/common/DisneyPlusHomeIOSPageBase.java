@@ -1,63 +1,48 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.disney.qa.common.constant.CollectionConstant;
-import org.openqa.selenium.WebDriver;
-
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
-    private ExtendedWebElement disneyTile;
-
-    @ExtendedFindBy(accessibilityId = "Disney Plus")
-    private ExtendedWebElement disneyPlusLogo;
-
-    @ExtendedFindBy(accessibilityId = "Mickey and Friends")
-    private ExtendedWebElement mickeyAndFriends;
-
-    @ExtendedFindBy(accessibilityId = "b8b35f0b-342d-4128-87ac-d3d5353121fa")
-    private ExtendedWebElement pixarTile;
-
-    @ExtendedFindBy(accessibilityId = "152b43dd-e9df-4bc5-94f3-ee4ffe99c8ae")
-    private ExtendedWebElement marvelTile;
-
-    @ExtendedFindBy(accessibilityId = "6f7a054a-cdde-4285-ae4b-b0887ece18e8")
-    private ExtendedWebElement starWarsTile;
-
-    @ExtendedFindBy(accessibilityId = "3bf4b88f-49a0-4533-ad24-97af0ca9b1d3")
-    private ExtendedWebElement nationalGeographicTile;
-
-    @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
-    private ExtendedWebElement starTile;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
-    private ExtendedWebElement brandNameCell;
-
     @ExtendedFindBy(accessibilityId = "homeContentView")
     protected ExtendedWebElement homeContentView;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$label='%s'$]/**/XCUIElementTypeCell/**XCUIElementTypeCell[$label == '%s'$][1]")
     protected ExtendedWebElement continueWatchingContentView;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell")
     protected ExtendedWebElement collectionCellNoRow;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
-
+    @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
+    private ExtendedWebElement disneyTile;
+    @ExtendedFindBy(accessibilityId = "Disney Plus")
+    private ExtendedWebElement disneyPlusLogo;
+    @ExtendedFindBy(accessibilityId = "Mickey and Friends")
+    private ExtendedWebElement mickeyAndFriends;
+    @ExtendedFindBy(accessibilityId = "b8b35f0b-342d-4128-87ac-d3d5353121fa")
+    private ExtendedWebElement pixarTile;
+    @ExtendedFindBy(accessibilityId = "152b43dd-e9df-4bc5-94f3-ee4ffe99c8ae")
+    private ExtendedWebElement marvelTile;
+    @ExtendedFindBy(accessibilityId = "6f7a054a-cdde-4285-ae4b-b0887ece18e8")
+    private ExtendedWebElement starWarsTile;
+    @ExtendedFindBy(accessibilityId = "3bf4b88f-49a0-4533-ad24-97af0ca9b1d3")
+    private ExtendedWebElement nationalGeographicTile;
+    @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
+    private ExtendedWebElement starTile;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
+    private ExtendedWebElement brandNameCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
     private ExtendedWebElement networkLogoImage;
 
@@ -65,9 +50,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public ExtendedWebElement getHomePageMainElement(){
-        return  dynamicCellByLabel.format("Disney, , Select for details on this title.");
+    public ExtendedWebElement getHomePageMainElement() {
+        return dynamicCellByLabel.format("Disney, , Select for details on this title.");
     }
+
     @Override
     public boolean isOpened() {
         //There is no dict key available for this element
@@ -116,6 +102,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isStarTilePresent() {
         return starTile.isPresent();
     }
+
     public void clickStarTile() {
         starTile.click();
     }
@@ -142,21 +129,23 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return disneyTile;
     }
 
-    public boolean isHuluTileVisible(){
+    public boolean isHuluTileVisible() {
         return getElementTypeCellByLabel("Hulu").isPresent();
     }
 
-    public void tapHuluBrandTile(){
+    public void tapHuluBrandTile() {
         getElementTypeCellByLabel("Hulu").click();
     }
 
-    public ExtendedWebElement getHomeContentView() { return homeContentView; }
+    public ExtendedWebElement getHomeContentView() {
+        return homeContentView;
+    }
 
     public ExtendedWebElement getNetworkLogoImage() {
         return networkLogoImage;
     }
 
-    public boolean isNetworkLogoImageVisible(){
+    public boolean isNetworkLogoImageVisible() {
         return networkLogoImage.isPresent();
     }
 
@@ -202,5 +191,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isProfileNameDisplayed(String name) {
         return getTypeButtonByLabel(name).isPresent();
+    }
+
+    public boolean isCollectionTitlePresent(CollectionConstant.Collection collection){
+        return getDynamicAccessibilityId(CollectionConstant.getCollectionTitle(collection)).isPresent();
     }
 }

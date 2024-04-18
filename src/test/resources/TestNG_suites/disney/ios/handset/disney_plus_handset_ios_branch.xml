@@ -20,7 +20,7 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player"/>
+               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
         <classes>
@@ -72,20 +72,18 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
         </classes>
     </test>
-
     <test verbose="1" name="DisneyPlus iOS Handset Video Player" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
-        </classes>
-    </test>
-
-    <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>
     </test>
-
+    <test verbose="1" name="DisneyPlus iOS Handset Video Player2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
+        </classes>
+    </test>
     <test verbose="1" name="DisneyPlus iOS Handset Search" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
