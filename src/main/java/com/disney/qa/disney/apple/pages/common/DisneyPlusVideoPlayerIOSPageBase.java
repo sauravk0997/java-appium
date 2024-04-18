@@ -542,14 +542,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForCertainAmountOfPlayback(int timeout, int polling) {
-        LOGGER.info("Waiting for video to play for {} seconds...", timeout);
-        int timeRemainingMinusTimeOut = getRemainingTime() - timeout;
-        fluentWait(getDriver(), timeout, polling, "Time remaining did not reduce after " + timeout).
-                until(it -> getRemainingTime() < timeRemainingMinusTimeOut);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public enum PlayerControl {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
