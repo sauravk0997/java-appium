@@ -39,7 +39,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72879"})
     @Test(description = "Ariel Ads Video Player > Able to scrub forward during Grace period", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
@@ -50,7 +49,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
 
         videoPlayer.waitForPreRollAdToComplete(90, 6);
-        videoPlayer.waitForCertainAmountOfPlayback(10, 2);
+//        videoPlayer.waitForCertainAmountOfPlayback(10, 2);
         videoPlayer.scrubToPlaybackPercentage(50);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
