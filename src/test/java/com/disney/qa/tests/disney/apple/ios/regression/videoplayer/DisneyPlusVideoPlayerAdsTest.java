@@ -68,11 +68,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
         int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
         sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
                         " is not greater than remaining time before restart click" + remainingTimeBeforeRestartClick);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
         sa.assertAll();
     }
 
