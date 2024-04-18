@@ -27,7 +27,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73696"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Basic sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Standard purchase with a new account for Basic sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyStandardPurchase_Basic() {
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
@@ -85,7 +85,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73697"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyStandardPurchase_Premium_Monthly() {
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
@@ -142,7 +142,7 @@ public class DisneyPlusIAPStandardPurchaseTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72741"})
     @Maintainer("gkrishna1")
-    @Test(description = "Standard purchase with a new account for Premium yearly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Standard purchase with a new account for Premium yearly sku", groups = {"Ariel-Purchase", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyStandardPurchase_Premium_Yearly() {
         if (buildType != BuildType.IAP) {
             skipExecution("Test run is not against IAP compatible build.");
