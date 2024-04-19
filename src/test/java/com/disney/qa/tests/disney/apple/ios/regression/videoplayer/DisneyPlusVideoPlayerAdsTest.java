@@ -25,6 +25,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final double PLAYER_PERCENTAGE_FOR_RANDOM_MOVING = 10;
+    private static final String FRANCAIS = "Français";
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
@@ -85,8 +86,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72212"})
     @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyAdBadgeWhilePlayingAd() {
-        String ESPAÑOL = "Español";
-        String spanishLanguageCode = "es";
+        String frenchLanguageCode = "fr";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -105,26 +105,26 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
-        appLanguage.selectLanguage(ESPAÑOL);
+        appLanguage.selectLanguage(FRANCAIS);
 
-        getLocalizationUtils().setLanguageCode(spanishLanguageCode);
+        getLocalizationUtils().setLanguageCode(frenchLanguageCode);
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        String doneInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
-        String playInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText());
-        String adInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        String doneInFrench = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
+        String playInFrench = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText());
+        String adInFrench = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
 
-        editProfile.clickElementAtLocation(editProfile.getStaticTextByLabel(doneInSpanish), 50, 50);
+        editProfile.clickElementAtLocation(editProfile.getStaticTextByLabel(doneInFrench), 50, 50);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.getStaticTextByLabel(playInSpanish).click();
+        detailsPage.getStaticTextByLabel(playInFrench).click();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.getDynamicAccessibilityId(adInSpanish).isPresent(), "Ad Badge is not displayed in spanish");
+        sa.assertTrue(videoPlayer.getDynamicAccessibilityId(adInFrench).isPresent(), "Ad Badge is not displayed in French language");
         sa.assertAll();
     }
 
