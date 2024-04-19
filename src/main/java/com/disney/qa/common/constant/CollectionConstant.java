@@ -86,4 +86,17 @@ public class CollectionConstant {
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
     }
+
+    public static String getCollectionTitle(Collection collection) {
+        switch (collection) {
+            case COMEDIES:
+                return "Comedies";
+            case CONTINUE_WATCHING:
+                return "Continue Watching";
+            case RECOMMENDED_FOR_YOU:
+                return "Recommended For You";
+            default:
+                throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
+        }
+    }
 }

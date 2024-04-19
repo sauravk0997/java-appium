@@ -24,7 +24,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     private ExtendedWebElement whosWatchingTitle;
 
     @ExtendedFindBy(accessibilityId = "editProfileButton")
-    private ExtendedWebElement editProfilesBtn;
+    private ExtendedWebElement editProfileBtn;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
     private ExtendedWebElement dynamicAccessProfileIcon;
@@ -61,12 +61,12 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         addProfile.click();
     }
 
-    public boolean isEditProfilesButtonDisplayed() {
-        return editProfilesBtn.isElementPresent();
+    public boolean isEditProfileButtonDisplayed() {
+        return editProfileBtn.isElementPresent();
     }
 
     public void clickEditProfile() {
-        editProfilesBtn.click();
+        editProfileBtn.click();
     }
 
     public void clickProfile(String name, boolean onboarding) {
