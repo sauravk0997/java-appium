@@ -538,13 +538,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return String.format("%dh %dm", hours, minutes);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForPreRollAdToComplete(int timeout, int polling) {
-        LOGGER.info("Waiting for pre roll ad to complete...");
-        fluentWait(getDriver(), timeout, polling, "Pre roll ad still present after " + timeout).
-                until(it -> !isAdBadgeLabelPresent());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public String getRestartButtonStatus() {
         displayVideoController();
         return restartButton.getAttribute(Attributes.ENABLED.getAttribute());

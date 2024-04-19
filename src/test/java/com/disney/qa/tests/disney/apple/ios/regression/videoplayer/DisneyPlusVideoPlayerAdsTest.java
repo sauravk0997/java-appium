@@ -49,7 +49,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
 
-        videoPlayer.waitForPreRollAdToComplete(90, 6);
+        videoPlayer.waitForAdToComplete(90, 6);
         videoPlayer.scrubToPlaybackPercentage(50);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
