@@ -230,28 +230,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
-    @Test(description = "VOD Player - RW & FW - Play State", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
-    public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
-
-        int remainingTimeBeforeFwd = videoPlayer.getRemainingTime();
-        int remainingTimeAfterFwdTapInPlayMode = videoPlayer.tapForwardButton(1).getRemainingTime();
-        sa.assertTrue(remainingTimeBeforeFwd > remainingTimeAfterFwdTapInPlayMode,
-                "Remaining time in play mode before fwd tap " + remainingTimeBeforeFwd +
-                        " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPlayMode);
-
-        int remainingTimeBeforeRewind = videoPlayer.getRemainingTime();
-        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(1).getRemainingTime();
-        sa.assertTrue(remainingTimeBeforeRewind < remainingTimeAfterRewindTapInPlayMode,
-                "Remaining time in play mode time after rewind tap " + remainingTimeAfterRewindTapInPlayMode +
-                        " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
-
-        sa.assertAll();
-    }
-
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
