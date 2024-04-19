@@ -91,6 +91,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
+        detailsPage.isOpened();
         detailsPage.clickPlayButton();
     }
 }
