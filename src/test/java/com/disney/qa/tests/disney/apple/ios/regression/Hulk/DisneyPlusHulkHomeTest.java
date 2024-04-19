@@ -132,7 +132,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75265", "XMOBQA-75488"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209", "XMOBQA-73822"})
     @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();

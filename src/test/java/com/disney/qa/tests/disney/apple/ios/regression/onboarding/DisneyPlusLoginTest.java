@@ -295,7 +295,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62074", "XMOBQA-62076"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62074", "XMOBQA-66764"})
     @Test(description = "Verify Choose Profiles Screen", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testChooseProfiles() {
         String kidProfile = "kidProfile";

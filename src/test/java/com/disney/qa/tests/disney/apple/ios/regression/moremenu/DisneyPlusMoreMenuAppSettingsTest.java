@@ -318,7 +318,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249", "XMOBQA-67284", "XMOBQA-68577"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249", "XMOBQA-67284", "XMOBQA-68577","XMOBQA-75466"})
     @Test(description = "App Settings Page UI test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyAppSettingsDefaultUI() {
         SoftAssert sa = new SoftAssert();

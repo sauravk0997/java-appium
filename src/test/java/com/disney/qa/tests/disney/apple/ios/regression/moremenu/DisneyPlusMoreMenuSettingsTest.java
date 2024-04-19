@@ -132,7 +132,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "User was not returned to the More Menu after closing Watchlist");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72991"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67286"})
     @Test(description = "Help Center > Open in New Browser", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyHelpCenter() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

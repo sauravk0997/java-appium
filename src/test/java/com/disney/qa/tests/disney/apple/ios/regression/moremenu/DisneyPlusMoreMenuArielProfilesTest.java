@@ -33,6 +33,28 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String ENGLISH_US = "English (US)";
     private static final String NEW_PROFILE_NAME = "New Name";
 
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
+    @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyU13AutoplayAndBackgroundVideoOff() {
+        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
+        SoftAssert softAssert = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),null,true,false);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfiles.clickEditModeProfile(KIDS_PROFILE);
+        softAssert.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
+        editProfiles.toggleAutoplayButton("On");
+        pause(4);
+        changePassword.isHeadlineSubtitlePresent();
+        softAssert.assertTrue(changePassword.isPasswordDescriptionPresent());
+        changePassword.enterPassword(getAccount());
+        softAssert.assertEquals(editProfiles.getAutoplayState(), "On","After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
+        softAssert.assertAll();
+    }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74470"})
@@ -56,7 +78,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72463"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
     @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13RestrictionONAuthentication() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -338,7 +360,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72663"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72683"})
     @Test(description = "Kids Profile new copy and rename to Junior Mode", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorModeCopy() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -403,7 +425,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72482"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72475"})
     @Test(description = "Profiles > Add profile, No Gender for U13 Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyNoGenderForU13Profiles() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -454,7 +476,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72817"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Profiles > Add profile, No Gender for U18 Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyNoGenderForU18Profiles() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -497,7 +519,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72664"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
     @Test(description = " Profiles > Kids Profile new copy", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyLearnMoreLinkForKidsProfile() {
         setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
@@ -555,7 +577,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72311"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72162","XMOBQA-72475","XMOBQA-72682"})
     @Test(description = "Profiles > Add profile, DOB and gender AAW", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfilePageInlineError() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -652,8 +674,27 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72266"})
+    @Test(description = "Ariel: Profiles - Edit Profile - Primary Profile - DOB & Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyPrimaryProfilesEditProfileDOBGender() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+
+        editProfiles.clickEditModeProfile(getAccount().getProfile(DEFAULT_PROFILE).getProfileName());
+        sa.assertTrue(editProfiles.isBirthdateHeaderDisplayed(), "Birthdate header is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isBirthdateDisplayed(getAccount().getProfile(DEFAULT_PROFILE)),"Birthdate is not displayed on the edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderButtonPresent(), "Gender header is not displayed on edit profiles screen");
+        sa.assertTrue(editProfiles.isGenderValuePresent(getAccount().getProfile(DEFAULT_PROFILE)), "Gender value is not as expected on the edit profiles screen");
+        sa.assertAll();
+    }
+
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72335"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69517"})
     @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileBannerForPrimaryProfiles() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -777,7 +818,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61284"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66818"})
     @Test(description = "Ariel: Profiles - Edit Profile - App UI Language", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileAppUILanguage() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);

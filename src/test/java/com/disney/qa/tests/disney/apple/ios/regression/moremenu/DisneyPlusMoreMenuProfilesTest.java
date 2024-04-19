@@ -196,7 +196,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74793"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74601"})
     @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyProfileDefaultsToTVMA() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -227,7 +227,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74794"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74602"})
     @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySecondaryProfileU18DefaultsToTV14() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -295,7 +295,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61261"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
     @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileSecondaryProfileUIElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -623,7 +623,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69579"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69511","XMOBQA-75395","XMOBQA-75396"})
     @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyKidProofExitSettings() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);

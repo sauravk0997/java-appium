@@ -29,7 +29,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String WORLDS_BEST = "World's Best";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61849"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
     @Test(description = "Movies Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyRemoveMovieFromWatchlist() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -189,33 +189,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         details.isOpened();
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found on details page");
         details.compareSuggestedTitleToMediaTitle(sa);
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62395"})
-    @Test(description = "Movie Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyMovieResumeBehavior() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
-
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(HOCUS_POCUS);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        detailsPage.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-
-        videoPlayer.clickBackButton();
-        detailsPage.isOpened();
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
-        videoPlayer.validateResumeTimeThreeIntegerRemaining(sa);
         sa.assertAll();
     }
 

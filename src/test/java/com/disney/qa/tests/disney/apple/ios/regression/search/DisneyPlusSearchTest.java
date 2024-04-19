@@ -56,7 +56,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74517"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyRecentSearchWhenNoSearchMade() {
         SoftAssert sa = new SoftAssert();
@@ -73,7 +73,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62552"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {"Search", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
@@ -117,7 +117,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62542"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyRecentSearchInitiatesValidSearch() {
         String media = "Turning Red";
@@ -161,7 +161,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62540"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68280"})
     @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {"Search", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyRecentSearchShowsMaxTenResults() {
         SoftAssert sa = new SoftAssert();
@@ -202,7 +202,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61829"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67956"})
     @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
     public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionName) {
         String filterValue = "Comedy";
@@ -248,7 +248,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61725"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyOriginalsLandingPageUI() {
         int containerPosition = 0;
@@ -309,7 +309,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61827"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
     @Test(description = "Search - Content Type Landing Pages - Swipe Behavior", groups = {"Search", TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
@@ -387,7 +387,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62189"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
     @Test(description = "Search - Search Results Contains Rating And Released Year details (Handset Only)", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifySearchResultContainsRatingAndYearDetails() {
         if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)){

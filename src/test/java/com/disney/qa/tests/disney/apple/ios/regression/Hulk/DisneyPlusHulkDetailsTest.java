@@ -30,7 +30,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String ADULT_DOB = "1980-10-23";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74543"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Junior Profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileDetailsUnavailableState() {
         SoftAssert sa = new SoftAssert();
@@ -175,7 +175,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75267"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
     @Test(description = "Hulu Series Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -373,7 +373,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74916"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
     @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileNoHulu() {
         SoftAssert sa = new SoftAssert();
@@ -463,7 +463,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75248"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
     @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyShopTabContainer() {
         SoftAssert sa = new SoftAssert();
