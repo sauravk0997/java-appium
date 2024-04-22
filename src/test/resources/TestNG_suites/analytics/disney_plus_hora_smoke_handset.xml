@@ -3,22 +3,25 @@
 
     <parameter name="suiteOwner" value="EDS"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="reporting.notification.slack-channels" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="Disney-Plus-Apple-iOS-Handset-Hora-Smoke"/>
-    <parameter name="scheduling" value="0 14 * * 1-5"/>
-    <parameter name="jenkinsEmail" value="tony.wang@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod,QA"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
-    <parameter name="choiceParam::groups::Group" value="hora_smoke"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
+    <!-- three below params generate upper level cron job with ability to parametrize and schedule this paricular suite xml job execution -->
+    <parameter name="jenkinsRegressionPipeline" value="Daily-Regression-iOS-Handset-Hora-Smoke"/>
+    <parameter name="jenkinsRegressionScheduling" value="0 14 * * 1-5"/>
+    <!-- comma separated parameter for single launch and semicolon separated for several launches as a matrix-->
+    <parameter name="jenkinsRegressionMatrix" value="reporting.notification.slack-channels: eds-test-automation"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="maxNumberKeepBuilds" value="500"/>
-    <parameter name="reporting.notification.slack-channels" value="eds-test-automation"/>
-    <parameter name="overrideFields"
-               value="capabilities.locale=${locale},capabilities.language=${language},capabilities.custom_env=${custom_env},JOB_MAX_RUN_TIME=600,enable_hora_validation=true"/>
-    <parameter name="choiceParam::custom_env::App Environment" value="PROD,QA,EDITORIAL"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,enable_hora_validation=true"/>
+    <parameter name="choiceParam::groups::Group" value="hora_smoke"/>
+    <parameter name="choiceParam::appcenter_app_name::AppCenter App Name" value="Disney-Prod-Enterprise,Disney-Enterprise"/>
     <parameter name="stringParam::hora_non_critical_failures::Hora non-critical failures override" value="null"/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
 
     <test parallel="methods" name="Disney Plus Smoke Device Test">
         <classes>
