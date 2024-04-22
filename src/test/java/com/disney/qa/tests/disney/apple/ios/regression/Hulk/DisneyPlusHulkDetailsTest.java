@@ -57,7 +57,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74568"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Adult profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyAdultProfileDetailsUnavailableState() {
         SoftAssert sa = new SoftAssert();
@@ -83,7 +83,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74633"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkMovieDetailsTab() {
         SoftAssert sa = new SoftAssert();
@@ -115,7 +115,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74830"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
     @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
@@ -152,7 +152,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74599"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820","XMOBQA-75118"})
     @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -203,7 +203,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75281"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
     @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -230,7 +230,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73898"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72248"})
     @Test(description = "Hulk Details verify extras tab", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkExtrasTab() {
         SoftAssert sa = new SoftAssert();
@@ -269,7 +269,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74628"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
     @Test(description = "Hulk Details verify share on adult and kids profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkShare() {
         SoftAssert sa = new SoftAssert();
@@ -307,7 +307,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74863", "XMOBQA-74548"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
     @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieNetworkAttribution() {
         SoftAssert sa = new SoftAssert();
@@ -428,7 +428,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75114"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
     @Test(description = "Hulu Movie Download - download metadata and playable", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluMovieDownloadAsset() {
         SoftAssert sa = new SoftAssert();
@@ -511,7 +511,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75112"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
     @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
         SoftAssert sa = new SoftAssert();
@@ -540,7 +540,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75291"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
         SoftAssert sa = new SoftAssert();
@@ -563,7 +563,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75291"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesNoAdsAccount() {
         SoftAssert sa = new SoftAssert();

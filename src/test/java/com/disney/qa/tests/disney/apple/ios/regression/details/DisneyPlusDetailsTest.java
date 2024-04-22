@@ -49,7 +49,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61847"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448","XMOBQA-71632"})
     @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyAddSeriesAndMovieToWatchlist() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -119,7 +119,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62360"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68648"})
     @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyNegativeStereotypeAdvisoryExpansion() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -276,11 +276,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
         //Verify Shop Promo for Series
-        vailidateShopPromoLabelHeaderAndSubHeader(sa, ASHOKA);
+        validateShopPromoLabelHeaderAndSubHeader(sa, ASHOKA);
 
         //Verify Shop Promo for Movie
         detailsPage.getBackArrow().click();
-        vailidateShopPromoLabelHeaderAndSubHeader(sa, SPIDERMAN_THREE);
+        validateShopPromoLabelHeaderAndSubHeader(sa, SPIDERMAN_THREE);
         sa.assertAll();
     }
 
@@ -307,7 +307,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62519"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
     @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -349,7 +349,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void vailidateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
+    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         searchPage.searchForMedia(titleName);

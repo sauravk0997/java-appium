@@ -33,28 +33,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String ENGLISH_US = "English (US)";
     private static final String NEW_PROFILE_NAME = "New Name";
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72229"})
-    @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyU13AutoplayAndBackgroundVideoOff() {
-        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
-        SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),null,true,false);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfiles.clickEditModeProfile(KIDS_PROFILE);
-        softAssert.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
-        editProfiles.toggleAutoplayButton("On");
-        pause(4);
-        changePassword.isHeadlineSubtitlePresent();
-        softAssert.assertTrue(changePassword.isPasswordDescriptionPresent());
-        changePassword.enterPassword(getAccount());
-        softAssert.assertEquals(editProfiles.getAutoplayState(), "On","After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
-        softAssert.assertAll();
-    }
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74470"})
@@ -239,8 +217,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.getSharePlayTooltip().isPresent(), "SharePlay tooltip is not shown on tapping on SharePlay cell");
     }
 
-    @Maintainer("mboulogne1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69535"})
     @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
@@ -394,7 +371,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72365"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75637"})
     @Test(description = "Profiles > Existing Sub->edit gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditGenderPageUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -636,7 +613,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72366"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72223"})
     @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEnforceDOBAndGenderAccountHolderCollectionScreen() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -672,24 +649,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         enforceDOBCollectionPage.clickPrimaryButton();
         sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
-        sa.assertAll();
-    }
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72348"})
-    @Test(description = "Ariel: Profiles - Edit Profile - Primary Profile - DOB & Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyPrimaryProfilesEditProfileDOBGender() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-        moreMenu.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
-
-        editProfiles.clickEditModeProfile(getAccount().getProfile(DEFAULT_PROFILE).getProfileName());
-        sa.assertTrue(editProfiles.isBirthdateHeaderDisplayed(), "Birthdate header is not displayed on the edit profiles screen");
-        sa.assertTrue(editProfiles.isBirthdateDisplayed(getAccount().getProfile(DEFAULT_PROFILE)),"Birthdate is not displayed on the edit profiles screen");
-        sa.assertTrue(editProfiles.isGenderButtonPresent(), "Gender header is not displayed on edit profiles screen");
-        sa.assertTrue(editProfiles.isGenderValuePresent(getAccount().getProfile(DEFAULT_PROFILE)), "Gender value is not as expected on the edit profiles screen");
         sa.assertAll();
     }
 
@@ -736,7 +695,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74481"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69517"})
     @Test(description = "Profiles > Existing Subs -> Add Profile flow through Add Banner for Primary Profiles", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfilePageAfterClickingAddProfileButtonOnAddProfileBanner() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();

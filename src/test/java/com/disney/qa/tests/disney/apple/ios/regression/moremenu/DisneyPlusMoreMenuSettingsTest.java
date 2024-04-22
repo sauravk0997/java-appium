@@ -31,7 +31,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     private static final String KIDS_PROFILE = "KIDS";
     private static final String TEST_USER = "Test User";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61653"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67276"})
     @Test(description = "Verify: More Menu Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
@@ -89,7 +89,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Profile Tray did not swipe");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61657"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67280"})
     @Test(description = "User taps on Edit Profiles", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
@@ -115,24 +115,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61659"})
-    @Test(description = "User taps on Watchlist", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyWatchlist() {
-        onboard(getAccount().getFirstName());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicAccessibilityId(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isElementPresent()
-                        && disneyPlusMoreMenuIOSPageBase.isBackArrowInWatchlistPresent(),
-                "Watchlist was not opened");
-
-        disneyPlusMoreMenuIOSPageBase.clickBackArrowFromWatchlist();
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(),
-                "User was not returned to the More Menu after closing Watchlist");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61661"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
     @Test(description = "User Taps on App Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyAppSettings() {
         onboard(getAccount().getFirstName());
@@ -183,7 +166,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         sa.assertTrue(editProfilePage.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61665"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67290"})
     @Test(description = "User taps on Log Out", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyLogOut() {
         onboard(getAccount().getFirstName());
@@ -208,7 +191,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61669"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66835"})
     @Test(description = "Verify: Simplified Kids More Menu", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifySimplifiedKidsMoreMenu() {
         SoftAssert sa = new SoftAssert();

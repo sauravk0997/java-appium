@@ -41,7 +41,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("dconyers")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61083"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67343"})
     @Test(description = "Search: Navigate to search page and verify search icon", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifySearchTabIcon() {
         SoftAssert sa = new SoftAssert();

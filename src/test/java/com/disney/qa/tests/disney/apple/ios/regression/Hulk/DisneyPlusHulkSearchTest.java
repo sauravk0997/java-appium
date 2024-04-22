@@ -19,7 +19,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String HULU_CONTENT = "Only Murders in the Building";
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74646"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"MOBQA-74554"})
     @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -46,7 +46,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74811"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(description = "Search > Empty Page State", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -66,7 +66,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74878"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75718"})
     @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -165,7 +165,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74652"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
     @Test(description = "Search > Limited Availability Messaging", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyLimitedAvailabilityMessaging() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -218,7 +218,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74573"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651", "XMOBQA-68442"})
     @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistAndAddToWatchlist() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -300,7 +300,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74649"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
     @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyMaxLimitSearchQuery() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

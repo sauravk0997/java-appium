@@ -57,7 +57,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62393"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
     @Test(description = "Movies Details Screen - If no Extra content, do not show section", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieNoExtras() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -74,7 +74,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71794"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Movie Details: Verify Details Tab Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMoviesDetailsTabMetadata() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -101,7 +101,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62391"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
     @Test(description = "Movies Details - Verify UI Elements", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsUIElements() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -131,7 +131,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62280"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67527"})
     @Test(description = "Movies Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsDeeplink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -144,7 +144,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61957"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74597"})
     @Test(description = "Asset Detail Page > User taps Share Button", groups = {"Details", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsShare() {
         SoftAssert sa = new SoftAssert();

@@ -35,7 +35,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         return new Object[][] {{"ON"}, {"OFF"}};
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61973"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
     @Test(description = "Verify Up Next UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     @Maintainer("gkrishna1")
     public void verifyUpNextUI() {
@@ -117,7 +117,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62005"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67672"})
     @Test(description = "Up Next Logic -Extra content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void VerifyUpNextLogicForExtraContent() {
