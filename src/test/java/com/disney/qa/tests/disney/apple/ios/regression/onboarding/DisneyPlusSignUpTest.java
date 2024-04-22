@@ -423,7 +423,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
         swipePageTillElementPresent(legal.getTypeButtonByLabel(legalHeader), 8, null, Direction.DOWN, 25);
-
+        swipeUp(1,1);
         pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
 
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
