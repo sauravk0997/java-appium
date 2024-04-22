@@ -25,7 +25,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(MS_MARVEL);
+        loginAndStartPlayback(MS_MARVEL, sa);
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON),
@@ -45,7 +45,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(MS_MARVEL);
+        loginAndStartPlayback(MS_MARVEL, sa);
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToComplete(90, 5);
@@ -59,7 +59,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SPIDERMAN_THREE);
+        loginAndStartPlayback(SPIDERMAN_THREE, sa);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing");
@@ -80,7 +80,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void loginAndStartPlayback(String content) {
+    private void loginAndStartPlayback(String content, SoftAssert sa) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -91,7 +91,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         detailsPage.clickPlayButton();
     }
 }
