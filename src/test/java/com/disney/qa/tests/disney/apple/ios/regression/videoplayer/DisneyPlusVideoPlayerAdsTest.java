@@ -48,8 +48,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
-
-        videoPlayer.waitForAdToComplete(90, 6);
+        int adTimeRemaining = videoPlayer.getAdRemainingTimeInSeconds();
+        videoPlayer.waitForAdToComplete(adTimeRemaining, 5);
         videoPlayer.scrubToPlaybackPercentage(50);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
@@ -61,7 +61,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SPIDERMAN_THREE);
-        videoPlayer.waitForVideoToStart().isOpened();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing");
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
