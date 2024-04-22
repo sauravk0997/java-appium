@@ -48,6 +48,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
+        System.out.println(getDriver().getPageSource());
         int adTimeRemaining = videoPlayer.getAdRemainingTimeInSeconds();
         videoPlayer.waitForAdToComplete(adTimeRemaining, 5);
         videoPlayer.scrubToPlaybackPercentage(50);
