@@ -23,6 +23,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     static final String SUBSCRIBER_AGREEMENT = "Disney+ Subscriber Agreement";
     static final String PRIVACY_POLICY = "Privacy Policy";
     static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
+    static final String DISNEY_TERMS_OF_USE = "Disney Terms of Use";
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62219", "XMOBQA-62221"})
@@ -422,8 +423,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        swipePageTillElementPresent(legal.getTypeButtonByLabel(legalHeader), 8, null, Direction.DOWN, 25);
-        swipeDown(2,1);
+        swipePageTillElementPresent(legal.getTypeButtonByLabel(DISNEY_TERMS_OF_USE), 8, null, Direction.DOWN, 25);
         pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
 
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
