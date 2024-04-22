@@ -69,6 +69,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
         sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
         homePage.tapHuluBrandTile();
 
