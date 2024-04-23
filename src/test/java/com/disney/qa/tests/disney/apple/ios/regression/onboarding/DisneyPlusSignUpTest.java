@@ -19,7 +19,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
-    static final String YOUR_CALIFORNIA_PRIVACY_RIGHTS = "US State Privacy Rights Notice";
+    static final String US_STATE_PRIVACY_RIGHTS = "US State Privacy Rights Notice";
     static final String SUBSCRIBER_AGREEMENT = "Disney+ Subscriber Agreement";
     static final String PRIVACY_POLICY = "Privacy Policy";
     static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
@@ -247,12 +247,14 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         signUp.openSubscriberAgreement();
         Assert.assertTrue(legal.isOpened(),
                 "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        sa.assertTrue(legal.getTypeButtonByLabel(DISNEY_TERMS_OF_USE).isPresent(),
+                DISNEY_TERMS_OF_USE + " is not visible");
         sa.assertTrue(legal.getTypeButtonByLabel(PRIVACY_POLICY).isPresent(),
                 PRIVACY_POLICY + " is not visible");
         sa.assertTrue(legal.getTypeButtonByLabel(SUBSCRIBER_AGREEMENT).isPresent(),
                 SUBSCRIBER_AGREEMENT + " is not visible");
-        sa.assertTrue(legal.getTypeButtonByLabel(YOUR_CALIFORNIA_PRIVACY_RIGHTS).isPresent(),
-                YOUR_CALIFORNIA_PRIVACY_RIGHTS + " is not visible");
+        sa.assertTrue(legal.getTypeButtonByLabel(US_STATE_PRIVACY_RIGHTS).isPresent(),
+                US_STATE_PRIVACY_RIGHTS + " is not visible");
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
@@ -264,7 +266,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62387"})
     @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyUSLegalCenterCaliforniaPrivacyAndDoNotSell() {
+    public void verifyUSLegalCenterUSStatePrivacy() {
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -274,17 +276,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(legal.isOpened(),
                 "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
 
-        //Do Not Sell My Personal Information - in not showed in the same screen to validate this functional conditions
-//        pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //expand
-//        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
-//                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not expanded.");
-//
-//        pressByElement(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION), 1); //collapse
-//        sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
-//                DO_NOT_SELL_MY_PERSONAL_INFORMATION + " was not collapsed");
-
         //Your California Privacy Rights
-        validateUSLegalPageUI(sa, YOUR_CALIFORNIA_PRIVACY_RIGHTS);
+        validateUSLegalPageUI(sa, US_STATE_PRIVACY_RIGHTS);
 
         pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(signUp.isOpened(),

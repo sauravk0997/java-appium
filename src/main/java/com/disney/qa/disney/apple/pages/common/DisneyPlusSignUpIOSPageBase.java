@@ -38,8 +38,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedFocused")
     protected ExtendedWebElement uncheckedBox;
 
-    @ExtendedFindBy(accessibilityId = "Disney+ Subscriber Agreement")
-    protected ExtendedWebElement disneySuscriberAgreement;
 
     public DisneyPlusSignUpIOSPageBase(WebDriver driver) {
 
@@ -114,7 +112,9 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void openSubscriberAgreement() {
-        disneySuscriberAgreement.click();
+        System.out.println(getDriver().getPageSource());
+        openHyperlink(customHyperlinkContainsLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
