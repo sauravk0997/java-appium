@@ -162,7 +162,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62540"})
-    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {"Search", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {"Search", TestGroup.PRE_CONFIGURATION })
     public void verifyRecentSearchShowsMaxTenResults() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -173,10 +173,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
-        //Add 11 search result in recent search list
+         //Add 11 search result in recent search list
         IntStream.range(0, getMedia().size()).forEach(i -> {
+
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                searchPage.clearText();
+                searchPage.getClearText().click();
             }
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
@@ -185,7 +186,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             detailsPage.getBackArrow().click();
         });
 
-        searchPage.clearText();
+        searchPage.getClearText().click();
         searchPage.getSearchBar().click();
 
         //Verify that the after searching 11 content, only last latest 10 visible in list and the first one is not visible
