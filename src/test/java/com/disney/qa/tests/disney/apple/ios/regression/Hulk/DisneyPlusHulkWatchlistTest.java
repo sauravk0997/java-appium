@@ -23,7 +23,7 @@ public class DisneyPlusHulkWatchlistTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74588"})
     @Test(description = "New URL Structure - Hulu Hub - Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
     public void verifyHulkDeepLinkNewURLStructureWatchlistAuthenticatedUser(String deepLink) {
         SoftAssert sa = new SoftAssert();

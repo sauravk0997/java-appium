@@ -555,15 +555,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getAdRemainingTimeInSeconds() {
         displayVideoController();
-//        String[] remainingTime = adRemainingTime.getText().split(":");
-        System.out.println(getDriver().getPageSource());
         String adTime = isAdBadgeLabelPresent()?adRemainingTime.getText():"0:00";
         String[] remainingTime = adTime.split(":");
-        LOGGER.info("What is remainingTime part 0? " + remainingTime[0]);
-        LOGGER.info("What is remainingTime part 1? " + remainingTime[1]);
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
+    }
+
+    public boolean isAdBadgeLabelPresentWhenControlDisplay() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        displayVideoController();
+        return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
     public enum PlayerControl {
