@@ -231,7 +231,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleSystemAlert(command, 10);
     }
 
-    public void initialSetup(String locale, String language) {
+    public void initialSetup() {
         getDriver();
         setBuildType();
 

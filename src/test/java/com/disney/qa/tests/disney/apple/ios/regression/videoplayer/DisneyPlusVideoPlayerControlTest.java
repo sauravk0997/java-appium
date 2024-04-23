@@ -71,7 +71,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");*/
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61185"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
     @Test(description = " Video Player > Tap on screen to Rewind", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     @Maintainer("gkrishna1")
     public void verifyRewindButtonControlOnPlayer() {
@@ -209,7 +209,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75245"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
     @Test(description = "Hulk - Hulu Video Player - Service Attribution", dataProvider = "userType", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyVideoPlayerServiceAttribution(String userType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
