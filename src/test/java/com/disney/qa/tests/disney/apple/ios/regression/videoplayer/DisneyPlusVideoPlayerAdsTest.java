@@ -24,7 +24,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     //Test constants
     private static final String THE_MARVELS = "The Marvels";
-    private static final double PLAYER_PERCENTAGE_FOR_RANDOM_MOVING = 10;
+    private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final String FRANCAIS = "Français";
 
     @Maintainer("csolmaz")
@@ -70,7 +70,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToComplete(videoPlayer.getAdRemainingTimeInSeconds(), 5);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_RANDOM_MOVING);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
