@@ -14,12 +14,14 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
+    protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
 
     @DataProvider(name = "contentType")
@@ -228,6 +230,55 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertFalse(videoPlayer.isSeekbarVisible(), "player controls were displayed when video started");
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(), "service attribution wasn't visible along with controls");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
+    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    public void verifyScrubberElementsOnPlayer() {
+        String errorMessage = "time not changed after scrub/Tap";
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS);
+
+        videoPlayer.clickPauseButton();
+        String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        String durationTime = getContentTimeInHMFormatFromAPI(THE_MARVELS);
+        sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
+
+        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Time Remaining was not found");
+        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Time Elapsed was not found");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
+        sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remianing time is not visible in HH:MM:SS or MM:SS Format");
+        sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
+
+        videoPlayer.clickPlayButton();
+        int remainingTime = videoPlayer.getRemainingTime();
+        int elapsedTime = videoPlayer.getCurrentTime();
+        int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
+        
+        videoPlayer.scrubToPlaybackPercentage(20);
+        int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
+        int elapsedTimeAfterScrub = videoPlayer.getCurrentTime();
+        int currentPositionAfterScrub = videoPlayer.getCurrentPositionOnPlayer();
+        sa.assertTrue(remainingTime > remainingTimeAfterScrub, "Remaining " + errorMessage);
+        sa.assertTrue(elapsedTime < elapsedTimeAfterScrub, "Elapsed " + errorMessage);
+        sa.assertTrue(currentPositionAfterScrub > currentPositionOnSeekPlayer , "Position of seek bar " + errorMessage);
+
+        videoPlayer.clickElementAtLocation(videoPlayer.getSeekBar(), 50, 50);
+        int remainingTimeAfterTapping = videoPlayer.getRemainingTime();
+        int elapsedTimeAfterTapping = videoPlayer.getCurrentTime();
+        int currentPositionAfterTapping = videoPlayer.getCurrentPositionOnPlayer();
+        sa.assertTrue(remainingTimeAfterScrub > remainingTimeAfterTapping, "Remaining " + errorMessage);
+        sa.assertTrue(elapsedTimeAfterScrub < elapsedTimeAfterTapping, "Elapsed " + errorMessage);
+        sa.assertTrue(currentPositionAfterTapping > currentPositionAfterScrub, "Position of seek bar " + errorMessage);
+        sa.assertAll();
+    }
+
+    public String getContentTimeInHMFormatFromAPI(String contentTitle){
+        int duration = getSearchApi().getMovie(contentTitle, getAccount()).getContentDuration();
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%dh %dm",hours, minutes);
     }
 
     private void loginAndStartPlayback(String content) {

@@ -17,6 +17,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -525,6 +526,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return currentTimeInSec;
     }
 
+    public int getCurrentTime(){
+        displayVideoController();
+        String[] currentTime = currentTimeLabel.getText().split(":");
+        int currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
+        LOGGER.info("Playback currently at {} seconds...", currentTimeInSec);
+        return currentTimeInSec;
+    }
+
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
         sa.assertTrue(getBeginningTime() < 60,
                 "Video is not playing from the beginning.");
@@ -559,6 +568,44 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
+    }
+
+    public ExtendedWebElement getSeekBar(){
+        displayVideoController();
+        return seekBar;
+    }
+
+    public boolean isRemainingTimeVisibleInCorrectFormat(){
+        displayVideoController();
+        return validateTime(timeRemainingLabel.getText().replace("-",""));
+    }
+
+    public boolean isCurrentTimeVisibleInCorrectFormat(){
+        displayVideoController();
+        return validateTime(currentTimeLabel.getText());
+    }
+
+    public boolean validateTime(String time){
+        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$");
+        Pattern timePatternInHMMSS = Pattern.compile("^[0-9]:[0-5][0-9]:[0-5][0-9]$");
+        Pattern timePatternInMMSS = Pattern.compile("^[0-5][0-9]:[0-5][0-9]$");
+        Pattern timePatternInMSS = Pattern.compile("^[0-9]:[0-5][0-9]$");
+        if(timePatternInHHMMSS.matcher(time).matches()){
+            LOGGER.info("Content time is displayed HH:MM:SS format");
+            return true;
+        }else if(timePatternInHMMSS.matcher(time).matches()){
+            LOGGER.info("Content time is displayed HH:MM:SS format");
+            return true;
+        } else if(timePatternInMMSS.matcher(time).matches()){
+            LOGGER.info("Content time is displayed in MM:SS format");
+            return true;
+        }else if(timePatternInMSS.matcher(time).matches()){
+            LOGGER.info("Content time is displayed in MM:SS format");
+            return true;
+        }else{
+            LOGGER.info("Content time is not displayed in correct format");
+            return false;
+        }
     }
 
     public enum PlayerControl {
