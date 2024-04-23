@@ -21,7 +21,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPa
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
-    private static final double PLAYER_PERCENTAGE_FOR_RANDOM_MOVING = 10;
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -240,15 +240,15 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         int remainingTimeBeforeFwd = videoPlayer.getRemainingTime();
         int remainingTimeAfterFwdTapInPlayMode = videoPlayer.tapForwardButton(1).getRemainingTime();
-        sa.assertTrue(remainingTimeBeforeFwd > remainingTimeAfterFwdTapInPlayMode,
+        sa.assertTrue((remainingTimeBeforeFwd - remainingTimeAfterFwdTapInPlayMode) > 10,
                 "Remaining time in play mode before fwd tap " + remainingTimeBeforeFwd +
                         " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPlayMode);
 
-        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_RANDOM_MOVING);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
         int remainingTimeBeforeRewind = videoPlayer.getRemainingTime();
-        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(3).getRemainingTime();
-        sa.assertTrue(remainingTimeBeforeRewind < remainingTimeAfterRewindTapInPlayMode,
+        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(1).getRemainingTime();
+        sa.assertTrue(remainingTimeAfterRewindTapInPlayMode - remainingTimeBeforeRewind <= 10,
                 "Remaining time in play mode time after rewind tap " + remainingTimeAfterRewindTapInPlayMode +
                         " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
 
