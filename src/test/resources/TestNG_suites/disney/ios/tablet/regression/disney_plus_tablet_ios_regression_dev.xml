@@ -95,6 +95,12 @@
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player Ads" parallel="methods">
+        <parameter name="iOS17TabletDevices"
+                   value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_8_Gen_1"/>
+        <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
         </classes>
     </test>
