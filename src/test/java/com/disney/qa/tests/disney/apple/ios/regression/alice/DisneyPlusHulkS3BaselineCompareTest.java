@@ -79,7 +79,7 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
     private void setUp() {
-        initialSetup("US", "en");
+        initialSetup();
         handleAlert();
         disableBrazeConfig();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
