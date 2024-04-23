@@ -74,6 +74,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type == 'XCUIElementTypeStaticText' and label = 'Ad'$]/XCUIElementTypeOther[12]/XCUIElementTypeStaticText")
+    protected ExtendedWebElement adRemainingTime;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -533,6 +536,29 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         long hours = remainingTimeInMinutes / 60;
         long minutes = remainingTimeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getRestartButtonStatus(){
+        displayVideoController();
+        return restartButton.getAttribute(Attributes.ENABLED.getAttribute());
+    }
+
+    public void clickRestartButton(){
+        displayVideoController();
+        restartButton.click();
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForAdToComplete(int timeout, int polling) {
+        fluentWait(getDriver(), timeout, polling, "Ad did not end after " + timeout).until(it ->  !isAdBadgeLabelPresent());
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public int getAdRemainingTimeInSeconds(){
+        displayVideoController();
+        String[] remainingTime = adRemainingTime.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
     }
 
     public enum PlayerControl {
