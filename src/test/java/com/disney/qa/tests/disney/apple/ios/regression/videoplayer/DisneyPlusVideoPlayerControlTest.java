@@ -21,6 +21,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPa
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -243,9 +244,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time in play mode before fwd tap " + remainingTimeBeforeFwd +
                         " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPlayMode);
 
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        videoPlayer.waitForVideoToStart();
         int remainingTimeBeforeRewind = videoPlayer.getRemainingTime();
-        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(1).getRemainingTime();
-        sa.assertTrue(remainingTimeAfterRewindTapInPlayMode - remainingTimeBeforeRewind <= 10,
+        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(3).getRemainingTime();
+        int remainingTimeDifferenceWhileRewind = remainingTimeAfterRewindTapInPlayMode - remainingTimeBeforeRewind;
+        sa.assertTrue(remainingTimeDifferenceWhileRewind <= 30 && remainingTimeDifferenceWhileRewind > 0,
                 "Remaining time in play mode time after rewind tap " + remainingTimeAfterRewindTapInPlayMode +
                         " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
 
