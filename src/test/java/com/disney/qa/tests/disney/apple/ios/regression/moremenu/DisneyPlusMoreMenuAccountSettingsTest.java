@@ -16,6 +16,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +27,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
@@ -57,6 +56,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String BRADESCO_URL = "banco.bradesco";
     private static final String BRADESCO_NEXT_URL = "next.me";
     private static final String DETELEKOM_URL = "telekom.de";
+    private DisneyEntitlement disneyEntitlements;
 
     @BeforeMethod
     public void handleAlert() {
@@ -539,7 +539,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyOffer offer = getAccountApi().lookupOfferToUse("monthly");
         request.addEntitlement(new DisneyEntitlement().setOffer(offer));
         DisneyAccount unverifiedAccount = getAccountApi().createAccount(request);
-        getAccountApi().patchAccountVerified(unverifiedAccount, false, PatchType.ACCOUNT);
+        getAccountApi().patchAccountVerified(unverifiedAccount, false, PatchType.ACCOUNT,null);
         //Add pause cause patch takes a little while
         pause(15);
         setAccount(unverifiedAccount);
@@ -861,7 +861,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
     @Test(description = "Verify Subscription section header displays correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException {
+    public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
@@ -869,7 +869,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusAccountIOSPageBase.isSingleSubHeaderPresent(),
                 "Single Subscription header text was not displayed");
 
-        getAccountApi().entitleAccount(getAccount(), DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, SUBSCRIPTION_V1);
+        getSubscriptionApi().addEntitlementBySku(getAccount(), DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, SUBSCRIPTION_V2);
         logout();
         setAppToAccountSettings();
 
@@ -1023,14 +1023,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
             getAccount().getOrderSettings().clear();
 
             try {
-                getAccountApi().entitleAccount(
-                        getAccount(),
-                        getAccountApi().fetchOffer(provider),
-                        SUBSCRIPTION_V1);
+                disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE));
+                disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+                getSubscriptionApi().entitleAccount(getAccount(), Arrays.asList(disneyEntitlements));
 
                 performIapHoldProviderSubscriptionCheck(sa, provider, iap);
             } catch (URISyntaxException | JSONException e) {
                 LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider, e);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }));
 
@@ -1039,14 +1042,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_VerizonStandalone() throws JSONException, URISyntaxException {
+    public void verifyBillingHoldWithPartnerSub_VerizonStandalone() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
+        getSubscriptionApi().addEntitlementBySku(getAccount(), DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, SUBSCRIPTION_V2);
         setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
@@ -1055,7 +1058,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
         setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
@@ -1065,14 +1070,16 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_VerizonBundle() throws JSONException, URISyntaxException {
+    public void verifyBillingHoldWithPartnerSub_VerizonBundle() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
         setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
@@ -1081,7 +1088,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
         setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
@@ -1091,13 +1100,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException {
+    public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
         setAccount(monthly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
@@ -1106,7 +1117,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
         setAccount(yearly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
@@ -1116,14 +1129,16 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_O2() throws JSONException, URISyntaxException {
+    public void verifyBillingHoldWithPartnerSub_O2() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
         AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
 
         DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         monthly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(monthly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
         setAccount(monthly);
 
         //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));
@@ -1132,7 +1147,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
         yearly.getOrderSettings().clear();
-        getAccountApi().entitleAccount(yearly, getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1);
+        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE));
+        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
+        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
         setAccount(yearly);
 
        // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));

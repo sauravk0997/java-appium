@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios;
 
 import java.lang.invoke.MethodHandles;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
@@ -376,8 +377,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void addHoraValidationSku(DisneyAccount accountToEntitle) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             try {
-                getAccountApi().entitleAccount(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V1");
-            } catch (URISyntaxException e) {
+                getSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
+            } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
