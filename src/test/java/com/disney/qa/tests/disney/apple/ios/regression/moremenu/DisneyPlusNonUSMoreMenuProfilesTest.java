@@ -25,7 +25,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
     @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
     public void verifyAddProfileFlow() {
-        initialSetup("JP", "ja");
+        initialSetup();
         handleAlert();
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
@@ -78,7 +78,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66792"})
     @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {"NonUS-More Menu"})
     public void verifyEditProfileUIPrimaryProfile() {
-        initialSetup("JP", "ja");
+        initialSetup();
         handleAlert();
         setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -111,7 +111,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUIKidsProfile() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        initialSetup("JP", "ja");
+        initialSetup();
         handleAlert();
         setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
@@ -139,7 +139,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61241"})
     @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
     public void verifyAddProfilePageUI() {
-        initialSetup("JP", "ja");
+        initialSetup();
         handleAlert();
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
