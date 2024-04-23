@@ -91,7 +91,7 @@ public class DisneyPlusHulkDisneyFiveBrandCompareTest extends DisneyBaseTest {
 
     @BeforeTest(alwaysRun = true, groups = TestGroup.NO_RESET)
     private void setUp() {
-        initialSetup("US", "en");
+        initialSetup();
         handleAlert();
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
             setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);

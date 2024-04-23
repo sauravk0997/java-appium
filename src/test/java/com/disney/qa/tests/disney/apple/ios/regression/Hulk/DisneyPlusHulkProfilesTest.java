@@ -17,7 +17,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
     private static final String PG_13 = "PG-13";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74938"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
     @Test(description = "Downloads are filtered out on Junior profile ", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
@@ -29,7 +29,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75327"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
     @Test(description = "Downloads are filtered out on adult profile with lower maturity rating", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyPCONProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();

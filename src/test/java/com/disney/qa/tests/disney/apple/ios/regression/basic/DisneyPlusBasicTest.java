@@ -113,7 +113,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-62703" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73922" })
     @Test(description = "Verify Edit Profile Page", groups = { "Smoke", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testEditProfile() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
