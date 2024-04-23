@@ -35,7 +35,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         return new Object[][] {{"ON"}, {"OFF"}};
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61973"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
     @Test(description = "Verify Up Next UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     @Maintainer("gkrishna1")
     public void verifyUpNextUI() {
@@ -47,7 +47,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61975"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
     @Test(description = "User Taps play icon", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyPlayIconOnUpNextUI() {
@@ -74,7 +74,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61979"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67652"})
     @Test(description = "User Taps See All Episodes", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextSeeAllEpisodes() {
@@ -89,7 +89,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61981"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67654"})
     @Test(description = "User allows autoplay to occur", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAutoPlayOnPlayerView() {
@@ -117,7 +117,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62005"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67672"})
     @Test(description = "Up Next Logic -Extra content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void VerifyUpNextLogicForExtraContent() {
@@ -151,7 +151,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62003"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67676","XMOBQA-72610"})
     @Test(description = "Up Next Behavior when app gets backgrounded", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "autoplay-state", enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextBehaviorWhenAppIsBackgrounded(String autoplayState) {
@@ -181,7 +181,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61993", "XMOBQA-61165", "XMOBQA-61271"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656", "XMOBQA-67672", "XMOBQA-66786"})
     @Test(description = "Autoplay does not autoplay if disabled", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
