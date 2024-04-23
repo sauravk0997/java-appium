@@ -23,7 +23,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     //Test constants
-    private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String THE_MARVELS = "The Marvels";
     private static final double PLAYER_PERCENTAGE_FOR_RANDOM_MOVING = 10;
     private static final String FRANCAIS = "Français";
 
@@ -64,7 +64,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SPIDERMAN_THREE);
+        loginAndStartPlayback(THE_MARVELS);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing");
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
@@ -85,7 +85,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72212"})
     @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
-    public void verifyAdBadgeWhilePlayingAd() {
+    public void verifyLocalizedAdBadgeWhilePlayingAd() {
         String frenchLanguageCode = "fr";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -95,7 +95,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SPIDERMAN_THREE);
+        loginAndStartPlayback(THE_MARVELS);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad Badge is not displayed");
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresentWhenControlDisplay(), "Ad Badge is not displayed when controls are visible");
 
@@ -119,7 +119,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         editProfile.clickElementAtLocation(editProfile.getStaticTextByLabel(doneInFrench), 50, 50);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
-        searchPage.searchForMedia(SPIDERMAN_THREE);
+        searchPage.searchForMedia(THE_MARVELS);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.getStaticTextByLabel(playInFrench).click();
