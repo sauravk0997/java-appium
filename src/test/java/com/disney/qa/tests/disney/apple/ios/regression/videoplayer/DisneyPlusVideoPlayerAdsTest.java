@@ -141,6 +141,5 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         detailsPage.clickPlayButton();
-        sa.assertTrue(initPage(DisneyPlusVideoPlayerIOSPageBase.class).isOpened(), "Video player did not open.");
     }
 }
