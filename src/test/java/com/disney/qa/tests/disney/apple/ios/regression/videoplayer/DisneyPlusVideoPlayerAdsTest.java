@@ -23,6 +23,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     //Test constants
+    private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final String FRANCAIS = "Français";
@@ -64,7 +65,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(THE_MARVELS);
+        loginAndStartPlayback(SPIDERMAN_THREE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing");
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
