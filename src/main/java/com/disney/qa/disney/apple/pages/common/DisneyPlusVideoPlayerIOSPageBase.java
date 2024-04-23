@@ -555,7 +555,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getAdRemainingTimeInSeconds(){
         displayVideoController();
+        LOGGER.info("Is adRemainingTime label found?" + adRemainingTime.isPresent());
         String[] remainingTime = adRemainingTime.getText().split(":");
+        LOGGER.info("What is remainingTime part 0? " + remainingTime[0]);
+        LOGGER.info("What is remainingTime part 1? " + remainingTime[1]);
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
