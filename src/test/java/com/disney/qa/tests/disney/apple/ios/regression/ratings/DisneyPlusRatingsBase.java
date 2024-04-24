@@ -84,7 +84,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        //String contentTitle = "이와주";
         String contentTitle = CONTENT_TITLE.get(0);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
@@ -112,7 +111,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        //String contentTitle = "Happier Than Ever: LA로 보내는 러브레터";
         String contentTitle = CONTENT_TITLE.get(0);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);

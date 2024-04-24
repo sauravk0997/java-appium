@@ -1076,7 +1076,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsInDetailsTab(String rating, String dictionaryKey, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in detail's tab");
-        swipe(getDetailsTab(),2);
+        if(!getDetailsTab().isPresent()) {
+            swipe(getDetailsTab(), 2);
+        }
         getDetailsTab().click();
         sa.assertTrue(isRatingPresent(dictionaryKey), rating + " rating was not found on  details tab area");
     }
