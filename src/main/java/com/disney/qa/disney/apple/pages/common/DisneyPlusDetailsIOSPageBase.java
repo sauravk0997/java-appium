@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyDictionaryKeys;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -21,6 +22,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -94,6 +96,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
+    @ExtendedFindBy(accessibilityId = "downloadEpisodeList")
+    private ExtendedWebElement downloadEpisodeButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "SHOP")
@@ -178,6 +182,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shareBtn.isElementPresent(time);
     }
 
+    public boolean isDetailsScreenDisplayed() {
+        return contentDetailsPage.isElementPresent();
+    }
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         getPlayButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -193,6 +200,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public void clickOnEpisodeDownloadButton() {
+        downloadEpisodeButton.click();
+    }
     public ExtendedWebElement getDownloadButton() {
         return dynamicBtnFindByLabelContains.format("downloadEpisodeList");
     }
@@ -573,7 +583,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getDetailsTab() {
-        return getTypeButtonByLabel("DETAILS");
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_DETAILS.getText()));
     }
 
     public ExtendedWebElement getActors() {
@@ -596,7 +606,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_PLAY.getText()));
     }
-
     public ExtendedWebElement getContinueButton() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_CONTINUE.getText()));
@@ -1057,5 +1066,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
         String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
+    }
+
+    public void verifyRatingsInDetailsFeaturedArea(String rating, String dictionaryKey, SoftAssert sa){
+        LOGGER.info("Verifying Ratings in featured area");
+        Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
+        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " rating was not found on movie details page featured area.");
+    }
+
+    public void validateRatingsInDetailsTab(String rating, String dictionaryKey, SoftAssert sa) {
+        LOGGER.info("Verifying Ratings in detail's tab");
+        swipe(getDetailsTab(),2);
+        getDetailsTab().click();
+        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " rating was not found on  details tab area");
     }
 }
