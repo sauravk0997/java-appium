@@ -1058,4 +1058,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
     }
+
+    /**
+     * To be used with continually navigating back and forth between details and player of same content.
+     */
+    public void clickPlayOrContinue() {
+        if (getPlayButton().isPresent()) {
+            clickPlayButton();
+        } else {
+            clickContinueButton();
+        }
+    }
 }

@@ -128,14 +128,16 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         audioSubtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.clickContinueButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayOrContinue();
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.tapAudioSubTitleMenu();
         sa.assertTrue(audioSubtitlePage.verifySelectedAudioIs(ENGLISH_AUDIO_DESCRIPTION), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         audioSubtitlePage.chooseAudioLanguage(DEUTSCH);
         audioSubtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.clickContinueButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayOrContinue();
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.tapAudioSubTitleMenu();
         sa.assertTrue(audioSubtitlePage.verifySelectedAudioIs(DEUTSCH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         sa.assertAll();
