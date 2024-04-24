@@ -95,7 +95,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
         //ratings are shown on downloaded content
         detailsPage.getEpisodesTab().click();
-        swipe(detailsPage.getDownloadAllSeasonButton());
+        if(!detailsPage.getDownloadAllSeasonButton().isPresent()) {
+            swipe(detailsPage.getDownloadAllSeasonButton());
+        }
         pressByElement(detailsPage.getDownloadAllSeasonButton(), 1);
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
@@ -120,7 +122,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         videoPlayer.validateRatingsOnPlayer(KCC_12, dictionaryKey, sa, detailsPage);
         detailsPage.validateRatingsInDetailsTab(KCC_12, dictionaryKey, sa);
         //ratings are shown on downloaded content
-        swipe(detailsPage.getMovieDownloadButton());
+        if(!detailsPage.getMovieDownloadButton().isPresent()) {
+            swipe(detailsPage.getMovieDownloadButton());
+        }
         detailsPage.getMovieDownloadButton().click();
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(null, Direction.UP, 2000);
