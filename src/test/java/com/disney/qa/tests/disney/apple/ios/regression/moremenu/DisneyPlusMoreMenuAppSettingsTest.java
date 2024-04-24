@@ -34,7 +34,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61201", "XMOBQA-61207"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249", "XMOBQA-66623"})
     @Test(description = "Cellular Data Usage Page UI test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyCellularDataUsagePageUI() {
         SoftAssert sa = new SoftAssert();
@@ -74,7 +74,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61203"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66623"})
     @Test(description = "Wi-Fi Data Usage Page UI test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyWiFiDataUsageUI() {
         SoftAssert sa = new SoftAssert();
@@ -269,7 +269,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         }
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61217", "XMOBQA-61219", "XMOBQA-61221"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
     @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyDownloadQualitySettingsUI() {
         SoftAssert sa = new SoftAssert();
@@ -318,7 +318,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61205", "XMOBQA-61223", "XMOBQA-61225", "XMOBQA-62421", "XMOBQA-62423"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249", "XMOBQA-67284", "XMOBQA-68577","XMOBQA-75466"})
     @Test(description = "App Settings Page UI test", groups = TestGroup.PRE_CONFIGURATION)
     public void verifyAppSettingsDefaultUI() {
         SoftAssert sa = new SoftAssert();
