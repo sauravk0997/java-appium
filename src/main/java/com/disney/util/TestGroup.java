@@ -52,4 +52,5 @@ public final class TestGroup {
     public static final String PROXY = "proxy";
     public static final String PRE_CONFIGURATION = "pre_configuration";
     public static final String NO_RESET = "noreset";
+    public static final String CUSTOM_LANG_LOCALE = "custom_lang_locale";
 }

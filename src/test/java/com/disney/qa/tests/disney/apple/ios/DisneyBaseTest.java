@@ -71,7 +71,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.CUSTOM_LANG_LOCALE)
+    public void customLangLocale(ITestContext context) {
+        localContext.set(context);
+        String testXmlLocale = context.getCurrentXmlTest().getParameter("locale");
+        String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
+        R.CONFIG.put("locale", testXmlLocale, true);
+        R.CONFIG.put("language", testXmlLanguage, true);
+    }
+
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET, dependsOnMethods = "customLangLocale")
     public void enableNoTestReset() {
         R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
         R.CONFIG.put("capabilities." + SupportsFullResetOption.FULL_RESET_OPTION, "false", true);
