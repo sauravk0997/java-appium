@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.config.DisneyParameters;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import org.testng.Assert;
+import io.appium.java_client.remote.MobilePlatform;
 import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
@@ -19,7 +21,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "KO";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
-        setDesiredContentRating(ratingValue, lang, locale);
+        getDesiredRatingContent(ratingValue, lang, locale);
+        setLocalizationUtils(lang);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -37,7 +40,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDesiredContentRating(String rating, String lang, String locale) {
+    private void getDesiredRatingContent(String rating, String lang, String locale) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         List<String> titles = new ArrayList<>();
         String movieFilter = "program";
@@ -65,6 +68,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         //no content found for desired rating value and skipping test
         throw new SkipException(
                 String.format("Skipping test for rating '%s' as API returned no content.", rating));
+    }
+
+    private void setLocalizationUtils(String lang) {
+        getLocalizationUtils().setLanguageCode(lang);
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
     }
 
     public void confirmRegionalRatingsDisplays(String rating, String dictionaryKey) {
