@@ -564,10 +564,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getAdRemainingTimeInSeconds(){
         displayVideoController();
-        String[] remainingTime = adRemainingTime.getText().split(":");
+        String adTime = isAdBadgeLabelPresent()?adRemainingTime.getText():"0:00";
+        String[] remainingTime = adTime.split(":");
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
+    }
+
+    public boolean isAdBadgeLabelPresentWhenControlDisplay() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        displayVideoController();
+        return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
     public ExtendedWebElement getSeekBar(){

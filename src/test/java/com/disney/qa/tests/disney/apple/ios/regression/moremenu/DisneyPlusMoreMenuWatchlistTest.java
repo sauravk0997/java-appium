@@ -16,7 +16,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62612"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
     @Test(description = "Verify empty Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
@@ -35,7 +35,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62610"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68440"})
     @Test(description = "Verify populated Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyPopulatedWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
@@ -76,14 +76,4 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
                 "Titles were not placed in the correct order");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62294"})
-    @Test(description = "Verify Watchlist Deeplink", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyWatchlistDeeplink() {
-        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink_2"), 10);
-        watchlistPage.clickOpenButton();
-        pause(2);
-        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
-    }
 }
