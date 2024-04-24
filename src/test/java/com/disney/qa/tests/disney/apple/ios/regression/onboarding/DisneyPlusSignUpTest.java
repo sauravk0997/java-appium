@@ -20,7 +20,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     static final String EXPANDED = "Expanded";
     static final String COLLAPSED = "Collapsed";
     static final String US_STATE_PRIVACY_RIGHTS = "US State Privacy Rights Notice";
-    static final String SUBSCRIBER_AGREEMENT = "Disney+ Subscriber Agreement";
+    static final String SUBSCRIBER_AGREEMENT = "Subscriber Agreement";
     static final String PRIVACY_POLICY = "Privacy Policy";
     static final String DO_NOT_SELL_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
     static final String DISNEY_TERMS_OF_USE = "Disney Terms of Use";

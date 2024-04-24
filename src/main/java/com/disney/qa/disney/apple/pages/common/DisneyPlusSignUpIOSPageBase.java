@@ -112,9 +112,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void openSubscriberAgreement() {
-        System.out.println(getDriver().getPageSource());
-        openHyperlink(customHyperlinkContainsLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
-
+        pressByElement(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)),1);
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
