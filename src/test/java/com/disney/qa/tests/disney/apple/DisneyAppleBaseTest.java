@@ -12,6 +12,7 @@ import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.account.DisneySubscriptionApi;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -132,6 +133,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
                     .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
                     .build();
             return new DisneyAccountApi(apiConfiguration);
+        }
+    };
+
+    private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
+        @Override
+        protected DisneySubscriptionApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                    .partner(DisneyConfiguration.getPartner())
+                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                    .build();
+            return new DisneySubscriptionApi(apiConfiguration);
         }
     };
 
@@ -274,6 +289,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static DisneyAccountApi getAccountApi() {
         try {
             return ACCOUNT_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static DisneySubscriptionApi getSubscriptionApi() {
+        try {
+            return SUBSCRIPTION_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
