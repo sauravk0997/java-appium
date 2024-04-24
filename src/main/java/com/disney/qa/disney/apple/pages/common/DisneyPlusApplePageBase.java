@@ -57,6 +57,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     public static final String PREY = "Prey";
     public static final String DEUTSCH = "Deutsch";
+    public static final String ITALIANO = "Italiano";
+    public static final String ENGLISH = "English";
+    public static final String ENGLISH_CC = "English [CC]";
+    public static final String ENGLISH_AUDIO_DESCRIPTION = "English [Audio Description]";
+    public static final String OFF = "Off";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
@@ -118,6 +123,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement cell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`]")
     protected ExtendedWebElement customHyperlinkByLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label CONTAINS '%s'`]")
+    protected ExtendedWebElement customHyperlinkContainsLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`][%s]")
     protected ExtendedWebElement typeLinkRowLabel;
     @ExtendedFindBy(iosPredicate = "label == \"Address\"")
