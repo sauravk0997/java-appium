@@ -1,15 +1,22 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
+    static final String KCC_12 = "12+";
+    static final String KOREA_LOCALE = "KR";
+    static final String KOREAN_LANG = "KO";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         setDesiredContentRating(ratingValue, lang, locale);
@@ -58,5 +65,70 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         //no content found for desired rating value and skipping test
         throw new SkipException(
                 String.format("Skipping test for rating '%s' as API returned no content.", rating));
+    }
+
+    public void confirmRegionalRatingsDisplays(String rating, String dictionaryKey) {
+        if (isMovie) {
+            LOGGER.info("Testing against Movie content.");
+             validateMovieContent(rating, dictionaryKey);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating, dictionaryKey);
+        }
+    }
+
+    public void validateSeriesContent(String rating, String dictionaryKey) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        //String contentTitle = "이와주";
+        String contentTitle = CONTENT_TITLE.get(0);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        detailsPage.verifyRatingsInDetailsFeaturedArea(KCC_12, dictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(KCC_12, dictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(KCC_12, dictionaryKey, sa);
+
+        //ratings are shown on downloaded content
+        detailsPage.getEpisodesTab().click();
+        swipe(detailsPage.getDownloadAllSeasonButton());
+        pressByElement(detailsPage.getDownloadAllSeasonButton(), 1);
+        detailsPage.clickDefaultAlertBtn();
+        detailsPage.getDownloadNav().click();
+        downloads.getStaticTextByLabelContains(contentTitle).click();
+        sa.assertTrue(downloads.isRatingPresent(dictionaryKey), rating  + " Rating was not found on series downloads.");
+        sa.assertAll();
+    }
+
+    public void validateMovieContent(String rating, String dictionaryKey) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        //String contentTitle = "Happier Than Ever: LA로 보내는 러브레터";
+        String contentTitle = CONTENT_TITLE.get(0);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        detailsPage.verifyRatingsInDetailsFeaturedArea(KCC_12, dictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(KCC_12, dictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(KCC_12, dictionaryKey, sa);
+        //ratings are shown on downloaded content
+        swipe(detailsPage.getMovieDownloadButton());
+        detailsPage.getMovieDownloadButton().click();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            swipeInContainer(null, Direction.UP, 2000);
+        }
+        detailsPage.getDownloadNav().click();
+        sa.assertTrue(downloads.isRatingPresent(dictionaryKey), rating  + " Rating was not found on movie downloads.");
+        sa.assertAll();
     }
 }

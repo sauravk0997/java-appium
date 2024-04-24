@@ -11,12 +11,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -578,5 +581,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         PAUSE,
         RESTART,
         REWIND
+    }
+
+    public void validateRatingsOnPlayer(String rating, String dictionaryKey, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+        detailsPage.getPlayButton().click();
+        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on movie video player.");
+        clickBackButton();
     }
 }
