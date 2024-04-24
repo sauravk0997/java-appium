@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyDictionaryKeys;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -185,6 +184,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isDetailsScreenDisplayed() {
         return contentDetailsPage.isElementPresent();
     }
+
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
         getPlayButton().click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -203,6 +203,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void clickOnEpisodeDownloadButton() {
         downloadEpisodeButton.click();
     }
+
     public ExtendedWebElement getDownloadButton() {
         return dynamicBtnFindByLabelContains.format("downloadEpisodeList");
     }
@@ -1071,15 +1072,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void verifyRatingsInDetailsFeaturedArea(String rating, String dictionaryKey, SoftAssert sa){
         LOGGER.info("Verifying Ratings in featured area");
         Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
-        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " rating was not found on movie details page featured area.");
+        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on details page featured area.");
     }
 
     public void validateRatingsInDetailsTab(String rating, String dictionaryKey, SoftAssert sa) {
-        LOGGER.info("Verifying Ratings in detail's tab");
+        LOGGER.info("Verifying Ratings in details tab");
         if(!getDetailsTab().isPresent()) {
             swipe(getDetailsTab(), 2);
         }
         getDetailsTab().click();
-        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " rating was not found on  details tab area");
+        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on details tab area");
     }
 }

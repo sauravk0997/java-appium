@@ -12,5 +12,4 @@ public class DisneyPlusNonUSRatingsKCCTest extends DisneyPlusRatingsBase {
         ratingsSetup(KCC_12, KOREAN_LANG, KOREA_LOCALE);
         confirmRegionalRatingsDisplays(KCC_12, DictionaryKeys.RATING_KCC_12.getText());
     }
-
 }

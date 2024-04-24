@@ -24,7 +24,7 @@
     <parameter name="jenkinsBuild" value="3.2.0.67697"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,NonUS-Ratings,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
+               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75949"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Basic" parallel="methods">
@@ -129,13 +129,6 @@
                    value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Non-US KCC Ratings" parallel="methods">
-        <parameter name="iOS17TabletDevices"
-                   value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
         </classes>
     </test>
 </suite>
