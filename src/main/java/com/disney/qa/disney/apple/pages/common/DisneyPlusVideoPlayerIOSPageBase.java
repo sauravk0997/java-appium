@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
@@ -578,5 +579,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         PAUSE,
         RESTART,
         REWIND
+    }
+
+    public void validateRatingsOnPlayer(String rating, String validateRatingsOnPlayer, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+        detailsPage.getPlayButton().click();
+        sa.assertTrue(isRatingPresent(validateRatingsOnPlayer), rating + " Rating was not found on movie video player.");
+        clickBackButton();
     }
 }
