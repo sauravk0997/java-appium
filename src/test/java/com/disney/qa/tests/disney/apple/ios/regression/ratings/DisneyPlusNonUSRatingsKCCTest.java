@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 

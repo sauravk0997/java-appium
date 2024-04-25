@@ -229,13 +229,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
 
         if (testXmlLocale == null || testXmlLanguage == null) {
-            LOGGER.info("CHOON NOPE!");
+            LOGGER.info("No custom lang & locale passed in from test xml.");
             return;
         }
-        LOGGER.info("CHOON!");
         localContext.set(context);
         R.CONFIG.put("locale", testXmlLocale, true);
         R.CONFIG.put("language", testXmlLanguage, true);
+        LOGGER.info("Setting custom lang '{}' & locale '{}' config from test xml.",
+                testXmlLanguage, testXmlLocale);
     }
 
     @BeforeSuite(alwaysRun = true, dependsOnMethods = "customLangLocale")

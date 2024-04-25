@@ -1,18 +1,20 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.config.DisneyConfiguration;
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import io.appium.java_client.remote.MobilePlatform;
 import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
+/**
+ * Base ratings setup class
+ * IF running on CI as a single class level: set lang/locale on Jenkins
+ * IF running on CI as from test XML level: lang/locale is configured from associated test XML parameter
+ * IF running locally: set lang/locale on config level
+ */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
@@ -96,7 +98,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(KCC_12, ratingsDictionaryKey, sa);
 
         //ratings are shown on downloaded content
-
         detailsPage.getEpisodesTab().click();
         if(!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
