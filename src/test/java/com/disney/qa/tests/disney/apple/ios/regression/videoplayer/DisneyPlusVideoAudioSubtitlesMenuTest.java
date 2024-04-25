@@ -73,7 +73,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         disneyPlusVideoPlayerIOSPageBase.isOpened();
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubTitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(ITALIANO), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(ENGLISH), "Selected subtitle language is not as expected");
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(ENGLISH), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
 
         sa.assertAll();
     }
