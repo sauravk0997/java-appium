@@ -312,7 +312,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public void tapAudioSubTitleMenu() {
+    public void tapAudioSubtitleMenu() {
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
                     displayVideoController();
