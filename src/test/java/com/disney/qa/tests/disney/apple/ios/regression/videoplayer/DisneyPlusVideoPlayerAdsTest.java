@@ -25,7 +25,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String MS_MARVEL = "Ms. Marvel";
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
-    private static final double SCRUB_PERCENTAGE_FIFTY = 50;
     private static final String FRANCAIS = "Français";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
@@ -56,7 +55,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(SPIDERMAN_THREE, sa);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
     }
