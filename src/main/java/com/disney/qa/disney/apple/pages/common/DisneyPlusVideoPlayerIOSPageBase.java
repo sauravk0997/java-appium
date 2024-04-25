@@ -565,7 +565,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase waitForAdToCompleteIfPresent() {
         int polling;
-        displayVideoController();
         ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
             String[] adTime = adTimeBadge.getText().split(":");
