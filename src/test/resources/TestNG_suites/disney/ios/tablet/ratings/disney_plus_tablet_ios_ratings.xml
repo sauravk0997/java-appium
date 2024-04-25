@@ -15,10 +15,6 @@
     <parameter name="capabilities"
                value="platformName=iOS;deviceType=Tablet;deviceName=ANY;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="choiceParam::locale::Locale to run"
-               value=",AD,AL,AR,AT,BA,BE,BG,BR,CA,CK,CH,CX,CZ,DE,DK,EE,ES,FI,FR,GB,GI,GR,GU,HK,HR,HU,IE,IS,IT,JP,KR,LI,LT,LU,LV,ME,MH,MK,MT,MX,NL,NO,PF,PL,PT,RO,RS,SE,SG,SI,SJ,SK,SM,SX,TR,TW,US"/>
-    <parameter name="choiceParam::language::Language to run"
-               value=",cs,da,de,el,en,es,fi,fr,hu,it,ja,ko,nl,no,pl,pt,ro,sk,sv,tr,zh"/>
     <parameter name="overrideFields" value="capabilities.locale=${locale},capabilities.language=${language},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Group" value="NonUS-Ratings"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
