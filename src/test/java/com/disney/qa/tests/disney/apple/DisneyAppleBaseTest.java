@@ -49,10 +49,8 @@ import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
 
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
@@ -225,6 +223,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @BeforeSuite(alwaysRun = true)
     public void customLangLocale(ITestContext context) {
+        localContext.set(context);
         String testXmlLocale = context.getCurrentXmlTest().getParameter("locale");
         String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
 
@@ -232,7 +231,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             LOGGER.info("No custom lang & locale passed in from test xml.");
             return;
         }
-        localContext.set(context);
         R.CONFIG.put("locale", testXmlLocale, true);
         R.CONFIG.put("language", testXmlLanguage, true);
         LOGGER.info("Setting custom lang '{}' & locale '{}' config from test xml.",
