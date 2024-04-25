@@ -581,9 +581,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         REWIND
     }
 
-    public void validateRatingsOnPlayer(String rating, String dictionaryKey, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+    public void validateRatingsOnPlayer(String rating, String validateRatingsOnPlayer, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on movie video player.");
+        sa.assertTrue(isRatingPresent(validateRatingsOnPlayer), rating + " Rating was not found on movie video player.");
         clickBackButton();
     }
 }

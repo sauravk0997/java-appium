@@ -1069,18 +1069,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
     }
 
-    public void verifyRatingsInDetailsFeaturedArea(String rating, String dictionaryKey, SoftAssert sa){
+    public void verifyRatingsInDetailsFeaturedArea(String rating, String ratingsDictionaryKey, SoftAssert sa){
         LOGGER.info("Verifying Ratings in featured area");
         Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
-        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on details page featured area.");
+        sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on details page featured area.");
     }
 
-    public void validateRatingsInDetailsTab(String rating, String dictionaryKey, SoftAssert sa) {
+    public void validateRatingsInDetailsTab(String rating, String ratingsDictionaryKey, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in details tab");
         if(!getDetailsTab().isPresent()) {
             swipe(getDetailsTab(), 2);
         }
         getDetailsTab().click();
-        sa.assertTrue(isRatingPresent(dictionaryKey), rating + " Rating was not found on details tab area");
+        sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on details tab area");
     }
 }
