@@ -18,7 +18,10 @@ import java.util.*;
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
+    static final String KCC_7 = "7+";
     static final String KCC_12 = "12+";
+    static final String KCC_15 = "15+";
+    static final String KCC_19 = "19+";
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
 
@@ -51,7 +54,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String contentType : contentFilter) {
             Map<String, String> item =
                     getContentApiChecker().findMediaByRating(rating, lang, locale, contentType, titles);
-
+            if (item.isEmpty()) {
+                continue;
+            }
             if (!item.get(rating).isEmpty()) {
                 LOGGER.info("Found rating {} content for filer type {}.", rating, contentType);
                 titles.add(item.get(rating));
@@ -93,9 +98,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
 
-        detailsPage.verifyRatingsInDetailsFeaturedArea(KCC_12, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(KCC_12, ratingsDictionaryKey, sa, detailsPage);
-        detailsPage.validateRatingsInDetailsTab(KCC_12, ratingsDictionaryKey, sa);
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
 
         //ratings are shown on downloaded content
         detailsPage.getEpisodesTab().click();
@@ -122,9 +127,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
 
-        detailsPage.verifyRatingsInDetailsFeaturedArea(KCC_12, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(KCC_12, ratingsDictionaryKey, sa, detailsPage);
-        detailsPage.validateRatingsInDetailsTab(KCC_12, ratingsDictionaryKey, sa);
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
 
         //ratings are shown on downloaded content
         if(!detailsPage.getMovieDownloadButton().isPresent()) {
