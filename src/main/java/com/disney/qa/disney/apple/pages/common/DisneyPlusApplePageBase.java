@@ -318,8 +318,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[label CONTAINS '%s']")
-    protected ExtendedWebElement customHyperlinkContainsLabel;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);

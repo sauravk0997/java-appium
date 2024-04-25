@@ -38,7 +38,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedFocused")
     protected ExtendedWebElement uncheckedBox;
 
-
     public DisneyPlusSignUpIOSPageBase(WebDriver driver) {
 
         super(driver);
