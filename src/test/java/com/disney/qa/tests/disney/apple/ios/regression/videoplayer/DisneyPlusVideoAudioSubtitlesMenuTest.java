@@ -39,14 +39,14 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(subtitlePage.isAudioHeadingPresent(), "Audio heading is not present");
         sa.assertTrue(subtitlePage.isSubtitleHeadingPresent(), "Subtitle Heading is not present");
 
-        sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), "checkmark was not present for selected lang");
+        sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(OFF), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + OFF);
 
         subtitlePage.tapCloseButton();
         disneyPlusVideoPlayerIOSPageBase.isOpened();
 
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubTitleMenu();
-        sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), "checkmark was not present for selected lang");
+        sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(OFF), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + OFF);
 
         sa.assertAll();
