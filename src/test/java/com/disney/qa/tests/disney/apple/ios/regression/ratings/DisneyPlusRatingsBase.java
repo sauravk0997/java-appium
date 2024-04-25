@@ -54,7 +54,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String contentType : contentFilter) {
             Map<String, String> item =
                     getContentApiChecker().findMediaByRating(rating, lang, locale, contentType, titles);
-
+            if (item.isEmpty()) {
+                continue;
+            }
             if (!item.get(rating).isEmpty()) {
                 LOGGER.info("Found rating {} content for filer type {}.", rating, contentType);
                 titles.add(item.get(rating));
