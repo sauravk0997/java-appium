@@ -47,9 +47,11 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
 
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
@@ -78,6 +80,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
+    private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.CUSTOM_LANG_LOCALE)
+    public void customLangLocale(ITestContext context) {
+        localContext.set(context);
+        String testXmlLocale = context.getCurrentXmlTest().getParameter("locale");
+        String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
+        R.CONFIG.put("locale", testXmlLocale, true);
+        R.CONFIG.put("language", testXmlLanguage, true);
+    }
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
         protected DisneyContentApiChecker initialize() {
