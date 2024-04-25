@@ -125,8 +125,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.verifyRatingsInDetailsFeaturedArea(KCC_12, ratingsDictionaryKey, sa);
         videoPlayer.validateRatingsOnPlayer(KCC_12, ratingsDictionaryKey, sa, detailsPage);
         detailsPage.validateRatingsInDetailsTab(KCC_12, ratingsDictionaryKey, sa);
-        //ratings are shown on downloaded content
 
+        //ratings are shown on downloaded content
         if(!detailsPage.getMovieDownloadButton().isPresent()) {
             swipe(detailsPage.getMovieDownloadButton());
         }
