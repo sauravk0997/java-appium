@@ -111,7 +111,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void openSubscriberAgreement() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+        pressByElement(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)),1);
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
@@ -144,7 +144,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
         return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
     }
-    
+
     private void openHyperlink(ExtendedWebElement link) {
         if (link.getSize().getWidth() > 150) {
             clickElementAtLocation(link, 10, 80);
