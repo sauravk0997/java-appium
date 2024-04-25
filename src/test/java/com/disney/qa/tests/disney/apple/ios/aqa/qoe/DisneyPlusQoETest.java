@@ -164,7 +164,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         DisneyAccount account = loginAndStartPlayback();
         //Enable subtitle
         DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        videoPlayerPage.tapAudioSubTitleMenu();
+        videoPlayerPage.tapAudioSubtitleMenu();
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = new DisneyPlusAudioSubtitleIOSPageBase(getDriver());
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "checkmark was not present for selected lang");
@@ -172,7 +172,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
         subtitlePage.tapCloseButton();
         //Verify that subtitle is enabled
         videoPlayerPage.isOpened();
-        videoPlayerPage.tapAudioSubTitleMenu();
+        videoPlayerPage.tapAudioSubtitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs("English"), "Checkmark was not present for the selected lang");
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs("English [CC]"), "Selected subtitle language is not as expected");
         subtitlePage.tapCloseButton();

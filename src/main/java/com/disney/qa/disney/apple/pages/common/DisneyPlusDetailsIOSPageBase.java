@@ -1069,6 +1069,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
     }
 
+
+    /**
+     * To be used with continually navigating back and forth between details and player of same content.
+     */
+    public void clickPlayOrContinue() {
+        if (getPlayButton().isPresent()) {
+            clickPlayButton();
+        } else {
+            clickContinueButton();
+        }
+    }
+
     public void verifyRatingsInDetailsFeaturedArea(String rating, String ratingsDictionaryKey, SoftAssert sa){
         LOGGER.info("Verifying Ratings in featured area");
         Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
