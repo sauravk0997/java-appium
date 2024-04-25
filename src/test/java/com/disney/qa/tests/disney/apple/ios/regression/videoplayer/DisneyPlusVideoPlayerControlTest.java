@@ -23,6 +23,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPa
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -232,6 +233,31 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
+    @Test(description = "VOD Player - RW & FW - Play State", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(SHORT_SERIES);
+
+        int remainingTimeBeforeFwd = videoPlayer.getRemainingTime();
+        int remainingTimeAfterFwdTapInPlayMode = videoPlayer.tapForwardButton(1).getRemainingTime();
+        sa.assertTrue((remainingTimeBeforeFwd - remainingTimeAfterFwdTapInPlayMode) > 10,
+                "Remaining time in play mode before fwd tap " + remainingTimeBeforeFwd +
+                        " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPlayMode);
+
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        videoPlayer.waitForVideoToStart();
+        int remainingTimeBeforeRewind = videoPlayer.getRemainingTime();
+        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(3).getRemainingTime();
+        int remainingTimeDifferenceWhileRewind = remainingTimeAfterRewindTapInPlayMode - remainingTimeBeforeRewind;
+        sa.assertTrue(remainingTimeDifferenceWhileRewind <= 30 && remainingTimeDifferenceWhileRewind > 0,
+                "Remaining time in play mode time after rewind tap " + remainingTimeAfterRewindTapInPlayMode +
+                        " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
+
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     public void verifyScrubberElementsOnPlayer() {
@@ -255,7 +281,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int remainingTime = videoPlayer.getRemainingTime();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
-        
+
         videoPlayer.scrubToPlaybackPercentage(20);
         int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
         int elapsedTimeAfterScrub = videoPlayer.getCurrentTime();

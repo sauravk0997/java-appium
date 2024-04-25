@@ -18,11 +18,11 @@ public class DisneyPlusTabletMoreMenuIOSPage extends DisneyPlusMoreMenuIOSPage {
 
 	@Override
 	public boolean isDeviceStorageCorrectlyDisplayed() {
-		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPad %s", getDictionary().getValueAfterPlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
+		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPad %s", getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText())).get(0)));
 		if(storageText.isElementPresent()) {
-			return storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
-					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
-					&& storageText.getText().contains(getDictionary().getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+			return storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())).get(0))
+					&& storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())).get(0))
+					&& storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())).get(0));
 		} else {
 			return false;
 		}
