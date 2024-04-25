@@ -123,8 +123,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement cell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`]")
     protected ExtendedWebElement customHyperlinkByLabel;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label CONTAINS '%s'`]")
-    protected ExtendedWebElement customHyperlinkContainsLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`][%s]")
     protected ExtendedWebElement typeLinkRowLabel;
     @ExtendedFindBy(iosPredicate = "label == \"Address\"")
