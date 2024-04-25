@@ -127,4 +127,13 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Non-US Ratings" parallel="methods">
+        <parameter name="locale" value="KR"/>
+        <parameter name="language" value="ko"/>
+        <parameter name="iOS17TabletDevices"
+                   value="iPad_Mini_5_Gen,iPad_Gen_9,iPad_Air_4_Gen,iPad_8_Gen_1"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+        </classes>
+    </test>
 </suite>
