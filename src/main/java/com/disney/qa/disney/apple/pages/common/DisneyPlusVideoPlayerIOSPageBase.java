@@ -313,8 +313,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public void tapAudioSubTitleMenu() {
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "subtitle menu overlay didn't open")
+    public void tapAudioSubtitleMenu() {
+        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
                     displayVideoController();
                     audioSubtitleMenuButton.click();
@@ -628,9 +628,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         REWIND
     }
 
-    public void validateRatingsOnPlayer(String rating, String validateRatingsOnPlayer, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+    public void validateRatingsOnPlayer(String rating, String ratingsDictionaryKey, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-        sa.assertTrue(isRatingPresent(validateRatingsOnPlayer), rating + " Rating was not found on movie video player.");
+        sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on movie video player.");
         clickBackButton();
     }
 }
