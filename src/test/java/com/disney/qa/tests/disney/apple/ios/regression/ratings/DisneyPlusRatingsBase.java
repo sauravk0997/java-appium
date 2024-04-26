@@ -2,17 +2,31 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import org.testng.SkipException;
+import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
+/**
+ * Base ratings setup class
+ * IF running on CI as a single class level: set lang/locale on Jenkins
+ * IF running on CI as from test XML level: lang/locale is configured from associated test XML parameter
+ * IF running locally: set lang/locale on config level
+ */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
+    static final String KCC_7 = "7+";
+    static final String KCC_12 = "12+";
+    static final String KCC_15 = "15+";
+    static final String KCC_19 = "19+";
+    static final String KOREA_LOCALE = "KR";
+    static final String KOREAN_LANG = "KO";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
-        setDesiredContentRating(ratingValue, lang, locale);
+        getDesiredRatingContent(ratingValue, lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -30,7 +44,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDesiredContentRating(String rating, String lang, String locale) {
+    private void getDesiredRatingContent(String rating, String lang, String locale) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         List<String> titles = new ArrayList<>();
         String movieFilter = "program";
@@ -40,7 +54,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String contentType : contentFilter) {
             Map<String, String> item =
                     getContentApiChecker().findMediaByRating(rating, lang, locale, contentType, titles);
-
+            if (item.isEmpty()) {
+                continue;
+            }
             if (!item.get(rating).isEmpty()) {
                 LOGGER.info("Found rating {} content for filer type {}.", rating, contentType);
                 titles.add(item.get(rating));
@@ -58,5 +74,70 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         //no content found for desired rating value and skipping test
         throw new SkipException(
                 String.format("Skipping test for rating '%s' as API returned no content.", rating));
+    }
+
+    public void confirmRegionalRatingsDisplays(String rating, String ratingsDictionaryKey) {
+        if (isMovie) {
+            LOGGER.info("Testing against Movie content.");
+             validateMovieContent(rating, ratingsDictionaryKey);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating, ratingsDictionaryKey);
+        }
+    }
+
+    public void validateSeriesContent(String rating, String ratingsDictionaryKey) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String contentTitle = CONTENT_TITLE.get(0);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
+
+        //ratings are shown on downloaded content
+        detailsPage.getEpisodesTab().click();
+        if(!detailsPage.getDownloadAllSeasonButton().isPresent()) {
+            swipe(detailsPage.getDownloadAllSeasonButton());
+        }
+        pressByElement(detailsPage.getDownloadAllSeasonButton(), 1);
+        detailsPage.clickDefaultAlertBtn();
+        detailsPage.getDownloadNav().click();
+        downloads.getStaticTextByLabelContains(contentTitle).click();
+        sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating  + " Rating was not found on series downloads.");
+        sa.assertAll();
+    }
+
+    public void validateMovieContent(String rating, String ratingsDictionaryKey) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String contentTitle = CONTENT_TITLE.get(0);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
+
+        //ratings are shown on downloaded content
+        if(!detailsPage.getMovieDownloadButton().isPresent()) {
+            swipe(detailsPage.getMovieDownloadButton());
+        }
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.getDownloadNav().click();
+        sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating  + " Rating was not found on movie downloads.");
+        sa.assertAll();
     }
 }

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
@@ -311,8 +312,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public void tapAudioSubTitleMenu() {
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "subtitle menu overlay didn't open")
+    public void tapAudioSubtitleMenu() {
+        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
                     displayVideoController();
                     audioSubtitleMenuButton.click();
@@ -578,5 +579,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         PAUSE,
         RESTART,
         REWIND
+    }
+
+    public void validateRatingsOnPlayer(String rating, String ratingsDictionaryKey, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+        detailsPage.getPlayButton().click();
+        sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on movie video player.");
+        clickBackButton();
     }
 }
