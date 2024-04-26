@@ -378,9 +378,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return dimension.getHeight();
     }
 
-    public boolean isAdBadgeLabelPresent() {
+    public boolean isAdBadgeLabelPresent(int...timeout) {
+        int waitTime = 20;
+        if (timeout.length > 0) {
+            waitTime = timeout[0];
+        }
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel).isPresent(SHORT_TIMEOUT);
+        return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
     }
 
     /**
