@@ -379,7 +379,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAdBadgeLabelPresent(int...timeout) {
-        int waitTime = 20;
+        int waitTime = 10;
         if (timeout.length > 0) {
             waitTime = timeout[0];
         }
