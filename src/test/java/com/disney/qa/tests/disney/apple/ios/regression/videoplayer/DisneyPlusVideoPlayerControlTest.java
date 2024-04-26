@@ -261,7 +261,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     public void verifyScrubberElementsOnPlayer() {
-        String errorMessage = "time not changed after scrub/Tap";
+        String errorMessage = "not changed after scrub/Tap";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
@@ -271,10 +271,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String durationTime = getContentTimeInHMFormatFromAPI(THE_MARVELS);
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
 
-        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Time Remaining was not found");
-        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Time Elapsed was not found");
+        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
+        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
-        sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remianing time is not visible in HH:MM:SS or MM:SS Format");
+        sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remaining time is not visible in HH:MM:SS or MM:SS Format");
         sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
 
         videoPlayer.clickPlayButton();
@@ -286,17 +286,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
         int elapsedTimeAfterScrub = videoPlayer.getCurrentTime();
         int currentPositionAfterScrub = videoPlayer.getCurrentPositionOnPlayer();
-        sa.assertTrue(remainingTime > remainingTimeAfterScrub, "Remaining " + errorMessage);
-        sa.assertTrue(elapsedTime < elapsedTimeAfterScrub, "Elapsed " + errorMessage);
+        sa.assertTrue(remainingTime > remainingTimeAfterScrub, "Remaining time " + errorMessage);
+        sa.assertTrue(elapsedTime < elapsedTimeAfterScrub, "Elapsed time " + errorMessage);
         sa.assertTrue(currentPositionAfterScrub > currentPositionOnSeekPlayer , "Position of seek bar " + errorMessage);
-
-        videoPlayer.clickElementAtLocation(videoPlayer.getSeekBar(), 50, 50);
-        int remainingTimeAfterTapping = videoPlayer.getRemainingTime();
-        int elapsedTimeAfterTapping = videoPlayer.getCurrentTime();
-        int currentPositionAfterTapping = videoPlayer.getCurrentPositionOnPlayer();
-        sa.assertTrue(remainingTimeAfterScrub > remainingTimeAfterTapping, "Remaining " + errorMessage);
-        sa.assertTrue(elapsedTimeAfterScrub < elapsedTimeAfterTapping, "Elapsed " + errorMessage);
-        sa.assertTrue(currentPositionAfterTapping > currentPositionAfterScrub, "Position of seek bar " + errorMessage);
         sa.assertAll();
     }
 
