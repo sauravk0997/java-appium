@@ -224,6 +224,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     @BeforeSuite(alwaysRun = true)
     public void customLangLocale(ITestContext context) {
         localContext.set(context);
+        resetLocaleLanguage();
         String testXmlLocale = context.getCurrentXmlTest().getParameter("locale");
         String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
 
@@ -273,6 +274,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public void clearDisneyAppleBaseTest() {
         DISNEY_ACCOUNT.remove();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+    }
+
+    private static void resetLocaleLanguage() {
+        LOGGER.info("Resetting language to 'en' and locale to 'US.");
+        R.CONFIG.put("locale", "US");
+        R.CONFIG.put("language", "en");
     }
 
     public static String getCountry() {

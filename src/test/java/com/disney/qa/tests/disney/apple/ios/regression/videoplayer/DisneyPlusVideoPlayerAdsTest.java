@@ -38,7 +38,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.AUDIO_SUBTITLE_BUTTON),
                 "Audio Subtitle button was not found.");
 
-        videoPlayer.tapAudioSubTitleMenu();
+        videoPlayer.tapAudioSubtitleMenu();
         sa.assertTrue(audioSubtitlePage.isOpened(), "Audio / Subtitle menu was not opened during first ad.");
         audioSubtitlePage.chooseAudioLanguage(DEUTSCH);
         audioSubtitlePage.chooseSubtitlesLanguage(DEUTSCH);

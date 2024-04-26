@@ -58,7 +58,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
 
-        videoPlayer.tapAudioSubTitleMenu();
+        videoPlayer.tapAudioSubtitleMenu();
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
 
         subtitlePage.chooseSubtitlesLanguage("English");
