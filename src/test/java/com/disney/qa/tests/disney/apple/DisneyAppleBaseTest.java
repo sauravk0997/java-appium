@@ -272,7 +272,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
         DISNEY_ACCOUNT.remove();
+        resetLocaleLanguage();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+    }
+
+    private static void resetLocaleLanguage() {
+        R.CONFIG.put("locale", "US");
+        R.CONFIG.put("language", "en");
     }
 
     public static String getCountry() {
