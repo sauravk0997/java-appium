@@ -41,10 +41,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyAccount testaccont = getAccount();
-        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB,getAccount().getProfileLang(), BABY_YODA, true, false);
+        DisneyAccount testAccount = getAccount();
+        getAccountApi().addProfile(testAccount, KIDS_PROFILE, KIDS_DOB, testAccount.getProfileLang(), BABY_YODA, true, false);
 
-        setAppToHomeScreen(testaccont, DEFAULT_PROFILE);
+        setAppToHomeScreen(testAccount, DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfiles.clickEditModeProfile(KIDS_PROFILE);
