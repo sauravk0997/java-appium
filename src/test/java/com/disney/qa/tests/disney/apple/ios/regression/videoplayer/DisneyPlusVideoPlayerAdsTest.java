@@ -52,10 +52,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SPIDERMAN_THREE, sa);
+        loginAndStartPlayback(MS_MARVEL, sa);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
-        videoPlayer.waitForAdToCompleteIfPresent();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY, 2);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
     }
