@@ -18,12 +18,17 @@ import java.util.*;
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
+
+    static final String APAC_G = "G";
     static final String KCC_7 = "7+";
     static final String KCC_12 = "12+";
     static final String KCC_15 = "15+";
     static final String KCC_19 = "19+";
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
+
+    static final String JAPAN_LOCALE = "JP";
+    static final String JAPAN_LANG = "JP";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         getDesiredRatingContent(ratingValue, lang, locale);
