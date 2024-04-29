@@ -36,7 +36,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Edit Profile - U13 Profile - Autoplay OFF / Hide Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyU13AutoplayAndBackgroundVideoOff() {
+    public void verifyU13AutoplayAndNoGenderField() {
         DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
