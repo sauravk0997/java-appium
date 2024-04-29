@@ -125,6 +125,7 @@
         <parameter name="language" value="ko"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
 </suite>

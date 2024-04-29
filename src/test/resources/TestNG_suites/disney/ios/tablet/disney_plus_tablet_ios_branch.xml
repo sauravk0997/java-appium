@@ -102,6 +102,7 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Non-US Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
 </suite>
