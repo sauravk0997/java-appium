@@ -57,8 +57,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(), brandPage.getBrand(brand) + "Brand logo image is not present.");
         brandPage.clickOnCollectionBackButton();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "Home page did't open after clicking the back button on the Brand page");
-
+        sa.assertTrue(homePage.isOpened(), "Home page didn't open after clicking the back button on the Brand page");
         sa.assertAll();
     }
 }
