@@ -277,12 +277,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remaining time is not visible in HH:MM:SS or MM:SS Format");
         sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
 
-        videoPlayer.clickPlayButton();
         int remainingTime = videoPlayer.getRemainingTime();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
 
-        videoPlayer.scrubToPlaybackPercentage(20);
+        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(), "Playhead position not representing the current point in time with respect to the total length of the video");
+
+        //video player already scrubbed 50 % in above method
         int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
         int elapsedTimeAfterScrub = videoPlayer.getCurrentTime();
         int currentPositionAfterScrub = videoPlayer.getCurrentPositionOnPlayer();
