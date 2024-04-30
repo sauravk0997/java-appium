@@ -81,7 +81,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             localContext.set(context);
-            limitTabletDevicePoolToIOS17(context);
         }
         getDriver();
         WebDriverConfiguration.getZebrunnerCapability("deviceType").ifPresent(type -> {
@@ -101,21 +100,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new SkipException("There was a problem with the setup: " + e.getMessage());
         }
         handleAlert();
-    }
-
-    private void limitTabletDevicePoolToIOS17(ITestContext context) {
-        LOGGER.info("Checking to limit tablet player tests to iOS 17...");
-        if (context.getCurrentXmlTest().getParameter("jenkinsJobName") == null ||
-                (!context.getCurrentXmlTest().getName().contains(TEST_XML_PLAYER_OBJECT)
-                        && context.getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES) == null)) {
-            LOGGER.info("Bypassing setting tablet player tests to iOS 17.");
-            return;
-        }
-
-        LOGGER.warn("Limiting tablet device pool to iOS 17 only...");
-        List<String> OS17devices = Collections.singletonList(localContext.get().getCurrentXmlTest().getParameter(TABLET_IOS_17_DEVICES));
-        LOGGER.info("Setting tablet devices to custom list: {}", OS17devices);
-        R.CONFIG.put("capabilities.deviceName", String.join(",", OS17devices), true);
     }
 
     @Getter

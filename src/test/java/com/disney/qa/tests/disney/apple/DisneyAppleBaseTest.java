@@ -47,7 +47,6 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -79,7 +78,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
-    private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
 
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
@@ -222,22 +220,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     @BeforeSuite(alwaysRun = true)
-    public void customLangLocale(ITestContext context) {
-        localContext.set(context);
-        String testXmlLocale = context.getCurrentXmlTest().getParameter("locale");
-        String testXmlLanguage = context.getCurrentXmlTest().getParameter("language");
-
-        if (testXmlLocale == null || testXmlLanguage == null) {
-            LOGGER.info("No custom lang & locale passed in from test xml.");
-            return;
-        }
-        R.CONFIG.put("locale", testXmlLocale, true);
-        R.CONFIG.put("language", testXmlLanguage, true);
-        LOGGER.info("Setting custom lang '{}' & locale '{}' config from test xml.",
-                testXmlLanguage, testXmlLocale);
-    }
-
-    @BeforeSuite(alwaysRun = true, dependsOnMethods = "customLangLocale")
     public void initPageDictionary() {
         //todo remove this configuration method
         DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
@@ -272,13 +254,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
         DISNEY_ACCOUNT.remove();
-        resetLocaleLanguage();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
-    }
-
-    private static void resetLocaleLanguage() {
-        R.CONFIG.put("locale", "US");
-        R.CONFIG.put("language", "en");
     }
 
     public static String getCountry() {
