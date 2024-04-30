@@ -131,8 +131,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         //ratings are shown on downloaded content
-        if(!detailsPage.getMovieDownloadButton().isElementPresent()) {
-            swipe(detailsPage.getMovieDownloadButton(),3,500);
+        if (!detailsPage.getMovieDownloadButton().isPresent()) {
+            swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
