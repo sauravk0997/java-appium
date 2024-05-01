@@ -76,6 +76,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SET_TO_FALSE = "Set to: false";
     private static final String APPLE = "apple";
     private static final String PARTNER = "disney";
+    private static final String APAC = "apac";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -323,8 +324,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
-
-    private static final String APAC = "apac";
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
