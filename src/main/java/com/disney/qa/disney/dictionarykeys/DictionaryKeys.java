@@ -136,6 +136,7 @@ public enum DictionaryKeys {
     DETAILS_NEGATIVE_STEREOTYPE_ADVISORY("details_negative_stereotype_advisory_full"),
     DETAILS_IMAX_ENHANCED_PROMO_LABEL("promo_imax_header"),
     DETAILS_IMAX_ENHANCED_PROMO_SUBHEADER("promo_imax_subheader"),
+    DETAILS_RATING("detail_rating"),
     DETAILS_SEASON_RATING("details_season_rating"),
     DETAILS_TOTAL_SEASON("detail_total_season"),
     DETAILS_TOTAL_SEASONS("detail_total_seasons"),

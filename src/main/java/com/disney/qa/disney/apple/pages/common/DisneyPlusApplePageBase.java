@@ -324,6 +324,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
+    private static String APAC = "apac";
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1434,7 +1436,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isRatingPresent(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains("apac")) {
+        if(ratingsDictionaryKey.contains(APAC)) {
             return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey)).isPresent();
         } else {
             return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey)).isPresent();
