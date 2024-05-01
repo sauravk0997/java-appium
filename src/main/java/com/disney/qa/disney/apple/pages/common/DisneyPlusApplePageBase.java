@@ -324,7 +324,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
-    private static String APAC = "apac";
+    private static final String APAC = "apac";
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
