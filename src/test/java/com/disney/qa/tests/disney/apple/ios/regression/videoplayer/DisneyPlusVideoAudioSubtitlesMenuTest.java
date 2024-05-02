@@ -10,7 +10,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
@@ -38,17 +40,17 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");
         sa.assertTrue(subtitlePage.isAudioHeadingPresent(), "Audio heading is not present");
         sa.assertTrue(subtitlePage.isSubtitleHeadingPresent(), "Subtitle Heading is not present");
-
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(OFF), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + OFF);
+
+        verifyAudioLanguageIsInOrder(sa);
+        verifyAudioSubtitleIsInOrder(sa);
 
         subtitlePage.tapCloseButton();
         disneyPlusVideoPlayerIOSPageBase.isOpened();
-
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(OFF), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + OFF);
-
         sa.assertAll();
     }
 
@@ -165,5 +167,38 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         sa.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.tapAudioSubtitleMenu();
+    }
+
+    public void verifyAudioLanguageIsInOrder(SoftAssert sa){
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
+        List<String> audioLanguageValue = subtitlePage.getAudioLanguagesFromUI();
+        IntStream.range(0, getAudioLanguage().size()).forEach(i -> sa.assertTrue(getAudioLanguage().get(i).equals(audioLanguageValue.get(i))));
+    }
+
+    public void verifyAudioSubtitleIsInOrder(SoftAssert sa){
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
+        List<String> audioSubtitleValue = subtitlePage.getAudioSubtitlesFromUI();
+        IntStream.range(0, getSubTitlesLanguage().size()).forEach(i -> sa.assertTrue(getSubTitlesLanguage().get(i).equals(audioSubtitleValue.get(i))));
+    }
+
+    protected ArrayList<String> getAudioLanguage() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Chinese (中文)");
+        contentList.add("Chinese (粵語)");
+        contentList.add("Dansk");
+        contentList.add("Deutsch");
+        contentList.add("English");
+        contentList.add("Español");
+        return contentList;
+    }
+
+    protected ArrayList<String> getSubTitlesLanguage() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Chinese (粵語)");
+        contentList.add("Chinese (繁體)");
+        contentList.add("English [CC]");
+        contentList.add("Español (Latinoamérica) [CC]");
+        contentList.add("Magyar");
+        return contentList;
     }
 }

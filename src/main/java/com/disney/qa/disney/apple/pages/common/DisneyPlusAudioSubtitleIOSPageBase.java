@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase {
@@ -42,6 +45,13 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     //This will return the immediate preceding sibling in view hierarchy
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
     private ExtendedWebElement audioSubtitleCheckBox;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == \"audioCollectionView\"`]/XCUIElementTypeCell")
+    private ExtendedWebElement audioLanguageCell;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == \"subtitleCollectionView\"`]/XCUIElementTypeCell")
+    private ExtendedWebElement audioSubtitleCell;
+
 
     //FUNCTIONS
     public DisneyPlusAudioSubtitleIOSPageBase(WebDriver driver) {
@@ -100,5 +110,20 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
         ExtendedWebElement element = languageCellCheckmark.format(language);
         swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
         return element.getAttribute("label").equalsIgnoreCase("checkmark");
+    }
+
+    public List<String> getAudioLanguagesFromUI(){
+        List<String> audioLanguageValue = new ArrayList<>();
+        List<ExtendedWebElement> audioLanguages = findExtendedWebElements(audioLanguageCell.getBy());
+        IntStream.range(0, audioLanguages.size()).forEach(i -> audioLanguageValue.add(audioLanguages.get(i).getText()));
+        return audioLanguageValue;
+    }
+
+    public List<String> getAudioSubtitlesFromUI(){
+        List<String> audioSubtitleValue = new ArrayList<>();
+        List<ExtendedWebElement> audioSubtitles = findExtendedWebElements(audioSubtitleCell.getBy());
+        IntStream.range(0, audioSubtitles.size()).forEach(i -> audioSubtitleValue.add(audioSubtitles.get(i).getText()));
+        audioSubtitleValue.remove(0);
+        return audioSubtitleValue;
     }
 }
