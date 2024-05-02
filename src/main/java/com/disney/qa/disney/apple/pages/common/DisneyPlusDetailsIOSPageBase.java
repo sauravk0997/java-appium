@@ -1096,6 +1096,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);
         }
+        pause(5);
         sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on details tab area");
     }
 }
