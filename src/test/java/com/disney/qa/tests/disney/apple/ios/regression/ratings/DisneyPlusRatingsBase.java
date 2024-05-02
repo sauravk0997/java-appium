@@ -18,12 +18,15 @@ import java.util.*;
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
+    static final String APAC_G = "G";
     static final String KCC_7 = "7+";
     static final String KCC_12 = "12+";
     static final String KCC_15 = "15+";
     static final String KCC_19 = "19+";
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
+    static final String JAPAN_LOCALE = "JP";
+    static final String JAPAN_LANG = "JP";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         getDesiredRatingContent(ratingValue, lang, locale);
@@ -127,17 +130,17 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
 
-        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
-        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
-
         //ratings are shown on downloaded content
-        if(!detailsPage.getMovieDownloadButton().isPresent()) {
-            swipe(detailsPage.getMovieDownloadButton());
+        if (!detailsPage.getMovieDownloadButton().isPresent()) {
+            swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
         sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating  + " Rating was not found on movie downloads.");
+        homePage.clickSearchIcon();
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
         sa.assertAll();
     }
 }
