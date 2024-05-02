@@ -63,7 +63,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String ENGLISH_AUDIO_DESCRIPTION = "English [Audio Description]";
     public static final String OFF = "Off";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String DEVICE_TYPE = "capabilities.deviceType";
+    public static final String DEVICE_TYPE = "capabilities.deviceType";
     private static final String TABLET = "Tablet";
     protected static final String USER_PROFILE = "user_profile";
     public static final String SEASON_NUMBER = "seasonNumber";
@@ -76,6 +76,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SET_TO_FALSE = "Set to: false";
     private static final String APPLE = "apple";
     private static final String PARTNER = "disney";
+    private static final String APAC = "apac";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1434,6 +1435,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isRatingPresent(String ratingsDictionaryKey) {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey)).isPresent();
+        if(ratingsDictionaryKey.contains(APAC)) {
+            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey)).isPresent();
+        } else {
+            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey)).isPresent();
+        }
     }
 }
