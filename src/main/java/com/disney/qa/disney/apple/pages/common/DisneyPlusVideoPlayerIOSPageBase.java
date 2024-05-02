@@ -174,17 +174,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase displayVideoController(int...timeout) {
+    public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
-        int waitTime = 15;
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
-        pause(1);
         tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        if (timeout.length > 0) {
-           waitTime = timeout[0];
-        }
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), waitTime);
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Element is not present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
@@ -268,13 +263,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      *
      * @param playbackPercent
      */
-    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent, int...timeout) {
+    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
         LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
-        displayVideoController(timeout);
+        displayVideoController();
         Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int seekBarWidth = seekBar.getSize().getWidth();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController(timeout);
+        displayVideoController();
         dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -571,7 +566,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForAdToCompleteIfPresent(int polling) {
+    public void waitForAdToCompleteIfPresent(int polling) {
         ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         int remainingTime;
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
@@ -582,7 +577,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
