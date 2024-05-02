@@ -626,6 +626,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int seekBarWidth = seekBar.getSize().getWidth();
 
         scrubToPlaybackPercentage(50);
+        waitForVideoToStart();
         int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
         int expectedPosition = (seekBarWidth/2);
         return ((expectedPosition - 30) < currentPositionOnSeekPlayerAfterScrub && (expectedPosition + 30) > currentPositionOnSeekPlayerAfterScrub);
