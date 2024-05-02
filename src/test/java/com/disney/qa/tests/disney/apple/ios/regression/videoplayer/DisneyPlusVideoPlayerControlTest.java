@@ -261,7 +261,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
     public void verifyScrubberElementsOnPlayer() {
-        String errorMessage = "not changed after scrub/Tap";
+        String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);

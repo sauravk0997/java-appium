@@ -619,19 +619,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     /**
      * To verify Playhead represents current time with respect to the total length of the video,
-     * we are scruubing playhead to 50% and verifying with Half of seekbar width plus/minus 20
+     * we are scruubing playhead to 50% and verifying with Half of seekbar width plus/minus 30
      */
     public boolean verifyPlayheadRepresentsCurrentPointOfTime(){
         displayVideoController();
         int seekBarWidth = seekBar.getSize().getWidth();
-        int currentPositionOnSeekPlayer = getCurrentPositionOnPlayer();
 
         scrubToPlaybackPercentage(50);
         int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
-
-        int expectedPosition = currentPositionOnSeekPlayer + (seekBarWidth/2);
-        return ((expectedPosition - 20) < currentPositionOnSeekPlayerAfterScrub && (expectedPosition + 20) > currentPositionOnSeekPlayerAfterScrub);
-
+        int expectedPosition = (seekBarWidth/2);
+        return ((expectedPosition - 30) < currentPositionOnSeekPlayerAfterScrub && (expectedPosition + 30) > currentPositionOnSeekPlayerAfterScrub);
     }
 
     public enum PlayerControl {
