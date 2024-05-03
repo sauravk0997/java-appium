@@ -599,21 +599,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean validateTimeFormat(String time){
-        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$");
-        Pattern timePatternInHMMSS = Pattern.compile("^[0-9]:[0-5][0-9]:[0-5][0-9]$");
-        Pattern timePatternInMMSS = Pattern.compile("^[0-5][0-9]:[0-5][0-9]$");
-        Pattern timePatternInMSS = Pattern.compile("^[0-9]:[0-5][0-9]$");
+        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMMSS = Pattern.compile("^[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMSS = Pattern.compile("^[\\d]:[0-5][\\d]$");
         if(timePatternInHHMMSS.matcher(time).matches()){
             LOGGER.info("Content time is displayed HH:MM:SS format");
             return true;
         }else if(timePatternInHMMSS.matcher(time).matches()){
-            LOGGER.info("Content time is displayed HH:MM:SS format");
+            LOGGER.info("Content time is displayed H:MM:SS format");
             return true;
         } else if(timePatternInMMSS.matcher(time).matches()){
             LOGGER.info("Content time is displayed in MM:SS format");
             return true;
         }else if(timePatternInMSS.matcher(time).matches()){
-            LOGGER.info("Content time is displayed in MM:SS format");
+            LOGGER.info("Content time is displayed in M:SS format");
             return true;
         }else{
             LOGGER.info("Content time is not displayed in correct format");
