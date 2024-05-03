@@ -270,13 +270,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String durationTime = getContentTimeInHMFormatFromAPI(THE_MARVELS);
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
 
-        videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
         sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remaining time is not visible in HH:MM:SS or MM:SS Format");
         sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
 
+        videoPlayer.clickPauseButton();
         int remainingTime = videoPlayer.getRemainingTime();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
