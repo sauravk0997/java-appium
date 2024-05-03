@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -184,6 +185,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         do {
             clickElementAtLocation(playerView, 35, 50);
         } while (attempts++ < 5 && !seekBar.isElementPresent(SHORT_TIMEOUT));
+        if (attempts == 6) {
+            Assert.fail("Seek bar was present and attempts exceeded over 5.");
+        }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
