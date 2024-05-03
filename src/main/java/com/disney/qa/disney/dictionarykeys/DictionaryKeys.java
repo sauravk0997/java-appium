@@ -37,6 +37,7 @@ public enum DictionaryKeys {
     BTN_ACCOUNT_CREATE_PASSWORD_SAVE("button_account_create_password_save"),
     BTN_ACCOUNT_HOLD_UPDATE_PAYMENT("btn_account_hold_update_payment"),
     BTN_ADD_PROFILE("btn_add_profile"),
+    BTN_ADD_PROFILE_SAVE("btn_add_profile_save"),
     BTN_BACK_DIALOG_NOT_NOW("btn_back_dialog_notnow"),
     BTN_CANCEL_SET_PROFILE_ENTRY_PIN("btn_cancel_set_profile_entry_pin"),
     BTN_SET_PROFILE_ENTRY_PIN("btn_set_profile_entry_pin"),
