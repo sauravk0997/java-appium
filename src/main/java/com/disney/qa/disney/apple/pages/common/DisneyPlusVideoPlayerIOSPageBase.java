@@ -267,16 +267,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      *
      * @param playbackPercent
      */
-    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
-        displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController();
-        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
+//    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
+//        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
+//        displayVideoController();
+//        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+//        int seekBarWidth = seekBar.getSize().getWidth();
+//        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+//        displayVideoController();
+//        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
+//        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+//    }
 
     /**
      * Verifies if the given episode title is playing
@@ -617,5 +617,30 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Skipping promo..");
             getSkipPromoButton().click();
         }
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
+        displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        int seekBarWidth = seekBar.getSize().getWidth();
+        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        displayVideoController();
+        dragFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
+//        try {
+//            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT).until(it -> ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
+//            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT).until(it -> !ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
+//        } catch (Exception e) {
+//            LOGGER.info("Timeout exception: {}", e.getMessage());
+//            Assert.fail("Loading spinner did not load.");
+//        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public void waitForGracePeriodToEnd() {
+        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+        LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
+                until(it -> getRemainingTime() < gracePeriod);
     }
 }
