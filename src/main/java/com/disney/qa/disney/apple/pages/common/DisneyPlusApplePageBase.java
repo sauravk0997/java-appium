@@ -45,8 +45,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -912,7 +911,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveProfileButton() {
-        saveProfileButton.click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
