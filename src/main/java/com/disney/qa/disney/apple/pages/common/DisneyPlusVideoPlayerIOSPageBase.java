@@ -606,4 +606,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on movie video player.");
         clickBackButton();
     }
+
+    public ExtendedWebElement getSkipPromoButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+    }
+
+    public void skipPromoIfPresent() {
+        displayVideoController();
+        if (getSkipPromoButton().isPresent()) {
+            LOGGER.info("Skipping promo..");
+            getSkipPromoButton().click();
+        }
+    }
 }
