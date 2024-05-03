@@ -276,8 +276,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remaining time is not visible in HH:MM:SS or MM:SS Format");
         sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
 
-        videoPlayer.clickPauseButton();
-        int remainingTime = videoPlayer.getRemainingTime();
+        int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
 
