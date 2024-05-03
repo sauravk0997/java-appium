@@ -530,7 +530,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getCurrentTime(){
         displayVideoController();
         String[] currentTime = currentTimeLabel.getText().split(":");
-        int currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
+        int currentTimeInSec = 0;
+        if(currentTime.length>2){
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60 + Integer.parseInt(currentTime[1]) * 60 + (Integer.parseInt(currentTime[2]));
+        }else{
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
+        }
         LOGGER.info("Playback currently at {} seconds...", currentTimeInSec);
         return currentTimeInSec;
     }
@@ -585,15 +590,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isRemainingTimeVisibleInCorrectFormat(){
         displayVideoController();
-        return validateTime(timeRemainingLabel.getText().replace("-",""));
+        return validateTimeFormat(timeRemainingLabel.getText().replace("-",""));
     }
 
     public boolean isCurrentTimeVisibleInCorrectFormat(){
         displayVideoController();
-        return validateTime(currentTimeLabel.getText());
+        return validateTimeFormat(currentTimeLabel.getText());
     }
 
-    public boolean validateTime(String time){
+    public boolean validateTimeFormat(String time){
         Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$");
         Pattern timePatternInHMMSS = Pattern.compile("^[0-9]:[0-5][0-9]:[0-5][0-9]$");
         Pattern timePatternInMMSS = Pattern.compile("^[0-5][0-9]:[0-5][0-9]$");
