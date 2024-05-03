@@ -4,6 +4,7 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -15,6 +16,8 @@ import io.appium.java_client.remote.MobilePlatform;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
@@ -25,8 +28,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String THE_MARVELS = "The Marvels";
+    private static final String MS_MARVEL = "Ms. Marvel";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final String FRANCAIS = "Français";
+    private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
+    private static final String NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE = "Unable to return to details page during ad playing";
+
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
@@ -125,6 +132,42 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         results.get(0).click();
         detailsPage.getStaticTextByLabel(playInFrench).click();
         sa.assertTrue(videoPlayer.getDynamicAccessibilityId(adInFrench).isPresent(), "Ad Badge is not displayed in French language");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
+    @Test(description = "VOD Player - Ads - Leave Player during Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyLeavePlayerDuringAd() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        List<String> content = Arrays.asList(MS_MARVEL, SPIDERMAN_THREE);
+        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        setAppToHomeScreen(basicAccount);
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        content.forEach(item -> {
+            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+                searchPage.clearText();
+            }
+            searchPage.searchForMedia(item);
+            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+            results.get(0).click();
+            detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+            videoPlayer.clickBackButton();
+            sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
+            detailsPage.clickPlayOrContinue();
+            videoPlayer.waitForVideoToStart().isOpened();
+            videoPlayer.waitForAdToCompleteIfPresent(5);
+            videoPlayer.waitForGracePeriodToEnd();
+            videoPlayer.newScrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+            videoPlayer.clickBackButton();
+            sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
+        });
         sa.assertAll();
     }
 

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -585,5 +586,43 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         detailsPage.getPlayButton().click();
         sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on movie video player.");
         clickBackButton();
+    }
+
+    public void waitForAdToCompleteIfPresent(int polling) {
+        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+        int remainingTime;
+        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
+            String[] adTime = adTimeBadge.getText().split(":");
+            remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
+            LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
+        } else {
+            LOGGER.info("No ad time badge detected, continuing with test..");
+        }
+    }
+
+    public void waitForGracePeriodToEnd() {
+        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+        LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
+                until(it -> getRemainingTime() < gracePeriod);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase newScrubToPlaybackPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
+        displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        int seekBarWidth = seekBar.getSize().getWidth();
+        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        displayVideoController();
+        dragFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
+        try {
+            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, 10).until(it -> ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
+            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, 10).until(it -> !ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
+        } catch (Exception e) {
+            LOGGER.info("Timeout exception: {}", e.getMessage());
+            Assert.fail("Loading spinner did not load.");
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }

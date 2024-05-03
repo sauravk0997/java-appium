@@ -965,4 +965,17 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         pickers.get(2).sendKeys(year);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
+
+    //using w3actions
+//    default void w3cScrollElement(int startX, int startY, int endX, int endY, long wait) {
+    default void dragFromTo(int startX, int startY, int endX, int endY) {
+        Map<String, Object> args = new HashMap<>();
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        args.put("duration", 0.5);
+        args.put("fromX", startX);
+        args.put("fromY", startY);
+        args.put("toX", endX);
+        args.put("toY", endY);
+        js.executeScript("mobile: dragFromToForDuration", args);
+    }
 }
