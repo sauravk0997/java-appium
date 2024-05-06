@@ -931,7 +931,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(getAccount().getFirstName());
         editProfilePage.enterProfileName(profileNameWithMoreThanMaxCharLimit);
 
-        sa.assertTrue(editProfilePage.getTextEntryField().getText().equals(profileNameWithMoreThanMaxCharLimit), "User ia not able to enter more than 12 character");
+        sa.assertTrue(editProfilePage.getTextEntryField().getText().equals(profileNameWithMoreThanMaxCharLimit), "User is not able to enter more than 12 character");
         //Once we get error message details/copy, need to modify below assertion with actual error message validation
         sa.assertTrue(editProfilePage.isProfileNameCharacterLimitErrorPresent(), "Profile Name Max character limit error was not found");
 
