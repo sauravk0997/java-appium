@@ -57,7 +57,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
     }
@@ -140,11 +140,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForGracePeriodToEnd();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing during grace period");
         sa.assertAll();
     }
