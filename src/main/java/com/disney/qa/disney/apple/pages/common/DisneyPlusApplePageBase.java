@@ -45,8 +45,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LIVE_PROGRESS_TIME;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -77,6 +76,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APPLE = "apple";
     private static final String PARTNER = "disney";
     private static final String APAC = "apac";
+    private static final String KMRB = "kmrb";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -912,7 +912,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveProfileButton() {
-        saveProfileButton.click();
+        dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -1434,11 +1434,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titlesFromApi;
     }
 
-    public boolean isRatingPresent(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains(APAC)) {
-            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey)).isPresent();
+    public String getRatingsDictValue(String ratingsDictionaryKey) {
+        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB)) {
+            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
         } else {
-            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey)).isPresent();
+            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey);
         }
+    }
+    public boolean isRatingPresent(String ratingsDictionaryKey) {
+        return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
     }
 }
