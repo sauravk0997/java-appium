@@ -21,6 +21,7 @@ public abstract class DisneyAbstractPage extends AbstractPage implements IOSUtil
     protected static final int HALF_TIMEOUT = 5;
     protected static final int SHORT_TIMEOUT = 3;
     protected static final int ONE_SEC_TIMEOUT = 1;
+    protected static final int FIFTEEN_SEC_TIMEOUT = 15;
 
     protected static final int DEFAULT_TRIES = 10;
 
