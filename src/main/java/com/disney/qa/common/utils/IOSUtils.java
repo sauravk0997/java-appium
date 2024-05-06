@@ -29,6 +29,10 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Interactive;
+import org.openqa.selenium.interactions.Pause;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -47,6 +51,8 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+
+import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
 @SuppressWarnings({"squid:S135"})
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
@@ -333,28 +339,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         TouchAction<?> touchActions = new TouchAction<>((PerformsTouchActions) getDriver());
         touchActions.tap(TapOptions.tapOptions().withPosition(PointOption.point(xOffset, yOffset))
                 .withTapsCount(numOfTaps)).perform();
-    }
-
-    /**
-     * Drag and Drop an element to a given position
-     *
-     * @param startX X coord of the element
-     * @param startY Y coord of the element
-     * @param endX   X coord of element's destination
-     * @param endY   Y coord of element's destination
-     * @param wait   seconds
-     */
-
-    default boolean dragAndDropElement(int startX, int startY, int endX, int endY, long wait) {
-        try {
-            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-            touchActions.longPress(PointOption.point(startX, startY)).moveTo(PointOption.point(endX, endY))
-                    .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(wait))).perform();
-            return true;
-        } catch (Exception e) {
-            IOS_UTILS_LOGGER.error("Error occurred during drag and drop", e);
-            return false;
-        }
     }
 
     /**
@@ -966,14 +950,34 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
-    default void dragFromTo(int startX, int startY, int endX, int endY) {
-        Map<String, Object> args = new HashMap<>();
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        args.put("duration", 0.5);
-        args.put("fromX", startX);
-        args.put("fromY", startY);
-        args.put("toX", endX);
-        args.put("toY", endY);
-        js.executeScript("mobile: dragFromToForDuration", args);
+    /**
+     * Scroll from element to a given position
+     *
+     * @param startX X coord of the element
+     * @param startY Y coord of the element
+     * @param endX   X coord of element's destination
+     * @param endY   Y coord of element's destination
+     */
+    default boolean scrollFromTo(int startX, int startY, int endX, int endY) {
+        boolean isActionSuccessful = false;
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence scroll = new Sequence(finger, 1)
+                .addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX,
+                        startY))
+                .addAction(finger.createPointerDown(LEFT.asArg()))
+                .addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), endX, endY))
+                .addAction(finger.createPointerUp(LEFT.asArg()));
+
+        Interactive driver = null;
+        try {
+            driver = (Interactive) getDriver();
+            driver.perform(List.of(scroll));
+            isActionSuccessful = true;
+        } catch (ClassCastException e) {
+            throw new UnsupportedOperationException("Driver does not support scroll method", e);
+        } catch (WebDriverException e) {
+            UTILS_LOGGER.info("Error occurs during scroll: " + e, e);
+        }
+        return isActionSuccessful;
     }
 }

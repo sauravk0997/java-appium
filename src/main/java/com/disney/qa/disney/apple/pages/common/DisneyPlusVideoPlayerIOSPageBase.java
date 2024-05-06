@@ -7,6 +7,8 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
@@ -386,6 +388,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
     }
 
+    public ExtendedWebElement getAdBadgeLabel() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        return getDynamicAccessibilityId(adLabel);
+    }
+
     /**
      * Opens the player overlay, reads remaining time that has 3 integers
      * (hours, minutes, seconds) on the seekbar and converts it to seconds
@@ -571,6 +578,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
+        waitForPresenceOfAnElement(getAdBadgeLabel());
         ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         int remainingTime;
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
@@ -608,7 +616,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getSkipPromoButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
     public void skipPromoIfPresent() {
@@ -619,28 +627,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
-        displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController();
-        dragFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
-//        try {
-//            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT).until(it -> ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
-//            fluentWaitNoMessage(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT).until(it -> !ucpLoadSpinner.isPresent(ONE_SEC_TIMEOUT));
-//        } catch (Exception e) {
-//            LOGGER.info("Timeout exception: {}", e.getMessage());
-//            Assert.fail("Loading spinner did not load.");
-//        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public void waitForGracePeriodToEnd() {
         int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
         LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed.", playbackPercent);
+        displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        int seekBarWidth = seekBar.getSize().getWidth();
+        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        displayVideoController();
+        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }
