@@ -17,6 +17,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String ENTER_YOUR_PASSWORD_HEADER = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_YOUR_PASSWORD.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
@@ -25,7 +26,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
 
-    @ExtendedFindBy(accessibilityId = "primaryButton")
+    @ExtendedFindBy(accessibilityId = "Log In")
     protected ExtendedWebElement logInButton;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
@@ -101,11 +102,20 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         passwordEntryField.type(password);
     }
 
+    public void enterLogInPassword(String password) {
+      secureTextEntryField.type(password);
+    }
+
+    public void clickLogInButton() {
+        logInButton.click();
+    }
+
     public void submitPasswordForLogin(String userPassword) {
-        typePassword(userPassword);
+        swipeInContainer(null, Direction.UP, 1, 900);
+        enterLogInPassword(userPassword);
+        staticTextByLabel.format(ENTER_YOUR_PASSWORD_HEADER).click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        clickPrimaryButtonByCoordinates();
-        hideKeyboard();
+        clickLogInButton();
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {

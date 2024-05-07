@@ -220,6 +220,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement systemAlertLogoutBtn;
     @ExtendedFindBy(accessibilityId = "primaryButton")
     protected ExtendedWebElement primaryButton;
+    @ExtendedFindBy(accessibilityId = "Continue")
+    protected ExtendedWebElement continueButton;
     @ExtendedFindBy(accessibilityId = "secondaryButton")
     protected ExtendedWebElement secondaryButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther")
@@ -833,6 +835,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickPrimaryButtonByCoordinates() {
         clickElementAtLocation(primaryButton, 50, 50);
+    }
+
+    public void clickContinueButton() {
+        continueButton.click();
     }
 
     public boolean isAlertDefaultBtnPresent() {
