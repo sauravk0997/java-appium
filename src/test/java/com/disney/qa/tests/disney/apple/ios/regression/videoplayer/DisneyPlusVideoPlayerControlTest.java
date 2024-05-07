@@ -14,12 +14,14 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
+    protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
 
@@ -254,6 +256,47 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                         " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
+    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    public void verifyScrubberElementsOnPlayer() {
+        String errorMessage = "not changed after scrub";
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS);
+
+        String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        String durationTime = getContentTimeInHMFormatFromAPI(THE_MARVELS);
+        sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
+
+        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
+        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
+        sa.assertTrue(videoPlayer.isRemainingTimeVisibleInCorrectFormat(), "Remaining time is not visible in HH:MM:SS or MM:SS Format");
+        sa.assertTrue(videoPlayer.isCurrentTimeVisibleInCorrectFormat(), "Elapsed time is not visible in HH:MM:SS or MM:SS Format");
+
+        int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
+        int elapsedTime = videoPlayer.getCurrentTime();
+        int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
+
+        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(), "Playhead position not representing the current point in time with respect to the total length of the video");
+
+        //video player already scrubbed 50 % in above method
+        int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
+        int elapsedTimeAfterScrub = videoPlayer.getCurrentTime();
+        int currentPositionAfterScrub = videoPlayer.getCurrentPositionOnPlayer();
+        sa.assertTrue(remainingTime > remainingTimeAfterScrub, "Remaining time " + errorMessage);
+        sa.assertTrue(elapsedTime < elapsedTimeAfterScrub, "Elapsed time " + errorMessage);
+        sa.assertTrue(currentPositionAfterScrub > currentPositionOnSeekPlayer , "Position of seek bar " + errorMessage);
+        sa.assertAll();
+    }
+
+    private String getContentTimeInHMFormatFromAPI(String contentTitle){
+        int duration = getSearchApi().getMovie(contentTitle, getAccount()).getContentDuration();
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%dh %dm",hours, minutes);
     }
 
     private void loginAndStartPlayback(String content) {
