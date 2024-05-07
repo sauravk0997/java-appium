@@ -661,7 +661,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void skipPromoIfPresent() {
-        displayVideoControllerForAdPlayer();
         if (getSkipPromoButton().isPresent()) {
             LOGGER.info("Skipping promo..");
             getSkipPromoButton().click();
