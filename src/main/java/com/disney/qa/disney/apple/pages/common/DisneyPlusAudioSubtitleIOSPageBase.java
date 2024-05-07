@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -114,16 +115,24 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     public List<String> getAudioLanguagesFromUI(){
         List<String> audioLanguageValue = new ArrayList<>();
-        List<ExtendedWebElement> audioLanguages = findExtendedWebElements(audioLanguageCell.getBy());
-        IntStream.range(0, audioLanguages.size()).forEach(i -> audioLanguageValue.add(audioLanguages.get(i).getText()));
-        return audioLanguageValue;
+        if (audioLanguageCell.isPresent()) {
+            List<ExtendedWebElement> audioLanguages = findExtendedWebElements(audioLanguageCell.getBy());
+            IntStream.range(0, audioLanguages.size()).forEach(i -> audioLanguageValue.add(audioLanguages.get(i).getText()));
+            return audioLanguageValue;
+        } else {
+            throw new NoSuchElementException("Failing test, audio language cell were found.");
+        }
     }
 
     public List<String> getAudioSubtitlesFromUI(){
         List<String> audioSubtitleValue = new ArrayList<>();
-        List<ExtendedWebElement> audioSubtitles = findExtendedWebElements(audioSubtitleCell.getBy());
-        IntStream.range(0, audioSubtitles.size()).forEach(i -> audioSubtitleValue.add(audioSubtitles.get(i).getText()));
-        audioSubtitleValue.remove(0);
-        return audioSubtitleValue;
+        if (audioSubtitleCell.isPresent()) {
+            List<ExtendedWebElement> audioSubtitles = findExtendedWebElements(audioSubtitleCell.getBy());
+            LOGGER.info("First value in subtitle cell will be 'Off' and after that all language value will display");
+            IntStream.range(1, audioSubtitles.size()).forEach(i -> audioSubtitleValue.add(audioSubtitles.get(i).getText()));
+            return audioSubtitleValue;
+        } else {
+            throw new NoSuchElementException("Failing test, audio subtitle cell were found.");
+        }
     }
 }
