@@ -19,4 +19,11 @@ public class DisneyPlusNonUSRatingsAPACTest extends DisneyPlusRatingsBase {
         ratingsSetup(APAC_PG, JAPAN_LANG, JAPAN_LOCALE);
         confirmRegionalRatingsDisplays(APAC_PG, DictionaryKeys.RATING_APAC_PG.getText());
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
+    public void verifyRatingSystemAPAC12() {
+        ratingsSetup(APAC_12, JAPAN_LANG, JAPAN_LOCALE);
+        confirmRegionalRatingsDisplays(APAC_12, DictionaryKeys.RATING_APAC_12.getText());
+    }
 }

@@ -20,6 +20,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private boolean isMovie = false;
     static final String APAC_G = "G";
     static final String APAC_PG = "PG";
+    static final String APAC_12 = "12+";
     static final String KCC_7 = "7+";
     static final String KCC_12 = "12+";
     static final String KCC_15 = "15+";
