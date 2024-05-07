@@ -79,8 +79,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmail(String userEmailAddress) {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        continueButton.clickIfPresent();
+        continueButton.clickIfPresent(10);
         pause(3);
     }
 
