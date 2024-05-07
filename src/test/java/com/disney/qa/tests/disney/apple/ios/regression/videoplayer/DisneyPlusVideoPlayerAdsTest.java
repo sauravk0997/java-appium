@@ -129,6 +129,28 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
+    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyPlayerNoSkippingDuringAd() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found");
+        int adTimeRemainingMinus30 = videoPlayer.getAdTimeRemaining() - 30;
+        videoPlayer.displayVideoController();
+        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 3);
+        sa.assertTrue(videoPlayer.getAdTimeRemaining() > adTimeRemainingMinus30,
+                "Fast forward action is not functional during an ad");
+
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found");
+        int adTimeRemainingPlus30 = videoPlayer.getAdTimeRemaining() + 30;
+        videoPlayer.displayVideoController();
+        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 3);
+        sa.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingPlus30,
+                "Rewind action is not functional during an ad");
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content, SoftAssert sa) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
