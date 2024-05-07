@@ -28,7 +28,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final String FRANCAIS = "Français";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
-    private static final String NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE = "Unable to return to details page during ad playing";
+    private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
+    private static final String DURING_SECOND_AD_POD = "During second ad pod,";
+    private static final String DURING_PRE_ROLL = "During pre-roll,";
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
@@ -136,6 +138,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
     @Test(description = "VOD Player - Ads - Leave Player during Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyLeavePlayerDuringAd() {
+        String errorFormat = "%s %s for %s";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -146,7 +149,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         setAppToHomeScreen(basicAccount);
         homePage.getSearchNav().click();
         content.forEach(item -> {
-            LOGGER.info("Validating exit player during ad for {}", item);
+            LOGGER.info("Validating exit player {} for {}", DURING_PRE_ROLL, item);
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
             }
@@ -155,9 +158,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             results.get(0).click();
             detailsPage.isOpened();
             detailsPage.clickPlayButton().isOpened();
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format("%s for %s", AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
             videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), String.format("%s for %s", NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE, item));
+            sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE, item));
+            LOGGER.info("Validating exit player {} for {}", DURING_SECOND_AD_POD, item);
             detailsPage.clickPlayOrContinue();
             videoPlayer.isOpened();
             videoPlayer.waitForAdToCompleteIfPresent(5);
@@ -168,9 +172,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                 videoPlayer.waitForMovieGracePeriodToEnd();
             }
             videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format("%s for %s", AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
             videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), String.format("%s for %s", NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE, item));
+            sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE, item));
             homePage.getSearchNav().click();
         });
         sa.assertAll();

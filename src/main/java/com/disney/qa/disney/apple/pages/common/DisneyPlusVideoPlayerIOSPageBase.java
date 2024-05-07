@@ -609,14 +609,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForEpisodeGracePeriodToEnd() {
         int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        LOGGER.info("Waiting for playback to move pass {} grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
     }
 
     public void waitForMovieGracePeriodToEnd() {
         int gracePeriod = getRemainingTimeThreeIntegers() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        LOGGER.info("Waiting for playback to move pass {} grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
                 until(it -> getRemainingTimeThreeIntegers() < gracePeriod);
     }
