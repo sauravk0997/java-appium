@@ -531,4 +531,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
+
+    public boolean isProfileNameCharacterLimitErrorPresent(){
+        return labelError.isPresent();
+    }
 }
