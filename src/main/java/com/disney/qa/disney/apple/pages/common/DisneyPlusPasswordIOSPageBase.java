@@ -102,7 +102,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void enterLogInPassword(String password) {
-        secureTextEntryField.type(password);
+      secureTextEntryField.type(password);
     }
 
     public void clickLogInButton() {
