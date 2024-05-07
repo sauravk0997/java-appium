@@ -76,6 +76,10 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         textEntryField.type(email);
     }
 
+    public void clickContinueButton() {
+        continueButton.click();
+    }
+
     public void submitEmail(String userEmailAddress) {
         swipeInContainer(null, Direction.UP, 1, 900);
         fillOutEmailField(userEmailAddress);

@@ -111,8 +111,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void submitPasswordForLogin(String userPassword) {
+        //In small device the passwordField is not displayed, since its in bottom hence we need to swipe.
         swipeInContainer(null, Direction.UP, 1, 900);
         enterLogInPassword(userPassword);
+        //Since hideKeyboard method is not working we are clicking on header to hide keyboard.
         staticTextByLabel.format(ENTER_YOUR_PASSWORD_HEADER).click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickLogInButton();

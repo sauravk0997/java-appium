@@ -837,10 +837,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickElementAtLocation(primaryButton, 50, 50);
     }
 
-    public void clickContinueButton() {
-        continueButton.click();
-    }
-
     public boolean isAlertDefaultBtnPresent() {
         return systemAlertDefaultBtn.isElementPresent();
     }
