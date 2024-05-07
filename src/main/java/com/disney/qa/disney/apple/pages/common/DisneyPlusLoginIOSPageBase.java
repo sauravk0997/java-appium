@@ -76,16 +76,11 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         textEntryField.type(email);
     }
 
-    public void clickContinueButtonIfPresent() {
-        if(continueButton.isPresent())
-            continueButton.click();
-    }
-
     public void submitEmail(String userEmailAddress) {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        clickContinueButtonIfPresent();
+        continueButton.clickIfPresent();
         pause(3);
     }
 
