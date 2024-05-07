@@ -137,14 +137,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL, sa);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found");
         int adTimeRemainingMinus30 = videoPlayer.getAdTimeRemaining() - 30;
-        videoPlayer.displayVideoController();
+        videoPlayer.displayVideoControllerForAdPlayer();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 3);
         sa.assertTrue(videoPlayer.getAdTimeRemaining() > adTimeRemainingMinus30,
                 "Fast forward action is not functional during an ad");
 
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found");
         int adTimeRemainingPlus30 = videoPlayer.getAdTimeRemaining() + 30;
-        videoPlayer.displayVideoController();
+        videoPlayer.displayVideoControllerForAdPlayer();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 3);
         sa.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingPlus30,
                 "Rewind action is not functional during an ad");
