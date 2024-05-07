@@ -229,7 +229,7 @@ public enum DictionaryKeys {
     LEGAL_TITLE("legalcenter_title"),
     LIVE_PROGRESS("live_progress"),
     LIVE_PROGRESS_TIME("live_progress_time"),
-    LOGIN_BTN("login_btn"),
+    LOGIN_BTN("btn_login"),
     LOGIN_EMAIL_LEGAL_PROMPT_HEADER("login_email_legal_prompt_header"),
     LOGIN_EMAIL_LEGAL_PROMPT_BODY("login_email_legal_prompt"),
     LOGIN_INVALID_EMAIL_ERROR("log_in_email_error_no_account"),

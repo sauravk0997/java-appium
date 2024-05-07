@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_BTN;
 
 /*
  * Enter Password Page
@@ -25,6 +24,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
+
+    @ExtendedFindBy(accessibilityId = "Log In")
+    protected ExtendedWebElement logInButton;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
     protected ExtendedWebElement continueButton;
@@ -84,7 +86,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLoginButtonDisplayed() {
-        return getLoginButton().isPresent();
+        return logInButton.isPresent();
     }
 
     public boolean isForgotPasswordLinkDisplayed() {
@@ -96,18 +98,21 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void typePassword(String password) {
+        passwordEntryField.type(password);
+    }
+
+    public void enterLogInPassword(String password) {
         secureTextEntryField.type(password);
+    }
+
+    public void clickLogInButton() {
+        logInButton.click();
     }
 
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
-        typePassword(userPassword + "\n");
-        getLoginButton().clickIfPresent(SHORT_TIMEOUT);
-    }
-
-    public ExtendedWebElement getLoginButton() {
-        return getDynamicAccessibilityId(getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, LOGIN_BTN.getText()));
+        enterLogInPassword(userPassword + "\n");
+        clickLogInButton();
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
