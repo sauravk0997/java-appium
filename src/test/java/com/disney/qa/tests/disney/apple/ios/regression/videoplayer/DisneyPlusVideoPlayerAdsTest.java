@@ -155,9 +155,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             results.get(0).click();
             detailsPage.isOpened();
             detailsPage.clickPlayButton().isOpened();
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format("%s for %s", AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
             videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
+            sa.assertTrue(detailsPage.isOpened(), String.format("%s for %s", NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE, item));
             detailsPage.clickPlayOrContinue();
             videoPlayer.isOpened();
             videoPlayer.waitForAdToCompleteIfPresent(5);
@@ -170,7 +170,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
             sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format("%s for %s", AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
             videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
+            sa.assertTrue(detailsPage.isOpened(), String.format("%s for %s", NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE, item));
             homePage.getSearchNav().click();
         });
         sa.assertAll();
