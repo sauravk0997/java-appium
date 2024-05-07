@@ -146,12 +146,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         setAppToHomeScreen(basicAccount);
         homePage.getSearchNav().click();
         content.forEach(item -> {
+            LOGGER.info("Validating exit player during ad for {}", item);
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
             }
             searchPage.searchForMedia(item);
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
+            detailsPage.isOpened();
             detailsPage.clickPlayButton().isOpened();
             sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
             videoPlayer.clickBackButton();
@@ -166,7 +168,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                 videoPlayer.waitForMovieGracePeriodToEnd();
             }
             videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format("%s for %s", AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
             videoPlayer.clickBackButton();
             sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
             homePage.getSearchNav().click();
