@@ -76,6 +76,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APPLE = "apple";
     private static final String PARTNER = "disney";
     private static final String APAC = "apac";
+    private static final String KMRB = "kmrb";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1433,11 +1434,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titlesFromApi;
     }
 
-    public boolean isRatingPresent(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains(APAC)) {
-            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey)).isPresent();
+    public String getRatingsDictValue(String ratingsDictionaryKey) {
+        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB)) {
+            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
         } else {
-            return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey)).isPresent();
+            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey);
         }
+    }
+    public boolean isRatingPresent(String ratingsDictionaryKey) {
+        return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
     }
 }

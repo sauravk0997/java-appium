@@ -179,13 +179,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
-        pause(1);
         tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(seekBar.getBy()), 15);
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
         } while (attempts++ < 5 && !seekBar.isElementPresent(SHORT_TIMEOUT));
+        if (attempts == 6) {
+            Assert.fail("Seek bar was present and attempts exceeded over 5.");
+        }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -375,9 +377,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return dimension.getHeight();
     }
 
-    public boolean isAdBadgeLabelPresent() {
+    public boolean isAdBadgeLabelPresent(int...timeout) {
+        int waitTime = 10;
+        if (timeout.length > 0) {
+            waitTime = timeout[0];
+        }
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel).isElementPresent();
+        return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
     }
 
     /**
@@ -540,28 +546,41 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return String.format("%dh %dm", hours, minutes);
     }
 
-    public String getRestartButtonStatus(){
+    public String getRestartButtonStatus() {
         displayVideoController();
         return restartButton.getAttribute(Attributes.ENABLED.getAttribute());
     }
 
-    public void clickRestartButton(){
+    public void clickRestartButton() {
         displayVideoController();
         restartButton.click();
     }
 
     public DisneyPlusVideoPlayerIOSPageBase waitForAdToComplete(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Ad did not end after " + timeout).until(it ->  !isAdBadgeLabelPresent());
+        fluentWait(getDriver(), timeout, polling, "Ad did not end after " + timeout).until(it -> !isAdBadgeLabelPresent());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public int getAdRemainingTimeInSeconds(){
+    public int getAdRemainingTimeInSeconds() {
         displayVideoController();
         String adTime = isAdBadgeLabelPresent()?adRemainingTime.getText():"0:00";
         String[] remainingTime = adTime.split(":");
         int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
+    }
+
+    public void waitForAdToCompleteIfPresent(int polling) {
+        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+        int remainingTime;
+        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
+            String[] adTime = adTimeBadge.getText().split(":");
+            remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
+            LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
+        } else {
+            LOGGER.info("No ad time badge detected, continuing with test..");
+        }
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
@@ -588,19 +607,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         clickBackButton();
     }
 
-    public void waitForAdToCompleteIfPresent(int polling) {
-        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
-        int remainingTime;
-        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
-            String[] adTime = adTimeBadge.getText().split(":");
-            remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
-            LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
-        } else {
-            LOGGER.info("No ad time badge detected, continuing with test..");
-        }
-    }
-
     public void waitForGracePeriodToEnd() {
         int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
         LOGGER.info("Waiting for playback to move pass {} second grace period ", FORTY_FIVE_SEC_TIMEOUT);
@@ -624,5 +630,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             Assert.fail("Loading spinner did not load.");
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public ExtendedWebElement getSkipPromoButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+    }
+
+    public void skipPromoIfPresent() {
+        displayVideoController();
+        if (getSkipPromoButton().isPresent()) {
+            LOGGER.info("Skipping promo..");
+            getSkipPromoButton().click();
+        }
     }
 }
