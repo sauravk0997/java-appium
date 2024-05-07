@@ -220,6 +220,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement systemAlertLogoutBtn;
     @ExtendedFindBy(accessibilityId = "primaryButton")
     protected ExtendedWebElement primaryButton;
+    @ExtendedFindBy(accessibilityId = "Continue")
+    protected ExtendedWebElement continueButton;
     @ExtendedFindBy(accessibilityId = "secondaryButton")
     protected ExtendedWebElement secondaryButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther")

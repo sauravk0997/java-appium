@@ -183,7 +183,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
         tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
@@ -278,6 +278,23 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
         dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    /**
+     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
+     * DisneyPlusVideoPlayerIOSPageBase.
+     *
+     * @param playbackPercent
+     */
+    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
+        displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        int seekBarWidth = seekBar.getSize().getWidth();
+        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        displayVideoController();
+        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -685,47 +702,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 until(it -> getRemainingTimeThreeIntegers() < gracePeriod);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase displayVideoControllerForAdPlayer() {
-        LOGGER.info("Activating video player controls..");
-        //Check is due to placement of PlayPause, which will pause the video if clicked
-        Dimension size = getDriver().manage().window().getSize();
-        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        fluentWait(getDriver(), HALF_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
-        int attempts = 0;
-        do {
-            clickElementAtLocation(playerView, 35, 50);
-        } while (attempts++ < 5 && !seekBar.isElementPresent(SHORT_TIMEOUT));
-        if (attempts == 6) {
-            Assert.fail("Seek bar was present and attempts exceeded over 5.");
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
-     * DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param playbackPercent
-     */
-    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
-        displayVideoControllerForAdPlayer();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoControllerForAdPlayer();
-        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public ExtendedWebElement getSkipPromoButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
     public void skipPromoIfPresent() {
-        if (getSkipPromoButton().isPresent()) {
-            LOGGER.info("Skipping promo..");
-            getSkipPromoButton().click();
-        }
+        getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
+    }
+
+    public void waitForAdGracePeriodToEnd() {
+        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+        LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
+                until(it -> getRemainingTime() < gracePeriod);
     }
 }
