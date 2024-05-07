@@ -17,7 +17,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
-    private static final String ENTER_YOUR_PASSWORD_HEADER = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_YOUR_PASSWORD.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
@@ -111,11 +110,8 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void submitPasswordForLogin(String userPassword) {
-        //In small device the passwordField is not displayed, since its in bottom hence we need to swipe.
-        swipeInContainer(null, Direction.UP, 1, 900);
-        enterLogInPassword(userPassword);
-        //Since hideKeyboard method is not working we are clicking on header to hide keyboard.
-        staticTextByLabel.format(ENTER_YOUR_PASSWORD_HEADER).click();
+        //To hide the keyboard we are passing \n at the end of password value
+        enterLogInPassword(userPassword + "\n");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickLogInButton();
     }
