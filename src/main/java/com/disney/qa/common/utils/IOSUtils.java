@@ -1,5 +1,35 @@
 package com.disney.qa.common.utils;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.messager.Messager;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.IDriverPool;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.SupportsLegacyAppManagement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.TapOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import lombok.Getter;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Interactive;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
@@ -9,44 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.disney.config.DisneyConfiguration;
-import com.zebrunner.carina.utils.messager.Messager;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
-import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.SupportsLegacyAppManagement;
-import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NoSuchSessionException;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.IDriverPool;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
+import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
 @SuppressWarnings({"squid:S135"})
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
@@ -964,5 +957,32 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+    }
+
+    /**
+     * Scroll from element to a given position
+     *
+     * @param startX X coord of the element
+     * @param startY Y coord of the element
+     * @param endX   X coord of element's destination
+     * @param endY   Y coord of element's destination
+     */
+    default void scrollFromTo(int startX, int startY, int endX, int endY) {
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence scroll = new Sequence(finger, 1)
+                .addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX,
+                        startY))
+                .addAction(finger.createPointerDown(LEFT.asArg()))
+                .addAction(finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), endX, endY))
+                .addAction(finger.createPointerUp(LEFT.asArg()));
+
+        Interactive driver = null;
+        try {
+            driver = (Interactive) getDriver();
+            driver.perform(List.of(scroll));
+        } catch (Exception e) {
+            Assert.fail(String.format("Error occurred during scrolling from (X = %d; Y = %d) to (X = %d; Y = %d): %s",
+                    startX, startY, endX, endY, e));
+        }
     }
 }
