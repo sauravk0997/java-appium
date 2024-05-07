@@ -25,6 +25,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
     protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
     protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
+    private static final String WAITING_PLAYBACK_GRACE_PERIOD = "Waiting for playback to move pass {} seconds grace period..";
+    private static final String PLAYBACK_UNABLE_PASS_GRACE_PERIOD_ERROR_MESSAGE = "playback unable to pass ad grace period";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -609,15 +611,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForEpisodeGracePeriodToEnd() {
         int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info("Waiting for playback to move pass {} grace period ", FORTY_FIVE_SEC_TIMEOUT);
-        fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
+        LOGGER.info(WAITING_PLAYBACK_GRACE_PERIOD, FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), gracePeriod, 5, PLAYBACK_UNABLE_PASS_GRACE_PERIOD_ERROR_MESSAGE).
                 until(it -> getRemainingTime() < gracePeriod);
     }
 
     public void waitForMovieGracePeriodToEnd() {
         int gracePeriod = getRemainingTimeThreeIntegers() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info("Waiting for playback to move pass {} grace period ", FORTY_FIVE_SEC_TIMEOUT);
-        fluentWait(getDriver(), gracePeriod, 5, "playback unable to pass ad grace period").
+        LOGGER.info(WAITING_PLAYBACK_GRACE_PERIOD, FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), gracePeriod, 5, PLAYBACK_UNABLE_PASS_GRACE_PERIOD_ERROR_MESSAGE).
                 until(it -> getRemainingTimeThreeIntegers() < gracePeriod);
     }
 
