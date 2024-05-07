@@ -33,7 +33,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String VALIDATING_EXIT_PLAYER = "{} validating exit player for {}";
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
     @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyAdsPlayerAudioSubtitleButton() {
