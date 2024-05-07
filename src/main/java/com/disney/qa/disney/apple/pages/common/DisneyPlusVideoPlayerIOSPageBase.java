@@ -420,11 +420,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
     }
 
-    public ExtendedWebElement getAdBadgeLabel() {
-        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel);
-    }
-
     /**
      * Opens the player overlay, reads remaining time that has 3 integers
      * (hours, minutes, seconds) on the seekbar and converts it to seconds
@@ -712,10 +707,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void skipPromoIfPresent() {
-        if (getSkipPromoButton().isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("Skipping promo..");
-            getSkipPromoButton().click();
-        }
+        getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
     }
 
     public void waitForAdGracePeriodToEnd() {

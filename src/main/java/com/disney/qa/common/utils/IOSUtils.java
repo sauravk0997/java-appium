@@ -1,36 +1,25 @@
 package com.disney.qa.common.utils;
 
-import java.lang.invoke.MethodHandles;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.messager.Messager;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.IDriverPool;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.SupportsLegacyAppManagement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.TapOptions;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.NoSuchSessionException;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Interactive;
-import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -40,17 +29,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.IDriverPool;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
+import java.lang.invoke.MethodHandles;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
@@ -993,12 +979,9 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         try {
             driver = (Interactive) getDriver();
             driver.perform(List.of(scroll));
-        } catch (ClassCastException | WebDriverException e) {
-            if (e instanceof ClassCastException) {
-                throw new UnsupportedOperationException("Driver does not support scroll method", e);
-            } else {
-                UTILS_LOGGER.info("Error occurs during scroll: " + e, e);
-            }
+        } catch (Exception e) {
+            IOS_UTILS_LOGGER.error(String.format("Error occurred during scrolling from (X = %d; Y = %d) to (X = %d; Y = %d): %s",
+                    startX, startY, endX, endY, e));
         }
     }
 }
