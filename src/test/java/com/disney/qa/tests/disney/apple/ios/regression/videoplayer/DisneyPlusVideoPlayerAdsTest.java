@@ -152,15 +152,15 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             searchPage.searchForMedia(item);
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
-            detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
+            detailsPage.clickPlayButton().isOpened();
             sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
             videoPlayer.clickBackButton();
             sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
             detailsPage.clickPlayOrContinue();
-            videoPlayer.waitForVideoToStart().isOpened();
+            videoPlayer.isOpened();
             videoPlayer.waitForAdToCompleteIfPresent(5);
             videoPlayer.skipPromoIfPresent();
-            if (content.get(Integer.parseInt(item)).equals(0)) {
+            if (item.equalsIgnoreCase(MS_MARVEL)) {
                 videoPlayer.waitForEpisodeGracePeriodToEnd();
             } else {
                 videoPlayer.waitForMovieGracePeriodToEnd();
