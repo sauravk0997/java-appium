@@ -110,7 +110,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void submitPasswordForLogin(String userPassword) {
-        //To hide the keyboard we are passing \n at the end of password value
+        //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickLogInButton();
