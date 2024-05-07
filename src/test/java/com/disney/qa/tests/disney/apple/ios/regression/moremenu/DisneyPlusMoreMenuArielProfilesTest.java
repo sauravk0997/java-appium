@@ -57,7 +57,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         changePassword.enterPasswordNoAccount(INVALID_PASSWORD);
         sa.assertTrue(changePassword.isInvalidPasswordErrorDisplayed(), "Invalid Password error was not displayed");
         changePassword.enterPassword(getAccount());
-        sa.assertEquals(editProfiles.getAutoplayState(), "On","After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
+        sa.assertEquals(editProfiles.getAutoplayState(), "On", "After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
         sa.assertAll();
     }
 
