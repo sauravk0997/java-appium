@@ -144,7 +144,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<String> content = Arrays.asList(MS_MARVEL, SPIDERMAN_THREE);
         DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
-        homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         content.forEach(item -> {
             if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
@@ -160,11 +159,17 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             detailsPage.clickPlayOrContinue();
             videoPlayer.waitForVideoToStart().isOpened();
             videoPlayer.waitForAdToCompleteIfPresent(5);
-            videoPlayer.waitForGracePeriodToEnd();
-            videoPlayer.newScrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+            videoPlayer.skipPromoIfPresent();
+            if (content.get(Integer.parseInt(item)).equals(0)) {
+                videoPlayer.waitForEpisodeGracePeriodToEnd();
+            } else {
+                videoPlayer.waitForMovieGracePeriodToEnd();
+            }
+            videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
             sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
             videoPlayer.clickBackButton();
             sa.assertTrue(detailsPage.isOpened(), NOT_RETURNED_DETAILS_PAGE_DURING_AD_ERROR_MESSAGE);
+            homePage.getSearchNav().click();
         });
         sa.assertAll();
     }
