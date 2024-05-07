@@ -139,7 +139,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
-        videoPlayer.waitForGracePeriodToEnd();
+        videoPlayer.waitForAdGracePeriodToEnd();
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
