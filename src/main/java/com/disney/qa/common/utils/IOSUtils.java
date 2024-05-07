@@ -28,6 +28,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
@@ -980,7 +981,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             driver = (Interactive) getDriver();
             driver.perform(List.of(scroll));
         } catch (Exception e) {
-            IOS_UTILS_LOGGER.error(String.format("Error occurred during scrolling from (X = %d; Y = %d) to (X = %d; Y = %d): %s",
+            Assert.fail(String.format("Error occurred during scrolling from (X = %d; Y = %d) to (X = %d; Y = %d): %s",
                     startX, startY, endX, endY, e));
         }
     }
