@@ -993,8 +993,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         try {
             driver = (Interactive) getDriver();
             driver.perform(List.of(scroll));
-        } catch (ClassCastException e) {
-            throw new UnsupportedOperationException("Driver does not support scroll method", e);
+        } catch (ClassCastException | WebDriverException e) {
+            if (e instanceof ClassCastException) {
+                throw new UnsupportedOperationException("Driver does not support scroll method", e);
+            } else {
+                UTILS_LOGGER.info("Error occurs during scroll: " + e, e);
+            }
         }
     }
 }
