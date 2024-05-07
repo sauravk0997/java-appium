@@ -292,7 +292,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public String getContentTimeInHMFormatFromAPI(String contentTitle){
+    private String getContentTimeInHMFormatFromAPI(String contentTitle){
         int duration = getSearchApi().getMovie(contentTitle, getAccount()).getContentDuration();
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;

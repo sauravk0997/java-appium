@@ -534,13 +534,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return currentTimeInSec;
     }
 
-    public int getCurrentTime(){
+    public int getCurrentTime() {
         displayVideoController();
         String[] currentTime = currentTimeLabel.getText().split(":");
         int currentTimeInSec = 0;
-        if(currentTime.length>2){
+        if (currentTime.length > 2) {
             currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60 + Integer.parseInt(currentTime[1]) * 60 + (Integer.parseInt(currentTime[2]));
-        }else{
+        } else {
             currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
         }
         LOGGER.info("Playback currently at {} seconds...", currentTimeInSec);
@@ -603,57 +603,51 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
-    public ExtendedWebElement getSeekBar(){
+    public boolean isRemainingTimeVisibleInCorrectFormat() {
         displayVideoController();
-        return seekBar;
+        return validateTimeFormat(timeRemainingLabel.getText().replace("-", ""));
     }
 
-    public boolean isRemainingTimeVisibleInCorrectFormat(){
-        displayVideoController();
-        return validateTimeFormat(timeRemainingLabel.getText().replace("-",""));
-    }
-
-    public boolean isCurrentTimeVisibleInCorrectFormat(){
+    public boolean isCurrentTimeVisibleInCorrectFormat() {
         displayVideoController();
         return validateTimeFormat(currentTimeLabel.getText());
     }
 
-    public boolean validateTimeFormat(String time){
+    public boolean validateTimeFormat(String time) {
         Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInMMSS = Pattern.compile("^[0-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInMSS = Pattern.compile("^[\\d]:[0-5][\\d]$");
-        if(timePatternInHHMMSS.matcher(time).matches()){
+        if (timePatternInHHMMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed HH:MM:SS format");
             return true;
-        }else if(timePatternInHMMSS.matcher(time).matches()){
+        } else if (timePatternInHMMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed H:MM:SS format");
             return true;
-        } else if(timePatternInMMSS.matcher(time).matches()){
+        } else if (timePatternInMMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed in MM:SS format");
             return true;
-        }else if(timePatternInMSS.matcher(time).matches()){
+        } else if (timePatternInMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed in M:SS format");
             return true;
-        }else{
+        } else {
             LOGGER.info("Content time is not displayed in correct format");
             return false;
         }
     }
 
-
     /**
      * To verify Playhead represents current time with respect to the total length of the video,
      * we are scruubing playhead to 50% and verifying with Half of seekbar width plus/minus 20
      */
-    public boolean verifyPlayheadRepresentsCurrentPointOfTime(){
+    public boolean verifyPlayheadRepresentsCurrentPointOfTime() {
         displayVideoController();
         int seekBarWidth = seekBar.getSize().getWidth();
 
         scrubToPlaybackPercentage(50);
         waitForVideoToStart();
         int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
-        int expectedPosition = (seekBarWidth/2);
+        int expectedPosition = (seekBarWidth / 2);
         return ((expectedPosition - 20) < currentPositionOnSeekPlayerAfterScrub && currentPositionOnSeekPlayerAfterScrub < (expectedPosition + 20));
     }
 
