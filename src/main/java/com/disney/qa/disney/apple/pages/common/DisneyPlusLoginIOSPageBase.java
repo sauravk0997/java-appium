@@ -81,7 +81,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void submitEmail(String userEmailAddress) {
-        swipe(continueButton);
+        swipeInContainerTillElementIsPresent(null, continueButton, 1, Direction.UP);
         fillOutEmailField(userEmailAddress);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickContinueButton();
