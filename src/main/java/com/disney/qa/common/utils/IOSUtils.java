@@ -980,8 +980,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param endX   X coord of element's destination
      * @param endY   Y coord of element's destination
      */
-    default boolean scrollFromTo(int startX, int startY, int endX, int endY) {
-        boolean isActionSuccessful = false;
+    default void scrollFromTo(int startX, int startY, int endX, int endY) {
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
         Sequence scroll = new Sequence(finger, 1)
                 .addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX,
@@ -994,12 +993,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         try {
             driver = (Interactive) getDriver();
             driver.perform(List.of(scroll));
-            isActionSuccessful = true;
         } catch (ClassCastException e) {
             throw new UnsupportedOperationException("Driver does not support scroll method", e);
-        } catch (WebDriverException e) {
-            UTILS_LOGGER.info("Error occurs during scroll: " + e, e);
         }
-        return isActionSuccessful;
     }
 }
