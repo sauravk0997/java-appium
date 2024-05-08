@@ -52,7 +52,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertFalse(editProfiles.isGenderFieldPresent(), "Gender field was found");
         sa.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
         editProfiles.toggleAutoplayButton("On");
-        pause(4);
         sa.assertTrue(changePassword.isPasswordDescriptionPresent(), "Password screen was not opened");
         changePassword.enterPasswordNoAccount(INVALID_PASSWORD);
         sa.assertTrue(changePassword.isInvalidPasswordErrorDisplayed(), "Invalid Password error was not displayed");
