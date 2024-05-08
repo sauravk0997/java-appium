@@ -8,6 +8,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
 
@@ -17,6 +18,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
@@ -30,6 +32,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "labelErrorMessage")
     protected ExtendedWebElement labelError;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == '%s'`]/XCUIElementTypeOther/XCUIElementTypeOther")
+    private ExtendedWebElement loadingIconOnPasswordButton;
 
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
@@ -103,14 +108,13 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getLoginButton() {
-        String logInButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
-        return getDynamicAccessibilityId(logInButton);
+        return getDynamicAccessibilityId(LOGIN_BUTTON);
     }
 
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        pause(SHORT_TIMEOUT);
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(loadingIconOnPasswordButton.format(LOGIN_BUTTON).getBy()), DELAY);
         getLoginButton().clickIfPresent(SHORT_TIMEOUT);
     }
 
