@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -33,27 +34,30 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String ENGLISH_US = "English (US)";
     private static final String NEW_PROFILE_NAME = "New Name";
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
-    @Test(description = " Edit Profile U13, Autoplay & Background video Off", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyU13AutoplayAndBackgroundVideoOff() {
+    @Test(description = "Edit Profile - U13 Profile - Autoplay OFF / Hide Gender", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyU13AutoplayAndNoGenderField() {
         DisneyPlusEditProfileIOSPageBase editProfiles = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
-        SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,KIDS_DOB,getAccount().getProfileLang(),null,true,false);
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount testAccount = getAccount();
+        getAccountApi().addProfile(testAccount, KIDS_PROFILE, KIDS_DOB, testAccount.getProfileLang(), BABY_YODA, true, false);
+
+        setAppToHomeScreen(testAccount, DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfiles.clickEditModeProfile(KIDS_PROFILE);
-        softAssert.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
+        sa.assertTrue(editProfiles.isEditTitleDisplayed(), "Edit profile page not opened");
+        sa.assertFalse(editProfiles.isGenderFieldPresent(), "Gender field was found");
+        sa.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
         editProfiles.toggleAutoplayButton("On");
-        pause(4);
-        changePassword.isHeadlineSubtitlePresent();
-        softAssert.assertTrue(changePassword.isPasswordDescriptionPresent());
+        sa.assertTrue(changePassword.isPasswordDescriptionPresent(), "Password screen was not opened");
+        changePassword.enterPasswordNoAccount(INVALID_PASSWORD);
+        sa.assertTrue(changePassword.isInvalidPasswordErrorDisplayed(), "Invalid Password error was not displayed");
         changePassword.enterPassword(getAccount());
-        softAssert.assertEquals(editProfiles.getAutoplayState(), "On","After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
-        softAssert.assertAll();
+        sa.assertEquals(editProfiles.getAutoplayState(), "On", "After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
+        sa.assertAll();
     }
 
     @Maintainer("gkrishna1")
