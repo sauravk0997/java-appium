@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
 
@@ -80,8 +81,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmail(String userEmailAddress) {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), DELAY);
-        continueButton.clickIfPresent(SHORT_TIMEOUT);
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), DELAY));
     }
 
     public String getErrorMessageString() {

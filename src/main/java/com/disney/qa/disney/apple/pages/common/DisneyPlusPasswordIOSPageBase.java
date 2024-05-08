@@ -9,6 +9,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
 
@@ -111,8 +112,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DELAY);
-        getLoginButton().clickIfPresent(SHORT_TIMEOUT);
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), FIFTEEN_SEC_TIMEOUT));
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
