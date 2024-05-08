@@ -172,7 +172,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_SECOND_AD_POD);
         detailsPage.clickPlayOrContinue();
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE\);
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
         if (content.equalsIgnoreCase(MS_MARVEL)) {
