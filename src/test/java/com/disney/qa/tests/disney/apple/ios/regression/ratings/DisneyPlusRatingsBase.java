@@ -31,7 +31,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
     static final String JAPAN_LOCALE = "JP";
-    static final String JAPAN_LANG = "JP";
+    static final String JAPAN_LANG = "ja";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         getDesiredRatingContent(ratingValue, lang, locale);
