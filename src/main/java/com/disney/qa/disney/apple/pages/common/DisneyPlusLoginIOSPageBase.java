@@ -8,6 +8,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,8 +80,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmail(String userEmailAddress) {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), DELAY);
         continueButton.clickIfPresent(SHORT_TIMEOUT);
-        pause(3);
     }
 
     public String getErrorMessageString() {
