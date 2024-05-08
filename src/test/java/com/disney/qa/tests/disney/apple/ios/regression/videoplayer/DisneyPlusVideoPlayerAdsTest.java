@@ -22,12 +22,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
-    @DataProvider(name = "content")
-    public Object[][] content() {
-        return new Object[][]{{MS_MARVEL},
-                {SPIDERMAN_THREE}
-        };
-    }
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String MS_MARVEL = "Ms. Marvel";
@@ -40,6 +34,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
+
+    @DataProvider(name = "content")
+    public Object[][] content() {
+        return new Object[][]{{MS_MARVEL},
+                {SPIDERMAN_THREE}
+        };
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
     @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
