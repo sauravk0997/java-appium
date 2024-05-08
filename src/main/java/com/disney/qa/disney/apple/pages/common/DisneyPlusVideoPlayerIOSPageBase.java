@@ -18,6 +18,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -180,7 +181,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
         tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIFTEEN_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
@@ -275,6 +276,23 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
         dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    /**
+     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
+     * DisneyPlusVideoPlayerIOSPageBase.
+     *
+     * @param playbackPercent
+     */
+    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
+        displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        int seekBarWidth = seekBar.getSize().getWidth();
+        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        displayVideoController();
+        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -533,6 +551,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return currentTimeInSec;
     }
 
+    public int getCurrentTime() {
+        displayVideoController();
+        String[] currentTime = currentTimeLabel.getText().split(":");
+        int currentTimeInSec = 0;
+        if (currentTime.length > 2) {
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60 + Integer.parseInt(currentTime[1]) * 60 + (Integer.parseInt(currentTime[2]));
+        } else {
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
+        }
+        LOGGER.info("Playback currently at {} seconds...", currentTimeInSec);
+        return currentTimeInSec;
+    }
+
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
         sa.assertTrue(getBeginningTime() < 60,
                 "Video is not playing from the beginning.");
@@ -589,6 +620,54 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isElementPresent();
     }
 
+    public boolean isRemainingTimeVisibleInCorrectFormat() {
+        displayVideoController();
+        return validateTimeFormat(timeRemainingLabel.getText().replace("-", ""));
+    }
+
+    public boolean isCurrentTimeVisibleInCorrectFormat() {
+        displayVideoController();
+        return validateTimeFormat(currentTimeLabel.getText());
+    }
+
+    public boolean validateTimeFormat(String time) {
+        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMMSS = Pattern.compile("^[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMSS = Pattern.compile("^[\\d]:[0-5][\\d]$");
+        if (timePatternInHHMMSS.matcher(time).matches()) {
+            LOGGER.info("Content time is displayed HH:MM:SS format");
+            return true;
+        } else if (timePatternInHMMSS.matcher(time).matches()) {
+            LOGGER.info("Content time is displayed H:MM:SS format");
+            return true;
+        } else if (timePatternInMMSS.matcher(time).matches()) {
+            LOGGER.info("Content time is displayed in MM:SS format");
+            return true;
+        } else if (timePatternInMSS.matcher(time).matches()) {
+            LOGGER.info("Content time is displayed in M:SS format");
+            return true;
+        } else {
+            LOGGER.info("Content time is not displayed in correct format");
+            return false;
+        }
+    }
+
+    /**
+     * To verify Playhead represents current time with respect to the total length of the video,
+     * we are scruubing playhead to 50% and verifying with Half of seekbar width plus/minus 20
+     */
+    public boolean verifyPlayheadRepresentsCurrentPointOfTime() {
+        displayVideoController();
+        int seekBarWidth = seekBar.getSize().getWidth();
+
+        scrubToPlaybackPercentage(50);
+        waitForVideoToStart();
+        int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
+        int expectedPosition = (seekBarWidth / 2);
+        return ((expectedPosition - 20) < currentPositionOnSeekPlayerAfterScrub && currentPositionOnSeekPlayerAfterScrub < (expectedPosition + 20));
+    }
+
     public enum PlayerControl {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
@@ -608,14 +687,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getSkipPromoButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
     public void skipPromoIfPresent() {
-        displayVideoController();
-        if (getSkipPromoButton().isPresent()) {
-            LOGGER.info("Skipping promo..");
-            getSkipPromoButton().click();
-        }
+        getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
+    }
+
+    public void waitForAdGracePeriodToEnd() {
+        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+        LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
+        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
+                until(it -> getRemainingTime() < gracePeriod);
     }
 }
