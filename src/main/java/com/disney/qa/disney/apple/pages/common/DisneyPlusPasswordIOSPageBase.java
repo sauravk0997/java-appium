@@ -25,7 +25,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
 
-    @ExtendedFindBy(accessibilityId = "primaryButton")
+    @ExtendedFindBy(accessibilityId = "Log In")
     protected ExtendedWebElement logInButton;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
@@ -101,11 +101,18 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         passwordEntryField.type(password);
     }
 
+    public void enterLogInPassword(String password) {
+      secureTextEntryField.type(password);
+    }
+
+    public void clickLogInButton() {
+        logInButton.click();
+    }
+
     public void submitPasswordForLogin(String userPassword) {
-        typePassword(userPassword);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        clickPrimaryButtonByCoordinates();
-        hideKeyboard();
+        //To hide the keyboard, passing \n at the end of password value
+        enterLogInPassword(userPassword + "\n");
+        clickLogInButton();
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
