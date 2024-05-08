@@ -155,9 +155,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
         homePage.getSearchNav().click();
-        if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-            searchPage.clearText();
-        }
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
