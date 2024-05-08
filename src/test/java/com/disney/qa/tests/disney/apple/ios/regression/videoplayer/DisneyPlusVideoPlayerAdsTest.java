@@ -39,7 +39,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
     private static final String DURING_PRE_ROLL = "During pre-roll,";
-    private static final String VALIDATING_EXIT_PLAYER = "{} validating exit player for {}";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
@@ -156,7 +155,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
         homePage.getSearchNav().click();
-        LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_PRE_ROLL);
         if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
             searchPage.clearText();
         }
@@ -170,7 +168,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
-        LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_SECOND_AD_POD);
         detailsPage.clickPlayOrContinue();
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
