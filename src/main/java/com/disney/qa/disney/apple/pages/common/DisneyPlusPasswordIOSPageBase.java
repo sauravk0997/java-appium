@@ -103,7 +103,8 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getLoginButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText()));
+        String logInButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
+        return getDynamicAccessibilityId(logInButton);
     }
 
     public void submitPasswordForLogin(String userPassword) {
