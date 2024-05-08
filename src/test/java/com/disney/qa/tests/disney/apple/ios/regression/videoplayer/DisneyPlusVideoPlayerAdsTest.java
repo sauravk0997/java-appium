@@ -11,6 +11,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -21,6 +22,13 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DE
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
+
+    @DataProvider(name = "content")
+    public Object[][] content() {
+        return new Object[][]{{MS_MARVEL},
+                {SPIDERMAN_THREE}
+        };
+    }
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String MS_MARVEL = "Ms. Marvel";
@@ -137,47 +145,44 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(description = "VOD Player - Ads - Leave Player during Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
-    public void verifyLeavePlayerDuringAd() {
-        String errorFormat = "%s %s for %s";
+    @Test(description = "VOD Player - Ads - Leave Player during Ad", dataProvider = "content", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyLeavePlayerDuringAd(String content) {
+        String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        List<String> content = Arrays.asList(MS_MARVEL, SPIDERMAN_THREE);
         DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
         homePage.getSearchNav().click();
-        content.forEach(item -> {
-            LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_PRE_ROLL, item);
-            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                searchPage.clearText();
-            }
-            searchPage.searchForMedia(item);
-            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-            results.get(0).click();
-            detailsPage.isOpened();
-            detailsPage.clickPlayButton().isOpened();
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
-            videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE, item));
-            LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_SECOND_AD_POD, item);
-            detailsPage.clickPlayOrContinue();
-            videoPlayer.isOpened();
-            videoPlayer.waitForAdToCompleteIfPresent(5);
-            videoPlayer.skipPromoIfPresent();
-            if (item.equalsIgnoreCase(MS_MARVEL)) {
-                videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
-            } else {
-                videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
-            }
-            videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-            sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
-            videoPlayer.clickBackButton();
-            sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE, item));
-            homePage.getSearchNav().click();
-        });
+        LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_PRE_ROLL);
+        if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+            searchPage.clearText();
+        }
+        searchPage.searchForMedia(content);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), "Player view did not open. ");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+        LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_SECOND_AD_POD);
+        detailsPage.clickPlayOrContinue();
+        videoPlayer.isOpened();
+        videoPlayer.waitForAdToCompleteIfPresent(5);
+        videoPlayer.skipPromoIfPresent();
+        if (content.equalsIgnoreCase(MS_MARVEL)) {
+            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
+        } else {
+            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
+        }
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
         sa.assertAll();
     }
 
