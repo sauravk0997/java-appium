@@ -21,7 +21,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DE
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
-
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String MS_MARVEL = "Ms. Marvel";
