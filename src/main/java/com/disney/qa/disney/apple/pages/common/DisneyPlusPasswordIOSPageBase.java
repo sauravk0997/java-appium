@@ -8,6 +8,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
 
@@ -17,6 +19,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
@@ -24,9 +27,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
-
-    @ExtendedFindBy(accessibilityId = "Log In")
-    protected ExtendedWebElement logInButton;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
     protected ExtendedWebElement continueButton;
@@ -86,7 +86,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLoginButtonDisplayed() {
-        return logInButton.isPresent();
+        return getLoginButton().isPresent();
     }
 
     public boolean isForgotPasswordLinkDisplayed() {
@@ -105,14 +105,14 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
       secureTextEntryField.type(password);
     }
 
-    public void clickLogInButton() {
-        logInButton.click();
+    public ExtendedWebElement getLoginButton() {
+        return getDynamicAccessibilityId(LOGIN_BUTTON);
     }
 
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        clickLogInButton();
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DEFAULT_EXPLICIT_TIMEOUT));
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
