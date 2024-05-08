@@ -45,7 +45,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(description = "Search > Empty Page State", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPage() {
@@ -302,7 +301,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void verifyNoResultFoundMessage(SoftAssert sa, String title){
+    private void verifyNoResultFoundMessage(SoftAssert sa, String title) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         homePage.clickSearchIcon();
