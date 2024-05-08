@@ -168,9 +168,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             videoPlayer.waitForAdToCompleteIfPresent(5);
             videoPlayer.skipPromoIfPresent();
             if (item.equalsIgnoreCase(MS_MARVEL)) {
-                videoPlayer.waitForEpisodeGracePeriodToEnd();
+                videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
             } else {
-                videoPlayer.waitForMovieGracePeriodToEnd();
+                videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
             }
             videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
             sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, item));
@@ -189,7 +189,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
-        videoPlayer.waitForAdGracePeriodToEnd();
+        videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found after scrubbing forward after an ad grace period");
 

@@ -688,20 +688,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         clickBackButton();
     }
 
-    public void waitForEpisodeGracePeriodToEnd() {
-        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info(WAITING_PLAYBACK_GRACE_PERIOD, FORTY_FIVE_SEC_TIMEOUT);
-        fluentWait(getDriver(), gracePeriod, 5, PLAYBACK_UNABLE_PASS_GRACE_PERIOD_ERROR_MESSAGE).
-                until(it -> getRemainingTime() < gracePeriod);
-    }
-
-    public void waitForMovieGracePeriodToEnd() {
-        int gracePeriod = getRemainingTimeThreeIntegers() - FORTY_FIVE_SEC_TIMEOUT;
-        LOGGER.info(WAITING_PLAYBACK_GRACE_PERIOD, FORTY_FIVE_SEC_TIMEOUT);
-        fluentWait(getDriver(), gracePeriod, 5, PLAYBACK_UNABLE_PASS_GRACE_PERIOD_ERROR_MESSAGE).
-                until(it -> getRemainingTimeThreeIntegers() < gracePeriod);
-    }
-
     public ExtendedWebElement getSkipPromoButton() {
         return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
@@ -710,8 +696,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
     }
 
-    public void waitForAdGracePeriodToEnd() {
-        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+    public void waitForAdGracePeriodToEnd(int remainingTime) {
+        int gracePeriod = remainingTime - FORTY_FIVE_SEC_TIMEOUT;
         LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
