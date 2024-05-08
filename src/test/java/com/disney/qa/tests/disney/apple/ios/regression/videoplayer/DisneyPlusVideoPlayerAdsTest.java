@@ -40,6 +40,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String VALIDATING_EXIT_PLAYER = "{} validating exit player for {}";
+    private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
     @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
@@ -162,15 +163,16 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), "Player view did not open. ");
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+
         LOGGER.info(VALIDATING_EXIT_PLAYER, DURING_SECOND_AD_POD);
         detailsPage.clickPlayOrContinue();
-        videoPlayer.isOpened();
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE\);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
         if (content.equalsIgnoreCase(MS_MARVEL)) {
