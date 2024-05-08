@@ -48,7 +48,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public static List<String> getLogInPasswordScreenTexts(DisneyLocalizationUtils disneyLanguageUtils) {
         var list = new ArrayList<String>();
-        getEnumValues(ENTER_YOUR_PASSWORD, PASSWORD, FORGOT_PASSWORD, LOGIN_BTN)
+        getEnumValues(ENTER_YOUR_PASSWORD, PASSWORD, FORGOT_PASSWORD, BTN_LOGIN)
                 .forEach(item -> list.add(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item)));
         return list;
     }
