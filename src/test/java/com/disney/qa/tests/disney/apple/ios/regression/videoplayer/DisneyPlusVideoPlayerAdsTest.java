@@ -178,6 +178,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE, item));
             homePage.getSearchNav().click();
         });
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72177"})
