@@ -25,9 +25,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
 
-    @ExtendedFindBy(accessibilityId = "Log In")
-    protected ExtendedWebElement logInButton;
-
     @ExtendedFindBy(accessibilityId = "CONTINUE")
     protected ExtendedWebElement continueButton;
 
@@ -86,7 +83,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLoginButtonDisplayed() {
-        return logInButton.isPresent();
+        return getLoginButton().isPresent();
     }
 
     public boolean isForgotPasswordLinkDisplayed() {
@@ -105,14 +102,14 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
       secureTextEntryField.type(password);
     }
 
-    public void clickLogInButton() {
-        logInButton.click();
+    public ExtendedWebElement getLoginButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText()));
     }
 
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        clickLogInButton();
+        getLoginButton().clickIfPresent(SHORT_TIMEOUT);
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
