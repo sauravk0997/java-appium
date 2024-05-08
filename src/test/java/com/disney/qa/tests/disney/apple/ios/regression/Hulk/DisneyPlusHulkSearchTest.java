@@ -49,19 +49,18 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(description = "Search > Empty Page State", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPage() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String inValidTitleForAdult = "Demolition";
+        String inValidTitleForKids = "Robocop";
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(getAccount(), KIDS_PROFILE, KIDS_DOB, getAccount().getProfileLang(), null, true, true);
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia("Demolition");
-        searchPage.getTypeButtonByLabel("search").clickIfPresent();
-        pause(2);
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "'No results' error message was not as expected");
+        verifyNoResultFoundMessage(sa, inValidTitleForAdult);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        verifyNoResultFoundMessage(sa, inValidTitleForKids);
         sa.assertAll();
     }
 
@@ -301,5 +300,16 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
                 "character after 64 char is accepted in search bar");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
         sa.assertAll();
+    }
+
+    private void verifyNoResultFoundMessage(SoftAssert sa, String title){
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(title);
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(title), "'No results' error message was not as expected");
     }
 }
