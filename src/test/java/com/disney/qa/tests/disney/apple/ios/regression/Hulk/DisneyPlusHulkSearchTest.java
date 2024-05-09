@@ -309,7 +309,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia(title);
-        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        searchPage.getKeyboardSearchButton().clickIfPresent();
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(title), "'No results' error message was not as expected");
     }
 }
