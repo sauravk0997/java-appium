@@ -186,7 +186,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
     private ExtendedWebElement globalNavBarView;
 
-    @ExtendedFindBy(accessibilityId = "buttonBack")
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement backArrow;
     @ExtendedFindBy(accessibilityId = "headlineHeader")
     protected ExtendedWebElement headlineHeader;

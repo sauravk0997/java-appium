@@ -285,7 +285,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
 
         //Toggle switch off but do not tap confirm your choice button
@@ -293,7 +293,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.tapConsentSwitch();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle was not Turned Off");
         oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
 
         //Toggle switch to OFF on Selling sharing page reflect on "Notice of Right to Opt-Out of Sale/Sharing" Page
@@ -305,7 +305,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sellinglegalTextPage.clickBackbutton();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle on Notice of Right to Opt-Out of Sale/Sharing should reflect the value of Selling, Sharing, Targeted Advertising page");
         oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
 
         //Toggle switch to OFF on  "Notice of Right to Opt-Out of Sale/Sharing" Page reflect on Selling Sharing" Page
@@ -319,7 +319,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.tapConfirmMyChoiceButton();
         sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
         sa.assertAll();
     }
