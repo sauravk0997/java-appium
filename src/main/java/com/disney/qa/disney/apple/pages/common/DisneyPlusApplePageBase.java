@@ -10,6 +10,7 @@ import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
@@ -40,6 +41,7 @@ import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -77,6 +79,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String PARTNER = "disney";
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
+    private static final String CONTENT_ENTITLEMENTS = "disney_plus_sub:base";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1408,21 +1411,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
-    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
+    public ExploreApi getExploreAPI() {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform(APPLE)
                 .partner(PARTNER)
                 .environment(DisneyParameters.getEnv())
                 .build();
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
+        return exploreApi;
+    }
+
+    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
+        ExploreApi exploreApi = getExploreAPI();
         ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
                 .profileId(account.getProfileId())
                 .limit(limit)
                 .build();
-        try{
+        try {
             ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
             return containerSet.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e){
+        } catch (URISyntaxException | JsonProcessingException e) {
             UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
             return ExceptionUtils.rethrow(e);
         }
@@ -1445,5 +1453,25 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
     public boolean isRatingPresent(String ratingsDictionaryKey) {
         return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
+    }
+
+    public int getMovieTimeFromExploreAPI(DisneyAccount account, String movieId) {
+        ExploreApi exploreApi = getExploreAPI();
+        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(movieId)
+                .profileId(account.getProfileId()).contentEntitlements(CONTENT_ENTITLEMENTS).build();
+        try {
+            ExploreContent movieDetails = exploreApi.getMovie(searchRequest);
+            return movieDetails.getDurationMs();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public String getMovieTimeInHMFormatFromExploreAPI(DisneyAccount account, String movieId) {
+        int duration = getMovieTimeFromExploreAPI(account, movieId);
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%dh %dm", hours, minutes);
     }
 }
