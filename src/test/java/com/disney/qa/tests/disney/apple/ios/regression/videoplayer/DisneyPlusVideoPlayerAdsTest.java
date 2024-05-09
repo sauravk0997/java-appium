@@ -81,7 +81,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SPIDERMAN_THREE, sa);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not playing");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToComplete(videoPlayer.getAdRemainingTimeInSeconds(), 5);
@@ -112,7 +112,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS, sa);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad Badge is not displayed");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresentWhenControlDisplay(), "Ad Badge is not displayed when controls are visible");
 
         videoPlayer.clickBackButton();
@@ -200,6 +200,20 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
+    @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyAdContentTimeDisplayUI() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.isAdRemainingTimePresent());
+        verifyAdRemainingTimeFormat(sa);
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content, SoftAssert sa) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -213,5 +227,16 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
         detailsPage.clickPlayButton();
+    }
+
+    private void verifyAdRemainingTimeFormat(SoftAssert sa) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int adTime = videoPlayer.getAdRemainingTimeInSeconds();
+        if (adTime < 60) {
+            sa.assertTrue(videoPlayer.getAdRemainingTimeInString().startsWith("0:"), "Ad remaining time should start with 0");
+        } else {
+            sa.assertFalse(videoPlayer.getAdRemainingTimeInString().startsWith("0:"), "Ad remaining time should start with 1 or 2");
+        }
+        sa.assertTrue(videoPlayer.isAdRemainingTimeVisibleInCorrectFormat(), "Ad remaining time is not visible in MM:SS or M:SS Format");
     }
 }

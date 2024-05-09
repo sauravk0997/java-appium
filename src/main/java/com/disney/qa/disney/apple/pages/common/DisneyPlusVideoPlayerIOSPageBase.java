@@ -700,4 +700,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
     }
+
+    public boolean isAdRemainingTimePresent() {
+        displayVideoController();
+        return adRemainingTime.isPresent();
+    }
+
+    public String getAdRemainingTimeInString() {
+        displayVideoController();
+        String adTime = isAdBadgeLabelPresent() ? adRemainingTime.getText() : "0:00";
+        LOGGER.info("Ad Playback time remaining {} string...", adTime);
+        return adTime;
+    }
+
+    public boolean isAdRemainingTimeVisibleInCorrectFormat() {
+        displayVideoController();
+        return validateTimeFormat(adRemainingTime.getText());
+    }
 }
