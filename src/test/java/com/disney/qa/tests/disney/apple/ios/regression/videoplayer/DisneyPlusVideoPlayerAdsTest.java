@@ -43,6 +43,25 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         };
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
+    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyAdDurationTimer() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found");
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
+        int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
+        videoPlayer.waitForAdToCompleteIfPresent(3);
+        videoPlayer.skipPromoIfPresent();
+        int remainingTimeAfterAd = videoPlayer.getRemainingTime();
+        sa.assertTrue(remainingTimeAfterAd <= remainingTimeBeforeAd,
+                "Remaining time before ad" + remainingTimeBeforeAd +
+                        " is not greater than remaining time after ad" + remainingTimeAfterAd);
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
     @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyAdsPlayerAudioSubtitleButton() {
