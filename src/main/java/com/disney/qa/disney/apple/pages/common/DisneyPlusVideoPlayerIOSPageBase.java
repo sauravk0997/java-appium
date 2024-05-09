@@ -699,8 +699,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
     }
 
-    public void waitForAdGracePeriodToEnd() {
-        int gracePeriod = getRemainingTime() - FORTY_FIVE_SEC_TIMEOUT;
+    public void waitForAdGracePeriodToEnd(int remainingTime) {
+        int gracePeriod = remainingTime - FORTY_FIVE_SEC_TIMEOUT;
         LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
