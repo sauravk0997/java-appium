@@ -19,6 +19,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private List<String> CONTENT_TITLE;
     private boolean isMovie = false;
     static final String APAC_G = "G";
+    static final String APAC_PG = "PG";
+    static final String APAC_12 = "12+";
     static final String KCC_7 = "7+";
     static final String KCC_12 = "12+";
     static final String KCC_15 = "15+";
@@ -29,7 +31,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
     static final String JAPAN_LOCALE = "JP";
-    static final String JAPAN_LANG = "JP";
+    static final String JAPAN_LANG = "ja";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         getDesiredRatingContent(ratingValue, lang, locale);
