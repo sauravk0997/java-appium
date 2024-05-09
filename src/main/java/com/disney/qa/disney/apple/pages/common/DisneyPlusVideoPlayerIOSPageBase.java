@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -615,10 +616,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isAdTimeDurationPresentWithVideoControls() {
         displayVideoController();
         List<ExtendedWebElement> remainingTimes = findExtendedWebElements(staticTextLabelContains.format(":").getBy());
-        for (ExtendedWebElement remainingTime : remainingTimes) {
-            if (!remainingTime.getText().contains("-")) {
-                return true;
+        if (!remainingTimes.isEmpty()) {
+            for (ExtendedWebElement remainingTime : remainingTimes) {
+                if (!remainingTime.getText().contains("-")) {
+                    return true;
+                }
             }
+        } else {
+            return false;
         }
         return false;
     }
