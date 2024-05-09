@@ -76,7 +76,8 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourUSStatePrivacyRightsLink(){
-        ExtendedWebElement element=customHyperlinkByLabel.format(usPrivacyRights);
+        //The "usPrivacyRights" hyperlink is breaking into two lines due to that the tap location (bottom left corner) is applied
+        ExtendedWebElement element = customHyperlinkByLabel.format(usPrivacyRights);
         var dimension = element.getSize();
         Point location = element.getLocation();
         tap(location.getX() , location.getY() + dimension.getHeight());
