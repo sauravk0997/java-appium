@@ -11,6 +11,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -153,14 +154,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int adTimeRemainingMinus30 = videoPlayer.getAdTimeRemaining() - 30;
         videoPlayer.displayVideoController();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 3);
-        sa.assertTrue(videoPlayer.getAdTimeRemaining() > adTimeRemainingMinus30,
+        Assert.assertTrue(videoPlayer.getAdTimeRemaining() > adTimeRemainingMinus30,
                 "Fast forward action is not functional during an ad");
 
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found");
         int adTimeRemainingPlus30 = videoPlayer.getAdTimeRemaining() + 30;
         videoPlayer.displayVideoController();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 3);
-        sa.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingPlus30,
+        Assert.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingPlus30,
                 "Rewind action is not functional during an ad");
         sa.assertAll();
     }
