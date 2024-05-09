@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -75,7 +76,11 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourUSStatePrivacyRightsLink(){
-        clickElementAtLocation(customHyperlinkByLabel.format(usPrivacyRights), 10, 80);
+        //The "usPrivacyRights" hyperlink is breaking into two lines due to that the tap location (bottom left corner) is applied
+        ExtendedWebElement element = customHyperlinkByLabel.format(usPrivacyRights);
+        var dimension = element.getSize();
+        Point location = element.getLocation();
+        tap(location.getX() , location.getY() + dimension.getHeight());
     }
 
     public boolean isYourUSStatePrivacyRightsPageOpened(int timeout){
