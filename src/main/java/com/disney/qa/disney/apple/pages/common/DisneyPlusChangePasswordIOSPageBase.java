@@ -126,6 +126,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     public boolean isPasswordDescriptionPresent(){
         String expectedString = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
         LOGGER.info("Expected auth headline: {}", expectedString);
+        waitForPresenceOfAnElement(headlineSubtitle);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
     }
 
