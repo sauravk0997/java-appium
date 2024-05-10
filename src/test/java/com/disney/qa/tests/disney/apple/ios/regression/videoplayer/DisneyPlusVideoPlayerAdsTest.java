@@ -86,7 +86,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
-        videoPlayer.waitForAdToComplete(videoPlayer.getAdRemainingTimeInSeconds(), 5);
+        videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
@@ -152,18 +152,18 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        int adTimeRemainingBeforeFastForward = videoPlayer.getAdTimeRemaining();
+        int adTimeRemainingBeforeFastForward = videoPlayer.getAdRemainingTimeInSeconds();
         int contentTimeRemaining = videoPlayer.getRemainingTime();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 2);
-        Assert.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingBeforeFastForward,
+        Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeFastForward,
                 "Fast forward action is functional during an ad");
         Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
 
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        int adTimeRemainingBeforeRewind = videoPlayer.getAdTimeRemaining();
+        int adTimeRemainingBeforeRewind = videoPlayer.getAdRemainingTimeInSeconds();
         videoPlayer.displayVideoController();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
-        Assert.assertTrue(videoPlayer.getAdTimeRemaining() < adTimeRemainingBeforeRewind,
+        Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeRewind,
                 "Rewind action is functional during an ad");
         Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
         sa.assertAll();
@@ -258,11 +258,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private void verifyAdRemainingTimeFormat(SoftAssert sa) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         int adTime = videoPlayer.getAdRemainingTimeInSeconds();
+        String adTimeInString = videoPlayer.getAdRemainingTimeInString();
         if (adTime < 60) {
-            sa.assertTrue(videoPlayer.getAdRemainingTimeInString().startsWith("0:"), "Ad remaining time should start with 0");
+            sa.assertTrue(adTimeInString.startsWith("0:"), "Ad remaining time should start with 0");
         } else {
-            sa.assertFalse(videoPlayer.getAdRemainingTimeInString().startsWith("0:"), "Ad remaining time should start with 1 or 2");
+            sa.assertTrue(adTimeInString.startsWith("1:"), "Ad remaining time should start with 1");
         }
-        sa.assertTrue(videoPlayer.isAdRemainingTimeVisibleInCorrectFormat(), "Ad remaining time is not visible in MM:SS or M:SS Format");
+        sa.assertTrue(videoPlayer.isAdRemainingTimeVisibleInCorrectFormat(), "Ad remaining time is not visible in M:SS Format");
     }
 }

@@ -77,9 +77,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type == 'XCUIElementTypeStaticText' and label = 'Ad'$]/XCUIElementTypeOther[12]/XCUIElementTypeStaticText")
-    protected ExtendedWebElement adRemainingTime;
-
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -404,6 +401,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
     }
 
+    public boolean isAdBadgeLabelPresentWhenControlDisplay() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        displayVideoController();
+        return getDynamicAccessibilityId(adLabel).isElementPresent();
+    }
+
     /**
      * Opens the player overlay, reads remaining time that has 3 integers
      * (hours, minutes, seconds) on the seekbar and converts it to seconds
@@ -587,42 +590,33 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         restartButton.click();
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase waitForAdToComplete(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Ad did not end after " + timeout).until(it -> !isAdBadgeLabelPresent());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    public int getAdRemainingTimeInSeconds() {
-        displayVideoController();
-        String adTime = isAdBadgeLabelPresent()?adRemainingTime.getText():"0:00";
-        String[] remainingTime = adTime.split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
-        LOGGER.info("Ad Playback time remaining {} seconds...", remainingTimeInSec);
-        return remainingTimeInSec;
+    public ExtendedWebElement getAdRemainingTime() {
+        return staticTextLabelContains.format(":");
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
-        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+        ExtendedWebElement adTimeBadge = getAdRemainingTime();
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
-            int remainingTime = getAdTimeRemaining();
+            int remainingTime = getAdRemainingTimeInSeconds();
             fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
     }
 
-    public int getAdTimeRemaining() {
-        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+    public int getAdRemainingTimeInSeconds() {
+        ExtendedWebElement adTimeBadge = getAdRemainingTime();
         String[] adTime = adTimeBadge.getText().split(":");
         int remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
         return remainingTime;
     }
 
-    public boolean isAdBadgeLabelPresentWhenControlDisplay() {
-        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+    public String getAdRemainingTimeInString() {
         displayVideoController();
-        return getDynamicAccessibilityId(adLabel).isElementPresent();
+        String adTime = getAdRemainingTime().getText();
+        LOGGER.info("Ad Playback time remaining {} string...", adTime);
+        return adTime;
     }
 
     public boolean isRemainingTimeVisibleInCorrectFormat() {
@@ -708,18 +702,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAdRemainingTimePresent() {
         displayVideoController();
-        return adRemainingTime.isPresent();
-    }
-
-    public String getAdRemainingTimeInString() {
-        displayVideoController();
-        String adTime = isAdBadgeLabelPresent() ? adRemainingTime.getText() : "0:00";
-        LOGGER.info("Ad Playback time remaining {} string...", adTime);
-        return adTime;
+        return getAdRemainingTime().isPresent();
     }
 
     public boolean isAdRemainingTimeVisibleInCorrectFormat() {
         displayVideoController();
-        return validateTimeFormat(adRemainingTime.getText());
+        return validateTimeFormat(getAdRemainingTime().getText());
     }
 }
