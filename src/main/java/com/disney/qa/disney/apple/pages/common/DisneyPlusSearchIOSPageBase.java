@@ -24,8 +24,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement recentSearchResultsView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
-    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
-    protected ExtendedWebElement backButtonOnContentPage;
     private String ratingImage = "current_rating_value_image";
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -226,6 +224,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBackButtonOnContentPage() {
-        return backButtonOnContentPage;
+        return navBackButton;
     }
 }
