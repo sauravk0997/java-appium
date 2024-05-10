@@ -601,9 +601,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
-    /**
-     * @return true if ad timer is displayed on screen when video overlay is down.
-     */
     public boolean isAdTimeDurationPresent() {
         ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         return adTimeBadge.isPresent();

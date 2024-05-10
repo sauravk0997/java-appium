@@ -16,6 +16,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.ValueRange;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
@@ -35,6 +36,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
+    private static final int UI_LATENCY = 15;
 
     @DataProvider(name = "content")
     public Object[][] content() {
@@ -56,7 +58,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(3);
         videoPlayer.skipPromoIfPresent();
         int remainingTimeAfterAd = videoPlayer.getRemainingTime();
-        sa.assertTrue(remainingTimeAfterAd <= remainingTimeBeforeAd,
+        int playDuration = (remainingTimeBeforeAd - remainingTimeAfterAd);
+        ValueRange range = ValueRange.of(0, UI_LATENCY);
+        sa.assertTrue(range.isValidIntValue(playDuration),
                 "Remaining time before ad" + remainingTimeBeforeAd +
                         " is not greater than remaining time after ad" + remainingTimeAfterAd);
         sa.assertAll();
