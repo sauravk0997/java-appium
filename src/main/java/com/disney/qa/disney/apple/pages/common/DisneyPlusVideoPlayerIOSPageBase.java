@@ -621,8 +621,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                     return true;
                 }
             }
-        } else {
-            return false;
         }
         return false;
     }
