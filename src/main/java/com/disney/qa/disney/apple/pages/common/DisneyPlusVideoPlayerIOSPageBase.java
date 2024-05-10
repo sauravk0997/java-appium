@@ -603,15 +603,20 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForAdToCompleteIfPresent(int polling) {
         ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
-        int remainingTime;
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
-            String[] adTime = adTimeBadge.getText().split(":");
-            remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
-            LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
+            int remainingTime = getAdTimeRemaining();
             fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
+    }
+
+    public int getAdTimeRemaining() {
+        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+        String[] adTime = adTimeBadge.getText().split(":");
+        int remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
+        LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
+        return remainingTime;
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
