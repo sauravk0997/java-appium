@@ -327,6 +327,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
+    protected ExtendedWebElement navBackButton;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1446,4 +1449,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isRatingPresent(String ratingsDictionaryKey) {
         return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
     }
+
+    public ExtendedWebElement getNavBackArrow() {
+        return navBackButton;
+    }
+
 }
