@@ -27,6 +27,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String MS_MARVEL = "Ms. Marvel";
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final double SCRUB_PERCENTAGE_SIXTY = 60;
     private static final String FRANCAIS = "Français";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
@@ -88,7 +89,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
