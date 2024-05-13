@@ -767,29 +767,20 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
     @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileChangeAvatar() {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);;
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
-        BufferedImage moreMenuAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
+        BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
-        pause(1);
-        System.out.println(getDriver().getPageSource());
-
-
         editProfile.getAddProfileAvatar().click();
-        pause(1);
-        System.out.println(getDriver().getPageSource());
-
-//Choose avatar
-//        ExtendedWebElement[] avatars = editProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-//        BufferedImage selectedAvatar = getElementImage(avatars[0]);
-//        avatars[0].click();
-
-        sa.assertAll();
+        ExtendedWebElement[] avatars = editProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        editProfile.getDoneButton().click();
+        moreMenu.clickMoreTab();
+        BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
+        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
     }
 
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
