@@ -223,7 +223,4 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
-    public ExtendedWebElement getBackButtonOnContentPage() {
-        return navBackButton;
-    }
 }
