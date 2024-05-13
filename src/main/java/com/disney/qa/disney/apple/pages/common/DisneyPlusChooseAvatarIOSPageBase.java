@@ -1,10 +1,13 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+
+import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
@@ -12,7 +15,10 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "avatarSelectionScreenView")
     ExtendedWebElement avatarSelectionScreenView;
 
-    ExtendedWebElement chooseAvatarTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
+    public ExtendedWebElement getChooseAvatarTitle() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
+    }
 
     private ExtendedWebElement skipButton = getDynamicAccessibilityId(
             getDictionary().getDictionaryItem(
@@ -38,7 +44,7 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return avatarSelectionScreenView.isPresent()
-                && chooseAvatarTitle.isPresent();
+                && getChooseAvatarTitle().isPresent();
     }
 
     public void verifyChooseAvatarPage() {

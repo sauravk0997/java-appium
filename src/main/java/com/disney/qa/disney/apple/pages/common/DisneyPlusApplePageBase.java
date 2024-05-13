@@ -330,6 +330,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
 
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    private ExtendedWebElement headerViewTitleLabel;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1334,11 +1337,19 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
+    public boolean validateScrollingHorizontallyInCollections(CollectionConstant.Collection collection, ExtendedWebElement container) {
+        swipePageTillElementPresent(getCollection(collection), 3, container, Direction.UP, 500);
         List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
         swipeLeftInCollection(collection);
         List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
+        return titles1 != titles2;
+    }
+
+    public boolean validateScrollingVerticallyInCollections(CollectionConstant.Collection firstCollection, CollectionConstant.Collection secondCollection, ExtendedWebElement container) {
+        swipePageTillElementPresent(getCollection(firstCollection), 3, container, Direction.UP, 500);
+        List<ExtendedWebElement> titles1 = getAllCollectionCells(firstCollection);
+        swipePageTillElementPresent(getCollection(secondCollection), 3, container, Direction.UP, 500);
+        List<ExtendedWebElement> titles2 = getAllCollectionCells(secondCollection);
         return titles1 != titles2;
     }
 
@@ -1454,4 +1465,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
+    public ExtendedWebElement getHeaderViewTitleLabel() { return headerViewTitleLabel; }
 }

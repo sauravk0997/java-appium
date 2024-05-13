@@ -5,6 +5,7 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -26,6 +27,7 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.CollectionConstant.Collection.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
@@ -42,6 +44,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWO = "2";
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
+    private static final String PIXAR = "Pixar";
+    private static final String FEATURED = "Featured";
+    private static final String CHOOSE_AVATAR = "Choose Avatar";
+    private static final String COLLECTION_NOT_FOUND_ERROR_MESSAGE = "collection title was not found.";
+    private static final String NOT_ABLE_TO_SCROLL_ERROR_MESSAGE = "Not able to scroll";
+    private static final String NOT_PRESENT_ERROR_MESSAGE = "was not present";
+    private static final String NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE = "Not returned to Edit Profile screen.";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -767,20 +776,47 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
     @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileChangeAvatar() {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);;
+        String errorFormat = "%s %s";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
+
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.getAddProfileAvatar().click();
-        ExtendedWebElement[] avatars = editProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
+        //validate back arrow, Choose Avatar screen title and a few collection titles
+        sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), String.format(errorFormat, "Back arrow", NOT_PRESENT_ERROR_MESSAGE));
+        sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), String.format(errorFormat, CHOOSE_AVATAR + "title", NOT_PRESENT_ERROR_MESSAGE));
+        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(FEATURED), String.format(errorFormat, FEATURED, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
+        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(DISNEY), String.format(errorFormat, DISNEY, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
+        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(PIXAR), String.format(errorFormat, PIXAR, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
+
+        //validate click back arrow
+        chooseAvatar.getBackArrow().click();
+        sa.assertTrue(editProfile.isOpened(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+        editProfile.getAddProfileAvatar().click();
+
+        //validate scroll horizontal and vertical
+        sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollections(CHOOSE_AVATAR_PIXAR, null),
+                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, PIXAR + " collection horizontally"));
+        sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(CHOOSE_AVATAR_FEATURED,
+                        CHOOSE_AVATAR_XMEN, null),
+                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, CHOOSE_AVATAR + " screen vertically"));
+
+        //validate select new avatar
+        swipePageTillElementTappable(editProfile.getCollection(CHOOSE_AVATAR_XMEN), 2, null, Direction.UP, 1000);
+        ExtendedWebElement[] avatars2 = editProfile.getAllCollectionCells(CHOOSE_AVATAR_XMEN).toArray(new ExtendedWebElement[0]);
+        avatars2[0].click();
+        sa.assertTrue(editProfile.isOpened(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
+        sa.assertAll();
     }
 
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
