@@ -258,7 +258,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
-        sa.assertTrue(videoPlayer.isAdRemainingTimePresent());
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
         sa.assertAll();
     }
