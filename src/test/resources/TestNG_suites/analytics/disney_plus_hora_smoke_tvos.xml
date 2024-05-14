@@ -13,7 +13,7 @@
     <parameter name="jenkinsRegressionPipeline" value="Daily-Regression-tvOS-Hora-Smoke"/>
     <parameter name="jenkinsRegressionScheduling" value="0 15 * * 1-5"/>
     <!-- comma separated parameter for single launch and semicolon separated for several launches as a matrix-->
-    <parameter name="jenkinsRegressionMatrix" value="reporting.notification.slack-channels: eds-test-automation"/>
+    <parameter name="jenkinsRegressionMatrix" value="reporting.notification.slack-channels: esqoi-insights-test-automation"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="maxNumberKeepBuilds" value="500"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=ANY;deviceType=tvOS;timeoutMs=120000"/>
