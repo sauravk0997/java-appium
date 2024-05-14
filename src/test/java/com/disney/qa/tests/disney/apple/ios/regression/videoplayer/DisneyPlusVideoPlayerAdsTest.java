@@ -16,6 +16,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.ValueRange;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
@@ -36,12 +37,33 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
+    private static final int UI_LATENCY = 15;
 
     @DataProvider(name = "content")
     public Object[][] content() {
         return new Object[][]{{MS_MARVEL},
                 {SPIDERMAN_THREE}
         };
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
+    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyAdDurationTimer() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
+        videoPlayer.waitForAdToCompleteIfPresent(3);
+        videoPlayer.skipPromoIfPresent();
+        int remainingTimeAfterAd = videoPlayer.getRemainingTime();
+        int playDuration = (remainingTimeBeforeAd - remainingTimeAfterAd);
+        ValueRange range = ValueRange.of(0, UI_LATENCY);
+        sa.assertTrue(range.isValidIntValue(playDuration),
+                "Remaining time before ad" + remainingTimeBeforeAd +
+                        " is not greater than remaining time after ad" + remainingTimeAfterAd);
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
