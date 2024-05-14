@@ -601,7 +601,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAdTimeDurationPresent() {
-        return getAdRemainingTime().isPresent();
+        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
+        return adTimeBadge.isPresent();
     }
 
     /**
