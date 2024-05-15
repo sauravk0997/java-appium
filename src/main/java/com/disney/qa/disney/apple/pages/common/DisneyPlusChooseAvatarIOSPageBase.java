@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -55,5 +54,18 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getSkipButton() {
         return skipButton;
+    }
+
+    public ExtendedWebElement getAvatarHeaderTitle() {
+        return getStaticTextByNameContains("headerViewTitleLabel");
+    }
+
+    public List<ExtendedWebElement> getHeaderTitlesInView() {
+        if (getAvatarHeaderTitle().isPresent()) {
+            List<ExtendedWebElement> headerElements = findExtendedWebElements(getAvatarHeaderTitle().getBy(), SHORT_TIMEOUT);
+            return headerElements;
+        } else {
+            throw new java.util.NoSuchElementException("Failing test, header view elements not found.");
+        }
     }
 }

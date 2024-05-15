@@ -106,6 +106,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement imageLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name CONTAINS \"%s\"`]")
+    protected ExtendedWebElement typeCellNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
@@ -483,6 +485,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeCellLabelContains(String label) {
         return typeCellLabelContains.format(label);
+    }
+
+    public ExtendedWebElement getTypeCellNameContains(String name) {
+        return typeCellNameContains.format(name);
     }
 
     public String getTextFromStaticTextByLabel(String label) {
@@ -1345,14 +1351,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titles1 != titles2;
     }
 
-    public boolean validateScrollingVerticallyInCollections(CollectionConstant.Collection firstCollection, CollectionConstant.Collection secondCollection, ExtendedWebElement container) {
-        swipePageTillElementPresent(getCollection(firstCollection), 3, container, Direction.UP, 500);
-        List<ExtendedWebElement> titles1 = getAllCollectionCells(firstCollection);
-        swipePageTillElementPresent(getCollection(secondCollection), 3, container, Direction.UP, 500);
-        List<ExtendedWebElement> titles2 = getAllCollectionCells(secondCollection);
-        return titles1 != titles2;
-    }
-
     public boolean isBackButtonPresent() {
         return collectionBackButton.isPresent();
     }
@@ -1466,4 +1464,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getHeaderViewTitleLabel() { return headerViewTitleLabel; }
+
+    public boolean validateScrollingVerticallyInCollections(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
+        swipePageTillElementPresent(firstCollection, 3, container, Direction.UP, 500);
+        List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), SHORT_TIMEOUT);
+        swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
+        List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
+        return titles1 != titles2;
+    }
 }

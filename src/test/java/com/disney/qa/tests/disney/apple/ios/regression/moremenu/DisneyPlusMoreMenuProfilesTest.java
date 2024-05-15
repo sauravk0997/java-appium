@@ -2,18 +2,19 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.CollectionConstant.Collection.*;
@@ -44,8 +46,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWO = "2";
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
-    private static final String PIXAR = "Pixar";
-    private static final String FEATURED = "Featured";
+    private static final String DISNEY_HEADER_TITLE = "Disney";
+    private static final String PIXAR_HEADER_TITLE = "Pixar";
+    private static final String FEATURED_HEADER_TITLE = "Featured";
     private static final String CHOOSE_AVATAR = "Choose Avatar";
     private static final String COLLECTION_NOT_FOUND_ERROR_MESSAGE = "collection title was not found.";
     private static final String NOT_ABLE_TO_SCROLL_ERROR_MESSAGE = "Not able to scroll";
@@ -781,7 +784,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
+
+        DisneySearchApi searchApi = new DisneySearchApi("ios", "Prod", "disney");
+        List<ContentSet> avatarSets = searchApi.getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+
+        int lastSetId = avatarSets.size()-1;
+        String lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
+        ExtendedWebElement firstAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName());
+        ExtendedWebElement lastAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName());
+        setAppToHomeScreen(account);
         moreMenu.clickMoreTab();
 
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
@@ -791,27 +803,29 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //validate back arrow, Choose Avatar screen title and a few collection titles
         sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), String.format(errorFormat, "Back arrow", NOT_PRESENT_ERROR_MESSAGE));
         sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), String.format(errorFormat, CHOOSE_AVATAR + "title", NOT_PRESENT_ERROR_MESSAGE));
-        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(FEATURED), String.format(errorFormat, FEATURED, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
-        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(DISNEY), String.format(errorFormat, DISNEY, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
-        sa.assertTrue(editProfile.getHeaderViewTitleLabel().getText().equalsIgnoreCase(PIXAR), String.format(errorFormat, PIXAR, COLLECTION_NOT_FOUND_ERROR_MESSAGE));
+        for (int i = 0; i < chooseAvatar.getHeaderTitlesInView().size(); i++) {
+            //First avatar set name returned is "Default" which does not exist as avatar header title
+            LOGGER.info("Is set name present?" + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent());
+            sa.assertTrue(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent(),
+                    "Avatar header was not found.");
+        }
 
         //validate click back arrow
         chooseAvatar.getBackArrow().click();
-        sa.assertTrue(editProfile.isOpened(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
         editProfile.getAddProfileAvatar().click();
 
-        //validate scroll horizontal and vertical
+        //validate scrolling
         sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollections(CHOOSE_AVATAR_PIXAR, null),
-                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, PIXAR + " collection horizontally"));
-        sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(CHOOSE_AVATAR_FEATURED,
-                        CHOOSE_AVATAR_XMEN, null),
+                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, PIXAR_HEADER_TITLE + " collection horizontally"));
+        sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(firstAvatarHeader, lastAvatarHeader, null),
                 String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, CHOOSE_AVATAR + " screen vertically"));
 
         //validate select new avatar
-        swipePageTillElementTappable(editProfile.getCollection(CHOOSE_AVATAR_XMEN), 2, null, Direction.UP, 1000);
-        ExtendedWebElement[] avatars2 = editProfile.getAllCollectionCells(CHOOSE_AVATAR_XMEN).toArray(new ExtendedWebElement[0]);
-        avatars2[0].click();
-        sa.assertTrue(editProfile.isOpened(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+        swipePageTillElementTappable(chooseAvatar.getTypeCellNameContains(lastSetAvatarId), 2, null, Direction.UP, 1000);
+        chooseAvatar.getTypeCellNameContains(lastSetAvatarId).click();
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+//        pressByElement(editProfile.getDoneButton(), 1);
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
