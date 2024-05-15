@@ -46,11 +46,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWO = "2";
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
-    private static final String DISNEY_HEADER_TITLE = "Disney";
     private static final String PIXAR_HEADER_TITLE = "Pixar";
-    private static final String FEATURED_HEADER_TITLE = "Featured";
     private static final String CHOOSE_AVATAR = "Choose Avatar";
-    private static final String COLLECTION_NOT_FOUND_ERROR_MESSAGE = "collection title was not found.";
     private static final String NOT_ABLE_TO_SCROLL_ERROR_MESSAGE = "Not able to scroll";
     private static final String NOT_PRESENT_ERROR_MESSAGE = "was not present";
     private static final String NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE = "Not returned to Edit Profile screen.";
