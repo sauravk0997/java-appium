@@ -45,6 +45,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String ONE = "1";
     private static final String TWO = "2";
     private static final String THREE = "3";
+    private static final String ESPAÑOL = "Español";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
