@@ -28,11 +28,7 @@ public class CollectionConstant {
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         KIDS_MICKEY_AND_FRIENDS,
         STUDIOS_AND_NETWORKS,
-        CHOOSE_AVATAR_FEATURED,
-        CHOOSE_AVATAR_DISNEY,
-        CHOOSE_AVATAR_PIXAR,
-        CHOOSE_AVATAR_STAR_WARS,
-        CHOOSE_AVATAR_XMEN;
+        CHOOSE_AVATAR_PIXAR;
     }
 
     public static String getCollectionName(Collection collection) {
@@ -87,17 +83,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
                 return "6e48d2c9-2ee3-476c-91d7-deb779bcfb6e";
-            //Choose Avatar Screen collections
-            case CHOOSE_AVATAR_FEATURED:
-                return "0e3c5897-f130-422e-affe-f748a6c67c10";
-            case CHOOSE_AVATAR_DISNEY:
-                return "ba66a590-2c73-40d4-b604-cf994b819abb";
             case CHOOSE_AVATAR_PIXAR:
                 return "efcbb0b1-144a-4a94-ab93-f6492b8c56a3";
-            case CHOOSE_AVATAR_STAR_WARS:
-                return "cc9d6d78-a034-4757-8fd1-32c457b7bc01";
-            case CHOOSE_AVATAR_XMEN:
-                return "02ed2590-bf92-4ecd-8922-7c17c88700d3";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }

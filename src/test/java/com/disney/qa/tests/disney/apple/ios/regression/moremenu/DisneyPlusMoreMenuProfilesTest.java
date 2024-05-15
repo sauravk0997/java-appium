@@ -796,17 +796,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.getAddProfileAvatar().click();
-        //validate back arrow, Choose Avatar screen title and a few collection titles
+        //validate back arrow, Choose Avatar screen title and avatar headers
         sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), String.format(errorFormat, "Back arrow", NOT_PRESENT_ERROR_MESSAGE));
         sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), String.format(errorFormat, CHOOSE_AVATAR + "title", NOT_PRESENT_ERROR_MESSAGE));
         for (int i = 0; i < chooseAvatar.getHeaderTitlesInView().size(); i++) {
             //First avatar set name returned is "Default" which does not exist as avatar header title
-            LOGGER.info("Is set name present?" + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent());
             sa.assertTrue(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent(),
                     "Avatar header was not found.");
         }
 
-        //validate click back arrow
+        //validate back arrow function
         chooseAvatar.getBackArrow().click();
         sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
         editProfile.getAddProfileAvatar().click();
@@ -821,7 +820,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         swipePageTillElementTappable(chooseAvatar.getTypeCellNameContains(lastSetAvatarId), 2, null, Direction.UP, 1000);
         chooseAvatar.getTypeCellNameContains(lastSetAvatarId).click();
         sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
-//        pressByElement(editProfile.getDoneButton(), 1);
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
