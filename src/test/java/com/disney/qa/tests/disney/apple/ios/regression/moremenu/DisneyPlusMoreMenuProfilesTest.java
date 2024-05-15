@@ -45,12 +45,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String ONE = "1";
     private static final String TWO = "2";
     private static final String THREE = "3";
-    private static final String ESPAÑOL = "Español";
-    private static final String PIXAR_HEADER_TITLE = "Pixar";
-    private static final String CHOOSE_AVATAR = "Choose Avatar";
-    private static final String NOT_ABLE_TO_SCROLL_ERROR_MESSAGE = "Not able to scroll";
-    private static final String NOT_PRESENT_ERROR_MESSAGE = "was not present";
-    private static final String NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE = "Not returned to Edit Profile screen.";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -777,7 +771,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
         DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
         DisneySearchApi searchApi = new DisneySearchApi("ios", "Prod", "disney");
@@ -793,8 +786,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getAddProfileAvatar().click();
 
         //validate back arrow, Choose Avatar screen title and avatar headers
-        sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), String.format(errorFormat, "Back arrow", NOT_PRESENT_ERROR_MESSAGE));
-        sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), String.format(errorFormat, CHOOSE_AVATAR + "title", NOT_PRESENT_ERROR_MESSAGE));
+        sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), "Back arrow was not present.");
+        sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), "Choose Avatar title was not present.");
         for (int i = 0; i < chooseAvatar.getHeaderTitlesInView().size(); i++) {
             //First avatar set name returned is "Default" which does not exist as avatar header title
             sa.assertTrue(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent(),
@@ -803,20 +796,20 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //validate back arrow function
         chooseAvatar.getBackArrow().click();
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Not returned back to Edit Profile screen.");
         editProfile.getAddProfileAvatar().click();
 
         //validate scrolling
         sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollections(CHOOSE_AVATAR_PIXAR, null),
-                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, PIXAR_HEADER_TITLE + " collection horizontally"));
+                "Not able to horizontally scroll Pixar collection.");
         sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()),
                 chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
-                String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, CHOOSE_AVATAR + " screen vertically"));
+                "Not able to vertically scroll Choose Avatar screen.");
 
         //validate select new avatar
         swipePageTillElementTappable(chooseAvatar.getTypeCellNameContains(lastSetAvatarId), 2, null, Direction.UP, 1000);
         chooseAvatar.getTypeCellNameContains(lastSetAvatarId).click();
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Not returned back to Edit Profile screen.");
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
