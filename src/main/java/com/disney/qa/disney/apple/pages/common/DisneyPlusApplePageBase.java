@@ -332,9 +332,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
 
-    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
-    private ExtendedWebElement headerViewTitleLabel;
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1462,8 +1459,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
     }
-
-    public ExtendedWebElement getHeaderViewTitleLabel() { return headerViewTitleLabel; }
 
     public boolean validateScrollingVerticallyInCollections(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
         swipePageTillElementPresent(firstCollection, 3, container, Direction.UP, 500);

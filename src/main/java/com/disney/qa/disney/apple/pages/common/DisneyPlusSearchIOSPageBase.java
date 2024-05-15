@@ -44,6 +44,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement clearText;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
     private ExtendedWebElement cancelButtonRecentSearch;
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    private ExtendedWebElement headerViewTitleLabel;
     private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
@@ -132,7 +134,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isRecentSearchDisplayed() {
-        return getHeaderViewTitleLabel().getText().equalsIgnoreCase("RECENT SEARCHES");
+        return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
     }
 
     public boolean isTitlePresent(String title) {
