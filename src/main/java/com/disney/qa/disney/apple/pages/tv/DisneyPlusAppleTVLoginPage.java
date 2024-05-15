@@ -156,7 +156,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void clickContinueBtn() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        primaryButton.click();
+        continueButton.click();
     }
 
     public void clickTryAgainBtn() {
