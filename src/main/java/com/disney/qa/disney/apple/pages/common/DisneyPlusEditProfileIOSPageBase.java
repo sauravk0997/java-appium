@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
