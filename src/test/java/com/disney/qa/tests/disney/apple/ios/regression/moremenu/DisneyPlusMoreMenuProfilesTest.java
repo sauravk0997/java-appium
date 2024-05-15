@@ -774,9 +774,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
     @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileChangeAvatar() {
         String errorFormat = "%s %s";
