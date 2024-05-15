@@ -777,23 +777,21 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
     @Test(description = "Edit Profile - Tap Edit Profile", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileChangeAvatar() {
-        String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
+        DisneySearchApi searchApi = new DisneySearchApi("ios", "Prod", "disney");
+        List<ContentSet> avatarSets = searchApi.getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-
-        DisneySearchApi searchApi = new DisneySearchApi("ios", "Prod", "disney");
-        List<ContentSet> avatarSets = searchApi.getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
-
+        String errorFormat = "%s %s";
         int lastSetId = avatarSets.size()-1;
         String lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
         ExtendedWebElement firstAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName());
         ExtendedWebElement lastAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName());
+
         setAppToHomeScreen(account);
         moreMenu.clickMoreTab();
-
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
