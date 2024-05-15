@@ -198,7 +198,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement showHidePasswordIndicator;
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     protected ExtendedWebElement collectionHeadlineTitle;
-    @ExtendedFindBy(accessibilityId = "Email")
+    @ExtendedFindBy(accessibilityId = "textFieldEmail")
     protected ExtendedWebElement emailField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow")
     protected ExtendedWebElement windowType;

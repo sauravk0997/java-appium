@@ -150,7 +150,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void enterEmail(String email) {
-        emailField.type(email);
+        textEntryField.type(email);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -187,8 +187,8 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
-        clickEmailField();
-        clickLocalizationEnterNewBtn();
+        //clickEmailField();
+        //clickLocalizationEnterNewBtn();
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
