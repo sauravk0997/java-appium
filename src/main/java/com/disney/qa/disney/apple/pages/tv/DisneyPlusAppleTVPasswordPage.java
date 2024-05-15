@@ -64,7 +64,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void clickPassword() {
-        passwordEntryField.click();
+        textEntryField.click();
     }
 
     public String getPasswordFieldText() {
@@ -103,7 +103,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void enterPassword(String password) {
-        passwordEntryField.type(password);
+        typeTextView.type(password);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -155,7 +155,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         clickSelect();
         isOpened();
         //TODO: TVOS-3472 focus not found on login button after user enters password
-        moveDown(2,1);
+        moveDown(1,1);
         clickSelect();
     }
 
