@@ -787,8 +787,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         List<ContentSet> avatarSets = searchApi.getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         int lastSetId = avatarSets.size()-1;
         String lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
-        ExtendedWebElement firstAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName());
-        ExtendedWebElement lastAvatarHeader = chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName());
 
         setAppToHomeScreen(account);
         moreMenu.clickMoreTab();
@@ -796,16 +794,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.getAddProfileAvatar().click();
+
         //validate back arrow, Choose Avatar screen title and avatar headers
         sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), String.format(errorFormat, "Back arrow", NOT_PRESENT_ERROR_MESSAGE));
         sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), String.format(errorFormat, CHOOSE_AVATAR + "title", NOT_PRESENT_ERROR_MESSAGE));
-        sa.assertTrue(chooseAvatar.isOpened());
-        LOGGER.info("did choose avatar screen open? " + chooseAvatar.isOpened());
-        LOGGER.info("what is setname 0 name? " + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(0).getSetName()));
-        LOGGER.info("what is setname 1 name? " + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()));
-        LOGGER.info("is setname 0 present? " + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(0).getSetName()).isPresent());
-        LOGGER.info("is setname 1 present? " + chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()).isPresent());
-
         for (int i = 0; i < chooseAvatar.getHeaderTitlesInView().size(); i++) {
             //First avatar set name returned is "Default" which does not exist as avatar header title
             sa.assertTrue(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent(),
@@ -820,7 +812,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //validate scrolling
         sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollections(CHOOSE_AVATAR_PIXAR, null),
                 String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, PIXAR_HEADER_TITLE + " collection horizontally"));
-        sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(firstAvatarHeader, lastAvatarHeader, null),
+        sa.assertTrue(chooseAvatar.validateScrollingVerticallyInCollections(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()),
+                chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
                 String.format(errorFormat, NOT_ABLE_TO_SCROLL_ERROR_MESSAGE, CHOOSE_AVATAR + " screen vertically"));
 
         //validate select new avatar
@@ -828,7 +821,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         chooseAvatar.getTypeCellNameContains(lastSetAvatarId).click();
         sa.assertTrue(editProfile.isEditTitleDisplayed(), NOT_RETURNED_EDIT_PROFILE_ERROR_MESSAGE);
         editProfile.getDoneButton().click();
-        pressByElement(editProfile.getDoneButton(), 1);
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
