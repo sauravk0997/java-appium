@@ -64,7 +64,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void clickPassword() {
-        textEntryField.click();
+        secureTextEntryField.click();
     }
 
     public String getPasswordFieldText() {
