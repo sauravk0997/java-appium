@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -10,6 +12,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -20,6 +23,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -258,7 +262,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72422"})
     @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifySeriesExtrasTab() {
+    public void verifySeriesExtrasTab() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -283,9 +287,13 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
 
-        //Get duration from search api
-        List<Integer> seriesExtrasDuration = getSearchApi().getSeries("5qalHg4aPKpv", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).getVideoDurations();
-        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration.get(0));
+        //Get duration from explore api
+        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(SERIES_EXTRA_ENTITY_ID)
+                  .profileId(getAccount().getProfileId()).build();
+        ExploreContent series = getExploreApi().getSeries(searchRequest);
+        int seriesExtrasDuration = series.getContainers().get(2).getItems().get(0).getVisuals().getDurationMs();
+
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration);
         //Get actual duration from trailer cell
         String actualDuration = detailsPage.getFirstDurationLabel().getText().split("m")[0];
         sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
