@@ -88,7 +88,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void clickEmailField() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        emailField.click();
+        textEntryField.click();
     }
 
     public void clickPasswordFld() {
@@ -150,13 +150,13 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void enterEmail(String email) {
-        textEntryField.type(email);
+        typeTextView.type(email);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickContinueBtn() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        primaryButton.click();
+        continueButton.click();
     }
 
     public void clickTryAgainBtn() {
@@ -187,10 +187,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
-        //clickEmailField();
-        //clickLocalizationEnterNewBtn();
+        clickEmailField();
         enterEmail(email);
-        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 3, 1);
         clickSelect();
         clickContinueBtn();
     }
