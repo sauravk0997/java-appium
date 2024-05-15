@@ -287,6 +287,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         } else {
             sa.assertTrue(adTimeInString.startsWith("1:"), "Ad remaining time should start with 1");
         }
-        sa.assertTrue(videoPlayer.isAdRemainingTimeVisibleInCorrectFormat(), "Ad remaining time is not visible in M:SS Format");
+        sa.assertTrue(videoPlayer.validateTimeFormat(videoPlayer.getAdRemainingTime().getText()), "Ad remaining time is not visible in M:SS Format");
     }
 }

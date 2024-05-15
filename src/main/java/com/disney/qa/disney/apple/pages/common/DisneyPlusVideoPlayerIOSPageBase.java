@@ -658,10 +658,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return validateTimeFormat(currentTimeLabel.getText());
     }
 
-    public boolean isAdRemainingTimeVisibleInCorrectFormat() {
-        return validateTimeFormat(getAdRemainingTime().getText());
-    }
-
     public boolean validateTimeFormat(String time) {
         Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
