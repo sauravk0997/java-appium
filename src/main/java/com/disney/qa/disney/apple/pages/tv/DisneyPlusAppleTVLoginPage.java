@@ -188,6 +188,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void proceedToLocalizedPasswordScreen(String email) {
         clickEmailField();
+        clickLocalizationEnterNewBtn();
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 3, 1);
         clickSelect();
