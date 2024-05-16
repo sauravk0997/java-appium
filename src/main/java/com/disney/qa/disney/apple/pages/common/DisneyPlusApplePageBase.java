@@ -250,7 +250,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "customButton")
     protected ExtendedWebElement customButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView")
-    private ExtendedWebElement typeTextView;
+    protected ExtendedWebElement typeTextView;
     @FindBy(xpath = "//*[contains(@name, \"%s\")]")
     private ExtendedWebElement dynamicXpathContainsName;
     @FindBy(xpath = "//*[contains(@label, \"%s\")]")
@@ -329,6 +329,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
+
+    @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
+    protected ExtendedWebElement navBackButton;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1454,6 +1457,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isRatingPresent(String ratingsDictionaryKey) {
         return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
     }
+
+    public ExtendedWebElement getNavBackArrow() {
+        return navBackButton;
+    }
+
 
     public int getMovieTimeFromExploreAPI(DisneyAccount account, String movieId) {
         ExploreApi exploreApi = getExploreAPI();
