@@ -13,13 +13,12 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
-
 public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74415"})
-    @Test(description = "R21: Create PIN - Enter Password - Invalid Input", groups = {"R21"})
+    @Test(description = "R21: Create PIN - Enter Password - Invalid Input", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21InvalidPasswordError() {
         ratingsSetup(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
