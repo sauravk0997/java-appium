@@ -16,11 +16,14 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     private ExtendedWebElement newEmailHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_NEW_HEADER.getText()));
 
-    @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnchecked")
     private ExtendedWebElement logoutAllDevicesUnchecked;
 
-    @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxChecked")
     private ExtendedWebElement logoutAllDevicesChecked;
+
+    @ExtendedFindBy(accessibilityId = "Cancel")
+    private ExtendedWebElement cancelButton;
 
     private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -41,15 +44,15 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public boolean isOpened() {
-        return title.isElementPresent();
+        return getDynamicAccessibilityId("Choose your new MyDisney email").isElementPresent();
     }
 
     public boolean isCurrentEmailShown(String email) {
-        return getDynamicAccessibilityId(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_CURRENT.getText()), Map.of("email", email))).isElementPresent();
+        return getStaticTextByLabelContains(email).isElementPresent();
     }
 
     public boolean isNewEmailHeaderPresent() {
-        return newEmailHeader.isElementPresent();
+        return getStaticTextByLabelContains("Choose an email").isElementPresent();
     }
 
     public void enterNewEmailAddress(String value) {
@@ -57,8 +60,8 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void submitNewEmailAddress(String value) {
-        enterNewEmailAddress(value);
-        primaryButton.click();
+        enterNewEmailAddress(value + "\n");
+        getSaveAndContinueBtn().click();
     }
 
     public boolean isLogoutAllDevicesChecked() {
@@ -70,7 +73,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void clickLogoutAllDevices() {
-        getTypeButtonContainsLabel("checkbox").click();
+        logoutAllDevicesUnchecked.click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
@@ -82,7 +85,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
-        return invalidEmail.isElementPresent();
+        return getStaticTextByLabelContains("Sorry, we are having trouble creating your account").isPresent();
     }
 
     public String getInvalidEmailText() {
@@ -91,7 +94,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public void clickCancelBtn() {
-        String cancelButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.CANCEL_LABEL.getText());
-        dynamicBtnFindByLabel.format(cancelButton).click();
+        cancelButton.click();
     }
 }
