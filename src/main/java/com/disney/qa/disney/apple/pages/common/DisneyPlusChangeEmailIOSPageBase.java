@@ -30,11 +30,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
                             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
 
-    private ExtendedWebElement logoutAllDevicesEmailCopy = staticTextByLabel.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_EMAIL_COPY.getText());
-
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidEmail;
 
@@ -44,7 +39,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public boolean isOpened() {
-        return getDynamicAccessibilityId("Choose your new MyDisney email").isElementPresent();
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HEADER.getText())).isElementPresent();
     }
 
     public boolean isCurrentEmailShown(String email) {
@@ -52,7 +47,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isNewEmailHeaderPresent() {
-        return getStaticTextByLabelContains("Choose an email").isElementPresent();
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HINT.getText())).isElementPresent();
     }
 
     public void enterNewEmailAddress(String value) {
@@ -80,8 +75,8 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         return logoutAllDevicesTitle.isElementPresent();
     }
 
-    public boolean isLogoutAllDevicesEmailCopyDisplayed() {
-        return logoutAllDevicesEmailCopy.isElementPresent();
+    public boolean isLearnMoreAboutMyDisney() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
