@@ -540,7 +540,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isHeadlineSubtitlePresent() {
-        return headlineSubtitle.isPresent();
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())).isElementPresent();
     }
 
     public String getActionableAlertMessage() {
@@ -1491,5 +1491,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         waitForPresenceOfAnElement(collectionView);
         List<ExtendedWebElement> collectionViews = findExtendedWebElements(collectionView.getBy(), SHORT_TIMEOUT);
         return collectionViews.toArray(new ExtendedWebElement[0]);
+    }
+
+    public void clickMyDisneyManageBtn() {
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
     }
 }
