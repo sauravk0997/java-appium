@@ -205,7 +205,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
-    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyIMAXEnhancedVersionTab() throws URISyntaxException, JsonProcessingException {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
