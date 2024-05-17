@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
 import com.disney.alice.AliceDriver;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -252,14 +251,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION})
     public void verifyOriginalsLandingPageUI() throws URISyntaxException, JsonProcessingException {
-        AtomicInteger containerPosition = new AtomicInteger();
+        AtomicInteger containerPosition = new AtomicInteger(0);
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
-        setAppToHomeScreen(testAccount);
+        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickOriginalsTab();
@@ -280,14 +279,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 if (item.getItems().size() > 0) {
                     String titleFromCollection = item.getItems().get(0).getVisuals().getTitle();
                     originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), containerPosition.getAndIncrement());
-                    sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + "" + " collection");
+                    sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + collectionName.getText() + " collection");
                     //verify that correct titles of that collection opened in app, verify with 1 titles
                     originalsPage.getTypeCellLabelContains(titleFromCollection).click();
                     sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
                     sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
                     detailsPage.clickCloseButton();
                 } else {
-                    LOGGER.info(String.format("%s collection is empty", item.getVisuals().getName()));
+                    sa.assertTrue(false, "API returned empty collection: " + item.getVisuals().getName());
                 }
             } else {
                 sa.assertTrue(collectionName.isPresent(), String.format("%s collection was not found", item.getVisuals().getName()));
@@ -440,7 +439,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private void validateRatingAndReleasedYearDetails(SoftAssert sa, String title, String rating, String releasedYear) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
+        if (null != rating) {
+            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
+        } else {
+            LOGGER.info("Api returned 'null' ratings for title: {}", title);
+        }
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
     }
 }

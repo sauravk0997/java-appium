@@ -268,6 +268,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        //Get duration from explore api
+        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(SERIES_EXTRA_ENTITY_ID)
+                .profileId(getAccount().getProfileId()).build();
+        ExploreContent series = getExploreApi().getSeries(searchRequest);
+        int seriesExtrasDuration = 0;
+
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
@@ -286,19 +292,16 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
-
-        //Get duration from explore api
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(SERIES_EXTRA_ENTITY_ID)
-                  .profileId(getAccount().getProfileId()).build();
-        ExploreContent series = getExploreApi().getSeries(searchRequest);
-        int seriesExtrasDuration = series.getContainers().get(2).getItems().get(0).getVisuals().getDurationMs();
-
+        try {
+            seriesExtrasDuration = series.getContainers().get(2).getItems().get(0).getVisuals().getDurationMs();
+        } catch (IndexOutOfBoundsException e) {
+            sa.assertTrue(false, "Series extra duration was returned null from the api");
+        }
         long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seriesExtrasDuration);
         //Get actual duration from trailer cell
         String actualDuration = detailsPage.getFirstDurationLabel().getText().split("m")[0];
         sa.assertTrue(Long.toString(durationFromApi).equalsIgnoreCase(actualDuration),
                 "Series extra duration is not the same value as actual value returned on details page.");
-
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();

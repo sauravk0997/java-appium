@@ -217,11 +217,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickMoviesTab();
-        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             swipe(searchPage.getStaticTextByLabel(filterValue));
             searchPage.getStaticTextByLabel(filterValue).click();
-        }else{
+        } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
@@ -236,13 +236,18 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
         String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET_ID);
-        ExploreContent exploreMovieContent = getApiMovieContent(entityID);
-        int duration = exploreMovieContent.getDurationMs();
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        String durationTime = String.format("%dh %dm",hours, minutes);
-        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title+ " "+ durationTime), "Content name and duration was not found in IMAX Enhanced Header");
-        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        if (entityID != null) {
+            ExploreContent exploreMovieContent = getApiMovieContent(entityID);
+            int duration = exploreMovieContent.getDurationMs();
+            LOGGER.info("Duration returned from api: {}", duration);
+            long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+            String durationTime = String.format("%dh %dm", hours, minutes);
+            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title + " " + durationTime), "Content name and duration was not found in IMAX Enhanced Header");
+            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        } else {
+            sa.assertTrue(false, "Entity ID for IMAX Enhanced set came back empty from api, check the IMAX_ENHANCED_SET_ID value");
+        }
         sa.assertAll();
     }
 

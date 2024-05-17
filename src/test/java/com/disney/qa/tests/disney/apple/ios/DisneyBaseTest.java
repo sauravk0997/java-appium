@@ -30,6 +30,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -494,8 +495,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
         ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(entityID)
                 .profileId(getAccount().getProfileId()).build();
-
         return getExploreApi().getSeries(searchRequest);
+
     }
 
     public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
@@ -514,16 +515,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         ExploreSearchRequest setRequest = ExploreSearchRequest.builder().setId(setID)
                 .profileId(getAccount().getProfileId()).build();
         ExploreSetResponse setResponse = getExploreApi().getSet(setRequest);
-        return setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
+        String FirstContentID = null;
+        try {
+            FirstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return FirstContentID;
     }
 
     public String getApiSeriesRatingDetails(ExploreContent apiContent) {
-        return apiContent.getContainers().get(2).getVisuals().getRatingInfo().getRating().getText();
+        String ratingDetail = null;
+        try {
+            ratingDetail = apiContent.getContainers().get(2).getVisuals().getRatingInfo().getRating().getText();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return ratingDetail;
     }
 
     public String getApiMovieRatingDetails(ExploreContent apiContent) {
-        return apiContent.getContainers().get(3).getVisuals().getRatingInfo().getRating().getText();
-
+        String ratingDetail = null;
+        try {
+            ratingDetail = apiContent.getContainers().get(3).getVisuals().getRatingInfo().getRating().getText();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return ratingDetail;
     }
 
     public String getApiContentReleasedYearDetails(ExploreContent apiContent) {
