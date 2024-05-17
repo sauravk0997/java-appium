@@ -755,7 +755,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
         Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isConfirmationPageOpen(),
                 "User was not directed to Confirmation Page");
-        disneyPlusChangeEmailIOSPageBase.clickBackToDisney();
+        disneyPlusChangeEmailIOSPageBase.clickBackToDisneyBtn();
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
                 "User was not returned to Account Settings after submitting the new email");
 
