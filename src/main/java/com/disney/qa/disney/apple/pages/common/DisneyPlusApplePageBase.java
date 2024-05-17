@@ -326,8 +326,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
-    @ExtendedFindBy(accessibilityId = "Save & Continue")
-    private ExtendedWebElement saveAndContinueBtn;
 
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;

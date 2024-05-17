@@ -22,17 +22,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxChecked")
     private ExtendedWebElement logoutAllDevicesChecked;
 
-    @ExtendedFindBy(accessibilityId = "Cancel")
-    private ExtendedWebElement cancelButton;
-
-    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
-
-    @FindBy(id = "labelErrorMessage")
-    private ExtendedWebElement invalidEmail;
-
     public DisneyPlusChangeEmailIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -71,10 +60,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         logoutAllDevicesUnchecked.click();
     }
 
-    public boolean isLogoutAllDevicesTitlePresent() {
-        return logoutAllDevicesTitle.isElementPresent();
-    }
-
     public boolean isLearnMoreAboutMyDisney() {
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }
@@ -94,12 +79,8 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
     }
 
-    public String getInvalidEmailText() {
-        return invalidEmail.getText();
-    }
-
     @Override
     public void clickCancelBtn() {
-        cancelButton.click();
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
     }
 }
