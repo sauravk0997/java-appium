@@ -83,6 +83,17 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         return getStaticTextByLabelContains("Sorry, we are having trouble creating your account").isPresent();
     }
 
+    public boolean isConfirmationPageOpen() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_HEADER.getText())).isPresent();
+    }
+
+    public void clickBackToDisney() {
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_BACK_TO_SERVICE_BTN.getText())).click();
+    }
+    public void clickLogoutBtn() {
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
+    }
+
     public String getInvalidEmailText() {
         return invalidEmail.getText();
     }

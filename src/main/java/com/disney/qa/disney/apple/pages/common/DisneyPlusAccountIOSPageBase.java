@@ -211,7 +211,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isChangeLinkPresent(String text) {
-        return changeLink.isPresent();
+        return getStaticTextByLabelContains(text).isPresent();
     }
 
     public boolean isChangeLinkActive(String text) {

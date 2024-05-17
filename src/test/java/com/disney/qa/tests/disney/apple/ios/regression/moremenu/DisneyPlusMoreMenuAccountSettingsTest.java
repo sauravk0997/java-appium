@@ -747,13 +747,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickChangeLink(testAccount.getEmail());
+        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail();
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
-
+        Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isConfirmationPageOpen(),
+                "User was not directed to Confirmation Page");
+        disneyPlusChangeEmailIOSPageBase.clickBackToDisney();
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
                 "User was not returned to Account Settings after submitting the new email");
 
@@ -787,7 +789,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         testAccount.setEmail(newEmail);
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
-
+        disneyPlusChangeEmailIOSPageBase.clickLogoutBtn();
         Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new email");
 
