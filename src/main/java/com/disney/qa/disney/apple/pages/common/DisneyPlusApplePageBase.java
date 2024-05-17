@@ -1342,8 +1342,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public boolean validateScrollingHorizontallyInCollections(CollectionConstant.Collection collection, ExtendedWebElement container) {
-        swipePageTillElementPresent(getCollection(collection), 3, container, Direction.UP, 500);
+    public boolean validateScrollingHorizontallyInCollections(CollectionConstant.Collection collection) {
+        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
         List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
         swipeLeftInCollection(collection);
         List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);

@@ -66,7 +66,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean validateScrollingInHuluCollection() {
-        return validateScrollingHorizontallyInCollections(CollectionConstant.Collection.HULU_ORIGINALS, brandLandingView);
+        return validateScrollingHorizontallyInCollections(CollectionConstant.Collection.HULU_ORIGINALS);
     }
 
     public void clickOnNetworkLogo(String network){
