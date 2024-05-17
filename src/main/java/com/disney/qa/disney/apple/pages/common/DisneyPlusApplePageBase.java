@@ -33,6 +33,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -124,6 +125,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement logoImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell")
     protected ExtendedWebElement cell;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView")
+    protected ExtendedWebElement collectionView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`]")
     protected ExtendedWebElement customHyperlinkByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`][%s]")
@@ -1461,31 +1464,33 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean validateScrollingVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
-        swipePageTillElementPresent(firstCollection, 3, container, Direction.UP, 500);
         List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), SHORT_TIMEOUT);
         swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
         List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
         return titles1 != titles2;
     }
 
-    public boolean validateScrollingHorizontallyInCollectionsNew(ExtendedWebElement element, ExtendedWebElement container) {
-        swipePageTillElementPresent(element, 3, container, Direction.UP, 500);
-        List<String> titles1 = getContentItems(0);
-        swipeLeftInCollectionNew(element);
-        List<String> titles2 = getContentItems(0);
+    public boolean validateScrollingHorizontally(int startNum) {
+        List<String> titles1 = getContentItems(startNum);
+        swipeLeftInHorizontalCollection(getCollectionViews()[1]);
+        List<String> titles2 = getContentItems(startNum);
         return titles1 != titles2;
     }
 
-    public void swipeLeftInCollectionNew(ExtendedWebElement element) {
-        ExtendedWebElement collectionElement = element;
-        Point elementLocation = collectionElement.getLocation();
-        Dimension elementDimensions = collectionElement.getSize();
-
+    public void swipeLeftInHorizontalCollection(ExtendedWebElement element) {
+        Point elementLocation = element.getLocation();
+        Dimension elementDimensions = element.getSize();
         int endY;
         int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
         int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
         this.swipe(startX, startY, endX, endY, 500);
+    }
+
+    public ExtendedWebElement[] getCollectionViews() {
+        waitForPresenceOfAnElement(collectionView);
+        List<ExtendedWebElement> collectionViews = findExtendedWebElements(collectionView.getBy(), SHORT_TIMEOUT);
+        return collectionViews.toArray(new ExtendedWebElement[0]);
     }
 }

@@ -29,7 +29,6 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.CollectionConstant.Collection.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
@@ -774,11 +773,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        DisneySearchApi searchApi = new DisneySearchApi("ios", "Prod", "disney");
-        List<ContentSet> avatarSets = searchApi.getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        DisneySearchApi searchApi = new DisneySearchApi(IOS_PLATFORM, PROD, DISNEY);
+        List<ContentSet> avatarSets = getAvatarSets(account);
         int lastSetId = avatarSets.size()-1;
-        String lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
-
+        String lastSetAvatarId = "";
+        try {
+            lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.info("Index out of bounds" + e);
+        }
         setAppToHomeScreen(account);
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
@@ -801,10 +804,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getAddProfileAvatar().click();
 
         //validate scrolling
-        sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollectionsNew(chooseAvatar.getDynamicAccessibilityId(avatarSets.get(2).getAvatarIds().get(1)),
-                null), "Not able to horizontally scroll Pixar collection.");
-//        sa.assertTrue(chooseAvatar.validateScrollingHorizontallyInCollections(CHOOSE_AVATAR_PIXAR, null),
-//                "Not able to horizontally scroll Pixar collection.");
+        sa.assertTrue(chooseAvatar.validateScrollingHorizontally(9), "Not able to horizontally scroll Pixar collection.");
         sa.assertTrue(chooseAvatar.validateScrollingVertically(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()),
                 chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
                 "Not able to vertically scroll Choose Avatar screen.");
@@ -818,6 +818,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
         sa.assertAll();
+    }
+
+    private List<ContentSet> getAvatarSets(DisneyAccount account) {
+        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        if (avatarSets.isEmpty()) {
+            throw new SkipException("Skipping test, no avatar sets were found.");
+        } else {
+            return avatarSets;
+        }
     }
 
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {

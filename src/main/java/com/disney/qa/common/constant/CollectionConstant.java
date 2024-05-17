@@ -12,7 +12,6 @@ public class CollectionConstant {
         BRANDS_MARVEL_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
         CAROUSEL, //carousel rotating slides
-        CHOOSE_AVATAR_PIXAR,
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
@@ -83,8 +82,6 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
                 return "6e48d2c9-2ee3-476c-91d7-deb779bcfb6e";
-            case CHOOSE_AVATAR_PIXAR:
-                return "efcbb0b1-144a-4a94-ab93-f6492b8c56a3";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
