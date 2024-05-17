@@ -127,4 +127,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Non-US R21 Ratings" parallel="methods">
+        <parameter name="locale" value="SG"/>
+        <parameter name="language" value="en"/>
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingR21Test"/>
+        </classes>
+    </test>
 </suite>
