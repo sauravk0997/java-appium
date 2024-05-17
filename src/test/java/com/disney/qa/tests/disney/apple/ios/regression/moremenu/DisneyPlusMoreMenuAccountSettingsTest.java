@@ -691,7 +691,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
 
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail();
+        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
@@ -747,7 +747,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail();
+        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
@@ -775,7 +775,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail();
+        disneyPlusAccountIOSPageBase.clickMyDisneyManageEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 

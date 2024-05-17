@@ -279,9 +279,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backButton;
 
-    @ExtendedFindBy(accessibilityId = "Email")
-    protected ExtendedWebElement editEmail;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
 
@@ -499,10 +496,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicAccessibilityId.format(getDictionary().getDictionaryItem(resourceKey, key.getText(), false));
     }
 
-    public ExtendedWebElement getEditEmail() {
-        return editEmail;
-    }
-
     public static List<String> getEnumValues(DictionaryKeys... dictionaryValues) {
         return Arrays.stream(dictionaryValues).map(DictionaryKeys::getText).collect(Collectors.toList());
     }
@@ -583,10 +576,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getOkButton() {
         return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.OK_BTN.getText()));
-    }
-
-    public ExtendedWebElement getSaveAndContinueBtn(){
-        return saveAndContinueBtn;
     }
 
     public void enterText(String text) {

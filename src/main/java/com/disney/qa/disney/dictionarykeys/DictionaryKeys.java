@@ -295,6 +295,7 @@ public enum DictionaryKeys {
     MY_DISNEY_LOGOUT_BTN("mydisney_logout_btn"),
     MY_DISNEY_LOGOUT_ALL_CHECKBOX("mydisney_logoutall_checkbox"),
     MY_DISNEY_MANAGE("mydisney_manage_cta"),
+    MY_DISNEY_MANAGE_EMAIL_CURRENT("mydisney_manage_email_current"),
     MY_DISNEY_SAVE_CONTINUE_BTN("mydisney_save_continue_btn"),
     NAV_ACCOUNT("nav_account"),
     NAV_DETAILS("nav_details"),

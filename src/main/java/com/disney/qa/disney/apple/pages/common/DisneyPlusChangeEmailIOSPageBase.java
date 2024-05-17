@@ -56,7 +56,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value + "\n");
-        getSaveAndContinueBtn().click();
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
     }
 
     public boolean isLogoutAllDevicesChecked() {
@@ -80,7 +80,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isInvalidEmailErrorDisplayed() {
-        return getStaticTextByLabelContains("Sorry, we are having trouble creating your account").isPresent();
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
     public boolean isConfirmationPageOpen() {
