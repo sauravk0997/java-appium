@@ -267,7 +267,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Verify Original page opened
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
         //Verify Back button is present
-        sa.assertTrue(originalsPage.getBackArrow().isPresent(), "Back button was not found");
+        sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
 
         //To get the collections details of Originals from API
         ArrayList<Container> collections = getPageContent(ORIGINALS_PAGE_ID);
