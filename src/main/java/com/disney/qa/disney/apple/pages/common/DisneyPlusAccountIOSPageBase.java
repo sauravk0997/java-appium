@@ -624,7 +624,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void clickMyDisneyManageEmail() {
         staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
-        getEditEmail().clickIfPresent(9);
+        getEditEmail().click();
     }
 
     public void clickChangePasswordCell() {
