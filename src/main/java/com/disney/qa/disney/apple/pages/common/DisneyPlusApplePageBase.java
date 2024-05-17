@@ -254,7 +254,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicXpathContainslabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[%s]/XCUIElementTypeCell[%s]")
     protected ExtendedWebElement dynamicRowColumnContent;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"done\"`]")
     private ExtendedWebElement keyboardContinue;
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement saveProfileButton;
