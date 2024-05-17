@@ -30,7 +30,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         sa.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
-        sa.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", ""), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+        sa.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", "\'"), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
         sa.assertAll();
     }
 
