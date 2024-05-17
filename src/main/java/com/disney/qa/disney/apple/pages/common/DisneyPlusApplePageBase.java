@@ -1467,4 +1467,25 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
         return titles1 != titles2;
     }
+
+    public boolean validateScrollingHorizontallyInCollectionsNew(ExtendedWebElement element, ExtendedWebElement container) {
+        swipePageTillElementPresent(element, 3, container, Direction.UP, 500);
+        List<String> titles1 = getContentItems(0);
+        swipeLeftInCollectionNew(element);
+        List<String> titles2 = getContentItems(0);
+        return titles1 != titles2;
+    }
+
+    public void swipeLeftInCollectionNew(ExtendedWebElement element) {
+        ExtendedWebElement collectionElement = element;
+        Point elementLocation = collectionElement.getLocation();
+        Dimension elementDimensions = collectionElement.getSize();
+
+        int endY;
+        int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+
+        this.swipe(startX, startY, endX, endY, 500);
+    }
 }

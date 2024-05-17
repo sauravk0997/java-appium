@@ -12,6 +12,7 @@ public class CollectionConstant {
         BRANDS_MARVEL_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
         CAROUSEL, //carousel rotating slides
+        CHOOSE_AVATAR_PIXAR,
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
@@ -27,8 +28,7 @@ public class CollectionConstant {
         KIDS_CAROUSEL, //Kids carousel rotating slides
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         KIDS_MICKEY_AND_FRIENDS,
-        STUDIOS_AND_NETWORKS,
-        CHOOSE_AVATAR_PIXAR;
+        STUDIOS_AND_NETWORKS;
     }
 
     public static String getCollectionName(Collection collection) {
