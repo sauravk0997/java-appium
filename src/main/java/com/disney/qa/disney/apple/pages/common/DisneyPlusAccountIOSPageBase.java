@@ -622,8 +622,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 
-    public void clickMyDisneyManageEmail(String email) {
-        clickMyDisneyManageBtn();
+    public void clickEditEmail(String email) {
         getStaticTextByLabelContains(email).click();
     }
 
