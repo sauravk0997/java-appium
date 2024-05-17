@@ -1455,9 +1455,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
-    public static String getUtf8MetaString(String metadata) {
-        byte[] bytePayload = metadata.getBytes(StandardCharsets.ISO_8859_1);
-        return new String(bytePayload, StandardCharsets.UTF_8);
-    }
-
 }
