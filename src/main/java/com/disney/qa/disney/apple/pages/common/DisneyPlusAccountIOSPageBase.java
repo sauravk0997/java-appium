@@ -623,7 +623,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void clickMyDisneyManageEmail(String email) {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
+        clickMyDisneyManageBtn();
         getStaticTextByLabelContains(email).click();
     }
 
