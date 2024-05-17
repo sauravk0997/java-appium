@@ -202,13 +202,13 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         confirmLegalPageOpens();
         String doNotSellString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
         sa.assertTrue(oneTrustPage.isOpened(), "");
         //Toggle switch but do not tap confirm your choice button
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
         oneTrustPage.tapConsentSwitch();
         oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
         //Toggle switch to OFF, tap 'confirm your choice' button
         oneTrustPage.tapConsentSwitch();
@@ -216,7 +216,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.tapConfirmMyChoiceButton();
         sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
         // Toggle switch to ON, and tap 'confirm your choice button
         oneTrustPage.tapConsentSwitch();
@@ -224,7 +224,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.tapConfirmMyChoiceButton();
         sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(doNotSellString).click();
+        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),"toggle didn't not turn ON after selecting");
         sa.assertAll();
     }
