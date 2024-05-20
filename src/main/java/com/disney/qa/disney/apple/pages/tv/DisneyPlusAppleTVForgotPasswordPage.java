@@ -59,7 +59,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickOnOtpField() {
-        getDynamicTextEntryFieldByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, OTP_PLACEHOLDER.getText())).click();
+        getDynamicTextEntryFieldByName("").click();
     }
 
     public boolean isNumericKeyboardOpen() {
