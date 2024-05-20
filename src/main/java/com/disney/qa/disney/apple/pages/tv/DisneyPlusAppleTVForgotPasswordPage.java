@@ -15,7 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_COPY;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.EMAIL_CODE_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY_2;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOneTimePasscodeIOSPageBase.class)
@@ -59,7 +63,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickOnOtpField() {
-        getDynamicTextEntryFieldByName("").click();
+        getDynamicTextEntryFieldByName(TEXT_FIELD_INPUT_CODE).click();
     }
 
     public boolean isNumericKeyboardOpen() {
