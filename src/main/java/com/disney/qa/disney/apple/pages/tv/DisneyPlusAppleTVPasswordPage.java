@@ -37,10 +37,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement createPasswordTextField;
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     private ExtendedWebElement signUpBtn;
-    @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
-    private ExtendedWebElement forgotPasswordBtn;
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
+
+    private ExtendedWebElement forgotPasswordBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);

@@ -52,6 +52,7 @@ public enum DictionaryKeys {
     BTN_FULL_CATALOG("btn_fullcatalog"),
     BTN_HELP_CENTER("btn_help_center"),
     BTN_LOGIN("btn_login"),
+    BTN_LOGIN_HELP("btn_login_help"),
     BTN_LOGOUT("btn_logout"),
     BTN_NOT_NOW("btn_notnow"),
     BTN_OK("btn_ok"),
