@@ -1475,7 +1475,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         try {
             swipeLeftInHorizontalCollection(getCollectionViews()[1]);
         } catch (IndexOutOfBoundsException e) {
-            LOGGER.info(String.format("Unable to swipe left in horizontal collection, index out of bounds: %s", e));
+            Assert.fail(String.format("Unable to swipe left in horizontal collection, index out of bounds: %s", e));
         }
         List<String> titles2 = getContentItems(startNum);
         return !titles1.equals(titles2);
