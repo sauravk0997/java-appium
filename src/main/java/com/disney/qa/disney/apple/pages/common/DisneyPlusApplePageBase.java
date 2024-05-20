@@ -532,7 +532,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isHeadlineSubtitlePresent() {
-        return headlineSubtitle.isPresent();
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())).isElementPresent();
     }
 
     public String getActionableAlertMessage() {
@@ -1452,6 +1452,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
+    }
+
+    public void clickMyDisneyManageBtn() {
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
     }
 
 }

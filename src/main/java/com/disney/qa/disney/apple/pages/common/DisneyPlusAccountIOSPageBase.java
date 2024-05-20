@@ -211,7 +211,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isChangeLinkPresent(String text) {
-        return changeLink.isPresent();
+        return getStaticTextByLabelContains(text).isPresent();
     }
 
     public boolean isChangeLinkActive(String text) {
@@ -620,6 +620,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 DictionaryKeys.SUBSCRIPTION_MONTHLY.getText())));
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
+    }
+
+    public void clickEditEmail(String email) {
+        getStaticTextByLabelContains(email).click();
     }
 
     public void clickChangePasswordCell() {

@@ -16,7 +16,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -686,12 +685,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
+        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
 
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickChangeLink(testAccount.getEmail());
+        disneyPlusApplePageBase.clickMyDisneyManageBtn();
+        disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
@@ -721,7 +722,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLogoutAllDevicesChecked(),
                 "XMOBQA-61551 - 'Logout All Devices' was not checked");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLogoutAllDevicesEmailCopyDisplayed(),
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
                 "XMOBQA-61551 - 'Logout All Devices' password text was not displayed");
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress("invalid");
@@ -743,17 +744,21 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
+        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
 
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickChangeLink(testAccount.getEmail());
+        disneyPlusApplePageBase.clickMyDisneyManageBtn();
+        disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
         String newEmail = generateGmailAccount();
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
-
+        Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isConfirmationPageOpen(),
+                "User was not directed to Confirmation Page");
+        disneyPlusChangeEmailIOSPageBase.clickBackToDisneyBtn();
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
                 "User was not returned to Account Settings after submitting the new email");
 
@@ -773,7 +778,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickChangeLink(testAccount.getEmail());
+        disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
@@ -787,7 +792,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         testAccount.setEmail(newEmail);
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress(newEmail);
-
+        disneyPlusChangeEmailIOSPageBase.clickLogoutBtn();
         Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new email");
 
