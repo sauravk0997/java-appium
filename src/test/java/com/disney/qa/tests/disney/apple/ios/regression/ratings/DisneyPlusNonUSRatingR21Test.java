@@ -72,7 +72,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         passwordPage.clickR21ForgotPasswordLink();
         sa.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
-        oneTimePasscodePage.enterOtpValue(otp);
+        oneTimePasscodePage.enterOtpValueOnly(otp);
+        oneTimePasscodePage.clickPrimaryButton();
         sa.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
