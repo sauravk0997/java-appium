@@ -493,35 +493,27 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     //Explore API methods
     public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(entityID)
-                .profileId(getAccount().getProfileId()).build();
-        return getExploreApi().getSeries(searchRequest);
+        return getExploreApi().getSeries(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
 
     }
 
     public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(entityID)
-                .profileId(getAccount().getProfileId()).build();
-        return getExploreApi().getMovie(searchRequest);
+        return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
     public ArrayList<Container> getPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
-        ExploreSearchRequest setRequest = ExploreSearchRequest.builder().entityId(pageID)
-                .profileId(getAccount().getProfileId()).build();
-        return getExploreApi().getPage(setRequest).getData().getPage().getContainers();
+        return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
     public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
-        ExploreSearchRequest setRequest = ExploreSearchRequest.builder().setId(setID)
-                .profileId(getAccount().getProfileId()).build();
-        ExploreSetResponse setResponse = getExploreApi().getSet(setRequest);
-        String FirstContentID = null;
+        ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+        String firstContentID = null;
         try {
-            FirstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
+            firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
         } catch (IndexOutOfBoundsException e) {
             Assert.fail(e.getMessage());
         }
-        return FirstContentID;
+        return firstContentID;
     }
 
     public String getApiSeriesRatingDetails(ExploreContent apiContent) {
