@@ -821,7 +821,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
         BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
-        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
+        sa.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
         sa.assertAll();
     }
 
