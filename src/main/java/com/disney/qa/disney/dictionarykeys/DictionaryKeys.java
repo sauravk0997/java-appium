@@ -319,6 +319,7 @@ public enum DictionaryKeys {
     ONBOARDING_STEPPER("onboarding_stepper"),
     OK_BTN("btn_ok"),
     ORIGINALS_PAGE_LOAD("originals_pageload"),
+    OTP_PLACEHOLDER("otp_placeholder"),
     OTP_PLACEHOLDER_SPACED("otp_placeholder_spaced"),
     PASSWORD("password"),
     PASSWORD_CREATION_ERROR_EMPTY("password_creation_error_empty"),
