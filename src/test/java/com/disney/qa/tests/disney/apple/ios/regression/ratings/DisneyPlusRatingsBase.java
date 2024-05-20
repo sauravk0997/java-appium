@@ -33,9 +33,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String JAPAN_LOCALE = "JP";
     static final String JAPAN_LANG = "ja";
 
-    public void ratingsSetup(String ratingValue, String lang, String locale) {
+    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         getDesiredRatingContent(ratingValue, lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
