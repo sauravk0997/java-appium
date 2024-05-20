@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
-
+    private static final String AVATAR_HEADER_TITLE = "headerViewTitleLabel";
     @ExtendedFindBy(accessibilityId = "avatarSelectionScreenView")
     ExtendedWebElement avatarSelectionScreenView;
 
@@ -57,7 +57,7 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAvatarHeaderTitle() {
-        return getStaticTextByNameContains("headerViewTitleLabel");
+        return getStaticTextByNameContains(AVATAR_HEADER_TITLE);
     }
 
     public List<ExtendedWebElement> getHeaderTitlesInView() {

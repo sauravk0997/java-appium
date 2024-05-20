@@ -654,6 +654,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public List<String> getContentItems(int startNum) {
+        waitForPresenceOfAnElement(cell);
         List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
         List<String> titles = new ArrayList<>();
         IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
@@ -1471,9 +1472,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean validateScrollingHorizontally(int startNum) {
         List<String> titles1 = getContentItems(startNum);
-        swipeLeftInHorizontalCollection(getCollectionViews()[1]);
+        try {
+            swipeLeftInHorizontalCollection(getCollectionViews()[1]);
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.info(String.format("Unable to swipe left in horizontal collection, index out of bounds: %s", e));
+        }
         List<String> titles2 = getContentItems(startNum);
-        return titles1 != titles2;
+        return !titles1.equals(titles2);
     }
 
     public void swipeLeftInHorizontalCollection(ExtendedWebElement element) {

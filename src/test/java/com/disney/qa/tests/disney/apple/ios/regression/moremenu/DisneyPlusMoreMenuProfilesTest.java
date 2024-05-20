@@ -773,14 +773,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        DisneySearchApi searchApi = new DisneySearchApi(IOS_PLATFORM, PROD, DISNEY);
         List<ContentSet> avatarSets = getAvatarSets(account);
-        int lastSetId = avatarSets.size()-1;
+        int lastSetId = avatarSets.size() - 1;
         String lastSetAvatarId = "";
+        String avatarSetName = "";
         try {
             lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
         } catch (IndexOutOfBoundsException e) {
-            LOGGER.info("Index out of bounds" + e);
+            Assert.fail("Index out of bounds" + e);
+        }
+        try {
+            avatarSetName = avatarSets.get(1).getSetName();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Index out of bounds" + e);
         }
         setAppToHomeScreen(account);
         moreMenu.clickMoreTab();
@@ -805,7 +810,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //validate scrolling
         sa.assertTrue(chooseAvatar.validateScrollingHorizontally(9), "Not able to horizontally scroll Pixar collection.");
-        sa.assertTrue(chooseAvatar.validateScrollingVertically(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(1).getSetName()),
+        sa.assertTrue(chooseAvatar.validateScrollingVertically(chooseAvatar.getStaticTextByLabelContains(avatarSetName),
                 chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
                 "Not able to vertically scroll Choose Avatar screen.");
 
