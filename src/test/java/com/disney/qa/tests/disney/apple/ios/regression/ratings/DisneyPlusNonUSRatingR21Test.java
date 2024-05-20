@@ -1,8 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChangePasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVerifyAgeDOBCollectionIOSPageBase;
@@ -11,6 +13,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.Date;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
@@ -46,6 +50,32 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         sa.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74416"})
+    @Test(description = "R21 - Create Pin - Enter Password - Forgot Password Flow", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINForgetPassword() {
+        String NEW_PASSWORD = "TestPass1234!";
+        Date startTime = getEmailApi().getStartTime();
+        ratingsSetup(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        sa.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+        passwordPage.clickR21ForgotPasswordLink();
+        sa.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
+        oneTimePasscodePage.enterOtpValue(otp);
+        sa.assertTrue(changePasswordPage.isOpened(),
+                "Change Password screen did not open after submitting OTP");
+        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
         sa.assertAll();
     }
