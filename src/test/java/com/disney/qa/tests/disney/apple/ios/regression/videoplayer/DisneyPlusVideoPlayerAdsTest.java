@@ -263,6 +263,22 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72174"})
+    @Test(description = "Ads Video Player > Scrub/Seek During Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyPlayerScrubSeekDuringAd() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        int timeRemainingBeforeScrub = videoPlayer.getRemainingTime();
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
+        sa.assertTrue(videoPlayer.isCrossingAdBoundaryAlertPresent(), "Crossing ad boundary alert message was not present.");
+        sa.assertTrue(videoPlayer.isVideoNavAcrossAdPodMessagePresent(), "Video navigation across ad pod message was not present.");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        sa.assertTrue(timeRemainingBeforeScrub > videoPlayer.getRemainingTime(), "Scrubbing player during ad was not successful.");
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content, SoftAssert sa) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

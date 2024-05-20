@@ -728,4 +728,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
     }
+
+    public ExtendedWebElement getCrossingAdBoundaryAlert() {
+        String adAlertMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ALERT_MESSAGE_CROSSING_AD_BOUNDARY.getText());
+        return getDynamicAccessibilityId(adAlertMessage);
+    }
+
+    public boolean isCrossingAdBoundaryAlertPresent() {
+        return getCrossingAdBoundaryAlert().isPresent(SHORT_TIMEOUT);
+    }
+
+    public boolean isVideoNavAcrossAdPodMessagePresent() {
+        String videoNavAcrossAdPodMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_NAVIGATION_ACROSS_AD_POD_MESSAGE.getText());
+        return getDynamicAccessibilityId(videoNavAcrossAdPodMessage).isPresent(SHORT_TIMEOUT);
+    }
 }
