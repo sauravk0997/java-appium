@@ -494,7 +494,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Explore API methods
     public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getSeries(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
-
     }
 
     public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
