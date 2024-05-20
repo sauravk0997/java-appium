@@ -46,6 +46,16 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
+    public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
+        getDesiredRatingContent(ratingValue, lang, locale);
+        setAccount( getAccountApi().createAccountForOTP(locale, lang));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
     private void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();

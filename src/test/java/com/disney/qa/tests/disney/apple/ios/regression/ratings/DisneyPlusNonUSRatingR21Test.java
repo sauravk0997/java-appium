@@ -59,7 +59,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     public void verifyR21CreatePINForgetPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         Date startTime = getEmailApi().getStartTime();
-        ratingsSetup(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
+        ratingsSetupForOTPAccount(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
