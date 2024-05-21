@@ -385,11 +385,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language) {
+    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language, boolean... ageVerified) {
         CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
         request.addSku(sku);
         request.setCountry(country);
         request.setLanguage(language);
+        if (ageVerified.length > 0) {
+            request.setAgeVerified(ageVerified[0]);
+        }
         return getAccountApi().createAccount(request);
     }
 
