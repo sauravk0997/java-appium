@@ -1473,18 +1473,17 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
     }
-
-    public boolean validateScrollingVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
+    public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
         List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), SHORT_TIMEOUT);
         swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
         List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
         return titles1 != titles2;
     }
 
-    public boolean validateScrollingHorizontally(int startNum) {
+    public boolean isCollectionViewScrollableHorizontally(int startNum) {
         List<String> titles1 = getContentItems(startNum);
         try {
-            swipeLeftInCollection(getCollectionViews()[1]);
+            swipeLeftInCollection(getFirstCollectionRowInView()[0]);
         } catch (IndexOutOfBoundsException e) {
             Assert.fail(String.format("Unable to swipe left in horizontal collection, index out of bounds: %s", e));
         }
@@ -1492,9 +1491,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return !titles1.equals(titles2);
     }
 
-    public ExtendedWebElement[] getCollectionViews() {
+    public ExtendedWebElement[] getFirstCollectionRowInView() {
         waitForPresenceOfAnElement(collectionView);
-        List<ExtendedWebElement> collectionViews = findExtendedWebElements(collectionView.getBy(), SHORT_TIMEOUT);
+        List<ExtendedWebElement> collectionViews = null;
+        try {
+            collectionViews = findExtendedWebElements(collectionView.getBy(), SHORT_TIMEOUT);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Not able to find any collection view(s), index out of bounds: %s", e);
+        }
         return collectionViews.toArray(new ExtendedWebElement[0]);
     }
 
