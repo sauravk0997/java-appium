@@ -1300,16 +1300,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
     }
 
-    public void swipeLeftInACollection(ExtendedWebElement element) {
+    public void swipeLeftInCollection(ExtendedWebElement element) {
         Point elementLocation = element.getLocation();
         Dimension elementDimensions = element.getSize();
         int endY;
         int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
         int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
-        LOGGER.info("element location: " + elementLocation);
-        LOGGER.info("element dimensions: " + elementDimensions);
-        LOGGER.info(String.format("start x: %s, start y: %s, end x: %s, end y: %s", startX, startY, endX, endY));
         this.swipe(startX, startY, endX, endY, 500);
     }
 
@@ -1484,11 +1481,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isCollectionViewScrollableHorizontally(int startNum) {
         List<String> titles1 = getContentItems(startNum);
-        LOGGER.info("all titles: " + getContentItems(0));
-        LOGGER.info("titles1: " + titles1);
-        swipeLeftInACollection(getFirstCollectionRowInView()[0]);
+        swipeLeftInCollection(getFirstCollectionRowInView()[0]);
         List<String> titles2 = getContentItems(startNum);
-        LOGGER.info("titles2: " + titles1);
         return !titles1.equals(titles2);
     }
 
