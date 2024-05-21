@@ -286,10 +286,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                     sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
                     detailsPage.clickCloseButton();
                 } else {
-                    sa.assertTrue(false, "API returned empty collection: " + item.getVisuals().getName());
+                    sa.assertTrue(item.getItems().size() > 0, "API returned empty collection: " + item.getVisuals().getName());
                 }
             } else {
-                sa.assertTrue(false, String.format("%s collection was not found", item.getVisuals().getName()));
+                sa.assertTrue(collectionName.isPresent(), String.format("%s collection was not found", item.getVisuals().getName()));
             }
         });
         sa.assertAll();
