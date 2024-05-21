@@ -439,11 +439,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private void validateRatingAndReleasedYearDetails(SoftAssert sa, String title, String rating, String releasedYear) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        if (null != rating) {
-            sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
-        } else {
-            LOGGER.info("Api returned 'null' ratings for title: {}", title);
-        }
+        sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
     }
 }
