@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -269,11 +268,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         //Get duration from explore api
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(SERIES_EXTRA_ENTITY_ID)
-                .profileId(getAccount().getProfileId()).build();
-        ExploreContent series = getExploreApi().getSeries(searchRequest);
+        ExploreContent series = getExploreApi().getSeries(getExploreSearchRequest().setEntityId(SERIES_EXTRA_ENTITY_ID).setProfileId(getAccount().getProfileId()));
         int seriesExtrasDuration = 0;
-
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
