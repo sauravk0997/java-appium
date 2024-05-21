@@ -16,7 +16,7 @@ import java.util.*;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    private List<String> CONTENT_TITLE;
+    protected List<String> CONTENT_TITLE;
     private boolean isMovie = false;
     static final String APAC_G = "G";
     static final String APAC_PG = "PG";
@@ -32,6 +32,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "KO";
     static final String JAPAN_LOCALE = "JP";
     static final String JAPAN_LANG = "ja";
+    static final String SINGAPORE_LOCALE = "SG";
+    static final String SINGAPORE_LANG = "en";
+    static final String R21 = "R21";
 
     public void ratingsSetup(String ratingValue, String lang, String locale) {
         getDesiredRatingContent(ratingValue, lang, locale);
