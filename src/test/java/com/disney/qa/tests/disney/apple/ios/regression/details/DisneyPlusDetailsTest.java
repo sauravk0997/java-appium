@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -10,6 +11,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -21,9 +23,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -201,7 +203,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
     @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyIMAXEnhancedVersionTab() {
+    public void verifyIMAXEnhancedVersionTab() throws URISyntaxException, JsonProcessingException {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -212,11 +214,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickMoviesTab();
-        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             swipe(searchPage.getStaticTextByLabel(filterValue));
             searchPage.getStaticTextByLabel(filterValue).click();
-        }else{
+        } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
@@ -230,12 +232,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
 
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
-        int duration = getSearchApi().getMovie(title, getAccount()).getContentDuration();
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        String durationTime = String.format("%dh %dm",hours, minutes);
-        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title+ " "+ durationTime), "Content name and duration was not found in IMAX Enhanced Header");
-        sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET_ID);
+        if (entityID != null) {
+            ExploreContent exploreMovieContent = getApiMovieContent(entityID);
+            int duration = exploreMovieContent.getDurationMs();
+            LOGGER.info("Duration returned from api: {}", duration);
+            String durationTime = detailsPage.getHourMinFormatForDuration(duration);
+            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title + " " + durationTime), "Content name and duration was not found in IMAX Enhanced Header");
+            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        } else {
+            sa.assertTrue(false, "Entity ID for IMAX Enhanced set came back empty from api, check the IMAX_ENHANCED_SET_ID value");
+        }
         sa.assertAll();
     }
 

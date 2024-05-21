@@ -6,11 +6,16 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -25,6 +30,7 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
@@ -71,6 +77,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
+    public static final String IMAX_ENHANCED_SET_ID = "7cd344eb-73db-4b5f-9359-f51cead40e23";
+    public static final String SERIES_EXTRA_ENTITY_ID = "entity-aa7bff48-41cd-4fe3-9eaa-b9951bb316d6";
+    public static final String SERIES_ENTITY_ID = "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568";
+    public static final String MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
+    public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -188,15 +199,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        //        handleAlert();
-        //        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp();
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
 
         } else if (!homePage.isOpened()) {
             restart();
             handleAlert();
-            //initialSetup();
             loginToHome(account, profileName);
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
@@ -481,5 +489,53 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return String.format(
                     S3_BASE_PATH + "apple-handset/" + deviceName + "/" + feature + "/%s", title);
         }
+    }
+
+    //Explore API methods
+    public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getSeries(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    }
+
+    public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    }
+
+    public ArrayList<Container> getPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
+        ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+        String firstContentID = null;
+        try {
+            firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return firstContentID;
+    }
+
+    public String getApiSeriesRatingDetails(ExploreContent apiContent) {
+        String ratingDetail = null;
+        try {
+            ratingDetail = apiContent.getContainers().get(2).getVisuals().getRatingInfo().getRating().getText();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return ratingDetail;
+    }
+
+    public String getApiMovieRatingDetails(ExploreContent apiContent) {
+        String ratingDetail = null;
+        try {
+            ratingDetail = apiContent.getContainers().get(3).getVisuals().getRatingInfo().getRating().getText();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return ratingDetail;
+    }
+
+    public String getApiContentReleasedYearDetails(ExploreContent apiContent) {
+        return apiContent.getReleaseYearRange().getStartYear();
     }
 }
