@@ -263,6 +263,20 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
+    @Test(description = "Ariel - VOD Player - Ads - Content Rating Displayed after preroll", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyContentRatingDisplayedAfterPreroll() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS, sa);
+
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.displayVideoController();
+        System.out.println(getDriver().getPageSource());
+
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content, SoftAssert sa) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
