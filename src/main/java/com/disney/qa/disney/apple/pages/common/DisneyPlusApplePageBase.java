@@ -40,6 +40,7 @@ import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -485,6 +486,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getTextFromStaticTextByLabel(String label) {
         return getStaticTextByLabel(label).getText();
+    }
+
+    public String getHourMinFormatForDuration(int duration) {
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%dh %dm", hours, minutes);
     }
 
     public ExtendedWebElement findByAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {

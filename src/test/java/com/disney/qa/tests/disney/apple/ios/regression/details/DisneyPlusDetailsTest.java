@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -28,7 +26,6 @@ import org.testng.asserts.SoftAssert;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -240,9 +237,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             ExploreContent exploreMovieContent = getApiMovieContent(entityID);
             int duration = exploreMovieContent.getDurationMs();
             LOGGER.info("Duration returned from api: {}", duration);
-            long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-            long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-            String durationTime = String.format("%dh %dm", hours, minutes);
+            String durationTime = detailsPage.getHourMinFormatForDuration(duration);
             sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title + " " + durationTime), "Content name and duration was not found in IMAX Enhanced Header");
             sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
         } else {
