@@ -36,9 +36,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String SINGAPORE_LANG = "en";
     static final String R21 = "R21";
 
-    public void ratingsSetup(String ratingValue, String lang, String locale) {
+    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         getDesiredRatingContent(ratingValue, lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
