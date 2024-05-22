@@ -5,7 +5,9 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -66,5 +68,16 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
         } else {
             throw new java.util.NoSuchElementException("Failing test, header view elements not found.");
         }
+    }
+
+    public int getRandomAvatarCollectionNum() {
+        int randomCollectionNum = 0;
+        try {
+            //First two collection views are not avatar collections, therefore size() minus 2
+            randomCollectionNum = new SecureRandom().nextInt(getCollectionViews().size()-2);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(String.format("Index out of bounds: %s", e));
+        }
+        return randomCollectionNum;
     }
 }

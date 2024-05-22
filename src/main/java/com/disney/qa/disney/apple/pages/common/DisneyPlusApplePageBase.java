@@ -1479,17 +1479,25 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titles1 != titles2;
     }
 
-    public boolean isCollectionViewScrollableHorizontally(int startNum) {
+    public boolean isCollectionViewScrollableHorizontally(int startNum, int index) {
         List<String> titles1 = getContentItems(startNum);
-        swipeLeftInCollection(getFirstCollectionRowInView()[0]);
+        swipeLeftInCollection(getCollectionRowInView(index));
         List<String> titles2 = getContentItems(startNum);
         return !titles1.equals(titles2);
     }
 
-    public ExtendedWebElement[] getFirstCollectionRowInView() {
-        waitForPresenceOfAnElement(collectionView);
-        List<ExtendedWebElement> collectionViews = findExtendedWebElements(collectionView.getBy());
-        return collectionViews.toArray(new ExtendedWebElement[0]);
+    public List<ExtendedWebElement> getCollectionViews() {
+        List<ExtendedWebElement> collectionViews = null;
+        try {
+            collectionViews = findExtendedWebElements(collectionView.getBy());
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(String.format("Index out of bounds: %s", e));
+        }
+        return collectionViews;
+    }
+
+    public ExtendedWebElement getCollectionRowInView(int index) {
+        return getCollectionViews().get(index);
     }
 
     public void clickMyDisneyManageBtn() {
