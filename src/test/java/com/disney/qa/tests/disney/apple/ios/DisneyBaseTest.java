@@ -546,13 +546,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
-        ExploreApi exploreApi = getExploreApi();
         ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
                 .profileId(account.getProfileId())
                 .limit(limit)
                 .build();
         try {
-            ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
+            ExploreSetResponse containerSet = getExploreApi().getSet(exploreSetRequest);
             return containerSet.getData().getSet().getItems();
         } catch (URISyntaxException | JsonProcessingException e) {
             UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));

@@ -29,7 +29,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String MS_MARVEL = "Ms. Marvel";
     private static final String THE_MARVELS = "The Marvels";
-    private static final String THE_MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final double SCRUB_PERCENTAGE_SIXTY = 60;
