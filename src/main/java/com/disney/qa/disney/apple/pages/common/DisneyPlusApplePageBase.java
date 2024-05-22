@@ -79,7 +79,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String PARTNER = "disney";
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
-    private static final String MPAA = "mpaa";
+    private static final String MPAA_AND_TVPG = "mpaaandtvpg";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1449,7 +1449,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public String getRatingsDictValue(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB) || ratingsDictionaryKey.contains(MPAA)) {
+        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB) || ratingsDictionaryKey.contains(MPAA_AND_TVPG)) {
             return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
         } else {
             return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey);
@@ -1466,5 +1466,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void clickMyDisneyManageBtn() {
         getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
     }
-
 }
