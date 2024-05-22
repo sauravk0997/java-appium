@@ -14,6 +14,8 @@ import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.account.DisneySubscriptionApi;
 import com.disney.qa.api.email.EmailApi;
+import com.disney.qa.api.explore.ExploreApi;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -165,6 +167,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
+    private static final LazyInitializer<ExploreApi> EXPLORE_API = new LazyInitializer<>() {
+        @Override
+        protected ExploreApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).partner(DisneyConfiguration.getPartner())
+            .environment(DisneyParameters.getEnv()).build();
+            return new ExploreApi(apiConfiguration);
+        }
+    };
+
     private static final LazyInitializer<EmailApi> EMAIL_API = new LazyInitializer<>() {
         @Override
         protected EmailApi initialize() throws ConcurrentException {
@@ -173,6 +184,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     };
 
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
+
+    private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
@@ -334,6 +347,16 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             return ExceptionUtils.rethrow(e);
         }
     }
+
+    public static ExploreApi getExploreApi() {
+        try {
+            return EXPLORE_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static ExploreSearchRequest getExploreSearchRequest() { return EXPLORE_SEARCH_REQUEST.get(); }
 
     ////////////////////////////
 
