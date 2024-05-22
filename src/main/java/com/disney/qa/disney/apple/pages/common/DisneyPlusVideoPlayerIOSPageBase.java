@@ -628,7 +628,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         ExtendedWebElement adTimeBadge = getAdRemainingTime();
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(SHORT_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
