@@ -44,7 +44,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
-
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);
     }

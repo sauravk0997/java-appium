@@ -75,9 +75,9 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void enterOTP(String otp) {
-        char[] c = otp.toCharArray();
-        for(int i=0;i<6;i++){
-            dynamicBtnFindByLabel.format(c[i]).click();
+        char[] otpArray = otp.toCharArray();
+        for (char otpChar : otpArray) {
+            dynamicBtnFindByLabel.format(otpChar).click();
         }
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
@@ -105,7 +105,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickContinueBtnOnOTPPage() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         primaryButton.click();
     }
 }
