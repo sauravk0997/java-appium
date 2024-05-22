@@ -68,7 +68,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
-        sa.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
         sa.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
