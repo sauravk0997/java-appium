@@ -37,10 +37,13 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement createPasswordTextField;
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     private ExtendedWebElement signUpBtn;
+    @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
+    private ExtendedWebElement forgotPasswordBtn;
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
 
     private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
+
 
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);
@@ -76,7 +79,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isForgotPasswordBtnFocused() {
-        boolean isFocused = isFocused(havingTroubleLogginInBtn);
+        boolean isFocused = isFocused(forgotPasswordBtn);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused;
     }
@@ -175,7 +178,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         return isFocused(primaryButton);
     }
 
-    public void clickForgotPasswordBtn() {
+    public void clickHavingTroubleLogginInBtn() {
         havingTroubleLogginInBtn.click();
     }
 

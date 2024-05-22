@@ -105,7 +105,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("6-IncorrectPasswordError", baseDirectory);
 
         //Apple TV S1.7
-        passwordPage.clickForgotPasswordBtn();
+        passwordPage.clickHavingTroubleLogginInBtn();
         oneTimePasscodePage.isOpened();
         getScreenshots("7-CheckEmailSixDigitCode", baseDirectory);
 
