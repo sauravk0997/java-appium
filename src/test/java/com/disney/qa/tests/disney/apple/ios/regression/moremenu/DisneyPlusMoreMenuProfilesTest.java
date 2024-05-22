@@ -809,7 +809,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getAddProfileAvatar().click();
 
         //validate scrolling
-        sa.assertTrue(chooseAvatar.isCollectionViewScrollableHorizontally(9, 2), "Not able to horizontally scroll in collection.");
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar page was not opened.");
+        sa.assertTrue(chooseAvatar.isCollectionViewScrollableHorizontally(0, 2), "Not able to horizontally scroll in collection.");
         sa.assertTrue(chooseAvatar.isCollectionViewScreenScrollableVertically(chooseAvatar.getStaticTextByLabelContains(avatarSetName),
                         chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
                 "Not able to vertically scroll Choose Avatar screen.");

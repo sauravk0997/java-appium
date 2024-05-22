@@ -1489,8 +1489,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isCollectionViewScrollableHorizontally(int startNum, int index) {
         List<String> titles1 = getContentItems(startNum);
+        LOGGER.info("titles 1: " + titles1);
         swipeLeftInCollection(getCollectionRowInView(index));
         List<String> titles2 = getContentItems(startNum);
+        LOGGER.info("titles 2: " + titles2);
         return !titles1.equals(titles2);
     }
 
