@@ -780,12 +780,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         try {
             lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
         } catch (IndexOutOfBoundsException e) {
-            Assert.fail("Index out of bounds" + e);
+            Assert.fail("Index out of bounds: " + e);
         }
         try {
             avatarSetName = avatarSets.get(1).getSetName();
         } catch (IndexOutOfBoundsException e) {
-            Assert.fail("Index out of bounds" + e);
+            Assert.fail("Index out of bounds: " + e);
         }
         setAppToHomeScreen(account);
         moreMenu.clickMoreTab();

@@ -11,6 +11,7 @@ import java.util.List;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     private static final String AVATAR_HEADER_TITLE = "headerViewTitleLabel";
+
     @ExtendedFindBy(accessibilityId = "avatarSelectionScreenView")
     ExtendedWebElement avatarSelectionScreenView;
 
