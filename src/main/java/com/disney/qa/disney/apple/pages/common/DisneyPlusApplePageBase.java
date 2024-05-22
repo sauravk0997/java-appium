@@ -665,7 +665,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         waitForPresenceOfAnElement(cell);
         List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
         List<String> titles = new ArrayList<>();
-        IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
+        IntStream.rangeClosed(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
         return titles;
     }
 
