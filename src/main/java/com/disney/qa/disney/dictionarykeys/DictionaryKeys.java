@@ -32,6 +32,7 @@ public enum DictionaryKeys {
     BADGE_TEXT_DATE_TIME("badge_text_date_time"),
     BADGE_LABEL_EVENT_UPCOMING("badge_label_event_upcoming"),
     BADGE_LABEL_EVENT_UPCOMING_TODAY("badge_label_event_upcoming_today"),
+    BRAND_LANDING_PAGE_LOAD("brandlanding_pageload"),
     BROWSE_CONTENT_HIDDEN_BODY("browse_content_hidden_body"),
     BROWSE_CONTENT_HIDDEN_BODY_KIDS("browse_content_hidden_body_kids"),
     BTN_ACCOUNT_CREATE_PASSWORD_SAVE("button_account_create_password_save"),

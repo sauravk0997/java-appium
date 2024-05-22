@@ -5,14 +5,15 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+
+import java.util.Map;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_ORIGINALS_TITLE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
-
-    private final ExtendedWebElement originalLabel = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView[%s]")
     protected ExtendedWebElement collectionContainer;
@@ -24,7 +25,10 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOriginalPageLoadPresent() {
-        return originalLabel.isElementPresent();
+        String originalLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
+        return getStaticTextByLabel(getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                        false), Map.of(BRAND_NAME, originalLabel))).isPresent();
     }
 
     public void swipeInCollectionContainer(ExtendedWebElement element, int position){

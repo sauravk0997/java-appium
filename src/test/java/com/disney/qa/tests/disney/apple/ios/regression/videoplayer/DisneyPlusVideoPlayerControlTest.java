@@ -4,6 +4,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -13,6 +14,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -260,14 +262,14 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
-    public void verifyScrubberElementsOnPlayer() {
+    public void verifyScrubberElementsOnPlayer() throws URISyntaxException, JsonProcessingException {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
 
         String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
-        String durationTime = getContentTimeInHMFormatFromAPI(THE_MARVELS);
+        String durationTime = getContentTimeInHMFormatFromAPI(MARVELS_MOVIE_ENTITY_ID);
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
 
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
@@ -292,8 +294,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private String getContentTimeInHMFormatFromAPI(String contentTitle){
-        int duration = getSearchApi().getMovie(contentTitle, getAccount()).getContentDuration();
+    private String getContentTimeInHMFormatFromAPI(String entityID) throws URISyntaxException, JsonProcessingException {
+        int duration = getApiMovieContent(entityID).getDurationMs();
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
         return String.format("%dh %dm",hours, minutes);

@@ -53,6 +53,7 @@ import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
     public static final String BABY_YODA = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
+    protected static final String BRAND_NAME = "brand_name";
     public static final String MICKEY_MOUSE = "442af7db-85f7-5e1d-96f0-b2c517be4085";
     public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
@@ -487,6 +488,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getTextFromStaticTextByLabel(String label) {
         return getStaticTextByLabel(label).getText();
+    }
+
+    public String getHourMinFormatForDuration(int duration) {
+        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
+        return String.format("%dh %dm", hours, minutes);
     }
 
     public ExtendedWebElement findByAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {
