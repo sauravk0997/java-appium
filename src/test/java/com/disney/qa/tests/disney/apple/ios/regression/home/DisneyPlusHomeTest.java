@@ -69,7 +69,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
-    public void verifyRecommendedForYouContainer() {
+    public void verifysRecommendedForYouContainer() {
         int limit = 30;
         String recommendedContainerNotFound = "Recommended For You container was not found";
         String recommendedHeaderNotFound = "Recommended For You Header was not found";
@@ -89,9 +89,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(collection).split(",")[0];
-        ExtendedWebElement firstTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(0));
+        ExtendedWebElement firstTitle = homePage.getCellElementFromContainer(collection, homePage.getUtf8MetaString(recommendationTitlesFromApi.get(0)));
         ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(size-1));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI title value not matched with API title value");
+        Assert.assertTrue(firstCellTitle.equals(homePage.getUtf8MetaString(recommendationTitlesFromApi.get(0))), "UI title value not matched with API title value");
 
         homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection), lastTitle, 30, Direction.LEFT );
         Assert.assertTrue(lastTitle.isPresent(), "User is not able to swipe through end of container");

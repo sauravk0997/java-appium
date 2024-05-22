@@ -1427,6 +1427,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 .build();
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
         ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
+                .contentEntitlements("disney_plus_sub:base")
                 .profileId(account.getProfileId())
                 .limit(limit)
                 .build();

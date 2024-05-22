@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -196,4 +197,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isCollectionTitlePresent(CollectionConstant.Collection collection){
         return getDynamicAccessibilityId(CollectionConstant.getCollectionTitle(collection)).isPresent();
     }
+
+    public String getUtf8MetaString(String metadata) {
+        byte[] bytePayload = metadata.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytePayload, StandardCharsets.UTF_8);
+    }
+
+
 }
