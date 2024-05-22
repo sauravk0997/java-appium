@@ -294,12 +294,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private String getContentTimeInHMFormatFromAPI(String entityID) throws URISyntaxException, JsonProcessingException {
-        int duration = getApiMovieContent(entityID).getDurationMs();
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        return String.format("%dh %dm",hours, minutes);
-    }
 
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

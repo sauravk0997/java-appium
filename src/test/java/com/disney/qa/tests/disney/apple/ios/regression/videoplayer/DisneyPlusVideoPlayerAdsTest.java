@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
@@ -16,6 +17,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
 import java.time.temporal.ValueRange;
 import java.util.List;
 
@@ -252,7 +254,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
     @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
-    public void verifyContentDurationBeforeAndAfterAd() {
+    public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -267,7 +269,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        String contentTimeFromAPI = videoPlayer.getMovieTimeInHMFormatFromExploreAPI(getAccount(), THE_MARVELS_MOVIE_ENTITY_ID);
+        String contentTimeFromAPI = getContentTimeInHMFormatFromAPI(MARVELS_MOVIE_ENTITY_ID);
         sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(contentTimeFromAPI), "Expected runtime for ad-supportrd content was not found on detail page");
 
         detailsPage.clickPlayButton();

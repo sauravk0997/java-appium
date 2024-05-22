@@ -1,22 +1,14 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.explore.ExploreApi;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
-import com.disney.qa.api.explore.response.Item;
-import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
 
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -26,7 +18,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
@@ -37,7 +28,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
@@ -80,7 +70,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String PARTNER = "disney";
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
-    private static final String CONTENT_ENTITLEMENTS = "disney_plus_sub:base";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1421,39 +1410,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
-    public ExploreApi getExploreAPI() {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .partner(PARTNER)
-                .environment(DisneyParameters.getEnv())
-                .build();
-        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        return exploreApi;
-    }
-
-    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
-        ExploreApi exploreApi = getExploreAPI();
-        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
-                .profileId(account.getProfileId())
-                .limit(limit)
-                .build();
-        try {
-            ExploreSetResponse containerSet = exploreApi.getSet(exploreSetRequest);
-            return containerSet.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            return ExceptionUtils.rethrow(e);
-        }
-    }
-
-    public List<String> getContainerTitlesFromApi(DisneyAccount account, String setID, int limit) {
-        List<Item> setItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
-        List<String> titlesFromApi = new ArrayList<>();
-        setItemsFromApi.forEach(item ->
-                titlesFromApi.add(item.getVisuals().getTitle()));
-        return titlesFromApi;
-    }
-
     public String getRatingsDictValue(String ratingsDictionaryKey) {
         if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB)) {
             return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
@@ -1471,25 +1427,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickMyDisneyManageBtn() {
         getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
-    }
-
-    public int getMovieTimeFromExploreAPI(DisneyAccount account, String movieId) {
-        ExploreApi exploreApi = getExploreAPI();
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(movieId)
-                .profileId(account.getProfileId()).contentEntitlements(CONTENT_ENTITLEMENTS).build();
-        try {
-            ExploreContent movieDetails = exploreApi.getMovie(searchRequest);
-            return movieDetails.getDurationMs();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            return ExceptionUtils.rethrow(e);
-        }
-    }
-
-    public String getMovieTimeInHMFormatFromExploreAPI(DisneyAccount account, String movieId) {
-        int duration = getMovieTimeFromExploreAPI(account, movieId);
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        return String.format("%dh %dm", hours, minutes);
     }
 }

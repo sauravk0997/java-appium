@@ -84,7 +84,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
-        List<String> recommendationTitlesFromApi = homePage.getContainerTitlesFromApi
+        List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
                 (account, CollectionConstant.getCollectionName(collection), limit);
 
         int size = recommendationTitlesFromApi.size();
