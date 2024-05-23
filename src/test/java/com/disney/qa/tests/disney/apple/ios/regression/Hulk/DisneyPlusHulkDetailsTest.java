@@ -336,7 +336,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74610"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
     @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUIMovies() {
         SoftAssert sa = new SoftAssert();
