@@ -275,7 +275,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
