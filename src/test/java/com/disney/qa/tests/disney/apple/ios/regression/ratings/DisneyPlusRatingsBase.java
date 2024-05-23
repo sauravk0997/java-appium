@@ -27,7 +27,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KCC_19 = "19+";
     static final String KMRB_12 = "12+";
     static final String KMRB_15 = "15+";
-    static final String KMRB_18 = "18";
+    static final String KMRB_18 = "18+";
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
     static final String JAPAN_LOCALE = "JP";
