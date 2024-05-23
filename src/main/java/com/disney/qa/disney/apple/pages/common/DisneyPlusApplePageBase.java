@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -13,7 +14,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
-
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
@@ -26,8 +26,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
@@ -1495,17 +1495,23 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public List<ExtendedWebElement> getCollectionViews() {
-        List<ExtendedWebElement> collectionViews = null;
-        try {
+        List<ExtendedWebElement> collectionViews = new ArrayList<>();
+        if (collectionView.isPresent()) {
             collectionViews = findExtendedWebElements(collectionView.getBy());
-        } catch (IndexOutOfBoundsException e) {
-            Assert.fail(String.format("Index out of bounds: %s", e));
+        } else {
+            throw new ObjectNotFoundException("Collection view not present and returning empty list.");
         }
         return collectionViews;
     }
 
     public ExtendedWebElement getCollectionRowInView(int index) {
-        return getCollectionViews().get(index);
+        ExtendedWebElement collectionRowInView = null;
+        try {
+            collectionRowInView = getCollectionViews().get(index);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(String.format("Index out of bounds: %s", e));
+        }
+        return collectionRowInView;
     }
 
     public void clickMyDisneyManageBtn() {
