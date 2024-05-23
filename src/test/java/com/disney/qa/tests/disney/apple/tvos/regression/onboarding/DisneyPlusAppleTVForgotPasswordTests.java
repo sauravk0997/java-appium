@@ -51,7 +51,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Password page did not launch");
 
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -84,7 +84,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -117,7 +117,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -160,7 +160,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = emailApi.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -168,12 +168,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertNotNull(otp, "OTP email received after time: " + startTime);
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
         disneyPlusAppleTVForgotPasswordPage.clickSelect();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
@@ -203,7 +199,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = emailApi.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -244,26 +240,19 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getErrorMessageLabelText(), otpErrorMessage);
 
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP("2233");
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.enterOTP("223344");
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getErrorMessageLabelText(), otpErrorMessage);
 
@@ -292,16 +281,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = emailApi.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
@@ -354,16 +340,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
@@ -403,7 +386,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
@@ -448,16 +431,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        passwordPage.clickForgotPasswordBtn();
+        passwordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        forgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(forgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         forgotPasswordPage.enterOTP(otp);
-        forgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        forgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
@@ -499,7 +479,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
@@ -543,16 +523,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
@@ -600,16 +577,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 
@@ -665,7 +639,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickForgotPasswordBtn();
+        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
@@ -719,16 +693,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = verifyEmail.getStartTime();
-        passwordPage.clickForgotPasswordBtn();
+        passwordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-        forgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(forgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
         forgotPasswordPage.enterOTP(otp);
-        forgotPasswordPage.selectContinueBtnOnKeyboardEntry();
+        forgotPasswordPage.clickContinueBtnOnOTPPage();
 
         sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
 

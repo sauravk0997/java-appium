@@ -260,8 +260,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicXpathContainslabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[%s]/XCUIElementTypeCell[%s]")
     protected ExtendedWebElement dynamicRowColumnContent;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
-    private ExtendedWebElement keyboardContinue;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"done\"`]")
+    private ExtendedWebElement keyboardDone;
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement saveProfileButton;
     @ExtendedFindBy(accessibilityId = "viewAlert")
@@ -777,7 +777,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     // Will take you to continue button on tvOS on screen keyboard
     public void moveToContinueBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardContinue));
+        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardDone));
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
