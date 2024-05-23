@@ -70,14 +70,14 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
-        sa.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
-        sa.assertTrue(changePasswordPage.isOpened(),
+        Assert.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
         sa.assertAll();
     }
 
