@@ -1495,7 +1495,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public List<ExtendedWebElement> getCollectionViews() {
-        List<ExtendedWebElement> collectionViews = new ArrayList<>();
+        List<ExtendedWebElement> collectionViews;
         if (collectionView.isPresent()) {
             collectionViews = findExtendedWebElements(collectionView.getBy());
         } else {
