@@ -37,6 +37,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
+    private static final String AD_BADGE_WAS_PRESENT_ERROR_MESSAGE = "Ad badge was present";
     private static final int UI_LATENCY = 15;
 
     @DataProvider(name = "content")
@@ -260,6 +261,25 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72347"})
+    @Test(description = "Ariel - VOD Player - Ads - Ad PreRoll Only Plays once Start of Playback", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyAdPreRollPlaysOnce() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL, sa);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.waitForAdToCompleteIfPresent(2);
+
+        videoPlayer.scrubPlaybackWithAdsPercentage(10);
+        videoPlayer.scrubPlaybackWithAdsPercentage(0);
+        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_WAS_PRESENT_ERROR_MESSAGE);
+
+        videoPlayer.scrubPlaybackWithAdsPercentage(10);
+        videoPlayer.clickRestartButton();
+        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_WAS_PRESENT_ERROR_MESSAGE);
         sa.assertAll();
     }
 
