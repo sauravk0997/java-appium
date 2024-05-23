@@ -6,9 +6,9 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.ExploreSetResponse;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -540,5 +540,27 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public String getApiContentReleasedYearDetails(ExploreContent apiContent) {
         return apiContent.getReleaseYearRange().getStartYear();
+    }
+
+    public List<Item> getItemsFromSet(String setId, int limit) {
+        try {
+            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
+                    .setSetId(setId)
+                    .setProfileId(getAccount().getProfileId())
+                    .setLimit(limit));
+            return setResponse.getData().getSet().getItems();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
+            Assert.fail("Items from Set not found " + e.getMessage());
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public List<String> getContainerTitlesFromApi(String setID, int limit) {
+        List<Item> setItemsFromApi = getItemsFromSet(setID, limit);
+        List<String> titlesFromApi = new ArrayList<>();
+        setItemsFromApi.forEach(item ->
+                titlesFromApi.add(item.getVisuals().getTitle()));
+        return titlesFromApi;
     }
 }
