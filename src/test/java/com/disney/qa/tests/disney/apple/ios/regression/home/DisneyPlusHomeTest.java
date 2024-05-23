@@ -85,7 +85,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
         List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
-                (account, CollectionConstant.getCollectionName(collection), limit);
+                (CollectionConstant.getCollectionName(collection), limit);
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(collection).split(",")[0];

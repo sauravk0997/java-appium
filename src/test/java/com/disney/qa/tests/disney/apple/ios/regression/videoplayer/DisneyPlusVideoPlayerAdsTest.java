@@ -4,6 +4,7 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -267,12 +268,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         searchPage.searchForMedia(THE_MARVELS);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        String contentTimeFromAPI = getContentTimeInHMFormatFromAPI(MARVELS_MOVIE_ENTITY_ID);
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        ExploreContent movieApiContent = getApiMovieContent(MARVELS_MOVIE_ENTITY_ID);
+        String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(contentTimeFromAPI), "Expected runtime for ad-supportrd content was not found on detail page");
 
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
         videoPlayer.waitForAdToCompleteIfPresent(5);

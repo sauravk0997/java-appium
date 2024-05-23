@@ -5,10 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-import com.disney.qa.api.explore.ExploreApi;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
@@ -545,32 +542,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return apiContent.getReleaseYearRange().getStartYear();
     }
 
-    public List<Item> getContainerDetailsFromAPI(DisneyAccount account, String setId, int limit) {
-        ExploreSearchRequest exploreSetRequest = ExploreSearchRequest.builder().setId(setId)
-                .profileId(account.getProfileId())
-                .limit(limit)
-                .build();
+    public List<Item> getItemsFromSet(String setId, int limit) {
         try {
-            ExploreSetResponse containerSet = getExploreApi().getSet(exploreSetRequest);
-            return containerSet.getData().getSet().getItems();
+            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
+                    .setSetId(setId)
+                    .setProfileId(getAccount().getProfileId())
+                    .setLimit(limit));
+            return setResponse.getData().getSet().getItems();
         } catch (URISyntaxException | JsonProcessingException e) {
             UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
             return ExceptionUtils.rethrow(e);
         }
     }
 
-    public List<String> getContainerTitlesFromApi(DisneyAccount account, String setID, int limit) {
-        List<Item> setItemsFromApi = getContainerDetailsFromAPI(account, setID, limit);
+    public List<String> getContainerTitlesFromApi(String setID, int limit) {
+        List<Item> setItemsFromApi = getItemsFromSet(setID, limit);
         List<String> titlesFromApi = new ArrayList<>();
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
-    }
-
-    public String getContentTimeInHMFormatFromAPI(String entityID) throws URISyntaxException, JsonProcessingException {
-        int duration = getApiMovieContent(entityID).getDurationMs();
-        long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
-        return String.format("%dh %dm", hours, minutes);
     }
 }
