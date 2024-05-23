@@ -181,7 +181,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         clickEmailField();
         clickEnterNewBtn();
         enterEmail(email);
-        moveToContinueBtnKeyboardEntry();
+        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         clickContinueBtn();
     }
