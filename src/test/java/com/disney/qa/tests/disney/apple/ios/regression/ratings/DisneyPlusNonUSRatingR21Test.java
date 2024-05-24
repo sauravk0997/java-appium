@@ -33,7 +33,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
         editProfile.getMaturityRatingCell().click();
         editProfile.enterPassword(getAccount());
-        Assert.assertTrue(editProfile.isR21MaturitySliderPresent(),"Maturity Rating slider description for R21 is not present");
+        Assert.assertTrue(editProfile.isR21MaturitySliderPresent(), "Maturity Rating slider description for R21 is not present");
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74415"})
     @Test(description = "R21: Create PIN - Enter Password - Invalid Input", groups = {"NonUS-Ratings", "R21"})
