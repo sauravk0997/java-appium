@@ -307,12 +307,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(ONE_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
+                String.format(errorFormat, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, "for " + MS_MARVEL));
         videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_ZERO);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT),
-                String.format(errorFormat, AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after scrubbing back to 0%."));
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
+                AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after scrubbing back to beginning."));
 
         videoPlayer.clickBackButton();
         details.clickSearchIcon();
@@ -324,11 +325,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         results.get(0).click();
         sa.assertTrue(details.isOpened(), "Details page did not open.");
         details.clickPlayButton();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
+                AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, "for " + SPIDERMAN_THREE));
         videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
         videoPlayer.scrubPlayerWithAdsAndClickRestart(SCRUB_PERCENTAGE_THIRTY);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT),
-                String.format(errorFormat, AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after restarting."));
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
+                AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after restarting."));
         sa.assertAll();
     }
 
