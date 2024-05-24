@@ -61,6 +61,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
+    public static final int ONE_SEC_TIMEOUT = 1;
     protected static final String CHECKED = "Checked";
     protected static final String UNCHECKED = "Unchecked";
     protected static final String TRUE = "true";
