@@ -69,7 +69,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
-    public void verifysRecommendedForYouContainer() {
+    public void verifyRecommendedForYouContainer() {
         int limit = 30;
         String recommendedContainerNotFound = "Recommended For You container was not found";
         String recommendedHeaderNotFound = "Recommended For You Header was not found";
