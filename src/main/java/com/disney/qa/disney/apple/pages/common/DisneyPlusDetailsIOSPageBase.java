@@ -446,6 +446,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return metaDataLabel.isPresent();
     }
 
+    public ExtendedWebElement getMetaDataLabel() {
+        return metaDataLabel;
+    }
+
     public ExtendedWebElement getReleaseDate() {
         return releaseDate;
     }
