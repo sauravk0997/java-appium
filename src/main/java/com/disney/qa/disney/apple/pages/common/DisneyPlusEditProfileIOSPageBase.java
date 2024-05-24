@@ -23,6 +23,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
     protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
+    private static final String R21 = "R21";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -39,8 +40,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "kidsProfileToggleCell")
     protected ExtendedWebElement juniorModeToggleCell;
 
+    @ExtendedFindBy(accessibilityId = "maturityRatingCell")
+    protected ExtendedWebElement maturityRatingCell;
 
-    private ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
+    private final ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
     private final ExtendedWebElement editProfileTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE.getText()));
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
@@ -104,12 +107,12 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
-    private ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
+    private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
 
-    private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
+    private final ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public ExtendedWebElement getDeleteProfileButton() {
@@ -126,7 +129,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return dynamicBtnFindByLabel.format(button);
     }
 
-    private String genderTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
+    private final String genderTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
 
     //FUNCTIONS
 
@@ -329,6 +332,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return juniorModeToggleCell.getText();
     }
 
+    public ExtendedWebElement getMaturityRatingCell() {
+        return maturityRatingCell;
+    }
+
     public void toggleKidsProofExit() {
         kidProofExitToggleCell.getElement().findElement(By.name("toggleView")).click();
     }
@@ -504,11 +511,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isErrorDuplicateProfileNamePresent() {
-        String message =  getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
+        String message = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
         LOGGER.info("Error Message by dictionary: {}", message);
         return staticTextLabelName.format(message).isPresent();
     }
-  
+
     public ExtendedWebElement getDeleteProfileCancelButton() {
         return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
     }
@@ -532,7 +539,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
 
-    public boolean isProfileNameCharacterLimitErrorPresent(){
+    public boolean isProfileNameCharacterLimitErrorPresent() {
         return labelError.isPresent();
+    }
+
+    public boolean isR21MaturitySliderPresent() {
+        String ratingDescriptionText = getElementTypeCellByLabel(R21).getText();
+        String dictRatingDescription = getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.RATING_MDA_R21_DESCRIPTION.getText());
+        return ratingDescriptionText.toLowerCase().contains(dictRatingDescription.toLowerCase());
     }
 }
