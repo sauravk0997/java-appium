@@ -1462,7 +1462,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (collectionView.isPresent()) {
             collectionViews = findExtendedWebElements(collectionView.getBy());
         } else {
-            throw new ObjectNotFoundException("Collection view not present and returning empty list.");
+            throw new ObjectNotFoundException("Collection view not present.");
         }
         return collectionViews;
     }
