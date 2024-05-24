@@ -300,6 +300,8 @@ public enum DictionaryKeys {
     MY_DISNEY_MANAGE_EMAIL_CURRENT("mydisney_manage_email_current"),
     MY_DISNEY_OTP_LOGIN_RESEND_BTN("mydisney_OTP_login_resend_btn"),
     MY_DISNEY_SAVE_CONTINUE_BTN("mydisney_save_continue_btn"),
+    MY_DISNEY_ENTER_EMAIL_HEADER("mydisney_enter_email_header"),
+    MY_DISNEY_ENTER_PASSWORD_HEADER("mydisney_enter_password_header"),
     NAV_ACCOUNT("nav_account"),
     NAV_DETAILS("nav_details"),
     NAV_EPISODES("nav_episodes"),

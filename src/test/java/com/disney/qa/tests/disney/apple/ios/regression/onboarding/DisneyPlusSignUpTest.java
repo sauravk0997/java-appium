@@ -114,12 +114,12 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public void verifyExistingEmailSubmission() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isSignUpPageOpen(),
                 "'Sign Up' did not open the email submission screen as expected");
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(getAccount().getEmail());
+        disneyPlusSignUpIOSPageBase.addEmailAddress(getAccount().getEmail());
 
-        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(),
+        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isPasswordPagePresent(),
                 "User was not directed to Password Entry as expected");
     }
 

@@ -17,6 +17,8 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText()));
 
+    protected ExtendedWebElement emailHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
+
     @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     protected ExtendedWebElement optInCheckbox;
 
@@ -46,6 +48,12 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = signUpHeader.isElementPresent();
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        return isPresent;
+    }
+
+    public boolean isSignUpPageOpen() {
+        boolean isPresent = emailHeader.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
@@ -92,6 +100,12 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         pause(2);
         emailField.type(email);
         primaryButton.click();
+    }
+
+    public void addEmailAddress(String email) {
+        pause(2);
+        emailBox.type(email);
+        continueButton.click();
     }
 
     public boolean isTermsOfUserDisclaimerDisplayed() {
