@@ -628,7 +628,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         ExtendedWebElement adTimeBadge = getAdRemainingTime();
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent());
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
@@ -727,5 +727,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
+    }
+
+    public void scrubPlayerWithAdsAndClickRestart(double playbackPercent) {
+        scrubPlaybackWithAdsPercentage(playbackPercent);
+        restartButton.click();
     }
 }

@@ -31,6 +31,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String MS_MARVEL = "Ms. Marvel";
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
+    private static final double SCRUB_PERCENTAGE_ZERO = 0;
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final double SCRUB_PERCENTAGE_SIXTY = 60;
     private static final String FRANCAIS = "Français";
@@ -298,21 +299,36 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72347"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad PreRoll Only Plays once Start of Playback", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel - VOD Player - Ad PreRoll Only Plays Once At Start of Playback", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
     public void verifyAdPreRollPlaysOnce() {
+        String errorFormat = "%s %s";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(2);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(ONE_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_ZERO);
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT),
+                String.format(errorFormat, AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after scrubbing back to 0%."));
 
-        videoPlayer.scrubPlaybackWithAdsPercentage(10);
-        videoPlayer.scrubPlaybackWithAdsPercentage(0);
-        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_WAS_PRESENT_ERROR_MESSAGE);
-
-        videoPlayer.scrubPlaybackWithAdsPercentage(10);
-        videoPlayer.clickRestartButton();
-        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_WAS_PRESENT_ERROR_MESSAGE);
+        videoPlayer.clickBackButton();
+        details.clickSearchIcon();
+        if (search.getClearText().isPresent(ONE_SEC_TIMEOUT)) {
+            search.clearText();
+        }
+        search.searchForMedia(SPIDERMAN_THREE);
+        List<ExtendedWebElement> results = search.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(details.isOpened(), "Details page did not open.");
+        details.clickPlayButton();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
+        videoPlayer.scrubPlayerWithAdsAndClickRestart(SCRUB_PERCENTAGE_THIRTY);
+        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT),
+                String.format(errorFormat, AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after restarting."));
         sa.assertAll();
     }
 
@@ -323,7 +339,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
-        homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
