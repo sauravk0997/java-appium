@@ -6,13 +6,14 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
+    private static final String AVATAR_HEADER_TITLE = "headerViewTitleLabel";
 
     @ExtendedFindBy(accessibilityId = "avatarSelectionScreenView")
     ExtendedWebElement avatarSelectionScreenView;
-
-    ExtendedWebElement chooseAvatarTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
 
     private ExtendedWebElement skipButton = getDynamicAccessibilityId(
             getDictionary().getDictionaryItem(
@@ -38,7 +39,12 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return avatarSelectionScreenView.isPresent()
-                && chooseAvatarTitle.isPresent();
+                && getChooseAvatarTitle().isPresent();
+    }
+
+    public ExtendedWebElement getChooseAvatarTitle() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
     }
 
     public void verifyChooseAvatarPage() {
@@ -49,5 +55,17 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getSkipButton() {
         return skipButton;
+    }
+
+    public ExtendedWebElement getAvatarHeaderTitle() {
+        return getStaticTextByNameContains(AVATAR_HEADER_TITLE);
+    }
+
+    public List<ExtendedWebElement> getHeaderTitlesInView() {
+        if (getAvatarHeaderTitle().isPresent()) {
+            return findExtendedWebElements(getAvatarHeaderTitle().getBy(), SHORT_TIMEOUT);
+        } else {
+            throw new java.util.NoSuchElementException("Failing test, header view elements not found.");
+        }
     }
 }

@@ -27,7 +27,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KCC_19 = "19+";
     static final String KMRB_12 = "12+";
     static final String KMRB_15 = "15+";
-    static final String KMRB_18 = "18";
+    static final String KMRB_18 = "18+";
     static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
     static final String JAPAN_LOCALE = "JP";
@@ -39,6 +39,16 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         getDesiredRatingContent(ratingValue, lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
+        getDesiredRatingContent(ratingValue, lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(locale, lang));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
