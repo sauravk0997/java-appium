@@ -778,6 +778,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
+        disneyPlusAccountIOSPageBase.clickMyDisneyManageBtn();
         disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);

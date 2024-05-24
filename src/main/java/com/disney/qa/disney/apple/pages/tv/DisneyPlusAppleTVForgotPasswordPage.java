@@ -15,11 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_COPY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.EMAIL_CODE_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY_2;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOneTimePasscodeIOSPageBase.class)
@@ -29,7 +25,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     private static final String TEXT_FIELD_INPUT_CODE = "textFieldInputCode";
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"textFieldInputCode\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"oneTimePasscode\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     private ExtendedWebElement otpInputCodeField;
 
     @ExtendedFindBy(accessibilityId = "buttonResend")
@@ -63,7 +59,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickOnOtpField() {
-        getDynamicTextEntryFieldByName(TEXT_FIELD_INPUT_CODE).click();
+        otpInputCodeField.click();
     }
 
     public boolean isNumericKeyboardOpen() {
@@ -79,7 +75,10 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void enterOTP(String otp) {
-        getDynamicTextEntryFieldByName(TEXT_FIELD_INPUT_CODE).type(otp);
+        char[] otpArray = otp.toCharArray();
+        for (char otpChar : otpArray) {
+            dynamicBtnFindByLabel.format(otpChar).click();
+        }
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -94,7 +93,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickResend() {
-        resendButton.click();
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).click();
     }
 
     public String getCheckYourEmailScreenTitle() {
@@ -103,5 +102,9 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     public String getOTPErrorMessage() {
         return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSCODE.getText());
+    }
+
+    public void clickContinueBtnOnOTPPage() {
+        primaryButton.click();
     }
 }

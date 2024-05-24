@@ -20,7 +20,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String HULU_CONTENT = "Only Murders in the Building";
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"MOBQA-74554"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
     @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
