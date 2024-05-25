@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
@@ -7,7 +8,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
-
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
@@ -99,6 +99,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement imageLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name CONTAINS \"%s\"`]")
+    protected ExtendedWebElement typeCellNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
@@ -115,6 +117,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement logoImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell")
     protected ExtendedWebElement cell;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView")
+    protected ExtendedWebElement collectionView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`]")
     protected ExtendedWebElement customHyperlinkByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == '%s'`][%s]")
@@ -477,6 +481,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeCellLabelContains.format(label);
     }
 
+    public ExtendedWebElement getTypeCellNameContains(String name) {
+        return typeCellNameContains.format(name);
+    }
+
     public String getTextFromStaticTextByLabel(String label) {
         return getStaticTextByLabel(label).getText();
     }
@@ -647,6 +655,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public List<String> getContentItems(int startNum) {
+        waitForPresenceOfAnElement(cell);
         List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
         List<String> titles = new ArrayList<>();
         IntStream.range(startNum, titlesElements.size()).forEach(i -> titles.add(titlesElements.get(i).getText()));
@@ -1292,6 +1301,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
     }
 
+    public void swipeLeftInCollection(ExtendedWebElement element) {
+        Point elementLocation = element.getLocation();
+        Dimension elementDimensions = element.getSize();
+        int endY;
+        int startY = endY = elementLocation.getY() + Math.round(elementDimensions.getHeight() / 2.0F);
+        int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
+        int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
+        this.swipe(startX, startY, endX, endY, 500);
+    }
+
     public void swipeLeftInCollection(CollectionConstant.Collection collection) {
         ExtendedWebElement collectionElement = getCollection(collection);
         Point elementLocation = collectionElement.getLocation();
@@ -1425,6 +1444,39 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
+    }
+    public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
+        List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), SHORT_TIMEOUT);
+        swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
+        List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
+        return !titles1.equals(titles2);
+    }
+
+    public boolean isCollectionViewScrollableHorizontally(int startNum, int index) {
+        List<String> titles1 = getContentItems(startNum);
+        swipeLeftInCollection(getCollectionRowInView(index));
+        List<String> titles2 = getContentItems(startNum);
+        return !titles1.equals(titles2);
+    }
+
+    public List<ExtendedWebElement> getCollectionViews() {
+        List<ExtendedWebElement> collectionViews;
+        if (collectionView.isPresent()) {
+            collectionViews = findExtendedWebElements(collectionView.getBy());
+        } else {
+            throw new ObjectNotFoundException("Collection view not present.");
+        }
+        return collectionViews;
+    }
+
+    public ExtendedWebElement getCollectionRowInView(int index) {
+        ExtendedWebElement collectionRowInView = null;
+        try {
+            collectionRowInView = getCollectionViews().get(index);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(String.format("Index out of bounds: %s", e));
+        }
+        return collectionRowInView;
     }
 
     public void clickMyDisneyManageBtn() {

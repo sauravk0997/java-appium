@@ -69,6 +69,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String DISNEY = "disney";
     public static final String LANGUAGE = "language";
     public static final String PROD = "prod";
+    public static final String IOS_PLATFORM = "ios";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
