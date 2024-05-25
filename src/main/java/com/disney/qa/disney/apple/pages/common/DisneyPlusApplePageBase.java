@@ -194,7 +194,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "textFieldEmail")
     protected ExtendedWebElement emailField;
     @ExtendedFindBy(accessibilityId = "Email")
-    protected ExtendedWebElement emailBox;
+    protected ExtendedWebElement emailTextField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow")
     protected ExtendedWebElement windowType;
     @ExtendedFindBy(accessibilityId = "actionableAlertTitle")

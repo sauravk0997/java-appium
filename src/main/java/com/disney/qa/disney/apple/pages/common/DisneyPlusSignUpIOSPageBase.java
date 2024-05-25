@@ -53,9 +53,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSignUpPageOpen() {
-        boolean isPresent = emailHeader.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return emailHeader.isElementPresent();
     }
 
     public void clickAgreeAndContinue() {
@@ -103,8 +101,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void addEmailAddress(String email) {
-        pause(2);
-        emailBox.type(email);
+        emailTextField.type(email);
         continueButton.click();
     }
 
