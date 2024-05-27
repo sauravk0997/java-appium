@@ -66,7 +66,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Add Profile view", groups = {"Profile"})
     public void exitFromAddProfile() {
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
 
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
