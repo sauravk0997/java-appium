@@ -315,6 +315,7 @@ public enum DictionaryKeys {
     NAV_SUGGESTED("nav_related"),
     NAV_WATCHLIST("nav_watchlist"),
     NAV_WATCHLIST_TITLE("nav_watchlist_title"),
+    NAVIGATION_BTN_LOG_IN("navigation_btn_log_in"),
     NETWORK_CONNECTION_ERROR("networkconnectionerror"),
     NETWORK_EXCEPTION_ERROR("networkexception"),
     ONBOARDING_ENTER_EMAIL("onboardingemail_text_enteremail"),
