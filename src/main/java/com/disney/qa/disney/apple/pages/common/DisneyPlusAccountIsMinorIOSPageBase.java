@@ -6,6 +6,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
  * Landing page when the user logs in with a minor account
@@ -14,23 +16,18 @@ import org.openqa.selenium.WebDriver;
 public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusAccountIsMinorIOSPageBase(WebDriver driver) { super(driver); }
 
-    @ExtendedFindBy(accessibilityId = "actionableAlertTitle")
-    private ExtendedWebElement notEligibleHeader;
+    private ExtendedWebElement notEligibleHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER);
 
-    @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
+    @ExtendedFindBy(accessibilityId = "Help Center")
     private ExtendedWebElement helpCenterButton;
 
-    @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
+    @ExtendedFindBy(accessibilityId = "Dismiss")
     private ExtendedWebElement dismissButton;
-
-    private ExtendedWebElement notEligibleSubText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTACT_CSR_SUBTITLE);
 
     @Override
     public boolean isOpened() { return notEligibleHeader.isElementPresent(); }
 
     public ExtendedWebElement getNotEligibleHeader() { return notEligibleHeader; }
-
-    public ExtendedWebElement getNotEligibleSubText() { return notEligibleSubText; }
 
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
@@ -43,4 +40,11 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public void clickDismissButton() {
         dismissButton.click();
     }
+
+    public ExtendedWebElement getNotEligibleSubText() {
+        String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText());
+        String subscribeText2 = getDictionary().formatPlaceholderString(subscribeText, Map.of("link_1", "here"));
+        return staticTextByLabel.format(subscribeText2);
+    }
+
 }
