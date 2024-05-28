@@ -2,17 +2,19 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.Maintainer;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -760,6 +763,76 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         sa.assertTrue(editProfile.isEditTitleDisplayed(), "Tapping on edit profile did not open profile to edit.");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
+    @Test(description = "Edit Profile - Change Avatar", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileChangeAvatar() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
+        List<ContentSet> avatarSets = getAvatarSets(account);
+        int lastSetId = avatarSets.size() - 1;
+        String lastSetAvatarId = "";
+        String avatarSetName = "";
+        try {
+            lastSetAvatarId = avatarSets.get(lastSetId).getAvatarIds().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Index out of bounds: " + e);
+        }
+        try {
+            avatarSetName = avatarSets.get(1).getSetName();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Index out of bounds: " + e);
+        }
+        setAppToHomeScreen(account);
+        moreMenu.clickMoreTab();
+        BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.getAddProfileAvatar().click();
+
+        //validate back arrow, Choose Avatar screen title and avatar headers
+        sa.assertTrue(chooseAvatar.getBackArrow().isPresent(), "Back arrow was not present.");
+        sa.assertTrue(chooseAvatar.getChooseAvatarTitle().isPresent(), "Choose Avatar title was not present.");
+        for (int i = 0; i < chooseAvatar.getHeaderTitlesInView().size(); i++) {
+            //First avatar set name returned is "Default" which does not exist as avatar header title
+            sa.assertTrue(chooseAvatar.getStaticTextByLabelContains(avatarSets.get(i + 1).getSetName()).isPresent(),
+                    "Avatar header was not found.");
+        }
+
+        //validate back arrow function
+        chooseAvatar.getBackArrow().click();
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Not returned back to Edit Profile screen.");
+        editProfile.getAddProfileAvatar().click();
+
+        //validate scrolling
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar page was not opened.");
+        sa.assertTrue(chooseAvatar.isCollectionViewScrollableHorizontally(0, 2), "Not able to horizontally scroll in collection.");
+        sa.assertTrue(chooseAvatar.isCollectionViewScreenScrollableVertically(chooseAvatar.getStaticTextByLabelContains(avatarSetName),
+                        chooseAvatar.getStaticTextByLabelContains(avatarSets.get(lastSetId).getSetName()), null),
+                "Not able to vertically scroll Choose Avatar screen.");
+
+        //validate select new avatar
+        swipePageTillElementTappable(chooseAvatar.getTypeCellNameContains(lastSetAvatarId), 2, null, Direction.UP, 1000);
+        chooseAvatar.getTypeCellNameContains(lastSetAvatarId).click();
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Not returned back to Edit Profile screen.");
+        editProfile.getDoneButton().click();
+        moreMenu.clickMoreTab();
+        BufferedImage updatedAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
+        sa.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same.");
+        sa.assertAll();
+    }
+
+    private List<ContentSet> getAvatarSets(DisneyAccount account) {
+        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        if (avatarSets.isEmpty()) {
+            throw new SkipException("Skipping test, no avatar sets were found.");
+        } else {
+            return avatarSets;
+        }
     }
 
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
