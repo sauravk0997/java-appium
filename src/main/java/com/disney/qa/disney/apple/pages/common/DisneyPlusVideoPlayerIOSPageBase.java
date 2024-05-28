@@ -729,6 +729,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 until(it -> getRemainingTime() < gracePeriod);
     }
 
+    /**
+     * To be used when displaying video controller is only needed one time
+     * to perform the following actions one after another:
+     * scrub forward to certain percentage and click restart button.
+     */
     public void scrubPlayerWithAdsAndClickRestart(double playbackPercent) {
         scrubPlaybackWithAdsPercentage(playbackPercent);
         restartButton.click();
