@@ -23,6 +23,7 @@ import java.time.temporal.ValueRange;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
@@ -293,6 +294,20 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72834"})
+    @Test(description = "Ariel - VOD Player - Ads - Content Rating Displayed after Pre-roll", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    public void verifyContentRatingDisplayedAfterPreRoll() {
+        String PG_13_RATING = DictionaryKeys.RATING_MPAA_AND_TVPG_PG_13.getText();
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS, sa);
+
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.waitForAdToCompleteIfPresent(2);
+        Assert.assertTrue(videoPlayer.isRatingPresent(PG_13_RATING), String.format("%s rating was not shown for %s", PG_13_RATING, MS_MARVEL));
         sa.assertAll();
     }
 
