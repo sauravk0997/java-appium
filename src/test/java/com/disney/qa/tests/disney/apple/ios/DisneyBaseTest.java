@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -564,5 +565,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
+    }
+
+    public String getUtf8MetaString(String metadata) {
+        byte[] bytePayload = metadata.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytePayload, StandardCharsets.UTF_8);
     }
 }
