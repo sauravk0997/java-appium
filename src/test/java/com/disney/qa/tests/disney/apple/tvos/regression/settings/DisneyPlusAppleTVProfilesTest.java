@@ -11,6 +11,7 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVChooseAvatarPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVEditProfilePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWhoIsWatchingPage;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -66,21 +67,14 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Add Profile view", groups = {"Profile"})
     public void exitFromAddProfile() {
         SoftAssert sa = new SoftAssert();
-
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-
-        createDisneyAccountRequest
-                .setSkus(Arrays.asList(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY))
-                .setDateOfBirth("1995-01-01")
-                .setCountry(getLocalizationUtils().getLocale())
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-
-        DisneyAccount entitledUser = getAccountApi().createAccount(createDisneyAccountRequest);
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
 
-        logInTemp(entitledUser);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        logInTemp(getAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
