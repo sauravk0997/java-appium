@@ -5,8 +5,10 @@ import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.disney.DisneyContentIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -255,12 +257,12 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Hidden state - Hero Carousel", groups = { "Home" })
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(entitledUser);
+        logInTemp(getAccount());
 
         disneyPlusAppleTVHomePage.moveRight(1, 1);
 
