@@ -156,9 +156,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         isOpened();
-        //TODO: TVOS-3472 focus not found on login button after user enters password
-        moveDown(1,1);
-        clickSelect();
+        Assert.assertTrue(isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
+                "Login button is not focused");
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void submitSandboxPassword(String password) {
