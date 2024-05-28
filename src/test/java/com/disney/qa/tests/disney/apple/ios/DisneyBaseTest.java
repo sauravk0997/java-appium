@@ -83,6 +83,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SERIES_ENTITY_ID = "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568";
     public static final String MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
     public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
+    public static final String DISNEY_PAGE_ID = "page-4c4b78ed-4a17-43eb-8221-14a3959e4517";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
@@ -509,6 +510,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
+    public ArrayList<Container> getPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getExploreSearchRequest()
+                .setEntityId(pageID)
+                .setProfileId(getAccount().getProfileId())
+                .setCountryCode(locale)
+                .setLanguage(language)).getData().getPage().getContainers();
+    }
+
     public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
         ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
         String firstContentID = null;
@@ -551,6 +560,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
                     .setLimit(limit));
+            return setResponse.getData().getSet().getItems();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
+            Assert.fail("Items from Set not found " + e.getMessage());
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public List<Item> getItemsFromSet(String setId, String locale, String language) {
+        try {
+            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
+                    .setSetId(setId)
+                    .setProfileId(getAccount().getProfileId())
+                    .setCountryCode(locale)
+                    .setLanguage(language));
             return setResponse.getData().getSet().getItems();
         } catch (URISyntaxException | JsonProcessingException e) {
             UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));

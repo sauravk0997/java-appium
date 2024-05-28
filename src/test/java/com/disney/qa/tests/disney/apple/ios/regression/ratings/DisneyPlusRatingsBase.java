@@ -1,12 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -16,7 +21,7 @@ import java.util.*;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    protected List<String> CONTENT_TITLE;
+    protected List<String> CONTENT_TITLE = new ArrayList<>();
     private boolean isMovie = false;
     static final String APAC_G = "G";
     static final String APAC_PG = "PG";
@@ -37,17 +42,17 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String R21 = "R21";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        getDesiredRatingContent(ratingValue, lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
 
     public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
-        getDesiredRatingContent(ratingValue, lang, locale);
+        //getDesiredRatingContent(ratingValue);
         setAccount(getAccountApi().createAccountForOTP(locale, lang));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -65,36 +70,41 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void getDesiredRatingContent(String rating, String lang, String locale) {
+    private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
-        List<String> titles = new ArrayList<>();
+
         String movieFilter = "program";
         String seriesFilter = "series";
         ArrayList<String> contentFilter = new ArrayList<>(Arrays.asList(movieFilter, seriesFilter));
+        try {
+            ArrayList<Container> collections = getPageContent(DISNEY_PAGE_ID, locale, language);
+            ArrayList<String> disneyCollectionsIDs = new ArrayList<>();
+            boolean isContentFound = false;
+            //Collections under Disney like originals etc
+            collections.forEach(item -> disneyCollectionsIDs.add(item.getId()));
+            //Items in the collection like Originals -> Monsters at work
+            for (int i = 0, disneyCollectionsIDsSize = disneyCollectionsIDs.size(); i < disneyCollectionsIDsSize; i++ && !isContentFound) {
+                String collectionID = disneyCollectionsIDs.get(i);
+                List<Item> disneyCollectionItems = getItemsFromSet(collectionID, locale, language);
+                System.out.println("In disneyCollectionsID loop for collectionID: " + collectionID);
+                for (Item item : disneyCollectionItems) {
+                    if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
+                        byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
 
-        for (String contentType : contentFilter) {
-            Map<String, String> item =
-                    getContentApiChecker().findMediaByRating(rating, lang, locale, contentType, titles);
-            if (item.isEmpty()) {
-                continue;
-            }
-            if (!item.get(rating).isEmpty()) {
-                LOGGER.info("Found rating {} content for filer type {}.", rating, contentType);
-                titles.add(item.get(rating));
-                CONTENT_TITLE = titles;
-                if (Objects.equals(contentType, movieFilter)) {
-                    LOGGER.info("Content under test is a Movie.");
-                    isMovie = true;
-                } else {
-                    LOGGER.info("Content under test is Series.");
+                        System.out.println("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
+                        CONTENT_TITLE.add(new String(bytePayload, StandardCharsets.UTF_8));
+                        isMovie = true;
+                        isContentFound = true;
+                        return;
+                    }
                 }
-                return;
+                if (isContentFound) {
+                    return;
+                }
             }
-            LOGGER.info("No content found for filter type {} against rating system {}.", contentType, rating);
+        } catch (Exception e) {
+            LOGGER.info(String.format("Exception:", e.getMessage()));
         }
-        //no content found for desired rating value and skipping test
-        throw new SkipException(
-                String.format("Skipping test for rating '%s' as API returned no content.", rating));
     }
 
     public void confirmRegionalRatingsDisplays(String rating, String ratingsDictionaryKey) {
