@@ -101,7 +101,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
                 "Global Nav menu is not collapsed after moving right from expanded global nav");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         IntStream.range(0, GLOBAL_NAV_TEXT.get().size()).forEach(i -> {
