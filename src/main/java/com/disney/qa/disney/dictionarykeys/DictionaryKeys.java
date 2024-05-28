@@ -376,6 +376,7 @@ public enum DictionaryKeys {
     RATING_KMRB_15("rating_kccandkmrb_15+"),
     RATING_KMRB_18("rating_kccandkmrb_18"),
     RATING_MDA_R21_DESCRIPTION("rating_mda_r21_description"),
+    RATING_MPAA_AND_TVPG_PG_13("rating_mpaaandtvpg_pg-13"),
     RATING_RESTRICTION_DETAIL_MESSAGE("rating_restriction_detail_message"),
     RATING_R21_FORGOT_PASSSWORD_LINK("r21_password_forgot"),
     REMOVE_DOWNLOAD_BTN("btn_remove_download"),
