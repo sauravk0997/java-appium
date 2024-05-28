@@ -15,9 +15,7 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
-    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText()));
-
-    protected ExtendedWebElement emailHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
+    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     protected ExtendedWebElement optInCheckbox;
@@ -50,10 +48,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         boolean isPresent = signUpHeader.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
-    }
-
-    public boolean isSignUpPageOpen() {
-        return emailHeader.isElementPresent();
     }
 
     public void clickAgreeAndContinue() {
