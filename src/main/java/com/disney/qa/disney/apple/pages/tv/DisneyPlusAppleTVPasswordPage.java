@@ -120,7 +120,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isCreatePasswordScreenOpen() {
-        boolean isPresent = createPasswordTitle.isElementPresent();
+        boolean isPresent = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText())).isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }

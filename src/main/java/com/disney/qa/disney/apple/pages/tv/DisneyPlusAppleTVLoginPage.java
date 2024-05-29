@@ -128,10 +128,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         return isPresent;
     }
 
-    public void selectEnterNewEnterEmailSelectContinueBtn(String email) {
+    public void selectEnterNewEnterEmailSelectDoneBtn(String email) {
         clickEmailAndPressEnterNew();
         enterEmail(email);
-        moveToContinueBtnKeyboardEntry();
+        moveToDoneBtnKeyboardEntry();
         clickSelect();
     }
 
