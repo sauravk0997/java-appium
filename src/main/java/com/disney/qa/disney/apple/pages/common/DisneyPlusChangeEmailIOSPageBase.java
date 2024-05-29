@@ -14,8 +14,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     private ExtendedWebElement title = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHANGE_EMAIL_TITLE.getText()));
 
-    private ExtendedWebElement newEmailHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_NEW_HEADER.getText()));
-
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnchecked")
     private ExtendedWebElement logoutAllDevicesUnchecked;
 
