@@ -1,0 +1,68 @@
+package com.disney.qa.common.constant;
+
+public class RatingConstant {
+
+    public enum Country {
+        JP, KR, SG, US
+    }
+
+    public enum Rating {
+        G("G"),
+        PG("PG"),
+        R21("R21"),
+        SEVEN_PLUS("7+"),
+        TWELVE_PLUS("12+"),
+        FIFTEEN_PLUS("15+"),
+        EIGHTEEN_PLUS("18+"),
+        NINETEEN_PLUS("19+");
+
+        private final String rating;
+
+        Rating(String rating) {
+            this.rating = rating;
+        }
+
+        public String getContentRating() {
+            return rating;
+        }
+    }
+
+    public static String getMaxMaturityRating(String locale) {
+        switch (locale) {
+            case "US":
+            case "CA":
+                return "1830";
+            case "KR":
+            case "SG":
+                return "1870";
+            case "NL":
+            case "JP":
+            case "DE":
+            case "TR":
+                return "1850";
+            default:
+                throw new IllegalArgumentException(String.format("'%s Max maturity rating for {} locale is not found", locale));
+        }
+    }
+
+    public static String getRoamingDas(String locale) {
+        switch (locale) {
+            case "CA":
+                return "23065";
+            case "DE":
+                return "23117";
+            case "JP":
+                return "23098";
+            case "KR":
+                return "23126";
+            case "SG":
+                return "23116";
+            case "TR":
+                return "23144";
+            case "US":
+                return "23831";
+            default:
+                throw new IllegalArgumentException(String.format("'%s  Roaming DA for {} locale is not found", locale));
+        }
+    }
+}
