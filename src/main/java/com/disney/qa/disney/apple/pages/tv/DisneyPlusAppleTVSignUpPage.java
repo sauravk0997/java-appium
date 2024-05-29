@@ -32,7 +32,7 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
 
     @Override
     public void clickAgreeAndContinue() {
-        primaryButton.click();
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public boolean isAgreeAndContinueFocused() {
