@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.basic;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -156,7 +157,7 @@ public class DisneyPlusBasicTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-62705" })
     @Test(description = "Verify Changing Profiles", groups = { "Smoke", TestGroup.PRE_CONFIGURATION })
     public void testChangingProfiles() {
-        getAccountApi().addProfile(getAccount(), TEST_USER, ADULT_DOB, getAccount().getProfileLang(), null, false, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(TEST_USER).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAppToHomeScreen(getAccount(), TEST_USER);
