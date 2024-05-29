@@ -257,12 +257,12 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Hidden state - Hero Carousel", groups = { "Home" })
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(entitledUser);
+        logInTemp(getAccount());
 
         disneyPlusAppleTVHomePage.moveRight(1, 1);
 
