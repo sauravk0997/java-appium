@@ -177,7 +177,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90628"})
     @Test(description = "Email is resent with a different code and user is taken to new email sent page", groups = {"Onboarding"})
-    public void isEmailResentWithDifferentCode() {
+    public void verifyEmailResentWithDifferentCode() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
