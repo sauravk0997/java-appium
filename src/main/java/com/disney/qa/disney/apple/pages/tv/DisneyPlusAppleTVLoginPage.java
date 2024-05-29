@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_SIGN_UP;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_NO_ACCOUNT;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.TRY_AGAIN_BTN;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusLoginIOSPageBase.class)
@@ -33,9 +30,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"TRY AGAIN\"`]")
     private ExtendedWebElement tryAgainBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
-    private ExtendedWebElement passwordFld;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Continue. Confirm your password and login.'`]")
     private ExtendedWebElement confirmLoginButton;
 
@@ -49,7 +43,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isElementEnabled(emailField);
+        return isFocused(textEntryField) && getEmailHint().isPresent(SHORT_TIMEOUT);
     }
 
     public void clickEnterNewBtn() {
@@ -90,10 +84,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public void clickEmailField() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         textEntryField.click();
-    }
-
-    public void clickPasswordFld() {
-        passwordFld.click();
     }
 
     public void clickConfirmLoginButton() {
@@ -206,5 +196,13 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         if (enterNewBtn.isElementPresent()) {
             clickMenu();
         }
+    }
+
+    public ExtendedWebElement getEmailHint() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
+    }
+
+    public ExtendedWebElement getNoEmailInputError() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText()));
     }
 }
