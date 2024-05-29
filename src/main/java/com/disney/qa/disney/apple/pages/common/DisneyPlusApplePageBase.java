@@ -768,15 +768,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Webview URL did not contain the expected text...").until(it -> getWebviewUrl().contains(expectedText));
     }
 
-    // Will take you to continue button on tvOS on screen keyboard
-    public void moveToContinueBtnKeyboardEntry() {
+    // Will take you to continue or done button on tvOS on screen keyboard
+    public void moveToContinueOrDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardContinue));
-    }
-
-    public void moveToDoneBtnKeyboardEntry() {
-        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        LOGGER.info("Keyboard done button is focused? {}", isFocused(keyboardDone));
     }
 
     public void moveToLocalizedKeyboard() {
@@ -796,7 +790,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void selectContinueBtnOnKeyboardEntry() {
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 

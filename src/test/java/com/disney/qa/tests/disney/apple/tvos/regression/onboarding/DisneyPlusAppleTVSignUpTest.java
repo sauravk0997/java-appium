@@ -383,7 +383,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
                 "Create password screen did launch from enter your email");
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(randomPassword);
-        disneyPlusAppleTVPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
         sa.assertFalse(disneyPlusAppleTVLoginPage.isKeyboardPresent(), "on screen keyboard is present after entering password and clicking on Continue");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), expectedPassword);

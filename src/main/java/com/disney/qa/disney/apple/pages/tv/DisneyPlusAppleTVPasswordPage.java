@@ -98,7 +98,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void createNewPasswordEntry(String password) {
         clickPassword();
         enterPasswordCreatePassword(password);
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         primaryButton.click();
@@ -140,7 +140,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void passwordEntry(String password) {
         clickPassword();
         enterPassword(password);
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 
