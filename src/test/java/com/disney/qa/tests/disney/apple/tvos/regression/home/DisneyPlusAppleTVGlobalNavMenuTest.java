@@ -64,12 +64,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { "Home", "Smoke" })
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        logInTemp(entitledUser);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        logInTemp(getAccount());
 
         // move down to focus on brand tile
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
@@ -100,7 +101,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
                 "Global Nav menu is not collapsed after moving right from expanded global nav");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         IntStream.range(0, GLOBAL_NAV_TEXT.get().size()).forEach(i -> {

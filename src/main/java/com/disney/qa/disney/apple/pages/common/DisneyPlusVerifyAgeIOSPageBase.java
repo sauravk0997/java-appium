@@ -17,6 +17,9 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "underAgeButton")
     private ExtendedWebElement declineMaturityButton;
 
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
+    private ExtendedWebElement cancelButton;
+
     //FUNCTIONS
     public DisneyPlusVerifyAgeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -29,5 +32,9 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickIAm21PlusButton() {
         acceptMaturityButton.click();
+    }
+
+    public void clickCancelButton() {
+        cancelButton.click();
     }
 }
