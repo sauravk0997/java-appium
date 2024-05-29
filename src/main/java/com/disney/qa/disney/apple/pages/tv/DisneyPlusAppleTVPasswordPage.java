@@ -126,7 +126,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public List<String> getLogInPasswordScreenActualTexts() {
-        return Stream.of(getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_HEADER.getText())).getText(), passwordEntryField.getText(),
+        return Stream.of(getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_HEADER.getText())).getText(),
+                        getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_HINT.getText())).getText(),
                         getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText())).getText(), primaryButton.getText())
                 .collect(Collectors.toList());
     }
