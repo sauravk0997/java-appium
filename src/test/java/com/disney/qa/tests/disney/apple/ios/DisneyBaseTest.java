@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -82,6 +83,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SERIES_ENTITY_ID = "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568";
     public static final String MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
     public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
+    public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -546,6 +548,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
                     .setSetId(setId)
+                    .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
                     .setLimit(limit));
             return setResponse.getData().getSet().getItems();
@@ -562,5 +565,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
+    }
+
+    public String getUtf8MetaString(String metadata) {
+        byte[] bytePayload = metadata.getBytes(StandardCharsets.ISO_8859_1);
+        return new String(bytePayload, StandardCharsets.UTF_8);
     }
 }
