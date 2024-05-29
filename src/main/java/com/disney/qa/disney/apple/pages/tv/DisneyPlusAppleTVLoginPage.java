@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.tv;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -32,9 +33,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"TRY AGAIN\"`]")
     private ExtendedWebElement tryAgainBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField")
-    private ExtendedWebElement passwordFld;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Continue. Confirm your password and login.'`]")
     private ExtendedWebElement confirmLoginButton;
 
@@ -48,7 +46,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isElementEnabled(emailField);
+        return isFocused(textEntryField) && getEmailHint().isPresent(SHORT_TIMEOUT);
     }
 
     public void clickEnterNewBtn() {
@@ -89,10 +87,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public void clickEmailField() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         textEntryField.click();
-    }
-
-    public void clickPasswordFld() {
-        passwordFld.click();
     }
 
     public void clickConfirmLoginButton() {
@@ -205,5 +199,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         if (enterNewBtn.isElementPresent()) {
             clickMenu();
         }
+    }
+
+    public ExtendedWebElement getEmailHint() {
+//        MY_DISNEY_ENTER_EMAIL_HINT
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
     }
 }
