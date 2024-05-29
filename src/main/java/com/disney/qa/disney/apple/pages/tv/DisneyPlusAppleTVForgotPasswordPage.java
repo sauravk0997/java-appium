@@ -106,7 +106,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         LOGGER.info("Is resent button button present?" + getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
         LOGGER.info("Is resent button accessibility identifier via dict key present?" + getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
         LOGGER.info("Is resent button original accessibility identifier?" + resendButton.isPresent());
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).click();
+        resendButton.click();
     }
 
     public String getOTPErrorMessage() {
