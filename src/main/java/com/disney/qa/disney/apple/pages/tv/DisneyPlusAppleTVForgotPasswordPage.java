@@ -33,7 +33,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return getOTPHeader().isPresent();
     }
 
