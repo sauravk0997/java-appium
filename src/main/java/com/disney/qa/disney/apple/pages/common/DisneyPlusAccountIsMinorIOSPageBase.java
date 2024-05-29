@@ -43,5 +43,4 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
         String subscribeText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
         return staticTextByLabel.format(subscribeText);
     }
-
 }
