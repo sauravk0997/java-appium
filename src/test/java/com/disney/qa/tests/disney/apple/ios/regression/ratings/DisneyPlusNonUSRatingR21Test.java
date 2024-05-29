@@ -100,12 +100,10 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         ratingsSetup(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         launchR21Content();
         Assert.assertTrue(verifyAgePage.isOpened(), "Verify Age page was not opened");
         verifyAgePage.clickCancelButton();
-        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
 
     public void launchR21Content() {
