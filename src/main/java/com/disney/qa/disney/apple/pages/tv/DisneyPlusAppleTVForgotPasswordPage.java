@@ -94,12 +94,12 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         return otpInputCodeField.getText();
     }
 
-    public String getCheckYourEmailScreenTitle() {
-        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_TITLE.getText());
-    }
-
     public void clickResend() {
         resendButton.click();
+    }
+
+    public String getCheckYourEmailScreenTitle() {
+        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_TITLE.getText());
     }
 
     public String getOTPErrorMessage() {
