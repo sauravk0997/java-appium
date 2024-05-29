@@ -1481,4 +1481,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void clickMyDisneyManageBtn() {
         getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
     }
+
+    public boolean isLearnMoreAboutMyDisneyButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
+    }
 }

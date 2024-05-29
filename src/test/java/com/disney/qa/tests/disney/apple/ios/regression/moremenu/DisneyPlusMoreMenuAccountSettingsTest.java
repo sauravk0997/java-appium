@@ -722,7 +722,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLogoutAllDevicesChecked(),
                 "XMOBQA-61551 - 'Logout All Devices' was not checked");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisneyButtonPresent(),
                 "XMOBQA-61551 - 'Logout All Devices' password text was not displayed");
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress("invalid");
