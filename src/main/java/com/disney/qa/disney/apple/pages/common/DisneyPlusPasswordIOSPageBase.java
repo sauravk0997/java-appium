@@ -11,8 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RATING_R21_FORGOT_PASSSWORD_LINK;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 /*
  * Enter Password Page
@@ -23,6 +22,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
+    private ExtendedWebElement passwordPageHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_PASSWORD_HEADER.getText()));
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
@@ -42,7 +42,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = headlineHeader.isElementPresent();
+        boolean isPresent = passwordPageHeader.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
