@@ -62,8 +62,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickOnOtpField() {
-        LOGGER.info("get page source around otp field..");
-        System.out.println(getDriver().getPageSource());
         otpInputCodeField.click();
     }
 
