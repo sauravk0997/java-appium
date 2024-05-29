@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_SIGN_UP;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_NO_ACCOUNT;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.TRY_AGAIN_BTN;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusLoginIOSPageBase.class)
@@ -202,7 +199,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public ExtendedWebElement getEmailHint() {
-//        MY_DISNEY_ENTER_EMAIL_HINT
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
+    }
+
+    public ExtendedWebElement getNoEmailInputError() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText()));
     }
 }
