@@ -265,23 +265,23 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Log In Password screen details verification", groups = {"Onboarding"})
     public void verifyPasswordScreenDetails() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         List<String> expectedTexts = DisneyPlusAppleTVPasswordPage.getLogInPasswordScreenTexts(getLocalizationUtils());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        welcomeScreen.clickLogInButton();
+        loginPage.proceedToPasswordScreen(entitledUser.getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
+        sa.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
 
-        List<String> actualTexts = disneyPlusAppleTVPasswordPage.getLogInPasswordScreenActualTexts();
+        List<String> actualTexts = passwordPage.getLogInPasswordScreenActualTexts();
 
         IntStream.range(0, expectedTexts.size()).forEach(i -> sa.assertEquals(actualTexts.get(i), expectedTexts.get(i)));
 
