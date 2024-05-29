@@ -23,7 +23,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOneTimePasscodeIOSPageBase.class)
 public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePasscodeIOSPageBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final String EMAIL_PLACEHOLDER = "{user_email}";
 
@@ -100,12 +99,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickResend() {
-        LOGGER.info("get page source around resend button..");
-        System.out.println(getDriver().getPageSource());
-        LOGGER.info("Is resent button static text present?" + getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
-        LOGGER.info("Is resent button button present?" + getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
-        LOGGER.info("Is resent button accessibility identifier via dict key present?" + getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
-        LOGGER.info("Is resent button original accessibility identifier?" + resendButton.isPresent());
         resendButton.click();
     }
 
