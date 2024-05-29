@@ -62,6 +62,8 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickOnOtpField() {
+        LOGGER.info("get page source around otp field..");
+        System.out.println(getDriver().getPageSource());
         otpInputCodeField.click();
     }
 
@@ -96,6 +98,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickResend() {
+        LOGGER.info("get page source around resend button..");
         System.out.println(getDriver().getPageSource());
         LOGGER.info("Is resent button static text present?" + getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
         LOGGER.info("Is resent button button present?" + getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).isPresent());
