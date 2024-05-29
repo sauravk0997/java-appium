@@ -79,11 +79,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
         sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldFocused(), "Email input is not focused by default");
         disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused");
-        disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isViewAgreementAndPoliciesFocused(), "View Agreement & Policies button is not focused");
-        disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAgreeAndContinueFocused(), "Agree and Continue button is not focused");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAgreeAndContinueFocused(), "Continue button is not focused");
         sa.assertAll();
     }
 
