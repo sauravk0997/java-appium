@@ -772,13 +772,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void moveToContinueBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardContinue));
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void moveToDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardDone));
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        LOGGER.info("Keyboard done button is focused? {}", isFocused(keyboardDone));
     }
 
     public void moveToLocalizedKeyboard() {
