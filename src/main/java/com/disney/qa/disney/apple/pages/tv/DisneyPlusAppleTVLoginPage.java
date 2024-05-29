@@ -110,7 +110,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public boolean isEmailFieldFocused() {
-        return isFocused(emailField);
+        return isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())));
     }
 
     public boolean isKeyboardPresent() {
