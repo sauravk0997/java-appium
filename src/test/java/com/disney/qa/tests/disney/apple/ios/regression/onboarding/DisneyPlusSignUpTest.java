@@ -27,39 +27,22 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66555"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifySignUpPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen as expected");
         SoftAssert sa = new SoftAssert();
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.getBackArrow().isElementPresent(),
-                "Back Button (arrow) was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(),
-                "Email field was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
-                "Opt-In Consent Form (Checkbox) was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isTermsOfUserDisclaimerDisplayed(),
-                "Acknowledgement text was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.arePrivacyPolicyLinksDisplayed(),
-                "'Privacy Policy' hyperlinks were not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isSubscriberAgreementLinkDisplayed(),
-                "'Subscriber Agreement' hyperlink was not displayed as expected");
-
-        sa.assertEquals(disneyPlusApplePageBase.getPrimaryButtonText().toLowerCase(),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, AGREE_AND_CONTINUE_BTN.getText()).toLowerCase());
-
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "'Sign Up' did not open the email submission screen as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBackButtonPresent(), "Back Button (arrow) was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(), "STEP 1 label was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(), "Enter Email Header was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailBodyDisplayed(), "Enter Email body was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue button was not found");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(), "Learn more header was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreBodyDisplayed(), "Learn more body was not displayed");
         sa.assertAll();
     }
-
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66567"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })

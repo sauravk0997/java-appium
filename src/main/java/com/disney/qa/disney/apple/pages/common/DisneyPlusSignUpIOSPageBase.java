@@ -152,4 +152,26 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
             link.click();
         }
     }
+
+    public boolean isStep1LabelDisplayed() {
+        String step1Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "1"));
+        return getStaticTextByLabel(step1Label).isPresent();
+    }
+
+    public boolean isEnterEmailHeaderDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER))).isPresent();
+    }
+
+    public boolean isEnterEmailBodyDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_BODY))).isPresent();
+    }
+
+    public boolean isLearnMoreHeaderDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER))).isPresent();
+    }
+
+    public boolean isLearnMoreBodyDisplayed() {
+        String learnMoreBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BODY.getText()), Map.of("link_1", "and more"));
+        return getStaticTextByLabel(learnMoreBody).isPresent();
+    }
 }
