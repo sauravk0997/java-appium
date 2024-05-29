@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSignUpIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -23,14 +25,14 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = primaryButton.isElementPresent();
+        boolean isPresent = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
     @Override
     public void clickAgreeAndContinue() {
-        primaryButton.click();
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public boolean isAgreeAndContinueFocused() {
