@@ -5,8 +5,11 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.Map;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase{
@@ -72,4 +75,37 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return passwordLengthError.isElementPresent();
     }
 
+    public boolean isCreateNewPasswordPageOpened() {
+        String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
+        return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
+    }
+
+    private void openHyperlink(ExtendedWebElement link) {
+        if (link.getSize().getWidth() > 150) {
+            clickElementAtLocation(link, 10, 80);
+        } else {
+            link.click();
+        }
+    }
+
+    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
+        boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
+        return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
+    }
+
+    public void openPrivacyPolicyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
+    }
+
+    public void openSubscriberAgreement() {
+        pressByElement(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)),1);
+    }
+
+    public void openCookiesPolicyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
+    }
+
+    public void openEuPrivacyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
+    }
 }
