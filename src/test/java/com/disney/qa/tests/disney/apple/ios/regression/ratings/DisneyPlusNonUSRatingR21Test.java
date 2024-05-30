@@ -94,6 +94,18 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69894"})
+    @Test(description = "R21 - Create Pin - Verify Age - Select Back Button on Verify Age Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINBackButtonOnVerifyAgeScreen() {
+        ratingsSetup(R21, SINGAPORE_LANG, SINGAPORE_LOCALE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        launchR21Content();
+        Assert.assertTrue(verifyAgePage.isOpened(), "Verify Age page was not opened");
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
