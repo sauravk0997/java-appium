@@ -12,8 +12,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.AGREE_AND_CONTINUE_BTN;
-
 public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
