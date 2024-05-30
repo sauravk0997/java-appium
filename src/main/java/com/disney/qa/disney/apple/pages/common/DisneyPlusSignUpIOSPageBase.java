@@ -122,10 +122,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         pressByElement(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)),1);
     }
 
-    public boolean isInvalidEmailErrorDisplayed() {
-        return labelError.isElementPresent();
-    }
-
     public boolean isCookiesPolicyLinkDisplayed() {
         return customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)).isElementPresent();
     }
