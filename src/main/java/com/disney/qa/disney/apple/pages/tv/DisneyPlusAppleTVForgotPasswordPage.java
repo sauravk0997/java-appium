@@ -33,9 +33,11 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = headlineHeader.getText().equals(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHECK_EMAIL_TITLE.getText()));
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return getOTPHeader().isPresent();
+    }
+
+    public ExtendedWebElement getOTPHeader() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_OTP_HEADER.getText()));
     }
 
     public DisneyPlusAppleTVForgotPasswordPage(WebDriver driver) {
@@ -93,7 +95,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public void clickResend() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_LOGIN_RESEND_BTN.getText())).click();
+        resendButton.click();
     }
 
     public String getCheckYourEmailScreenTitle() {
@@ -106,5 +108,15 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     public void clickContinueBtnOnOTPPage() {
         primaryButton.click();
+    }
+
+    public boolean isResentEmailHeaderPresent() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_OTP_RESENT_HEADER.getText())).isPresent();
+    }
+
+    public boolean isResentEmailBodyPresent() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_OTP_RESENT_BODY.getText())).isPresent();
     }
 }
