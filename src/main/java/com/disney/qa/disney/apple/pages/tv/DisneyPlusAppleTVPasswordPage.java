@@ -246,4 +246,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
             enterNewPassword(newPassword);
         }
     }
+
+    public boolean isLearnMoreAboutMyDisneyButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
+    }
 }

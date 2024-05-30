@@ -60,6 +60,10 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         logoutAllDevicesUnchecked.click();
     }
 
+    public boolean isLearnMoreAboutMyDisney() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
+    }
+
     public boolean isInvalidEmailErrorDisplayed() {
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
