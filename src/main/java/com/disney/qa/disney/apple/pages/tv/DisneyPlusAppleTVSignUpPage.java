@@ -67,7 +67,8 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     }
 
     public void waitUntilEmailFieldIsFocused() {
-        isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())));
+        fluentWait(getDriver(), LONG_TIMEOUT, ONE_SEC_TIMEOUT,"Unable to focus email field on sign up page")
+                .until(it -> isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()))));
     }
 
     public void enterDateOfBirth(String dob) {
