@@ -1,5 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.alice.AliceAssertion;
+import com.disney.alice.AliceDriver;
+import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -11,6 +14,9 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
@@ -29,6 +35,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public void verifySignUpPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "'Sign Up' did not open the email submission screen as expected");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isBackButtonPresent(), "Back Button (arrow) was not displayed as expected");
@@ -39,6 +46,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue button was not found");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(), "Learn more header was not displayed");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreBodyDisplayed(), "Learn more body was not displayed");
+        var labelList = Stream.of(AliceLabels.NAT_GEO_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.MARVEL_LOGO,
+                AliceLabels.ESPN_LOGO, AliceLabels.DISNEY_LOGO).collect(Collectors.toList());
+        AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
+        labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
         sa.assertAll();
     }
 

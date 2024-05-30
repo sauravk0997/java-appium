@@ -15,6 +15,7 @@ public enum AliceLabels {
     ERROR_MESSAGE("error_message"),
     ERROR_TEXT_FIELD("error_text_field"),
     ERROR_TEXT_FIELD_HOVERED("error_text_field_hovered"),
+    ESPN_LOGO("espn_logo"),
     HOME_BUTTON_IS_HOVERED("home_button_hovered"),
     HOME_BUTTON_IS_SELECTED("home_button_selected"),
     LOADING_ANIMATION("loading_animation"),
