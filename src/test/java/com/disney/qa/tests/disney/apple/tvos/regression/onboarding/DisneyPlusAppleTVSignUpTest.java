@@ -153,6 +153,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     public void emailInputErrorMessages() {
         String tempEmailText = "somethin!^&&#@gmail";
         SoftAssert sa = new SoftAssert();
+        String errorText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -163,11 +164,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
 
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
+        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
 
         disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(tempEmailText);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
+        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
         sa.assertAll();
     }
 
