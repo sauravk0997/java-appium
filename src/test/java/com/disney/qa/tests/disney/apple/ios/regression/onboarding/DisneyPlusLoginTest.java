@@ -382,9 +382,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.enterLogInPassword("incorrectPassword123" + "\n");
-        LOGGER.info("Expected Value:-'{}' "+invalidPasswordError);
-        LOGGER.info("Actual Value:-'{}' "+disneyPlusLoginIOSPageBase.getStaticTextByLabel(invalidPasswordError).getText());
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.getStaticTextByLabel(invalidPasswordError).isPresent(), NO_ERROR_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.getDynamicAccessibilityId(invalidPasswordError).isPresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
