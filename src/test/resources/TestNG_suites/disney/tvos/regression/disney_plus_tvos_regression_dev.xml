@@ -16,50 +16,50 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
-    <!-- <parameter name="scheduling" value="H 12 * * *"/> -->
-   <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
-   <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76186"/>
-   <parameter name="jenkinsDefaultRetryCount" value="0"/>
+    <parameter name="scheduling" value="H 12 * * *"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76186"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
-   <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVAppLaunchTest">
-           </class>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsScreenTests"/>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Home" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVGlobalNavMenuTest"/>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVHomeTests"/>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Onboarding" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVForgotPasswordTests"/>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVLoginTests"/>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVSignUpTest"/>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVWelcomeScreenTests"/>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Originals" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.originals.DisneyPlusAppleTVOriginalsTest">
-           </class>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Settings" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVProfilesTest"/>
-       </classes>
-   </test>
-   <test verbose="1" name="DisneyPlus tvOS Watchlist" parallel="methods">
-       <classes>
-           <class name="com.disney.qa.tests.disney.apple.tvos.regression.watchlist.DisneyPlusAppleTVWatchlistTest"/>
-       </classes>
-   </test>
+    <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVAppLaunchTest">
+            </class>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsScreenTests"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Home" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVGlobalNavMenuTest"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVHomeTests"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Onboarding" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVForgotPasswordTests"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVLoginTests"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVSignUpTest"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVWelcomeScreenTests"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Originals" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.originals.DisneyPlusAppleTVOriginalsTest">
+            </class>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Settings" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Watchlist" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.watchlist.DisneyPlusAppleTVWatchlistTest"/>
+        </classes>
+    </test>
 </suite>
