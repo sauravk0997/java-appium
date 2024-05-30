@@ -369,9 +369,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
 
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        disneyPlusSignUpIOSPageBase.submitEmailAddress("abc");
+        disneyPlusSignUpIOSPageBase.enterEmailAddress("abc");
+        disneyPlusSignUpIOSPageBase.clickContinueBtn();
 
-        sa.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidEmailError, NO_ERROR_DISPLAYED);
+        sa.assertTrue(disneyPlusLoginIOSPageBase.isErrorMessagePresent(),NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
 

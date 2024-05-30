@@ -7,6 +7,7 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
@@ -86,6 +87,10 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public boolean isErrorMessagePresent() {
+    return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isElementPresent();
     }
 
     public boolean isTryAgainAlertButtonDisplayed() {
