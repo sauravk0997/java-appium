@@ -67,7 +67,7 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     }
 
     public void waitUntilEmailFieldIsFocused() {
-        isFocused(getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())));
+        isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())));
     }
 
     public void enterDateOfBirth(String dob) {
