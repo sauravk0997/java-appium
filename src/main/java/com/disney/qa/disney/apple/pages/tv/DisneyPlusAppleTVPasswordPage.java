@@ -117,22 +117,22 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public boolean isEnterYourPasswordHeaderPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_HEADER.getText())).isPresent();
+                MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isPresent();
     }
 
     public boolean isEnterYourPasswordHintPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT.getText())).isPresent();
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
     }
 
     public boolean isForgotPasswordButtonPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT.getText())).isPresent();
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
     }
 
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
         String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
     }
 
