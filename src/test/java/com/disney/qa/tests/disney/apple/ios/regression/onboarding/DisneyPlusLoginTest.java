@@ -373,7 +373,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67236"})
     @Test(description = "Log in - Incorrect Password", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testIncorrectPassword() {
-        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
+        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -382,7 +382,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.enterLogInPassword("incorrectPassword123" + "\n");
-        System.out.println(invalidPasswordError);
+        LOGGER.info("Expected Value:-'{}' "+invalidPasswordError);
+        LOGGER.info("Actual Value:-'{}' "+disneyPlusLoginIOSPageBase.getStaticTextByLabel(invalidPasswordError).getText());
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.getStaticTextByLabel(invalidPasswordError).isPresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
