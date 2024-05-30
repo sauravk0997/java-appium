@@ -254,6 +254,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicRowColumnContent;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"done\"`]")
     private ExtendedWebElement keyboardDone;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
+    private ExtendedWebElement keyboardContinue;
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement saveProfileButton;
     @ExtendedFindBy(accessibilityId = "viewAlert")
@@ -766,11 +768,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Webview URL did not contain the expected text...").until(it -> getWebviewUrl().contains(expectedText));
     }
 
-    // Will take you to continue button on tvOS on screen keyboard
-    public void moveToContinueBtnKeyboardEntry() {
+    // Will take you to continue or done button on tvOS on screen keyboard
+    public void moveToContinueOrDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        LOGGER.info("Keyboard continue button is focused? {}", isFocused(keyboardDone));
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void moveToLocalizedKeyboard() {
@@ -790,7 +790,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void selectContinueBtnOnKeyboardEntry() {
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 

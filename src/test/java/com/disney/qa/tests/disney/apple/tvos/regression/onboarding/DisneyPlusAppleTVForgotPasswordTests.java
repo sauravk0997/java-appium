@@ -591,7 +591,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
             }
         });
 
-        disneyPlusAppleTVForgotPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVForgotPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
 
         disneyPlusAppleTVForgotPasswordPage.clickSelect();
 
