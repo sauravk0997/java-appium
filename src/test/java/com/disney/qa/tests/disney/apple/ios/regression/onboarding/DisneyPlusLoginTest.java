@@ -196,12 +196,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        String invalidCreds = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
+        String invalidCreds = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin("wrongUserPass");
-        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getErrorMessageString(), invalidCreds, NO_ERROR_DISPLAYED);
+        disneyPlusPasswordIOSPageBase.enterLogInPassword("wrongUserPass" + "\n");
+        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getDynamicAccessibilityId(invalidCreds).isPresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
