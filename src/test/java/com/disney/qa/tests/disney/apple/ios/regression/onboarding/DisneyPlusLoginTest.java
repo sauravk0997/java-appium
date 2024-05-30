@@ -370,7 +370,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67236"})
     @Test(description = "Log in - Incorrect Password", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testIncorrectPassword() {
@@ -382,8 +381,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin("incorrectPassword123");
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
+        disneyPlusPasswordIOSPageBase.enterLogInPassword("incorrectPassword123" + "\n");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.getStaticTextByLabel(invalidPasswordError).isPresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
