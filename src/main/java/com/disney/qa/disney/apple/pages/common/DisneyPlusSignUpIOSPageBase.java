@@ -15,7 +15,7 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
-    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SIGN_UP.getText()));
+    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     protected ExtendedWebElement optInCheckbox;
@@ -92,6 +92,14 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         pause(2);
         emailField.type(email);
         primaryButton.click();
+    }
+
+    public void enterEmailAddress(String email) {
+        emailField.type(email);
+    }
+
+    public void clickContinueBtn() {
+        continueButton.click();
     }
 
     public boolean isTermsOfUserDisclaimerDisplayed() {
