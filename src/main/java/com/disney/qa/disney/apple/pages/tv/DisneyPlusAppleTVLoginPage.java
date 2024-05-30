@@ -100,7 +100,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
             clickSelect();
             pause(3);
         });
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 
@@ -119,10 +119,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         return isPresent;
     }
 
-    public void selectEnterNewEnterEmailSelectContinueBtn(String email) {
+    public void selectEnterNewEnterEmailSelectDoneBtn(String email) {
         clickEmailAndPressEnterNew();
         enterEmail(email);
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 

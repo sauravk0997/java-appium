@@ -228,7 +228,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Create password screen did launch from enter your email");
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.get("disney_qa_web_generic_pass"));
-        disneyPlusAppleTVPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
         disneyPlusAppleTVPasswordPage.clickSignUp();
 
@@ -383,7 +383,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
             disneyPlusAppleTVPasswordPage.clickRight();
         });
         //Move down to continue button and select it
-        disneyPlusAppleTVPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(),
