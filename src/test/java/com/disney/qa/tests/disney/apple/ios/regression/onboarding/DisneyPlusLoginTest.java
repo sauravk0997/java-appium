@@ -85,7 +85,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         new DisneyPlusLoginIOSPageBase(getDriver()).submitEmail(getAccount().getEmail());
-        softAssert.assertTrue(new DisneyPlusPasswordIOSPageBase(getDriver()).isOpened(), "Password page should have opened");
+        softAssert.assertTrue(new DisneyPlusPasswordIOSPageBase(getDriver()).isPasswordPagePresent(), "Password page should have opened");
 
         softAssert.assertAll();
     }
