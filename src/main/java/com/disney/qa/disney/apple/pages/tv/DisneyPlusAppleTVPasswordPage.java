@@ -41,6 +41,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement forgotPasswordBtn;
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
+    @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeTextView\"")
+    protected ExtendedWebElement passwordOnScreenField;
 
     private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
@@ -231,5 +233,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         } catch (StaleElementReferenceException e) {
             enterNewPassword(newPassword);
         }
+    }
+
+    @Override
+    public boolean isPasswordFieldDisplayed() {
+        return passwordOnScreenField.isPresent();
     }
 }
