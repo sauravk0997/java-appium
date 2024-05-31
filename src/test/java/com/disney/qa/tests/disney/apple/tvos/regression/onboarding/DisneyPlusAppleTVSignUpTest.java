@@ -24,6 +24,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
+    //TODO this test will be fix when new flows are updated QAA-14797
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90469", "XCDQA-90465"})
     @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"}, enabled = false)
     public void signUpEmailScreenAppearance() {
@@ -83,6 +84,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    //TODO this test will be fix when new flows are updated QAA-14798
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
     @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"}, enabled = false)
     public void signUpEmailScreenCheckBox() {
