@@ -4,8 +4,8 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.Map;
 
@@ -81,11 +81,9 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     private void openHyperlink(ExtendedWebElement link) {
-        if (link.getSize().getWidth() > 150) {
-            clickElementAtLocation(link, 10, 80);
-        } else {
-            link.click();
-        }
+        var dimension = link.getSize();
+        Point location = link.getLocation();
+        tap(location.getX() , location.getY() + dimension.getHeight());
     }
 
     private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
