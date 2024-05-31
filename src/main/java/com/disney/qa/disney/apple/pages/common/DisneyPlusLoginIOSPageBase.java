@@ -122,4 +122,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement getTryAgainAlertButton() {
         return alertTryAgainBtn;
     }
+
+    public void clickContinueBtn() {
+        continueButton.click();
+    }
 }
