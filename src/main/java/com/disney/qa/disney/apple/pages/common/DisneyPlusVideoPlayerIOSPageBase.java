@@ -581,14 +581,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public ExtendedWebElement getRestartButton() {
+        return restartButton;
+    }
+
     public String getRestartButtonStatus() {
         displayVideoController();
-        return restartButton.getAttribute(Attributes.ENABLED.getAttribute());
+        return getRestartButton().getAttribute(Attributes.ENABLED.getAttribute());
     }
 
     public void clickRestartButton() {
         displayVideoController();
-        restartButton.click();
+        getRestartButton().click();
     }
 
     public ExtendedWebElement getAdRemainingTime() {
@@ -628,7 +632,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         ExtendedWebElement adTimeBadge = getAdRemainingTime();
         if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(SHORT_TIMEOUT));
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
