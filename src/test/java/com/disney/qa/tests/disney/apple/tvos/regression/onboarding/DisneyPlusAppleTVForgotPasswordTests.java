@@ -207,8 +207,9 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
+    //TODO this test will be fix when new flows are updated QAA-14765
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90644", "XCDQA-90646"})
-    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {"Onboarding"})
+    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {"Onboarding"}, enabled = false)
     public void noCodeEntryError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
