@@ -84,11 +84,9 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         Point location = link.getLocation();
         if (link.getSize().getWidth() > 150) {
             var dimension = link.getSize();
-            tap(location.getX() , location.getY() + dimension.getHeight());
-            System.out.println("more than 150 width");
+            tap(location.getX() , location.getY() + (dimension.getHeight()-5));
         } else {
             tap(location.getX() , location.getY());
-            System.out.println("less than 150 width");
         }
     }
 
@@ -98,7 +96,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public void openPrivacyPolicyLink() {
-        System.out.println("Privacy Link Label:- "+getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY));
         openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
     }
 
