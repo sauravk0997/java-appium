@@ -98,10 +98,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         emailField.type(email);
     }
 
-    public void clickContinueBtn() {
-        continueButton.click();
-    }
-
     public boolean isTermsOfUserDisclaimerDisplayed() {
         return termsOfUserDisclaimer.isElementPresent();
     }
