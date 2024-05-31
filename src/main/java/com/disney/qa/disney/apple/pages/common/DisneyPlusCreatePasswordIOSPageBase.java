@@ -84,9 +84,11 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         Point location = link.getLocation();
         if (link.getSize().getWidth() > 150) {
             var dimension = link.getSize();
-            tap(location.getX() , location.getY() + (dimension.getHeight()-5));
+            tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
+            System.out.println("Widhth > 150");
         } else {
-            tap(location.getX() , location.getY());
+            tap(location.getX(), location.getY());
+            System.out.println("Widhth < 150" + location.getX() +"x - y"+ location.getY());
         }
     }
 
