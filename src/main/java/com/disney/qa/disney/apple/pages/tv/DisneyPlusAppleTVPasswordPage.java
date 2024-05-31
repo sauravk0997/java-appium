@@ -141,6 +141,15 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
                 MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
     }
 
+    public boolean isLearnMoreAboutMyDisneyButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getLoginNavigationButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()));
+    }
+
     public String getShowHidePasswordBtnState() {
         String text = hideShowPasswordBtn.getText();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
@@ -168,11 +177,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         isOpened();
         Assert.assertTrue(isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
                 "Login button is not focused");
-        getLoginNavigationButton().click();
-    }
-
-    public ExtendedWebElement getLoginNavigationButton() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()));
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void submitSandboxPassword(String password) {
@@ -245,10 +250,5 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         } catch (StaleElementReferenceException e) {
             enterNewPassword(newPassword);
         }
-    }
-
-    public boolean isLearnMoreAboutMyDisneyButtonPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
     }
 }
