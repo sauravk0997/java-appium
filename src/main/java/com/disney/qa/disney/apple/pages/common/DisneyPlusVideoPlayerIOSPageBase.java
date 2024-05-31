@@ -581,14 +581,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public ExtendedWebElement getRestartButton() {
+        return restartButton;
+    }
+
     public String getRestartButtonStatus() {
         displayVideoController();
-        return restartButton.getAttribute(Attributes.ENABLED.getAttribute());
+        return getRestartButton().getAttribute(Attributes.ENABLED.getAttribute());
     }
 
     public void clickRestartButton() {
         displayVideoController();
-        restartButton.click();
+        getRestartButton().click();
     }
 
     public ExtendedWebElement getAdRemainingTime() {
@@ -727,15 +731,5 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
         fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
-    }
-
-    /**
-     * To be used when displaying video controller is only needed one time
-     * to perform the following actions one after another:
-     * scrub forward to certain percentage and click restart button.
-     */
-    public void scrubPlayerWithAdsAndClickRestart(double playbackPercent) {
-        scrubPlaybackWithAdsPercentage(playbackPercent);
-        restartButton.click();
     }
 }

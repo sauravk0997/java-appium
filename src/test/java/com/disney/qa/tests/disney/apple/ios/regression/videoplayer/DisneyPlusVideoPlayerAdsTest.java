@@ -342,7 +342,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
                 AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, "for " + SPIDERMAN_THREE));
         videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
-        videoPlayer.scrubPlayerWithAdsAndClickRestart(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.getRestartButton().click();
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
                 AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after restarting."));
         sa.assertAll();
