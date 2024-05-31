@@ -306,7 +306,6 @@ public enum DictionaryKeys {
     MY_DISNEY_ENTER_PASSWORD_HINT("mydisney_enter_password_hint"),
     MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2("mydisney_enter_password_hint_2"),
     MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN("mydisney_enter_password_otp_btn"),
-    MY_DISNEY_LOGIN_BTN("mydisney_login_btn"),
     MY_DISNEY_LEARN_MORE_BTN("mydisney_learn_more_btn"),
     MY_DISNEY_LOGOUT_BTN("mydisney_logout_btn"),
     MY_DISNEY_LOGOUT_ALL_CHECKBOX("mydisney_logoutall_checkbox"),
