@@ -71,7 +71,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getEmailFieldText() {
-        return emailField.getText();
+        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).getText();
     }
 
     public void fillOutEmailField(String email) {
@@ -86,6 +86,10 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public boolean isErrorMessagePresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isElementPresent();
     }
 
     public boolean isTryAgainAlertButtonDisplayed() {
