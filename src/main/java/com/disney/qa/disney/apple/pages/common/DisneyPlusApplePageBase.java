@@ -760,6 +760,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getTypeButtonByLabel("Continue").isElementPresent();
     }
 
+    public void clickContinueBtn() {
+        continueButton.click();
+    }
+
     public String getWebviewUrl() {
         return webviewUrlBar.getText();
     }
@@ -1480,9 +1484,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickMyDisneyManageBtn() {
         getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
-    }
-
-    public void clickContinueBtn() {
-        continueButton.click();
     }
 }
