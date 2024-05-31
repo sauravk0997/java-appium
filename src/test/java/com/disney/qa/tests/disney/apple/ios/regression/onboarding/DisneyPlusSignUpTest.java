@@ -228,8 +228,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(legal.isLegalModelOpened(), "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
         validateUSLegalPageUI(sa, PRIVACY_POLICY);
 
-        //Scrolling down to close Legal Model
-        scrollDown();
+        //Swiping to close Legal Model
+        swipeDown(1000);
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(),
                 "'Back Button' navigation did not return the create password page");
         sa.assertAll();
