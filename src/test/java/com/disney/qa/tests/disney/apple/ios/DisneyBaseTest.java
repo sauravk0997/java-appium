@@ -573,21 +573,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public List<Item> getItemsFromSet(String setId, String locale, String language) {
-        try {
-            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
-                    .setSetId(setId)
-                    .setProfileId(getAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language));
-            return setResponse.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            Assert.fail("Items from Set not found " + e.getMessage());
-            return ExceptionUtils.rethrow(e);
-        }
+    public List<Item> getItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getSet(getExploreSearchRequest()
+                        .setSetId(setId)
+                        .setProfileId(getAccount().getProfileId())
+                        .setCountryCode(locale)
+                        .setMaturity(getMaxMaturityRating(locale))
+                        .setRoamingDas(getRoamingDas(locale))
+                        .setLanguage(language))
+                .getData().getSet().getItems();
     }
 
     public List<String> getContainerTitlesFromApi(String setID, int limit) {

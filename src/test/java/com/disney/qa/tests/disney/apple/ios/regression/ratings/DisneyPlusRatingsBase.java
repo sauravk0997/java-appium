@@ -21,28 +21,14 @@ import java.util.*;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    protected List<String> CONTENT_TITLE = new ArrayList<>();
-    private boolean isMovie = false;
+    protected String contentTitle;
+    private boolean isMovie;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String APAC_G = "G";
-    static final String APAC_PG = "PG";
-    static final String APAC_12 = "12+";
-    static final String KCC_7 = "7+";
-    static final String KCC_12 = "12+";
-    static final String KCC_15 = "15+";
-    static final String KCC_19 = "19+";
-    static final String KMRB_12 = "12+";
-    static final String KMRB_15 = "15+";
-    static final String KMRB_18 = "18+";
-    static final String KOREA_LOCALE = "KR";
     static final String KOREAN_LANG = "KO";
-    static final String JAPAN_LOCALE = "JP";
     static final String JAPAN_LANG = "ja";
-    static final String SINGAPORE_LOCALE = "SG";
     static final String SINGAPORE_LANG = "en";
-    static final String R21 = "R21";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
@@ -55,7 +41,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
-        //getDesiredRatingContent(ratingValue);
+        getDesiredRatingContent(ratingValue, locale, lang);
         setAccount(getAccountApi().createAccountForOTP(locale, lang));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -75,8 +61,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
+        isMovie = false;
         try {
-            List<String> apiContentTitleList;
+            String apiContentTitleList;
             ArrayList<String> brandIDList = getBrandIDList(HOME_PAGE_ID, locale, language);
             for (int i = 0, brandCollectionSize = brandIDList.size(); i < brandCollectionSize; i++) {
                 LOGGER.info("Searching for content in brand collection: {}", brandIDList.get(i));
@@ -105,15 +92,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
     }
 
-    private List<String> getContentForBrand(String brandID, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    private String getContentForBrand(String brandID, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
         ArrayList<String> disneyCollectionIDs = new ArrayList<>();
         ArrayList<Container> collections = getPageContent(PAGE_IDENTIFIER + brandID, locale, language);
         collections.forEach(item -> disneyCollectionIDs.add(item.getId()));
         return getContentTitleFor(disneyCollectionIDs, rating, locale, language);
     }
 
-    //TODO: since we are only interested in one content, return string instead of List
-    private List<String> getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
         LOGGER.info("Rating requested: " + rating);
         for (int i = 0, disneyCollectionsIDsSize = disneyCollectionsIDs.size(); i < disneyCollectionsIDsSize; i++) {
             List<Item> disneyCollectionItems = getItemsFromSet(disneyCollectionsIDs.get(i), locale, language);
@@ -122,16 +108,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                         byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
                         LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
-                        CONTENT_TITLE.add(new String(bytePayload, StandardCharsets.UTF_8));
+                        contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
                         if (!(getPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0).getType().equals(EPISODES))) {
                             isMovie = true;
                         }
-                        return CONTENT_TITLE;
+                        return contentTitle;
                     }
-                } else {
-                    //TODO: remove if all tests are good to go
-                    //In case if we get the collections from the brand page we need to make another page call and do the same thing as in the if loop
-                    //List<Container> containers =  getPageContent(PAGE_IDENTIFIER + item.getId(), locale, language);
                 }
             }
         }
@@ -155,7 +137,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String contentTitle = CONTENT_TITLE.get(0);
+        String contentTitle = this.contentTitle;
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
@@ -184,7 +166,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String contentTitle = CONTENT_TITLE.get(0);
+        String contentTitle = this.contentTitle;
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
