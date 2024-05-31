@@ -760,6 +760,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getTypeButtonByLabel("Continue").isElementPresent();
     }
 
+    public void clickContinueBtn() {
+        continueButton.click();
+    }
+
     public String getWebviewUrl() {
         return webviewUrlBar.getText();
     }
