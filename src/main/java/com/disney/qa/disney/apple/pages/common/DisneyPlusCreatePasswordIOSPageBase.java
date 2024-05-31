@@ -81,12 +81,14 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     private void openHyperlink(ExtendedWebElement link) {
+        Point location = link.getLocation();
         if (link.getSize().getWidth() > 150) {
             var dimension = link.getSize();
-            Point location = link.getLocation();
             tap(location.getX() , location.getY() + dimension.getHeight());
+            System.out.println("more than 150 width");
         } else {
-            link.click();
+            tap(location.getX() , location.getY());
+            System.out.println("less than 150 width");
         }
     }
 
