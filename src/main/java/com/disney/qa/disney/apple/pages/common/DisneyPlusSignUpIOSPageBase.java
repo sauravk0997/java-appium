@@ -95,15 +95,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         emailField.type(email);
     }
 
-    public void clickContinueBtn() {
-        continueButton.click();
-    }
-
-
-    public boolean isInvalidEmailErrorDisplayed() {
-        return labelError.isElementPresent();
-    }
-
     //Clicks at 0,0 location due to iOS whole element not being clickable area for response
     public void clickUncheckedBoxes() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(checkBoxItem.getBy()), 30);
