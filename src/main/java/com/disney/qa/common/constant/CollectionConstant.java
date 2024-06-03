@@ -45,7 +45,7 @@ public class CollectionConstant {
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
                 return "51018b48-44ec-42b1-b7b8-80afbd222713";
             case BRANDS_MARVEL_FEATURED:
-                return "b7ba44aa-9a57-449d-bfc7-ca9f3459dabd";
+                return "7700deda-0491-4729-9bef-b2cdc0b62dd8";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "d1fff418-060e-4321-9e80-8a2744518929";
             case CAROUSEL:
