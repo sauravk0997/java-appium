@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -23,9 +22,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
 
-    @ExtendedFindBy(accessibilityId = "legalConsole")
-    private ExtendedWebElement legalModel;
-
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -41,10 +37,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isLegalHeadersPresent(String header) {
         return staticTextLabelName.format(header).isElementPresent();
-    }
-
-    public boolean isLegalModelOpened() {
-        return legalModel.isPresent();
     }
 
     public String getLegalText() {

@@ -205,11 +205,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openSubscriberAgreement();
-        Assert.assertTrue(legal.isLegalModelOpened(), "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        Assert.assertTrue(legal.isOpened(), "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
         validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
 
-        //Swiping to close Legal Model
-        swipeDown(1000);
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
@@ -229,11 +228,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openPrivacyPolicyLink();
-        Assert.assertTrue(legal.isLegalModelOpened(), "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
+        Assert.assertTrue(legal.isOpened(), "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
         validateUSLegalPageUI(sa, PRIVACY_POLICY);
 
-        //Swiping to close Legal Model
-        swipeDown(1000);
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
@@ -253,7 +251,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openSubscriberAgreement();
-        Assert.assertTrue(legal.isLegalModelOpened(), "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        Assert.assertTrue(legal.isOpened(), "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
         sa.assertTrue(legal.getTypeButtonByLabel(DISNEY_TERMS_OF_USE).isPresent(),
                 DISNEY_TERMS_OF_USE + " is not visible");
         sa.assertTrue(legal.getTypeButtonByLabel(PRIVACY_POLICY).isPresent(),
@@ -265,8 +263,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        //Swiping to close Legal Model
-        swipeDown(1000);
+        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
