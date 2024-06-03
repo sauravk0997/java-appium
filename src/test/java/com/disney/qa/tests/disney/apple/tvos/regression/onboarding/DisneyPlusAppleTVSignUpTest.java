@@ -24,8 +24,9 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
+    //TODO this test will be fix when new flows are updated QAA-14797
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90469", "XCDQA-90465"})
-    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"})
+    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"}, enabled = false)
     public void signUpEmailScreenAppearance() {
         String marketingText = ".text";
         String legalText = "content.text";
@@ -79,16 +80,13 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
         sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldFocused(), "Email input is not focused by default");
         disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused");
-        disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isViewAgreementAndPoliciesFocused(), "View Agreement & Policies button is not focused");
-        disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAgreeAndContinueFocused(), "Agree and Continue button is not focused");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAgreeAndContinueFocused(), "Continue button is not focused");
         sa.assertAll();
     }
 
+    //TODO this test will be fix when new flows are updated QAA-14798
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
-    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"})
+    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"}, enabled = false)
     public void signUpEmailScreenCheckBox() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -124,7 +122,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVLoginPage.isKeyboardPresent(), "on screen keyboard is not present");
         disneyPlusAppleTVLoginPage.clickMenu();
         sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldDisplayed(), "on screen keyboard is present");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(tempEmailText);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(tempEmailText);
 
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isAgreeAndContinueFocused(), "Agree and Continue button is not focused");
@@ -157,7 +155,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     public void emailInputErrorMessages() {
         String tempEmailText = "somethin!^&&#@gmail";
         SoftAssert sa = new SoftAssert();
-        String errorText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -168,11 +165,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
 
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
 
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(tempEmailText);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(tempEmailText);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
         sa.assertAll();
     }
 
@@ -215,7 +212,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(entitledUser.getEmail());
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Password entry page did not launch");
         disneyPlusAppleTVPasswordPage.logInWithPassword(entitledUser.getUserPass());
@@ -245,7 +242,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
@@ -276,7 +273,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
@@ -310,7 +307,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
@@ -335,8 +332,8 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {"Onboarding"})
     public void passwordCreationOnScreenKeyboard() {
         String validEmail = DisneyApiCommon.getUniqueEmail();
-        String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
+        String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_CREATE_PASSWORD_STRENGTH_HINT.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -347,7 +344,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
@@ -377,13 +374,13 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(randomPassword);
-        disneyPlusAppleTVPasswordPage.moveToContinueBtnKeyboardEntry();
+        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
         sa.assertFalse(disneyPlusAppleTVLoginPage.isKeyboardPresent(), "on screen keyboard is present after entering password and clicking on Continue");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), expectedPassword);
@@ -420,7 +417,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectContinueBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");

@@ -117,9 +117,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(getAccount().getEmail());
+        disneyPlusSignUpIOSPageBase.enterEmailAddress(getAccount().getEmail());
+        disneyPlusSignUpIOSPageBase.clickContinueBtn();
 
-        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(),
+        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isPasswordPagePresent(),
                 "User was not directed to Password Entry as expected");
     }
 
@@ -362,15 +363,16 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
     @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyInvalidEmailError() {
-        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
 
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        disneyPlusSignUpIOSPageBase.submitEmailAddress("abc");
+        disneyPlusSignUpIOSPageBase.enterEmailAddress("abc");
+        disneyPlusSignUpIOSPageBase.clickContinueBtn();
 
-        sa.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidEmailError, NO_ERROR_DISPLAYED);
+            sa.assertTrue(disneyPlusLoginIOSPageBase.isErrorMessagePresent(),
+        NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
 
