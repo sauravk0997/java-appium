@@ -600,6 +600,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return errorMessage;
     }
 
+    public boolean isErrorMessagePresent() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
+    }
+
     public boolean isAIDElementPresentWithScreenshot(String id) {
         boolean isPresent = dynamicAccessibilityId.format(id).isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
@@ -758,6 +762,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean continueButtonPresent() {
         return getTypeButtonByLabel("Continue").isElementPresent();
+    }
+
+    public void clickContinueBtn() {
+        continueButton.click();
     }
 
     public String getWebviewUrl() {
