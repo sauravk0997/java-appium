@@ -16,14 +16,14 @@ public class RatingConstant {
         EIGHTEEN_PLUS("18+"),
         NINETEEN_PLUS("19+");
 
-        private final String rating;
+        private final String contentRating;
 
         Rating(String rating) {
-            this.rating = rating;
+            this.contentRating = rating;
         }
 
         public String getContentRating() {
-            return rating;
+            return contentRating;
         }
     }
 
