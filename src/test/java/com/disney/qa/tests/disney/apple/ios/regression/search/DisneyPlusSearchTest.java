@@ -269,7 +269,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
 
         //To get the collections details of Originals from API
-        ArrayList<Container> collections = getPageContent(ORIGINALS_PAGE_ID);
+        ArrayList<Container> collections = getExploreAPIPageContent(ORIGINALS_PAGE_ID);
         collections.forEach(item -> {
             ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
             swipePageTillElementPresent(collectionName, 2, null, Direction.UP, 500);
