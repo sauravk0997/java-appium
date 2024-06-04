@@ -179,7 +179,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(createPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty Password Error was not displayed");
 
         createPasswordPage.submitPasswordValue("abcghtjk");
-        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was not displayed for more than 6 char bur not meet requirements password");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was not displayed for more than 6 char but not meet requirements password");
         sa.assertAll();
     }
 
