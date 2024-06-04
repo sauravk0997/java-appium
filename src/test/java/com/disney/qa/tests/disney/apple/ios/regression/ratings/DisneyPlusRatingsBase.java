@@ -63,12 +63,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
         try {
-            String apiContentTitleList;
+            String apiContentTitle;
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
             for (String brandID : brandIDList) {
                 LOGGER.info("Searching for content in brand collection: {}", brandID);
-                apiContentTitleList = getContentForBrand(brandID, rating, locale, language);
-                if (apiContentTitleList != null) {
+                apiContentTitle = getContentForBrand(brandID, rating, locale, language);
+                if (apiContentTitle!= null && !apiContentTitle.isEmpty()) {
                     break;
                 }
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
