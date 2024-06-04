@@ -70,28 +70,22 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         welcomePage.clickSignUpButton();
 
-        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
-        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
-
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62229 - Submitting no email did not produce an invalid email error");
+        disneyPlusSignUpIOSPageBase.clickContinueBtn();
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.getInvalidEmailErrorMessage(), "XMOBQA-62229 - Submitting no email did not produce an invalid email error");
 
         if (!disneyPlusSignUpIOSPageBase.isOpened()) {
-            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
+            disneyPlusCreatePasswordIOSPageBase.clickOnCollectionBackButton();
         }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutSymbol.com");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62225 - Missing '@' did not produce an invalid email error");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.getInvalidEmailErrorMessage(), "XMOBQA-62225 - Missing '@' did not produce an invalid email error");
 
         if (!disneyPlusSignUpIOSPageBase.isOpened()) {
-            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
+            disneyPlusCreatePasswordIOSPageBase.clickOnCollectionBackButton();
         }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutDomain");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62227 - Missing email domain (.com) did not produce an invalid email error");
-
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.getInvalidEmailErrorMessage(), "XMOBQA-62227 - Missing email domain (.com) did not produce an invalid email error");
         sa.assertAll();
     }
 
