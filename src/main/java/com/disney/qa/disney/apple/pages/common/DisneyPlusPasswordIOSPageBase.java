@@ -11,8 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.FORGOT_PASSWORD;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RATING_R21_FORGOT_PASSSWORD_LINK;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 /*
  * Enter Password Page
@@ -45,6 +44,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         boolean isPresent = headlineHeader.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
+    }
+
+    public boolean isPasswordPagePresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isElementPresent();
     }
 
     public boolean isCreatePasswordTextFieldFocused() {

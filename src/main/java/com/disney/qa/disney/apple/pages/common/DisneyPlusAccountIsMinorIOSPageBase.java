@@ -6,6 +6,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
  * Landing page when the user logs in with a minor account
@@ -14,23 +16,16 @@ import org.openqa.selenium.WebDriver;
 public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusAccountIsMinorIOSPageBase(WebDriver driver) { super(driver); }
 
-    @ExtendedFindBy(accessibilityId = "actionableAlertTitle")
-    private ExtendedWebElement notEligibleHeader;
+    private ExtendedWebElement notEligibleHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER);
 
-    @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
-    private ExtendedWebElement helpCenterButton;
+    private ExtendedWebElement helpCenterButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BTN_HELP_CENTER);
 
-    @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
-    private ExtendedWebElement dismissButton;
-
-    private ExtendedWebElement notEligibleSubText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTACT_CSR_SUBTITLE);
+    private ExtendedWebElement dismissButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_DISMISS_BTN);
 
     @Override
     public boolean isOpened() { return notEligibleHeader.isElementPresent(); }
 
     public ExtendedWebElement getNotEligibleHeader() { return notEligibleHeader; }
-
-    public ExtendedWebElement getNotEligibleSubText() { return notEligibleSubText; }
 
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
@@ -42,5 +37,10 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
 
     public void clickDismissButton() {
         dismissButton.click();
+    }
+
+    public ExtendedWebElement getNotEligibleSubText() {
+        String subscribeText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
+        return staticTextByLabel.format(subscribeText);
     }
 }

@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -13,9 +12,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,18 +38,13 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement forgotPasswordBtn;
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
+    @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeTextView\"")
+    protected ExtendedWebElement passwordOnScreenField;
 
     private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);
-    }
-
-    public static List<String> getLogInPasswordScreenTexts(DisneyLocalizationUtils disneyLanguageUtils) {
-        var list = new ArrayList<String>();
-        getEnumValues(ENTER_YOUR_PASSWORD, PASSWORD, FORGOT_PASSWORD, BTN_LOGIN)
-                .forEach(item -> list.add(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item)));
-        return list;
     }
 
     @Override
@@ -98,7 +90,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void createNewPasswordEntry(String password) {
         clickPassword();
         enterPasswordCreatePassword(password);
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         primaryButton.click();
@@ -120,15 +112,44 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isCreatePasswordScreenOpen() {
-        boolean isPresent = createPasswordTitle.isElementPresent();
+        boolean isPresent = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText())).isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
-    public List<String> getLogInPasswordScreenActualTexts() {
-        return Stream.of(headlineHeader.getText(), passwordEntryField.getText(),
-                        getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText())).getText(), primaryButton.getText())
-                .collect(Collectors.toList());
+    public boolean isEnterYourPasswordHeaderPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isPresent();
+    }
+
+    public boolean isEnterYourPasswordHintPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
+    }
+
+    public boolean isForgotPasswordButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
+    }
+
+    public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
+        String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
+        return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
+    }
+
+    public boolean isCaseSensitiveHintPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
+    }
+
+    public boolean isLearnMoreAboutMyDisneyButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
+    }
+
+    public boolean isLoginNavigationButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).isPresent();
     }
 
     public String getShowHidePasswordBtnState() {
@@ -140,7 +161,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void passwordEntry(String password) {
         clickPassword();
         enterPassword(password);
-        moveToContinueBtnKeyboardEntry();
+        moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
     }
 
@@ -231,5 +252,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         } catch (StaleElementReferenceException e) {
             enterNewPassword(newPassword);
         }
+    }
+
+    @Override
+    public boolean isPasswordFieldDisplayed() {
+        return passwordOnScreenField.isPresent();
     }
 }
