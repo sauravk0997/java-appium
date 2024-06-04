@@ -1399,7 +1399,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getKeyboardDelete() {
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (iPhoneKeyboardDelete.isPresent()) {
             return iPhoneKeyboardDelete;
         } else {
             return iPadKeyboardDelete;
