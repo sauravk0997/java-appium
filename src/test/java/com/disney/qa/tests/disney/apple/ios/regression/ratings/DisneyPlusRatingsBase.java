@@ -64,29 +64,30 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         isMovie = false;
         try {
             String apiContentTitleList;
-            ArrayList<String> brandIDList = getBrandIDList(HOME_PAGE_ID, locale, language);
-            for (int i = 0, brandCollectionSize = brandIDList.size(); i < brandCollectionSize; i++) {
-                LOGGER.info("Searching for content in brand collection: {}", brandIDList.get(i));
-                apiContentTitleList = getContentForBrand(brandIDList.get(i), rating, locale, language);
+            ArrayList<String> brandIDList = getHomePageBrandIDList(HOME_PAGE_ID, locale, language);
+            for (String brandID : brandIDList) {
+                LOGGER.info("Searching for content in brand collection: {}", brandID);
+                apiContentTitleList = getContentForBrand(brandID, rating, locale, language);
                 if (apiContentTitleList != null) {
                     break;
                 }
-                LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandIDList.get(i), locale, rating);
+                LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            LOGGER.info(String.format("Exception occurred while scanning api for the desired rating:", e.getMessage()));
+            LOGGER.info("Exception occurred while scanning api for the desired rating: {}", e.getMessage());
         }
     }
 
-    private ArrayList<String> getBrandIDList(String homePageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    private ArrayList<String> getHomePageBrandIDList(String homePageID, String locale, String language) {
         LOGGER.info("Preparing brand list for home page ID: {}", homePageID);
         try {
-            ArrayList<Container> collections = getPageContent(homePageID, locale, language);
-            List<Item> Items = getItemsFromSet(collections.get(1).getId(), locale, language);
+            ArrayList<Container> collections = getExploreAPIPageContent(homePageID, locale, language);
+            //2nd index from the collections contains all the brand IDs displayed on the home page eg: Disney,Pixar etc
+            List<Item> Items = getExploreAPIItemsFromSet(collections.get(1).getId(), locale, language);
             ArrayList<String> brandIDs = new ArrayList<>();
             Items.forEach(item -> brandIDs.add(item.getId()));
             return brandIDs;
-        } catch (URISyntaxException | JsonProcessingException exception) {
+        } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException exception) {
             LOGGER.info("Exception occurred while getting the brand IDs from the Home page");
             return ExceptionUtils.rethrow(exception);
         }
@@ -94,22 +95,22 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     private String getContentForBrand(String brandID, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
         ArrayList<String> disneyCollectionIDs = new ArrayList<>();
-        ArrayList<Container> collections = getPageContent(PAGE_IDENTIFIER + brandID, locale, language);
+        ArrayList<Container> collections = getExploreAPIPageContent(PAGE_IDENTIFIER + brandID, locale, language);
         collections.forEach(item -> disneyCollectionIDs.add(item.getId()));
         return getContentTitleFor(disneyCollectionIDs, rating, locale, language);
     }
 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
         LOGGER.info("Rating requested: " + rating);
-        for (int i = 0, disneyCollectionsIDsSize = disneyCollectionsIDs.size(); i < disneyCollectionsIDsSize; i++) {
-            List<Item> disneyCollectionItems = getItemsFromSet(disneyCollectionsIDs.get(i), locale, language);
+        for (String disneyCollectionsID : disneyCollectionsIDs) {
+            List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
                 if (item.getVisuals().getMetastringParts() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                         byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
                         LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
                         contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
-                        if (!(getPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0).getType().equals(EPISODES))) {
+                        if (!(getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0).getType().equals(EPISODES))) {
                             isMovie = true;
                         }
                         return contentTitle;
@@ -137,7 +138,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String contentTitle = this.contentTitle;
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
@@ -166,7 +166,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String contentTitle = this.contentTitle;
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();

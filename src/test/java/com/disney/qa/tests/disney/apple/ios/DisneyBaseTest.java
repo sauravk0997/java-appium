@@ -509,11 +509,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ArrayList<Container> getPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
+    public ArrayList<Container> getExploreAPIPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
-    public ArrayList<Container> getPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    public ArrayList<Container> getExploreAPIPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getExploreSearchRequest()
                 .setEntityId(pageID)
                 .setProfileId(getAccount().getProfileId())
@@ -558,7 +558,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return apiContent.getReleaseYearRange().getStartYear();
     }
 
-    public List<Item> getItemsFromSet(String setId, int limit) {
+    public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
             ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
                     .setSetId(setId)
@@ -573,7 +573,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public List<Item> getItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getSet(getExploreSearchRequest()
                         .setSetId(setId)
                         .setProfileId(getAccount().getProfileId())
@@ -585,7 +585,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public List<String> getContainerTitlesFromApi(String setID, int limit) {
-        List<Item> setItemsFromApi = getItemsFromSet(setID, limit);
+        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
         List<String> titlesFromApi = new ArrayList<>();
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
