@@ -70,7 +70,7 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean waitForUpNextUIToAppear() {
        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "upNext UI didn't appear on video player")
-                .until(it -> upNextImageView.isElementPresent(LONG_TIMEOUT)));
+                .until(it -> upNextImageView.isElementPresent(EXTRA_LONG_TIMEOUT)));
     }
 
     public boolean isUpNextViewPresent() {
