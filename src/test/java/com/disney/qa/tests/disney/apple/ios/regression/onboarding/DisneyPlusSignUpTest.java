@@ -173,13 +173,13 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         createPasswordPage.clickShowHidePassword();
         createPasswordPage.getKeyboardDelete().click();
-        sa.assertFalse(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was displayed");
+        sa.assertFalse(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' Error was still displayed after user delete one char");
 
         createPasswordPage.submitPasswordValue("");
         sa.assertTrue(createPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty Password Error was not displayed");
 
         createPasswordPage.submitPasswordValue("abcghtjk");
-        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was not displayed for more than 6 char but not meet requirements password");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' error was not displayed for 6 digit password that did not meet password requirements.");
         sa.assertAll();
     }
 
