@@ -127,7 +127,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public boolean isContinueButtonDisplayed() {
-        return primaryButton.isPresent();
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent();
     }
 
     public boolean isContinueButtonFocused() {
