@@ -727,7 +727,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress("invalid");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isInvalidEmailErrorDisplayed(),
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isErrorMessagePresent(),
                 "XMOBQA-61551 - 'Invalid Email' error was not displayed");
 
         disneyPlusChangeEmailIOSPageBase.clickCancelBtn();

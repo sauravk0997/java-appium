@@ -604,6 +604,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return errorMessage;
     }
 
+    public boolean isErrorMessagePresent() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
+    }
+
     public boolean isAIDElementPresentWithScreenshot(String id) {
         boolean isPresent = dynamicAccessibilityId.format(id).isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);

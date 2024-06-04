@@ -88,10 +88,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return labelError.getText();
     }
 
-    public boolean isErrorMessagePresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isElementPresent();
-    }
-
     public boolean isTryAgainAlertButtonDisplayed() {
         return getTryAgainAlertButton().isElementPresent();
     }
