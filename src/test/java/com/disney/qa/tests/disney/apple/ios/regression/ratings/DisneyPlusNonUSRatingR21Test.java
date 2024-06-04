@@ -113,7 +113,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        String contentTitle = this.contentTitle;
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();

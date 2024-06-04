@@ -2,10 +2,10 @@ package com.disney.qa.common.constant;
 
 public class RatingConstant {
 
-    public static String JAPAN = "JP";
-    public static String KOREA = "KR";
-    public static String SINGAPORE = "SG";
-    public static String USA = "US";
+    public static final String JAPAN = "JP";
+    public static final String KOREA = "KR";
+    public static final String SINGAPORE = "SG";
+    public static final String USA = "US";
 
     public enum Rating {
         G("G"),
@@ -42,7 +42,7 @@ public class RatingConstant {
             case "TR":
                 return "1850";
             default:
-                throw new IllegalArgumentException(String.format("Max maturity rating for {} locale is not found", locale));
+                throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }
     }
 
@@ -63,7 +63,7 @@ public class RatingConstant {
             case "US":
                 return "23831";
             default:
-                throw new IllegalArgumentException(String.format("Roaming DA for {} locale is not found", locale));
+                throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }
     }
 }

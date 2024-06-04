@@ -64,7 +64,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         isMovie = false;
         try {
             String apiContentTitleList;
-            ArrayList<String> brandIDList = getHomePageBrandIDList(HOME_PAGE_ID, locale, language);
+            ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
             for (String brandID : brandIDList) {
                 LOGGER.info("Searching for content in brand collection: {}", brandID);
                 apiContentTitleList = getContentForBrand(brandID, rating, locale, language);
@@ -78,10 +78,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
     }
 
-    private ArrayList<String> getHomePageBrandIDList(String homePageID, String locale, String language) {
-        LOGGER.info("Preparing brand list for home page ID: {}", homePageID);
+    private ArrayList<String> getHomePageBrandIDList(String locale, String language) {
+        LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE_ID);
         try {
-            ArrayList<Container> collections = getExploreAPIPageContent(homePageID, locale, language);
+            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE_ID, locale, language);
             //2nd index from the collections contains all the brand IDs displayed on the home page eg: Disney,Pixar etc
             List<Item> Items = getExploreAPIItemsFromSet(collections.get(1).getId(), locale, language);
             ArrayList<String> brandIDs = new ArrayList<>();
