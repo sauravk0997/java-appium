@@ -130,7 +130,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         welcomeScreen.clickLogInButton();
         sa.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
         loginPage.clickContinueBtn();
-        sa.assertTrue(loginPage.isNoInputErrorPresent(), NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE);
+        sa.assertTrue(loginPage.isAttributValidationErrorMessagePresent(), NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -145,7 +145,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen("somethin!^&&#@gmail");
-        sa.assertTrue(loginPage.isNoInputErrorPresent(), NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE);
+        sa.assertTrue(loginPage.isAttributValidationErrorMessagePresent(), NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE);
         sa.assertAll();
     }
 

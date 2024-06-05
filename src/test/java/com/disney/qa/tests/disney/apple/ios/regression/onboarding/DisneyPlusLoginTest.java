@@ -216,7 +216,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin("");
-        Assert.assertTrue(passwordPage.isNoInputErrorPresent(), NO_ERROR_DISPLAYED);
+        Assert.assertTrue(passwordPage.isAttributValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67230"})
