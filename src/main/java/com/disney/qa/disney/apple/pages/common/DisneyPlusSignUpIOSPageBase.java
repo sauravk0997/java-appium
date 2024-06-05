@@ -98,10 +98,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         emailField.type(email);
     }
 
-    public void clickContinueBtn() {
-        continueButton.click();
-    }
-
     public boolean isTermsOfUserDisclaimerDisplayed() {
         return termsOfUserDisclaimer.isElementPresent();
     }
@@ -120,10 +116,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     public void openSubscriberAgreement() {
         pressByElement(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)),1);
-    }
-
-    public boolean isInvalidEmailErrorDisplayed() {
-        return labelError.isElementPresent();
     }
 
     public boolean isCookiesPolicyLinkDisplayed() {

@@ -132,7 +132,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         for (String header : getLocalizationUtils().getLegalHeaders()) {
             LOGGER.info("Looking for hyperlink in '{}'", header);
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(header).click();
+            disneyPlusLegalIOSPageBase.getStaticTextByLabel(header).click();
             pause(5);
             hyperlinkFound = disneyPlusLegalIOSPageBase.isHyperlinkPresent();
             if (hyperlinkFound) {

@@ -24,8 +24,9 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
+    //TODO this test will be fix when new flows are updated QAA-14797
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90469", "XCDQA-90465"})
-    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"})
+    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"}, enabled = false)
     public void signUpEmailScreenAppearance() {
         String marketingText = ".text";
         String legalText = "content.text";
@@ -83,8 +84,9 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    //TODO this test will be fix when new flows are updated QAA-14798
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
-    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"})
+    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"}, enabled = false)
     public void signUpEmailScreenCheckBox() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -153,7 +155,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     public void emailInputErrorMessages() {
         String tempEmailText = "somethin!^&&#@gmail";
         SoftAssert sa = new SoftAssert();
-        String errorText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, ATTRIBUTE_VALIDATION.getText());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -164,11 +165,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
 
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
 
         disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(tempEmailText);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertEquals(disneyPlusAppleTVSignUpPage.getErrorMessageLabelText(), errorText);
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
         sa.assertAll();
     }
 

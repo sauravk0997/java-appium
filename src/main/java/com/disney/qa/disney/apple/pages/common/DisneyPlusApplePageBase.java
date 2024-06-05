@@ -594,10 +594,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return headlineHeader.getText();
     }
 
+    public boolean isHeadlineHeaderTextPresent(){
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
+    }
+
     public String getErrorMessageLabelText() {
         String errorMessage = getElementText(labelError);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return errorMessage;
+    }
+
+    public boolean isErrorMessagePresent() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
     public boolean isAIDElementPresentWithScreenshot(String id) {
@@ -758,6 +766,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean continueButtonPresent() {
         return getTypeButtonByLabel("Continue").isElementPresent();
+    }
+
+    public void clickContinueBtn() {
+        continueButton.click();
     }
 
     public String getWebviewUrl() {
@@ -1387,7 +1399,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getKeyboardDelete() {
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (iPhoneKeyboardDelete.isPresent()) {
             return iPhoneKeyboardDelete;
         } else {
             return iPadKeyboardDelete;

@@ -43,7 +43,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused(textEntryField) && getEmailHint().isPresent(SHORT_TIMEOUT);
+        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent() && getEmailHint().isPresent(SHORT_TIMEOUT);
     }
 
     public void clickEnterNewBtn() {
@@ -127,13 +127,13 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public boolean isContinueButtonDisplayed() {
-        return primaryButton.isPresent();
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent();
     }
 
     public boolean isContinueButtonFocused() {
         //TODO: TVOS-3471 Continue button is not in focus.
         moveDown(1,1);
-        return isFocused(primaryButton);
+        return isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())));
     }
 
     public void navigateToContinueButton() {
