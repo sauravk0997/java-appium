@@ -168,6 +168,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void logInWithPassword(String password) {
         passwordEntry(password);
         Assert.assertTrue(isOpened(), "Password entry page did not open");
+        moveDown(2,1);
         clickSelect();
     }
 

@@ -1503,4 +1503,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         ExtendedWebElement passwordEmptyError = getStaticTextByLabel((getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_CREATION_ERROR_EMPTY.getText())));
         return passwordEmptyError.isElementPresent();
     }
+
+    public boolean isInvalidPasswordErrorDisplayed() {
+        ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
+        return passwordLengthError.isElementPresent();
+    }
 }
