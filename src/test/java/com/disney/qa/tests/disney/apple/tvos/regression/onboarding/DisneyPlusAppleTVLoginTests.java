@@ -14,17 +14,23 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.apache.commons.lang.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.alice.labels.AliceLabels.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
@@ -411,24 +417,40 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90697"})
     @Test(description = "On enter password screen when no input is provided but login is attempted an error should be prompted", groups = {"Onboarding"})
     public void verifyNoInputPasswordError() {
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
-        Assert.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
+        welcomeScreen.clickLogInButton();
+        loginPage.proceedToPasswordScreen(getAccount().getEmail());
+        Assert.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
 
-        disneyPlusAppleTVPasswordPage.moveDown(2, 1);
-        disneyPlusAppleTVPasswordPage.clickSelect();
-        Assert.assertTrue(disneyPlusAppleTVPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty password error did not display");
+
+        LOGGER.info("WHAT IS IN FOCUS AFTER MOVE down 1 TIME?");
+        passwordPage.moveDown(1, 1);
+        pause(2);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        System.out.println(getDriver().getPageSource());
+        LOGGER.info("is login button focused? " + passwordPage.isFocused(passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))));
+
+        LOGGER.info("WHAT IS IN FOCUS AFTER MOVE down second TIME?");
+        passwordPage.moveDown(1, 1);
+        pause(2);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        System.out.println(getDriver().getPageSource());
+        LOGGER.info("is login button focused? " + passwordPage.isFocused(passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))));
+//        passwordPage.clickSelect();
+        passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
+        Assert.assertTrue(passwordPage.isEmptyPasswordErrorDisplayed(), "Empty password error did not display");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})

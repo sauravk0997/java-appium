@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
-import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
@@ -1507,5 +1506,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isInvalidPasswordErrorDisplayed() {
         ExtendedWebElement passwordLengthError = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
         return passwordLengthError.isElementPresent();
+    }
+
+    public void moveToLoginButton() {
+        moveDown(1,1);
+
     }
 }
