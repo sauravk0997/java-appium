@@ -183,7 +183,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField("");
         disneyPlusLoginIOSPageBase.clickContinueBtn();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
@@ -216,7 +216,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin("");
-        Assert.assertTrue(passwordPage.isAttributValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
+        Assert.assertTrue(passwordPage.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67230"})

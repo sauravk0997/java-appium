@@ -603,7 +603,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return errorMessage;
     }
 
-    public boolean isAttributValidationErrorMessagePresent() {
+    public boolean isAttributeValidationErrorMessagePresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 

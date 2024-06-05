@@ -382,7 +382,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         disneyPlusSignUpIOSPageBase.enterEmailAddress("abc");
         disneyPlusSignUpIOSPageBase.clickContinueBtn();
 
-            sa.assertTrue(disneyPlusLoginIOSPageBase.isAttributValidationErrorMessagePresent(),
+            sa.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(),
         NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
