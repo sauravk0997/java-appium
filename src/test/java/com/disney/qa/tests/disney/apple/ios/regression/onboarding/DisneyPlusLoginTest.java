@@ -209,7 +209,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
     @Test(description = "Log in - Verify empty password", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testEmptyPassword() {
-        String noPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_NO_PASSWORD_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -218,7 +217,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin("");
-        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getErrorMessageString(), noPasswordError, NO_ERROR_DISPLAYED);
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.getInvalidPasswordErrorMessage(),NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
