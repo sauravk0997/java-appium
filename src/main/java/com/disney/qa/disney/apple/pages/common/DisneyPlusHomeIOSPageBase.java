@@ -44,8 +44,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement starTile;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandNameCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"placeholder accessibility title label\"`]")
-    private ExtendedWebElement networkLogoImage;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -143,13 +141,13 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNetworkLogoImage(String item) {
-        return getStaticTextByLabel(getDictionary().formatPlaceholderString(
+        return imageLabelContains.format(getDictionary().formatPlaceholderString(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, item)));
     }
 
     public boolean isNetworkLogoImageVisible(String item) {
-        return getStaticTextByLabel(getDictionary().formatPlaceholderString(
+        return imageLabelContains.format(getDictionary().formatPlaceholderString(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, item))).isPresent();
     }
