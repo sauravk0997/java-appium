@@ -76,14 +76,15 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         if (!disneyPlusSignUpIOSPageBase.isOpened()) {
             disneyPlusCreatePasswordIOSPageBase.clickOnCollectionBackButton();
         }
-        disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutSymbol.com");
+        disneyPlusSignUpIOSPageBase.enterEmailAddress("EmailWithoutSymbol.com");
 
         sa.assertTrue(disneyPlusSignUpIOSPageBase.getInvalidEmailErrorMessage(), "XMOBQA-62225 - Missing '@' did not produce an invalid email error");
+        disneyPlusSignUpIOSPageBase.clearEmailAddress();
 
         if (!disneyPlusSignUpIOSPageBase.isOpened()) {
             disneyPlusCreatePasswordIOSPageBase.clickOnCollectionBackButton();
         }
-        disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutDomain");
+        disneyPlusSignUpIOSPageBase.enterEmailAddress("EmailWithoutDomain");
 
         sa.assertTrue(disneyPlusSignUpIOSPageBase.getInvalidEmailErrorMessage(), "XMOBQA-62227 - Missing email domain (.com) did not produce an invalid email error");
         sa.assertAll();
