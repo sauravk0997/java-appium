@@ -35,13 +35,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
     private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
     private static final String HOCUS_POCUS = "Hocus Pocus";
-    private static final String DUMBO = "Dumbo";
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String ASHOKA = "Ashoka";
+    private static final String AHSOKA = "Ahsoka";
     private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
+    private static final String SHOP_TAB_SERIES = "Bluey";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -283,7 +283,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
         //Verify Shop Promo for Series
-        validateShopPromoLabelHeaderAndSubHeader(sa, ASHOKA);
+        validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
 
         //Verify Shop Promo for Movie
         detailsPage.getBackArrow().click();
@@ -310,7 +310,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //Verify Shop tab button for series
         detailsPage.getBackArrow().click();
-        validateShopTabButton(sa, ASHOKA);
+        validateShopTabButton(sa, SHOP_TAB_SERIES);
         sa.assertAll();
     }
 
