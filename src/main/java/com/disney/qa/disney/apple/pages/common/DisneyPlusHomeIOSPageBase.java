@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
@@ -145,8 +146,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return networkLogoImage;
     }
 
-    public boolean isNetworkLogoImageVisible() {
-        return networkLogoImage.isPresent();
+    public boolean isNetworkLogoImageVisible(String item) {
+        return getStaticTextByLabel(getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                        false), Map.of(BRAND_NAME, item))).isPresent();
     }
 
     public ExtendedWebElement getBrandTile(String brand) {

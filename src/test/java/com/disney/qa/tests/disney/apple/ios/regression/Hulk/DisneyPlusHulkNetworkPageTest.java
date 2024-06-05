@@ -52,7 +52,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
         networkLogos.forEach(item -> {
             sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item));
             huluPage.clickOnNetworkLogo(item);
-            sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+            sa.assertTrue(homePage.isNetworkLogoImageVisible(item), "Network logo page are not present");
             pause(3);
             String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
             File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);
