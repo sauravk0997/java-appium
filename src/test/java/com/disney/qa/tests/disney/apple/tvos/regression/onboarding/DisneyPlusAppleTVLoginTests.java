@@ -480,7 +480,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(getAccount());
 
-        disneyPlusAppleTVPasswordPage.waitForPasswordPageNotDisplayed();
+        disneyPlusAppleTVPasswordPage.waitForPasswordPageToDisappear();
         aliceDriver.screenshotAndRecognize()
                 .isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
 
