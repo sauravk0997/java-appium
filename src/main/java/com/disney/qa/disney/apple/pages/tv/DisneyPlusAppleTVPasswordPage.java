@@ -167,8 +167,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void logInWithPassword(String password) {
         passwordEntry(password);
         Assert.assertTrue(isOpened(), "Password entry page did not open");
-        moveDown(2,1);
-        clickSelect();
+        Assert.assertTrue(isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
+                "Login button is not focused");
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void logInWithPasswordLocalized(String password) {
