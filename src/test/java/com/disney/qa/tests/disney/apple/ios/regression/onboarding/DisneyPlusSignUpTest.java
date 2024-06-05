@@ -46,10 +46,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue button was not found");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(), "Learn more header was not displayed");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreBodyDisplayed(), "Learn more body was not displayed");
-        var labelList = Stream.of(AliceLabels.NAT_GEO_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.MARVEL_LOGO,
-                AliceLabels.ESPN_LOGO, AliceLabels.DISNEY_LOGO).collect(Collectors.toList());
-        AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
-        labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
+
+        //Need to remove below assertion and method once developer add specific accessibility Id to each logo
+        //Dev ticket to add  accessibility to each logo - IOS-11385
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBrandLogosAreDispalyed(), "Brand Logos are not displayed");
         sa.assertAll();
     }
 

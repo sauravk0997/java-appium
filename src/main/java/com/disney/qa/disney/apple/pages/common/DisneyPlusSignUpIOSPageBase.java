@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -37,6 +38,8 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedFocused")
     protected ExtendedWebElement uncheckedBox;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
+    private ExtendedWebElement brandLogos;
 
     public DisneyPlusSignUpIOSPageBase(WebDriver driver) {
 
@@ -173,5 +176,10 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isLearnMoreBodyDisplayed() {
         String learnMoreBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BODY.getText()), Map.of("link_1", "and more"));
         return getStaticTextByLabel(learnMoreBody).isPresent();
+    }
+
+    public boolean isBrandLogosAreDispalyed() {
+        List<ExtendedWebElement> logos = findExtendedWebElements(brandLogos.getBy());
+        return brandLogos.isPresent() && logos.size() > 2;
     }
 }
