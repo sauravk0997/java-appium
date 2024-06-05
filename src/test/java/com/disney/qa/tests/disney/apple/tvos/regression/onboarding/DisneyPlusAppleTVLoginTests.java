@@ -427,9 +427,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
         Assert.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
 
-        disneyPlusAppleTVPasswordPage.moveDown(1, 1);
+        disneyPlusAppleTVPasswordPage.moveDown(2, 1);
         disneyPlusAppleTVPasswordPage.clickSelect();
-        Assert.assertTrue(disneyPlusAppleTVPasswordPage.isNoInputErrorPresent(), "No password error did not display.");
+        Assert.assertTrue(disneyPlusAppleTVPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty password error did not display");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})
