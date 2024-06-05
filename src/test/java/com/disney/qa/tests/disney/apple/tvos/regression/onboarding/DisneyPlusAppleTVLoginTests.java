@@ -141,7 +141,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         loginPage.proceedToPasswordScreen("somethin!^&&#@gmail");
         sa.assertTrue(loginPage.isNoInputErrorPresent(), NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE);
         sa.assertAll();
-
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90104"})
