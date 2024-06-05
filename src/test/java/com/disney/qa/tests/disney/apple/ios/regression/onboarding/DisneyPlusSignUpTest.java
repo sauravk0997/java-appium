@@ -154,17 +154,28 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66583"})
-    @Test(description = "Verify invalid password submissions", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify invalid password submissions", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifyInvalidPasswordSubmissions() {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("123456");
+        signUp.enterEmailAddress(generateGmailAccount() + "\n");
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
+        createPasswordPage.submitPasswordValue("12345");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was not displayed as expected");
 
-        Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isInvalidPasswordErrorDisplayed(),
-                "Invalid Password Error was not displayed as expected");
+        createPasswordPage.clickShowHidePassword();
+        createPasswordPage.getKeyboardDelete().click();
+        sa.assertFalse(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' Error was still displayed after user delete one char");
+
+        createPasswordPage.submitPasswordValue("");
+        sa.assertTrue(createPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty Password Error was not displayed");
+
+        createPasswordPage.submitPasswordValue("abcghtjk");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' error was not displayed for 6 digit password that did not meet password requirements.");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
