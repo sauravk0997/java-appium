@@ -1,8 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.alice.AliceAssertion;
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -14,9 +11,6 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
@@ -35,7 +29,6 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public void verifySignUpPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "'Sign Up' did not open the email submission screen as expected");
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isBackButtonPresent(), "Back Button (arrow) was not displayed as expected");
