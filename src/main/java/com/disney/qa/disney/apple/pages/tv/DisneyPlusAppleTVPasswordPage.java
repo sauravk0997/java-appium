@@ -262,6 +262,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public boolean isInvalidCredentialsDisplayed() {
         String invalidCredentialsError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
-        return getStaticTextByLabelContains(invalidCredentialsError).isPresent();
+        return getDynamicAccessibilityId(invalidCredentialsError).isPresent();
     }
 }
