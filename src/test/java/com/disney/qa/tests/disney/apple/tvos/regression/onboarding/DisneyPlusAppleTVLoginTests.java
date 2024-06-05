@@ -433,24 +433,10 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
         Assert.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
-
-
-        LOGGER.info("WHAT IS IN FOCUS AFTER MOVE down 1 TIME?");
         passwordPage.moveDown(1, 1);
-        pause(2);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        System.out.println(getDriver().getPageSource());
         LOGGER.info("is login button focused? " + passwordPage.isFocused(passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))));
-
-        LOGGER.info("WHAT IS IN FOCUS AFTER MOVE down second TIME?");
-        passwordPage.moveDown(1, 1);
-        pause(2);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        System.out.println(getDriver().getPageSource());
-        LOGGER.info("is login button focused? " + passwordPage.isFocused(passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))));
-//        passwordPage.clickSelect();
         passwordPage.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
-        Assert.assertTrue(passwordPage.isEmptyPasswordErrorDisplayed(), "Empty password error did not display");
+        Assert.assertTrue(passwordPage.isAttributValidationErrorMessagePresent(), "Empty password error did not display");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})
@@ -468,7 +454,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
         passwordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
-        sa.assertTrue(passwordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password error not displayed.");
+        sa.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed.");
         sa.assertAll();
     }
 

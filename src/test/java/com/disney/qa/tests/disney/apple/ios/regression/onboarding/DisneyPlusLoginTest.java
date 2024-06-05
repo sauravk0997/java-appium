@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
@@ -184,7 +183,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.fillOutEmailField("");
         disneyPlusLoginIOSPageBase.clickContinueBtn();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isErrorMessagePresent(), NO_ERROR_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
     }
