@@ -55,7 +55,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
             sa.assertTrue(homePage.isNetworkLogoImageVisible(item), "Network logo page are not present");
             pause(3);
             String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
-            File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);
+            File srcFile = homePage.getNetworkLogoImage(item).getElement().getScreenshotAs(OutputType.FILE);
             ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
             ImagesResponse360 imagesResponse360 = aliceManager.compareImages360S3(imagesComparisonRequest);
             JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
