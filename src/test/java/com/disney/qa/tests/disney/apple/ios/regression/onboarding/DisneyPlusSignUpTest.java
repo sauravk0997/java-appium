@@ -55,28 +55,17 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         welcomePage.clickSignUpButton();
 
-        disneyPlusSignUpIOSPageBase.clickAgreeAndContinue();
-        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
+        disneyPlusSignUpIOSPageBase.clickContinueBtn();
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Submitting no email did not produce an invalid email error");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62229 - Submitting no email did not produce an invalid email error");
-
-        if (!disneyPlusSignUpIOSPageBase.isOpened()) {
-            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
-        }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutSymbol.com");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62225 - Missing '@' did not produce an invalid email error");
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Missing '@' did not produce an invalid email error");
+        disneyPlusSignUpIOSPageBase.clearEmailAddress();
 
-        if (!disneyPlusSignUpIOSPageBase.isOpened()) {
-            disneyPlusCreatePasswordIOSPageBase.getBackArrow().click();
-        }
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutDomain");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getErrorMessageLabelText(), invalidEmailError,
-                "XMOBQA-62227 - Missing email domain (.com) did not produce an invalid email error");
-
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Missing email domain (.com) did not produce an invalid email error");
         sa.assertAll();
     }
 
