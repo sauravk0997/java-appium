@@ -81,7 +81,7 @@ public class CollectionConstant {
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
-                return "6e48d2c9-2ee3-476c-91d7-deb779bcfb6e";
+                return "775c549b-3308-4694-a0d6-986934b10f3a";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
