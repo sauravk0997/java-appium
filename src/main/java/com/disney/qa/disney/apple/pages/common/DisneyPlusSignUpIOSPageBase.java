@@ -94,7 +94,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmailAddress(String email) {
         pause(2);
         emailField.type(email);
-        primaryButton.click();
+        continueButton.click();
     }
 
     public void enterEmailAddress(String email) {
