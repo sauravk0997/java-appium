@@ -147,9 +147,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNetworkLogoImageVisible(String item) {
-        return imageLabelContains.format(getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
-                        false), Map.of(BRAND_NAME, item))).isPresent();
+        return getNetworkLogoImage(item).isPresent();
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
