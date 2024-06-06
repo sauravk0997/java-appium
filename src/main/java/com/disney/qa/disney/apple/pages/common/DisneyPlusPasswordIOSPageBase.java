@@ -153,5 +153,4 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isAuthPasswordKidsProfileBodyDisplayed() {
         return textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY.getText())).isPresent();
     }
-
 }
