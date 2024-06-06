@@ -213,7 +213,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin("");
-        passwordPage.getLoginButton().click();
+        System.out.println(getDriver().getPageSource());
         Assert.assertTrue(passwordPage.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
     }
 
