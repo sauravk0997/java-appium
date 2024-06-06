@@ -186,5 +186,4 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         List<ExtendedWebElement> logos = findExtendedWebElements(brandLogos.getBy());
         return brandLogos.isPresent() && logos.size() > 2;
     }
-
 }
