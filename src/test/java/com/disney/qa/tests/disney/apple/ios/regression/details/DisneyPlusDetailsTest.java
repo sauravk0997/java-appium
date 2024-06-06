@@ -283,7 +283,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
         //Verify Shop Promo for Series
-        validateShopPromoLabelHeaderAndSubHeader(sa, AHSOKA);
+        validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
 
         //Verify Shop Promo for Movie
         detailsPage.getBackArrow().click();
