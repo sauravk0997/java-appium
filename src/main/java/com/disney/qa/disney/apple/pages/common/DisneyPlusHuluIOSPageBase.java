@@ -36,7 +36,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNetworkLogo(String network){
-        return networkLogo.format(CollectionConstant.Collection.STUDIOS_AND_NETWORKS, network);
+        return networkLogo.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), network);
     }
 
    public boolean isStudiosAndNetworkPresent() {
