@@ -187,8 +187,4 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         return brandLogos.isPresent() && logos.size() > 2;
     }
 
-    public boolean getInvalidEmailErrorMessage() {
-        String invalidEmailError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
-        return getDynamicAccessibilityId(invalidEmailError).isPresent();
-    }
 }
