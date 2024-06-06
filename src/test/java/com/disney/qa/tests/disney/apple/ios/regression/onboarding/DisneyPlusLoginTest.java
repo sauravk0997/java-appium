@@ -216,7 +216,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin("");
+        disneyPlusPasswordIOSPageBase.enterLogInPassword("");
+        disneyPlusPasswordIOSPageBase.getLoginButton().click();
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isErrorMessagePresent(),NO_ERROR_DISPLAYED);
 
         softAssert.assertAll();
