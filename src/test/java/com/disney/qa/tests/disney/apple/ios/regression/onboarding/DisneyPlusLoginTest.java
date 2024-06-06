@@ -132,13 +132,11 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
-        SoftAssert softAssert = new SoftAssert();
-
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail("notAnEmail");
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidEmailError, NO_ERROR_DISPLAYED);
-
-        softAssert.assertAll();
+        disneyPlusLoginIOSPageBase.fillOutEmailField("notAnEmail");
+        disneyPlusLoginIOSPageBase.clickContinueBtn();
+        Assert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(),
+                NO_ERROR_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})

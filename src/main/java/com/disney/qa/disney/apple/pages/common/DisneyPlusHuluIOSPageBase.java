@@ -19,6 +19,9 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24LightActive\"`]")
     protected ExtendedWebElement networkBackButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == \"%s\"`]/**/XCUIElementTypeCell[`label CONTAINS \"%s,\"`]")
+    protected ExtendedWebElement networkLogo;
+
     public DisneyPlusHuluIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -33,14 +36,12 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNetworkLogo(String network){
-        return findExtendedWebElement(AppiumBy
-                .iOSClassChain(String.format("**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]/**/XCUIElementTypeImage"
-                        , network)));
+        return networkLogo.format(CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), network);
     }
 
    public boolean isStudiosAndNetworkPresent() {
         ExtendedWebElement studiosLabel = getStudiosAndNetwork();
-        swipePageTillElementPresent(studiosLabel, 3, brandLandingView, Direction.UP, 1000);
+        swipePageTillElementPresent(studiosLabel, 6, brandLandingView, Direction.UP, 1000);
         if (!getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent()){
             swipeInContainer(brandLandingView, Direction.UP, 1000);
         }
