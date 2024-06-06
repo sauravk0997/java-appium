@@ -12,8 +12,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.AGREE_AND_CONTINUE_BTN;
-
 public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
@@ -27,39 +25,26 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66555"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifySignUpPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen as expected");
         SoftAssert sa = new SoftAssert();
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.getBackArrow().isElementPresent(),
-                "Back Button (arrow) was not displayed as expected");
+        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "'Sign Up' did not open the email submission screen as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBackButtonPresent(), "Back Button (arrow) was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(), "STEP 1 label was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(), "Enter Email Header was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailBodyDisplayed(), "Enter Email body was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue button was not found");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(), "Learn more header was not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreBodyDisplayed(), "Learn more body was not displayed");
 
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(),
-                "Email field was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
-                "Opt-In Consent Form (Checkbox) was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isTermsOfUserDisclaimerDisplayed(),
-                "Acknowledgement text was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.arePrivacyPolicyLinksDisplayed(),
-                "'Privacy Policy' hyperlinks were not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isSubscriberAgreementLinkDisplayed(),
-                "'Subscriber Agreement' hyperlink was not displayed as expected");
-
-        sa.assertEquals(disneyPlusApplePageBase.getPrimaryButtonText().toLowerCase(),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, AGREE_AND_CONTINUE_BTN.getText()).toLowerCase());
-
+        //Need to remove below assertion and method once developer add specific accessibility Id to each logo
+        //Dev ticket to add  accessibility to each logo - IOS-11385
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBrandLogosAreDispalyed(), "Brand Logos are not displayed");
         sa.assertAll();
     }
-
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66567"})
     @Test(description = "Verify 'Sign Up' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
@@ -159,17 +144,28 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66583"})
-    @Test(description = "Verify invalid password submissions", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify invalid password submissions", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifyInvalidPasswordSubmissions() {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("123456");
+        signUp.enterEmailAddress(generateGmailAccount() + "\n");
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
+        createPasswordPage.submitPasswordValue("12345");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "Invalid Password Error was not displayed as expected");
 
-        Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isInvalidPasswordErrorDisplayed(),
-                "Invalid Password Error was not displayed as expected");
+        createPasswordPage.clickShowHidePassword();
+        createPasswordPage.getKeyboardDelete().click();
+        sa.assertFalse(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' Error was still displayed after user delete one char");
+
+        createPasswordPage.submitPasswordValue("");
+        sa.assertTrue(createPasswordPage.isEmptyPasswordErrorDisplayed(), "Empty Password Error was not displayed");
+
+        createPasswordPage.submitPasswordValue("abcghtjk");
+        sa.assertTrue(createPasswordPage.isInvalidPasswordErrorDisplayed(), "'Invalid Password' error was not displayed for 6 digit password that did not meet password requirements.");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
