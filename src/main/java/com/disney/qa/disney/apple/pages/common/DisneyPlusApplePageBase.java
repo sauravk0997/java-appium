@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
-import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
@@ -604,7 +603,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return errorMessage;
     }
 
-    public boolean isErrorMessagePresent() {
+    public boolean isAttributeValidationErrorMessagePresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 

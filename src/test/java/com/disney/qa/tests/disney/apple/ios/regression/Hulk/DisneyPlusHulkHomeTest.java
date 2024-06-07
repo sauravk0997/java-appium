@@ -101,6 +101,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
     @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
     public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
+        String network = "ABC";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -110,23 +111,23 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
         pause(5);
         // Get Network logo by deeplink access
-        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage());
+        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(network));
         homePage.clickHomeIcon();
 
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
-        huluPage.clickOnNetworkLogo("ABC");
+        huluPage.clickOnNetworkLogo(network);
 
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
         pause(5);
         // Get Network logo by app navigation
-        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage());
+        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
 
         sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
-                "The user doesn't land on the given Network page");
+                "The user doesn't land on the given "+network+" network page");
 
         sa.assertAll();
     }

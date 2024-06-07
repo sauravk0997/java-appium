@@ -43,9 +43,9 @@ public class CollectionConstant {
             case BRANDS_PIXAR_FEATURED:
                 return "08b2c7c9-1a54-4d69-9ed4-3cae0d035202";
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
-                return "51018b48-44ec-42b1-b7b8-80afbd222713";
+                return "50866b06-c063-4378-ba03-affbd4ba87e7";
             case BRANDS_MARVEL_FEATURED:
-                return "b7ba44aa-9a57-449d-bfc7-ca9f3459dabd";
+                return "7700deda-0491-4729-9bef-b2cdc0b62dd8";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "d1fff418-060e-4321-9e80-8a2744518929";
             case CAROUSEL:
@@ -81,7 +81,7 @@ public class CollectionConstant {
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
-                return "6e48d2c9-2ee3-476c-91d7-deb779bcfb6e";
+                return "775c549b-3308-4694-a0d6-986934b10f3a";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
