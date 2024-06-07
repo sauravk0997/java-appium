@@ -56,16 +56,16 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         welcomePage.clickSignUpButton();
 
         disneyPlusSignUpIOSPageBase.clickContinueBtn();
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Submitting no email did not produce an invalid email error");
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isAttributeValidationErrorMessagePresent(), "Submitting no email did not produce an invalid email error");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutSymbol.com");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Missing '@' did not produce an invalid email error");
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isAttributeValidationErrorMessagePresent(), "Missing '@' did not produce an invalid email error");
         disneyPlusSignUpIOSPageBase.clearEmailAddress();
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress("EmailWithoutDomain");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isErrorMessagePresent(), "Missing email domain (.com) did not produce an invalid email error");
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isAttributeValidationErrorMessagePresent(), "Missing email domain (.com) did not produce an invalid email error");
         sa.assertAll();
     }
 
@@ -344,9 +344,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Email Validation Rules - Verify Error code string", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifyInvalidEmailError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -356,8 +355,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         disneyPlusSignUpIOSPageBase.enterEmailAddress("abc");
         disneyPlusSignUpIOSPageBase.clickContinueBtn();
 
-            sa.assertTrue(disneyPlusLoginIOSPageBase.isErrorMessagePresent(),
-        NO_ERROR_DISPLAYED);
+        sa.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
         sa.assertAll();
     }
 

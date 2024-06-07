@@ -49,8 +49,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return staticTextLabelContains.format("Enter your password").isPresent();
+        return secureTextEntryField.isPresent();
     }
 
     public int getPasswordStrengthMeterWidth() {
@@ -168,7 +167,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void logInWithPassword(String password) {
         passwordEntry(password);
         Assert.assertTrue(isOpened(), "Password entry page did not open");
-        clickSelect();
+        Assert.assertTrue(isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
+                "Login button is not focused");
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void logInWithPasswordLocalized(String password) {
@@ -265,5 +266,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     @Override
     public boolean isPasswordFieldDisplayed() {
         return passwordOnScreenField.isPresent();
+    }
+
+    public boolean isInvalidCredentialsDisplayed() {
+        String invalidCredentialsError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        return getDynamicAccessibilityId(invalidCredentialsError).isPresent();
     }
 }
