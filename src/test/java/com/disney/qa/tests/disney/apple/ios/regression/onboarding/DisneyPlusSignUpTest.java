@@ -73,13 +73,13 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     @Test(description = "Verify signup with new account", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyNewEmailSubmission() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
 
         disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusSignUpIOSPageBase.clickPrimaryButtonByCoordinates();
-        Assert.assertTrue(initPage(DisneyPlusCreatePasswordIOSPageBase.class).isOpened(),
+        Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isCreateNewPasswordPageOpened(),
                 "User was not directed to Create Password as expected");
     }
 
