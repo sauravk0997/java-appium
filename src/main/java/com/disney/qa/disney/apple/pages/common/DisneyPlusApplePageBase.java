@@ -784,6 +784,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
     }
 
+    public ExtendedWebElement getManageWithMyDisneyButton() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText()));
+    }
+    public void clickManageWithMyDisneyButton() {
+        getManageWithMyDisneyButton().click();
+    }
+
     public void moveToLocalizedKeyboard() {
         ExtendedWebElement keyboardContinueLocalized = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KEYBOARD_CONTINUE.getText()).toLowerCase());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE,"Email_Input_Screen");
@@ -1489,7 +1496,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionRowInView;
     }
 
-    public void clickMyDisneyManageBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
-    }
 }
