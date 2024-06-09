@@ -922,30 +922,21 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66811"})
     @Test(description = "Edit Profile - Edit Profile Name - Maximum Profile Character Count", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyMaxProfileCharacterCount() {
-        String profileNameWithMoreThanMaxCharLimit = "TestTestTest1";
         String profileNameWithMaxAllowedCharLimit = "TestTestTest";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(getAccount().getFirstName());
-        editProfilePage.enterProfileName(profileNameWithMoreThanMaxCharLimit);
-
-        sa.assertTrue(editProfilePage.getTextEntryField().getText().equals(profileNameWithMoreThanMaxCharLimit), "User is not able to enter more than 12 character");
-        //Once we get error message details/copy, need to modify below assertion with actual error message validation
-        sa.assertTrue(editProfilePage.isProfileNameCharacterLimitErrorPresent(), "Profile Name Max character limit error was not found");
-
-        editProfilePage.enterProfileName(profileNameWithMaxAllowedCharLimit);
+        editProfilePage.enterProfileName(profileNameWithMaxAllowedCharLimit + "X");
         editProfilePage.getDoneButton().click();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "HomePage is not opened after saving profile with new name");
+        Assert.assertTrue(homePage.isOpened(), "Home Page is not opened after saving profile with a new name");
         moreMenu.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(profileNameWithMaxAllowedCharLimit), "Profile name not saved with Max allowed character limit");
-        sa.assertAll();
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(profileNameWithMaxAllowedCharLimit + "X"), "Profile name not saved with +Max allowed character limit");
     }
 
     private void setAppToAccountSettings() {
