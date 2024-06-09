@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 
 import java.lang.invoke.MethodHandles;
 
@@ -21,6 +22,13 @@ import java.lang.invoke.MethodHandles;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    public enum emailFormats {
+        oneChar,
+        noTopLevelDomain,
+        noEmail,
+        invalidEmail
+    }
 
     @ExtendedFindBy(accessibilityId = "signUpSwap")
     protected ExtendedWebElement signUpButton;
@@ -117,5 +125,21 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement getTryAgainAlertButton() {
         return alertTryAgainBtn;
+    }
+
+    public String getEmailFormat(DisneyPlusLoginIOSPageBase.emailFormats emailFormats) {
+        switch (emailFormats) {
+            case oneChar:
+                return "a";
+            case noTopLevelDomain:
+                return "emailWithoutTLD@gmail";
+            case noEmail:
+                return "";
+            case invalidEmail:
+                return "notAnEmail";
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' the email format is not valid one", emailFormats));
+        }
     }
 }
