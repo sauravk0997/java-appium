@@ -48,7 +48,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
-    @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {"Search", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -84,7 +84,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
-    @Test(description = "Search > Empty Page State- Max maturity rating", groups = {"Search", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search > Empty Page State- Max maturity rating", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPageMaxMaturityRating() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -147,7 +147,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {"Search", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistAndAddToWatchlist() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -229,7 +229,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
-    @Test(description = "Search Hulu Content", groups = {"Search", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifyMaxLimitSearchQuery() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
