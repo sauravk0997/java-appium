@@ -36,7 +36,7 @@ public final class TestGroup {
     public static final String ANTHOLOGY = "Anthology";
     public static final String ARIEL_LOGIN = "ArielLogIn";
     public static final String DEEPLINKS = "Deeplinks";
-    public static final String DETAILSPAGE = "DetailsPage";
+    public static final String DETAILS_PAGE = "DetailsPage";
     public static final String SEARCH = "Search";
     public static final String WATCHLIST = "Watchlist";
     public static final String MORE_MENU = "More Menu";
