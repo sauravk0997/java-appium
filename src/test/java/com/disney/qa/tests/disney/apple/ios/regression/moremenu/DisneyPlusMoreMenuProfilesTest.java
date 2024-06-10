@@ -129,7 +129,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-66772" })
     @Test(description = "Verify: User cannot select the same avatar for multiple profiles", groups = {"Profiles", TestGroup.PRE_CONFIGURATION})
     public void verifyUserCanNotSelectTheSameAvatarForMultipleProfiles() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
