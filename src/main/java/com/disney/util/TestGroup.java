@@ -34,6 +34,7 @@ public final class TestGroup {
     //Feature Groups
     public static final String SMOKE = "Smoke";
     public static final String ANTHOLOGY = "Anthology";
+    public static final String ARIEL_LOGIN = "ArielLogIn";
     public static final String DEEPLINKS = "Deeplinks";
     public static final String DETAILSPAGE = "DetailsPage";
     public static final String SEARCH = "Search";

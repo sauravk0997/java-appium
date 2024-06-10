@@ -640,7 +640,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72223"})
-    @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {"ArielLogIn", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {TestGroup.ARIEL_LOGIN, TestGroup.PRE_CONFIGURATION})
     public void verifyEnforceDOBAndGenderAccountHolderCollectionScreen() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
