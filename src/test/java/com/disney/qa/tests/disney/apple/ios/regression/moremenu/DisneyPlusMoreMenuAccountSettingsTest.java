@@ -121,26 +121,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
-    @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyBundle() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
         setAppToAccountSettings();
-            SoftAssert sa  = new SoftAssert();
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleMonthlySubscriptionTitlePresent(),
-                "D+ Bundle Subscription title was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
-                "D+ Bundle Subscription message was not displayed");
-
+        SoftAssert sa = new SoftAssert();
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleMonthlySubscriptionTitlePresent(), "D+ Bundle Subscription title was not displayed");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(), "D+ Bundle Subscription message was not displayed");
         disneyPlusAccountIOSPageBase.openBamtechBundleWebview();
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
-                "Webview did not open to the expected url");
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(), "Browser webview did not open");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL), "Webview did not open to the expected url");
         sa.assertAll();
     }
 
