@@ -67,7 +67,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        String subscriptionMessage = "Manage your subscription by going to disneyplus.com/account";
+        String subscriptionMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText()
         return getStaticTextByLabel(subscriptionMessage);
     }
 
