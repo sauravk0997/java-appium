@@ -34,10 +34,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @DataProvider(name = "emailFormats")
     public Object[][] emailTypes() {
         return new Object[][]{
-                {DisneyPlusLoginIOSPageBase.emailFormats.oneChar},
-                {DisneyPlusLoginIOSPageBase.emailFormats.noTopLevelDomain},
-                {DisneyPlusLoginIOSPageBase.emailFormats.noEmail},
-                {DisneyPlusLoginIOSPageBase.emailFormats.invalidEmail},
+                {DisneyPlusLoginIOSPageBase.emailFormats.ONECHAR},
+                {DisneyPlusLoginIOSPageBase.emailFormats.NOTOPLEVELDOMAIN},
+                {DisneyPlusLoginIOSPageBase.emailFormats.NOEMAIL},
+                {DisneyPlusLoginIOSPageBase.emailFormats.INVALIDEMAIL},
         };
     }
 

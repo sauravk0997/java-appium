@@ -24,10 +24,10 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public enum emailFormats {
-        oneChar,
-        noTopLevelDomain,
-        noEmail,
-        invalidEmail
+        ONECHAR,
+        NOTOPLEVELDOMAIN,
+        NOEMAIL,
+        INVALIDEMAIL
     }
 
     @ExtendedFindBy(accessibilityId = "signUpSwap")
