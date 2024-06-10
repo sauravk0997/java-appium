@@ -88,6 +88,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
     public static final String HOME_PAGE_ID = "page-4a8e20b7-1848-49e1-ae23-d45624f4498a";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
+    public static final String HULU_PAGE_ID = "page-ff723d29-20d5-4303-9cce-4a9aac8e269e";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {

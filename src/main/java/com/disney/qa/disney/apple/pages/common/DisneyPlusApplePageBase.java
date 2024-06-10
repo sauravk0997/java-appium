@@ -1318,6 +1318,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
     }
 
+    public ExtendedWebElement getCollection(String collectionId) {
+        return collectionCell.format(collectionId);
+    }
+
     public void swipeLeftInCollection(ExtendedWebElement element) {
         Point elementLocation = element.getLocation();
         Dimension elementDimensions = element.getSize();
@@ -1372,7 +1376,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
+        swipePageTillElementPresent(getCollection(collection), 10, brandLandingView, Direction.UP, 500);
         List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
         swipeLeftInCollection(collection);
         List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
