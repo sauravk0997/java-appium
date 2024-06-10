@@ -2,10 +2,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -13,13 +11,8 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     private static final String PROFILE_NAME = "Test";
