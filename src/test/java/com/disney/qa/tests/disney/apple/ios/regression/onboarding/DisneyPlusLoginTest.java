@@ -9,7 +9,6 @@ import com.disney.util.TestGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -30,16 +29,6 @@ import java.util.List;
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
-
-    @DataProvider(name = "emailFormats")
-    public Object[][] emailTypes() {
-        return new Object[][]{
-                {DisneyPlusLoginIOSPageBase.emailFormats.ONECHAR},
-                {DisneyPlusLoginIOSPageBase.emailFormats.NOTOPLEVELDOMAIN},
-                {DisneyPlusLoginIOSPageBase.emailFormats.NOEMAIL},
-                {DisneyPlusLoginIOSPageBase.emailFormats.INVALIDEMAIL},
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62689"})
     @Test(description = "Log In - Verify Login Screen UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
@@ -127,17 +116,28 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-        @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(dataProvider = "emailFormats", description = "Log in - Verify invalid email formats - One Character ,No Top Level Domain ,No Email, Invalid Email", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void testInvalidEmailFormat(DisneyPlusLoginIOSPageBase.emailFormats emailFormats) {
-        String invalidEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText());
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
+    @Test(description = "Log in - Verify invalid email formats - One Character ,No Top Level Domain ,No Email, Invalid Email", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    public void testInvalidEmailFormat() {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
         SoftAssert softAssert = new SoftAssert();
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.fillOutEmailField(disneyPlusLoginIOSPageBase.getEmailFormat(emailFormats));
+        disneyPlusLoginIOSPageBase.fillOutEmailField("a");
+        disneyPlusLoginIOSPageBase.clickContinueBtn();
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
+
+        disneyPlusLoginIOSPageBase.fillOutEmailField("emailWithoutTLD@gmail");
+        disneyPlusLoginIOSPageBase.clickContinueBtn();
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
+
+        disneyPlusLoginIOSPageBase.fillOutEmailField("");
+        disneyPlusLoginIOSPageBase.clickContinueBtn();
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
+
+        disneyPlusLoginIOSPageBase.fillOutEmailField("notAnEmail");
         disneyPlusLoginIOSPageBase.clickContinueBtn();
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
 
