@@ -259,23 +259,21 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
         logInTemp(getAccount());
 
-        disneyPlusAppleTVHomePage.moveRight(1, 1);
-
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
-        disneyPlusAppleTVHomePage.clickMenu();
+        homePage.moveLeft(2, 1);
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
+        homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
-        sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
+        sa.assertTrue(homePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
+        sa.assertTrue(homePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default");
-        disneyPlusAppleTVHomePage.moveRight(2, 1);
+        homePage.moveRight(2, 1);
         LOGGER.info("Collapsing Global Nav menu by moving right");
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), "Global Nav menu is present");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
+        sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_BRAND_TILE.getText());
         sa.assertAll();
     }
 }
