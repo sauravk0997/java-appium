@@ -11,6 +11,7 @@ public enum AliceLabels {
     CELL_PHONE_IMAGE("cell_phone_image"),
     DARTH_MAUL_AVATAR("darth_maul_avatar"),
     DESCRIPTION("description"),
+    DISNEY_BRAND_TILE("disney_brand_tile"),
     DISNEY_LOGO("disney_logo"),
     ERROR_MESSAGE("error_message"),
     ERROR_TEXT_FIELD("error_text_field"),
