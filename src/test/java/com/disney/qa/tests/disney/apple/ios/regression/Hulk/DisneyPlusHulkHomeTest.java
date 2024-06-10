@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -70,7 +71,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
         homePage.tapHuluBrandTile();
 
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
@@ -108,18 +109,21 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
         homePage.tapHuluBrandTile();
 
         //To get the collections details of Hulu from API
         ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
         //Click any title from collection
-        String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
-        huluPage.getTypeCellLabelContains(titleFromCollection).click();
 
-        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Detail page did not open");
-        sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
-        sa.assertAll();
+        try {
+            String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
+            huluPage.getTypeCellLabelContains(titleFromCollection).click();
+            Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Detail page did not open");
+            Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Maintainer("mparra5")
