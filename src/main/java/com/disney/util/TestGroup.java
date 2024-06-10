@@ -40,7 +40,7 @@ public final class TestGroup {
     public static final String SEARCH = "Search";
     public static final String WATCHLIST = "Watchlist";
     public static final String MORE_MENU = "More Menu";
-    public static final String VIDEOPLAYER = "VideoPlayer";
+    public static final String VIDEO_PLAYER = "VideoPlayer";
     public static final String VIDEOPLAYERADS = "VideoPlayerAds";
     public static final String PROFILES = "Profiles";
 
