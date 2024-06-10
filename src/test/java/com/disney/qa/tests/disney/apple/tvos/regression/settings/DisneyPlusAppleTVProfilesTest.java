@@ -7,15 +7,13 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVChooseAvatarPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVEditProfilePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWhoIsWatchingPage;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -33,32 +31,31 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Who's Watching view", groups = {"Profile", "Smoke"})
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        logInTemp(entitledUser);
-
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
-        disneyPlusAppleTVHomePage.clickSelect();
-
-        sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
-        disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after clicking menu on Profile selection page");
+        logInTemp(getAccount());
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
+        homePage.clickSelect();
+        sa.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
+        homePage.clickMenuTimes(1, 1);
+        sa.assertTrue(homePage.isOpened(), "Home page is not open after clicking menu on Profile selection page");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
-        disneyPlusAppleTVHomePage.clickSelect();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
+        homePage.clickSelect();
 
-        sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
-        disneyPlusAppleTVHomePage.clickProfileBtn(PROFILE_NAME);
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after selecting a profile");
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
-        disneyPlusAppleTVHomePage.moveUp(1,1);
+        sa.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
+        homePage.clickProfileBtn(PROFILE_NAME);
+        sa.assertTrue(homePage.isOpened(), "Home page is not open after selecting a profile");
+        sa.assertFalse(homePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
+        homePage.moveUp(1,1);
+        homePage.moveLeft(2,1);
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
         sa.assertAll();
     }
