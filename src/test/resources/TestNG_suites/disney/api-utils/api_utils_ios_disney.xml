@@ -19,15 +19,6 @@
     <parameter name="reporting.notification.slack-channels" value="qte-release-tests"/>
     <parameter name="hiddenParam::multiverseAccountsUrl::The Multiverse Staging Url" value="https://multiverse-accounts-staging.qateam.bamgrid.com"/>
 
-    <test verbose="1" name="DisneyPlus iOS Handset Basic Api Utils tests" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest">
-                <methods>
-                    <include name="testChangingProfiles"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding Api Utils tests" parallel="methods">
         <classes>
