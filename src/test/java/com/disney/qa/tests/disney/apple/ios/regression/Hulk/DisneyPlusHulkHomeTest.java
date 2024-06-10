@@ -114,10 +114,10 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         //To get the collections details of Hulu from API
         ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
         //Click any title from collection
-        String titleFromCollection = getUtf8MetaString(collections.get(1).getItems().get(0).getVisuals().getTitle());
+        String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
         huluPage.getTypeCellLabelContains(titleFromCollection).click();
 
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Detail page did not open");
         sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
         sa.assertAll();
     }
