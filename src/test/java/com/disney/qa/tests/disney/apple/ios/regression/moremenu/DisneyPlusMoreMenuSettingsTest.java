@@ -90,7 +90,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67280"})
-    @Test(description = "User taps on Edit Profiles", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "User taps on Edit Profiles", groups = {"More Menu", TestGroup.SMOKE})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
         onboard(getAccount().getFirstName());
@@ -116,7 +116,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
-    @Test(description = "User Taps on App Settings", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "User Taps on App Settings", groups = {"More Menu", TestGroup.SMOKE})
     public void verifyAppSettings() {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);

@@ -32,6 +32,7 @@ public final class TestGroup {
     public static final String HORA_SMOKE = "hora_smoke";
 
     //Feature Groups
+    public static final String SMOKE = "Smoke";
     public static final String WEB_HOME = "web_home";
     public static final String WEB_DETAILS = "web_details";
     public static final String USER_FLOW = "user_flow";

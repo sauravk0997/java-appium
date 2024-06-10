@@ -485,7 +485,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.waitUntilWebviewUrlContains(CABLEVISION_URL);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66502"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69546"})
     @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_MercadoLibreBrazil() {
         SoftAssert sa = new SoftAssert();
@@ -938,7 +938,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827", "XMOBQA-69488"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827"})
     @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
         SoftAssert sa = new SoftAssert();
