@@ -33,7 +33,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72640" })
-    @Test(description = "Verify Anthology Series - Search", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Search", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologySearch() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -53,7 +53,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72728" })
-    @Test(description = "Verify Anthology Series - Watchlist", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Watchlist", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyWatchlist() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -73,7 +73,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72257" })
-    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyUpcomingBadgeAndMetadata() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
@@ -102,7 +102,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73629" })
-    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLiveBadge() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
@@ -130,7 +130,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72251" })
-    @Test(description = "Verify Anthology Series - Live Playback", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Live Playback", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLivePlayback() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
@@ -156,7 +156,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72247" })
-    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyEnded() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
@@ -172,7 +172,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73780" })
-    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyTitleDescriptionDate() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -189,7 +189,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73789" })
-    @Test(description = "Verify Anthology Series - Episode Download", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Episode Download", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyEpisodeDownload() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
@@ -234,7 +234,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73802" })
-    @Test(description = "Verify Anthology Series - VOD Progress", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - VOD Progress", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyVODProgress() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -260,7 +260,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72249" })
-    @Test(description = "Verify Anthology Series - Details Tab", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Details Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyDetailsTab() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -291,7 +291,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72253" })
-    @Test(description = "Verify Anthology Series - Suggested Tab", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Suggested Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologySuggestedTab() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -306,7 +306,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72248" })
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyExtrasTab() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -321,7 +321,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72252" })
-    @Test(description = "Verify Anthology Series - Featured VOD", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyFeaturedVOD() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -358,7 +358,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73782" })
-    @Test(description = "Verify Anthology Series - Trailer", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Trailer", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyTrailer() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -379,7 +379,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72254" })
-    @Test(description = "Verify Anthology Series - Live Modal", groups = { "Anthology", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Anthology Series - Live Modal", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLiveModal() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);

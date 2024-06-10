@@ -33,19 +33,15 @@ public final class TestGroup {
 
     //Feature Groups
     public static final String SMOKE = "Smoke";
-    public static final String WEB_HOME = "web_home";
-    public static final String WEB_DETAILS = "web_details";
-    public static final String USER_FLOW = "user_flow";
-    public static final String MORE_MENU = "more_menu";
-    public static final String ARIEL_COMMERCE = "ariel_commerce";
-    public static final String PROFILES = "profiles";
-    public static final String ARIEL_APPEX = "ariel_appex";
-    public static final String SHOP_DISNEY = "shop_disney";
-    public static final String IDENTITY_UNIFICATION = "identity_unification";
-    public static final String SEARCH = "search";
-    public static final String ARIEL_DOB_COMMERCE = "ariel_dob_commerce";
-    public static final String HUBS = "hubs";
-    public static final String LIONSGATE_APPEX = "lionsgate";
+    public static final String ANTHOLOGY = "Anthology";
+    public static final String DEEPLINKS = "Deeplinks";
+    public static final String DETAILSPAGE = "DetailsPage";
+    public static final String SEARCH = "Search";
+    public static final String WATCHLIST = "Watchlist";
+    public static final String MORE_MENU = "More Menu";
+    public static final String VIDEOPLAYER = "VideoPlayer";
+    public static final String VIDEOPLAYERADS = "VideoPlayerAds";
+    public static final String PROFILES = "Profiles";
 
     //Analytics Groups
     public static final String QOE_PLAYBACK = "qoeplayback";
