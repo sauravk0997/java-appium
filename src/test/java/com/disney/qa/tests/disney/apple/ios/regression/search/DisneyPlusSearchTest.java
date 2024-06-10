@@ -24,7 +24,6 @@ import org.testng.asserts.SoftAssert;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
@@ -251,7 +250,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
     @Test(description = "Search - Originals Landing Page - UI Elements", groups = {"Search", TestGroup.PRE_CONFIGURATION})
     public void verifyOriginalsLandingPageUI() throws URISyntaxException, JsonProcessingException {
-        AtomicInteger containerPosition = new AtomicInteger(0);
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -277,8 +275,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             if (collectionName.isPresent()) {
                 //To get the all movie/series title under collection from API
                 if (item.getItems().size() > 0) {
-                    String titleFromCollection = item.getItems().get(0).getVisuals().getTitle();
-                    originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), containerPosition.getAndIncrement());
+                    String titleFromCollection = getUtf8MetaString(item.getItems().get(0).getVisuals().getTitle());
+                    swipePageTillElementPresent(originalsPage.getCollection(item.getId()), 2, null, Direction.UP, 500);
+                    originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), item.getId());
                     sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + collectionName.getText() + " collection");
                     //verify that correct titles of that collection opened in app, verify with 1 titles
                     originalsPage.getTypeCellLabelContains(titleFromCollection).click();

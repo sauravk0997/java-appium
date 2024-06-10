@@ -86,39 +86,18 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
         setAppToAccountSettings(accountV2);
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
-        pause(3);
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(accountV2.getEmail()).isPresent(),
-                "User Email address was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(accountV2.getEmail())
-                        && disneyPlusAccountIOSPageBase.isChangeLinkActive(accountV2.getEmail()),
-                "Change Email link was not displayed and enabled");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(),
-                "User Password (hidden) was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())),
-                "Change Password link was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(),
-                "Billing Details (Subscriptions) header not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(),
-                "Settings header not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isRestrictProfilesContainerPresent(),
-                "Restrict Profile Creation container was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isEditProfilesLinkPresent(),
-                "Edit Profiles link was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isEditProfilesTextPresent(),
-                "Edit Profiles text was not displayed");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isPrivacyChoicesLinkPresent(),
-                "Privacy Choices link was not displayed");
-
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        accountPage.waitForAccountPageToOpen();
+        sa.assertTrue(accountPage.getStaticTextByLabel(accountV2.getEmail()).isPresent(), "User Email address was not displayed");
+        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(), "Manage with MyDisney link was not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(), "User Password (hidden) was not displayed");
+        sa.assertTrue(accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())), "Change Password link was not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(), "Billing Details (Subscriptions) header not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(), "Settings header not displayed");
+        sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(), "Restrict Profile Creation container was not displayed");
+        sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
+        sa.assertTrue(accountPage.isEditProfilesTextPresent(), "Edit Profiles text was not displayed");
+        sa.assertTrue(accountPage.isPrivacyChoicesLinkPresent(), "Privacy Choices link was not displayed");
         sa.assertAll();
     }
 
@@ -691,7 +670,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
 
         setAppToAccountSettings(testAccount);
-        disneyPlusApplePageBase.clickMyDisneyManageBtn();
+        disneyPlusApplePageBase.clickManageWithMyDisneyButton();
         disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
 
@@ -727,7 +706,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress("invalid");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isErrorMessagePresent(),
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isAttributeValidationErrorMessagePresent(),
                 "XMOBQA-61551 - 'Invalid Email' error was not displayed");
 
         disneyPlusChangeEmailIOSPageBase.clickCancelBtn();
@@ -749,7 +728,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusApplePageBase.clickMyDisneyManageBtn();
+        disneyPlusApplePageBase.clickManageWithMyDisneyButton();
         disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
@@ -778,7 +757,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(testAccount);
-        disneyPlusAccountIOSPageBase.clickMyDisneyManageBtn();
+        disneyPlusAccountIOSPageBase.clickManageWithMyDisneyButton();
         disneyPlusAccountIOSPageBase.clickEditEmail(testAccount.getEmail());
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);

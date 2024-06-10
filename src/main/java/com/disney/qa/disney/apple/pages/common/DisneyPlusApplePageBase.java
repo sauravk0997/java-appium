@@ -603,7 +603,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return errorMessage;
     }
 
-    public boolean isErrorMessagePresent() {
+    public boolean isAttributeValidationErrorMessagePresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
@@ -782,6 +782,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     // Will take you to continue or done button on tvOS on screen keyboard
     public void moveToContinueOrDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+    }
+
+    public ExtendedWebElement getManageWithMyDisneyButton() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText()));
+    }
+    public void clickManageWithMyDisneyButton() {
+        getManageWithMyDisneyButton().click();
     }
 
     public void moveToLocalizedKeyboard() {
@@ -1311,6 +1318,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
     }
 
+    public ExtendedWebElement getCollection(String collectionId) {
+        return collectionCell.format(collectionId);
+    }
+
     public void swipeLeftInCollection(ExtendedWebElement element) {
         Point elementLocation = element.getLocation();
         Dimension elementDimensions = element.getSize();
@@ -1489,7 +1500,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionRowInView;
     }
 
-    public void clickMyDisneyManageBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
-    }
 }
