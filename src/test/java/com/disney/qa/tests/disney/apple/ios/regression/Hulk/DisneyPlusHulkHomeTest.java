@@ -115,7 +115,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         //To get the collections details of Hulu from API
         ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
         //Click any title from collection
-
         try {
             String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
             huluPage.getTypeCellLabelContains(titleFromCollection).click();
