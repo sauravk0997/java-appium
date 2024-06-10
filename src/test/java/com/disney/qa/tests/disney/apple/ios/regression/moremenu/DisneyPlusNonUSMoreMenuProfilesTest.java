@@ -166,7 +166,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69677"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69535"})
     @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION},enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();

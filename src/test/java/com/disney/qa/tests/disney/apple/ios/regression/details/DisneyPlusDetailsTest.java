@@ -52,7 +52,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448","XMOBQA-71632"})
-    @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyAddSeriesAndMovieToWatchlist() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -87,7 +87,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
-    @Test(description = "Details Page - IMAX Enhanced - Badges", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Details Page - IMAX Enhanced - Badges", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyIMAXEnhancedBadges() {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -122,7 +122,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68648"})
-    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyNegativeStereotypeAdvisoryExpansion() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -154,7 +154,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66841"})
-    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(getAccount(), TV_Y7, KIDS_DOB, getAccount().getProfileLang(), RAYA, false, true);
@@ -202,7 +202,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
-    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyIMAXEnhancedVersionTab() throws URISyntaxException, JsonProcessingException {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -247,32 +247,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72032"})
-    @Test(description = "Details Page - IMAX Enhanced - Deeplink to Details Screen", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void navigatIMAXEnhancedDetailsPagefromDeeplink() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        IntStream.range(0, getTabname().size()).forEach(i -> {
-            navigateToIMAXEnhancedDetailPageFromDeeplink(getTabname().get(i));
-            detailsPage.dismissNotificationsPopUp();
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-            sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            sa.assertTrue(detailsPage.isImaxEnhancedPromoLabelPresent(), "IMAX Enhanced Promo Label was not found");
-            sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(),"IMAX Enhanced Badge was not found in media features row");
-            if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-                swipeUp(1500);
-            }
-            sa.assertTrue(detailsPage.isTabSelected(getTabname().get(i).toUpperCase()),getTabname().get(i) + "Tab was not selected");
-        });
-        sa.assertAll();
-    }
-
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
-    @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -293,7 +269,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72730"})
-    @Test(description = "Details Page - ShopDisney - Shop Tab - Primary Profile (Ad Tier & Non Ad Tier)", dataProvider = "disneyPlanTypes", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - ShopDisney - Shop Tab - Primary Profile (Ad Tier & Non Ad Tier)", dataProvider = "disneyPlanTypes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyShopTabInDetailsPage(String planType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -315,7 +291,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
