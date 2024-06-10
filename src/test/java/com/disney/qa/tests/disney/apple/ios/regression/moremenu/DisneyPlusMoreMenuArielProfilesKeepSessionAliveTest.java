@@ -31,7 +31,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final String WRONG_PASSWORD = "local123b456@";
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -52,7 +52,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75275"})
     @Test(description = "Add Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void  verifyAddProfileU13MinorConsentAgree() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -87,7 +87,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74467"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75274"})
     @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13MinorConsentDecline() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -109,7 +109,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72973"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74470"})
     @Test(description = "Add Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13MinorConsentAbandonFlow() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -136,7 +136,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72869"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyU13PasswordGrantForWelch() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -169,7 +169,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75277"})
     @Maintainer("gkrishna1")
     @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyExistingProfileMinorAuth() {
