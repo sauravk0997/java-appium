@@ -40,6 +40,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement hideShowPasswordBtn;
     @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeTextView\"")
     protected ExtendedWebElement passwordOnScreenField;
+    @ExtendedFindBy(accessibilityId = "hidePasswordDisneyAuth")
+    private ExtendedWebElement hidePasswordDisneyAuth;
+    @ExtendedFindBy(accessibilityId = "showPasswordDisneyAuth")
+    private ExtendedWebElement showPasswordDisneyAuth;
 
     private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
@@ -51,6 +55,14 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return staticTextLabelContains.format("Enter your password").isPresent();
+    }
+
+    public ExtendedWebElement getHidePassword() {
+        return hidePasswordDisneyAuth;
+    }
+
+    public ExtendedWebElement getShowPassword() {
+        return showPasswordDisneyAuth;
     }
 
     public int getPasswordStrengthMeterWidth() {
