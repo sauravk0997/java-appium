@@ -119,4 +119,8 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_OTP_RESENT_BODY.getText())).isPresent();
     }
+
+    public boolean isOtpIncorrectErrorPresent() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
+    }
 }
