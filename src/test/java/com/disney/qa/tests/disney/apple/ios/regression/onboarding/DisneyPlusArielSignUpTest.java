@@ -17,7 +17,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     private static final String DOB_INVALID = "01/01/1766";
 
     @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDoBUnder18() {
         SoftAssert sa = new SoftAssert();
@@ -85,7 +85,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     @Maintainer("acadavidcorrea")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72384"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
     @Test(description = "Log in - Verify login - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();

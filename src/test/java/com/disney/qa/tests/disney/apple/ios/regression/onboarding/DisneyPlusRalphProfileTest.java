@@ -18,7 +18,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-AcceptAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationAcceptAll() {
         setupForRalph();
@@ -49,7 +49,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74758"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationCustomizeChoice() {
         setupForRalph();
@@ -78,7 +78,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74757"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationRejectAll() {
         setupForRalph();
@@ -107,7 +107,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74136"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
     @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileForSingleProfile() {
         setupForRalph();
@@ -134,7 +134,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74136"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
     @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileOnSecondaryProfile() {
         setupForRalph();

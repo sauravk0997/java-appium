@@ -360,54 +360,45 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {"Onboarding"})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         String encryptedPassword = "••••";
-
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        welcomeScreen.clickLogInButton();
+        loginPage.proceedToPasswordScreen(getAccount().getEmail());
+        sa.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
-
-        disneyPlusAppleTVPasswordPage.clickPassword();
-
-        sa.assertTrue(disneyPlusAppleTVLoginPage.isKeyboardPresent(), "KeyboardScreen did not launch");
+        passwordPage.clickPassword();
+        sa.assertTrue(loginPage.isKeyboardPresent(), "KeyboardScreen did not launch");
 
         IntStream.range(0, 4).forEach(i -> {
-            disneyPlusAppleTVPasswordPage.clickSelect();
-            disneyPlusAppleTVPasswordPage.clickRight();
+            passwordPage.clickSelect();
+            passwordPage.clickRight();
         });
         //Move down to continue button and select it
-        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
-        disneyPlusAppleTVPasswordPage.clickSelect();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(),
+        passwordPage.moveToContinueOrDoneBtnKeyboardEntry();
+        passwordPage.clickSelect();
+        sa.assertTrue(passwordPage.isOpened(),
                 "Log In password screen did not launch after pressing menu from on screen keyboards screen");
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), encryptedPassword);
+        sa.assertEquals(passwordPage.getSecureTextEntryField().getText(), encryptedPassword);
 
         //Move to show password button from login button
-        disneyPlusAppleTVPasswordPage.moveUp(2, 1);
-        disneyPlusAppleTVPasswordPage.moveRight(1, 1);
-        disneyPlusAppleTVPasswordPage.clickSelect();
-
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), "abcd",
-                "XCDQA-90709 - Password was not displayed");
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getShowHidePasswordBtnState(), "hide");
+        passwordPage.moveUp(2, 1);
+        passwordPage.moveRight(1, 1);
+        passwordPage.getHidePassword().click();
+        sa.assertTrue(passwordPage.getStaticTextByLabelContains("abcd").isPresent(), "XCDQA-90709 - Password was not displayed");
+        sa.assertTrue(passwordPage.getShowPassword().isPresent(), "`Show password` was not present.");
 
         //Click hide password button and it should turn into show password
-        disneyPlusAppleTVPasswordPage.clickSelect();
-
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), encryptedPassword,
+        passwordPage.getShowPassword().click();
+        sa.assertEquals(passwordPage.getSecureTextEntryField().getText(), encryptedPassword,
                 "XCDQA-907011 - Password was not encrypted");
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getShowHidePasswordBtnState(), "show");
-
+        sa.assertTrue(passwordPage.getHidePassword().isPresent(), "`Hide password` was not present.");
         sa.assertAll();
     }
 
