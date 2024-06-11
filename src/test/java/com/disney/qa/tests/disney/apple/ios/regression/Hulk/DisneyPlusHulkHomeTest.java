@@ -101,7 +101,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
     @Test(description = "Hulk - Hulu Hub Page - Collections", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
