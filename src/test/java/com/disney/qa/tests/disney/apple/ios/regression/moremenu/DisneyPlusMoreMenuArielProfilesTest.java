@@ -739,7 +739,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69517"})
     @Test(description = "Profiles > Existing Subs -> Add Profile flow through Add Banner for Primary Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfilePageAfterClickingAddProfileButtonOnAddProfileBanner() {
