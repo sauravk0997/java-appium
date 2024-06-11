@@ -117,7 +117,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(description = "Log in - Verify invalid email formats - One Character ,No Top Level Domain ,No Email, Invalid Email", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Log in - Verify invalid email formats - One Character, No Top Level Domain, No Email, Invalid Email", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testInvalidEmailFormat() {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
