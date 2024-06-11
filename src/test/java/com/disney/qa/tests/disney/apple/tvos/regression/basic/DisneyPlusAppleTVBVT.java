@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.basic;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -43,7 +44,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount user = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getAccountApi().addProfile(user, KIDS, KIDS_DOB, user.getProfileLang(), null, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(user).profileName(KIDS).dateOfBirth(KIDS_DOB).language(user.getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(welcome.isOpened(), "Welcome screen did not launch");
 
