@@ -21,13 +21,22 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76397"/>
 
-    <test verbose="1" name="DisneyPlus iOS Handset Non-US Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset APAC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Non-US R21 Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset KCC Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset KMRB Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKMRBTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset R21 Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingR21Test"/>
         </classes>
