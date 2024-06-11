@@ -447,6 +447,7 @@ public enum DictionaryKeys {
     SUBSCRIPTIONS_MESSAGE("account_subscription_message_bamtech_disney"),
     SUBSCRIPTIONS_BUNDLE_MESSAGE("account_subscription_message_bamtech_disney_bundle"),
     SUBSCRIPTIONS_MESSAGE_AMAZON("account_subscription_message_amazon"),
+    SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY("account_subscription_message_bamtech_disney"),
     SUBSCRIPTIONS_MESSAGE_BRADESCO("account_subscription_message_bradesco_bank_br"),
     SUBSCRIPTIONS_MESSAGE_BRADESCO_NEXT("account_subscription_message_bradesco_next_br"),
     SUBSCRIPTIONS_MESSAGE_CABLEVISION("account_subscription_message_telecom_ar"),

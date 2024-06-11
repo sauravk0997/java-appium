@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyOrder;
@@ -107,7 +108,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
 
-        getAccountApi().addProfile(getAccount(), "Prof2", getAccount().getProfileLang(), null, false);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Prof2").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
@@ -258,8 +259,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
 
-        getAccountApi().addProfile(getAccount(), kidProfile, "en", "90e6cc76-b849-5301-bf2a-d8ddb200d07b", true);
-        getAccountApi().addProfile(getAccount(), profile3, "en", "b4515c3a-d9a9-57e4-b2be-a793104c0839", false);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(kidProfile).language("en").avatarId("90e6cc76-b849-5301-bf2a-d8ddb200d07b").kidsModeEnabled(true).dateOfBirth(null).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(profile3).language("en").avatarId("b4515c3a-d9a9-57e4-b2be-a793104c0839").kidsModeEnabled(false).dateOfBirth(null).build());
 
         SoftAssert softAssert = new SoftAssert();
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
