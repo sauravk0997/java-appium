@@ -182,7 +182,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(learnMoreBody).isPresent();
     }
 
-    public boolean areBrandLogosDisplayed() {
+    public boolean isMultipleBrandLogosDisplayed() {
         List<ExtendedWebElement> logos = findExtendedWebElements(brandLogos.getBy());
         return brandLogos.isPresent() && logos.size() > 2;
     }
