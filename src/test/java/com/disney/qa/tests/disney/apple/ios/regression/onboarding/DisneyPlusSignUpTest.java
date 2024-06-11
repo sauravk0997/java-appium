@@ -1,12 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -42,7 +39,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         //Need to remove below assertion and method once developer add specific accessibility Id to each logo
         //Dev ticket to add  accessibility to each logo - IOS-11385
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBrandLogosAreDispalyed(), "Brand Logos are not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBrandLogosAreDisplayed(), "Brand Logos are not displayed");
         sa.assertAll();
     }
 

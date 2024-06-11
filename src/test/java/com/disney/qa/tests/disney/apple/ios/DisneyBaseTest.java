@@ -59,10 +59,9 @@ import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
-    private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
-    private static final String TEST_XML_PLAYER_OBJECT = "Player";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
+    public static final String DISNEY_URL = "disneyplus.com";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
