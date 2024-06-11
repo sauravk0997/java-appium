@@ -166,7 +166,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("SecondaryTestProfile").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("SecondaryTestProfile").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
@@ -491,7 +491,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
-            getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("Test_" + i).language(getLanguage()).avatarId(null).kidsModeEnabled(false).build());
+            getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("Test_" + i).language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
         }
         restart();
 
