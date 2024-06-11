@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -59,8 +61,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
     @Test(description = "Validate of the UI and functional items of the Hulu brand page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
@@ -70,7 +71,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
         homePage.tapHuluBrandTile();
 
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
@@ -97,9 +98,36 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
+    @Test(description = "Hulk - Hulu Hub Page - Collections", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
+        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        homePage.tapHuluBrandTile();
+
+        //To get the collections details of Hulu from API
+        ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
+        //Click any title from collection
+        try {
+            String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
+            huluPage.getTypeCellLabelContains(titleFromCollection).click();
+            Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Detail page did not open");
+            Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
+    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
     public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
         String network = "ABC";
         SoftAssert sa = new SoftAssert();
@@ -133,8 +161,8 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209", "XMOBQA-73822"})
-    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
+    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

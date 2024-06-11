@@ -250,7 +250,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62074", "XMOBQA-66764"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66764"})
     @Test(description = "Verify Choose Profiles Screen", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testChooseProfiles() {
         String kidProfile = "kidProfile";
@@ -281,7 +281,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67250"})
-    @Test(description = "Log in - Test non-entitled account", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Log In - Complete Subscription UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testNotEntitledAccount() {
         DisneyAccount nonActiveAccount = getAccountApi().createAccount("US", "en");
         SoftAssert softAssert = new SoftAssert();
