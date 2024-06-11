@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.disney.DisneyContentIds;
@@ -135,7 +136,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(entitledUser, KIDS, KIDS_DOB, entitledUser.getProfileLang(), null, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(KIDS).dateOfBirth(KIDS_DOB).language(entitledUser.getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(entitledUser);
 
