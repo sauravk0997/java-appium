@@ -39,7 +39,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         //Need to remove below assertion and method once developer add specific accessibility Id to each logo
         //Dev ticket to add  accessibility to each logo - IOS-11385
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isBrandLogosAreDisplayed(), "Brand Logos are not displayed");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.areBrandLogosDisplayed(), "Brand Logos are not displayed");
         sa.assertAll();
     }
 
