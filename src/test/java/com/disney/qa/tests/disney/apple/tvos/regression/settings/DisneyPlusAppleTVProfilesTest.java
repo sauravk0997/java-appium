@@ -11,6 +11,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -34,18 +35,17 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavWithClickingMenu();
         homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         homePage.clickSelect();
-        sa.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
+        Assert.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         homePage.clickMenuTimes(1, 1);
         sa.assertTrue(homePage.isOpened(), "Home page is not open after clicking menu on Profile selection page");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         homePage.openGlobalNavWithClickingMenu();
         homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         homePage.clickSelect();
 
-        sa.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
+        Assert.assertTrue(whoseWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         homePage.clickProfileBtn(PROFILE_NAME);
-        sa.assertTrue(homePage.isOpened(), "Home page is not open after selecting a profile");
+        Assert.assertTrue(homePage.isOpened(), "Home page is not open after selecting a profile");
         sa.assertFalse(homePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
         homePage.moveUp(1,1);
         homePage.moveLeft(2,1); //stop carousel moving
