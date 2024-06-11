@@ -210,6 +210,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return accountDetailsSection.isElementPresent();
     }
 
+    public void waitForAccountPageToOpen() {
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Account page did not open")
+                .until(it -> accountDetailsSection.isPresent(SHORT_TIMEOUT));
+    }
+
     public boolean isChangeLinkPresent(String text) {
         return getStaticTextByLabelContains(text).isPresent();
     }
