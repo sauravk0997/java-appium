@@ -17,13 +17,13 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isOpened() {
-        String enforceDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_HEADER.getText());
-        return staticTextByLabel.format(enforceDateOfBirthPageTitle).isPresent();
+        String ednaDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_HEADER.getText());
+        return staticTextByLabel.format(ednaDateOfBirthPageTitle).isPresent();
     }
 
     public boolean isEdnaDateOfBirthDescriptionPresent() {
-        String enforceDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
-        return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
+        String ednaDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
+        return staticTextByLabel.format(ednaDateOfBirthPageDescription).isPresent();
     }
 
     //format: Month, day, year
