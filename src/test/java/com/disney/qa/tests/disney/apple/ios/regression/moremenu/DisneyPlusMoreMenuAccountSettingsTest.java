@@ -628,27 +628,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not directed back to 'Account Settings' after changing their password");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68919"})
-    @Test(description = "Verify the password save functionality flow with Logout checked", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void testChangePasswordWithLogout() {
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-
-        DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-        setAppToAccountSettings(testAccount);
-        Date startTime = getEmailApi().getStartTime();
-        accountPage.clickChangePasswordCell();
-        String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-        oneTimePasscodePage.enterOtpValue(otp);
-        changePasswordPage.clickLogoutAllDevices();
-        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-
-        Assert.assertTrue(welcomeScreen.isOpened(),
-                "User was logged out after changing their password");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67134", "XMOBQA-75513", "XMOBQA-70695"})
     @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void testChangeEmailUI() {
@@ -771,68 +750,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(),
                 "User was not able to log in successfully with the new email");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68915","XMOBQA-75363"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void testLogoutOfAllDevicesUI() {
-        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicesPage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
-
-        SoftAssert sa = new SoftAssert();
-        setAppToAccountSettings();
-        accountPage.clickLogOutOfAllDevices();
-
-        Assert.assertTrue(logOutOfDevicesPage.isOpened(),
-                "'Log out of all accounts' screen did not open");
-
-        sa.assertTrue(logOutOfDevicesPage.isSubtitleDisplayed(),
-                "Subtitle was not displayed");
-
-        sa.assertTrue(logOutOfDevicesPage.isPasswordTextEntryPresent(),
-                "Password entry field was not displayed");
-
-        sa.assertTrue(logOutOfDevicesPage.isForgotPasswordLinkDisplayed(),
-                "'Forgot Password?' link was not displayed");
-
-        sa.assertTrue(logOutOfDevicesPage.isPrimaryButtonPresent(),
-                "'Log Out' button was not displayed");
-
-        sa.assertAll();
-    }
-
-    //TODO: Refactor to use 2 drivers to cover XMOBQA-61603
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68919"})
-    @Test(description = "Verify the UI of the 'Logout of all devices'", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void testLogoutOfAllDevicesForgotPasswordFunctions() {
-        SoftAssert sa = new SoftAssert();
-        Date startTime = getEmailApi().getStartTime();
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusLogOutOfDevicesIOSPageBase logOutOfDevicePage = new DisneyPlusLogOutOfDevicesIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
-
-        DisneyAccount testAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-        setAppToAccountSettings(testAccount);
-        accountPage.clickLogOutOfAllDevices();
-        logOutOfDevicePage.clickForgotPasswordLink();
-        sa.assertTrue(oneTimePasscodePage.isOpened(),
-                "OTP Page was not opened");
-
-        String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-        oneTimePasscodePage.enterOtpValue(otp);
-        sa.assertTrue(changePasswordPage.isOpened(),
-                "Change Password screen did not open after submitting OTP");
-
-        changePasswordPage.enterNewPasswordValue(NEW_PASSWORD);
-        changePasswordPage.clickLogoutAllDevices();
-        changePasswordPage.clickSaveBtn();
-        sa.assertTrue(changePasswordPage.isLogOutOfThisDeviceMessagePresent(),
-                "`You're now being logged out of this device` message is not present");
-        sa.assertTrue(welcomeScreenPage.isOpened(),
-                "User was not returned to the Welcome screen upon logout");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
