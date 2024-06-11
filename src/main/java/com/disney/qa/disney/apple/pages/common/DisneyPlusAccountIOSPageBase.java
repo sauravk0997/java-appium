@@ -67,9 +67,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        //TODO: QAA-15012 - figure out why the dict key value is not being recognized
-        //String subscriptionMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText());
-        String subscriptionMessage = "Manage your subscription by going to disneyplus.com/account";
+        String subscriptionMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText()).replace("\u00a0"," ");
         return getStaticTextByLabel(subscriptionMessage);
     }
 
