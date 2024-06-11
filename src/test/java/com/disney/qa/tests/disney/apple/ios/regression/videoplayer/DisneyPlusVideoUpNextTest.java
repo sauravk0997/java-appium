@@ -36,7 +36,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
-    @Test(description = "Verify Up Next UI", groups = {"Video Player", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify Up Next UI", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
     @Maintainer("gkrishna1")
     public void verifyUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -48,7 +48,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
-    @Test(description = "User Taps play icon", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "User Taps play icon", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyPlayIconOnUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -75,7 +75,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67652"})
-    @Test(description = "User Taps See All Episodes", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "User Taps See All Episodes", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextSeeAllEpisodes() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -90,7 +90,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67654"})
-    @Test(description = "User allows autoplay to occur", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "User allows autoplay to occur", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAutoPlayOnPlayerView() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -118,7 +118,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67672"})
-    @Test(description = "Up Next Logic -Extra content", groups = {"Video Player", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Up Next Logic -Extra content", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION })
     @Maintainer("gkrishna1")
     public void VerifyUpNextLogicForExtraContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -152,7 +152,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67676","XMOBQA-72610"})
-    @Test(description = "Up Next Behavior when app gets backgrounded", groups = {"Video Player", TestGroup.PRE_CONFIGURATION}, dataProvider = "autoplay-state", enabled = false)
+    @Test(description = "Up Next Behavior when app gets backgrounded", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "autoplay-state", enabled = false)
     @Maintainer("gkrishna1")
     public void verifyUpNextBehaviorWhenAppIsBackgrounded(String autoplayState) {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -181,8 +181,8 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656", "XMOBQA-67672", "XMOBQA-66786"})
-    @Test(description = "Autoplay does not autoplay if disabled", groups = {"Video Player", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
+    @Test(description = "Autoplay does not autoplay if disabled", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION }, enabled = false)
     @Maintainer("gkrishna1")
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);

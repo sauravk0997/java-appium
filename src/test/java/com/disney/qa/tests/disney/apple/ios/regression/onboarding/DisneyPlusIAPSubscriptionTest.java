@@ -85,39 +85,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for US based users", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
-    public void verifyOnboardingStepperUS() {
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
-        DisneyPlusPaywallIOSPageBase paywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen");
-        //Stepper title number discrepancy details are per IOS-6829
-        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("1","3")), "Onboarding stepper title '1 OF 3' is not as expected");
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-
-        Assert.assertTrue(createPasswordPage.isOpened(), "User was not directed to 'Create Password'");
-        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","3")), "Onboarding stepper title '2 OF 3' is not as expected");
-        createPasswordPage.submitPasswordValue("abcd123!@");
-        sa.assertTrue(dobCollectionPage.isOpened(), "enter your DOB title is not as expected");
-        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("3","5")), "Onboarding stepper title '3 OF 5' is not as expected");
-        dobCollectionPage.enterDOB(DOB_ADULT);
-        pause(5);
-        sa.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isChooseYourPlanHeaderPresent(),
-                "User was not directed to the choose your plan page");
-        sa.assertTrue(createPasswordPage.getStepTitleTextLabel().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("4","5")), "Onboarding stepper title '4 OF 5' is not as expected");
-        paywallIOSPageBase.waitForPresenceOfAnElement(paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY));
-        paywallIOSPageBase.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY).click(SHORT_TIMEOUT);
-        sa.assertTrue(paywallIOSPageBase.isOpened(), "Paywall page did not open");
-        sa.assertTrue(createPasswordPage.getStepTitleText().equals(disneyPlusSignUpIOSPageBase.getStepperDictValue("5","5")), "Onboarding stepper title '5 OF 5' is not as expected");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
     @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyPaywallCancel() {
@@ -213,7 +180,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72339","XMOBQA-73539"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73539"})
     @Maintainer("gkrishna1")
     @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyReturningUserCompletesSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
@@ -272,7 +239,7 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66591"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyValidPasswordSubmissions() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
