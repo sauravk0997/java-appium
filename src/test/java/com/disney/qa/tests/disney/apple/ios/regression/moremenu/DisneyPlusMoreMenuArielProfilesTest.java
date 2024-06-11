@@ -740,7 +740,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69517"})
     @Test(description = "Profiles > Existing Subs -> Add Profile flow through Add Banner for Primary Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfilePageAfterClickingAddProfileButtonOnAddProfileBanner() {
@@ -748,7 +747,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -767,8 +766,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        enforceDOBCollectionPage.clickPrimaryButton();
+        ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
         addProfileBanner.tapAddProfileButton();
