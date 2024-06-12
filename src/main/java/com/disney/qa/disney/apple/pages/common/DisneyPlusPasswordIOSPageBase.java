@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
+import java.util.Map;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 /*
@@ -20,13 +22,19 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
-    private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
+    private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText()));
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
 
-    @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
-    @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
+    private ExtendedWebElement myDisneyLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"STEP 2\"`]")
+    private ExtendedWebElement stepper;
+
+    @ExtendedFindBy(accessibilityId = "(Case sensitive)")
     protected ExtendedWebElement passwordHintText;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
@@ -55,7 +63,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isBackArrowDisplayed() {
-        return backArrow.isPresent();
+        return collectionBackButton.isPresent();
     }
 
     public boolean isDisneyLogoDisplayed() {
@@ -77,7 +85,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent && showHidePasswordIndicator.getAttribute("label").equals("show");
+        return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
     public boolean isHidePasswordIconDisplayed() {
@@ -153,5 +161,13 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAuthPasswordKidsProfileBodyDisplayed() {
         return textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY.getText())).isPresent();
+    }
+
+    public boolean isMyDisneyLogoDisplayed() {
+        return myDisneyLogo.isPresent();
+    }
+
+    public boolean isStepperDisplayed() {
+        return stepper.isPresent();
     }
 }
