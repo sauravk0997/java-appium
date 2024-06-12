@@ -788,6 +788,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int Max = 6;
 
@@ -815,6 +816,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         //Verify add profile banner is not displayed if user already have maximum amount of profiles, namely 7
         sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
         sa.assertAll();
     }
 
