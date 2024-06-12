@@ -24,11 +24,15 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText()));
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
+    private ExtendedWebElement oneTimeCodeLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText()));
+    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
+    protected ExtendedWebElement editlink = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_BODY.getText()));
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement myDisneyLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"STEP 2\"`]")
@@ -42,6 +46,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "labelErrorMessage")
     protected ExtendedWebElement labelError;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Learn more about MyDisney\"`]")
+    protected ExtendedWebElement myDisneyLink;
 
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
@@ -169,5 +176,24 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isStepperDisplayed() {
         return stepper.isPresent();
+    }
+
+    public boolean isMyDisneyLinkDisplayed() {
+        return myDisneyLink.isPresent();
+    }
+
+    public boolean isOneTimeCodeLinkDisplayed(){
+        return oneTimeCodeLink.isPresent();
+    }
+
+    public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
+        String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
+        return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
+    }
+
+    public boolean isEditLinkPressed() {
+        //isEnterYourPasswordBodyPresent
+        return signUpHeader.isPresent();
     }
 }
