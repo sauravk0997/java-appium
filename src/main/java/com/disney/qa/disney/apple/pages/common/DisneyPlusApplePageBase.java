@@ -158,6 +158,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement staticTextLabelName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
     protected ExtendedWebElement dynamicCellByLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
+    protected ExtendedWebElement dynamicCellByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicCellByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`][%s]")
@@ -392,6 +394,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getDynamicCellByLabel(String label) {
         return dynamicCellByLabel.format(label);
+    }
+
+    public ExtendedWebElement getDynamicCellByLabelContains(String label) {
+        return dynamicCellByLabelContains.format(label);
     }
 
     public ExtendedWebElement getDynamicCellByName(String name) {

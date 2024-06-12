@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.phone.DisneyPlusMoreMenuIOSPage;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -28,9 +30,7 @@ public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = watchlistCollectionView.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isPresent();
     }
 
     public boolean isRemoveWatchlistBtnOpen() {
