@@ -37,7 +37,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String NEW_PASSWORD = "TestPass1234!";
     private static final String MONTHLY = "Monthly";
     private static final String YEARLY = "Yearly";
-    private static final String DISNEY_URL = "disneyplus.com";
     private static final String VERIZON_URL = "verizon.com";
     private static final String TELMEX_URL = "telmex.com";
     private static final String O2_URL = "o2.com";
@@ -101,6 +100,22 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
+    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    public void verifyAccountMonthlyToAnnualDisplays_Google() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToAccountSettings();
+        sa.assertTrue(accountPage.isGoogleSubscriptionTitlePresent(), "Disney+ Premium title is not displayed in the Subscription section");
+        sa.assertTrue(accountPage.isBamtechBundleSubscriptionMessagePresent(), "Disney+ Subscription message was not displayed");
+        accountPage.openBamtechBundleWebview();
+        Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");
+        Assert.assertTrue(accountPage.getWebviewUrl().contains(DISNEY_URL), "Webview did not open to the expected url");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
@@ -127,7 +142,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleMonthlySubscriptionTitlePresent(), "D+ Bundle Subscription title was not displayed");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionTitlePresent(), "D+ Bundle Subscription title was not displayed");
         sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(), "D+ Bundle Subscription message was not displayed");
         disneyPlusAccountIOSPageBase.openBamtechBundleWebview();
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(), "Browser webview did not open");
