@@ -16,7 +16,6 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value="Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
         <classes>
