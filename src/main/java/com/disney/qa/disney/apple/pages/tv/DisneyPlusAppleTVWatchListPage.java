@@ -30,7 +30,7 @@ public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
 
     @Override
     public boolean isOpened() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isPresent();
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isPresent();
     }
 
     public boolean isRemoveWatchlistBtnOpen() {
