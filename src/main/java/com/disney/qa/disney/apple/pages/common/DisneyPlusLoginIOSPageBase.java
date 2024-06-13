@@ -81,7 +81,7 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public void submitEmail(String userEmailAddress) {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
-        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), DELAY));
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), DELAY), "Continue button was present after 10 sec on 'enter email' page");
     }
 
     public String getErrorMessageString() {
