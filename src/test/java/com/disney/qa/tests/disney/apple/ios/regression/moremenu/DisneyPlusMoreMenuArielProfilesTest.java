@@ -25,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+import static java.time.Month.JANUARY;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -888,7 +889,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
-    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDuplicateProfileError() {
         String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -899,17 +900,20 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(false).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount());
-        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         whoIsWatching.clickEditProfile();
-        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
+        editProfilePage.clickSkipBtn();
 
         editProfilePage.enterProfileName(DEFAULT_PROFILE);
-        editProfilePage.clickSaveBtn();
+        editProfilePage.clickSaveProfileButton();
         sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
 
         editProfilePage.enterProfileName(NEW_PROFILE_NAME);
-        editProfilePage.clickSaveBtn();
+        editProfilePage.enterDOB(DateHelper.Month.valueOf("JANUARY"), "1", "2000"  );
+        editProfilePage.chooseGender();
+        editProfilePage.clickSaveProfileButton();
+        editProfilePage.clickNotNowBtn();
         homePage.clickMoreTab();
         sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();

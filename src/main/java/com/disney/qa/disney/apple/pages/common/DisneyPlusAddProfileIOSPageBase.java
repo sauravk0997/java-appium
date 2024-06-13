@@ -57,6 +57,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
+    @ExtendedFindBy(accessibilityId = "secondaryButton")
+    protected ExtendedWebElement notNowBtn;
+
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
@@ -163,6 +166,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         enterProfileName(profileName);
         chooseGender();
         tapSaveButton();
+    }
+
+    public void clickNotNowBtn(){
+        notNowBtn.click();
     }
 
     public void createProfile(String profileName, DateHelper.Month month, String day, String year) {
