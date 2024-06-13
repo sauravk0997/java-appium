@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.phone.DisneyPlusMoreMenuIOSPage;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -11,10 +13,6 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusMoreMenuIOSPage.class)
 public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
-
-    // TODO: Watchlist accessibility id requested: TVOS-4227
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"placeholder accessibility title label\"`]")
-    private ExtendedWebElement watchlistCollectionView;
 
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement removeWatchlistBtn;
@@ -28,9 +26,7 @@ public class DisneyPlusAppleTVWatchListPage extends DisneyPlusMoreMenuIOSPage {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = watchlistCollectionView.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isPresent();
     }
 
     public boolean isRemoveWatchlistBtnOpen() {
