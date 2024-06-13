@@ -42,6 +42,7 @@ public enum DictionaryKeys {
     BTN_BACK_DIALOG_NOT_NOW("btn_back_dialog_notnow"),
     BTN_CANCEL_SET_PROFILE_ENTRY_PIN("btn_cancel_set_profile_entry_pin"),
     BTN_SET_PROFILE_ENTRY_PIN("btn_set_profile_entry_pin"),
+    BTN_COMPLETE_SUB_PROFILE_SAVE("btn_complete_sub_profile_save"),
     BTN_CONTINUE("btn_continue"),
     BTN_CREATE_PIN("btn_create_pin"),
     BTN_DATE_OF_BIRTH_CONTINUE("btn_date_of_birth_continue"),
