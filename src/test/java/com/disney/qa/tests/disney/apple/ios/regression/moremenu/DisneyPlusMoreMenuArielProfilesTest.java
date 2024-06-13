@@ -525,7 +525,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
-    @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyLearnMoreLinkForKidsProfile() {
         CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
         request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
