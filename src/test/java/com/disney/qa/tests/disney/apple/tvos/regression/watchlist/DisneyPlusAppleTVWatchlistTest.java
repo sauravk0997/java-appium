@@ -84,7 +84,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
-    @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"}, enabled = false)
+    @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
     public void removeWatchlistContent() {
         SoftAssert sa = new SoftAssert();
         ListOrderedSet<DisneyContentIds> titles = new ListOrderedSet<>();
