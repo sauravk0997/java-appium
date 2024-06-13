@@ -225,9 +225,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
     @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAdTierUserCoViewing() {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        setAccount(getAccountApi().createAccount(request));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getAccount());
         //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -527,9 +525,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
     @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyLearnMoreLinkForKidsProfile() {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        setAccount(getAccountApi().createAccount(request));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getAccount());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);

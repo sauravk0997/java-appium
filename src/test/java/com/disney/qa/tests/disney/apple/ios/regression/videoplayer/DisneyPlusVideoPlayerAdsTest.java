@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.DisneyParameters;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -257,9 +256,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        DisneyAccount basicAccount = getAccountApi().createAccount(request);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -349,9 +346,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        DisneyAccount basicAccount = getAccountApi().createAccount(request);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(content);
