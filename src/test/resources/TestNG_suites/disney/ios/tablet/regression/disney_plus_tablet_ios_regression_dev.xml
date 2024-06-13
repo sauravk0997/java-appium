@@ -4,7 +4,7 @@
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_dev"/>
-    <parameter name="jenkinsEmail" value="eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsEmail" value="eric.liao@disney.com,jared.e.watterworth@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
