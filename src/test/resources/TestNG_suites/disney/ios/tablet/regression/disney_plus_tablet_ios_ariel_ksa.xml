@@ -6,7 +6,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_ariel_ksa"/>
     <parameter name="jenkinsEmail"
-               value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+               value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>

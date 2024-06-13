@@ -7,7 +7,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="tvos_regression_rc"/>
     <parameter name="jenkinsEnvironments" value="PROD"/>
-    <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_5,ATV_4_Gen_9,ATV_4_Gen_10,ATV_4_Gen_11,ATV_4_Gen_12;platformName=iOS;deviceType=tvOS"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
