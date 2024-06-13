@@ -242,7 +242,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        request.addSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB);
         DisneyAccount basicAccount = getAccountApi().createAccount(request);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
