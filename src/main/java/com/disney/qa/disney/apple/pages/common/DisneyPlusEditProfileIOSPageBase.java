@@ -188,7 +188,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
                 getDictionary().formatPlaceholderString(
                         getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                                DictionaryKeys.WHOS_WATCHING_ADD_PROFILE.getText()),
+                                DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
                         Map.of(USER_PROFILE, profile)));
         profileIcon.click();
     }

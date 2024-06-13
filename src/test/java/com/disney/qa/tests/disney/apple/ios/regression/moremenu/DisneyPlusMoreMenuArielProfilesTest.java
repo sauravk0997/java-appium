@@ -25,7 +25,6 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
-import static java.time.Month.JANUARY;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -900,20 +899,17 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(false).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         whoIsWatching.clickEditProfile();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
-        editProfilePage.clickSkipBtn();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
         editProfilePage.enterProfileName(DEFAULT_PROFILE);
-        editProfilePage.clickSaveProfileButton();
+        editProfilePage.getDoneButton().click();
         sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
 
         editProfilePage.enterProfileName(NEW_PROFILE_NAME);
-        editProfilePage.enterDOB(DateHelper.Month.valueOf("JANUARY"), "1", "2000"  );
-        editProfilePage.chooseGender();
-        editProfilePage.clickSaveProfileButton();
-        editProfilePage.clickNotNowBtn();
+        editProfilePage.getDoneButton().click();
         homePage.clickMoreTab();
         sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
