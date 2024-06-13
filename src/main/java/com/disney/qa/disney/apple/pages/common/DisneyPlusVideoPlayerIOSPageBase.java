@@ -421,7 +421,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             waitTime = timeout[0];
         }
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
+        return (fluentWait(getDriver(), waitTime, SHORT_TIMEOUT, "Ad badge label not found")
+                .until(it -> getDynamicAccessibilityId(adLabel).isPresent()));
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
