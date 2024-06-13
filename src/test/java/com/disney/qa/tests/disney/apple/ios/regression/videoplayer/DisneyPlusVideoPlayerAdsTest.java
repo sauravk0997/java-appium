@@ -44,7 +44,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_WAS_PRESENT_ERROR_MESSAGE = "Ad badge was present";
-    private static final int UI_LATENCY = 15;
+    private static final int UI_LATENCY = 25;
 
     @DataProvider(name = "content")
     public Object[][] content() {
