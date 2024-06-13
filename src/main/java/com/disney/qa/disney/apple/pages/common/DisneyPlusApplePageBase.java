@@ -394,10 +394,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicCellByLabel.format(label);
     }
 
-    public ExtendedWebElement getDynamicCellByLabelContains(String label) {
-        return typeCellLabelContains.format(label);
-    }
-
     public ExtendedWebElement getDynamicCellByName(String name) {
         return dynamicCellByName.format(name);
     }
