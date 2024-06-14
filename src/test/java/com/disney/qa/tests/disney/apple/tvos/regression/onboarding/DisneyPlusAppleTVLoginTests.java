@@ -613,16 +613,17 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"}, enabled = false)
     public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        List<ContentSet> sets = getSearchApi().getAllSetsInHomeCollection(entitledUser, getCountry(), getLanguage(), "PersonalizedCollection");
+        List<ContentSet> sets = getSearchApi().getAllSetsInHomeCollection(getAccount(), getCountry(), getLanguage(), "PersonalizedCollection");
         List<String> titles = sets.get(1).getTitles();
 
-        getAccountApi().patchProfileAvatar(entitledUser, entitledUser.getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
+        getAccountApi().patchProfileAvatar(getAccount(), getAccount().getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
 
-        logIn(entitledUser);
+        logIn(getAccount());
 
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, 5).forEach(i -> {
@@ -634,7 +635,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global navigation is not expanded");
 
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(entitledUser.getProfiles().get(0).getProfileName()));
+        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(getAccount().getProfiles().get(0).getProfileName()));
 
         sa.assertAll();
     }
