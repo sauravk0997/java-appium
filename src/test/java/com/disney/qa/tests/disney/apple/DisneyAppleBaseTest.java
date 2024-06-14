@@ -76,7 +76,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String MONTHLY_OFFER = "monthly";
-    public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2 = "V2";
     public static final String SUBSCRIPTION_V3 = "V3";
