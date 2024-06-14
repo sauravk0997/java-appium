@@ -1,11 +1,11 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.disney.DisneyContentIds;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.api.watchlist.WatchlistApi;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -13,6 +13,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.collections4.set.ListOrderedSet;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -56,43 +57,43 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         ApiConfiguration configuration = ApiConfiguration.builder().partner(DISNEY).environment(PROD).platform(APPLE).build();
         WatchlistApi watchlistApi = new WatchlistApi(configuration);
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         IntStream.range(0, titles.size()).forEach(i -> watchlistApi.addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
         logInTemp(getAccount());
 
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page did not launch");
-        int watchlistItems = disneyPlusAppleTVWatchListPage.getNumberOfItemsByCell();
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
+        int watchlistItems = watchListPage.getNumberOfItemsByCell();
 
         sa.assertTrue(titles.size() == watchlistItems, "Number of added items did not match.");
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
+        sa.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
         IntStream.range(0, titles.size()).forEach(i -> {
             String title = titles.get(i).getTitle();
-            sa.assertTrue(disneyPlusAppleTVWatchListPage.getDynamicCellByLabel(title).isElementPresent(), String.format("%s not found", title));
+            sa.assertTrue(watchListPage.getDynamicCellContainsLabel(title).isElementPresent(), String.format("%s not found", title));
         });
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
+        sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
 
         watchlistApi.addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId());
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page is not open after login");
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
-        String firstItem = disneyPlusAppleTVWatchListPage.getContentItems(0).get(0);
-        sa.assertTrue(firstItem.equals(DisneyContentIds.SOUL.getTitle()), String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
+        sa.assertTrue(homePage.isOpened(), "Home page is not open after login");
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
+        String firstItem = watchListPage.getContentItems(0).get(0).split(",")[0];
+        sa.assertTrue(firstItem.equals(DisneyEntityIds.SOUL.getTitle()), String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
     @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
     public void removeWatchlistContent() {
-        SoftAssert sa = new SoftAssert();
         ListOrderedSet<DisneyEntityIds> titles = new ListOrderedSet<>();
         titles.add(DisneyEntityIds.LUCA);
         titles.add(DisneyEntityIds.IRONMAN);
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         ApiConfiguration configuration = ApiConfiguration.builder().partner(DISNEY).environment(PROD).platform(APPLE).build();
         WatchlistApi watchlistApi = new WatchlistApi(configuration);
@@ -100,18 +101,15 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page is not open");
-        //debug
-        pause(5);
-        System.out.println(getDriver().getPageSource());
+        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
 
-        homePage.getDynamicCellByLabel(titles.get(0).getTitle()).click();
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isRemoveWatchlistBtnOpen(), "remove watchlist button is not present");
-        disneyPlusAppleTVWatchListPage.clickRemoveWatchlistBtn();
+        watchListPage.getDynamicCellContainsLabel(titles.get(0).getTitle()).click();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+
+        detailsPage.clickWatchlistButton();
         titles.remove(0);
-        disneyPlusAppleTVWatchListPage.clickMenuTimes(1, 1);
-        String firstItemAfterRemoval = disneyPlusAppleTVWatchListPage.getContentItems(0).get(0);
-        sa.assertTrue(firstItemAfterRemoval.equals(titles.get(0).getTitle()), "Removed Luca content is present in Watchlist");
-        sa.assertAll();
+        watchListPage.clickMenuTimes(1, 1);
+        String firstItemAfterRemoval = watchListPage.getContentItems(0).get(0).split(",")[0];
+        Assert.assertTrue(firstItemAfterRemoval.equalsIgnoreCase(titles.get(0).getTitle()), "Removed Luca content is present in Watchlist");
     }
 }
