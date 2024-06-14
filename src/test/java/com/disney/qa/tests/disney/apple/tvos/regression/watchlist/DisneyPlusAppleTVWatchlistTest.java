@@ -25,7 +25,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
     @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"})
-    public void noWatchlistAppearance() {
+    public void verifyNoWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -46,7 +46,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
     @Test(description = "Watchlist Items Present - UI check", groups = {"Watchlist"})
-    public void watchlistAppearance() {
+    public void verifyWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         List<DisneyEntityIds> titles = new ArrayList<>();
@@ -88,7 +88,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
     @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
-    public void removeWatchlistContent() {
+    public void verifyRemoveWatchlistContent() {
         ListOrderedSet<DisneyEntityIds> titles = new ListOrderedSet<>();
         titles.add(DisneyEntityIds.LUCA);
         titles.add(DisneyEntityIds.IRONMAN);
