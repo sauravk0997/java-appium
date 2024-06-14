@@ -116,7 +116,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickPlayButton();
+        detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "Verify your age page should open");
     }
 
