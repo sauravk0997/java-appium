@@ -1,9 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
-import com.disney.alice.AliceDriver;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
@@ -240,7 +240,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
