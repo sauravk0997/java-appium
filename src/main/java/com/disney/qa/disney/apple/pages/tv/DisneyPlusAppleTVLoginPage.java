@@ -169,12 +169,14 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void proceedToPasswordScreen(String email) {
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         clickEmailField();
         clickEnterNewBtn();
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         clickContinueBtn();
+        if(!passwordPage.isOpened()){ clickContinueBtn(); }
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
