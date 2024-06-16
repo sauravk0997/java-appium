@@ -111,7 +111,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isOpened(),
                 "User was not directed to Password Creation as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.getBackArrow().isElementPresent(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isBackButtonPresent(),
                 "Back Arrow was not displayed as expected");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),

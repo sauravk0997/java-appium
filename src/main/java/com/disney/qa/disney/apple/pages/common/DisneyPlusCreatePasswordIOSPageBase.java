@@ -24,7 +24,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isOpened() {
-        return createPasswordHeader.isPresent();
+        return headlineHeader.isPresent();
     }
 
     public boolean isHidePasswordIconPresent() {
@@ -59,7 +59,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordStrengthHeaderPresent() {
-        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
+        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
         return passwordStrengthHeader.isElementPresent();
     }
 
