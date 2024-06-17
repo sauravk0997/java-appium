@@ -174,10 +174,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
-        fluentWait(getDriver(), SHORT_TIMEOUT, SHORT_TIMEOUT, "Couldn't tap on play button on details page")
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Couldn't open password page")
                 .until(it -> {
                     clickContinueBtn();
-                    return continueButton.isElementNotPresent(SHORT_TIMEOUT);
+                    return initPage(DisneyPlusAppleTVPasswordPage.class).isOpened();
                 });
     }
 
