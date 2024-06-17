@@ -86,6 +86,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
+        waitForVideoToStart();
         return playerView.isPresent();
     }
 
@@ -178,7 +179,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
-        screenPress(35,50);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), FIFTEEN_SEC_TIMEOUT);
+        screenPress(35, 50);
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
@@ -415,7 +417,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return dimension.getHeight();
     }
 
-    public boolean isAdBadgeLabelPresent(int...timeout) {
+    public boolean isAdBadgeLabelPresent(int... timeout) {
         int waitTime = 10;
         if (timeout.length > 0) {
             waitTime = timeout[0];
@@ -613,6 +615,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      * There are two timers on screen when video controls are up
      * One-remaining time for ad and second - time remaining for the content
      * remaining time for content has a negative sign, this method utilizes this check to rule out the content remaining playback time.
+     *
      * @return true if ad timer is displayed on screen when video overlay is up.
      */
     public boolean isAdTimeDurationPresentWithVideoControls() {
