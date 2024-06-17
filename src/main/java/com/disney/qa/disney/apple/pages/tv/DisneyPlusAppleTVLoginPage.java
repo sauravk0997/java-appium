@@ -177,7 +177,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Couldn't open password page")
                 .until(it -> {
                     clickContinueBtn();
-                    return initPage(DisneyPlusAppleTVPasswordPage.class).isOpened();
+                    return continueButton.isElementNotPresent(SHORT_TIMEOUT);
                 });
     }
 
