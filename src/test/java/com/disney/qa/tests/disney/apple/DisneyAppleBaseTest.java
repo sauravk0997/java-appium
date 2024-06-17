@@ -181,8 +181,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final LazyInitializer<WatchlistApi> WATCHLIST_API = new LazyInitializer<>() {
         @Override
         protected WatchlistApi initialize() {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).partner(DisneyConfiguration.getPartner())
-                    .environment(DisneyParameters.getEnv()).build();
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
             return new WatchlistApi(apiConfiguration);
         }
     };
