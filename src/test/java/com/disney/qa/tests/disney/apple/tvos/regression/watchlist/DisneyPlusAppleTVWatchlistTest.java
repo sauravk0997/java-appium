@@ -2,9 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.api.watchlist.WatchlistApi;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
@@ -55,11 +53,9 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         titles.add(DisneyEntityIds.LUCA);
         titles.add(DisneyEntityIds.WANDA_VISION);
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        ApiConfiguration configuration = ApiConfiguration.builder().partner(DISNEY).environment(PROD).platform(APPLE).build();
-        WatchlistApi watchlistApi = new WatchlistApi(configuration);
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        IntStream.range(0, titles.size()).forEach(i -> watchlistApi.addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
         logInTemp(getAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
@@ -70,11 +66,11 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
         IntStream.range(0, titles.size()).forEach(i -> {
             String title = titles.get(i).getTitle();
-            sa.assertTrue(watchListPage.getDynamicCellContainsLabel(title).isElementPresent(), String.format("%s not found", title));
+            sa.assertTrue(watchListPage.getTypeCellLabelContains(title).isElementPresent(), String.format("%s not found", title));
         });
         sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
 
-        watchlistApi.addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId());
+        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
         Assert.assertTrue(homePage.isOpened(), "Home page is not open after login");
 
@@ -97,15 +93,13 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        ApiConfiguration configuration = ApiConfiguration.builder().partner(DISNEY).environment(PROD).platform(APPLE).build();
-        WatchlistApi watchlistApi = new WatchlistApi(configuration);
-        IntStream.range(0, titles.size()).forEach(i -> watchlistApi.addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
 
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
 
-        watchListPage.getDynamicCellContainsLabel(titles.get(0).getTitle()).click();
+        watchListPage.getTypeCellLabelContains(titles.get(0).getTitle()).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
 
         detailsPage.clickWatchlistButton();
