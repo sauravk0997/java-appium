@@ -49,7 +49,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public boolean isContentSummaryView() { return contentSummaryView.isElementPresent(); }
     public boolean isDescriptionPresent(String text) {
-        return getStaticTextByNameContains(text).isPresent();
+        return getStaticTextByName(text).isPresent();
     }
 
     public boolean isAnthologyTitlePresent() {
