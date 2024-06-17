@@ -26,8 +26,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
     private ExtendedWebElement oneTimeCodeLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText()));
     protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
-    protected ExtendedWebElement editlink = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_BODY.getText()));
-
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
@@ -188,12 +186,16 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
         String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)"));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
     }
 
-    public boolean isEditLinkPressed() {
-        //isEnterYourPasswordBodyPresent
+    public boolean isEditLinkPressed(String accountEmail) {
+         ExtendedWebElement editLink = getDynamicAccessibilityId(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)")));
+        int elementX = editLink.getLocation().getX() + editLink.getSize().getWidth()-10;
+        int elementY = editLink.getLocation().getY() + editLink.getSize().getHeight()-10;
+        tap(elementX,elementY,5);
         return signUpHeader.isPresent();
     }
 }
