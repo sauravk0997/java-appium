@@ -137,6 +137,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return titleLabel.isElementPresent();
     }
 
+    public ExtendedWebElement getSeekbar() {
+        return seekBar;
+    }
+
     public boolean isSeekbarVisible() {
         return seekBar.isPresent();
     }
