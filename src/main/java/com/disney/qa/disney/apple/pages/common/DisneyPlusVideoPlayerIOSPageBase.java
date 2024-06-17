@@ -217,6 +217,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         for (ExtendedWebElement element : backButtons) {
             if (element.isElementPresent(ONE_SEC_TIMEOUT)) {
                 element.click();
+                break;
             }
         }
         return initPage(DisneyPlusDetailsIOSPageBase.class);
