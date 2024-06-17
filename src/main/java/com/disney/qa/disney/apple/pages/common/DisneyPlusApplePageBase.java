@@ -837,7 +837,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isPrimaryButtonPresent() {
-        return primaryButton.isElementPresent();
+        return continueButton.isElementPresent();
     }
 
     public boolean isViewAlertPresent() {

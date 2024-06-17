@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Map;
 
 /*
  * Email and password login pages
@@ -22,11 +23,19 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
+        boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
+        return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
+    }
+
     @ExtendedFindBy(accessibilityId = "signUpSwap")
     protected ExtendedWebElement signUpButton;
 
-    @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[2]")
+    private ExtendedWebElement myDisneyLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"We couldn't find an account for that email\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]")
     protected ExtendedWebElement noAccountAlert;
@@ -118,4 +127,30 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement getTryAgainAlertButton() {
         return alertTryAgainBtn;
     }
+
+    public boolean isEnterEmailHeaderDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER))).isPresent();
+    }
+
+    public boolean isEnterEmailBodyDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_BODY))).isPresent();
+    }
+
+    public boolean isLearnMoreHeaderDisplayed() {
+        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER))).isPresent();
+    }
+
+    public boolean isLearnMoreSubTextDisplayed() {
+           String step1Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY.getText()), Map.of("link_1" , "and more"));
+        return getDynamicAccessibilityId(step1Label).isElementPresent();
+    }
+
+    public boolean isMyDisneyLogoDisplayed() {
+        return myDisneyLogo.isPresent();
+    }
+    public boolean isStep1LabelDisplayed() {
+        String step1Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "1"));
+        return getStaticTextByLabel(step1Label).isPresent();
+    }
+
 }

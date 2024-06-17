@@ -38,14 +38,16 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackArrowDisplayed(), "Expected: Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEmailFieldDisplayed(), "Expected: Email field should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent(), "Expected: Continue (primary) button should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpButtonDisplayed(), "Expected: Sign Up button should be present");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), "Expected: Back Arrow should be present");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), "Expected: Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLoginTextDisplayed(), "Expected: 'Log in with your email' text should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isNewToDPlusTextDisplayed(), "Expected: 'New to Disney+?' text should be displayed");
-
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(),"Expected: MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isStep1LabelDisplayed(), "Expected: STEP 1 text should be displayedz");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailHeaderDisplayed(), "Expected: 'Enter your email to continue' text should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEmailFieldDisplayed(), "Expected: Email field should be present");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailBodyDisplayed(),"Expected: Log in to Disney+ with your MyDisney account");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isPrimaryButtonPresent(), "Expected: Continue (primary) button should be present");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreHeaderDisplayed(), "Expected: 'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreSubTextDisplayed(),"Expected 'MyDisney lets you seamlessly log in to services' text should be displayed");
         softAssert.assertAll();
     }
 
