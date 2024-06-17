@@ -58,10 +58,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
-        videoPlayer.waitForVideoToStart();
         int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
+        Assert.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
         sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
