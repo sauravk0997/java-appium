@@ -36,14 +36,8 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public void clickSearchResult(String assetName) {
-        if (keyboard.getSize().getWidth() > 1000) {
-            LOGGER.info("Detected horizontal keyboard, clicking down to search results..");
-            keyPressTimes(IRemoteControllerAppleTV::clickDown, 1, 1);
-        } else {
-            LOGGER.info("Detected vertical keyboard, clicking right to search results..");
-            keyPressTimes(IRemoteControllerAppleTV::clickRight, 6, 1);
-        }
-        dynamicCellByLabel.format(assetName).click();
+        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        getTypeCellLabelContains(assetName).click();
     }
 
     public void clickLocalizedSearchResult(String assetName) {

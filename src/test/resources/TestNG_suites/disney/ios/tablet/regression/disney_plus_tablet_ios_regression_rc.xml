@@ -5,7 +5,7 @@
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_rc"/>
-    <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com"/>
+    <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
@@ -16,7 +16,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value="Ariel,Ariel-More Menu,Deeplinks,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding1" parallel="methods">
         <classes>

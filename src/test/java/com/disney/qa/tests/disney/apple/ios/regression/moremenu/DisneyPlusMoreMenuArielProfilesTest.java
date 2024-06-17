@@ -5,6 +5,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -221,12 +222,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
     @Test(description = "Ads Tier User > Co-viewing > Profile Settings", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAdTierUserCoViewing() {
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getAccount());
         //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -523,12 +522,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
-    @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyLearnMoreLinkForKidsProfile() {
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getAccount());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -553,7 +550,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.goBackToDisneyAppFromSafari();
         moreMenu.dismissNotificationsPopUp();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not returned to the add profile page after navigating back from safari");
-        addProfile.clickSaveBtn();
+        addProfile.clickSaveProfileButton();
         //minor consent is shown
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
@@ -639,7 +636,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72223"})
     @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {TestGroup.ARIEL_LOGIN, TestGroup.PRE_CONFIGURATION})
     public void verifyEnforceDOBAndGenderAccountHolderCollectionScreen() {
@@ -647,7 +643,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
@@ -664,17 +660,17 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
-        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
+        sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
 
         //Verify if user terminate app without saving DOB, app will keep showcasing Enforce DOB screen
         terminateApp(buildType.getDisneyBundle());
         launchApp(buildType.getDisneyBundle());
-        sa.assertTrue(enforceDOBCollectionPage.isOpened(), "Enforce DOB collection page didn't open after login");
-        sa.assertTrue(enforceDOBCollectionPage.isDateOfBirthDescriptionPresent(), "Enforce DOB Description is not displayed");
+        sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
+        sa.assertTrue(ednaDOBCollectionPageBase.isEdnaDateOfBirthDescriptionPresent(), "Edna enforce DOB Description is not displayed");
 
         //Verify Gender collection screen is displayed or not, after DOB collection page if existing account without DOb and Gender
-        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        enforceDOBCollectionPage.clickPrimaryButton();
+        ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
         sa.assertTrue(updateProfilePage.isOpened(), "Update profile page is not displayed");
         sa.assertAll();
     }
@@ -698,7 +694,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69517"})
     @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileBannerForPrimaryProfiles() {
@@ -706,7 +701,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -723,8 +718,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        enforceDOBCollectionPage.clickPrimaryButton();
+        ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
 
@@ -780,17 +775,18 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74482"})
     @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Max profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyAddProfileBannerIsNotDispalyedForTheMaxAmountOfProfiles() {
+    public void verifyAddProfileBannerIsNotDisplayedForTheMaxAmountOfProfiles() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int Max = 6;
 
@@ -812,12 +808,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
         }
 
-        enforceDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        enforceDOBCollectionPage.clickPrimaryButton();
+        ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
+        sa.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         //Verify add profile banner is not displayed if user already have maximum amount of profiles, namely 7
         sa.assertFalse(addProfileBanner.isProfileHeaderPresent(), "Add Profile Banner Header is present");
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
         sa.assertAll();
     }
 
@@ -888,7 +887,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
     @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
-    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDuplicateProfileError() {
         String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -905,11 +904,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
 
         editProfilePage.enterProfileName(DEFAULT_PROFILE);
-        editProfilePage.clickSaveBtn();
+        editProfilePage.getDoneButton().click();
         sa.assertTrue(editProfilePage.isErrorDuplicateProfileNamePresent(), "Error `Duplicate Profile Name` is not present");
 
         editProfilePage.enterProfileName(NEW_PROFILE_NAME);
-        editProfilePage.clickSaveBtn();
+        editProfilePage.getDoneButton().click();
         homePage.clickMoreTab();
         sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();

@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -222,15 +223,14 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
-    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
         String errorMsg = "profile was not found";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);

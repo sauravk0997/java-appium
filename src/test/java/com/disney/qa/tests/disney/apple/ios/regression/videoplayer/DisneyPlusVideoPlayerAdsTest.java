@@ -5,6 +5,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -111,6 +112,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS, sa);
+        videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
@@ -202,18 +204,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyLeavePlayerDuringAd(String content) {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
-        setAppToHomeScreen(basicAccount);
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(content);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        detailsPage.clickPlayButton();
+        loginAndStartPlayback(content, sa);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
@@ -263,7 +256,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -353,7 +346,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(content);
