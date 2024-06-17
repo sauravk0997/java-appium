@@ -62,7 +62,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
         sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
-        videoPlayer.fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "seekbar is visible").until(it -> !videoPlayer.isSeekbarVisible());
+        videoPlayer.fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "seekbar is visible").until(it -> videoPlayer.isSeekbarVisible());
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         int remainingTimeAfterAd = videoPlayer.getRemainingTime();
