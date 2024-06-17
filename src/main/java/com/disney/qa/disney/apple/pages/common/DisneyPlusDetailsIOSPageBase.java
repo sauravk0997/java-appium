@@ -190,6 +190,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public void clickPlayButton(int timeout) {
+        fluentWait(getDriver(), timeout, SHORT_TIMEOUT, "Couldn't tap on play button on details page")
+                .until(it -> {
+                    getPlayButton().click();
+                    return getPlayButton().isElementNotPresent(SHORT_TIMEOUT);
+                });
+    }
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
         getTypeButtonByName(LOWER_CASE_WATCH).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);

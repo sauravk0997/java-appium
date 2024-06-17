@@ -4,9 +4,11 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyContentIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -22,15 +24,14 @@ import java.util.stream.IntStream;
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
-    @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"}, enabled = false)
+    @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"})
     public void noWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-
-        logInTemp(entitledUser);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        logInTemp(getAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
 
