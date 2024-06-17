@@ -48,9 +48,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     public boolean isContentSummaryView() { return contentSummaryView.isElementPresent(); }
-    public boolean isBriefDescriptionPresent(String text) {
-        ExtendedWebElement briefDesc = getDynamicAccessibilityId(text);
-        return briefDesc.isElementPresent() && briefDesc.getText().chars().count() <= 120;
+    public boolean isDescriptionPresent(String text) {
+        return getStaticTextByNameContains(text).isPresent();
     }
 
     public boolean isAnthologyTitlePresent() {

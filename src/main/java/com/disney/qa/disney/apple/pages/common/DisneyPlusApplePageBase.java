@@ -662,6 +662,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return titles.size();
     }
 
+    public List<ExtendedWebElement> getDynamicRowButtons() {
+        List<ExtendedWebElement> rowButtons = findExtendedWebElements(dynamicRowButtonLabel.getBy());
+        return rowButtons;
+    }
+
     public List<String> getContentItems(int startNum) {
         waitForPresenceOfAnElement(cell);
         List<ExtendedWebElement> titlesElements = findExtendedWebElements(cell.getBy());
