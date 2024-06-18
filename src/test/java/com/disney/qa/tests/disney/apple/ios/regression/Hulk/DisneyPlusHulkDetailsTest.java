@@ -11,6 +11,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -203,7 +204,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
     @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsPageRestartButton() {
@@ -223,10 +223,11 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
         videoPlayer.clickBackButton();
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), SHORT_TIMEOUT);
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
         detailsPage.getRestartButton().click();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginnning");
+        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginning");
         sa.assertAll();
     }
 
