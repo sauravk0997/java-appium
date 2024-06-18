@@ -178,8 +178,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
+        SoftAssert sa = new SoftAssert();
         Dimension size = getDriver().manage().window().getSize();
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), FIFTEEN_SEC_TIMEOUT);
+        sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), FIFTEEN_SEC_TIMEOUT));
         screenPress(35, 50);
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
