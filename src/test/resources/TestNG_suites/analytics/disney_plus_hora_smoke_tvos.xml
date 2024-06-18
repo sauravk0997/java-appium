@@ -11,7 +11,7 @@
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <!-- three below params generate upper level cron job with ability to parametrize and schedule this paricular suite xml job execution -->
     <parameter name="jenkinsRegressionPipeline" value="Daily-Regression-tvOS-Hora-Smoke"/>
-    <parameter name="jenkinsRegressionScheduling" value="0 15 * * 1-5"/>
+    <parameter name="jenkinsRegressionScheduling" value="0 15 * * 2,4"/>
     <!-- comma separated parameter for single launch and semicolon separated for several launches as a matrix-->
     <parameter name="jenkinsRegressionMatrix" value="reporting.notification.slack-channels: esqoi-insights-test-automation"/>
     <parameter name="provider" value="mcloud"/>
