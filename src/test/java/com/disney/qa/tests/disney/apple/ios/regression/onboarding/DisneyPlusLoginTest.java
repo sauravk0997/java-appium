@@ -38,8 +38,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), "Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(),"Back Arrow should be present");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(),"Disney+ logo image should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(),"MyDisney logo image should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isStep1LabelDisplayed(),"STEP 1 text should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailHeaderDisplayed(),"'Enter your email to continue' text should be displayed");
