@@ -141,8 +141,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLearnMoreSubTextDisplayed() {
-           String step1Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY.getText()), Map.of("link_1" , "and more"));
-        return getDynamicAccessibilityId(step1Label).isElementPresent();
+           String learnMoreText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY.getText()), Map.of("link_1" , "and more"));
+        return getDynamicAccessibilityId(learnMoreText).isElementPresent();
     }
 
     public boolean isMyDisneyLogoDisplayed() {
