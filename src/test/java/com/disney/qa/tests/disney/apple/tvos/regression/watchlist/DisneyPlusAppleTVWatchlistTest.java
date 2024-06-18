@@ -72,7 +72,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
-        Assert.assertTrue(homePage.isOpened(), "Home page is not open after login");
+        Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
@@ -103,9 +103,10 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
 
         detailsPage.clickWatchlistButton();
-        titles.remove(0);
         watchListPage.clickMenuTimes(1, 1);
-        String firstItemAfterRemoval = watchListPage.getContentItems(0).get(0).split(",")[0];
-        Assert.assertTrue(firstItemAfterRemoval.equalsIgnoreCase(titles.get(0).getTitle()), "Removed Luca content is present in Watchlist");
+        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementNotPresent(SHORT_TIMEOUT),
+                "Removed Luca content is present in Watchlist");
+        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.IRONMAN.getTitle()).isElementPresent(SHORT_TIMEOUT),
+                "Ironman content is not present in Watchlist");
     }
 }
