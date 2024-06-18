@@ -31,7 +31,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62689"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72745"})
     @Test(description = "Log In - Verify Login Screen UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testLogInScreen() {
         SoftAssert softAssert = new SoftAssert();
@@ -43,8 +43,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(),"MyDisney logo image should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isStep1LabelDisplayed(),"STEP 1 text should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailHeaderDisplayed(),"'Enter your email to continue' text should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEmailFieldDisplayed(),"Email Body should display");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailBodyDisplayed(),"Log in to Disney+ with your MyDisney account");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEmailFieldDisplayed(),"Email field should be present");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailBodyDisplayed(),"Log in to Disney+ with your MyDisney account should display or Email Body should display");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.continueButtonPresent(),"Continue (primary) button should be present");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreHeaderDisplayed(),"'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreSubTextDisplayed(),"'MyDisney lets you seamlessly log in to services' text should be displayed");
