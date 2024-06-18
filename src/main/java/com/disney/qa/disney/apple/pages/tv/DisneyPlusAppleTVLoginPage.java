@@ -174,11 +174,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Couldn't open password page")
-                .until(it -> {
-                    getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).click();
-                    return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isElementNotPresent(SHORT_TIMEOUT);
-                });
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
