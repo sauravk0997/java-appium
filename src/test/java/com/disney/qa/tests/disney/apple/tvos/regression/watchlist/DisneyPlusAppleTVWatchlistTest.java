@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
+    public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
     @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"})
@@ -104,9 +104,9 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         detailsPage.clickWatchlistButton();
         watchListPage.clickMenuTimes(1, 1);
-        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementNotPresent(SHORT_TIMEOUT),
-                "Removed Luca content is present in Watchlist");
-        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.IRONMAN.getTitle()).isElementPresent(SHORT_TIMEOUT),
+        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.IRONMAN.getTitle()).isElementPresent(),
                 "Ironman content is not present in Watchlist");
+        Assert.assertFalse(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementPresent(),
+                "Removed Luca content is present in Watchlist");
     }
 }
