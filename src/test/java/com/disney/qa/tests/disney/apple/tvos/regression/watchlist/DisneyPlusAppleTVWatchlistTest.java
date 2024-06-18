@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -47,11 +48,12 @@ import java.util.stream.IntStream;
     public void verifyWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        List<DisneyEntityIds> titles = new ArrayList<>();
-        titles.add(DisneyEntityIds.END_GAME);
-        titles.add(DisneyEntityIds.INCREDIBLES2);
-        titles.add(DisneyEntityIds.LUCA);
-        titles.add(DisneyEntityIds.WANDA_VISION);
+        List<DisneyEntityIds> titles =
+                new ArrayList<>(Arrays.asList(
+                        DisneyEntityIds.END_GAME,
+                        DisneyEntityIds.INCREDIBLES_2,
+                        DisneyEntityIds.LUCA,
+                        DisneyEntityIds.WANDA_VISION));
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
@@ -78,16 +80,17 @@ import java.util.stream.IntStream;
         Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
 
         String firstItem = watchListPage.getContentItems(0).get(0).split(",")[0];
-        Assert.assertTrue(firstItem.equals(DisneyEntityIds.SOUL.getTitle()), String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
+        Assert.assertEquals(DisneyEntityIds.SOUL.getTitle(), firstItem, String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
     @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
     public void verifyRemoveWatchlistContent() {
-        ListOrderedSet<DisneyEntityIds> titles = new ListOrderedSet<>();
-        titles.add(DisneyEntityIds.LUCA);
-        titles.add(DisneyEntityIds.IRONMAN);
+        List<DisneyEntityIds> titles =
+                new ArrayList<>(Arrays.asList(
+                        DisneyEntityIds.LUCA,
+                        DisneyEntityIds.IRONMAN));
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
