@@ -174,7 +174,14 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
-        clickContinueBtn();
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Continue button wasn't focused within 15 sec")
+                .until(it -> isFocused(
+                        getTypeButtonByLabel(
+                                getDictionary()
+                                        .getDictionaryItem(
+                                                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                                                MY_DISNEY_CONTINUE_BTN.getText()))));
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
