@@ -626,7 +626,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getAccount());
 
-        disneyPlusAppleTVHomePage.moveDown(7,1);
+        disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, 5).forEach(i -> {
             //The title of Riley's First Date? is appearing as Rileyâs First Date?
