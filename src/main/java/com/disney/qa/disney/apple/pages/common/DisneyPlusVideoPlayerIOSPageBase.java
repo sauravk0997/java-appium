@@ -213,7 +213,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusDetailsIOSPageBase clickBackButton() {
         displayVideoController();
-        getBackButton().click();
+        List<ExtendedWebElement> backButtonList = findExtendedWebElements(getBackButton().getBy());
+        if (!backButtonList.isEmpty()) {
+            for (ExtendedWebElement backButton : backButtonList) {
+                if (backButton.isElementPresent(ONE_SEC_TIMEOUT)) {
+                    backButton.click();
+                    break;
+                }
+            }
+        } else {
+            throw new NoSuchElementException("Back button was not found on video player");
+        }
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 
