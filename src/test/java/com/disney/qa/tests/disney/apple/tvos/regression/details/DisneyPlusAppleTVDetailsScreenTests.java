@@ -64,7 +64,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         AliceUtilities aliceUtilities = new AliceUtilities(getDriver());
         aliceUtilities.isUltronTextPresent("HD 5.1 CC", DESCRIPTION.getText());
         aliceUtilities.isUltronTextPresent(ratingsValue, DESCRIPTION.getText());
-        LOGGER.info("what dynamic row buttons are presents? " + detailsPage.getDynamicRowButtons());
         tabs.forEach(item -> sa.assertTrue(detailsPage.getDynamicRowButtonLabel(item, 1).isPresent(SHORT_TIMEOUT),
                 "The following tab isn't present " + item));
         sa.assertAll();
