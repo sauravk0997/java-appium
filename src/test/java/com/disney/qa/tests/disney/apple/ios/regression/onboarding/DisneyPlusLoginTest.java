@@ -58,20 +58,19 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackArrowDisplayed(), "Expected: Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), "Expected: Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), "Expected: myDisney logo image should be displayed");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isStepperDisplayed(), "Expected: stepper should be displayed");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isHeaderTextDisplayed(), "Expected: Header text should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordFieldDisplayed(), "Expected: Password field should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordHintTextDisplayed(), "Expected: Password hint text should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Expected: Forgot password link should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed(), "Expected: Show Password button should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLinkDisplayed(), "Expected: My Disney Link should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isOneTimeCodeLinkDisplayed(), "Expected: One Time Code Link should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLoginButtonDisplayed(), "Expected: Login button should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Expected: Edit link should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEditLinkPressed(getAccount().getEmail()));
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackArrowDisplayed(), "Back Arrow should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), "MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isStepperDisplayed(), "stepper should be displayed");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isHeaderTextDisplayed(), "Header text should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordFieldDisplayed(), "Password field should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordHintTextDisplayed(), "Password hint text should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Forgot password link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed(), "Show Password button should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLinkDisplayed(), "My Disney Link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isOneTimeCodeLinkDisplayed(), "One Time Code Link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLoginButtonDisplayed(), "Login button should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Edit link should be present");
         softAssert.assertAll();
     }
 

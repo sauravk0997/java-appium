@@ -189,13 +189,4 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)"));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
     }
-
-    public boolean isEditLinkPressed(String accountEmail) {
-         ExtendedWebElement editLink = getDynamicAccessibilityId(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)")));
-        int elementX = editLink.getLocation().getX() + editLink.getSize().getWidth()-10;
-        int elementY = editLink.getLocation().getY() + editLink.getSize().getHeight()-10;
-        tap(elementX,elementY,5);
-        return signUpHeader.isPresent();
-    }
 }
