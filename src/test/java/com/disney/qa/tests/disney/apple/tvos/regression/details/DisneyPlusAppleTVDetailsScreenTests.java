@@ -1,14 +1,8 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
-import com.disney.alice.AliceAssertion;
-import com.disney.alice.AliceDriver;
 import com.disney.alice.AliceUtilities;
-import com.disney.alice.model.RecognitionMetaType;
-import com.disney.qa.api.client.responses.content.ContentMovie;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.api.watchlist.WatchlistApi;
@@ -24,7 +18,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
