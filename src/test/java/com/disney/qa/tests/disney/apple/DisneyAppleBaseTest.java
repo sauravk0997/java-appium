@@ -30,7 +30,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.amazonaws.services.cognitosync.model.InvalidConfigurationException;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
