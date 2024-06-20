@@ -165,6 +165,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         launchDeeplink(true, deeplink, 10);
         homePage.clickOpenButton();
         sa.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
         videoPlayer.tapAudioSubtitleMenu();
     }
 
