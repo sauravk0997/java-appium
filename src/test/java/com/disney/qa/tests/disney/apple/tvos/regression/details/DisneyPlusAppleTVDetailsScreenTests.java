@@ -55,7 +55,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Logo isn't present in its expected position");
         sa.assertTrue(detailsPage.isContentSummaryView(), "Content summary view is not displayed.");
-        sa.assertTrue(detailsPage.isDescriptionPresent(description), "description is not present");
+        sa.assertTrue(detailsPage.isBriefDescriptionPresent(description), "description is not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button isn't present in its expected position");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button isn't present in its expected position");
