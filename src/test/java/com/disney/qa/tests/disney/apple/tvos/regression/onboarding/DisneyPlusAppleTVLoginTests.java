@@ -629,12 +629,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, 5).forEach(i -> {
-            //The title of Riley's First Date? is appearing as Rileyâs First Date?
-            if(!titles.get(i).contains("Riley")) {
-                String item = titles.get(i);
-                sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(item).isElementPresent(),
-                        String.format("%s asset of %s not found on first row", titles, item));
-            }
+            String item = disneyBaseTest.getUtf8MetaString(titles.get(i));
+            sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(item).isElementPresent(),
+                    String.format("%s asset of %s not found on first row", titles, item));
         });
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
