@@ -289,15 +289,15 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90703"})
-    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"})
     public void passwordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         String passwordGhost = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, PASSWORD.getText());
         String forgotPasswordBtnText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText());
@@ -307,7 +307,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
@@ -315,7 +315,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVPasswordPage.clickDown();
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isForgotPasswordBtnFocused(), "Forgot password button is not focused");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isHavingTroubleLogginInBtnFocused(), "Forgot password button is not focused");
         aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, forgotPasswordBtnText, AliceLabels.BUTTON_HOVERED.getText());
 
         disneyPlusAppleTVPasswordPage.clickDown();

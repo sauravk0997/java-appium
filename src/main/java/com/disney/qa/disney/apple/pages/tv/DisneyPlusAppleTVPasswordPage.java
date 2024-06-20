@@ -77,7 +77,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isPasswordFieldFocused() {
-        return isFocused(passwordEntryField);
+        return isFocused(getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText())));
     }
 
     public boolean isForgotPasswordBtnFocused() {
@@ -213,6 +214,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public void clickHavingTroubleLogginInBtn() {
         havingTroubleLogginInBtn.click();
+    }
+
+    public boolean isHavingTroubleLogginInBtnFocused() {
+        return isFocused(havingTroubleLogginInBtn);
     }
 
     public boolean isCreateNewPasswordScreenOpen() {
