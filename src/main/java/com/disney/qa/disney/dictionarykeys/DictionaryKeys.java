@@ -291,7 +291,6 @@ public enum DictionaryKeys {
     MY_DISNEY_CHANGE_EMAIL_CURRENT("mydisney_change_email_current"),
     MY_DISNEY_CHANGE_EMAIL_HEADER("mydisney_change_email_header"),
     MY_DISNEY_CHANGE_EMAIL_HINT("mydisney_change_email_hint"),
-    MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY("mydisney_change_email_success_body"),
     MY_DISNEY_CHANGE_EMAIL_SUCCESS_HEADER("mydisney_change_email_success_header"),
     MY_DISNEY_CHANGE_PASSWORD_BODY("mydisney_change_password_body"),
     MY_DISNEY_CHANGE_PASSWORD_HINT("mydisney_change_password_hint"),

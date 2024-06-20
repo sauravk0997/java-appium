@@ -123,11 +123,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return alertTryAgainBtn;
     }
 
-    public boolean isLearnMoreSubTextDisplayed() {
-        String learnMoreText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY.getText()), Map.of("link_1" , "and more"));
-        return getDynamicAccessibilityId(learnMoreText).isElementPresent();
-    }
-
     public boolean isMyDisneyLogoDisplayed() {
         return myDisneyLogo.isPresent();
     }
