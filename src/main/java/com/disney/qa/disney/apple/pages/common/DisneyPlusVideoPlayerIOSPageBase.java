@@ -86,7 +86,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        waitForVideoToStart();
         return playerView.isPresent();
     }
 
