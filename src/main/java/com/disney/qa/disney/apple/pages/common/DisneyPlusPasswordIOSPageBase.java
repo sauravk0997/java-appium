@@ -33,9 +33,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement myDisneyLogo;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"STEP 2\"`]")
-    private ExtendedWebElement stepper;
-
     @ExtendedFindBy(accessibilityId = "(Case sensitive)")
     protected ExtendedWebElement passwordHintText;
 
@@ -172,8 +169,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return myDisneyLogo.isPresent();
     }
 
-    public boolean isStepperDisplayed() {
-        return stepper.isPresent();
+    public boolean isStep2LabelDisplayed() {
+        String step2Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "2"));
+        return getStaticTextByLabel(step2Label).isPresent();
     }
 
     public boolean isMyDisneyLinkDisplayed() {
