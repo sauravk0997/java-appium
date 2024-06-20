@@ -128,18 +128,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return alertTryAgainBtn;
     }
 
-    public boolean isEnterEmailHeaderDisplayed() {
-        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER))).isPresent();
-    }
-
-    public boolean isEnterEmailBodyDisplayed() {
-        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_BODY))).isPresent();
-    }
-
-    public boolean isLearnMoreHeaderDisplayed() {
-        return getStaticTextByLabel((getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER))).isPresent();
-    }
-
     public boolean isLearnMoreSubTextDisplayed() {
         String learnMoreText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_BODY.getText()), Map.of("link_1" , "and more"));
         return getDynamicAccessibilityId(learnMoreText).isElementPresent();
@@ -148,9 +136,4 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isMyDisneyLogoDisplayed() {
         return myDisneyLogo.isPresent();
     }
-    public boolean isStep1LabelDisplayed() {
-        String step1Label = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "1"));
-        return getStaticTextByLabel(step1Label).isPresent();
-    }
-
 }

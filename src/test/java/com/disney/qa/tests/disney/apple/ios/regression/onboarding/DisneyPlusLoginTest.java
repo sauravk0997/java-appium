@@ -36,17 +36,18 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     public void testLogInScreen() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(),"Back Arrow should be present");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(),"Disney+ logo image should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(),"MyDisney logo image should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isStep1LabelDisplayed(),"STEP 1 text should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailHeaderDisplayed(),"'Enter your email to continue' text should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEmailFieldDisplayed(),"Email field should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isEnterEmailBodyDisplayed(),"Log in to Disney+ with your MyDisney account should display or Email Body should display");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.continueButtonPresent(),"Continue (primary) button should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreHeaderDisplayed(),"'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(),"STEP 1 text should be displayed");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(),"'Enter your email to continue' text should be displayed");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(),"Email field should be present");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailBodyDisplayed(),"Log in to Disney+ with your MyDisney account should display or Email Body should display");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(),"Continue (primary) button should be present");
+        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(),"'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isLearnMoreSubTextDisplayed(),"'MyDisney lets you seamlessly log in to services' text should be displayed");
         softAssert.assertAll();
     }
