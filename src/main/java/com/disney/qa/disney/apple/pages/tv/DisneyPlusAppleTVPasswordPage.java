@@ -88,9 +88,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isLogInBtnFocused() {
-        boolean isFocused = isFocused(primaryButton);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused;
+       return isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+               MY_DISNEY_LOGIN_BTN.getText())));
     }
 
     public boolean isSignUpBtnFocused() {
