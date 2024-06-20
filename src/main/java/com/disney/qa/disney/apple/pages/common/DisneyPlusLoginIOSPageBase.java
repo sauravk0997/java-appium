@@ -23,11 +23,6 @@ import java.util.Map;
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
-        boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
-        return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
-    }
-
     @ExtendedFindBy(accessibilityId = "signUpSwap")
     protected ExtendedWebElement signUpButton;
 
