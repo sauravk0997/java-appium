@@ -1504,5 +1504,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         return collectionRowInView;
     }
-
 }
