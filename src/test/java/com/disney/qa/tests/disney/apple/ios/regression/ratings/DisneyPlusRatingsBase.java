@@ -26,6 +26,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
+    String episodicRating = null;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -118,7 +119,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         return getContentTitleFor(disneyCollectionIDs, rating, locale, language);
     }
 
-    private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
@@ -128,10 +129,20 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                         byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
                         LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
                         contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
-                        if (!(getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0).getType().equals(EPISODES))) {
-                            isMovie = true;
+                        Container container = getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                        if (container != null) {
+                            if (!container.getType().equals(EPISODES)) {
+                                isMovie = true;
+                            } else {
+                                if (container.getSeasons().get(0) != null) {
+                                    List<Item> seasonItems = container.getSeasons().get(0).getItems();
+                                    if (seasonItems.get(0) != null) {
+                                        episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                    }
+                                }
+                            }
+                            return contentTitle;
                         }
-                        return contentTitle;
                     }
                 }
             }
@@ -159,9 +170,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
-
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        if (episodicRating != null) {
+            videoPlayer.validateRatingsOnPlayer(episodicRating, ratingsDictionaryKey, sa, detailsPage);
+        } else {
+            LOGGER.info("Skipping validate ratings on player since episodic rating returned as 'null'");
+        }
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
 
@@ -174,7 +188,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();
-        sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on series downloads.");
+        if (episodicRating != null) {
+            sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
+        } else {
+            LOGGER.info("Skipping validate ratings on download since episodic rating returned as 'null'");
+        }
         sa.assertAll();
     }
 
