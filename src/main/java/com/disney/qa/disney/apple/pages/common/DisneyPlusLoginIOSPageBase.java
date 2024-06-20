@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Map;
 
 /*
  * Email and password login pages
