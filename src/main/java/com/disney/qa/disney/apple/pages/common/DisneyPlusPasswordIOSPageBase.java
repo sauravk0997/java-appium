@@ -42,9 +42,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "labelErrorMessage")
     protected ExtendedWebElement labelError;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Learn more about MyDisney\"`]")
-    protected ExtendedWebElement myDisneyLink;
-
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -174,8 +171,8 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(step2Label).isPresent();
     }
 
-    public boolean isMyDisneyLinkDisplayed() {
-        return myDisneyLink.isPresent();
+    public boolean isLearnMoreAboutMyDisney() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }
 
     public boolean isOneTimeCodeLinkDisplayed(){
