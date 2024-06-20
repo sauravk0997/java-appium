@@ -197,9 +197,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int adTimeRemainingBeforeRewind = videoPlayer.getAdRemainingTimeInSeconds();
         videoPlayer.displayVideoController();
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
+        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
         Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeRewind,
                 "Rewind action is functional during an ad");
-        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
         sa.assertAll();
     }
 
