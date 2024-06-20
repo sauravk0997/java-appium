@@ -77,8 +77,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isPasswordFieldFocused() {
-        return isFocused(getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_HINT.getText())));
+        return isFocused(secureTextEntryField);
     }
 
     public boolean isForgotPasswordBtnFocused() {
