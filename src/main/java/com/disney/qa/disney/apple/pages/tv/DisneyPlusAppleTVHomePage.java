@@ -90,7 +90,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @Override
     public boolean isKidsHomePageOpen() {
-        return getDynamicCellByLabel("Disney Junior").isElementPresent();
+        return getTypeCellNameContains("Disney Junior").isElementPresent();
     }
 
     public void clickHomeBtn() {
