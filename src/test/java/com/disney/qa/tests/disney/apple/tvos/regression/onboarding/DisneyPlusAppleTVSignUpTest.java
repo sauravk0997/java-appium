@@ -86,16 +86,23 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
     //TODO this test will be fix when new flows are updated QAA-14798
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
-    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"})
     public void signUpEmailScreenCheckBox() {
+        String validEmail = DisneyApiCommon.getUniqueEmail();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
+        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
+        disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
+                "Create password screen did launch from enter your email");
         disneyPlusAppleTVSignUpPage.clickDown();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused and checked");
         disneyPlusAppleTVSignUpPage.clickSelect();
