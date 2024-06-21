@@ -79,7 +79,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         return checkBoxNormal.isPresent();
     }
 
-    public boolean isCheckBoxUnChecked() {
+    public boolean isCheckBoxCheckedFocused() {
         return checkedBoxFocused.isPresent();
     }
 
