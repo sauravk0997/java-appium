@@ -7,7 +7,6 @@ import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
@@ -131,7 +130,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66776"})
     @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
     public void verifyAddProfilePageUI() {

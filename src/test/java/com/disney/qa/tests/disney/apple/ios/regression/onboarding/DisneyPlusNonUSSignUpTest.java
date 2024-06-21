@@ -4,7 +4,6 @@ import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -28,7 +27,6 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
                 "User was not directed to the paywall");
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
     @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallCancel() {
@@ -59,7 +57,6 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
     @Test(description = "Sign Up - Verify Paywall UI", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyPaywallUI() {

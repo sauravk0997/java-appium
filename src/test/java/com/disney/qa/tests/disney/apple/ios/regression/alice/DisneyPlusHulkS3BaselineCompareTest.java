@@ -13,7 +13,6 @@ import com.disney.qa.tests.disney.apple.ios.regression.alice.DisneyPlusAliceData
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -152,13 +151,11 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "handsetDataContentProvider", description = "Alice Base Compare Images Test - Handset")
     public void aliceBaselineCompareS3HandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "tabletDataContentProvider", description = "Alice Base Compare Images Test - Tablet")
     public void aliceBaselineCompareS3TabletTest(HulkContentS3 hulkContent) {
         aliceS3BaselineVsLatestScreenshot(hulkContent);

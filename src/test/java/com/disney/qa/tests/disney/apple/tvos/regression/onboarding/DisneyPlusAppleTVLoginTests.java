@@ -5,6 +5,7 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneyApiCommon;
@@ -21,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -610,31 +612,32 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     //TODO add avatar recognition once training is complete
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065", "XCDQA-91067"})
-    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"})
     public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        List<ContentSet> sets = getSearchApi().getAllSetsInHomeCollection(entitledUser, getCountry(), getLanguage(), "PersonalizedCollection");
-        List<String> titles = sets.get(1).getTitles();
+        ArrayList<Container> collections = disneyBaseTest.getExploreAPIPageContent(disneyBaseTest.HOME_PAGE_ID);
+        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(2).getId(), 50);
 
-        getAccountApi().patchProfileAvatar(entitledUser, entitledUser.getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
+        getAccountApi().patchProfileAvatar(getAccount(), getAccount().getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
 
-        logIn(entitledUser);
+        logIn(getAccount());
 
+        disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, 5).forEach(i -> {
-            String item = titles.get(i);
-            sa.assertTrue(disneyPlusAppleTVHomePage.getDynamicCellByLabel(item).isElementPresent(),
+            String item = disneyBaseTest.getUtf8MetaString(titles.get(i));
+            sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(item).isElementPresent(),
                     String.format("%s asset of %s not found on first row", titles, item));
         });
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global navigation is not expanded");
 
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(entitledUser.getProfiles().get(0).getProfileName()));
+        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(getAccount().getProfiles().get(0).getProfileName()));
 
         sa.assertAll();
     }

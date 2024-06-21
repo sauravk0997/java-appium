@@ -6,7 +6,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
@@ -31,7 +30,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ADULT_DOB = "1980-10-23";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Junior Profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileDetailsUnavailableState() {
@@ -58,7 +56,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Adult profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyAdultProfileDetailsUnavailableState() {
@@ -84,7 +81,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkMovieDetailsTab() {
@@ -116,7 +112,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
     @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkDetailsTabs() {
@@ -153,7 +148,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820","XMOBQA-75118"})
     @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieServiceAttribution() {
@@ -176,7 +170,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         });
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
     @Test(description = "Hulu Series Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
@@ -231,7 +224,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72248"})
     @Test(description = "Hulk Details verify extras tab", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkExtrasTab() {
@@ -270,7 +262,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
     @Test(description = "Hulk Details verify share on adult and kids profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkShare() {
@@ -308,7 +299,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.getShareBtn().isPresent(), "Share button was found on kids profile.");
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
     @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieNetworkAttribution() {
@@ -337,7 +327,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
     @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUIMovies() {
@@ -357,7 +346,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
     @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUISeries() {
@@ -374,7 +362,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
     @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileNoHulu() {
@@ -429,7 +416,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
     @Test(description = "Hulu Movie Download - download metadata and playable", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluMovieDownloadAsset() {
@@ -464,7 +450,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73818"})
     @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyShopTabContainer() {
@@ -512,7 +497,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
     @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
@@ -541,7 +525,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
@@ -564,7 +547,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesNoAdsAccount() {

@@ -31,7 +31,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     private static final String PLAY = "PLAY";
     private static final String WATCH_LIVE = "Watch Live";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72640" })
     @Test(description = "Verify Anthology Series - Search", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologySearch() {
@@ -51,7 +50,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72728" })
     @Test(description = "Verify Anthology Series - Watchlist", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyWatchlist() {
@@ -71,7 +69,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72257" })
     @Test(description = "Verify Anthology Series - Upcoming Badge and Metadata", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyUpcomingBadgeAndMetadata() {
@@ -100,7 +97,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73629" })
     @Test(description = "Verify Anthology Series - Live Badge and Airing Indicator", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLiveBadge() {
@@ -128,7 +124,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72251" })
     @Test(description = "Verify Anthology Series - Live Playback", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLivePlayback() {
@@ -154,7 +149,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72247" })
     @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyEnded() {
@@ -170,7 +164,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73780" })
     @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyTitleDescriptionDate() {
@@ -187,7 +180,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73789" })
     @Test(description = "Verify Anthology Series - Episode Download", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyEpisodeDownload() {
@@ -232,7 +224,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73802" })
     @Test(description = "Verify Anthology Series - VOD Progress", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyVODProgress() {
@@ -258,7 +249,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72249" })
     @Test(description = "Verify Anthology Series - Details Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyDetailsTab() {
@@ -289,7 +279,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72253" })
     @Test(description = "Verify Anthology Series - Suggested Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologySuggestedTab() {
@@ -304,7 +293,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72248" })
     @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyExtrasTab() {
@@ -319,7 +307,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72252" })
     @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyFeaturedVOD() {
@@ -356,7 +343,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73782" })
     @Test(description = "Verify Anthology Series - Trailer", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyTrailer() {
@@ -377,7 +363,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72254" })
     @Test(description = "Verify Anthology Series - Live Modal", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION })
     public void verifyAnthologyLiveModal() {

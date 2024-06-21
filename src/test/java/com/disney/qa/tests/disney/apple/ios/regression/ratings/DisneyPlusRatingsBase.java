@@ -162,6 +162,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
         videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
 
         //ratings are shown on downloaded content
@@ -198,6 +199,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
         videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
         sa.assertAll();
     }
