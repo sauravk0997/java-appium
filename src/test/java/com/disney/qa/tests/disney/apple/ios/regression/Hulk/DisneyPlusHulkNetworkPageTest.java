@@ -9,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
@@ -33,7 +32,6 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
     @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyHulkCollectionPagesNetworkPageUI() {

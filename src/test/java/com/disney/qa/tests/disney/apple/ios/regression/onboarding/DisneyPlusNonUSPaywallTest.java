@@ -7,7 +7,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusRestartSubscriptionIOSP
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -49,7 +48,6 @@ public class DisneyPlusNonUSPaywallTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
     @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
     public void verifyRestartSubscriptionPaywallUI() {
