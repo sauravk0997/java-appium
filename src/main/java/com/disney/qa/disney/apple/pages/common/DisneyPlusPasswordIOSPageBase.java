@@ -80,7 +80,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPasswordEntryFieldDisplayed() {
-        return passwordPageEntryField.isPresent();
+        return passwordFieldHint.isPresent();
     }
 
     public boolean isShowPasswordIconDisplayed() {

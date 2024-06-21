@@ -139,7 +139,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
     @ExtendedFindBy(accessibilityId = "Password")
-    protected ExtendedWebElement passwordPageEntryField;
+    protected ExtendedWebElement passwordFieldHint;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
     protected ExtendedWebElement saveBtn;
     @ExtendedFindBy(accessibilityId = "dismissButton")
