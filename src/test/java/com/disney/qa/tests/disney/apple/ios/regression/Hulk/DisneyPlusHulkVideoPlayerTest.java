@@ -4,7 +4,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -16,7 +15,6 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
     static final int SPLIT_TIME = 15;
 
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74451"})
     @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermark() {
@@ -75,7 +73,6 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74454"})
     @Test(description = "Hulu Video Player - Network Watermark - User-interrupted (Skip FF/RW | Pause without Controls)", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermarkUserInterruptedSkipFFRWPause() {

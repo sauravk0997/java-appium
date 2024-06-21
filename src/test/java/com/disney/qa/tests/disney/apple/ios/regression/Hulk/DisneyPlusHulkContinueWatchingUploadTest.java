@@ -11,7 +11,6 @@ import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.*;
@@ -38,13 +37,11 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
     private static final List<String> s3ImageNames = new ArrayList<>();
     private static String jsonS3FilePath = "";
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceUploadHandsetTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Continue Watching Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void continueWatchingAliceUploadTabletTest(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusHulkDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());
