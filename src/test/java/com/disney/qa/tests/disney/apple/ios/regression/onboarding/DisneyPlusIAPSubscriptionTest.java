@@ -19,7 +19,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -53,7 +52,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72376"})
-    @Maintainer("gkrishna1")
     @Test(description = "Standard purchase with a new account on all SKUs", dataProvider = "disneyPlanTypes", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyIAPDisneyPlanCards(DisneyPlusPaywallIOSPageBase.PlanType planType) {
         if (buildType != BuildType.IAP) {
@@ -181,7 +179,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73539"})
-    @Maintainer("gkrishna1")
     @Test(description = "Complete subscription for a returning user without a subscription, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyReturningUserCompletesSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
         DisneyAccount nonActiveAccount = getAccountApi().createAccount("US", "en");
@@ -275,7 +272,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73609"})
     @Test(description = "Verify Web Offer/Plan Name", dataProvider = "disneyWebPlanTypes", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
-    @Maintainer("gkrishna1")
     public void verifyWebOfferNames(String offerName, DisneyPlusPaywallIOSPageBase.PlanType planName) {
         setAccount(getAccountApi().createAccount(offerName, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER));
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
@@ -289,7 +285,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73647","XMOBQA-73648"})
-    @Maintainer("gkrishna1")
     @Test(description = "When the returning user with expired subscription authenticates via login flow or sign up flow, selects ads plan", dataProvider = "disneyPlanCards", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyExpiredAccountSelectsSubscription(DisneyPlusPaywallIOSPageBase.PlanType planName) {
         SoftAssert sa = new SoftAssert();
@@ -349,7 +344,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72389"})
-    @Maintainer("csolmaz")
     @Test(description = "Verify plan switch from basic monthly with ads to premium monthly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyPlanSwitchBasicMonthlyToPremiumMonthly() {
         SoftAssert sa = new SoftAssert();
@@ -420,7 +414,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72782"})
-    @Maintainer("csolmaz")
     @Test(description = "Verify plan switch from premium monthly no ads to premium yearly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyPlanSwitchPremiumMonthlyToPremiumYearly() {
         SoftAssert sa = new SoftAssert();
@@ -488,7 +481,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72362"})
-    @Maintainer("csolmaz")
     @Test(description = "Verify plan switch from basic monthly with ads to premium yearly with no ads", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyPlanSwitchBasicMonthlyToPremiumYearly() {
         SoftAssert sa = new SoftAssert();
@@ -554,7 +546,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
     @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDOBOver18() {
@@ -597,7 +588,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
                 "'Sign Up' did not open the email submission screen as expected");
     }
 
-    @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72668"})
     @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testPasswordPromptAfterActionGrantExpiresAdultDOB() {
@@ -643,7 +633,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("acadavidcorrea")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74950"})
     @Test(description = "SUF – Password prompt when action grant expires", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testPasswordPromptAfterActionGrantExpiresU18DOB() {
