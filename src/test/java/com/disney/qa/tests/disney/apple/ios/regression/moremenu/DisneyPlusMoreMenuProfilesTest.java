@@ -7,13 +7,11 @@ import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
@@ -199,7 +197,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74601"})
     @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyProfileDefaultsToTVMA() {
@@ -230,7 +227,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74602"})
     @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySecondaryProfileU18DefaultsToTV14() {
@@ -263,7 +259,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66770"})
     @Test(description = "Add Profile - Seventh Profile", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeventhProfile() {
@@ -293,7 +288,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
     @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileSecondaryProfileUIElements() {
@@ -333,7 +327,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66836"})
     @Test(description = "Profile - Forgot Profile PIN", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyForgotPin() {
@@ -415,7 +408,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66764"})
     @Test(description = "Profile Selection Page UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyProfileSelectionPageUI() {
@@ -435,7 +427,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66796"})
     @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDeleteProfileUI() {
@@ -466,7 +457,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66839"})
     @Test(description = "Profiles > Profile PIN - Profile Access", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyProfilePinProfileAccess() {
@@ -515,7 +505,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73134"})
     @Test(description = "Ariel: Profiles - Edit Profile - Maturity Rating Slider", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileMaturityRatingSlider() {
@@ -552,7 +541,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66837"})
     @Test(description = "Profiles > Manage Profile PIN", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyManageProfilePIN() {
@@ -621,7 +609,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-69511" })
     @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyKidProofExitSettings() {
@@ -686,7 +673,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66780"})
     @Test(description = "Edit Profile - All Characters allowed for Profile name", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileAllCharacters() {
@@ -741,7 +727,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66790"})
     @Test(description = "Edit Profile - Tap Edit Profile", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyTapEditProfile() {

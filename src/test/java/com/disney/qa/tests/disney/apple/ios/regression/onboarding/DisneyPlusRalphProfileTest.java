@@ -8,7 +8,6 @@ import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -17,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-AcceptAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationAcceptAll() {
@@ -48,7 +46,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationCustomizeChoice() {
@@ -77,7 +74,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74240", "XMOBQA-75508"})
     @Test(description = "Conditional OneTrust Initialization-CTA-RejectAll", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testConditionalOneTrustInitializationRejectAll() {
@@ -106,7 +102,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
     @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileForSingleProfile() {
@@ -133,7 +128,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertFalse(editProfilePage.isGenderButtonPresent(), "Gender Field is shown on edit profile page");
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
     @Test(description = "Suppress Gender field on Edit Profile for all jurisdictions", groups = {"Ralph-Onboarding", TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileOnSecondaryProfile() {

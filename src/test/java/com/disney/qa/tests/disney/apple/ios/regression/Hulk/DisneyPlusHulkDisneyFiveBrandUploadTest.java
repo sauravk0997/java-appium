@@ -7,7 +7,6 @@ import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.*;
@@ -33,13 +32,11 @@ public class DisneyPlusHulkDisneyFiveBrandUploadTest extends DisneyBaseTest {
     private static String jsonS3FilePath = "";
     private static final String FIVE_BRANDS_TILE = "/five-brands-tile/%s";
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Disney - Five Brands: Alice Upload to S3 - Handset", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void brandAliceUploadHandsetTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContent hulkContent) {
         aliceS3TileBaseline(hulkContent, DisneyPlusHulkDisneyFiveBrandDataProvider.PlatformType.HANDSET_BRAND_TILE, getDeviceNameFromCapabilities());
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Disney - Five Brands: Alice Upload to S3 - Tablet", groups = {"Hulk-Upload", TestGroup.PRE_CONFIGURATION})
     public void brandAliceUploadTabletTest(DisneyPlusHulkDisneyFiveBrandDataProvider.HulkContent hulkContent) {
         aliceS3TileBaseline(hulkContent, DisneyPlusHulkDisneyFiveBrandDataProvider.PlatformType.TABLET_BRAND_TILE, getDeviceNameFromCapabilities());

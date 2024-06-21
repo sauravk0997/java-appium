@@ -14,7 +14,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
@@ -62,7 +61,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74470"})
     @Test(description = "Add profile U13, minor authentication", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileU13AuthenticationAbandonFlow() {
@@ -83,7 +81,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
     @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13RestrictionONAuthentication() {
@@ -126,7 +123,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75277"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Agree", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileU13MinorConsentAgree() {
@@ -169,7 +165,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75276"})
     @Test(description = "Profiles > Existing Profile U13-> Minor Consent Decline", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileU13MinorConsentDecline() {
@@ -194,7 +189,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74468"})
     @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileU13MinorConsentAbandonFlow() {
@@ -320,7 +314,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
     @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyU13RestrictionOnWelchActionGrant() {
@@ -363,7 +356,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72683"})
     @Test(description = "Kids Profile new copy and rename to Junior Mode", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorModeCopy() {
@@ -396,7 +388,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickDoneBtn();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75637"})
     @Test(description = "Profiles > Existing Sub->edit gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditGenderPageUI() {
@@ -428,7 +419,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72475"})
     @Test(description = "Profiles > Add profile, No Gender for U13 Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyNoGenderForU13Profiles() {
@@ -479,7 +469,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Profiles > Add profile, No Gender for U18 Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyNoGenderForU18Profiles() {
@@ -578,7 +567,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72162"})
     @Test(description = "Profiles > Add profile, DOB and gender AAW", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfilePageInlineError() {
@@ -675,7 +663,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72266"})
     @Test(description = "Ariel: Profiles - Edit Profile - Primary Profile - DOB & Gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyPrimaryProfilesEditProfileDOBGender() {
@@ -820,7 +807,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66818"})
     @Test(description = "Ariel: Profiles - Edit Profile - App UI Language", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEditProfileAppUILanguage() {
@@ -854,7 +840,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69503"})
     @Test(description = "Ariel: Profiles - Edit Profile - Kids Mode - Require Password to Disable Junior Mode Profile", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileKidsModeDisableJuniorMode() {
@@ -885,7 +870,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
     @Test(description = "Edit Profile - Duplicate Profile Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDuplicateProfileError() {

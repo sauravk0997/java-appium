@@ -5,7 +5,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWatchlistIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.annotations.DataProvider;
@@ -22,7 +21,6 @@ public class DisneyPlusHulkWatchlistTest extends DisneyBaseTest {
         };
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74588"})
     @Test(description = "New URL Structure - Hulu Hub - Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
     public void verifyHulkDeepLinkNewURLStructureWatchlistAuthenticatedUser(String deepLink) {
@@ -47,7 +45,6 @@ public class DisneyPlusHulkWatchlistTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
     @Test(description = "New URL Structure - Hulu Hub - Watchlist - Log Out", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
