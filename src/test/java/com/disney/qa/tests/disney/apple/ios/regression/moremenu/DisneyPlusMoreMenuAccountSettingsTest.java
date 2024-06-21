@@ -100,22 +100,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
-    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifyAccountMonthlyToAnnualDisplays_Google() {
-        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        sa.assertTrue(accountPage.isGoogleSubscriptionTitlePresent(), "Disney+ Premium title is not displayed in the Subscription section");
-        sa.assertTrue(accountPage.isBamtechBundleSubscriptionMessagePresent(), "Disney+ Subscription message was not displayed");
-        accountPage.openBamtechBundleWebview();
-        Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");
-        Assert.assertTrue(accountPage.getWebviewUrl().contains(DISNEY_URL), "Webview did not open to the expected url");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
@@ -170,8 +154,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61577"})
-    @Test(description = "Verify that the correct description for Google Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
+    @Test(description = "Verify that the correct description for Google displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_GooglePlay() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -191,7 +175,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61579"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(description = "Verify that the correct description for Roku displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Roku() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -212,8 +196,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61581"})
-    @Test(description = "Verify that the correct description for Amazon Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
+    @Test(description = "Verify that the correct description for Amazon displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySubscriptionDetails_Amazon() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToAccountSettings();
@@ -231,222 +215,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(AMAZON_URL),
                 "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61583"})
-    @Test(description = "Verify that the correct description for Verizon displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Verizon() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_PROMO_BUNDLE_12MONTH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionTitlePresent(),
-                "Verizon Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerizonSubscriptionMessagePresent(),
-                "Verizon Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openVerizonWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(VERIZON_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61585"})
-    @Test(description = "Verify that the correct description for O2 displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_O2() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        setAppToAccountSettings();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionTitlePresent(),
-                "O2 Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isO2SubscriptionMessagePresent(),
-                "O2 Subscription message was not displayed");
-
-        //Due to existing IOS-2649 bug, commenting out below steps for now
-        /*disneyPlusAccountIOSPageBase.openO2SubscriptionWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
-                "Webview did not open to the expected url");*/
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61587"})
-    @Test(description = "Verify that the correct description for Telecom TIM displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_TelecomTIM() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TIM_IT_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionTitlePresent(),
-                "Telecom TIM Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelecomTIMSubscriptionMessagePresent(),
-                "Telecom TIM Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openTIMWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(TELECOM_TIM_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61589"})
-    @Test(description = "Verify that the correct description for Movistar displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Movistar() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_MOVISTAR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionTitlePresent(),
-                "Moviestar Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMovistarSubscriptionMessagePresent(),
-                "Moviestar Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openMovistarWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(MOVISTAR_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61591"})
-    @Test(description = "Verify that the correct description for Deutsche Telekom displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_DeutscheTelekom() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_DETELEKOM_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionTitlePresent(),
-                "Deutsche Telekom Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDeutscheTelekomSubscriptionMessagePresent(),
-                "Deutsche Telekom Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openDeTelekomWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DETELEKOM_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61593"})
-    @Test(description = "Verify that the correct description for Sky is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Sky() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_EXTERNAL_SKYUK_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionTitlePresent(),
-                "Sky Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSkySubscriptionMessagePresent(),
-                "Sky Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openSkyWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(SKY_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61609"})
-    @Test(description = "Verify that the correct description Telmex is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Telmex() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        setAppToAccountSettings();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionTitlePresent(),
-                "Telmex Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelmexSubscriptionMessagePresent(),
-                "Telmex Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openTelmexWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(TELMEX_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61610"})
-    @Test(description = "Verify that the correct description for Bradesco is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Bradesco() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_BANK_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionTitlePresent(),
-                "Bradesco Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoSubscriptionMessagePresent(),
-                "Bradesco Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openBradescoWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(BRADESCO_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61611"})
-    @Test(description = "Verify that the correct description for Bradesco NEXT is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_BradescoNext() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_BRADESCO_NEXT_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionTitlePresent(),
-                "Bradesco NEXT Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isBradescoNextSubscriptionMessagePresent(),
-                "Bradesco NEXT Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openBradescoNextWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(BRADESCO_NEXT_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61612"})
-    @Test(description = "Verify that the correct description for Telefonica Vivo is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_TelefonicaVivo() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelefonicaVivoSubscriptionMessagePresent(),
-                "Telefonica Vivo Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelefonicaVivoSubscriptionMessagePresent(),
-                "Telefonica Vivo Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openVivoWebview();
-
-        if (disneyPlusAccountIOSPageBase.continueButtonPresent()) {
-            disneyPlusAccountIOSPageBase.getTypeButtonByLabel("Continue").clickIfPresent();
-            disneyPlusAccountIOSPageBase.getTypeButtonByLabel("Turn On Personalized Ads").clickIfPresent();
-            disneyPlusAccountIOSPageBase.getTypeButtonByLabel("Allow While Using App").clickIfPresent();
-        }
-        //Expecting vivo app in app store
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isTelefonicaAppPresentInAppStore(),
-                "App didn't redirect to the Vivo app in app store");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500"})
@@ -467,48 +235,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Browser webview did not open");
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(MERCADOLIBRE_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66499"})
-    @Test(description = "Verify that the correct description for Cablevision is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_Cablevision() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_TELECOM_AR_STANDAONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionTitlePresent(),
-                "Cablevision/Telecom Argentina SA Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isCablevisionSubscriptionMessagePresent(),
-                "Cablevision/Telecom Argentina SA Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openCablevisionWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        //Use wait instead of instant check to account for multiple redirects in browser.
-        disneyPlusAccountIOSPageBase.waitUntilWebviewUrlContains(CABLEVISION_URL);
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69546"})
-    @Test(description = "Verify that the correct description for Mercado Libre Brazil is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionDetails_MercadoLibreBrazil() {
-        SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_BR_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreMonthlySubscriptionTitlePresent(),
-                "Mercado Libre Brazil Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadoLibreBrazilSubscriptionMessagePresent(),
-                "Mercado Libre Brazil Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openMercadoLibreBrazilWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(MERCADOLIBRE_BR_URL),
                 "Webview did not open to the expected url");
     }
 
@@ -767,141 +493,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not able to log in successfully with the new email");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61604"})
-    @Test(description = "Verify Subscription section header displays correctly", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySubscriptionsSectionHeader() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
-        SoftAssert sa = new SoftAssert();
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isSingleSubHeaderPresent(),
-                "Single Subscription header text was not displayed");
-
-        getSubscriptionApi().addEntitlementBySku(getAccount(), DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, SUBSCRIPTION_V2);
-        logout();
-        setAppToAccountSettings();
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent(),
-                "Stacked Subscription header text was not displayed");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
-    @Test(description = "Verify Monthly to Annual option is not present for Amazon Monthly subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifyAccountMonthlyToAnnualDisplays_Amazon() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertFalse(disneyPlusAccountIOSPageBase.areSwitchToAnnualElementsDisplayed(),
-                "Switch to Annual description and/or CTA was displayed unexpectedly");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
-    @Test(description = "Verify Monthly to Annual option is not present for Roku Monthly subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifyAccountMonthlyToAnnualDisplays_Roku() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertFalse(disneyPlusAccountIOSPageBase.areSwitchToAnnualElementsDisplayed(),
-                "Switch to Annual description and/or CTA was displayed unexpectedly");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73683"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
-    public void verifyPausedSubscription_VerizonStandalone(String planType) {
-        SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
-        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE), SUBSCRIPTION_V1));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-        DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL, planName, sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73684"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
-    public void verifyPausedSubscription_Canal(String planType) {
-        SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
-            List<DisneyEntitlement> disneyEntitlement = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE), SUBSCRIPTION_V3));
-            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlement).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-            setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-            DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-            performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL, planName, sa);
-            sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73685"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
-    public void verifyPausedSubscription_O2(String planType) {
-        SoftAssert sa = new SoftAssert();
-        DisneyEntitlement directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
-            List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE), SUBSCRIPTION_V1));
-            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-            setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-        DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL, planName, sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62826"})
-    @Test(description = "Verify Direct Paused Billing display and navigation", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, dataProvider = "disneyPlanTypes", enabled = false)
-    public void verifyPausedSubscription_TelMex(String planType) {
-        SoftAssert sa = new SoftAssert();
-        DisneyEntitlement  directBillingEntitlement = new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), planType), SUBSCRIPTION_V1);
-        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(directBillingEntitlement, new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-        DisneyPlusPaywallIOSPageBase.PlanType planName = directBillingEntitlement.getOffer().getPeriod().contains("MONTH") ? DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_MONTHLY: DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY;
-        performPausedEntitlementCheck(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE, TELMEX_URL, planName, sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62827"})
-    @Test(description = "Verify an unpaused direct billing subscription updates the Subscriptions list correctly", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyUnpausedSubscription() throws JSONException, URISyntaxException{
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        List<DisneyEntitlement> disneyEntitlements = Arrays.asList(
-                new DisneyEntitlement(getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY), SUBSCRIPTION_V1),
-                new DisneyEntitlement(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_PARTNER_TELMEX_MX_STANDALONE), SUBSCRIPTION_V3));
-        CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder().entitlements(disneyEntitlements).country(getLocalizationUtils().getLocale()).language(getLocalizationUtils().getUserLanguage()).build();
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-        disneyPlusAccountIOSPageBase.keepSessionAlive(1, welcomePage.getSignupButton());
-        setAppToAccountSettings();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent()
-                        && disneyPlusAccountIOSPageBase.isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY),
-                "Required 'Paused Subscription' state was not applied to the account. Unpaused entitlement check will be invalid.");
-
-        logout();
-
-        getAccountApi().revokeSkuV3(getAccount(), disneyEntitlements.get(1).getOffer(), CancellationReasons.VOLUNTARY_CANCEL);
-
-        setAppToAccountSettings();
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isSingleSubHeaderPresent(),
-                "Subscriptions header text was not displayed correctly");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechSubscriptionMessagePresent(),
-                "Disney+ Direct billing subscription was not displayed correctly");
-
-        sa.assertFalse(disneyPlusAccountIOSPageBase.isTelmexSubscriptionMessagePresent(),
-                "Revoked partner subscription was displayed unexpectedly");
-
-        disneyPlusAccountIOSPageBase.openBamtechWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
-                "Webview did not open to the expected url");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyIAPBillingHoldWithPartnerSub() {
@@ -947,124 +538,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_VerizonStandalone() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-
-        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        monthly.getOrderSettings().clear();
-        getSubscriptionApi().addEntitlementBySku(getAccount(), DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, SUBSCRIPTION_V2);
-        setAccount(monthly);
-
-       // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
-
-        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        yearly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
-        setAccount(yearly);
-
-        //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, VERIZON_URL));
-
-        sa.get().assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_VerizonBundle() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-
-        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        monthly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
-        setAccount(monthly);
-
-       // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
-
-        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        yearly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
-        setAccount(yearly);
-
-        //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE, VERIZON_URL));
-
-        sa.get().assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_Canal() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        monthly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
-        setAccount(monthly);
-
-       // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
-
-        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        yearly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(yearly, Arrays.asList(disneyEntitlements));
-        setAccount(yearly);
-
-        //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, CANAL_URL));
-
-        sa.get().assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66503"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyBillingHoldWithPartnerSub_O2() throws JSONException, URISyntaxException, MalformedURLException, InterruptedException {
-        AtomicReference<SoftAssert> sa = new AtomicReference<>(new SoftAssert());
-
-        DisneyAccount monthly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), MONTHLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        monthly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
-        setAccount(monthly);
-
-        //sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));
-
-        DisneyAccount yearly = getAccountApi().createAccountWithBillingHold(
-                getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), YEARLY).getOfferId(),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2_ORDER);
-        yearly.getOrderSettings().clear();
-        disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE));
-        disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-        getSubscriptionApi().entitleAccount(monthly, Arrays.asList(disneyEntitlements));
-        setAccount(yearly);
-
-       // sa.set(performPausedEntitlementCheck(DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE, O2_URL));
-
-        sa.get().assertAll();
-    }
-
 
     //Helper methods
 
