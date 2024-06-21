@@ -54,6 +54,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         };
     }
 
+    @DataProvider(name = "tapAction")
+    public Object[][] tapAction() {
+        return new Object[][]{{DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD},
+                {DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND}
+        };
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
     @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdDurationTimer() {
@@ -180,28 +187,20 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
-    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
-    public void verifyPlayerNoSkippingDuringAd() {
+    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    public void verifyPlayerNoSkippingDuringAd(DisneyPlusVideoPlayerIOSPageBase.PlayerControl control) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(DELAY), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        int adTimeRemainingBeforeFastForward = videoPlayer.getAdRemainingTimeInSeconds();
+        int adTimeRemainingBeforeControlAction = videoPlayer.getAdRemainingTimeInSeconds();
         int contentTimeRemaining = videoPlayer.getRemainingTime();
-        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 2);
+        videoPlayer.tapPlayerScreen(control, 2);
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), ONE_SEC_TIMEOUT);
         Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeFastForward,
-                "Fast forward action is functional during an ad");
-
+        Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeControlAction,
+                "Fast forward/Rewind action is functional during an ad");
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        int adTimeRemainingBeforeRewind = videoPlayer.getAdRemainingTimeInSeconds();
-        videoPlayer.displayVideoController();
-        videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), ONE_SEC_TIMEOUT);
-        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeRewind,
-                "Rewind action is functional during an ad");
         sa.assertAll();
     }
 
