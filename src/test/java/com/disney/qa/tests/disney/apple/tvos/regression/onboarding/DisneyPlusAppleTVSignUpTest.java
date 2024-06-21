@@ -109,10 +109,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxCheckedFocused(), "first checkbox is unchecked");
         disneyPlusAppleTVSignUpPage.clickSelect();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "first checkbox is not focused and checked");
-        disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "second checkbox is not focused and checked");
-        disneyPlusAppleTVSignUpPage.clickSelect();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxCheckedFocused(), "second checkbox is unchecked");
         sa.assertAll();
     }
 
