@@ -290,7 +290,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    //TODO Alice need to be retrained to check the buttons on password screen
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90703"})
     @Test(description = "Navigation of Log In Password Screen without password entered", groups = {"Onboarding"})
     public void passwordScreenNavigation() {
@@ -312,17 +311,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordText(), passwordGhost);
-
         disneyPlusAppleTVPasswordPage.clickDown();
-
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isLogInBtnFocused(), "Log In button is not focused");
-
         disneyPlusAppleTVPasswordPage.clickDown();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isHavingTroubleLogginInBtnFocused(), "Forgot password button is not focused");
-
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isHavingTroubleLogginInBtnFocused(), "Having trouble logging in button is not focused");
         disneyPlusAppleTVPasswordPage.clickDown();
-
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isLearnMoreAboutMyDisneyButtonPresent(), "Learn more about MyDisney button is not focused");
 
         sa.assertAll();
