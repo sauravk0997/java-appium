@@ -9,7 +9,6 @@ import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.OutputType;
@@ -184,13 +183,11 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Handset")
     public void aliceUploadBaseImagesHandset(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusAliceDataProvider.PlatformType.HANDSET, getDeviceNameFromCapabilities());
     }
 
-    @Maintainer("csolmaz")
     @Test(dataProvider = "dataContentProvider", description = "Alice Base Images to S3 - Tablet")
     public void aliceUploadBaseImagesTablet(DisneyPlusAliceDataProvider.HulkContent hulkContent) {
         aliceS3Baseline(hulkContent, DisneyPlusAliceDataProvider.PlatformType.TABLET, getDeviceNameFromCapabilities());

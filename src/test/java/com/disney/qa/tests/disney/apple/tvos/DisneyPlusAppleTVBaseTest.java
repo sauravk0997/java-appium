@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
  * Base class for tvos
  */
 @SuppressWarnings("squid:S2187")
-public class DisneyPlusAppleTVBaseTest extends DisneyAppleBaseTest {
+public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public static final String SUB_VERSION = "V1";
