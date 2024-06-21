@@ -180,7 +180,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
         String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)"));
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", "(edit)"));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
     }
 
