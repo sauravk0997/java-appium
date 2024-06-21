@@ -51,35 +51,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         };
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62193"})
-    @Test(description = "Log in - Verify Restart Subscription Paywall UI", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
-    public void verifyRestartSubscriptionPaywallUI() {
-        SoftAssert softAssert = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = initPage(DisneyPlusRestartSubscriptionIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase paywallPage = initPage(DisneyPlusPaywallIOSPageBase.class);
-
-        DisneyAccount expiredAccount = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V1");
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(expiredAccount);
-
-        disneyPlusRestartSubscriptionIOSPageBase.clickRestartSubscriptionButton();
-        paywallPage.getSelectButtonFor(DisneyPlusPaywallIOSPageBase.PlanType.PREMIUM_YEARLY).click();
-        softAssert.assertTrue(paywallPage.isYearlySkuButtonPresent(),
-                "Yearly SKU button is not displayed.");
-        softAssert.assertTrue(paywallPage.isMonthlySkuButtonPresent(),
-                "Monthly SKU button is not displayed.");
-        softAssert.assertTrue(paywallPage.isPaywallCancelButtonDisplayed(),
-                "Cancel button is not displayed.");
-        softAssert.assertTrue(paywallPage.isRestartsSubscriptionHeaderDisplayed(),
-                "Restart Subscription header is not displayed.");
-        softAssert.assertTrue(paywallPage.isRestartsSubscriptionSubHeaderDisplayed(),
-                "'You will be billed immediately. Restart anytime.' is not displayed. ");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66591"})
     @Test(description = "Verify valid password submissions and hide/show button", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyValidPasswordSubmissions() {
