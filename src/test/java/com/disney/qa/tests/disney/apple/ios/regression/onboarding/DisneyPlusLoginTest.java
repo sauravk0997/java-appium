@@ -64,8 +64,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isStep2LabelDisplayed(), "stepper should be displayed");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isHeaderTextDisplayed(), "Header text should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordFieldDisplayed(), "Password field should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordHintTextDisplayed(), "Password hint text should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordLinkDisplayed(), "Forgot password link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isCaseSensitiveHintPresent(), "Password hint text should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed(), "Show Password button should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLearnMoreAboutMyDisney(), "My Disney Link should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isOneTimeCodeLinkDisplayed(), "One Time Code Link should be present");

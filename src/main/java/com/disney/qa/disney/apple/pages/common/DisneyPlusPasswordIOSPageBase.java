@@ -32,7 +32,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement myDisneyLogo;
 
-    @ExtendedFindBy(accessibilityId = "(Case sensitive)")
+    @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
     protected ExtendedWebElement passwordHintText;
 
     @ExtendedFindBy(accessibilityId = "CONTINUE")
@@ -182,5 +182,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,"link_1" , "(edit)"));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
+    }
+
+    public boolean isCaseSensitiveHintPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
     }
 }
