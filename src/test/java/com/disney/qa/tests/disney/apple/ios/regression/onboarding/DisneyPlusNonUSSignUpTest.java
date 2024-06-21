@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;

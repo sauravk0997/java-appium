@@ -1,12 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
-import org.openqa.selenium.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -14,14 +12,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.alice.AliceDriver;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
 public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
 
