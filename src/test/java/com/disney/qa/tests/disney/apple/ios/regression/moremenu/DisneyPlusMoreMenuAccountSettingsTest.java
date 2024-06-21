@@ -79,7 +79,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61547"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67128"})
     @Test(description = "Verify the Account submenu display elements are present", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
         DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
