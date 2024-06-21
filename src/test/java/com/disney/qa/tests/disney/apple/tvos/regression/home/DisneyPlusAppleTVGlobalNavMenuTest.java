@@ -127,18 +127,19 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-91703", "XCDQA-91701" })
-    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" }, enabled = false)
+    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" })
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(KIDS).dateOfBirth(KIDS_DOB).language(entitledUser.getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
         selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(entitledUser);
+        logInWithoutHomeCheck(getAccount());
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(), "Who's watching page did not launch");
         disneyPlusAppleTVHomePage.clickProfileBtn(KIDS);
