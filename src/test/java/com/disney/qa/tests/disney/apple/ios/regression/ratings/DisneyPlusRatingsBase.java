@@ -26,7 +26,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
-    String episodicRating = null;
+    String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -81,6 +81,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
+        episodicRating = null;
         try {
             String apiContentTitle;
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
