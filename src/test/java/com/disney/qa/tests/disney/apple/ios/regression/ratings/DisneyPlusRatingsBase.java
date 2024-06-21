@@ -215,16 +215,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.getDownloadNav().click();
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
-<<<<<<< HEAD
-        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
-        detailsPage.waitForWatchlistButtonToAppear();
-        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
-=======
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
+        detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
->>>>>>> a587d825b (update ratings test)
         sa.assertAll();
     }
 }
