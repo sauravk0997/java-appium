@@ -61,7 +61,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isBackArrowDisplayed() {
-        return collectionBackButton.isPresent();
+        return backArrow.isPresent();
     }
 
     public boolean isDisneyLogoDisplayed() {
