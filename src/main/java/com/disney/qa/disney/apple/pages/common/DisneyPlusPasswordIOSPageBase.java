@@ -80,6 +80,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return passwordEntryField.isPresent();
     }
 
+    public boolean isPasswordEntryFieldDisplayed() {
+        return passwordPageEntryField.isPresent();
+    }
+
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
