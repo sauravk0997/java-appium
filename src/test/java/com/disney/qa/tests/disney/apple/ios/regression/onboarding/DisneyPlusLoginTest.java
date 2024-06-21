@@ -66,7 +66,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordFieldDisplayed(), "Password field should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isCaseSensitiveHintPresent(), "Password hint text should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed(), "Show Password button should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLearnMoreAboutMyDisneyLinkDisplayed(), "My Disney Link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLearnMoreAboutMyDisneyLinkDisplayed(), "Learn more about my disney Link should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isOneTimeCodeLinkDisplayed(), "One Time Code Link should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLoginButtonDisplayed(), "Login button should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Edit link should be present");
