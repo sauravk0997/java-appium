@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isPasswordFieldFocused() {
-        return isFocused(passwordEntryField);
+        return isFocused(secureTextEntryField);
     }
 
     public boolean isForgotPasswordBtnFocused() {
@@ -87,9 +87,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isLogInBtnFocused() {
-        boolean isFocused = isFocused(primaryButton);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused;
+       return isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+               MY_DISNEY_LOGIN_BTN.getText())));
     }
 
     public boolean isSignUpBtnFocused() {
@@ -136,22 +135,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public boolean isEnterYourPasswordHintPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
-    }
-
-    public boolean isForgotPasswordButtonPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
-    }
-
-    public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
-        String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail));
-        return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
-    }
-
-    public boolean isCaseSensitiveHintPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
     }
 
     public boolean isLearnMoreAboutMyDisneyButtonPresent() {
@@ -213,6 +196,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public void clickHavingTroubleLogginInBtn() {
         havingTroubleLogginInBtn.click();
+    }
+
+    public boolean isHavingTroubleLogginInBtnFocused() {
+        return isFocused(havingTroubleLogginInBtn);
     }
 
     public boolean isCreateNewPasswordScreenOpen() {
