@@ -18,9 +18,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
 
-
-    protected ExtendedWebElement passwordBodyText = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()));
-
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
@@ -51,20 +48,13 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordBodyTextDisplayed() {
-        String passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText());
-        String[] elementParts = passwordBodyText.split("\\.");
-        String[] splittedElement = elementParts;
-        String elementFirstPart=splittedElement[0]+". ";
-        return getTextViewByName(elementFirstPart).isElementPresent();
+        String[] passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
+        return getTextViewByName(passwordBodyText[0]).isElementPresent();
     }
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
-        String passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText());
-        String[] elementParts = passwordBodyText.split("\\.");
-        String[] splittedElement = elementParts;
-        String elementSecondPart=splittedElement[1]+". ";
-        String passwordBodyText1 = getDictionary().formatPlaceholderString(elementSecondPart, Map.of("email", email,"link_1" , "(edit)"));
-       // return staticTextByLabel.format(subscribeText2);
+        String[] passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
+        String passwordBodyText1 = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", email,"link_1" , "(edit)"));
         return getTextViewByName(passwordBodyText1).isElementPresent();
     }
 

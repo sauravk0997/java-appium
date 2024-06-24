@@ -127,8 +127,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodyTextDisplayed(),
                 "'With a MyDisney account, you can log in to Disney+' text should be present");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(getAccount().getEmail()),
-                "'With a MyDisney account, you can log in to Disney+' text should be present");
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(email),
+                "'create the account' text should be present");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
                 "Password entry text field was not displayed as expected");
