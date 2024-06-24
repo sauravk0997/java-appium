@@ -5,22 +5,18 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
     @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifySearchHuluContent() {
@@ -47,7 +43,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
     @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
@@ -83,7 +78,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(description = "Search > Empty Page State- Max maturity rating", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchEmptyPageMaxMaturityRating() {
@@ -104,7 +98,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
-    @Maintainer("gkrishna1")
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySearchDisplayRecentSearches() {
@@ -146,7 +140,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
     @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistAndAddToWatchlist() {
@@ -188,7 +181,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651"})
     @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyWatchlistAddAndRemoveItem() {
@@ -228,7 +220,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
     @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifyMaxLimitSearchQuery() {

@@ -13,7 +13,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyplusSellingLegalIOSPageBase
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.StringUtils;
@@ -187,7 +186,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Maintainer("gkrishna")
     @Test(description = "One trust - 'opt-out module'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustModal() {
         SoftAssert sa = new SoftAssert();
@@ -229,7 +227,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73773"})
     @Test(description = "More Menu - Legal - OneTrust Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyOneTrustPageUI() {
@@ -272,7 +269,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73779"})
-    @Maintainer("hpatel7")
     @Test(description = "More Menu - Legal - OneTrust Page - Verify Toggle Behavior", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustPageToggleBehaviour() {
         SoftAssert sa = new SoftAssert();
@@ -324,7 +320,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73778"})
     @Test(description = "More Menu - Legal - OneTrust Page - Verify Links", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustPageLinkBehaviour() {

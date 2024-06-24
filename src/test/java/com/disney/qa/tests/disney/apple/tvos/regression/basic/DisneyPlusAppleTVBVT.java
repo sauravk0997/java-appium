@@ -5,7 +5,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,6 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
     private static final String TEST = "Test";
     private static final String KIDS_DOB = "2018-01-01";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106585"})
     @Test(description = "tvOS Basic Verification Test", groups = {"BVT"})
     public void tvOSBVT() {

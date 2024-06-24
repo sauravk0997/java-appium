@@ -5,7 +5,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -19,7 +18,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PR
 public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
     private static final String SET = "set";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169", "XMOBQA-74450", "XMOBQA-74449"})
     @Test(description = "Verify download actions of episode, season and movie", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyHuluPremiumDownloadActions() {
