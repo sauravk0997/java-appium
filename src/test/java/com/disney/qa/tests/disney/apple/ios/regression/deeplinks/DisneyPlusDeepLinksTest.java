@@ -20,6 +20,9 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
+    private static final String WATCHLIST_IS_EMPTY_ERROR = "Your Watchlist is empty";
+    private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
+
     @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
@@ -56,7 +59,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         String legacyWatchlistDeepLink = R.TESTDATA.get("disney_prod_watchlist_deeplink_legacy");
         launchDeeplink(true, legacyWatchlistDeepLink, 10);
         homePage.clickOpenButton();
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
     }
@@ -72,15 +75,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
-
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
         homePage.dismissAppTrackingPopUp(10);
-
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
     }
@@ -97,8 +98,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         handleAlert();
         login(getAccount());
-        pause(5);
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty").isPresent(), "Watchlist page did not open via deeplink.");
+        watchlistPage.waitForPresenceOfAnElement(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty"));
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
     }
@@ -154,20 +155,20 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.clickOpenButton();
 
         sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
+
+        huluPage.waitForPresenceOfAnElement(homePage.getNetworkLogoImage(network));
         // Get Network logo by deeplink access
         BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(network));
         homePage.clickHomeIcon();
-
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
-        huluPage.clickOnNetworkLogo(network);
 
+        huluPage.clickOnNetworkLogo(network);
         sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
+
+        huluPage.waitForPresenceOfAnElement(homePage.getNetworkLogoImage(network));
         // Get Network logo by app navigation
         BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
-
         sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
                 "The user doesn't land on the given "+network+" network page");
 
