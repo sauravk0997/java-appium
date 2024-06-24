@@ -57,6 +57,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusNonUSMoreMenuProfilesTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Deep Links" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
+        </classes>
+    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Details" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest"/>
