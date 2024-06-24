@@ -175,10 +175,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(step2Label).isPresent();
     }
 
-    public boolean isLearnMoreAboutMyDisneyLinkDisplayed() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
-    }
-
     public boolean isOneTimeCodeLinkDisplayed(){
         return oneTimeCodeLink.isPresent();
     }
