@@ -463,6 +463,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getTextViewByName(String name) {
+       System.out.println("getTextViewByName  method  "+textViewByName.format(name).getText());
         return textViewByName.format(name);
     }
 

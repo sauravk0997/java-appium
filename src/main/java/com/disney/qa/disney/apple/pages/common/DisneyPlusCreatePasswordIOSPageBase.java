@@ -5,7 +5,9 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -16,7 +18,16 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
 
+
+    protected ExtendedWebElement passwordBodyText = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()));
+
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
+    private ExtendedWebElement dPlusLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[3]")
+    private ExtendedWebElement myDisneyLogo;
 
     public DisneyPlusCreatePasswordIOSPageBase(WebDriver driver) {
         super(driver);
@@ -29,6 +40,32 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isHidePasswordIconPresent() {
         return showHidePasswordIndicator.isElementPresent();
+    }
+
+    public boolean isDisneyLogoDisplayed() {
+        return dPlusLogo.isPresent();
+    }
+
+    public boolean isMyDisneyLogoDisplayed() {
+        return myDisneyLogo.isPresent();
+    }
+
+    public boolean isPasswordBodyTextDisplayed() {
+        String passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText());
+        String[] elementParts = passwordBodyText.split("\\.");
+        String[] splittedElement = elementParts;
+        String elementFirstPart=splittedElement[0]+". ";
+        return getTextViewByName(elementFirstPart).isElementPresent();
+    }
+
+    public boolean isPasswordBodySubTextDisplayed(String email) {
+        String passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText());
+        String[] elementParts = passwordBodyText.split("\\.");
+        String[] splittedElement = elementParts;
+        String elementSecondPart=splittedElement[1]+". ";
+        String passwordBodyText1 = getDictionary().formatPlaceholderString(elementSecondPart, Map.of("email", email,"link_1" , "(edit)"));
+       // return staticTextByLabel.format(subscribeText2);
+        return getTextViewByName(passwordBodyText1).isElementPresent();
     }
 
     public void clickShowHidePassword() {

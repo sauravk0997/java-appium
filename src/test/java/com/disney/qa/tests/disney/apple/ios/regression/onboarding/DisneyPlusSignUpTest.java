@@ -100,6 +100,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public void verifySubmitPasswordPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -113,6 +114,21 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isBackButtonPresent(),
                 "Back Arrow was not displayed as expected");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isDisneyLogoDisplayed(),
+                "Disney+ logo image should be displayed");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMyDisneyLogoDisplayed(),
+                "MyDisney logo image should be displayed");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
+                "'Create an account to continue' text should be displayed ");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodyTextDisplayed(),
+                "'With a MyDisney account, you can log in to Disney+' text should be present");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(getAccount().getEmail()),
+                "'With a MyDisney account, you can log in to Disney+' text should be present");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
                 "Password entry text field was not displayed as expected");
