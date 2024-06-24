@@ -42,9 +42,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
     private ExtendedWebElement brandLogos;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"disneyAuthCheckboxUncheckedUnf\"`][1]")
-    private ExtendedWebElement checkbox;
-
     public DisneyPlusSignUpIOSPageBase(WebDriver driver) {
 
         super(driver);
