@@ -4,7 +4,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -24,7 +23,6 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         };
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})
     @Test(dataProvider = "brands", description = "Home - Brands UI", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyBrandUI(DisneyPlusBrandIOSPageBase.Brand brand) {

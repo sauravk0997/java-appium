@@ -25,8 +25,11 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "signUpSwap")
     protected ExtendedWebElement signUpButton;
 
-    @FindBy(xpath = "//XCUIElementTypeButton[@name='buttonBack']/../following-sibling::*/*/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[2]")
+    private ExtendedWebElement myDisneyLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"We couldn't find an account for that email\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]")
     protected ExtendedWebElement noAccountAlert;
@@ -117,5 +120,9 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement getTryAgainAlertButton() {
         return alertTryAgainBtn;
+    }
+
+    public boolean isMyDisneyLogoDisplayed() {
+        return myDisneyLogo.isPresent();
     }
 }

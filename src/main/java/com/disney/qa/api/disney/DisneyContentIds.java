@@ -4,7 +4,6 @@ package com.disney.qa.api.disney;
 //TODO: QAA-15088 - Deprecated as of Jun 14 2024. Please use DisneyEntityIds.
 public enum DisneyContentIds {
     END_GAME("Marvel Studios' Avengers: Endgame", "211b146d-13a0-4c71-b2f1-75de907781e9", DisneyContentIds.PROGRAM_ID),
-    END_GAME_QA("Marvel Studios' Avengers: Endgame", "4193d521-c460-4a98-a3a1-3786e4b21631", DisneyContentIds.PROGRAM_ID),
     DANCING_WITH_THE_STARS("Dancing with the Stars", "38c1eef7-aa8b-4fa4-8bdc-88e596ea565f", DisneyContentIds.SERIES_ID);
 
     private static final String PROGRAM_ID = "programId";
