@@ -192,7 +192,6 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(signUp.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
         signUp.enterEmailAddress(generateGmailAccount() + "\n");
-
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openSubscriberAgreement();
@@ -215,7 +214,6 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(signUp.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
         signUp.enterEmailAddress(generateGmailAccount() + "\n");
-
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openPrivacyPolicyLink();
@@ -238,7 +236,6 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(signUp.isOpened(),
                 "'Sign Up' did not open the email submission screen as expected");
         signUp.enterEmailAddress(generateGmailAccount() + "\n");
-
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openSubscriberAgreement();
@@ -267,6 +264,10 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(signUp.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
+        signUp.enterEmailAddress(generateGmailAccount() + "\n");
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
         createPasswordPage.openSubscriberAgreement();
         Assert.assertTrue(legal.isOpened(),
@@ -276,8 +277,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         validateUSLegalPageUI(sa, US_STATE_PRIVACY_RIGHTS);
 
         pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
-        Assert.assertTrue(signUp.isOpened(),
-                "'Back Button' navigation did not return the user to the Sign Up page");
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
 
