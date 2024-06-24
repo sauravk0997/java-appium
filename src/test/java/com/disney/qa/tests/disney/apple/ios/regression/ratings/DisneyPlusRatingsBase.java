@@ -180,7 +180,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
-        detailsPage.waitForWatchlistButtonToAppear();
+        detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
@@ -217,7 +217,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
-        detailsPage.waitForWatchlistButtonToAppear();
+        detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }

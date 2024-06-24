@@ -316,6 +316,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> watchlistButton.isPresent());
     }
 
+    public void waitForRestartButtonToAppear() {
+        LOGGER.info("Waiting for  WatchlistButton to appear");
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Restart button is not present")
+                .until(it -> getRestartButton().isPresent());
+    }
+
     public void addToWatchlist() {
         watchlistButton.click();
     }
