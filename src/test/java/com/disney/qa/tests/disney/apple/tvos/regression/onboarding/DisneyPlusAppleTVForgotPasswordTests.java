@@ -152,35 +152,26 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-
+        
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
-
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-
 
         Date startTime = emailApi.getStartTime();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
-
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-
 
         String otp = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
 
-
         sa.assertNotNull(otp, "OTP email received after time: " + startTime);
-
 
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
         disneyPlusAppleTVForgotPasswordPage.clickSelect();
 
-
         sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Create a new password screen did not launch");
-
 
         sa.assertAll();
     }
