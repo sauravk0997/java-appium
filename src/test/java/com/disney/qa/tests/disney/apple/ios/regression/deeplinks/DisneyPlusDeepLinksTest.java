@@ -13,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
-    @DataProvider(name = "huluWatchlistDeepLinks")
+    @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
                 {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
@@ -38,7 +38,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74588"})
-    @Test(description = "Deep Link - New URL Structure - Watchlist - Authenticated", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
+    @Test(description = "Deep Link - New URL Structure - Watchlist - Authenticated", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "watchlistDeepLinks")
     public void verifyDeepLinkNewURLStructureWatchlistAuthenticatedUser(String deepLink) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
