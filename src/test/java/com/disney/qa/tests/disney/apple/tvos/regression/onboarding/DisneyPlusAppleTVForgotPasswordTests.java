@@ -139,8 +139,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
 
     //TODO this test will be fix when new flows are updated QAA-14767
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90622", "XCDQA-90626", "XCDQA-90648", "XCDQA-90642"})
-    @Test(description = "Verify that the email with the appropriate subject has been sent and use the OTP to proceed to create password", groups = {"Onboarding"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90622", "XCDQA-90626"})
+    @Test(description = "Verify that the email with the appropriate subject has been sent and use the OTP to proceed to the Home Screen", groups = {"Onboarding"})
     public void otpEntryAndCodeVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
