@@ -17,6 +17,13 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
+    @DataProvider(name = "watchlistDeepLinks")
+    public Object[][] watchlistDeepLinks() {
+        return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
+                {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
+        };
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67520"})
     @Test(description = "Home - Deeplink", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHomeDeeplink() {
@@ -25,13 +32,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(true, R.TESTDATA.get("disney_prod_home_deeplink"), 10);
         homePage.clickOpenButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
-    }
-
-    @DataProvider(name = "watchlistDeepLinks")
-    public Object[][] watchlistDeepLinks() {
-        return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
-                {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
-        };
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67547"})
