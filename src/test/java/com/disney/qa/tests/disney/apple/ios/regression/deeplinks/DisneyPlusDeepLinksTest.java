@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWatchlistIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,6 +14,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
@@ -21,6 +24,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public Object[][] watchlistDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
                 {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
+        };
+    }
+
+    @DataProvider(name = "huluNetworkDeepLinks")
+    public Object[][] huluNetworkDeepLinks() {
+        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_abc_network_deeplink")},
+                {R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink")}
         };
     }
 
@@ -128,5 +138,39 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING),
                 "Only Murders In The Building - Hulu Series Details Page did not open via deeplink.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
+    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluNetworkDeepLinks")
+    public void verifyDeepLinkNewURLStructureHuluNetworkPage(String deepLink) {
+        String network = "ABC";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(true, deepLink, 10);
+        homePage.clickOpenButton();
+
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
+        pause(5);
+        // Get Network logo by deeplink access
+        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(network));
+        homePage.clickHomeIcon();
+
+        homePage.tapHuluBrandTile();
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
+        huluPage.clickOnNetworkLogo(network);
+
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
+        pause(5);
+        // Get Network logo by app navigation
+        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
+
+        sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
+                "The user doesn't land on the given "+network+" network page");
+
+        sa.assertAll();
     }
 }
