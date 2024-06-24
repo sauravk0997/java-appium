@@ -20,7 +20,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
-    private static final String WATCHLIST_IS_EMPTY_ERROR = "Your Watchlist is empty";
+    private static final String WATCHLIST_IS_EMPTY_ERROR = "Your watchlist is empty";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
 
     @DataProvider(name = "watchlistDeepLinks")
