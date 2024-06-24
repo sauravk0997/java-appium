@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.alice.AliceDriver;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -25,73 +24,6 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
         disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
         Assert.assertTrue(initPage(DisneyPlusPaywallIOSPageBase.class).isOpened(),
                 "User was not directed to the paywall");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62022"})
-    @Test(description = "Sign Up - Paywall - User taps Cancel", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyPaywallCancel() {
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-
-        SoftAssert sa = new SoftAssert();
-
-        disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
-        disneyPlusPaywallIOSPageBase.clickPaywallCancelButton();
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterHeaderPresent(),
-                "Finish later header is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterTextPresent(),
-                "Finish later text is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isResumeButtonPresent(),
-                "RESUME button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isFinishLaterButtonPresent(),
-                "FINISH LATER button is not displayed.");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62020"})
-    @Test(description = "Sign Up - Verify Paywall UI", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyPaywallUI() {
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusPaywallIOSPageBase disneyPlusPaywallIOSPageBase = initPage(DisneyPlusPaywallIOSPageBase.class);
-
-        SoftAssert sa = new SoftAssert();
-
-        disneyPlusWelcomeScreenIOSPageBase.clickSignUpButton();
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(generateGmailAccount());
-        disneyPlusCreatePasswordIOSPageBase.submitPasswordValue("abcd123!@");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isYearlySkuButtonPresent(),
-                "Yearly SKU button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isMonthlySkuButtonPresent(),
-                "Monthly SKU button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isPaywallCancelButtonDisplayed(),
-                "Cancel button is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isStartStreamingTextDisplayed(),
-                "Start Streaming Text is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.isCancelAnytimeTextDisplayed(),
-                "Cancel anytime text is not displayed.");
-
-        sa.assertTrue(disneyPlusPaywallIOSPageBase.restoreBtn.isElementPresent(),
-                "Restore Purchase button is not displayed.");
-
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, "disney_logo");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})

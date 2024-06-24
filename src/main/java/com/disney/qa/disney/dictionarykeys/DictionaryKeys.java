@@ -312,6 +312,7 @@ public enum DictionaryKeys {
     MY_DISNEY_LEARN_MORE_BODY("mydisney_learn_more_body"),
     MY_DISNEY_LEARN_MORE_BTN("mydisney_learn_more_btn"),
     MY_DISNEY_LEARN_MORE_HEADER("mydisney_learn_more_header"),
+    MY_DISNEY_LOGIN_BTN("mydisney_login_btn"),
     MY_DISNEY_LOGOUT_BTN("mydisney_logout_btn"),
     MY_DISNEY_LOGOUT_ALL_CHECKBOX("mydisney_logoutall_checkbox"),
     MY_DISNEY_MANAGE("mydisney_manage_cta"),
