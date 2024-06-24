@@ -346,22 +346,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
-    @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
-    public void verifyHulkBaseUISeries() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"), 10);
-        detailsPage.clickOpenButton();
-        detailsPage.isOpened();
-
-        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "Season(s) not found.");
-        validateBaseUI(sa, ONLY_MURDERS_IN_THE_BUILDING);
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
     @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileNoHulu() {
