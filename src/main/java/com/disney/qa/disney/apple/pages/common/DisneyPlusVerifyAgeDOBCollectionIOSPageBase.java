@@ -39,7 +39,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     public boolean isBackModalDisplayed() {
         return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
 
 }
