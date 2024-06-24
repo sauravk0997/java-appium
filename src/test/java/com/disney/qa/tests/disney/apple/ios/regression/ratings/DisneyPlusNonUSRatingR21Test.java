@@ -108,6 +108,35 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74656"})
+    @Test(description = "R21 - Create Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINBackButtonOnDOBScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        Assert.assertTrue(verifyAgePage.isOpened(), "Verify Age page was not opened");
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+
+        //Verify Continue button on alert
+        verifyAgeDOBPage.clickCancelButton();
+        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed");
+        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+
+        //Verify Not Now button on alert
+        verifyAgeDOBPage.clickCancelButton();
+        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed ");
+        verifyAgeDOBPage.clickDefaultAlertBtn();
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+        sa.assertAll();
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
