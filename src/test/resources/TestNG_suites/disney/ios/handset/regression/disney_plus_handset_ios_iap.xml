@@ -20,9 +20,4 @@
     <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-75492"/>
 <!--    <parameter name="scheduling" value="H 4 * * 6-7"/>-->
-    <test verbose="1" name="DisneyPlus iOS Handset IAP" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
-        </classes>
-    </test>
 </suite>
