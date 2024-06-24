@@ -36,7 +36,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLegalHeadersPresent(String header) {
-        return dynamicBtnFindByLabelContains.format(header).isElementPresent();
+        return dynamicBtnFindByLabel.format(header).isElementPresent();
     }
 
     public String getLegalText() {
