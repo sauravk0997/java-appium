@@ -30,7 +30,7 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "buttonContinue")
     protected ExtendedWebElement agreeAndContinueSignUpBtn;
 
-    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxCheckedFocus")
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxCheckedUnfoc")
     protected ExtendedWebElement checkedBoxFocused;
 
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
