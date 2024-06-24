@@ -136,6 +136,12 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getPasswordText() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
+                .getText();
+    }
+
+    public String getHidePasswordText() {
         return secureTextEntryField.getText();
     }
 
