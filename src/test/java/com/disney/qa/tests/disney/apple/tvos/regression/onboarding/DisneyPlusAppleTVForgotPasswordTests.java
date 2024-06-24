@@ -170,7 +170,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
         disneyPlusAppleTVForgotPasswordPage.clickSelect();
 
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Create a new password screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page screen did not launch");
 
         sa.assertAll();
     }
