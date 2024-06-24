@@ -137,11 +137,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
                 MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
     }
 
-    public boolean isForgotPasswordButtonPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
-    }
-
     public boolean isLearnMoreAboutMyDisneyButtonPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();

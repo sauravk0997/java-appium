@@ -23,7 +23,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
-    private ExtendedWebElement oneTimeCodeLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText()));
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
@@ -175,10 +174,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(step2Label).isPresent();
     }
 
-    public boolean isOneTimeCodeLinkDisplayed(){
-        return oneTimeCodeLink.isPresent();
-    }
-
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
         String enterYourPasswordBody = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", "(edit)"));
@@ -188,5 +183,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isCaseSensitiveHintPresent() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
+    }
+
+    public boolean isForgotPasswordButtonPresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
     }
 }
