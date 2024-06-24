@@ -21,7 +21,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67547"})
-    @Test(description = "New URL Structure - Hulu Hub - Watchlist", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Deep Link - Legacy Watchlist URL", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyDeepLinkWatchlist() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -38,7 +38,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74588"})
-    @Test(description = "New URL Structure - Hulu Hub - Watchlist", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
+    @Test(description = "Deep Link - New URL Structure - Watchlist - Authenticated", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluWatchlistDeepLinks")
     public void verifyDeepLinkNewURLStructureWatchlistAuthenticatedUser(String deepLink) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -62,7 +62,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75123"})
-    @Test(description = "New URL Structure - Hulu Hub - Watchlist - Log Out", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Deep Link - New URL Structure - Watchlist - Un-authenticated", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
