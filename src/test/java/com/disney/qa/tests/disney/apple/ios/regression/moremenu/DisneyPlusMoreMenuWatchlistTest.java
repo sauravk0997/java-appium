@@ -3,9 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -17,7 +15,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(description = "Verify empty Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify empty Watchlist display", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -34,9 +32,8 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68440"})
-    @Test(description = "Verify populated Watchlist display", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify populated Watchlist display", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyPopulatedWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

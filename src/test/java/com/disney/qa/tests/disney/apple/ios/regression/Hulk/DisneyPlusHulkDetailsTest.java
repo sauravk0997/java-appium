@@ -1,15 +1,16 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -29,7 +30,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ADULT_DOB = "1980-10-23";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Junior Profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileDetailsUnavailableState() {
@@ -38,7 +38,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
@@ -56,7 +56,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(description = "On Adult profile verify unavailable details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyAdultProfileDetailsUnavailableState() {
@@ -82,7 +81,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkMovieDetailsTab() {
@@ -114,7 +112,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
     @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkDetailsTabs() {
@@ -151,7 +148,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820","XMOBQA-75118"})
     @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieServiceAttribution() {
@@ -174,7 +170,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         });
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
     @Test(description = "Hulu Series Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
@@ -202,7 +197,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
     @Test(description = "Hulu Movies Details Page - Restart Button", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyMovieDetailsPageRestartButton() {
@@ -222,14 +216,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
         videoPlayer.clickBackButton();
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), SHORT_TIMEOUT);
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
         detailsPage.getRestartButton().click();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginnning");
+        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginning");
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72248"})
     @Test(description = "Hulk Details verify extras tab", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkExtrasTab() {
@@ -268,7 +262,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
     @Test(description = "Hulk Details verify share on adult and kids profile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkShare() {
@@ -278,7 +271,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Adult
@@ -306,7 +299,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.getShareBtn().isPresent(), "Share button was found on kids profile.");
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
     @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkSeriesAndMovieNetworkAttribution() {
@@ -335,7 +327,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
     @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUIMovies() {
@@ -355,9 +346,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74933"})
-    @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
+    @Test(description = "Hulk Base UI - Series - all attributes on base ui of series details page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHulkBaseUISeries() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -372,7 +362,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
     @Test(description = "Hulk Junior Mode - No Hulu content found", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileNoHulu() {
@@ -383,7 +372,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
 
         //No upsell
@@ -427,7 +416,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
     @Test(description = "Hulu Movie Download - download metadata and playable", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluMovieDownloadAsset() {
@@ -462,8 +450,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("hpatel7")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73818"})
     @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyShopTabContainer() {
         SoftAssert sa = new SoftAssert();
@@ -473,8 +460,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
-        getAccountApi().addProfile(getAccount(), SECONDARY_PROFILE, ADULT_DOB, getAccount().getProfileLang(), DARTH_MAUL, false, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(false).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Tested this scenario with Disney content as we dont have any Hulu content with shop tab in PROD currently
@@ -510,7 +497,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
     @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
@@ -539,7 +525,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
@@ -562,7 +547,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
     @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesNoAdsAccount() {

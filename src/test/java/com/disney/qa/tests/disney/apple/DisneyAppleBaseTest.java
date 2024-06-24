@@ -22,6 +22,7 @@ import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
+import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -76,7 +77,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String MONTHLY_OFFER = "monthly";
-    public static final String BUNDLE_BASIC = "Disney+ With Ads, Hulu with Ads, and ESPN+";
     public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2 = "V2";
     public static final String SUBSCRIPTION_V3 = "V3";
@@ -175,6 +175,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).partner(DisneyConfiguration.getPartner())
             .environment(DisneyParameters.getEnv()).build();
             return new ExploreApi(apiConfiguration);
+        }
+    };
+
+    private static final LazyInitializer<WatchlistApi> WATCHLIST_API = new LazyInitializer<>() {
+        @Override
+        protected WatchlistApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new WatchlistApi(apiConfiguration);
         }
     };
 
@@ -353,6 +365,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static ExploreApi getExploreApi() {
         try {
             return EXPLORE_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static WatchlistApi getWatchlistApi() {
+        try {
+            return WATCHLIST_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }

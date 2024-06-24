@@ -4,26 +4,29 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.common.constant.RatingConstant.JAPAN;
+import static com.disney.qa.common.constant.RatingConstant.Rating.*;
+
 public class DisneyPlusNonUSRatingsAPACTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75201"})
     @Test(description = "Rating System - APAC Proprietary - G", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPACG() {
-        ratingsSetup(APAC_G, JAPAN_LANG, JAPAN_LOCALE);
-        confirmRegionalRatingsDisplays(APAC_G, DictionaryKeys.RATING_APAC_G.getText());
+        ratingsSetup(G.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(G.getContentRating(), DictionaryKeys.RATING_APAC_G.getText());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75202"})
     @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPACPG() {
-        ratingsSetup(APAC_PG, JAPAN_LANG, JAPAN_LOCALE);
-        confirmRegionalRatingsDisplays(APAC_PG, DictionaryKeys.RATING_APAC_PG.getText());
+        ratingsSetup(PG.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(PG.getContentRating(), DictionaryKeys.RATING_APAC_PG.getText());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
     @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPAC12() {
-        ratingsSetup(APAC_12, JAPAN_LANG, JAPAN_LOCALE);
-        confirmRegionalRatingsDisplays(APAC_12, DictionaryKeys.RATING_APAC_12.getText());
+        ratingsSetup(TWELVE_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating(), DictionaryKeys.RATING_APAC_12.getText());
     }
 }

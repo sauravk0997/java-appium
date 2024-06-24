@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.Assert;
@@ -36,9 +35,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
-    @Test(description = "Series Detail: attempt download season with more than 20 episodes", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Detail: attempt download season with more than 20 episodes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyDownloadMessageForSeasonMoreThanTwentyEpisodes() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -61,9 +59,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mboulogne1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73712"})
-    @Test(description = "Series Detail Page > User Taps Seasons", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Detail Page > User Taps Seasons", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesSeasonPicker() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -85,9 +82,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71632"})
-    @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Series Detail Page > User taps checkmark to remove watchlist", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyRemoveSeriesFromWatchlist() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -113,9 +109,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67985"})
-    @Test(description = "Series Details: Verify Details Tab Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsTabMetadata() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -141,9 +136,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71699"})
-    @Test(description = "Series Details - Verify UI Elements", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details - Verify UI Elements", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsUIElements() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -170,36 +164,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("dconyers")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71793"})
-    @Test(description = "Originals Details: Verify Details Tab Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION})
-    public void verifyOriginalsDetailsTabMetadata() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-        SoftAssert sa = new SoftAssert();
-        setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        setAppToHomeScreen(getAccount());
-
-        //Navigate to Originals Series
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(MOON_KNIGHT);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickDetailsTab();
-
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab release date not present");
-        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
-        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
-        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
-        sa.assertAll();
-    }
-
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67529"})
-    @Test(description = "Series Details - Deeplink", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details - Deeplink", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsDeeplink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
@@ -210,9 +176,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Avengers Assemble Details page did not open via deeplink.");
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67707"})
-    @Test(description = "Asset Detail Page > User taps Share Button", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Asset Detail Page > User taps Share Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesDetailsShare() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -239,9 +204,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72421"})
-    @Test(description = "Series Detail Page > User taps on Suggested tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Detail Page > User taps on Suggested tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesSuggestedTab() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -258,9 +222,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72422"})
-    @Test(description = "Series Details verify extras tab", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details verify extras tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesExtrasTab() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -305,9 +268,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75166"})
-    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Details Page - Resume State - Series - Episodes Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyResumeStateSeriesEpisodesTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -349,9 +311,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
-    @Test(description = "Series Details verify resume behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Series Details verify resume behavior", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesResumeBehavior() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -376,9 +337,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
-    @Test(description = "Details Page - Resume State - Series", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - Resume State - Series", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyResumeStateSeries() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -434,9 +394,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72418"})
-    @Test(description = "Series Details verify playback behavior", groups = {"Details", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Series Details verify playback behavior", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifySeriesPlayBehavior() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -455,9 +414,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
-    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {"Details", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Series Details Page - Featured Episode Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

@@ -18,6 +18,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private static final String CONTAINER_TEXT = "%s, %s ";
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
+    private static final String PREMIUM = "Premium";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
@@ -67,7 +68,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_BUNDLE_MESSAGE.getText()));
+        String subscriptionMessage = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText()).replace("\u00a0"," ");
+        return getStaticTextByLabel(subscriptionMessage);
     }
 
     public ExtendedWebElement getMercardoLibreBrazilSubscription() {
@@ -81,7 +83,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isGoogleSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_GOOGLE.getText());
-        return getStaticTextByLabel(title.concat(" " + ANNUAL)).isPresent();
+        return getStaticTextByLabel(title.concat(" " + PREMIUM)).isPresent();
     }
 
     public ExtendedWebElement getGoogleSubscription() {
@@ -210,6 +212,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return accountDetailsSection.isElementPresent();
     }
 
+    public void waitForAccountPageToOpen() {
+        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Account page did not open")
+                .until(it -> accountDetailsSection.isPresent(SHORT_TIMEOUT));
+    }
+
     public boolean isChangeLinkPresent(String text) {
         return getStaticTextByLabelContains(text).isPresent();
     }
@@ -301,9 +308,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getMercadolibreSubscription().isPresent();
     }
 
-    public boolean isBamtechBundleMonthlySubscriptionTitlePresent() {
+    public boolean isBamtechBundleSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
-        return getStaticTextByLabel(title.concat(" "+ MONTHLY)).isPresent();
+        return getStaticTextByLabel(title).isPresent();
     }
 
     public void openBamtechBundleWebview() {

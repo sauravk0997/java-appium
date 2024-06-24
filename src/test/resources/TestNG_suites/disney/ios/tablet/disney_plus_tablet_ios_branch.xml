@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="ios_tablet_branch" annotations="JDK" configfailurepolicy="continue" thread-count="15" parallel="tests">
+<suite verbose="1" name="ios_tablet_branch" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
@@ -18,13 +18,7 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
-
-    <test verbose="1" name="DisneyPlus iOS Tablet Basic Acceptance" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest"/>
-        </classes>
-    </test>
+               value=",Ariel,Ariel-More Menu,Deeplinks,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding Acceptance" parallel="methods">
         <classes>
@@ -78,11 +72,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusBrandsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet BVT" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
@@ -97,12 +86,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Non-US Ratings" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
 </suite>

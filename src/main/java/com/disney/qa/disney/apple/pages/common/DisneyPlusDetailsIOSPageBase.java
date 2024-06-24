@@ -111,7 +111,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement shareBtn;
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement watchlistButton;
-    private ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
+    private final ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
     private ExtendedWebElement suggestedTab;
     @FindBy(name = "titleLabel_0")
@@ -190,6 +190,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public void clickPlayButton(int timeout) {
+        fluentWait(getDriver(), timeout, SHORT_TIMEOUT, "Couldn't tap on play button on details page")
+                .until(it -> {
+                    getPlayButton().click();
+                    return getPlayButton().isElementNotPresent(SHORT_TIMEOUT);
+                });
+    }
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
         getTypeButtonByName(LOWER_CASE_WATCH).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -951,9 +958,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
         String contentAdvisoryText = String.format("%s, %s ",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim());
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim()).replaceAll("\\s+", " ");
         swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
-        return contentAdvisoryText.contains(contentAdvisory.getText());
+        return contentAdvisoryText.contains(contentAdvisory.getText().replaceAll("\\s+", " "));
     }
 
     public ExtendedWebElement getRatingRestrictionDetailMessage() {
@@ -1044,7 +1051,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
         List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
-        List<String> noDolbyVisionDeviceNames = Arrays.asList("iPad_8_Gen_1");
+        List<String> noDolbyVisionDeviceNames = List.of("iPad_8_Gen_1");
         if (dolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is present..");
             sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");

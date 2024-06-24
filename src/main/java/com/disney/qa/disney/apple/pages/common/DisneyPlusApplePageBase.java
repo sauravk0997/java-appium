@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
-import static com.zebrunner.carina.utils.commons.SpecialKeywords.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemoteControllerAppleTV, IOSUtils {
@@ -594,13 +593,17 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return headlineHeader.getText();
     }
 
+    public boolean isHeadlineHeaderTextPresent(){
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
+    }
+
     public String getErrorMessageLabelText() {
         String errorMessage = getElementText(labelError);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return errorMessage;
     }
 
-    public boolean isErrorMessagePresent() {
+    public boolean isAttributeValidationErrorMessagePresent() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
@@ -779,6 +782,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     // Will take you to continue or done button on tvOS on screen keyboard
     public void moveToContinueOrDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+    }
+
+    public ExtendedWebElement getManageWithMyDisneyButton() {
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText()));
+    }
+    public void clickManageWithMyDisneyButton() {
+        getManageWithMyDisneyButton().click();
     }
 
     public void moveToLocalizedKeyboard() {
@@ -1308,6 +1318,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
     }
 
+    public ExtendedWebElement getCollection(String collectionId) {
+        return collectionCell.format(collectionId);
+    }
+
     public void swipeLeftInCollection(ExtendedWebElement element) {
         Point elementLocation = element.getLocation();
         Dimension elementDimensions = element.getSize();
@@ -1362,7 +1376,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        swipePageTillElementPresent(getCollection(collection), 3, brandLandingView, Direction.UP, 500);
+        swipePageTillElementPresent(getCollection(collection), 10, brandLandingView, Direction.UP, 500);
         List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
         swipeLeftInCollection(collection);
         List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
@@ -1395,7 +1409,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getKeyboardDelete() {
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (iPhoneKeyboardDelete.isPresent()) {
             return iPhoneKeyboardDelete;
         } else {
             return iPadKeyboardDelete;
@@ -1484,9 +1498,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.fail(String.format("Index out of bounds: %s", e));
         }
         return collectionRowInView;
-    }
-
-    public void clickMyDisneyManageBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MANAGE.getText())).click();
     }
 }

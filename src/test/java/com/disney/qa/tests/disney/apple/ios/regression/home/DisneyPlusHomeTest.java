@@ -6,7 +6,6 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -22,9 +21,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String HOME_PAGE_ERROR = "Home page did not open";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67520"})
-    @Test(description = "Home - Deeplink", groups = {"Home", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Home - Deeplink", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHomeDeeplink() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount());
@@ -33,7 +31,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyHomeUIElements() {

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
@@ -165,8 +166,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
-        getAccountApi().addProfile(testAccount, "SecondaryTestProfile",
-                getAccount().getProfileLang(), null, false);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("SecondaryTestProfile").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
@@ -491,8 +491,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
-            getAccountApi().addProfile(testAccount, "Test_" + i, getLanguage(),
-                    null, false);
+            getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("Test_" + i).language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
         }
         restart();
 
@@ -575,8 +574,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         request.addEntitlement(entitlement);
         DisneyAccount testAccountTwoProfiles = getAccountApi().createAccount(request);
-        getAccountApi().addProfile(testAccountTwoProfiles, SECONDARY_PROFILE, "2018-01-01", getLocalizationUtils().getUserLanguage(),
-                null, false, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccountTwoProfiles).profileName(SECONDARY_PROFILE).dateOfBirth("2018-01-01").language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
         //set account to the lowest rating for a step later on
         getAccountApi().editContentRatingProfileSetting(testAccount, getAccountApi().getDisneyProfiles(testAccountTwoProfiles).get(1).getProfileId(),
                 ratingSystem,

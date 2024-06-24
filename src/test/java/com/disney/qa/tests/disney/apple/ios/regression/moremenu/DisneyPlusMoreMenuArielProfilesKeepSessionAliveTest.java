@@ -1,14 +1,15 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
@@ -30,8 +31,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
 
     private static final String WRONG_PASSWORD = "local123b456@";
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74469"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
     @Test(description = "Add profile U13, minor authentication", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -51,8 +51,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72470"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75275"})
     @Test(description = "Add Profile U13-> Minor Consent Agree", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void  verifyAddProfileU13MinorConsentAgree() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -86,8 +85,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74467"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75274"})
     @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13MinorConsentDecline() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -108,8 +106,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72973"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74470"})
     @Test(description = "Add Profile U13-> Minor Consent Abandon Flow", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileU13MinorConsentAbandonFlow() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -135,8 +132,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @Maintainer("gkrishna1")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72869"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {"Ariel-More Menu-KSA", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyU13PasswordGrantForWelch() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -169,8 +165,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72379"})
-    @Maintainer("gkrishna1")
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75277"})
     @Test(description = "Existing Profile, Minor U13-Authentication", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyExistingProfileMinorAuth() {
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
@@ -186,7 +181,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         SoftAssert softAssert = new SoftAssert();
         String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(getAccount(),KIDS_PROFILE,getAccount().getProfileLang(),null,true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
 
         //wait for 15 min to expire the current action grant
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());
@@ -221,17 +216,15 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
-    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Profiles - Who's Watching - User does not see Profile Selection if returning before Two Hour Background Limit", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
         String errorMsg = "profile was not found";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_BASIC),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA,
-                true, true);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();

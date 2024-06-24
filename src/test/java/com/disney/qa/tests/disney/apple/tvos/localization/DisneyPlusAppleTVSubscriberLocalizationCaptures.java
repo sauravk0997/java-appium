@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.email.EmailApi;
@@ -196,7 +197,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         String baseDirectory = "Profile/";
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        getAccountApi().addProfile(user, ADULT_PROFILE_NAME, getLocalizationUtils().getUserLanguage(), null, false);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(user).profileName(ADULT_PROFILE_NAME).language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
 
         pause(10); //handle initial load of app
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
@@ -484,7 +485,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
         DisneyAccount entitledUser = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage(), SUB_VERSION);
-        getAccountApi().addProfile(entitledUser, KIDS_PROFILE_NAME, getLocalizationUtils().getUserLanguage(), null, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(KIDS_PROFILE_NAME).language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
         List<DisneyProfile> profiles = getAccountApi().getDisneyProfiles(entitledUser);
         entitledUser.setProfiles(profiles);
 

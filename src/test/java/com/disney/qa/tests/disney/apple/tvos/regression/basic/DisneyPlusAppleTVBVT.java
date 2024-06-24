@@ -1,10 +1,10 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.basic;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,6 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
     private static final String TEST = "Test";
     private static final String KIDS_DOB = "2018-01-01";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106585"})
     @Test(description = "tvOS Basic Verification Test", groups = {"BVT"})
     public void tvOSBVT() {
@@ -43,7 +42,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount user = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getAccountApi().addProfile(user, KIDS, KIDS_DOB, user.getProfileLang(), null, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(user).profileName(KIDS).dateOfBirth(KIDS_DOB).language(user.getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(welcome.isOpened(), "Welcome screen did not launch");
 

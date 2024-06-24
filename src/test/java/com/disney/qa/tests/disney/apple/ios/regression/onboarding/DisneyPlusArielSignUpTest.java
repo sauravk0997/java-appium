@@ -4,7 +4,6 @@ import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,8 +15,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     private static final String DOB_ADULT = "01/01/1983";
     private static final String DOB_INVALID = "01/01/1766";
 
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74264"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDoBUnder18() {
         SoftAssert sa = new SoftAssert();
@@ -51,7 +49,6 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
     @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDOBInvalid() {
@@ -84,8 +81,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @Maintainer("acadavidcorrea")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72384"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
     @Test(description = "Log in - Verify login - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();

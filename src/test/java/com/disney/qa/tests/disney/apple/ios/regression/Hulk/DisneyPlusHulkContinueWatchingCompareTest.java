@@ -12,7 +12,6 @@ import com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDataPr
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -37,15 +36,13 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 
 public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
 
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74565"})
     @Test(dataProvider = "handsetDataContentProvider", description = "Continue Watching Compare Hulu Badging - Handset", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void continueWatchingAliceCompareHandsetTest(HulkContentS3 hulkContent) {
         aliceS3BaseCompareLatestCapture(hulkContent);
     }
 
-    @Maintainer("csolmaz")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74621"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74565"})
     @Test(dataProvider = "tabletDataContentProvider", description = "Continue Watching Compare Hulu Badging - Tablet", groups = {"Hulk-Compare", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void continueWatchingAliceCompareTabletTest(HulkContentS3 hulkContent) {
         aliceS3BaseCompareLatestCapture(hulkContent);

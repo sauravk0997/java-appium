@@ -5,6 +5,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -42,7 +44,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_WAS_PRESENT_ERROR_MESSAGE = "Ad badge was present";
-    private static final int UI_LATENCY = 15;
+    private static final int UI_LATENCY = 25;
 
     @DataProvider(name = "content")
     public Object[][] content() {
@@ -52,15 +54,17 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
-    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdDurationTimer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
         int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
         sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
-        videoPlayer.waitForAdToCompleteIfPresent(3);
+        videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
+        videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         int remainingTimeAfterAd = videoPlayer.getRemainingTime();
         int playDuration = (remainingTimeBeforeAd - remainingTimeAfterAd);
@@ -72,7 +76,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
-    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdsPlayerAudioSubtitleButton() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
@@ -92,7 +96,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72879"})
-    @Test(description = "Ariel Ads Video Player > Able to scrub forward during Grace period", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel Ads Video Player > Able to scrub forward during Grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -106,11 +110,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73630"})
-    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS, sa);
+        videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
@@ -130,7 +135,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72212"})
-    @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyLocalizedAdBadgeWhilePlayingAd() {
         String frenchLanguageCode = "fr";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -174,7 +179,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
-    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyPlayerNoSkippingDuringAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -198,22 +203,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(description = "VOD Player - Ads - Leave Player during Ad", dataProvider = "content", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - Ads - Leave Player during Ad", dataProvider = "content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyLeavePlayerDuringAd(String content) {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
-        setAppToHomeScreen(basicAccount);
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(content);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        detailsPage.clickPlayButton();
+        loginAndStartPlayback(content, sa);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
@@ -228,7 +224,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         } else {
             videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
         }
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
@@ -236,7 +232,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72177"})
-    @Test(description = "Ariel Ads Video Player > Scrub forward after grace period", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel Ads Video Player > Scrub forward after grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyPlayerScrubForwardAfterAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -255,7 +251,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
-    @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -263,7 +259,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -285,7 +281,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdContentTimeDisplayUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -299,7 +295,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72834"})
-    @Test(description = "Ariel - VOD Player - Ads - Content Rating Displayed after Pre-roll", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel - VOD Player - Ads - Content Rating Displayed after Pre-roll", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyContentRatingDisplayedAfterPreRoll() {
         String PG_13_RATING = DictionaryKeys.RATING_MPAA_AND_TVPG_PG_13.getText();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -313,7 +309,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72347"})
-    @Test(description = "Ariel - VOD Player - Ad PreRoll Only Plays Once At Start of Playback", groups = {"VideoPlayerAds", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Ariel - VOD Player - Ad PreRoll Only Plays Once At Start of Playback", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdPreRollPlaysOnce() {
         String errorFormat = "%s %s";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -353,7 +349,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createV2Account(BUNDLE_BASIC);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(content);

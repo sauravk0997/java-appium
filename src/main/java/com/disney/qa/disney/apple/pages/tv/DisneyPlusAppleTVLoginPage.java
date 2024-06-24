@@ -127,7 +127,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public boolean isContinueButtonDisplayed() {
-        return primaryButton.isPresent();
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent();
     }
 
     public boolean isContinueButtonFocused() {
@@ -174,7 +174,14 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
-        clickContinueBtn();
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Continue button wasn't focused within 15 sec")
+                .until(it -> isFocused(
+                        getTypeButtonByLabel(
+                                getDictionary()
+                                        .getDictionaryItem(
+                                                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                                                MY_DISNEY_CONTINUE_BTN.getText()))));
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void proceedToLocalizedPasswordScreen(String email) {
@@ -200,9 +207,5 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public ExtendedWebElement getEmailHint() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
-    }
-
-    public ExtendedWebElement getNoEmailInputError() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText()));
     }
 }

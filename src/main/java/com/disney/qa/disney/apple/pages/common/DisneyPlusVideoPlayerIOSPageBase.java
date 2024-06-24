@@ -137,6 +137,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return titleLabel.isElementPresent();
     }
 
+    public ExtendedWebElement getSeekbar() {
+        return seekBar;
+    }
+
     public boolean isSeekbarVisible() {
         return seekBar.isPresent();
     }
@@ -209,7 +213,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusDetailsIOSPageBase clickBackButton() {
         displayVideoController();
-        getBackButton().click();
+        List<ExtendedWebElement> backButtonList = findExtendedWebElements(getBackButton().getBy());
+        if (!backButtonList.isEmpty()) {
+            for (ExtendedWebElement backButton : backButtonList) {
+                if (backButton.isElementPresent(ONE_SEC_TIMEOUT)) {
+                    backButton.click();
+                    break;
+                }
+            }
+        } else {
+            throw new NoSuchElementException("Back button was not found on video player");
+        }
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 
@@ -597,6 +611,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getAdRemainingTime() {
         ExtendedWebElement adRemainingTime = staticTextLabelContains.format(":");
+        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adRemainingTime.isPresent());
         if (!adRemainingTime.getText().contains("-")) {
             return adRemainingTime;
         } else {

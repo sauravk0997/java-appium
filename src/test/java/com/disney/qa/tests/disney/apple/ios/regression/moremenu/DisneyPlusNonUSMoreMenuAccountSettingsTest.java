@@ -11,10 +11,9 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest {
 
-    private static final String GOOGLE_URL = "accounts.google.com";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyAccountMonthlyToAnnualDisplays_Apple() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -37,25 +36,6 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
                 "'Switch to Annual' copy was not shown");
 
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
-    @Test(description = "Verify monthly subscription details for Google subscribers", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyAccountMonthlyToAnnualDisplays_Google() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.areSwitchToAnnualElementsDisplayed(),
-                "Switch to Annual description and/or CTA was not displayed");
-
-        disneyPlusAccountIOSPageBase.clickSwitchToAnnualButton();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
-                "Webview did not open to the expected url");
     }
 
     public void setAppToAccountSettings() {

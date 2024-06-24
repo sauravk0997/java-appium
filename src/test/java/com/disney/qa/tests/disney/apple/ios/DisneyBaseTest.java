@@ -49,6 +49,9 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
+import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
+
 /**
  * Base class for ios
  */
@@ -56,10 +59,9 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
-    private static final String TABLET_IOS_17_DEVICES = "iOS17TabletDevices";
-    private static final String TEST_XML_PLAYER_OBJECT = "Player";
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
+    public static final String DISNEY_URL = "disneyplus.com";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
@@ -83,7 +85,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SERIES_ENTITY_ID = "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568";
     public static final String MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
     public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
+    public static final String HOME_PAGE_ID = "page-4a8e20b7-1848-49e1-ae23-d45624f4498a";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
+    public static final String HULU_PAGE_ID = "page-ff723d29-20d5-4303-9cce-4a9aac8e269e";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -387,6 +391,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public DisneyAccount createAccountWithSku(DisneySkuParameters sku) {
+        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
+        request.addSku(sku);
+        return getAccountApi().createAccount(request);
+    }
+
     public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language, boolean... ageVerified) {
         CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
         request.addSku(sku);
@@ -505,8 +515,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ArrayList<Container> getPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
+    public ArrayList<Container> getExploreAPIPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public ArrayList<Container> getExploreAPIPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getExploreSearchRequest()
+                .setEntityId(pageID)
+                .setProfileId(getAccount().getProfileId())
+                .setCountryCode(locale)
+                .setMaturity(getMaxMaturityRating(locale))
+                .setRoamingDas(getRoamingDas(locale))
+                .setLanguage(language)).getData().getPage().getContainers();
     }
 
     public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
@@ -544,7 +564,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return apiContent.getReleaseYearRange().getStartYear();
     }
 
-    public List<Item> getItemsFromSet(String setId, int limit) {
+    public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
             ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
                     .setSetId(setId)
@@ -559,8 +579,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getSet(getExploreSearchRequest()
+                        .setSetId(setId)
+                        .setProfileId(getAccount().getProfileId())
+                        .setCountryCode(locale)
+                        .setMaturity(getMaxMaturityRating(locale))
+                        .setRoamingDas(getRoamingDas(locale))
+                        .setLanguage(language))
+                .getData().getSet().getItems();
+    }
+
     public List<String> getContainerTitlesFromApi(String setID, int limit) {
-        List<Item> setItemsFromApi = getItemsFromSet(setID, limit);
+        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
         List<String> titlesFromApi = new ArrayList<>();
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));

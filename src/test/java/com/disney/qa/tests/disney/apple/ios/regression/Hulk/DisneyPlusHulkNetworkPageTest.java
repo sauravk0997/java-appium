@@ -9,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
@@ -33,8 +32,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
 
-    @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74598"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
     @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyHulkCollectionPagesNetworkPageUI() {
         SoftAssert sa = new SoftAssert();
@@ -52,10 +50,10 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
         networkLogos.forEach(item -> {
             sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item));
             huluPage.clickOnNetworkLogo(item);
-            sa.assertTrue(homePage.isNetworkLogoImageVisible(), "Network logo page are not present");
+            sa.assertTrue(homePage.isNetworkLogoImageVisible(item), "Network logo page are not present");
             pause(3);
             String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
-            File srcFile = homePage.getNetworkLogoImage().getElement().getScreenshotAs(OutputType.FILE);
+            File srcFile = homePage.getNetworkLogoImage(item).getElement().getScreenshotAs(OutputType.FILE);
             ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
             ImagesResponse360 imagesResponse360 = aliceManager.compareImages360S3(imagesComparisonRequest);
             JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());

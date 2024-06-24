@@ -1,12 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -16,25 +16,23 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
     private static final String PG_13 = "PG-13";
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
     @Test(description = "Downloads are filtered out on Junior profile ", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), JUNIOR_PROFILE, KIDS_DOB, getAccount().getProfileLang(), BABY_YODA, true, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         validateHuluDownloadsNotOnLowerMaturityProfile(sa);
         sa.assertAll();
     }
 
-    @Maintainer("csolmaz")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
     @Test(description = "Downloads are filtered out on adult profile with lower maturity rating", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyPCONProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(getAccount(), PG_13, ADULT_DOB, getAccount().getProfileLang(), RAYA, false, true);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(PG_13).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
         DisneyProfile profile = getAccount().getProfile(PG_13);
         getAccountApi().editContentRatingProfileSetting(getAccount(), getAccountApi().getDisneyProfiles(getAccount()).get(1).getProfileId(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),

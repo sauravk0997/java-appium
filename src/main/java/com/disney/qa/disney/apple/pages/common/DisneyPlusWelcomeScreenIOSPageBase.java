@@ -67,12 +67,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isMainTextDisplayed() {
-        if (detectDevice(DeviceType.Type.APPLE_TV)) {
-            return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.WELCOME_TAGLINE_COPY.getText())).isPresent();
-
-        } else {
-            return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
-        }
+        return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
     //TODO: Investigate why this dictionary key is not found QAA-12657

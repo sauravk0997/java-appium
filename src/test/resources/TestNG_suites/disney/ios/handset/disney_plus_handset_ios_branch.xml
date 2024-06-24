@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="ios_handset_branch" annotations="JDK" configfailurepolicy="continue"  thread-count="20" parallel="tests">
+<suite verbose="1" name="ios_handset_branch" annotations="JDK" configfailurepolicy="continue"  thread-count="5" parallel="tests">
 
     <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
@@ -20,13 +20,7 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Ariel,Ariel-More Menu,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Search,Smoke,Video Player,VideoPlayerAds"/>
-
-    <test verbose="1" name="DisneyPlus iOS Handset Basic" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusBasicTest"/>
-        </classes>
-    </test>
+               value=",Ariel,Ariel-More Menu,Deeplinks,Details,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
@@ -88,11 +82,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset BVT" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.basic.DisneyPlusiOSBVT"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
@@ -113,14 +102,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Non-US Ratings" parallel="methods">
-        <parameter name="locale" value="KR"/>
-        <parameter name="language" value="ko"/>
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
         </classes>
     </test>
 </suite>

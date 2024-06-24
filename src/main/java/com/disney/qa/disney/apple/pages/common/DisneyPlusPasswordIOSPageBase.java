@@ -121,7 +121,8 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DEFAULT_EXPLICIT_TIMEOUT));
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DEFAULT_EXPLICIT_TIMEOUT),
+                "Login button is visible after entering password.");
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
@@ -135,7 +136,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getPasswordText() {
-        return passwordEntryField.getText();
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
+                .getText();
     }
 
     public void clickShowPasswordIcon() {

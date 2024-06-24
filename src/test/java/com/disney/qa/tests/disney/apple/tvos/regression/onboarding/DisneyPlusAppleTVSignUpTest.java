@@ -165,11 +165,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
 
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAttributeValidationErrorMessagePresent(), "Error message is not been displayed");
 
         disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(tempEmailText);
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isErrorMessagePresent(), "Error message is not been displayed");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isAttributeValidationErrorMessagePresent(), "Error message is not been displayed");
         sa.assertAll();
     }
 

@@ -1,29 +1,33 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
+
+import static com.disney.qa.common.constant.RatingConstant.Rating.*;
+import static com.disney.qa.common.constant.RatingConstant.*;
 
 public class DisneyPlusNonUSRatingsKMRBTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75173"})
     @Test(description = "Ratings-South Korea 12+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB12() {
-        ratingsSetup(KMRB_12, KOREAN_LANG, KOREA_LOCALE);
-        confirmRegionalRatingsDisplays(KMRB_12, DictionaryKeys.RATING_KMRB_12.getText());
+        ratingsSetup(TWELVE_PLUS.getContentRating(), KOREAN_LANG, KOREA);
+        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_12.getText());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75174"})
     @Test(description = "Ratings-South Korea 15+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB15() {
-        ratingsSetup(KMRB_15, KOREAN_LANG, KOREA_LOCALE);
-        confirmRegionalRatingsDisplays(KMRB_15, DictionaryKeys.RATING_KMRB_15.getText());
+        ratingsSetup(FIFTEEN_PLUS.getContentRating(), KOREAN_LANG, KOREA);
+        confirmRegionalRatingsDisplays(FIFTEEN_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_15.getText());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75175"})
     @Test(description = "Ratings-South Korea 15+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB18() {
-        ratingsSetup(KMRB_18, KOREAN_LANG, KOREA_LOCALE, true);
-        confirmRegionalRatingsDisplays(KMRB_18, DictionaryKeys.RATING_KMRB_18.getText());
+        ratingsSetup(EIGHTEEN_PLUS.getContentRating(), KOREAN_LANG, KOREA, true);
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_18.getText());
     }
 }

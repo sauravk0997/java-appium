@@ -75,6 +75,11 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return passwordLengthError.isElementPresent();
     }
 
+    public boolean isEmptyPasswordErrorDisplayed() {
+        ExtendedWebElement passwordEmptyError = getStaticTextByLabel((getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_CREATION_ERROR_EMPTY.getText())));
+        return passwordEmptyError.isElementPresent();
+    }
+
     public boolean isCreateNewPasswordPageOpened() {
         String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
         return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
