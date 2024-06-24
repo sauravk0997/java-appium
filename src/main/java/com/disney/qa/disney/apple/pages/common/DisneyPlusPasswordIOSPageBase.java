@@ -80,12 +80,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
-    public boolean isHidePasswordIconDisplayed() {
-        boolean isPresent = showHidePasswordIndicator.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hide");
-    }
-
     public boolean isPasswordHintTextDisplayed() {
         return passwordHintText.isPresent();
     }
@@ -136,9 +130,11 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getPasswordText() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
-                .getText();
+        return secureTextEntryField.getText();
+    }
+
+    public String getShowPasswordText(){
+        return textEntryField.getText();
     }
 
     public void clickShowPasswordIcon() {
