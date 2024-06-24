@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase{
 
@@ -81,7 +79,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isCreateNewPasswordPageOpened() {
-        String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
+        String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
         return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
     }
 
