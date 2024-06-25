@@ -199,11 +199,11 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.typePassword(getAccount().getUserPass());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed());
-        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getPasswordText(), hiddenPassword.toString());
+        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getHidePasswordText(), hiddenPassword.toString());
         disneyPlusPasswordIOSPageBase.clickShowPasswordIcon();
-        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getPasswordText(), userPassword);
+        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getShowPasswordText(), userPassword);
         disneyPlusPasswordIOSPageBase.clickHidePasswordIcon();
-        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getPasswordText(), hiddenPassword.toString());
+        softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getHidePasswordText(), hiddenPassword.toString());
 
         softAssert.assertAll();
     }

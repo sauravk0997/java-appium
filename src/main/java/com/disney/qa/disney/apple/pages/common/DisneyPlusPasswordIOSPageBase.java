@@ -115,7 +115,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void typePassword(String password) {
-        passwordEntryField.type(password);
+        passwordFieldHint.type(password);
     }
 
     public void enterLogInPassword(String password) {
@@ -149,12 +149,20 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 .getText();
     }
 
+    public String getHidePasswordText() {
+        return secureTextEntryField.getText();
+    }
+
+    public String getShowPasswordText(){
+        return textEntryField.getText();
+    }
+
     public void clickShowPasswordIcon() {
         showHidePasswordIndicator.click();
     }
 
     public void clickHidePasswordIcon() {
-        showHidePasswordIndicator.click();
+        showPasswordIndicator.click();
     }
 
     public String getErrorMessageString() {
