@@ -41,7 +41,7 @@ public class CollectionConstant {
             case BRANDS_DISNEY_ORIGINALS:
                 return "729f60b2-ed1d-4e10-8699-7e93feaedf36";
             case BRANDS_PIXAR_FEATURED:
-                return "08b2c7c9-1a54-4d69-9ed4-3cae0d035202";
+                return "5a275fa8-c283-495b-beff-126ca976b2d2";
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
                 return "50866b06-c063-4378-ba03-affbd4ba87e7";
             case BRANDS_MARVEL_FEATURED:
