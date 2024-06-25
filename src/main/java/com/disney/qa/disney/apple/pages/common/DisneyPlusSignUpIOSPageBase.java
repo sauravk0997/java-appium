@@ -30,14 +30,15 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "buttonContinue")
     protected ExtendedWebElement agreeAndContinueSignUpBtn;
 
-    @ExtendedFindBy(accessibilityId = "checkboxCheckedFocused")
-    protected ExtendedWebElement checkedBoxFocused;
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnCheckedFoc")
+    protected ExtendedWebElement checkboxUnChecked;
 
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     protected ExtendedWebElement checkBoxNormal;
 
-    @ExtendedFindBy(accessibilityId = "checkboxUncheckedFocused")
-    protected ExtendedWebElement uncheckedBox;
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxCheckedFocus")
+    protected ExtendedWebElement checkboxChecked;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeTextField'$][12]/XCUIElementTypeImage")
     private ExtendedWebElement brandLogos;
 
@@ -71,16 +72,12 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         return optInCheckbox.isElementPresent();
     }
 
-    public boolean isCheckBoxChecked() {
-        return checkBoxNormal.isPresent();
-    }
-
     public boolean isCheckBoxUnChecked() {
-        return uncheckedBox.isPresent();
+        return checkboxUnChecked.isPresent();
     }
 
-    public boolean isCheckBoxFocused() {
-        return checkedBoxFocused.isPresent();
+    public boolean isCheckBoxChecked() {
+        return checkboxChecked.isPresent();
     }
 
     public boolean isEmailFieldDisplayed() {
