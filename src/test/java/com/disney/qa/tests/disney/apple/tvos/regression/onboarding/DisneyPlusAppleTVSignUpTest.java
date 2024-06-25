@@ -84,7 +84,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    //TODO this test will be fix when new flows are updated QAA-14798
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
     @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"})
     public void signUpEmailScreenCheckBox() {
@@ -103,11 +102,11 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
         disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused and checked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxChecked(), "checkbox is not focused and checked");
         disneyPlusAppleTVSignUpPage.clickSelect();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxCheckedFocused(), "checkbox is unchecked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxUnChecked(), "checkbox is unchecked");
         disneyPlusAppleTVSignUpPage.clickSelect();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused and checked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxChecked(), "checkbox is not focused and checked");
         sa.assertAll();
     }
 

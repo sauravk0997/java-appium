@@ -72,16 +72,12 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         return optInCheckbox.isElementPresent();
     }
 
+    public boolean isCheckBoxUnChecked() {
+        return checkboxUnChecked.isPresent();
+    }
+
     public boolean isCheckBoxChecked() {
-        return checkBoxNormal.isPresent();
-    }
-
-    public boolean isCheckBoxCheckedFocused() {
-        return isFocused(checkboxUnChecked);
-    }
-
-    public boolean isCheckBoxFocused() {
-        return isFocused(checkboxChecked);
+        return checkboxChecked.isPresent();
     }
 
     public boolean isEmailFieldDisplayed() {
