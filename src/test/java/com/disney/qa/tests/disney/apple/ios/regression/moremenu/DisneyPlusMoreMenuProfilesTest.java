@@ -58,14 +58,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+
         onboard();
         MoreMenuIOSPageBase.clickAddProfile();
-
-
         Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
         sa.assertTrue(chooseAvatarPage.isSkipButtonPresent(), "Skip button not present on Choose Avatar page");
         sa.assertTrue(chooseAvatarPage.getBackArrow().isPresent(), "Back button not present on Choose Avatar page");
-
 
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         BufferedImage selectedAvatar = getElementImage(avatars[0]);
@@ -96,8 +94,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        ExtendedWebElement[] avatars;
 
+        ExtendedWebElement[] avatars;
         setAppToHomeScreen(getAccount());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
         BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
