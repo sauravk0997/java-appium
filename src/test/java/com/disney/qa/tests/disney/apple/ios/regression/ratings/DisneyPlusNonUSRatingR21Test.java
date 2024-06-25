@@ -108,6 +108,24 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
+    @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINNot21ErrorModal() {
+        String modelErrorMessage = "Verify Age Modal/Alert should displayed";
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickNoButton();
+        Assert.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        verifyAgePage.clickDefaultAlertBtn();
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
