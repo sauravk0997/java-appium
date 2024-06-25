@@ -31,6 +31,7 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickIAm21PlusButton() {
+        waitForPresenceOfAnElement(acceptMaturityButton);
         acceptMaturityButton.click();
     }
 

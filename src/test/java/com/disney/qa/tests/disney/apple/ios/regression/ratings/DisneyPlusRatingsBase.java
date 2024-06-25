@@ -25,6 +25,7 @@ import java.util.*;
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
+    protected String contentTitle2;
     private boolean isMovie;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
