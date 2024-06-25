@@ -16,9 +16,6 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     @ExtendedFindBy(accessibilityId = "verifyAgeButton")
     private ExtendedWebElement verifyAgeButton;
 
-    @ExtendedFindBy(accessibilityId = "cancelBarButton")
-    private ExtendedWebElement cancelButton;
-
     //FUNCTIONS
     public DisneyPlusVerifyAgeDOBCollectionIOSPageBase(WebDriver driver) {
         super(driver);
@@ -31,10 +28,6 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     public void clickVerifyAgeButton() {
         verifyAgeButton.click();
-    }
-
-    public void clickCancelButton() {
-        cancelButton.click();
     }
 
     public boolean isBackModalDisplayed() {
