@@ -613,7 +613,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         ArrayList<Container> collections = disneyBaseTest.getExploreAPIPageContent(disneyBaseTest.HOME_PAGE_ID);
-        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(2).getId(), 50);
+        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(1).getId(), 50);
 
         getAccountApi().patchProfileAvatar(getAccount(), getAccount().getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
 
