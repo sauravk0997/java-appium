@@ -98,7 +98,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         handleAlert();
         login(getAccount());
-        watchlistPage.waitForPresenceOfAnElement(watchlistPage.getStaticTextByLabelContains("Your watchlist is empty"));
+        watchlistPage.waitForPresenceOfAnElement(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR));
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
