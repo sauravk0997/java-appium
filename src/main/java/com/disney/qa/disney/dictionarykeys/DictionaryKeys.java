@@ -387,6 +387,7 @@ public enum DictionaryKeys {
     PROFILE_SETTINGS_MATURITY_RATING_LABEL("profile_settings_maturity_rating_label"),
     PROFILE_SETTINGS_KIDPROOF_EXIT_LABEL("profile_settings_kidproofexit_label"),
     PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER("profile_settings_personal_information_header"),
+    R21_VERIFY_AGE_CANCEL_MODAL("r21_back_youmust_modal"),
     RATED("rated"),
     RATING_APAC_G("rating_disneyplusapac_g"),
     RATING_APAC_PG("rating_disneyplusapac_pg"),
