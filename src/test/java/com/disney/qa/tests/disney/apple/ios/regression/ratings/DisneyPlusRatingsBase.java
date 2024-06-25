@@ -82,6 +82,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
+        episodicRating = null;
         try {
             String apiContentTitle;
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
