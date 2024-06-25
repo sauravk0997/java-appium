@@ -50,7 +50,7 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isBrowseOtherTitlesButtonDisplayed() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).isPresent();
     }
 }
