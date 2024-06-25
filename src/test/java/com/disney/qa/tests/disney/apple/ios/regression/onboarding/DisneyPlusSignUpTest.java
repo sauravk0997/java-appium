@@ -100,7 +100,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     public void verifySubmitPasswordPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = initPage(DisneyPlusChangeEmailIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -128,19 +128,25 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "'With a MyDisney account, you can log in to Disney+' text should be present");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(email),
-                "'create the account' text should be present");
+                "'Create your account' text should be present");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
                 "Password entry text field was not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHidePasswordIconPresent(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isbuttonShowHidePasswordPresent(),
                 "Show/Hide Password icon was not displayed as expected");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordStrengthHeaderPresent(),
                 "Password Strength header text was not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isEmailInUseDisplayed(email),
-                "'You'll be using...' text and/or email submitted was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
+                "CheckBox should be displayed as expected");
+
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
+                "Agree & Continue Button should be displayed as expected");
+
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
+                "'Learn more about MyDisney' Link should be displayed as expected");
 
         sa.assertAll();
     }

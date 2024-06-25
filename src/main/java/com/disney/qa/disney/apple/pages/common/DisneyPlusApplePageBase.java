@@ -195,6 +195,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement labelError;
     @ExtendedFindBy(accessibilityId = "hidePasswordDisneyAuth")
     protected ExtendedWebElement showHidePasswordIndicator;
+    @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
+    protected ExtendedWebElement buttonShowHidePassword;
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     protected ExtendedWebElement collectionHeadlineTitle;
     @ExtendedFindBy(accessibilityId = "Email")
@@ -465,7 +467,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getTextViewByName(String name) {
-       System.out.println("getTextViewByName  method  "+textViewByName.format(name).getText());
         return textViewByName.format(name);
     }
 
