@@ -88,7 +88,6 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
     @Test(description = "Email Input screen for Sign Up flow: checkbox", groups = {"Onboarding"})
     public void signUpEmailScreenCheckBox() {
-        String validEmail = DisneyApiCommon.getUniqueEmail();
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -99,16 +98,16 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(validEmail);
+        disneyPlusAppleTVLoginPage.selectEnterNewEnterEmailSelectDoneBtn(DisneyApiCommon.getUniqueEmail());
         disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreatePasswordScreenOpen(),
                 "Create password screen did launch from enter your email");
         disneyPlusAppleTVSignUpPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "first checkbox is not focused and checked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused and checked");
         disneyPlusAppleTVSignUpPage.clickSelect();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxCheckedFocused(), "first checkbox is unchecked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxCheckedFocused(), "checkbox is unchecked");
         disneyPlusAppleTVSignUpPage.clickSelect();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "first checkbox is not focused and checked");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxFocused(), "checkbox is not focused and checked");
         sa.assertAll();
     }
 
