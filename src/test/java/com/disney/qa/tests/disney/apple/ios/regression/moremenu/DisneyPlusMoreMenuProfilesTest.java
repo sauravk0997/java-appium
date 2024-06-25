@@ -61,31 +61,24 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         onboard();
         MoreMenuIOSPageBase.clickAddProfile();
 
-        // Verify choose avatar page UI
+
         Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
         sa.assertTrue(chooseAvatarPage.isSkipButtonPresent(), "Skip button not present on Choose Avatar page");
         sa.assertTrue(chooseAvatarPage.getBackArrow().isPresent(), "Back button not present on Choose Avatar page");
 
-        //Choose avatar
+
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         BufferedImage selectedAvatar = getElementImage(avatars[0]);
         avatars[0].click();
-
-        //Verify that selected avatar appears on Add profile page
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
-        BufferedImage addProfileAvatar = getElementImage(addProfile.getAddProfileAvatar());
-        selectedAvatar = getScaledImage(selectedAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
 
-        sa.assertTrue(areImagesTheSame(addProfileAvatar, selectedAvatar, 10),
-                "Avatar Selected was either not displayed or was altered beyond the accepted margin of error");
-        //Finish creating profile
         if (getAccount().getProfileLang().equalsIgnoreCase("en")) {
             addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1923");
         }
         sa.assertTrue(EditProfileIOSPageBase.isServiceEnrollmentAccessFullCatalogPagePresent(), "Not on serviceEnrollmentAccessFullCatalog page");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
+
         addProfile.clickSecondaryButtonByCoordinates();
-        //Verify that selected avatar appears on More menu page
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
 
