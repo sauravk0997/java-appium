@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.asserts.SoftAssert;
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -139,6 +140,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                                     List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                     if (seasonItems.get(0) != null) {
                                         episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                    } else {
+                                        throw new NullPointerException("Episodic rating is null");
                                     }
                                 }
                             }
@@ -148,7 +151,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 }
             }
         }
-        return null;
+        if (contentTitle.isBlank()) {
+            throw new ObjectNotFoundException("No titles returned from API.");
+        } else {
+            return contentTitle;
+        }
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
