@@ -10,9 +10,6 @@ import org.openqa.selenium.WebDriver;
 public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
-    @ExtendedFindBy(accessibilityId = "birthdateEntryView")
-    private ExtendedWebElement verifyAgeDOBPage;
-
     @ExtendedFindBy(accessibilityId = "verifyAgeButton")
     private ExtendedWebElement verifyAgeButton;
 
@@ -23,7 +20,8 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     @Override
     public boolean isOpened() {
-        return verifyAgeDOBPage.isPresent();
+        return getStaticTextByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_TITLE.getText())).isPresent();
     }
 
     public void clickVerifyAgeButton() {
