@@ -172,11 +172,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        if (episodicRating != null) {
-            videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
-        } else {
-            LOGGER.info("Skipping validate ratings on player since episodic rating returned as 'null'");
-        }
+        videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
@@ -189,11 +185,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();
-        if (episodicRating != null) {
-            sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
-        } else {
-            LOGGER.info("Skipping validate ratings on download since episodic rating returned as 'null'");
-        }
+        sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
 
