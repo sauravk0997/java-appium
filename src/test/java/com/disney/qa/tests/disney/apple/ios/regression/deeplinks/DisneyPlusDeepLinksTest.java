@@ -59,7 +59,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         String legacyWatchlistDeepLink = R.TESTDATA.get("disney_prod_watchlist_deeplink_legacy");
         launchDeeplink(true, legacyWatchlistDeepLink, 10);
         homePage.clickOpenButton();
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
+        Assert.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
     }
