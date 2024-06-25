@@ -19,7 +19,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
 
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
-    private ExtendedWebElement buttonShowHidePassword;
+    private ExtendedWebElement ShowHideIconBtn;
 
     public DisneyPlusCreatePasswordIOSPageBase(WebDriver driver) {
         super(driver);
@@ -31,11 +31,11 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isHidePasswordIconPresent() {
-        return buttonShowHidePassword.isElementPresent();
+        return ShowHideIconBtn.isElementPresent();
     }
 
     public void clickShowHidePassword() {
-        buttonShowHidePassword.click();
+        ShowHideIconBtn.click();
     }
 
     public boolean isPasswordEntryFieldPresent() {
