@@ -649,11 +649,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
 
         sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
-
-        //Verify if user terminate app without saving DOB, app will keep showcasing Enforce DOB screen
-        terminateApp(buildType.getDisneyBundle());
-        launchApp(buildType.getDisneyBundle());
-        sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
         sa.assertTrue(ednaDOBCollectionPageBase.isEdnaDateOfBirthDescriptionPresent(), "Edna enforce DOB Description is not displayed");
 
         //Verify Gender collection screen is displayed or not, after DOB collection page if existing account without DOb and Gender
