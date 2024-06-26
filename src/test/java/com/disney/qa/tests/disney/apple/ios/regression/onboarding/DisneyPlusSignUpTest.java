@@ -212,6 +212,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         validateUSLegalPageUI(sa, US_STATE_PRIVACY_RIGHTS);
 
         pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        //For small device like iPhone_8 need to scroll up again
+        createPasswordPage.scrollUp();
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
