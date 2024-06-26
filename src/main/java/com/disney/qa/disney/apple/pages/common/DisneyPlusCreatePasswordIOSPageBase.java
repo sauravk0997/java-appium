@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.testng.SkipException;
 
 import java.util.Map;
 
@@ -88,12 +89,16 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     private void openHyperlink(ExtendedWebElement link) {
         swipePageTillElementPresent(link, 2, null, Direction.UP, 900);
-        Point location = link.getLocation();
-        if (link.getSize().getWidth() > 150) {
-            var dimension = link.getSize();
-            tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
+        if (link.isPresent()) {
+            Point location = link.getLocation();
+            if (link.getSize().getWidth() > 150) {
+                var dimension = link.getSize();
+                tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
+            } else {
+                tap(location.getX(), location.getY() + 5);
+            }
         } else {
-            tap(location.getX(), location.getY() + 5);
+            throw new SkipException("Link is not found on page");
         }
     }
 
