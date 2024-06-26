@@ -5,6 +5,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -140,7 +141,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @Test(description = "R21 - Playback - Video Player - Play Another R21 Content", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21VideoPlayerTwoContents() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-//        String secondContent = getSecondContentRating(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
@@ -150,10 +150,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
         verifyAgeDOBPage.enterDOB(ADULT_DOB);
-        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play.");
-        videoPlayer.clickBackButton();
-        homePage.clickSearchIcon();
-
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"), 10);
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open up for second content.");
     }
 
     public void launchR21Content() {
