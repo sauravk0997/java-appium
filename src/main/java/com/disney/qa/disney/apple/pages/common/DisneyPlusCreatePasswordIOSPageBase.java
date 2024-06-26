@@ -88,7 +88,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     private void openHyperlink(ExtendedWebElement link) {
-        scrollUp();
+        scrollDown();
         if (link.isPresent()) {
             Point location = link.getLocation();
             if (link.getSize().getWidth() > 150) {
