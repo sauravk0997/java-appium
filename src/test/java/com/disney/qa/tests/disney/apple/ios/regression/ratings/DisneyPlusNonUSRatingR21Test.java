@@ -108,6 +108,30 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
+    @Test(description = "R21: Create PIN - Enter Date of Birth - Error Modal when DOB is Not 21+", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINNot21ErrorModalOnDOBScreen() {
+        String modelErrorMessage = "Verify Age Modal/Alert should displayed";
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        sa.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
+        verifyAgePage.clickDefaultAlertBtn();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+        sa.assertAll();
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

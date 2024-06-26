@@ -21,7 +21,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     @Override
     public boolean isOpened() {
-        return verifyAgeDOBPage.isPresent();
+        return verifyAgeDOBPage.isPresent(SHORT_TIMEOUT);
     }
 
     public void clickVerifyAgeButton() {
