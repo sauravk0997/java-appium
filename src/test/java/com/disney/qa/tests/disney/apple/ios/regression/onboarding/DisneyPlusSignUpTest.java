@@ -142,7 +142,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
                 "CheckBox is not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isCheckBoxHeaderDisplayed(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMarketingTextDisplayed(),
                 "Yes, I would like to receive updates text was not displayed as expected");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isAgreeContinueTextDisplayed(),

@@ -114,7 +114,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
     }
 
-    public boolean isCheckBoxHeaderDisplayed() {
+    public boolean isMarketingTextDisplayed() {
         return getTextViewByName(CONSENT_TEXT_HEADER).isElementPresent();
     }
 
