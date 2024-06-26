@@ -91,8 +91,8 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
        return createNewPasswordPageHeader;
     }
 
-    private void openHyperlink(ExtendedWebElement link) {
-        swipeInContainerTillElementIsPresent(null, link, 2, Direction.UP);
+    private void openHyperlinkOnCreatePasswordPage(ExtendedWebElement link) {
+        swipeInContainerTillElementIsPresent(null, primaryButton, 2, Direction.UP);
         if (link.isDisplayed()) {
             Point location = link.getLocation();
             if (link.getSize().getWidth() > 150) {
@@ -112,18 +112,18 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public void openPrivacyPolicyLink() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
+        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
     }
 
     public void openSubscriberAgreement() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
     }
 
     public void openCookiesPolicyLink() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
+        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
     }
 
     public void openEuPrivacyLink() {
-        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
+        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
     }
 }
