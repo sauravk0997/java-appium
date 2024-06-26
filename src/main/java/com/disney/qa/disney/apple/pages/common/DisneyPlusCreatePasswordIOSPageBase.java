@@ -13,9 +13,9 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     protected ExtendedWebElement createPasswordHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PASSWORD_SCREEN_TITLE.getText()));
 
-    private static final String consentTextHeader = "Yes, I would like to receive updates, special offers and other information from Disney+ and The Walt Disney Family of Companies.";
+    private static final String CONSENT_TEXT_HEADER = "Yes, I would like to receive updates, special offers and other information from Disney+ and The Walt Disney Family of Companies.";
 
-    private static final String consentSubText = "By clicking “Agree & Continue,” you agree to the Disney Terms of Use and Disney+ Subscriber Agreement, and acknowledge you have read our Privacy Policy and US State Privacy Rights Notice.";
+    private static final String CONSENT_SUBTEXT = "By clicking “Agree & Continue,” you agree to the Disney Terms of Use and Disney+ Subscriber Agreement, and acknowledge you have read our Privacy Policy and US State Privacy Rights Notice.";
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -23,11 +23,11 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
 
     public boolean isCheckBoxHeaderDisplayed() {
-        return getTextViewByName(consentTextHeader).isElementPresent();
+        return getTextViewByName(CONSENT_TEXT_HEADER).isElementPresent();
     }
 
     public boolean isAgreeContinueTextDisplayed() {
-        return getTextViewByName(consentSubText).isElementPresent();
+        return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
     }
 
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
