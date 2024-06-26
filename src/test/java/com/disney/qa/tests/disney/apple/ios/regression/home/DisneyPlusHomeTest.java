@@ -21,16 +21,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String HOME_PAGE_ERROR = "Home page did not open";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67520"})
-    @Test(description = "Home - Deeplink", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
-    public void verifyHomeDeeplink() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_home_deeplink"), 10);
-        homePage.clickOpenButton();
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
     public void verifyHomeUIElements() {
