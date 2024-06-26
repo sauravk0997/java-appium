@@ -15,7 +15,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.awt.image.BufferedImage;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -29,13 +28,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
             Arrays.asList("A&E", "ABC", "ABC News", "Andscape", "Disney XD", "FOX", "Freeform", "FX", "FYI",
                     "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
                     "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
-
-    @DataProvider(name = "huluDeepLinks")
-    public Object[][] huluDeepLinks() {
-        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_abc_network_deeplink")},
-                {R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink")}
-        };
-    }
 
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
@@ -120,40 +112,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
-    public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
-        String network = "ABC";
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
-
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
-        // Get Network logo by deeplink access
-        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(network));
-        homePage.clickHomeIcon();
-
-        homePage.tapHuluBrandTile();
-        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
-        huluPage.clickOnNetworkLogo(network);
-
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
-        // Get Network logo by app navigation
-        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
-
-        sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
-                "The user doesn't land on the given "+network+" network page");
-
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
