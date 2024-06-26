@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.qa.common.constant.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
@@ -14,20 +12,20 @@ public class DisneyPlusNonUSRatingsKMRBTest extends DisneyPlusRatingsBase {
     @Test(description = "Ratings-South Korea 12+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB12() {
         ratingsSetup(TWELVE_PLUS.getContentRating(), KOREAN_LANG, KOREA);
-        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_12.getText());
+        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75174"})
     @Test(description = "Ratings-South Korea 15+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB15() {
         ratingsSetup(FIFTEEN_PLUS.getContentRating(), KOREAN_LANG, KOREA);
-        confirmRegionalRatingsDisplays(FIFTEEN_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_15.getText());
+        confirmRegionalRatingsDisplays(FIFTEEN_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75175"})
     @Test(description = "Ratings-South Korea 15+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB18() {
         ratingsSetup(EIGHTEEN_PLUS.getContentRating(), KOREAN_LANG, KOREA, true);
-        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating(), DictionaryKeys.RATING_KMRB_18.getText());
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
 }
