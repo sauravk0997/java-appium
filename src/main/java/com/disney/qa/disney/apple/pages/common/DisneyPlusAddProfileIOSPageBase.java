@@ -201,6 +201,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickSave() {
         dynamicBtnFindByNameContains.format("Save").click();
     }
+    public void clickWelchNotNow() {
+        dynamicBtnFindByNameContains.format("NOT NOW").click();
+    }
 
     /**
      * checks if gender field is enabled or not

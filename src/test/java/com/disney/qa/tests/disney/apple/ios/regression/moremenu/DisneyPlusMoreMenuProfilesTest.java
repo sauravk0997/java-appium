@@ -74,14 +74,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.OCTOBER, "23", "1923");
         addProfile.chooseGender();
         addProfile.clickSave();
+        addProfile.clickWelchNotNow();
 
-        sa.assertTrue(EditProfileIOSPageBase.isServiceEnrollmentAccessFullCatalogPagePresent(), "Not on serviceEnrollmentAccessFullCatalog page");
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
-
-        addProfile.clickSecondaryButtonByCoordinates();
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
-
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
         sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
                 "Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
