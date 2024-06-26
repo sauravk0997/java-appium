@@ -31,9 +31,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String KOREAN_LANG = "KO";
     static final String JAPAN_LANG = "ja";
+    static final String KOREAN_LANG = "KO";
     static final String SINGAPORE_LANG = "en";
+    static final String TURKEY_LANG = "tr";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
@@ -190,6 +191,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
+        if(!detailsPage.getEpisodesTab().isPresent()) {
+            swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500);
+        }
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
