@@ -54,10 +54,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return showHideEyeIcon.isElementPresent();
     }
 
-    public boolean isbuttonShowHidePasswordPresent() {
-        return  buttonShowHidePassword.isElementPresent();
-    }
-
     public boolean isDisneyLogoDisplayed() {
         return dPlusLogo.isPresent();
     }

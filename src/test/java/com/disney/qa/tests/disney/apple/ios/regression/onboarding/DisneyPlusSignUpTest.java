@@ -133,7 +133,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
                 "Password entry text field was not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isbuttonShowHidePasswordPresent(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHidePasswordIconPresent(),
                 "Show/Hide Password icon was not displayed as expected");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordStrengthHeaderPresent(),
