@@ -317,7 +317,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForRestartButtonToAppear() {
-        LOGGER.info("Waiting for  restart button to appear");
+        LOGGER.info("Waiting for restart button to appear");
         fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Restart button is not present")
                 .until(it -> getRestartButton().isPresent());
     }
