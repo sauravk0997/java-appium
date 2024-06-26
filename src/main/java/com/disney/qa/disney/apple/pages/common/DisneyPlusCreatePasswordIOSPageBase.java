@@ -91,7 +91,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
        return createNewPasswordPageHeader;
     }
 
-    private void openHyperlinkOnCreatePasswordPage(ExtendedWebElement link) {
+    private void openHyperlink(ExtendedWebElement link) {
         swipeInContainerTillElementIsPresent(null, primaryButton, 2, Direction.UP);
         if (link.isDisplayed()) {
             Point location = link.getLocation();
@@ -112,18 +112,18 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public void openPrivacyPolicyLink() {
-        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
     }
 
     public void openSubscriberAgreement() {
-        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
     }
 
     public void openCookiesPolicyLink() {
-        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
     }
 
     public void openEuPrivacyLink() {
-        openHyperlinkOnCreatePasswordPage(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
     }
 }
