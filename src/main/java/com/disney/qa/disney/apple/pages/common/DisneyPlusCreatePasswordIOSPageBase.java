@@ -14,6 +14,7 @@ import java.util.Map;
 public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase{
 
     protected ExtendedWebElement createPasswordHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PASSWORD_SCREEN_TITLE.getText()));
+    protected ExtendedWebElement createNewPasswordPageHeader = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -83,8 +84,11 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isCreateNewPasswordPageOpened() {
-        String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
-        return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
+        return createNewPasswordPageHeader.isElementPresent();
+    }
+
+    public ExtendedWebElement getCreateNewPasswordPageHeader() {
+       return createNewPasswordPageHeader;
     }
 
     private void openHyperlink(ExtendedWebElement link) {
