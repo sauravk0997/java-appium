@@ -145,7 +145,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMarketingTextDisplayed(),
                 "Yes, I would like to receive updates text was not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isAgreeContinueTextDisplayed(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
                 "By clicking “Agree & Continue,” you agree to the Disney Terms text was not displayed as expected");
 
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
