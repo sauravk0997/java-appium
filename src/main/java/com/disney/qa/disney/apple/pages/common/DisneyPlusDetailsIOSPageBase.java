@@ -1092,21 +1092,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public void verifyRatingsInDetailsFeaturedArea(String rating, String ratingsDictionaryKey, SoftAssert sa){
+    public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in featured area");
         Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
-        sa.assertTrue(isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on details page featured area.");
+        sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on details page featured area.");
     }
 
-    public void validateRatingsInDetailsTab(String rating, String ratingsDictionaryKey, SoftAssert sa) {
+    public void validateRatingsInDetailsTab(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in details tab");
-        if(!getDetailsTab().isPresent()) {
+        if (!getDetailsTab().isPresent()) {
             swipe(getDetailsTab(), 2);
         }
         getDetailsTab().click();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);
         }
-        sa.assertTrue(getTypeOtherContainsLabel(getRatingsDictValue(ratingsDictionaryKey)).isPresent(), rating + " Rating was not found on details tab area");
+        sa.assertTrue(getTypeOtherContainsLabel(rating).isPresent(), rating + " Rating was not found on details tab area");
     }
 }

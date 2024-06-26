@@ -18,6 +18,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENT
 public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
+    private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -65,7 +66,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPassword(getAccount());
-        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -92,7 +93,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(changePasswordPage.isOpened(),
                 "Change Password screen did not open after submitting OTP");
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -103,9 +104,36 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         launchR21Content();
-        Assert.assertTrue(verifyAgePage.isOpened(), "Verify Age page was not opened");
         verifyAgePage.clickCancelButton();
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74656"})
+    @Test(description = "R21 - Create Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINBackButtonOnDOBScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        //Verify Continue button on alert
+        verifyAgePage.clickCancelButton();
+        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed");
+        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        //Verify Not Now button on alert
+        verifyAgePage.clickCancelButton();
+        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed");
+        verifyAgeDOBPage.clickDefaultAlertBtn();
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
