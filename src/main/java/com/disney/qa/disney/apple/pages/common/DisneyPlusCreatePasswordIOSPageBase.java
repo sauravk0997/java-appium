@@ -119,5 +119,4 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     public boolean isConsentLegalTextDisplayed() {
         return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
     }
-
 }
