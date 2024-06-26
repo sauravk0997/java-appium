@@ -208,9 +208,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    //TODO this test will be fix when new flows are updated QAA-14765
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90644", "XCDQA-90646"})
-    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {"Onboarding"}, enabled = false)
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90644"})
+    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {"Onboarding"})
     public void noCodeEntryError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -218,8 +217,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-
-        String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -231,19 +228,41 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having trouble loggin in page did not launch");
 
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
-        sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getErrorMessageLabelText(), otpErrorMessage);
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
 
-        disneyPlusAppleTVForgotPasswordPage.clickMenu();
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90646"})
+    @Test(description = "Attempting to continue entering a wrong code should result in an error", groups = {"Onboarding"})
+    public void invalidCodeEntryError() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
+
+        selectAppleUpdateLaterAndDismissAppTracking();
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+
+        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
+
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having trouble loggin in page did not launch");
 
         disneyPlusAppleTVForgotPasswordPage.enterOTP("223344");
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
-        sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getErrorMessageLabelText(), otpErrorMessage);
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
 
         sa.assertAll();
     }

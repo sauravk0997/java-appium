@@ -95,7 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            LOGGER.info("Exception occurred while scanning api for the desired rating: {}", e.getMessage());
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
         }
     }
 
@@ -151,11 +151,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 }
             }
         }
-        if (contentTitle != null && !contentTitle.isBlank()) {
-            return contentTitle;
-        } else {
-            throw new ObjectNotFoundException("No titles returned from API.");
-        }
+        return null;
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
@@ -180,7 +176,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
-        detailsPage.waitForWatchlistButtonToAppear();
+        detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
@@ -217,7 +213,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
-        detailsPage.waitForWatchlistButtonToAppear();
+        detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
