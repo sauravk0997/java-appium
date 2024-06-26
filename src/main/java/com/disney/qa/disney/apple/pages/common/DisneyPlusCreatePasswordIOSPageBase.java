@@ -22,14 +22,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     protected ExtendedWebElement emailInUseText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FAT_FINGER_EMAIL.getText()));
 
-    public boolean isCheckBoxHeaderDisplayed() {
-        return getTextViewByName(CONSENT_TEXT_HEADER).isElementPresent();
-    }
-
-    public boolean isAgreeContinueTextDisplayed() {
-        return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
-    }
-
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement showHideEyeIcon;
 
@@ -120,6 +112,14 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     public boolean isCreateNewPasswordPageOpened() {
         String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
         return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
+    }
+
+    public boolean isCheckBoxHeaderDisplayed() {
+        return getTextViewByName(CONSENT_TEXT_HEADER).isElementPresent();
+    }
+
+    public boolean isAgreeContinueTextDisplayed() {
+        return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
     }
 
 }
