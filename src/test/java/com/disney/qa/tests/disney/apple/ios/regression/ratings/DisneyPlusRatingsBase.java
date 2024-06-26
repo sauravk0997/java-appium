@@ -67,6 +67,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
+        getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
