@@ -603,8 +603,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    //TODO add avatar recognition once training is complete
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065", "XCDQA-91067"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065"})
     @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {"Onboarding"})
     public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
         SoftAssert sa = new SoftAssert();
@@ -613,7 +612,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         ArrayList<Container> collections = disneyBaseTest.getExploreAPIPageContent(disneyBaseTest.HOME_PAGE_ID);
-        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(2).getId(), 50);
+        // Recommended collection titles are been listed
+        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(1).getId(), 50);
 
         getAccountApi().patchProfileAvatar(getAccount(), getAccount().getProfileId(), R.TESTDATA.get("disney_darth_maul_avatar_id"));
 

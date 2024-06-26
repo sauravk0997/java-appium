@@ -1459,15 +1459,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
-    public String getRatingsDictValue(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB) || ratingsDictionaryKey.contains(MPAA_AND_TVPG)) {
-            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
-        } else {
-            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey);
-        }
-    }
-    public boolean isRatingPresent(String ratingsDictionaryKey) {
-        return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
+    public boolean isRatingPresent(String rating) {
+        return getStaticTextByLabelContains(rating).isPresent();
     }
 
     public ExtendedWebElement getNavBackArrow() {
