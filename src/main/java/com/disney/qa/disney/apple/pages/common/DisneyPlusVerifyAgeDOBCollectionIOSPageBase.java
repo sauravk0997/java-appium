@@ -30,16 +30,13 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         verifyAgeButton.click();
     }
 
-<<<<<<< Updated upstream
     public boolean isBackModalDisplayed() {
         return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
 
-=======
     public void enterDOB(String dob) {
         getDateTextField().type(dob);
         clickVerifyAgeButton();
     }
->>>>>>> Stashed changes
 }
