@@ -95,7 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            LOGGER.info("Exception occurred while scanning api for the desired rating: {}", e.getMessage());
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s",e.getMessage()));
         }
     }
 
