@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.asserts.SoftAssert;
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -26,6 +27,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
+    String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -80,13 +82,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
+        episodicRating = null;
         try {
             String apiContentTitle;
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
             for (String brandID : brandIDList) {
                 LOGGER.info("Searching for content in brand collection: {}", brandID);
                 apiContentTitle = getContentForBrand(brandID, rating, locale, language);
-                if (apiContentTitle!= null && !apiContentTitle.isEmpty()) {
+                if (apiContentTitle != null && !apiContentTitle.isEmpty()) {
                     break;
                 }
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
@@ -118,7 +121,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         return getContentTitleFor(disneyCollectionIDs, rating, locale, language);
     }
 
-    private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
+    private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
@@ -128,28 +131,44 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                         byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
                         LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
                         contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
-                        if (!(getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0).getType().equals(EPISODES))) {
-                            isMovie = true;
+                        Container pageContainer = getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                        if (pageContainer != null) {
+                            if (!pageContainer.getType().equals(EPISODES)) {
+                                isMovie = true;
+                            } else {
+                                if (pageContainer.getSeasons().get(0) != null) {
+                                    List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
+                                    if (seasonItems.get(0) != null) {
+                                        episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                    } else {
+                                        throw new NullPointerException("Episodic rating is null");
+                                    }
+                                }
+                            }
+                            return contentTitle;
                         }
-                        return contentTitle;
                     }
                 }
             }
         }
-        return null;
-    }
-
-    public void confirmRegionalRatingsDisplays(String rating, String ratingsDictionaryKey) {
-        if (isMovie) {
-            LOGGER.info("Testing against Movie content.");
-            validateMovieContent(rating, ratingsDictionaryKey);
+        if (contentTitle != null && !contentTitle.isBlank()) {
+            return contentTitle;
         } else {
-            LOGGER.info("Testing against Series content.");
-            validateSeriesContent(rating, ratingsDictionaryKey);
+            throw new ObjectNotFoundException("No titles returned from API.");
         }
     }
 
-    public void validateSeriesContent(String rating, String ratingsDictionaryKey) {
+    public void confirmRegionalRatingsDisplays(String rating) {
+        if (isMovie) {
+            LOGGER.info("Testing against Movie content.");
+            validateMovieContent(rating);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating);
+        }
+    }
+
+    public void validateSeriesContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -159,11 +178,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
-
-        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
+        videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForWatchlistButtonToAppear();
-        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
+        detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
         detailsPage.getEpisodesTab().click();
@@ -174,11 +192,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();
-        sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on series downloads.");
+        sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
 
-    public void validateMovieContent(String rating, String ratingsDictionaryKey) {
+    public void validateMovieContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -195,12 +213,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
-        sa.assertTrue(downloads.isRatingPresent(ratingsDictionaryKey), rating + " Rating was not found on movie downloads.");
+        sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
-        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, ratingsDictionaryKey, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, ratingsDictionaryKey, sa, detailsPage);
+        detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
+        videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
         detailsPage.waitForWatchlistButtonToAppear();
-        detailsPage.validateRatingsInDetailsTab(rating, ratingsDictionaryKey, sa);
+        detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
 }
