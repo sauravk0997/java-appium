@@ -74,7 +74,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.OCTOBER, "23", "1923");
         addProfile.chooseGender();
         addProfile.clickSave();
-        addProfile.clickWelchNotNow();
+        addProfile.clickSecondaryButton();
 
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
