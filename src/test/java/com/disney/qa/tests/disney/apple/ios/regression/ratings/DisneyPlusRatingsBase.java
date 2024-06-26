@@ -95,7 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s",e.getMessage()));
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
         }
     }
 
@@ -151,11 +151,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 }
             }
         }
-        if (contentTitle != null && !contentTitle.isBlank()) {
-            return contentTitle;
-        } else {
-            throw new ObjectNotFoundException("No titles returned from API.");
-        }
+        return null;
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
