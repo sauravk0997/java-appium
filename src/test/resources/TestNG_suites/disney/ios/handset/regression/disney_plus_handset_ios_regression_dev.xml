@@ -56,6 +56,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusNonUSMoreMenuProfilesTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Deep Links" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
+        </classes>
+    </test>
     <test verbose="1" name="DisneyPlus iOS Handset Details" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest"/>
@@ -97,7 +102,6 @@
     <test verbose="1" name="DisneyPlus iOS Handset Hulk2" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkWatchlistTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
         </classes>
