@@ -70,9 +70,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         avatars[0].click();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
 
-        if (getAccount().getProfileLang().equalsIgnoreCase("en")) {
-            addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1923");
-        }
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(DateHelper.Month.OCTOBER, "23", "1923");
+        addProfile.chooseGender();
+        EditProfileIOSPageBase.clickDoneBtn();
+
         sa.assertTrue(EditProfileIOSPageBase.isServiceEnrollmentAccessFullCatalogPagePresent(), "Not on serviceEnrollmentAccessFullCatalog page");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
 
