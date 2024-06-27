@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.Date;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
@@ -160,10 +161,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.enterDOB(DateHelper.Month.JANUARY, "11", "1990");
         Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
 
-        pinPage.getTypeKey("1").click();
-        pinPage.getTypeKey("2").click();
-        pinPage.getTypeKey("3").click();
-        pinPage.getTypeKey("4").click();
+        IntStream.range(0, 4).forEach(i -> {
+            pinPage.getTypeKey(String.valueOf(i)).click();
+                });
         pressByElement(pinPage.getR21SetPinButton(), 1);
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
 
