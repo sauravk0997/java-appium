@@ -50,7 +50,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     public boolean isInvalidDOBMessageDisplayed() { return labelError.isPresent(); }
 
     public void enterDOB(String dob) {
-        getDateTextField().type(dob);
+        dateTextField.type(dob);
         confirmButton.click();
     }
 }

@@ -333,9 +333,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
 
-    @ExtendedFindBy(accessibilityId = "dateTextField")
-    private ExtendedWebElement dateTextField;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
 
@@ -1501,10 +1498,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.fail(String.format("Index out of bounds: %s", e));
         }
         return collectionRowInView;
-    }
-
-    public ExtendedWebElement getDateTextField() {
-        return dateTextField;
     }
 
     public ExtendedWebElement getTypeKey(String num) {
