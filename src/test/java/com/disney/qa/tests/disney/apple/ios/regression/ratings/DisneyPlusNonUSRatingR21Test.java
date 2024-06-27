@@ -149,10 +149,10 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
-        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page not opened");
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
-        sa.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        sa.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
         verifyAgePage.clickDefaultAlertBtn();
         homePage.waitForHomePageToOpen();

@@ -44,7 +44,7 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
         cancelButton.click();
     }
 
-    public boolean isVerifyAgeModalDisplayed() {
+    public boolean isAgeModalDisplayed() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_HEADER.getText())).isPresent();
     }
