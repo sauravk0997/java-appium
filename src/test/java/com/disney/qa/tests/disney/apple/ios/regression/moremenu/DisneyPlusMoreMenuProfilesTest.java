@@ -51,10 +51,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66772"})
-    @Test(description = "Ariel: Profiles - Edit Profile - Choose an Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyAvatarSelection() {
+    @Test(description = "Ariel: Profiles - Add Profile - Choose an Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileAvatarSelection() {
         DisneyPlusMoreMenuIOSPageBase MoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase EditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -76,6 +75,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSave();
         addProfile.clickSecondaryButton();
 
+        Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), "More Menu is not opened");
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
@@ -90,6 +90,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUserCanChangeAvatar() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
@@ -111,7 +112,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
                 "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
-        disneyPlusEditProfileIOSPageBase.clickSaveProfileButton();
+        addProfile.clickSave();
 
         sa.assertAll();
     }
