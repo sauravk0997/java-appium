@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.zebrunner.agent.core.annotation.TestLabel;
