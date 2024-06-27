@@ -2,7 +2,7 @@
 <suite verbose="1" name="ios_handset_regression_rc" annotations="JDK" configfailurepolicy="continue" thread-count="10" parallel="tests">
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
+    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Dominguez-Prod-Ad-Hoc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_regression_rc"/>
     <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,eric.liao@disney.com,jared.e.watterworth@disney.com,vaibhavi.zaveri@disney.com"/>
