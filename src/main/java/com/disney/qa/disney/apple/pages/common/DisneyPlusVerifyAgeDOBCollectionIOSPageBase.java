@@ -38,7 +38,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     public ExtendedWebElement getR21Birthday() {
         String r21Format = getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText());
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         return getTextFieldValue(r21Format);
     }
 }
