@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase{
+public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     private static final String CONSENT_TEXT_HEADER = "Yes, I would like to receive updates, special offers and other information from Disney+ and The Walt Disney Family of Companies.";
 
@@ -51,13 +51,13 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordBodyTextDisplayed() {
-        String[] passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
+        String[] passwordBodyText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
         return getTextViewByName(passwordBodyText[0]).isElementPresent();
     }
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
-        String[] passwordBodyText=getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
-        String passwordBodySubText = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", email,"link_1" , "(edit)"));
+        String[] passwordBodyText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
+        String passwordBodySubText = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", email, "link_1", "(edit)"));
         return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 
