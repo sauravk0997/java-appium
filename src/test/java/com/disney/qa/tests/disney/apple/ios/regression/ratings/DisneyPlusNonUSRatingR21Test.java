@@ -154,6 +154,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"), 10);
         detailsPage.clickOpenButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
 
