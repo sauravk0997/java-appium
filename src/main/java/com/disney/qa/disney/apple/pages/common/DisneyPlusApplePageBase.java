@@ -130,6 +130,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement secureTextEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField")
     protected ExtendedWebElement textEntryField;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
+    private ExtendedWebElement textFieldValue;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
@@ -333,6 +335,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
+
+    @ExtendedFindBy(accessibilityId = "Clear text")
+    private ExtendedWebElement clearText;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1502,5 +1507,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void enterDOB(DateHelper.Month month, String day, String year) {
         setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
+    }
+
+    public ExtendedWebElement getClearText() {
+        return clearText;
+    }
+
+    public ExtendedWebElement getTextFieldValue(String value) {
+        return textFieldValue.format(value);
     }
 }

@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -158,6 +159,24 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         homePage.waitForHomePageToOpen();
         sa.assertTrue(homePage.isOpened(), "Home page did not open");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69893"})
+    @Test(description = "R21 - Create Pin - Date of Birth Format", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINDateOfBirthFormat() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Verify Age Date of Birth Page did not open.");
+
+        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
+        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
+        Assert.assertTrue(verifyAgeDOBPage.getR21Birthday().isPresent(), "R21 birthday format is not present.");
     }
 
     public void launchR21Content() {
