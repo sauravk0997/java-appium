@@ -172,7 +172,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         detailsPage.clickOpenButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open up for second content.");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for second R21 content.");
     }
 
     public void launchR21Content() {
