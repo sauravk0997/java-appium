@@ -334,6 +334,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
+    private ExtendedWebElement typeKey;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1496,6 +1499,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.fail(String.format("Index out of bounds: %s", e));
         }
         return collectionRowInView;
+    }
+
+    public ExtendedWebElement getTypeKey(String num) {
+        return typeKey.format(num);
     }
 
     //format: Month, day, year
