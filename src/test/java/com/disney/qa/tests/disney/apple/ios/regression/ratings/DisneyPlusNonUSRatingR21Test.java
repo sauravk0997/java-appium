@@ -139,17 +139,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
-//            launchR21Content();
-//        verifyAgePage.clickIAm21PlusButton();
-//        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
-//        passwordPage.enterPassword(getAccount());
-//        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Verify Age Date of Birth Page did not open.");
-//        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
-//        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
-//        pause(5);
-//        System.out.println(getDriver().getPageSource());
-//        Assert.assertTrue(verifyAgeDOBPage.isR21DateOfBirthFormatPresent(), "R21 Date of birth format was not found.");
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69777"})
     @Test(description = "R21 - Playback - Video Player - Play Another R21 Content", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21VideoPlayerTwoContents() {

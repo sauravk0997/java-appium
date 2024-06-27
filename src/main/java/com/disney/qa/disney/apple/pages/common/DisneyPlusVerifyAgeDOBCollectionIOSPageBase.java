@@ -36,12 +36,6 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
 
-//    public void enterDOB(String dob) {
-////        getDateTextField().type(dob);
-////        clickVerifyAgeButton();
-//
-//    }
-
     public void enterDOB(DateHelper.Month month, String day, String year) {
         setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
