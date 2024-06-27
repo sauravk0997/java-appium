@@ -90,7 +90,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUserCanChangeAvatar() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
@@ -112,7 +111,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
                 "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
-        addProfile.clickSave();
+        disneyPlusEditProfileIOSPageBase.clickDone();
 
         sa.assertAll();
     }
