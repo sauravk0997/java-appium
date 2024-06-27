@@ -5,11 +5,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
-import java.util.Locale;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApplePageBase {
@@ -20,9 +15,6 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     @ExtendedFindBy(accessibilityId = "verifyAgeButton")
     private ExtendedWebElement verifyAgeButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"MM/DD/YYYY\"`]")
-    private ExtendedWebElement monthDayYearBirthdayTextField;
 
     //FUNCTIONS
     public DisneyPlusVerifyAgeDOBCollectionIOSPageBase(WebDriver driver) {
@@ -46,7 +38,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     public ExtendedWebElement getR21Birthday() {
         String r21Format = getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText());
         return getTextFieldValue(r21Format);
     }
 }
