@@ -169,6 +169,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         videoPlayer.clickBackButton();
         launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"), 10);
+        detailsPage.clickOpenButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open up for second content.");
