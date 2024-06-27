@@ -387,6 +387,8 @@ public enum DictionaryKeys {
     PROFILE_SETTINGS_MATURITY_RATING_LABEL("profile_settings_maturity_rating_label"),
     PROFILE_SETTINGS_KIDPROOF_EXIT_LABEL("profile_settings_kidproofexit_label"),
     PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER("profile_settings_personal_information_header"),
+    R21_CREATE_PIN_CREATE_PIN("r21_createpin_createpin"),
+    R21_CREATE_PIN_SET_PIN("r21_createpin_setpin"),
     R21_VERIFY_AGE_CANCEL_MODAL("r21_back_youmust_modal"),
     RATING_MDA_R21_DESCRIPTION("rating_mda_r21_description"),
     RATING_MPAA_AND_TVPG_PG_13("rating_mpaaandtvpg_pg-13"),

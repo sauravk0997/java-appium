@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -20,6 +21,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
+    private static final String NEW_PROFILE_PIN = "1234";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -137,6 +139,17 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+//            launchR21Content();
+//        verifyAgePage.clickIAm21PlusButton();
+//        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+//        passwordPage.enterPassword(getAccount());
+//        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Verify Age Date of Birth Page did not open.");
+//        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
+//        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
+//        pause(5);
+//        System.out.println(getDriver().getPageSource());
+//        Assert.assertTrue(verifyAgeDOBPage.isR21DateOfBirthFormatPresent(), "R21 Date of birth format was not found.");
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69777"})
     @Test(description = "R21 - Playback - Video Player - Play Another R21 Content", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21VideoPlayerTwoContents() {
@@ -145,12 +158,26 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+
         passwordPage.enterPassword(getAccount());
-        verifyAgeDOBPage.enterDOB(ADULT_DOB);
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), "Verify Age Date of Birth Page did not open.");
+
+        verifyAgeDOBPage.enterDOB(DateHelper.Month.JANUARY, "11", "1990");
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
+
+        pinPage.getTypeKey("1").click();
+        pinPage.getTypeKey("2").click();
+        pinPage.getTypeKey("3").click();
+        pinPage.getTypeKey("4").click();
+        pressByElement(pinPage.getR21SetPinButton(), 1);
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
+
+        videoPlayer.clickBackButton();
         launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"), 10);
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open up for second content.");
     }

@@ -176,6 +176,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicOtherFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicOtherFindByLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label CONTAINS \"%s\"`][%s]")
+    protected ExtendedWebElement rowOtherContainsLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name CONTAINS \"%s\"`][%s]")
+    protected ExtendedWebElement rowOtherContainsName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicOtherFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
@@ -335,6 +339,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "dateTextField")
     private ExtendedWebElement dateTextField;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
+    private ExtendedWebElement typeKey;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -559,6 +566,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicRowButtonLabel.format(label, rowNum);
     }
 
+    public ExtendedWebElement getOtherContainsLabel(String label, int rowNum) {
+        return rowOtherContainsName.format(label, rowNum);
+    }
     public ExtendedWebElement dynamicTypeLinkRowLabel(String label, int num) {
         return typeLinkRowLabel.format(label, num);
     }
@@ -1502,5 +1512,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getDateTextField() {
         return dateTextField;
+    }
+
+    public ExtendedWebElement getTypeKey(String num) {
+        return typeKey.format(num);
     }
 }
