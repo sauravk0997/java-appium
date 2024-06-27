@@ -44,6 +44,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWO = "2";
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
+    private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -75,7 +76,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSave();
         addProfile.clickSecondaryButton();
 
-        Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), "More Menu is not opened");
+        Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
@@ -96,6 +97,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         ExtendedWebElement[] avatars;
         setAppToHomeScreen(getAccount());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
+        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
 
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
