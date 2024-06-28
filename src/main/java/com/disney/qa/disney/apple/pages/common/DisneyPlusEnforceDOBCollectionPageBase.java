@@ -32,12 +32,6 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
         return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
     }
 
-    //format: Month, day, year
-    public void enterDOB(DateHelper.Month month, String day, String year) {
-        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
-        dismissPickerWheelKeyboard();
-    }
-
     /**
      * Click Log Out button
      */
