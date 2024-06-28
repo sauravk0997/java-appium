@@ -14,12 +14,12 @@
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
     <!-- TODO: This needs to be update to not collide with iOS Handset regression schedule -->
-    <!-- <parameter name="scheduling" value="H 0 * * *"/> -->
+    <parameter name="scheduling" value="H 0 * * 6,0"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="jenkinsBuild" value="3.4.0.69898"/>
+    <parameter name="jenkinsBuild" value="3.5.0.70537"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76397"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76553"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset APAC Ratings">
         <classes>

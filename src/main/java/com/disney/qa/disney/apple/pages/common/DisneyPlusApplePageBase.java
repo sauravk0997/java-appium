@@ -8,6 +8,7 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
@@ -138,6 +139,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
+    @ExtendedFindBy(accessibilityId = "Password")
+    protected ExtendedWebElement passwordFieldHint;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
     protected ExtendedWebElement saveBtn;
     @ExtendedFindBy(accessibilityId = "dismissButton")
@@ -191,8 +194,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement headlineSubtitle;
     @ExtendedFindBy(accessibilityId = "labelErrorMessage")
     protected ExtendedWebElement labelError;
-    @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
+    @ExtendedFindBy(accessibilityId = "hidePasswordDisneyAuth")
     protected ExtendedWebElement showHidePasswordIndicator;
+    @ExtendedFindBy(accessibilityId = "showPasswordDisneyAuth")
+    protected ExtendedWebElement showPasswordIndicator;
     @ExtendedFindBy(accessibilityId = "collectionHeadlineTitle")
     protected ExtendedWebElement collectionHeadlineTitle;
     @ExtendedFindBy(accessibilityId = "Email")
@@ -328,6 +333,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
+    private ExtendedWebElement typeKey;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1452,15 +1460,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
-    public String getRatingsDictValue(String ratingsDictionaryKey) {
-        if(ratingsDictionaryKey.contains(APAC) || ratingsDictionaryKey.contains(KMRB) || ratingsDictionaryKey.contains(MPAA_AND_TVPG)) {
-            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, ratingsDictionaryKey);
-        } else {
-            return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS, ratingsDictionaryKey);
-        }
-    }
-    public boolean isRatingPresent(String ratingsDictionaryKey) {
-        return getStaticTextByLabelContains(getRatingsDictValue(ratingsDictionaryKey)).isPresent();
+    public boolean isRatingPresent(String rating) {
+        return getStaticTextByLabelContains(rating).isPresent();
     }
 
     public ExtendedWebElement getNavBackArrow() {
@@ -1498,5 +1499,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.fail(String.format("Index out of bounds: %s", e));
         }
         return collectionRowInView;
+    }
+
+    public ExtendedWebElement getTypeKey(String num) {
+        return typeKey.format(num);
+    }
+
+    //format: Month, day, year
+    public void enterDOB(DateHelper.Month month, String day, String year) {
+        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
+        dismissPickerWheelKeyboard();
     }
 }

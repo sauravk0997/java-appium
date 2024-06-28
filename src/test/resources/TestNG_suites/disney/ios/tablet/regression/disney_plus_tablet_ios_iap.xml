@@ -21,9 +21,4 @@
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Group" value="Ariel-Purchase"/>
 <!--    <parameter name="scheduling" value="30 4 * * 6-7"/>-->
-    <test verbose="1" name="DisneyPlus iOS Tablet IAP" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusIAPStandardPurchaseTest"/>
-        </classes>
-    </test>
 </suite>

@@ -1,5 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -21,11 +23,16 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     @Override
     public boolean isOpened() {
-        return verifyAgeDOBPage.isPresent();
+        return getStaticTextByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_PAGE_HEADER.getText())).isPresent(SHORT_TIMEOUT);
     }
 
     public void clickVerifyAgeButton() {
         verifyAgeButton.click();
     }
 
+    public boolean isBackModalDisplayed() {
+        return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
+    }
 }

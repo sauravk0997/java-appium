@@ -8,7 +8,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -16,7 +15,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.awt.image.BufferedImage;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -31,13 +29,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                     "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
                     "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
 
-    @DataProvider(name = "huluDeepLinks")
-    public Object[][] huluDeepLinks() {
-        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_abc_network_deeplink")},
-                {R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink")}
-        };
-    }
-
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_unavailable_deeplink")},
@@ -45,7 +36,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         };
     }
 
-    @Maintainer("gkrishna1")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
     @Test(description = "Brand Row Set includes Hulu Tile", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluBrandTileOnHome() {
@@ -124,42 +114,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         }
     }
 
-    @Maintainer("mparra5")
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(description = "New URL Structure - Hulu Hub - Network Page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluDeepLinks")
-    public void verifyHulkDeepLinkNewURLStructure(String deepLink) {
-        String network = "ABC";
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
-
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
-        // Get Network logo by deeplink access
-        BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(network));
-        homePage.clickHomeIcon();
-
-        homePage.tapHuluBrandTile();
-        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
-        huluPage.clickOnNetworkLogo(network);
-
-        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
-        pause(5);
-        // Get Network logo by app navigation
-        BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
-
-        sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
-                "The user doesn't land on the given "+network+" network page");
-
-        sa.assertAll();
-    }
-
-    @Maintainer("mparra5")
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
     @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {

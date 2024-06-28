@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
@@ -13,20 +12,34 @@ public class DisneyPlusNonUSRatingsAPACTest extends DisneyPlusRatingsBase {
     @Test(description = "Rating System - APAC Proprietary - G", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPACG() {
         ratingsSetup(G.getContentRating(), JAPAN_LANG, JAPAN);
-        confirmRegionalRatingsDisplays(G.getContentRating(), DictionaryKeys.RATING_APAC_G.getText());
+        confirmRegionalRatingsDisplays(G.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75202"})
     @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPACPG() {
         ratingsSetup(PG.getContentRating(), JAPAN_LANG, JAPAN);
-        confirmRegionalRatingsDisplays(PG.getContentRating(), DictionaryKeys.RATING_APAC_PG.getText());
+        confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
-    @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
+    @Test(description = "Rating System - APAC Proprietary - 12", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPAC12() {
         ratingsSetup(TWELVE_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
-        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating(), DictionaryKeys.RATING_APAC_12.getText());
+        confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @Test(description = "Rating System - APAC Proprietary - 15", groups = {"NonUS-Ratings"})
+    public void verifyRatingSystemAPAC15() {
+        ratingsSetup(FIFTEEN_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(FIFTEEN_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @Test(description = "Rating System - APAC Proprietary - 18", groups = {"NonUS-Ratings"})
+    public void verifyRatingSystemAPAC18() {
+        ratingsSetup(EIGHTEEN_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
 }
