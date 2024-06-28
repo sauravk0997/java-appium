@@ -211,10 +211,10 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         launchR21Content();
         verifyAgePage.clickNoButton();
-        Assert.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
         Assert.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
         verifyAgePage.clickCancelButton();
-        Assert.assertTrue(verifyAgePage.isVerifyAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
         verifyAgePage.clickDefaultAlertBtn();
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
