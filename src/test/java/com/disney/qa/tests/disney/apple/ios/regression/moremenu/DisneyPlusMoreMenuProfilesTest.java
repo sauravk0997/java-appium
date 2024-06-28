@@ -71,12 +71,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
 
         addProfile.enterProfileName(SECONDARY_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.OCTOBER, "23", "1923");
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
         addProfile.clickSave();
         addProfile.clickSecondaryButton();
-
         Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
+
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
@@ -92,7 +92,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-
         ExtendedWebElement[] avatars;
         setAppToHomeScreen(getAccount());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
