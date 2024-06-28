@@ -8,6 +8,7 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
@@ -332,6 +333,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
+    private ExtendedWebElement typeKey;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1495,5 +1499,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.fail(String.format("Index out of bounds: %s", e));
         }
         return collectionRowInView;
+    }
+
+    public ExtendedWebElement getTypeKey(String num) {
+        return typeKey.format(num);
+    }
+
+    //format: Month, day, year
+    public void enterDOB(DateHelper.Month month, String day, String year) {
+        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
+        dismissPickerWheelKeyboard();
     }
 }

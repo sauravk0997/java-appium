@@ -23,9 +23,23 @@ public class DisneyPlusNonUSRatingsAPACTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
-    @Test(description = "Rating System - APAC Proprietary - PG", groups = {"NonUS-Ratings"})
+    @Test(description = "Rating System - APAC Proprietary - 12", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemAPAC12() {
         ratingsSetup(TWELVE_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @Test(description = "Rating System - APAC Proprietary - 15", groups = {"NonUS-Ratings"})
+    public void verifyRatingSystemAPAC15() {
+        ratingsSetup(FIFTEEN_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(FIFTEEN_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @Test(description = "Rating System - APAC Proprietary - 18", groups = {"NonUS-Ratings"})
+    public void verifyRatingSystemAPAC18() {
+        ratingsSetup(EIGHTEEN_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
 }

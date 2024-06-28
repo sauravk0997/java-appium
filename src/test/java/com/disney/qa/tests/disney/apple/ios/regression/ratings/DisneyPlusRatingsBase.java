@@ -37,10 +37,20 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -67,6 +77,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
+        getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
@@ -128,9 +139,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             for (Item item : disneyCollectionItems) {
                 if (item.getVisuals().getMetastringParts() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                        byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
-                        LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
-                        contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
+                        LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                        contentTitle = item.getVisuals().getTitle();
                         Container pageContainer = getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                         if (pageContainer != null) {
                             if (!pageContainer.getType().equals(EPISODES)) {
