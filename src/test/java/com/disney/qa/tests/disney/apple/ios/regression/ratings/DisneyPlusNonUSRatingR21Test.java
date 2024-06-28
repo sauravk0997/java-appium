@@ -207,6 +207,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @Test(description = "R21 - Create Pin - Date of Birth Format", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINDateOfBirthFormat() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        String r21Format = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -218,7 +219,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
-        Assert.assertTrue(verifyAgeDOBPage.getR21Birthday().isPresent(), "R21 birthday format is not present.");
+        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
     }
 
     public void launchR21Content() {
