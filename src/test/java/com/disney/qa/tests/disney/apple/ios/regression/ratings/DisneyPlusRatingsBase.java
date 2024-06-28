@@ -32,7 +32,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
     static final String JAPAN_LANG = "ja";
-    static final String KOREAN_LANG = "KO";
+    static final String KOREAN_LANG = "ko";
     static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
 
