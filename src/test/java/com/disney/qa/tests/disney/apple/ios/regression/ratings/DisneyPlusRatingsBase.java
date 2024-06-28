@@ -139,9 +139,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             for (Item item : disneyCollectionItems) {
                 if (item.getVisuals().getMetastringParts() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                        byte[] bytePayload = item.getVisuals().getTitle().getBytes(StandardCharsets.ISO_8859_1);
-                        LOGGER.info("Title returned: " + new String(bytePayload, StandardCharsets.UTF_8));
-                        contentTitle = (new String(bytePayload, StandardCharsets.UTF_8));
+                        LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                        contentTitle = item.getVisuals().getTitle();
                         Container pageContainer = getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                         if (pageContainer != null) {
                             if (!pageContainer.getType().equals(EPISODES)) {
