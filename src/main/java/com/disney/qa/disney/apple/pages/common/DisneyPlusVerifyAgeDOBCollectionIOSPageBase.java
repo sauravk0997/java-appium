@@ -35,4 +35,9 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
+
+    public boolean isInvalidDOBErrorMessageDisplayed() {
+        return getStaticTextByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_INVALID_ERROR_MESSAGE.getText())).isPresent();
+    }
 }
