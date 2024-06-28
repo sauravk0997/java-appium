@@ -39,7 +39,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Turkey AI Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingAITest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingTurkeyAITest"/>
         </classes>
     </test>
 </suite>
