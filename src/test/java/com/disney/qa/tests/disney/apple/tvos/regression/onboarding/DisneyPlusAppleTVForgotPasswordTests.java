@@ -106,21 +106,21 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         EmailApi emailApi = new EmailApi();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
+        DisneyAccount disneyOTPAccount = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-        if(!disneyPlusAppleTVPasswordPage.isOpened()) { disneyPlusAppleTVPasswordPage.clickContinueBtn(); }
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyOTPAccount.getEmail());
+        if(!disneyPlusAppleTVLoginPage.isContinueButtonDisplayed()) { disneyPlusAppleTVPasswordPage.clickContinueBtn(); }
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = emailApi.getStartTime();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
-        String otp = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
+        String otp = emailApi.getDisneyOTP(disneyOTPAccount.getEmail(), startTime);
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
         
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
