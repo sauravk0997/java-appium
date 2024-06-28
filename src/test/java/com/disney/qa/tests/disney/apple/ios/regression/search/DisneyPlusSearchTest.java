@@ -254,7 +254,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             if (collectionName.isPresent()) {
                 //To get the all movie/series title under collection from API
                 if (item.getItems().size() > 0) {
-                    String titleFromCollection = getUtf8MetaString(item.getItems().get(0).getVisuals().getTitle());
+                    String titleFromCollection = item.getItems().get(0).getVisuals().getTitle();
                     swipePageTillElementPresent(originalsPage.getCollection(item.getId()), 2, null, Direction.UP, 500);
                     originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), item.getId());
                     sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + collectionName.getText() + " collection");
