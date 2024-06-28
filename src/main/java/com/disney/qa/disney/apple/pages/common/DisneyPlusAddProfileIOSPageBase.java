@@ -199,7 +199,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickSave() {
-        dynamicBtnFindByNameContains.format("Save").click();
+        dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_SAVE.getText())).click();
     }
 
     /**
