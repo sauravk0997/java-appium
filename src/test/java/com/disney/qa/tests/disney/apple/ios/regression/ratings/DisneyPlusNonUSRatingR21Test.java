@@ -213,9 +213,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN125.getMonth(), Person.OLDERTHAN125.getDay(), Person.OLDERTHAN125.getYear());
+        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN125.getMonth(), Person.OLDERTHAN125.getDay(), "1810");
         verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(verifyAgeDOBPage.isInvalidDOBErrorMessageDisplayed(), "R21 pin page did not open.");
+        Assert.assertTrue(verifyAgeDOBPage.isInvalidDOBErrorMessageDisplayed(), "Invalid Date of birth message should display");
     }
 
     public void launchR21Content() {
