@@ -101,7 +101,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         welcomePage.clickSignUpButton();
         pause(3);
         getScreenshots("EnterEmail");
-        signUpPage.openPrivacyPolicyLink();
+        createPasswordPage.openPrivacyPolicyLink();
         pause(3);
         getScreenshots("PrivacyPolicy");
         legalPage.getBackArrow().click();
@@ -113,7 +113,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         boolean checkboxRequired = new DisneyGlobalUtils().getBooleanFromCountries(getLocalizationUtils().getLocale(), "isEmailCheckBoxOptInCountry");
 
         if (!getLocalizationUtils().isSubscriberAgreementRequired() && !checkboxRequired) {
-            signUpPage.openSubscriberAgreement();
+            createPasswordPage.openSubscriberAgreement();
             pause(3);
             getScreenshots("SubscriberAgreement");
             legalPage.getBackArrow().click();
