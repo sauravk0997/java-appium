@@ -83,6 +83,12 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.BTN_SET_PROFILE_ENTRY_PIN.getText()));
     }
 
+    public ExtendedWebElement getR21SetPinButton() {
+        return getDynamicAccessibilityId(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.R21_CREATE_PIN_SET_PIN.getText()));
+    }
+
     public ExtendedWebElement getAccountPasswordRequiredMessaging() {
         return getDynamicAccessibilityId(getDictionary()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -101,5 +107,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPinFieldNumberPresent(String number) {
         return getTypeOtherByLabel(number).isPresent();
+    }
+
+    public boolean isR21PinPageOpen() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_CREATE_PIN_CREATE_PIN.getText())).isPresent();
     }
 }

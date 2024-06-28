@@ -1,5 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -31,10 +33,25 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickIAm21PlusButton() {
+        waitForPresenceOfAnElement(acceptMaturityButton);
         acceptMaturityButton.click();
+    }
+
+    public void clickNoButton() {
+        declineMaturityButton.click();
     }
 
     public void clickCancelButton() {
         cancelButton.click();
+    }
+
+    public boolean isAgeModalDisplayed() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_HEADER.getText())).isPresent();
+    }
+
+    public boolean isBrowseOtherTitlesButtonDisplayed() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).isPresent();
     }
 }

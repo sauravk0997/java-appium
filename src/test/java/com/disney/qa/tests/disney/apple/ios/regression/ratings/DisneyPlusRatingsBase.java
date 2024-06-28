@@ -37,10 +37,20 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -67,6 +77,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
+        getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
