@@ -35,10 +35,4 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
-
-    public ExtendedWebElement getR21Birthday() {
-        String r21Format = getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
-        return getTextFieldValue(r21Format);
-    }
 }
