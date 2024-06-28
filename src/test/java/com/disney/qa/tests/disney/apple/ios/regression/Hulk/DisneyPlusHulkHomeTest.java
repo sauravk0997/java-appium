@@ -105,7 +105,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
         //Click any title from collection
         try {
-            String titleFromCollection = getUtf8MetaString(collections.get(0).getItems().get(0).getVisuals().getTitle());
+            String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();
             huluPage.getTypeCellLabelContains(titleFromCollection).click();
             Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Detail page did not open");
             Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
