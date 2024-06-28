@@ -83,7 +83,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
                 "Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
         sa.assertAll();
-
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
