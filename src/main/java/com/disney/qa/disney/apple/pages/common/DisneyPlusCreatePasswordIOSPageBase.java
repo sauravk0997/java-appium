@@ -1,12 +1,12 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.testng.SkipException;
 
 import java.util.Map;
 
@@ -93,16 +93,16 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     private void openHyperlink(ExtendedWebElement link) {
         swipeInContainerTillElementIsPresent(null, primaryButton, 2, Direction.UP);
-        if (link.isDisplayed()) {
-            Point location = link.getLocation();
-            if (link.getSize().getWidth() > 150) {
-                var dimension = link.getSize();
-                tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
-            } else {
-                tap(location.getX(), location.getY() + 5);
-            }
+        if (!link.isDisplayed()) {
+            throw new ObjectNotFoundException("Link is not found on page");
+        }
+
+        Point location = link.getLocation();
+        if (link.getSize().getWidth() > 150) {
+            var dimension = link.getSize();
+            tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
         } else {
-            throw new SkipException("Link is not found on page");
+            tap(location.getX(), location.getY() + 5);
         }
     }
 
