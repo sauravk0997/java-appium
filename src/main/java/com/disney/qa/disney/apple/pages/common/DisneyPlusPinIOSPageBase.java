@@ -113,4 +113,14 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_CREATE_PIN_CREATE_PIN.getText())).isPresent();
     }
+
+    public boolean isR21PinPageCancelModalDisplayed() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_CREATE_PIN_CANCEL_MODAL_HEADER.getText())).isPresent();
+    }
+
+    public boolean isR21PinPageCancelModalSubHeaderDisplayed() {
+        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_CREATE_PIN_CANCEL_MODAL_SUBHEADER.getText())).isPresent();
+    }
 }
