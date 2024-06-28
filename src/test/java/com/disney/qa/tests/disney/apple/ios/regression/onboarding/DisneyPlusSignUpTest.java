@@ -121,8 +121,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMyDisneyLogoDisplayed(),
                 "MyDisney logo image should be displayed");
 
-        sa.assertEquals(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","3"),
-                "STEP 2 OF 3");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","3"),
+                "'STEP 2 OF 3' should be displayed");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
                 "'Create an account to continue' text should be displayed ");
