@@ -252,7 +252,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         clickElementAtLocation(doneBtn, 50, 50);
     }
 
-    public void clickDone() { dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+    public void clickDone() { dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
             DictionaryKeys.BTN_PROFILE_SETTINGS_DONE.getText())).click();
     }
 
