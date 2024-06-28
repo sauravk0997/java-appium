@@ -205,6 +205,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
     @Test(description = " R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
+        String invalidDate = "88/88/1210";
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -214,6 +215,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isInvalidDOBErrorMessageDisplayed(), "Invalid Date of birth message should display");
     }
 

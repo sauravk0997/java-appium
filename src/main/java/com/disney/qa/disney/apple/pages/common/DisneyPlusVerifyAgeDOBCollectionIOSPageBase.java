@@ -40,4 +40,9 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         return getStaticTextByLabel(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_INVALID_ERROR_MESSAGE.getText())).isPresent();
     }
+
+    public void submitInvalidDOB(String invalidDate) {
+        getTextEntryField().clear();
+        getTextEntryField().type(invalidDate);
+    }
 }
