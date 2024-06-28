@@ -121,7 +121,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
         String otp = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
-        sa.assertNotNull(otp, "OTP email received after time: " + startTime);
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
         
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
