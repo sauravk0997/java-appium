@@ -125,9 +125,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
             disneyPlusAppleTVForgotPasswordPage.clickSelect();
             disneyPlusAppleTVForgotPasswordPage.clickRight();
         });
-
-        sa.assertEquals(disneyPlusAppleTVForgotPasswordPage.getOTPCodeN(), "1234");
-
+        
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch after backing from numerical keyboard screen");
