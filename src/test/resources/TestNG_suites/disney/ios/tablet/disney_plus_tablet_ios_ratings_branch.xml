@@ -35,7 +35,7 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingR21Test"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet AI Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet Turkey AI Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingAITest"/>
         </classes>

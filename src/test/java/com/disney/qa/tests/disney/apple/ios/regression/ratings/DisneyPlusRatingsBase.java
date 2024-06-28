@@ -11,6 +11,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
+import org.testng.*;
 import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
@@ -192,7 +193,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
         //ratings are shown on downloaded content
         if(!detailsPage.getEpisodesTab().isPresent()) {
-            swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500);
+            Assert.assertTrue(swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500), "Couldn't swipe to Episode tab");
         }
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
