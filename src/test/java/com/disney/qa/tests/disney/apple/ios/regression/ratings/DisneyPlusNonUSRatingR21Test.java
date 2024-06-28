@@ -204,7 +204,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
     @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {"NonUS-Ratings", "R21"})
-    public void verifyR21CreatePINNot21ErrorModal() {
+    public void verifyR21CreatePINNot21ErrorModalOnAgeScreen() {
         String modelErrorMessage = "Verify Age Modal/Alert should displayed";
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
