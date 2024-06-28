@@ -40,8 +40,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement exploreHeader;
     @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
     private ExtendedWebElement searchBar;
-    @ExtendedFindBy(accessibilityId = "Clear text")
-    private ExtendedWebElement clearText;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
     private ExtendedWebElement cancelButtonRecentSearch;
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
@@ -126,11 +124,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
-        pressByElement(clearText, 1);
-    }
-
-    public ExtendedWebElement getClearText() {
-        return clearText;
+        pressByElement(getClearText(), 1);
     }
 
     public boolean isRecentSearchDisplayed() {

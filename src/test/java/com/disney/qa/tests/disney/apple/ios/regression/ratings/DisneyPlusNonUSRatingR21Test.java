@@ -21,6 +21,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
+    private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -202,6 +203,27 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
+    @Test(description = "R21: Create PIN - Enter Date of Birth - Missing Or Incorrect", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePinDateOfBirthMissingOrIncorrect() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+
+        launchR21ContentAndEnterPwd();
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
+
+        verifyAgeDOBPage.getBrowseOtherTitlesButton().click();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
+        launchR21ContentAndEnterPwd();
+        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
+        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
+        verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -212,5 +234,11 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "Verify your age page should open");
+    }
+
+    public void launchR21ContentAndEnterPwd() {
+        launchR21Content();
+        initPage(DisneyPlusVerifyAgeIOSPageBase.class).clickIAm21PlusButton();
+        initPage(DisneyPlusPasswordIOSPageBase.class).enterPassword(getAccount());
     }
 }

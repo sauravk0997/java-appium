@@ -336,6 +336,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
+    @ExtendedFindBy(accessibilityId = "Clear text")
+    private ExtendedWebElement clearText;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1509,5 +1511,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void enterDOB(DateHelper.Month month, String day, String year) {
         setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
+    }
+
+    public ExtendedWebElement getClearText() {
+        return clearText;
     }
 }
