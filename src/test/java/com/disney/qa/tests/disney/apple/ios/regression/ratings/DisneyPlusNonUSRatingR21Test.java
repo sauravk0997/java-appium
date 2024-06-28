@@ -213,8 +213,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN125.getMonth(), Person.OLDERTHAN125.getDay(), "1810");
-        verifyAgeDOBPage.clickVerifyAgeButton();
+        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         Assert.assertTrue(verifyAgeDOBPage.isInvalidDOBErrorMessageDisplayed(), "Invalid Date of birth message should display");
     }
 
