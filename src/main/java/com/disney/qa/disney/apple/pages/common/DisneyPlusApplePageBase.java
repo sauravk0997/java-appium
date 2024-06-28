@@ -337,6 +337,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
 
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
+    private ExtendedWebElement cancelButton;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1509,5 +1512,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void enterDOB(DateHelper.Month month, String day, String year) {
         setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
         dismissPickerWheelKeyboard();
+    }
+
+    public void clickCancelButton() {
+        cancelButton.click();
     }
 }
