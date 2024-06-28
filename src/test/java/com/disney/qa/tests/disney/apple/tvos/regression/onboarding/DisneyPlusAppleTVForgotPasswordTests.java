@@ -105,30 +105,26 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        EmailApi emailApi = new EmailApi();
+        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
-
+        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
+        Date startTime = emailApi.getStartTime();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
-        //This should input 1,2,3,4
-        IntStream.range(0, 4).forEach(i -> {
-            disneyPlusAppleTVForgotPasswordPage.clickSelect();
-            disneyPlusAppleTVForgotPasswordPage.clickRight();
-        });
+        String otp = emailApi.getDisneyOTP(disneyUser.getEmail(), startTime);
+        sa.assertNotNull(otp, "OTP email received after time: " + startTime);
+        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
         
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch after backing from numerical keyboard screen");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch after backing from numerical keyboard screen");
 
         sa.assertAll();
     }
