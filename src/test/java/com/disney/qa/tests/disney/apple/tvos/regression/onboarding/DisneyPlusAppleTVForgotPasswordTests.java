@@ -113,6 +113,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
+        if(!disneyPlusAppleTVPasswordPage.isOpened()) { disneyPlusAppleTVPasswordPage.clickContinueBtn(); }
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
 
         Date startTime = emailApi.getStartTime();

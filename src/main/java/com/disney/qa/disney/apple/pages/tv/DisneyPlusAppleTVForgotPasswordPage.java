@@ -78,9 +78,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     public String getOTPCodeN() {
         return otpInputCodeField.getText();
-//        String text = staticTypeTextViewValue.format(code).getText();
-//        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-//        return text;
     }
 
     public void enterOTP(String otp) {
