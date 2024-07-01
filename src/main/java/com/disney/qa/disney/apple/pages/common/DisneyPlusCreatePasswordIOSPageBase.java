@@ -1,9 +1,11 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
@@ -16,6 +18,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     private static final String CONSENT_SUBTEXT = "By clicking “Agree & Continue,” you agree to the Disney Terms of Use and Disney+ Subscriber Agreement, and acknowledge you have read our Privacy Policy and US State Privacy Rights Notice.";
 
     private static final String EDIT_LINK = "(edit)";
+    protected ExtendedWebElement createNewPasswordPageHeader = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -110,8 +113,43 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isCreateNewPasswordPageOpened() {
-        String createNewPasswordPageHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText());
-        return getStaticTextByLabelContains(createNewPasswordPageHeader).isElementPresent();
+        return createNewPasswordPageHeader.isElementPresent();
+    }
+
+    public ExtendedWebElement getCreateNewPasswordPageHeader() {
+       return createNewPasswordPageHeader;
+    }
+
+    private void openHyperlink(ExtendedWebElement link) {
+        swipeInContainerTillElementIsPresent(null, primaryButton, 2, Direction.UP);
+        if (!link.isDisplayed()) {
+            throw new ObjectNotFoundException("Link is not found on page");
+        }
+
+        Point location = link.getLocation();
+        if (link.getSize().getWidth() > 150) {
+            var dimension = link.getSize();
+            tap(location.getX(), location.getY() + (dimension.getHeight() - 5));
+        } else {
+            tap(location.getX(), location.getY() + 5);
+        }
+    }
+
+    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
+        boolean isSupported = getDictionary().getSupportedLangs().contains(getDictionary().getUserLanguage());
+        return getDictionary().getDictionaryItem(dictionary, key.getText(), isSupported);
+    }
+
+    public void openPrivacyPolicyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_POLICY)));
+    }
+
+    public void openSubscriberAgreement() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIBER_AGREEMENT_HEADER)));
+    }
+
+    public void openCookiesPolicyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
     }
 
     public boolean isMarketingTextDisplayed() {
@@ -120,5 +158,8 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isConsentLegalTextDisplayed() {
         return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
+    }
+    public void openEuPrivacyLink() {
+        openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
     }
 }
