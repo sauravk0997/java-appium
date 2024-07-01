@@ -126,15 +126,9 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenuIOSPageBase.isOpened(), "More Menu is not opened");
 
         moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
-                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), "Legal Center Header is not displayed");
-        sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(),
-                "Back button not displayed");
 
+        sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(), "Back button not displayed");
         legalIOSPageBase.clickLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
         legalIOSPageBase.clickLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
         legalIOSPageBase.clickLegalScreenSection(sa, PRIVACY_POLICY);
@@ -142,8 +136,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         legalIOSPageBase.clickLegalScreenSection(sa, DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION);
 
         legalIOSPageBase.clickBack();
-        sa.assertTrue(moreMenuIOSPageBase.isOpened(),
-                "More menu screen not displayed");
+        sa.assertTrue(moreMenuIOSPageBase.isOpened(), "More menu screen not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
