@@ -214,7 +214,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
 
-        verifyAgeDOBPage.getBrowseOtherTitlesButton().click();
+        verifyAgeDOBPage.clickBrowseOtherTitlesButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
         launchR21ContentAndEnterPwd();
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());

@@ -42,9 +42,8 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     }
 
 
-    public ExtendedWebElement getBrowseOtherTitlesButton() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText()));
+    public void clickBrowseOtherTitlesButton() {
+        getTypeButtonByLabel(getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).click();
     }
-
 }
