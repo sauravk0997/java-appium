@@ -73,7 +73,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
-        addProfile.clickSave();
+        addProfile.clickSaveBtn();
         addProfile.clickSecondaryButton();
         Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
 
@@ -111,7 +111,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
                 "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
-        disneyPlusEditProfileIOSPageBase.clickDone();
+        disneyPlusEditProfileIOSPageBase.clickDoneBtnByDictionaryKey();
 
         sa.assertAll();
     }
