@@ -182,54 +182,20 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "Verify valid Subscriber Agreement link, expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyUSLegalHyperlinkSubscriberAgreement() {
-        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-        signUp.openSubscriberAgreement();
-        Assert.assertTrue(legal.isOpened(),
-                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
-        validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
-
-        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
-        Assert.assertTrue(signUp.isOpened(),
-                "'Back Button' navigation did not return the user to the Sign Up page");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "Verify valid Privacy Policy link, expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyUSLegalHyperlinkPrivacyPolicy() {
-        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-        signUp.openPrivacyPolicyLink();
-        Assert.assertTrue(legal.isOpened(),
-                "Legal page was not opened after " + PRIVACY_POLICY + " link clicked");
-        validateUSLegalPageUI(sa, PRIVACY_POLICY);
-
-        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
-        Assert.assertTrue(signUp.isOpened(),
-                "'Back Button' navigation did not return the user to the Sign Up page");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify Legal Center UI is present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifyUSLegalCenterUI() {
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
+        Assert.assertTrue(signUp.isOpened(),
+                "'Sign Up' did not open the email submission screen as expected");
+        signUp.enterEmailAddress(generateGmailAccount() + "\n");
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Create password page not opened");
 
-        signUp.openSubscriberAgreement();
-        Assert.assertTrue(legal.isOpened(),
-                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
+        createPasswordPage.openSubscriberAgreement();
+        Assert.assertTrue(legal.isOpened(), "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
         sa.assertTrue(legal.getTypeButtonByLabel(DISNEY_TERMS_OF_USE).isPresent(),
                 DISNEY_TERMS_OF_USE + " is not visible");
         sa.assertTrue(legal.getTypeButtonByLabel(PRIVACY_POLICY).isPresent(),
@@ -241,30 +207,14 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(legal.getTypeButtonByLabel(DO_NOT_SELL_MY_PERSONAL_INFORMATION).isPresent(),
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
-        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
-        Assert.assertTrue(signUp.isOpened(),
-                "'Back Button' navigation did not return the user to the Sign Up page");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "Verify Your California Privacy Rights and Do Not Sell My Personal Information expand/collapse/scroll content", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
-    public void verifyUSLegalCenterUSStatePrivacy() {
-        DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-
-        signUp.openSubscriberAgreement();
-        Assert.assertTrue(legal.isOpened(),
-                "Legal page was not opened after " + SUBSCRIBER_AGREEMENT + " link clicked");
-
-        //Your California Privacy Rights
+        validateUSLegalPageUI(sa, PRIVACY_POLICY);
+        validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
         validateUSLegalPageUI(sa, US_STATE_PRIVACY_RIGHTS);
 
         pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
-        Assert.assertTrue(signUp.isOpened(),
-                "'Back Button' navigation did not return the user to the Sign Up page");
+        //For small device like iPhone_8 need to scroll back on Top again
+        swipeInContainerTillElementIsPresent(null, createPasswordPage.getCreateNewPasswordPageHeader(), 2, Direction.DOWN);
+        Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
         sa.assertAll();
     }
 
@@ -274,11 +224,12 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPasswordPage = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
         restart();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
 
-        disneyPlusSignUpIOSPageBase.openSubscriberAgreement();
+        createPasswordPage.openSubscriberAgreement();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "XMOBQA-62375 - Legal page was not opened after 'Subscriber Agreement' hyperlink navigation");
@@ -293,7 +244,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "XMOBQA-62389 - 'Back Button' navigation did not return the user to the Sign Up page");
 
-        disneyPlusSignUpIOSPageBase.openPrivacyPolicyLink();
+        createPasswordPage.openPrivacyPolicyLink();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "XMOBQA-62377 - Legal page was not opened after 'Privacy Policy' hyperlink navigation");
@@ -308,7 +259,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "XMOBQA-62389 - 'Back Button' navigation did not return the user to the Sign Up page");
 
-        disneyPlusSignUpIOSPageBase.openCookiesPolicyLink();
+        createPasswordPage.openCookiesPolicyLink();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "XMOBQA-62381 - Legal page was not opened after 'Cookies Policy' hyperlink navigation");
@@ -323,7 +274,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
                 "XMOBQA-62389 - 'Back Button' navigation did not return the user to the Sign Up page");
 
-        disneyPlusSignUpIOSPageBase.openEuPrivacyLink();
+        createPasswordPage.openEuPrivacyLink();
 
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "XMOBQA-62379 - Legal page was not opened after 'EU & UK Privacy Rights' hyperlink navigation");
