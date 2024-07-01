@@ -198,7 +198,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }
 
-    public void clickSaveBtn() {
+    public void clickSaveByDictionaryKey() {
         dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_SAVE.getText())).click();
     }

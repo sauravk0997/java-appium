@@ -73,7 +73,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
-        addProfile.clickSaveBtn();
+        addProfile.clickSaveByDictionaryKey();
         addProfile.clickSecondaryButton();
         Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
 
