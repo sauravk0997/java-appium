@@ -130,6 +130,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement secureTextEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField")
     protected ExtendedWebElement textEntryField;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
+    private ExtendedWebElement textFieldValue;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
@@ -333,11 +335,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
-    private ExtendedWebElement typeKey;
     @ExtendedFindBy(accessibilityId = "Clear text")
     private ExtendedWebElement clearText;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
+    private ExtendedWebElement typeKey;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1513,7 +1514,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         dismissPickerWheelKeyboard();
     }
 
-    public ExtendedWebElement getClearText() {
+    public ExtendedWebElement getClearTextBtn() {
         return clearText;
+    }
+
+    public ExtendedWebElement getTextFieldValue(String value) {
+        return textFieldValue.format(value);
     }
 }
