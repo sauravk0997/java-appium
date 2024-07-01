@@ -208,15 +208,21 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     public void verifyR21CreatePinDateOfBirthMissingOrIncorrect() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        launchR21ContentAndEnterPwd();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
 
         verifyAgeDOBPage.clickBrowseOtherTitlesButton();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open.");
-        launchR21ContentAndEnterPwd();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
         verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
@@ -234,11 +240,5 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "Verify your age page should open");
-    }
-
-    public void launchR21ContentAndEnterPwd() {
-        launchR21Content();
-        initPage(DisneyPlusVerifyAgeIOSPageBase.class).clickIAm21PlusButton();
-        initPage(DisneyPlusPasswordIOSPageBase.class).enterPassword(getAccount());
     }
 }
