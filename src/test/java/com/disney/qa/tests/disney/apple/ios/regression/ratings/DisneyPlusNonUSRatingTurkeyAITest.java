@@ -31,7 +31,7 @@ public class DisneyPlusNonUSRatingTurkeyAITest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75194"})
     @Test(description = "Rating System - AI - Turkey - 18+", groups = {"NonUS-Ratings"})
-    public void verifyTurkeyRating18() {
+    public void verifyTurkeyAIRating18() {
         ratingsSetup(EIGHTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
         confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
