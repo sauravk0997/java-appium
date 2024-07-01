@@ -1518,7 +1518,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return clearText;
     }
 
-    public ExtendedWebElement getEditTextFieldValue(String value) {
+    public ExtendedWebElement getTextFieldValue(String value) {
         return textFieldValue.format(value);
     }
 }
