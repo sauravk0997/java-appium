@@ -28,6 +28,10 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private static final String DISNEY_TERMS_OF_USE = "Disney Terms of Use";
+    private static final String SUBSCRIBER_AGREEMENT = "Subscriber Agreement";
+    private static final String PRIVACY_POLICY = "Privacy Policy";
+    private static final String US_STATE_PRIVACY_RIGHTS_NOTICE = "US State Privacy Rights Notice";
     private static final String DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
 
     @DataProvider
@@ -47,7 +51,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private void confirmLegalPageOpens() {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
-                "XMOBQA-62261 - Legal Page did not open on navigation");
+                "Legal Page did not open on navigation");
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
@@ -108,45 +112,38 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68063"})
-    @Test(description = "Verify hyperlink functionality opens into browser", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyUserTapsOnLink() {
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = new DisneyplusLegalIOSPageBase(getDriver());
-
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+    @Test(description = "Verify Legal and return to More Menu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    public void testCheckLegalDisplay() {
+        DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V1));
+        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        Assert.assertTrue(moreMenuIOSPageBase.isOpened(), "More Menu is not opened");
+
+        moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
+        Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), "Legal Center Header is not displayed");
+        sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(),
+                "Back button not displayed");
 
-        confirmLegalPageOpens();
-        boolean hyperlinkFound = false;
+        legalIOSPageBase.clickLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
+        legalIOSPageBase.clickLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
+        legalIOSPageBase.clickLegalScreenSection(sa, PRIVACY_POLICY);
+        legalIOSPageBase.clickLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
+        legalIOSPageBase.clickLegalScreenSection(sa, DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION);
 
-        for (String header : getLocalizationUtils().getLegalHeaders()) {
-            LOGGER.info("Looking for hyperlink in '{}'", header);
-            disneyPlusLegalIOSPageBase.getStaticTextByLabel(header).click();
-            pause(5);
-            hyperlinkFound = disneyPlusLegalIOSPageBase.isHyperlinkPresent();
-            if (hyperlinkFound) {
-                LOGGER.info("Hyperlink found!");
-                disneyPlusLegalIOSPageBase.clickHyperlink();
-                break;
-            }
-        }
-
-        if (!hyperlinkFound) {
-            skipExecution("No legal options have a hyperlink at present. Skipping test.");
-        }
-
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isWebviewOpen(),
-                "Browser did not open");
+        legalIOSPageBase.clickBack();
+        sa.assertTrue(moreMenuIOSPageBase.isOpened(),
+                "More menu screen not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
