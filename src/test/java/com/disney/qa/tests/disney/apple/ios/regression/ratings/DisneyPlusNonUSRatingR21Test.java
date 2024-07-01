@@ -218,9 +218,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
-        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearText());
-        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearText(), 1);
-        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
+        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
+        verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
+        Assert.assertTrue(verifyAgeDOBPage.getEditTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
     }
 
     public void launchR21Content() {

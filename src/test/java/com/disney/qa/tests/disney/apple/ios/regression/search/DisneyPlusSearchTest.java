@@ -155,8 +155,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Add 11 search result in recent search list
         IntStream.range(0, getMedia().size()).forEach(i -> {
 
-            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
-                searchPage.getClearText().click();
+            if (searchPage.getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
+                searchPage.getClearTextBtn().click();
             }
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
@@ -165,7 +165,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             detailsPage.getBackArrow().click();
         });
 
-        searchPage.getClearText().click();
+        searchPage.getClearTextBtn().click();
         searchPage.getSearchBar().click();
 
         //Verify that the after searching 11 content, only last latest 10 visible in list and the first one is not visible

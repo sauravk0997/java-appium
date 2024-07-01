@@ -1514,11 +1514,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         dismissPickerWheelKeyboard();
     }
 
-    public ExtendedWebElement getClearText() {
+    public ExtendedWebElement getClearTextBtn() {
         return clearText;
     }
 
-    public ExtendedWebElement getTextFieldValue(String value) {
+    public ExtendedWebElement getEditTextFieldValue(String value) {
         return textFieldValue.format(value);
     }
 }
