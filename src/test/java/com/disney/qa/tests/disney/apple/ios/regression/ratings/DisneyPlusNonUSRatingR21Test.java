@@ -203,7 +203,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69860"})
     @Test(description = "R21: Create PIN - Enter Date of Birth - Missing Or Incorrect", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePinDateOfBirthMissingOrIncorrect() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
