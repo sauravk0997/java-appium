@@ -28,4 +28,11 @@ public class DisneyPlusNonUSRatingTurkeyAITest extends DisneyPlusRatingsBase {
         ratingsSetup(THIRTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
         confirmRegionalRatingsDisplays(THIRTEEN_PLUS.getContentRating());
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75194"})
+    @Test(description = "Rating System - AI - Turkey - 18+", groups = {"NonUS-Ratings"})
+    public void verifyTurkeyAIRating18() {
+        ratingsSetup(EIGHTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
+    }
 }
