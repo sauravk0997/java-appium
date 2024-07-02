@@ -14,9 +14,11 @@ public class RatingConstant {
         PG("PG"),
         R21("R21"),
         SEVEN_PLUS("7+"),
+        TEN_PLUS("10+"),
         TWELVE_PLUS("12+"),
         THIRTEEN_PLUS("13+"),
         FIFTEEN_PLUS("15+"),
+        SIXTEEN_PLUS("16+"),
         EIGHTEEN_PLUS("18+"),
         NINETEEN_PLUS("19+");
 
