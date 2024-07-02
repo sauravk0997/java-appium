@@ -314,13 +314,13 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         //Verify Continue button on alert
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Modal Set PIN error is not displayed");
         verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
         sa.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
 
         //Verify Not Now button on alert
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Modal Set PIN error is not displayed");
         verifyAgeDOBPage.clickDefaultAlertBtn();
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
         sa.assertAll();
