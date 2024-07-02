@@ -206,58 +206,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69766"})
-    @Test(description = "R21 - Create Pin - Set Pin - Select Cancel", groups = {"NonUS-Ratings", "R21"})
-    public void verifyR21CreatePINCancelButtonOnPinScreen() {
-        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
-        verifyAgePage.clickCancelButton();
-        Assert.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Cancel modal is not displayed");
-        Assert.assertTrue(pinPage.isR21PinPageCancelModalSubHeaderDisplayed(), "Cancel modal sub-header should be displayed");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
-    @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {"NonUS-Ratings", "R21"})
-    public void verifyR21CreatePINCancelModalOnPINScreen() {
-        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
-
-        //Verify Continue button on alert
-        pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
-        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
-        sa.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
-
-        //Verify Not Now button on alert
-        pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
-        verifyAgeDOBPage.clickDefaultAlertBtn();
-        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69860"})
     @Test(description = "R21: Create PIN - Enter Date of Birth - Missing Or Incorrect", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePinDateOfBirthMissingOrIncorrect() {
@@ -302,6 +250,38 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
         Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
+    @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINCancelModalOnPINScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
+
+        //Verify Continue button on alert
+        pinPage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
+        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
+
+        //Verify Not Now button on alert
+        pinPage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Modal Set PIN error is not displayed");
+        verifyAgeDOBPage.clickDefaultAlertBtn();
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+        sa.assertAll();
     }
 
     public void launchR21Content() {
