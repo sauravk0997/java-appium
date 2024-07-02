@@ -117,13 +117,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         Date startTime = emailApi.getStartTime();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having Trouble Loggin In page did not launch");
 
         String otp = emailApi.getDisneyOTP(disneyOTPAccount.getEmail(), startTime);
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
         
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch after backing from numerical keyboard screen");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter Password screen did not launch after backing from Having Trouble Loggin In");
 
         sa.assertAll();
     }
