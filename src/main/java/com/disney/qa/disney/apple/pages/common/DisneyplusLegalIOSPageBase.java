@@ -8,11 +8,9 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Set;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
@@ -25,8 +23,8 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
 
-    @FindBy(id = "legalContentTextView")
-    private ExtendedWebElement legalContentView;
+    @FindBy(id = "//XCUIElementTextView")
+    private ExtendedWebElement textview;
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -68,15 +66,17 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         hyperlink.click();
     }
 
-    public boolean isLegalContentViewVisible(){
-        return legalContentView.isElementPresent();
+    public boolean isTextViewPresent(){
+        return textview.isElementPresent();
     }
 
     public void clickLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
+
         dynamicBtnFindByNameContains.format(legalSection).click();
-        sa.assertTrue(isLegalContentViewVisible(), legalSection + " is not expanded after clicking");
+        sa.assertTrue(isTextViewPresent(), legalSection + " is not expanded after clicking");
+
         dynamicBtnFindByNameContains.format(legalSection).click();
     }
 }
