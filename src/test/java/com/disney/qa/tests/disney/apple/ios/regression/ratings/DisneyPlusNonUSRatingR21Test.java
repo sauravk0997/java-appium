@@ -281,6 +281,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
@@ -289,8 +290,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
         verifyAgePage.clickCancelButton();
-        Assert.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Must Create pin' header is not displayed");
-        Assert.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Must Create pin' header is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
+        sa.assertAll();
     }
 
     public void launchR21Content() {
