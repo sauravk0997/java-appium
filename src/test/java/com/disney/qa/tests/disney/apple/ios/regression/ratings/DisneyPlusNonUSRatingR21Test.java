@@ -296,6 +296,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
         sa.assertAll();
     }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69768"})
     @Test(description = "R21: Create PIN - Verify Age - I Am 21+", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINPasswordScreen() {
