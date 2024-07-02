@@ -598,9 +598,4 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
     }
-
-    public String getUtf8MetaString(String metadata) {
-        byte[] bytePayload = metadata.getBytes(StandardCharsets.ISO_8859_1);
-        return new String(bytePayload, StandardCharsets.UTF_8);
-    }
 }
