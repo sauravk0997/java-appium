@@ -23,7 +23,7 @@ public class DisneyPlusNonUSRatingsKMRBTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75175"})
-    @Test(description = "Ratings-South Korea 15+ KCC", groups = {"NonUS-Ratings"})
+    @Test(description = "Ratings-South Korea 18+ KCC", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemSouthKoreaKMRB18() {
         ratingsSetup(EIGHTEEN_PLUS.getContentRating(), KOREAN_LANG, KOREA, true);
         confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());

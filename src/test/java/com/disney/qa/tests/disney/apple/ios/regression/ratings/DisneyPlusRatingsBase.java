@@ -11,6 +11,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
+import org.testng.*;
 import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
@@ -31,9 +32,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String KOREAN_LANG = "KO";
     static final String JAPAN_LANG = "ja";
+    static final String KOREAN_LANG = "ko";
     static final String SINGAPORE_LANG = "en";
+    static final String TURKEY_LANG = "tr";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
@@ -190,6 +192,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
+        if(!detailsPage.getEpisodesTab().isPresent()) {
+            Assert.assertTrue(swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500), "Couldn't swipe to Episode tab");
+        }
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
