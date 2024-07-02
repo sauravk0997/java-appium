@@ -25,6 +25,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
     private static final String PIN_PAGE_ERROR_MESSAGE = "R21 pin page did not open";
+    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header is not displayed";
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -314,13 +316,13 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         //Verify Continue button on alert
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Modal Set PIN error is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
         verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
         sa.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
 
         //Verify Not Now button on alert
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Modal Set PIN error is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
         verifyAgeDOBPage.clickDefaultAlertBtn();
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
         sa.assertAll();
