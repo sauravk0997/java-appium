@@ -254,7 +254,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
     @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINNot21ErrorModalOnAgeScreen() {
-        String modelErrorMessage = "Verify Age Modal/Alert should displayed";
+        String modelErrorMessage = "Verify Age Modal/Alert should be displayed";
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -262,8 +262,12 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickNoButton();
         Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
         Assert.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
+
+        //Clicking Cancel button to validate that user can not dismiss the modal by clicking outside the bounds
         verifyAgePage.clickCancelButton();
         Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+
+        //Click "Browse other titles" to return back to Home
         verifyAgePage.clickDefaultAlertBtn();
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
