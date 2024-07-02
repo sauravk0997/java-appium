@@ -340,6 +340,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
 
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
+    private ExtendedWebElement cancelButton;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1520,5 +1523,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTextFieldValue(String value) {
         return textFieldValue.format(value);
+    }
+
+    public void clickCancelButton() {
+        cancelButton.click();
     }
 }
