@@ -114,13 +114,13 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.R21_CREATE_PIN_CREATE_PIN.getText())).isPresent();
     }
 
-    public boolean isR21PinPageCancelModalDisplayed() {
+    public boolean isR21PinPageModalHeaderDisplayed() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                DictionaryKeys.R21_CREATE_PIN_CANCEL_MODAL_HEADER.getText())).isPresent();
+                DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_HEADER.getText())).isPresent();
     }
 
-    public boolean isR21PinPageCancelModalSubHeaderDisplayed() {
+    public boolean isR21PinPageModalMessageDisplayed() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                DictionaryKeys.R21_CREATE_PIN_CANCEL_MODAL_SUBHEADER.getText())).isPresent();
+                DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_MESSAGE.getText())).isPresent();
     }
 }

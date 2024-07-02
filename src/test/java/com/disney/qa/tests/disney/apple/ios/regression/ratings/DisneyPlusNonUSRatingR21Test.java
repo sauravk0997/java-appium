@@ -267,8 +267,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
         verifyAgePage.clickCancelButton();
-        Assert.assertTrue(pinPage.isR21PinPageCancelModalDisplayed(), "Cancel modal is not displayed");
-        Assert.assertTrue(pinPage.isR21PinPageCancelModalSubHeaderDisplayed(), "Cancel modal sub-header should be displayed");
+        Assert.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Must Create pin' header is not displayed");
+        Assert.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
     }
 
     public void launchR21Content() {
