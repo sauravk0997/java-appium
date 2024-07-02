@@ -273,6 +273,28 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69766"})
+    @Test(description = "R21 - Create Pin - Set Pin - Select Cancel", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINCancelButtonOnPinScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
+        verifyAgePage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "Must Create pin' header is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
+        sa.assertAll();
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
