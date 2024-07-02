@@ -159,7 +159,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         IntStream.range(0, getHuluMedia().size()).forEach(i -> {
             homePage.clickSearchIcon();
-            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+            if (searchPage.getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
             }
             searchPage.searchForMedia(getHuluMedia().get(i));
@@ -311,7 +311,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         IntStream.range(0, getMedia().size()).forEach(i -> {
             homePage.clickSearchIcon();
-            if (searchPage.getClearText().isPresent(SHORT_TIMEOUT)) {
+            if (searchPage.getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
                 searchPage.clearText();
             }
             searchPage.searchForMedia(getMedia().get(i));
