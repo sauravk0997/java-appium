@@ -74,9 +74,9 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Validating functions for: {}", legalSection);
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
 
-        getTypeButtonByLabel(legalSection).click();
+        getStaticTextLabelName(legalSection).click();
         sa.assertTrue(isTextViewPresent(), legalSection + " is not expanded after clicking");
 
-        getTypeButtonByLabel(legalSection).click();
+        getStaticTextLabelName(legalSection).click();
     }
 }
