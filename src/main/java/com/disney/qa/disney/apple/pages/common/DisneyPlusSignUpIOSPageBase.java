@@ -60,9 +60,9 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         primaryButton.clickIfPresent(3);
     }
 
-    public boolean getStepperDictValue(String val1 , String val2) {
+    public boolean getStepperDictValue(String stepValueOne , String stepValueTwo) {
         String text = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ONBOARDING_STEPPER.getText());
-        return getStaticTextByLabel(getDictionary().formatPlaceholderString(text, Map.of("current_step", val1, "total_steps", val2))).isElementPresent();
+        return getStaticTextByLabel(getDictionary().formatPlaceholderString(text, Map.of("current_step", stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
     }
 
     public boolean isConsentFormPresent() {
