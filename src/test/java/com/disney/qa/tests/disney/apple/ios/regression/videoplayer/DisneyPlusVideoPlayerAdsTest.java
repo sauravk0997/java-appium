@@ -328,7 +328,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         videoPlayer.clickBackButton();
         details.clickSearchIcon();
-        if (search.getClearText().isPresent(ONE_SEC_TIMEOUT)) {
+        if (search.getClearTextBtn().isPresent(ONE_SEC_TIMEOUT)) {
             search.clearText();
         }
         search.searchForMedia(SPIDERMAN_THREE);
