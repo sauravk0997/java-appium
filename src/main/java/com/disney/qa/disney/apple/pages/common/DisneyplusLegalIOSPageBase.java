@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.common.utils.IOSUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -25,6 +26,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(id = "//XCUIElementTextView")
     private ExtendedWebElement textview;
+    static final String EXPANDED = "Expanded";
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -74,9 +76,10 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Validating functions for: {}", legalSection);
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
 
-        getTypeButtonByLabel(legalSection).click();
-        sa.assertTrue(isTextViewPresent(), legalSection + " is not expanded after clicking");
+        pressByElement(getTypeButtonByLabel(legalSection), 1);
+        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
+                legalSection + " was not expanded");
 
-        getTypeButtonByLabel(legalSection).click();
+        pressByElement(getTypeButtonByLabel(legalSection), 1);
     }
 }
