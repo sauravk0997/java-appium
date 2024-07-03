@@ -64,7 +64,6 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
         String passwordBodySubText = getDictionary().formatPlaceholderString(getPasswordBodyText()[2], Map.of(EMAIL, email, "link_1", EDIT_LINK));
-        System.out.println("   passwordBodySubText  " + passwordBodySubText);
         return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 
