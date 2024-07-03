@@ -940,7 +940,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         sa.assertEquals(editProfilePage.getAutoplayState(), OFF, "Kids profile autoplay is not turned off by default.");
 
-        switchAndValidateAutoplay(ON, sa,KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
+        switchAndValidateAutoplay(ON, sa, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
         switchAndValidateAutoplay(OFF, sa, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
         sa.assertAll();
     }
