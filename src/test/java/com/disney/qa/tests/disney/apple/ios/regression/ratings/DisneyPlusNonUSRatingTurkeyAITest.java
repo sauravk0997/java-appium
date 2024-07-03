@@ -22,10 +22,31 @@ public class DisneyPlusNonUSRatingTurkeyAITest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(SEVEN_PLUS.getContentRating());
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75191"})
+    @Test(description = "Rating System - AI - Turkey - 10+", groups = {"NonUS-Ratings"})
+    public void verifyTurkeyAIRating10() {
+        ratingsSetup(TEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
+        confirmRegionalRatingsDisplays(TEN_PLUS.getContentRating());
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75192"})
     @Test(description = "Rating System - AI - Turkey - 13+", groups = {"NonUS-Ratings"})
     public void verifyTurkeyAIRating13() {
         ratingsSetup(THIRTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
         confirmRegionalRatingsDisplays(THIRTEEN_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75193"})
+    @Test(description = "Rating System - AI - Turkey - 16+", groups = {"NonUS-Ratings"})
+    public void verifyTurkeyAIRating16() {
+        ratingsSetup(SIXTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
+        confirmRegionalRatingsDisplays(SIXTEEN_PLUS.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75194"})
+    @Test(description = "Rating System - AI - Turkey - 18+", groups = {"NonUS-Ratings"})
+    public void verifyTurkeyAIRating18() {
+        ratingsSetup(EIGHTEEN_PLUS.getContentRating(), TURKEY_LANG, TURKEY);
+        confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
 }

@@ -393,6 +393,8 @@ public enum DictionaryKeys {
     R21_CREATE_PIN_SET_PIN("r21_createpin_setpin"),
     R21_DOB_ERROR_INVALID_BIRTHDATE("r21_dob_error_invalidbirthdate"),
     R21_DOB_PAGE_HEADER("r21_dob_enter"),
+    R21_MUST_CREATE_PIN_MODAL_HEADER("r21_createpin_modal_youmust"),
+    R21_MUST_CREATE_PIN_MODAL_MESSAGE("r21_createpin_modal_manage"),
     R21_VERIFY_AGE_CANCEL_MODAL("r21_back_youmust_modal"),
     R21_VERIFY_AGE_MODEL_BUTTON("r21_verifyage_modal_button"),
     R21_VERIFY_AGE_MODEL_HEADER("r21_verifyage_modal_header"),

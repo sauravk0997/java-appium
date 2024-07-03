@@ -24,6 +24,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
+    private static final String PIN_PAGE_ERROR_MESSAGE = "R21 pin page did not open";
+    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -249,6 +251,82 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
         Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
+    @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINNot21ErrorModalOnAgeScreen() {
+        String modelErrorMessage = "Verify Age Modal/Alert should be displayed";
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickNoButton();
+        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
+
+        //Clicking Cancel button to validate that user can not dismiss the modal by clicking outside the bounds
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+
+        //Click "Browse other titles" to return back to Home
+        verifyAgePage.clickDefaultAlertBtn();
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69766"})
+    @Test(description = "R21 - Create Pin - Set Pin - Select Cancel", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINCancelButtonOnPinScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
+        verifyAgePage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
+    @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINCancelModalOnPINScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
+
+        //Verify Continue button on alert
+        pinPage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
+        sa.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
+
+        //Verify Not Now button on alert
+        pinPage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        verifyAgeDOBPage.clickDefaultAlertBtn();
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+        sa.assertAll();
     }
 
     public void launchR21Content() {
