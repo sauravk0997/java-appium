@@ -297,6 +297,17 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69768"})
+    @Test(description = "R21: Create PIN - Verify Age - I Am 21+", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINPasswordScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
     @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINCancelModalOnPINScreen() {
