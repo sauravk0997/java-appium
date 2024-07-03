@@ -44,69 +44,58 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWO = "2";
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
+    private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-66772" })
-    @Test(description = "verify Avatar Selection UI & user's selected Avatar appears", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyAvatarSelection() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66772"})
+    @Test(description = "Ariel: Profiles - Add Profile - Choose an Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileAvatarSelection() {
         DisneyPlusMoreMenuIOSPageBase MoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase EditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+
         onboard();
         MoreMenuIOSPageBase.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
+        sa.assertTrue(chooseAvatarPage.isSkipButtonPresent(), "Skip button not present on Choose Avatar page");
+        sa.assertTrue(chooseAvatarPage.getBackArrow().isPresent(), "Back button not present on Choose Avatar page");
 
-        // Verify choose avatar page UI
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "XMOBQA-62628 - Choose Avatar page was not opened");
-        sa.assertTrue(chooseAvatarPage.isSkipButtonPresent(), "XMOBQA-62628 - skip button not present on Choose Avatar page");
-        sa.assertTrue(chooseAvatarPage.getBackArrow().isPresent(), "XMOBQA-62628 - back button not present on Choose Avatar page");
-
-        //Choose avatar
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         BufferedImage selectedAvatar = getElementImage(avatars[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
 
-        //Verify that selected avatar appears on Add profile page
-        Assert.assertTrue(addProfile.isAddProfilePageOpened(), "XMOBQA-62630 - User was not taken to the 'Add Profiles' page as expected");
-        BufferedImage addProfileAvatar = getElementImage(addProfile.getAddProfileAvatar());
-        selectedAvatar = getScaledImage(selectedAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.chooseGender();
+        addProfile.clickSaveByDictionaryKey();
+        addProfile.clickSecondaryButton();
+        Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
 
-        sa.assertTrue(areImagesTheSame(addProfileAvatar, selectedAvatar, 10),
-                "XMOBQA-62630 - Avatar Selected was either not displayed or was altered beyond the accepted margin of error");
-        //Finish creating profile
-        if (getAccount().getProfileLang().equalsIgnoreCase("en")) {
-            addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1923");
-        }
-        sa.assertTrue(EditProfileIOSPageBase.isServiceEnrollmentAccessFullCatalogPagePresent(), "Not on serviceEnrollmentAccessFullCatalog page");
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
-        addProfile.clickSecondaryButtonByCoordinates();
-        //Verify that selected avatar appears on More menu page
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
-
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
         sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
-                "XMOBQA-62630 - Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
+                "Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
         sa.assertAll();
-
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
-    @Test(description = "Verify: Edit Profile User can change Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Ariel: Profiles - Edit Profile - Change Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileUserCanChangeAvatar() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         ExtendedWebElement[] avatars;
-
         setAppToHomeScreen(getAccount());
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
+        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
 
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
@@ -121,8 +110,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
-                "XMOBQA-62630 - Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
-        disneyPlusEditProfileIOSPageBase.clickSaveProfileButton();
+                "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
+        disneyPlusEditProfileIOSPageBase.clickDoneBtnByDictionaryKey();
 
         sa.assertAll();
     }
