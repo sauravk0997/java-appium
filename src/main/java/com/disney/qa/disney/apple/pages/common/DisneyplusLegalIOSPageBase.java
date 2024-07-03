@@ -78,7 +78,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
         
         pressByElement(getStaticTextByName(legalSection), 1);
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
+        sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         pressByElement(getStaticTextByName(legalSection), 1);
