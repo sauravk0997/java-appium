@@ -125,7 +125,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "'STEP 2 OF 3' should be displayed");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
-                "'Create an account to continue' text should be displayed ");
+                "'Create an account to continue' text should be displayed");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodyTextDisplayed(),
                 "'With a MyDisney account, you can log in to Disney+' text should be present");

@@ -17,6 +17,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     private static final String CONSENT_SUBTEXT = "By clicking “Agree & Continue,” you agree to the Disney Terms of Use and Disney+ Subscriber Agreement, and acknowledge you have read our Privacy Policy and US State Privacy Rights Notice.";
     private static final String EDIT_LINK = "(edit)";
     protected ExtendedWebElement createNewPasswordPageHeader = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText()));
+    private static final String EMAIL = "email";
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -60,7 +61,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
         String[] passwordBodyText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
-        String passwordBodySubText = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", email, "link_1", EDIT_LINK));
+        String passwordBodySubText = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", EMAIL, "link_1", EDIT_LINK));
         return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 
