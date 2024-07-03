@@ -26,6 +26,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(id = "//XCUIElementTextView")
     private ExtendedWebElement textview;
+
     static final String EXPANDED = "Expanded";
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {

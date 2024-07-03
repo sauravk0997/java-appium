@@ -73,7 +73,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68063"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
@@ -176,7 +176,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "One trust - 'opt-out module'", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "One trust - 'opt-out module'", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustModal() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -218,7 +218,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73773"})
-    @Test(description = "More Menu - Legal - OneTrust Page UI", groups = {"More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "More Menu - Legal - OneTrust Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyOneTrustPageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -259,7 +259,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73779"})
-    @Test(description = "More Menu - Legal - OneTrust Page - Verify Toggle Behavior", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "More Menu - Legal - OneTrust Page - Verify Toggle Behavior", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyOneTrustPageToggleBehaviour() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
