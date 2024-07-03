@@ -198,6 +198,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }
 
+    public void clickSaveByDictionaryKey() {
+        dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_SAVE.getText())).click();
+    }
+
     /**
      * checks if gender field is enabled or not
      * @return true/false, return the enabled attribute value
