@@ -38,6 +38,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String ON = "On";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off.";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on.";
+    private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found.";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Edit Profile - U13 Profile - Autoplay OFF / Hide Gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
@@ -928,7 +929,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
@@ -940,31 +940,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         sa.assertEquals(editProfilePage.getAutoplayState(), OFF, "Kids profile autoplay is not turned off by default.");
 
-        //Switch autoplay to "on"
-        editProfilePage.toggleAutoplayButton(ON);
-        passwordPage.enterPassword(getAccount());
-        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Updated toast was not found.");
-        sa.assertEquals(editProfilePage.getAutoplayState(), ON, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
-
-        //Validate autoplay "on" persists
-        editProfilePage.getDoneButton().click();
-        homePage.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
-        sa.assertEquals(editProfilePage.getAutoplayState(), ON, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
-
-        //Switch autoplay to "off"
-        editProfilePage.toggleAutoplayButton(OFF);
-        passwordPage.enterPassword(getAccount());
-        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Updated toast was not found.");
-        sa.assertEquals(editProfilePage.getAutoplayState(), OFF, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
-
-        //Validate autoplay "off" persists
-        editProfilePage.getDoneButton().click();
-        homePage.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
-        sa.assertEquals(editProfilePage.getAutoplayState(), OFF, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
+        switchAndValidateAutoplay(ON, sa,KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
+        switchAndValidateAutoplay(OFF, sa, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -991,5 +968,21 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         addProfile.clickSaveProfileButton();
+    }
+
+    private void switchAndValidateAutoplay(String state, SoftAssert sa, String errorMessage) {
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        editProfilePage.toggleAutoplayButton(state);
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
+        sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
+        editProfilePage.getDoneButton().click();
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
     }
 }
