@@ -34,6 +34,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String ESPAÑOL = "Español";
     private static final String ENGLISH_US = "English (US)";
     private static final String NEW_PROFILE_NAME = "New Name";
+    private static final String OFF = "Off";
+    private static final String ON = "On";
+    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off.";
+    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on.";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Edit Profile - U13 Profile - Autoplay OFF / Hide Gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
@@ -51,13 +55,13 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfiles.clickEditModeProfile(KIDS_PROFILE);
         sa.assertTrue(editProfiles.isEditTitleDisplayed(), "Edit profile page not opened");
         sa.assertFalse(editProfiles.isGenderFieldPresent(), "Gender field was found");
-        sa.assertEquals(editProfiles.getAutoplayState(),"Off", "Autoplay and Background video wasn't turned off by default for U13 Profile");
-        editProfiles.toggleAutoplayButton("On");
+        sa.assertEquals(editProfiles.getAutoplayState(),OFF, "Autoplay and Background video wasn't turned off by default for U13 Profile");
+        editProfiles.toggleAutoplayButton(ON);
         sa.assertTrue(changePassword.isPasswordDescriptionPresent(), "Password screen was not opened");
         changePassword.enterPasswordNoAccount(INVALID_PASSWORD);
         sa.assertTrue(changePassword.isInvalidPasswordErrorDisplayed(), "Invalid Password error was not displayed");
         changePassword.enterPassword(getAccount());
-        sa.assertEquals(editProfiles.getAutoplayState(), "On", "After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
+        sa.assertEquals(editProfiles.getAutoplayState(), ON, "After authentication, 'Autoplay' was not turned 'ON' for U13 profile");
         sa.assertAll();
     }
 
@@ -915,6 +919,53 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), "Home Page is not opened after saving profile with a new name");
         moreMenu.clickMoreTab();
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(profileNameWithMaxAllowedCharLimit + "X"), "Profile name not saved with +Max allowed character limit");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76067"})
+    @Test(description = "Edit Profile - Kids Profile - Autoplay UI & Toggle", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyEditProfileKidsAutoplay() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        //Default setting is autoplay off
+        setAppToHomeScreen(getAccount());
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        sa.assertEquals(editProfilePage.getAutoplayState(), OFF, "Kids profile autoplay is not turned off by default.");
+
+        //Switch autoplay to "on"
+        editProfilePage.toggleAutoplayButton(ON);
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Updated toast was not found.");
+        sa.assertEquals(editProfilePage.getAutoplayState(), ON, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
+
+        //Validate autoplay "on" persists
+        editProfilePage.getDoneButton().click();
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        sa.assertEquals(editProfilePage.getAutoplayState(), ON, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
+
+        //Switch autoplay to "off"
+        editProfilePage.toggleAutoplayButton(OFF);
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Updated toast was not found.");
+        sa.assertEquals(editProfilePage.getAutoplayState(), OFF, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
+
+        //Validate autoplay "off" persists
+        editProfilePage.getDoneButton().click();
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        sa.assertEquals(editProfilePage.getAutoplayState(), OFF, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE);
+        sa.assertAll();
     }
 
     private void setAppToAccountSettings() {
