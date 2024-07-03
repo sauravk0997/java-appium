@@ -42,6 +42,10 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         return headlineHeader.isPresent();
     }
 
+    public String[] getPasswordBodyText() {
+        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
+    }
+
     public boolean isHidePasswordIconPresent() {
         return showHideEyeIcon.isElementPresent();
     }
@@ -55,13 +59,12 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordBodyTextDisplayed() {
-        String[] passwordBodyText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
-        return getTextViewByName(passwordBodyText[0]).isElementPresent();
+        return getTextViewByName(getPasswordBodyText()[0]).isElementPresent();
     }
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
-        String[] passwordBodyText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
-        String passwordBodySubText = getDictionary().formatPlaceholderString(passwordBodyText[2], Map.of("email", EMAIL, "link_1", EDIT_LINK));
+        String passwordBodySubText = getDictionary().formatPlaceholderString(getPasswordBodyText()[2], Map.of(EMAIL, email, "link_1", EDIT_LINK));
+        System.out.println("   passwordBodySubText  " + passwordBodySubText);
         return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 
