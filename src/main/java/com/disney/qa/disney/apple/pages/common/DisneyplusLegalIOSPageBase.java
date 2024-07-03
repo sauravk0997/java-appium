@@ -76,11 +76,11 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     public void clickLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
-
-        pressByElement(getTypeButtonByLabel(legalSection), 1);
+        
+        pressByElement(getStaticTextByLabel(legalSection), 1);
         sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
-        pressByElement(getTypeButtonByLabel(legalSection), 1);
+        pressByElement(getStaticTextByLabel(legalSection), 1);
     }
 }
