@@ -96,8 +96,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
         episodicRating = null;
+        String apiContentTitle = null;
         try {
-            String apiContentTitle;
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
             for (String brandID : brandIDList) {
                 LOGGER.info("Searching for content in brand collection: {}", brandID);
@@ -109,6 +109,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             }
         } catch (Exception e) {
             throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
+        }
+
+        if (apiContentTitle == null) {
+            throw new SkipException(String.format("Skipping test for rating '%s' as no media is available for it.", rating));
         }
     }
 
