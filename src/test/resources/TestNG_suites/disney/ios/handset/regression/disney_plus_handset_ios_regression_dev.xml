@@ -18,7 +18,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsBuild" value="3.5.0.70537"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,Details,Home,Hulk,More Menu,NonUS-MoreMenu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-MoreMenu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76553"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
@@ -104,6 +104,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
         </classes>
     </test>
 </suite>
