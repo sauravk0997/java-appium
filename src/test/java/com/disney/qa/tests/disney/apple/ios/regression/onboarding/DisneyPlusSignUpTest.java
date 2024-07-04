@@ -151,7 +151,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
                 "By clicking “Agree & Continue,” you agree to the Disney Terms text was not displayed as expected");
 
-        scrollDown();
+        disneyPlusCreatePasswordIOSPageBase.swipePageTillElementPresent(disneyPlusSignUpIOSPageBase.getprimaryButton(),2, null, Direction.DOWN, 500);
 
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
                 "Agree & Continue Button should be displayed as expected");
