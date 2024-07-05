@@ -91,7 +91,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            disneyPlusLegalIOSPageBase.getStaticTextByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
             if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
@@ -100,7 +100,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
             } else {
                 sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
                         String.format("Document: '%s' did not match api response.", documentHeader));
-                disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+                disneyPlusLegalIOSPageBase.getStaticTextByLabel(documentHeader).click();
             }
         });
 
