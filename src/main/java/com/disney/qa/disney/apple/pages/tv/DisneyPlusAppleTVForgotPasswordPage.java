@@ -51,8 +51,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
                 .forEach(item -> {
                     if (item == MY_DISNEY_OTP_BODY) {
                         expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()).replace(EMAIL_PLACEHOLDER, email));
-//                    } else if (item == RESEND_EMAIL_COPY_2) {
-//                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText()).toUpperCase());
                     } else {
                         expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()));
                     }
