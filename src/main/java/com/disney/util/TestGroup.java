@@ -43,6 +43,7 @@ public final class TestGroup {
     public static final String VIDEO_PLAYER = "VideoPlayer";
     public static final String VIDEO_PLAYER_ADS = "VideoPlayerAds";
     public static final String PROFILES = "Profiles";
+    public static final String ONBOARDING = "Onboarding";
 
     //Analytics Groups
     public static final String QOE_PLAYBACK = "qoeplayback";

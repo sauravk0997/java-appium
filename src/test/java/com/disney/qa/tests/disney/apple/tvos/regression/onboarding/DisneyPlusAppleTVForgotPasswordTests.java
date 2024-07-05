@@ -11,6 +11,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.StringGenerator;
 import org.testng.Assert;
@@ -63,7 +64,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
     //TODO this test will be fix when new flows are updated QAA-14761
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90620"})
-    @Test(description = "Verify forgot password screen details", groups = {"Onboarding"})
+    @Test(description = "Verify forgot password screen details", groups = {TestGroup.ONBOARDING})
     public void forgotPasswordScreenDetails() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
