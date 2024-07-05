@@ -11,10 +11,14 @@ import org.openqa.selenium.WebDriver;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase{
+public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase {
 
-    protected ExtendedWebElement createPasswordHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PASSWORD_SCREEN_TITLE.getText()));
+    private static final String CONSENT_TEXT_HEADER = "Yes, I would like to receive updates, special offers and other information from Disney+ and The Walt Disney Family of Companies.";
+    private static final String CONSENT_SUBTEXT = "By clicking “Agree & Continue,” you agree to the Disney Terms of Use and Disney+ Subscriber Agreement, and acknowledge you have read our Privacy Policy and US State Privacy Rights Notice.";
+    private static final String EDIT_LINK = "(edit)";
     protected ExtendedWebElement createNewPasswordPageHeader = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText()));
+    private static final String EMAIL = "email";
+    private static final String LINK_1 = "link_1";
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -24,17 +28,44 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement showHideEyeIcon;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[1]")
+    private ExtendedWebElement dPlusLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[3]")
+    private ExtendedWebElement myDisneyLogo;
+
     public DisneyPlusCreatePasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
 
     @Override
     public boolean isOpened() {
-        return createPasswordHeader.isPresent();
+        return headlineHeader.isPresent();
+    }
+
+    public String[] getPasswordBodyText() {
+        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_BODY.getText()).split("\n");
     }
 
     public boolean isHidePasswordIconPresent() {
         return showHideEyeIcon.isElementPresent();
+    }
+
+    public boolean isDisneyLogoDisplayed() {
+        return dPlusLogo.isPresent();
+    }
+
+    public boolean isMyDisneyLogoDisplayed() {
+        return myDisneyLogo.isPresent();
+    }
+
+    public boolean isPasswordBodyTextDisplayed() {
+        return getTextViewByName(getPasswordBodyText()[0]).isElementPresent();
+    }
+
+    public boolean isPasswordBodySubTextDisplayed(String email) {
+        String passwordBodySubText = getDictionary().formatPlaceholderString(getPasswordBodyText()[2], Map.of(EMAIL, email, LINK_1, EDIT_LINK));
+        return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 
     public void clickShowHidePassword() {
@@ -65,7 +96,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordStrengthHeaderPresent() {
-        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2"))));
+        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText()));
         return passwordStrengthHeader.isElementPresent();
     }
 
@@ -123,6 +154,13 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
         openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COOKIE_POLICY)));
     }
 
+    public boolean isMarketingTextDisplayed() {
+        return getTextViewByName(CONSENT_TEXT_HEADER).isElementPresent();
+    }
+
+    public boolean isConsentLegalTextDisplayed() {
+        return getTextViewByName(CONSENT_SUBTEXT).isElementPresent();
+    }
     public void openEuPrivacyLink() {
         openHyperlink(customHyperlinkByLabel.format(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EU_PRIVACY)));
     }

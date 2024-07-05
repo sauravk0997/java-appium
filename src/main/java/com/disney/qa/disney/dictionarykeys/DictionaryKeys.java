@@ -296,6 +296,7 @@ public enum DictionaryKeys {
     MY_DISNEY_CHANGE_PASSWORD_BODY("mydisney_change_password_body"),
     MY_DISNEY_CHANGE_PASSWORD_HINT("mydisney_change_password_hint"),
     MY_DISNEY_CONTINUE_BTN("mydisney_continue_btn"),
+    MY_DISNEY_CREATE_PASSWORD_BODY("mydisney_create_password_body"),
     MY_DISNEY_CREATE_PASSWORD_HEADER("mydisney_create_password_header"),
     MY_DISNEY_CREATE_PASSWORD_STRENGTH_HINT("mydisney_create_password_strength_hint"),
     MY_DISNEY_DISMISS_BTN("mydisney_dismiss_btn"),
