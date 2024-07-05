@@ -499,8 +499,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeCellNameContains.format(name);
     }
 
-    public ExtendedWebElement getprimaryButton() { return primaryButton; }
-
     public String getTextFromStaticTextByLabel(String label) {
         return getStaticTextByLabel(label).getText();
     }

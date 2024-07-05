@@ -18,6 +18,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     private static final String EDIT_LINK = "(edit)";
     protected ExtendedWebElement createNewPasswordPageHeader = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CREATE_PASSWORD_HEADER.getText()));
     private static final String EMAIL = "email";
+    private static final String LINK_1 = "link_1";
 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpBtn;
@@ -63,7 +64,7 @@ public class DisneyPlusCreatePasswordIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isPasswordBodySubTextDisplayed(String email) {
-        String passwordBodySubText = getDictionary().formatPlaceholderString(getPasswordBodyText()[2], Map.of(EMAIL, email, "link_1", EDIT_LINK));
+        String passwordBodySubText = getDictionary().formatPlaceholderString(getPasswordBodyText()[2], Map.of(EMAIL, email, LINK_1, EDIT_LINK));
         return getTextViewByName(passwordBodySubText).isElementPresent();
     }
 

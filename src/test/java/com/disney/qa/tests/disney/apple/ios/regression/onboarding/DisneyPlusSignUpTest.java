@@ -96,7 +96,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66581"})
-    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifySubmitPasswordPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -121,7 +121,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMyDisneyLogoDisplayed(),
                 "MyDisney logo image should be displayed");
 
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.getStepperDictValue("2","3"),
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.getStepperDictValue("2", "3"),
                 "'STEP 2 OF 3' should be displayed");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
@@ -145,12 +145,12 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
                 "CheckBox is not displayed as expected");
 
-        disneyPlusCreatePasswordIOSPageBase.swipe(disneyPlusChangeEmailIOSPageBase.getLearnMoreAboutMyDisney(),Direction.UP,1,500);
+        disneyPlusCreatePasswordIOSPageBase.swipe(disneyPlusChangeEmailIOSPageBase.getLearnMoreAboutMyDisney(), Direction.UP, 1, 500);
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMarketingTextDisplayed(),
                 "Yes, I would like to receive updates text was not displayed as expected");
 
-         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
                 "By clicking “Agree & Continue,” you agree to the Disney Terms text was not displayed as expected");
 
         sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
