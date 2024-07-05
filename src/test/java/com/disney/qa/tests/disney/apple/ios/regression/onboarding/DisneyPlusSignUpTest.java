@@ -96,10 +96,11 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66581"})
-    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify 'Create Password' page elements are all present", groups = {"Onboarding", TestGroup.PRE_CONFIGURATION})
     public void verifySubmitPasswordPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = initPage(DisneyPlusChangeEmailIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
@@ -111,8 +112,26 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isOpened(),
                 "User was not directed to Password Creation as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.getBackArrow().isElementPresent(),
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isBackButtonPresent(),
                 "Back Arrow was not displayed as expected");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isDisneyLogoDisplayed(),
+                "Disney+ logo image should be displayed");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMyDisneyLogoDisplayed(),
+                "MyDisney logo image should be displayed");
+
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isStepperDictValueDisplayed("2", "3"),
+                "'STEP 2 OF 3' should be displayed");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
+                "'Create an account to continue' text should be displayed");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodyTextDisplayed(),
+                "'With a MyDisney account, you can log in to Disney+' text should be present");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(email),
+                "'Create your account' text should be present");
 
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
                 "Password entry text field was not displayed as expected");
@@ -123,8 +142,22 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordStrengthHeaderPresent(),
                 "Password Strength header text was not displayed as expected");
 
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isEmailInUseDisplayed(email),
-                "'You'll be using...' text and/or email submitted was not displayed as expected");
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
+                "CheckBox is not displayed as expected");
+
+        disneyPlusCreatePasswordIOSPageBase.swipe(disneyPlusChangeEmailIOSPageBase.getLearnMoreAboutMyDisney(), Direction.UP, 1, 500);
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMarketingTextDisplayed(),
+                "Yes, I would like to receive updates text was not displayed as expected");
+
+        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
+                "By clicking “Agree & Continue,” you agree to the Disney Terms text was not displayed as expected");
+
+        sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
+                "Agree & Continue Button should be displayed as expected");
+
+        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
+                "'Learn more about MyDisney' Link should be displayed as expected");
 
         sa.assertAll();
     }
