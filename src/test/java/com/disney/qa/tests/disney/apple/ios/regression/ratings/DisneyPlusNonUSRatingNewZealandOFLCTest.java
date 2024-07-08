@@ -10,7 +10,7 @@ public class DisneyPlusNonUSRatingNewZealandOFLCTest extends DisneyPlusRatingsBa
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73188"})
     @Test(description = "Rating System - OFLC - New Zealand - M", groups = {"NonUS-Ratings"})
-    public void verifyRatingSystemOFLCM() {
+    public void verifyNewZealandOFLCRatingM() {
         ratingsSetup(M.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
         confirmRegionalRatingsDisplays(M.getContentRating());
     }

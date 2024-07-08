@@ -42,6 +42,7 @@ public class RatingConstant {
                 return "1830";
             case "KR":
             case "SG":
+            case "NZ":
                 return "1870";
             case "NL":
             case "JP":
@@ -63,6 +64,8 @@ public class RatingConstant {
                 return "23098";
             case "KR":
                 return "23126";
+            case "NZ":
+                return "23150";
             case "SG":
                 return "23116";
             case "TR":
