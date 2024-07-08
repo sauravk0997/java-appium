@@ -31,7 +31,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         verifyAgeButton.click();
     }
 
-    public boolean isBackModalDisplayed() {
+    public boolean isR21VerifyYourAgeModalDisplayed() {
         return isViewAlertPresent() && staticTextByLabel.format(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_CANCEL_MODAL.getText())).isPresent();
     }
