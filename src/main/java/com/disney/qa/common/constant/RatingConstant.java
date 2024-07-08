@@ -4,6 +4,7 @@ public class RatingConstant {
 
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
+    public static final String NEW_ZEALAND = "NZ";
     public static final String SINGAPORE = "SG";
     public static final String TURKEY = "TR";
     public static final String USA = "US";
@@ -11,6 +12,7 @@ public class RatingConstant {
     public enum Rating {
         G("G"),
         GA("General Audience"),
+        M("M"),
         PG("PG"),
         R21("R21"),
         SEVEN_PLUS("7+"),
