@@ -38,7 +38,7 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
         declineMaturityButton.click();
     }
 
-    public boolean isAgeModalDisplayed() {
+    public boolean isR21MustBe21YearOlderModalDisplayed() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_HEADER.getText())).isPresent();
     }
