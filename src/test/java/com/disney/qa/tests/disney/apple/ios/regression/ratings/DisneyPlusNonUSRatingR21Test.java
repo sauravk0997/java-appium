@@ -387,8 +387,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        Assert.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found on Who is watching page.");
-        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page not open");
+        whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
         pinPage.clickProfilePin();
         pinPage.enterProfilePin(PROFILE_PIN);
         Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
