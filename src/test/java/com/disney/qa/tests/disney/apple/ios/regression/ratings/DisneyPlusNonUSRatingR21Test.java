@@ -357,6 +357,33 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74749"})
+    @Test(description = "R21 - Existing Pin - Enter Password - Forgot Password Flow", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21ExistingPinForgotPassword() {
+        String NEW_PASSWORD = "TestPass1234!";
+        Date startTime = getEmailApi().getStartTime();
+        ratingsSetupForOTPAccount(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+        passwordPage.clickR21ForgotPasswordLink();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
+        String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
+        oneTimePasscodePage.enterOtp(otp);
+        oneTimePasscodePage.clickPrimaryButton();
+        Assert.assertTrue(changePasswordPage.isOpened(),
+                "Change Password screen did not open after submitting OTP");
+        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        sa.assertAll();
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
