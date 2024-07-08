@@ -363,7 +363,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        launchR21Content();
+        launchR21ContentWithPINUser();
         verifyAgePage.clickCancelButton();
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
@@ -373,6 +373,25 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickPlayButton(SHORT_TIMEOUT);
+        Assert.assertTrue(verifyAgePage.isOpened(), "Verify your age page should open");
+    }
+
+    public void launchR21ContentWithPINUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        Assert.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.clickProfilePin();
+        pinPage.enterProfilePin(PROFILE_PIN);
+        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();

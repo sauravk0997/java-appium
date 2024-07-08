@@ -35,7 +35,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "ko";
     static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
-    private static final String PROFILE_PIN = "1234";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
@@ -49,9 +48,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -65,11 +61,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
-        Assert.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
-        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
-        pinPage.clickProfilePin();
-        pinPage.enterProfilePin(PROFILE_PIN);
-        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
     }
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
