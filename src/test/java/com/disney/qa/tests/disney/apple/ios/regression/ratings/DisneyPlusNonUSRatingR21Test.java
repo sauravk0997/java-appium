@@ -341,7 +341,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
-    @Test(description = " R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
+    @Test(description = "R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -355,6 +355,17 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74746"})
+    @Test(description = "R21 - User Has Pin - Verify Age - Select Back Button on Verify Age Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21HasPINBackButtonOnVerifyAgeScreen() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
     }
 
     public void launchR21Content() {

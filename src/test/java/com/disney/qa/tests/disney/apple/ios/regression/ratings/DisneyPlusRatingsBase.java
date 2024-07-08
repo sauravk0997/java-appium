@@ -16,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -36,11 +35,28 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "ko";
     static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
+    private static final String PROFILE_PIN = "1234";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
