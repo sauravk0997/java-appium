@@ -28,6 +28,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement textview;
 
     static final String EXPANDED = "Expanded";
+    static final String COLLAPSED = "Collapsed";
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -76,15 +77,13 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     public void clickLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
         sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
-
-
-
-        //getStaticTextByName
-        //getTypeButtonByLabel
+        
         getStaticTextByName(legalSection).click();
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
+        sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
+                legalSection + " was not collapsed");
     }
 }
