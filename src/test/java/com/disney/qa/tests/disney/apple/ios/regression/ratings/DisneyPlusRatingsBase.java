@@ -51,14 +51,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
