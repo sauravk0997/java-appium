@@ -116,6 +116,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void testCheckLegalDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V1));
         SoftAssert sa = new SoftAssert();
@@ -133,7 +134,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         legalIOSPageBase.clickLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
         legalIOSPageBase.clickLegalScreenSection(sa, PRIVACY_POLICY);
         legalIOSPageBase.clickLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
-        legalIOSPageBase.clickLegalScreenSection(sa, DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION);
+        legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+
+        oneTrustPage.tapCloseButton();
+        Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), "Legal Center Header is not displayed");
 
         legalIOSPageBase.clickBack();
         sa.assertTrue(moreMenuIOSPageBase.isOpened(), "More menu screen not displayed");
