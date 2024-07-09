@@ -42,4 +42,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingTurkeyAITest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset New Zealand OFLC Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingNewZealandOFLCTest"/>
+        </classes>
+    </test>
 </suite>
