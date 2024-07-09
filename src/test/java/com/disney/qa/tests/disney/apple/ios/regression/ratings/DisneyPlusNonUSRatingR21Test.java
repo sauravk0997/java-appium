@@ -25,7 +25,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
     private static final String PIN_PAGE_ERROR_MESSAGE = "R21 pin page did not open";
-    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header/message is not displayed";
+    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header is not displayed";
+    private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Must Create pin' popup sub-header message is not displayed";
     private static final String MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE = "You Must be 21 year older modal/popup is not displayed";
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "You must yerify your age Age modal/popup should displayed";
 
@@ -293,7 +294,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
         verifyAgePage.clickCancelButton();
         sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
-        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -325,8 +326,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "PIN Cancel modal header not displayed");
-        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "PIN Cancel modal sub message not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE);
         sa.assertTrue(pinPage.isContinueButtonOnCancelModalDisplayed(), "Continue button on cancel modal not displayed");
         sa.assertTrue(pinPage.isNotNowButtonOnCancelModalDisplayed(), "Not now button on cancel modal not displayed");
         sa.assertAll();
@@ -358,7 +359,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         //Verify Not Now button on alert
         pinPage.clickCancelButton();
-        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE);
         verifyAgeDOBPage.clickDefaultAlertBtn();
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
         sa.assertAll();
