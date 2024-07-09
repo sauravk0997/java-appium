@@ -197,8 +197,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
-        if(!detailsPage.getEpisodesTab().isPresent()) {
-            Assert.assertTrue(swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500), "Couldn't swipe to Episode tab");
+        if (!detailsPage.getEpisodesTab().isPresent()) {
+            swipePageTillElementPresent(detailsPage.getEpisodesTab(), 2, detailsPage.getContentDetailsPage(), Direction.DOWN, 500);
         }
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
