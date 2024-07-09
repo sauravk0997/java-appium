@@ -206,7 +206,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
-    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
         String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
@@ -221,7 +221,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
-        disneyPlusAppleTVLoginPage.clickSignUpButtonUnknownEmailScreen();
+        disneyPlusAppleTVLoginPage.clickSignUpButtonUnknownEmailScreen(); // error
 
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign Up page did not launch");
         sa.assertEquals(disneyPlusAppleTVSignUpPage.getEmailFieldText(), uniqueUserEmail);
