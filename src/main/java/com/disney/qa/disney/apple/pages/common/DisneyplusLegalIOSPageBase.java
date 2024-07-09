@@ -17,6 +17,9 @@ import java.lang.invoke.MethodHandles;
 public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private static final String EXPANDED = "Expanded";
+    private static final String COLLAPSED = "Collapsed";
+
     private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
 
     private ExtendedWebElement backupHeader = findByFallbackAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
@@ -26,9 +29,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(id = "//XCUIElementTextView")
     private ExtendedWebElement textview;
-
-    static final String EXPANDED = "Expanded";
-    static final String COLLAPSED = "Collapsed";
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
