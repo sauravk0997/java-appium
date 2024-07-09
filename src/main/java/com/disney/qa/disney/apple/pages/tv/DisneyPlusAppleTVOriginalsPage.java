@@ -12,43 +12,15 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOriginalsIOSPageBase.class)
 public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBase {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'Originals'`]")
-    private ExtendedWebElement originalText;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'PLAY'`]")
-    private ExtendedWebElement playButton;
-
-    @ExtendedFindBy(accessibilityId = "Featured")
-    private ExtendedWebElement featured;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'PLAY'$]/**/XCUIElementTypeButton[-1]")
-    private ExtendedWebElement addBtn;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"Shorts\"`]")
+    private ExtendedWebElement shorts;
 
     public DisneyPlusAppleTVOriginalsPage(WebDriver driver) {
         super(driver);
     }
 
-    public boolean isOriginalTextPresent() {
-        return originalText.isPresent();
-    }
-
-    public boolean isPlayBtnPresent() {
-        return playButton.isPresent();
-    }
-
-    public DisneyPlusAppleTVOriginalsPage clickAddBtn() {
-        addBtn.click();
-        return this;
-    }
-
-    public String getAddBtnStatus() {
-        return addBtn.getAttribute("label");
-    }
-
     @Override
     public boolean isOpened() {
-        boolean isOpened = DisneyPlusAppleTVCommonPage.isProd() ? featured.isElementPresent() : getDynamicAccessibilityId("Star+_Grid").isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isOpened;
+        return DisneyPlusAppleTVCommonPage.isProd() ? shorts.isElementPresent() : getStaticTextByLabelContains("On the Originals screen.").isPresent();
     }
 }

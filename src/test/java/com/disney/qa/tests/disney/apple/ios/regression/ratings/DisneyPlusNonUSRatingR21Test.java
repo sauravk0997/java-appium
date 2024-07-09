@@ -4,7 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.phone.DisneyPlusDownloadsIOSPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -342,7 +341,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
-    @Test(description = " R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
+    @Test(description = "R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -357,9 +356,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
     }
-
-//    D+ iOS Automation - R21 - Downloads - User Has PIN - Verify Playback Completed R21 Download
-//    XMOBQA-74741
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
     @Test(description = " R21 - Downloads - Play Completed Download", groups = {"NonUS-Ratings", "R21"})
@@ -402,6 +398,18 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74746"})
+    @Test(description = "R21 - User Has Pin - Verify Age - Select Back Button on Verify Age Screen", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21HasPINBackButtonOnVerifyAgeScreen() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        launchR21Content();
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
+    }
+
     public void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -412,5 +420,15 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "Verify your age page should open");
+    }
+
+    public void navigateToHomePageForPinUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page was not open");
+        whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
+        pinPage.enterPin(PROFILE_PIN);
+        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
     }
 }
