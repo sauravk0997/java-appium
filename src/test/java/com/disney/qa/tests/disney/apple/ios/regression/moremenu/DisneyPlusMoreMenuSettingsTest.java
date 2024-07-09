@@ -88,8 +88,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
-        DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
 
