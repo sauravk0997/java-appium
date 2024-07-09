@@ -25,7 +25,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
     private static final String PIN_PAGE_ERROR_MESSAGE = "R21 pin page did not open";
-    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header is not displayed";
+    private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header/message is not displayed";
+    private static final String MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE = "You Must be 21 year older modal/popup is not displayed";
+    private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "You must yerify your age Age modal/popup should displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {"NonUS-Ratings", "R21"})
@@ -132,13 +134,13 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         //Verify Continue button on alert
         verifyAgePage.clickCancelButton();
-        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed");
+        sa.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
         verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
         sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
         //Verify Not Now button on alert
         verifyAgePage.clickCancelButton();
-        sa.assertTrue(verifyAgeDOBPage.isBackModalDisplayed(), "Modal Back button/View alert not displayed");
+        sa.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
         verifyAgeDOBPage.clickDefaultAlertBtn();
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
         sa.assertAll();
@@ -186,7 +188,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
     @Test(description = "R21: Create PIN - Enter Date of Birth - Error Modal when DOB is Not 21+", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINNot21ErrorModalOnDOBScreen() {
-        String modelErrorMessage = "Verify Age Modal/Alert should displayed";
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -199,7 +200,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
-        sa.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+        sa.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
         verifyAgePage.clickDefaultAlertBtn();
         homePage.waitForHomePageToOpen();
@@ -256,18 +257,17 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
     @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINNot21ErrorModalOnAgeScreen() {
-        String modelErrorMessage = "Verify Age Modal/Alert should be displayed";
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         launchR21Content();
         verifyAgePage.clickNoButton();
-        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         Assert.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), "Browse other titles button not displyed on modal");
 
         //Clicking Cancel button to validate that user can not dismiss the modal by clicking outside the bounds
         verifyAgePage.clickCancelButton();
-        Assert.assertTrue(verifyAgePage.isAgeModalDisplayed(), modelErrorMessage);
+        Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
 
         //Click "Browse other titles" to return back to Home
         verifyAgePage.clickDefaultAlertBtn();
@@ -293,7 +293,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
         verifyAgePage.clickCancelButton();
         sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
-        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "Must Create pin' message is not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), MUST_CREATE_PIN_POPUP_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -338,6 +338,23 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickDefaultAlertBtn();
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), "Details page was not opened");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
+    @Test(description = " R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINErrorMessageForInvalidDOB() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
+        Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
     }
 
     public void launchR21Content() {

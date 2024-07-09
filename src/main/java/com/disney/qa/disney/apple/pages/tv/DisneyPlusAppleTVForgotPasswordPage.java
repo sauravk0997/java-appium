@@ -21,7 +21,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOneTimePasscodeIOSPageBase.class)
 public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePasscodeIOSPageBase {
 
-    private static final String EMAIL_PLACEHOLDER = "{user_email}";
+    private static final String EMAIL_PLACEHOLDER = "{email}";
 
     private static final String TEXT_FIELD_INPUT_CODE = "textFieldInputCode";
 
@@ -47,14 +47,12 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     public List<String> getForgotPasswordExpectedScreenTexts(String email) {
         var expectedList = new ArrayList<String>();
 
-        Stream.of(CHECK_EMAIL_TITLE, CHECK_EMAIL_COPY, RESEND_EMAIL_COPY, RESEND_EMAIL_COPY_2).collect(Collectors.toList())
+        Stream.of(MY_DISNEY_OTP_HEADER, MY_DISNEY_OTP_BODY, MY_DISNEY_OTP_LOGIN_RESEND_BTN, MY_DISNEY_CONTINUE_BTN).collect(Collectors.toList())
                 .forEach(item -> {
-                    if (item == CHECK_EMAIL_COPY) {
-                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText()).replace(EMAIL_PLACEHOLDER, email));
-                    } else if (item == RESEND_EMAIL_COPY_2) {
-                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText()).toUpperCase());
+                    if (item == MY_DISNEY_OTP_BODY) {
+                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()).replace(EMAIL_PLACEHOLDER, email));
                     } else {
-                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText()));
+                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()));
                     }
                 });
         return expectedList;
@@ -90,8 +88,8 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         clickSelect();
     }
 
-    public String getOTPText() {
-        return otpInputCodeField.getText();
+    public boolean isOTPPlaceholderPresent() {
+        return otpInputCodeField.isPresent();
     }
 
     public void clickResend() {
