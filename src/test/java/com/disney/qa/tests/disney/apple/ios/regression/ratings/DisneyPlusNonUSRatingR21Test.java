@@ -361,7 +361,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     @Test(description = " R21 - Downloads - Play Completed Download", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21DownloadsCompletedPlayback() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        SoftAssert sa = new SoftAssert();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
@@ -378,11 +377,11 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         detailsPage.startDownload();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
-        sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
-        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
 
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
@@ -390,12 +389,11 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         pressByElement(pinPage.getR21SetPinButton(), 1);
         detailsPage.waitForMovieDownloadComplete(150, 15);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        sa.assertTrue(downloads.isOpened(), "Downloads page did not open.");
+        Assert.assertTrue(downloads.isOpened(), "Downloads page did not open.");
 
         downloads.tapDownloadedAsset(contentTitle);
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74746"})
