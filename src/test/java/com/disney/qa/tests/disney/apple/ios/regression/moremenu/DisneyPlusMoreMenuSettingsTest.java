@@ -83,7 +83,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67280"})
-    @Test(description = "User taps on Edit Profiles", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE})
+    @Test(description = "User taps on Edit Profiles", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.MORE_MENU, TestGroup.SMOKE})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
         onboard(getAccount().getFirstName());
