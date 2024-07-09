@@ -2,12 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -94,6 +89,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
 
         Assert.assertTrue(disneyPlusEditProfileIOSPageBase.isEditProfilesTitlePresent(),
@@ -109,6 +106,14 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
 
         softAssert.assertTrue(new DisneyPlusWhoseWatchingIOSPageBase(getDriver()).isAccessModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles did not change to Access Mode (pencil removed)");
+
+        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
+                "Add Profile Icon was not displayed");
+
+        disneyPlusWhoseWatchingIOSPageBase.clickAddProfile();
+
+        Assert.assertTrue(disneyPlusChooseAvatarIOSPageBase.isOpened(),
+                "Choose Avatar Page was not displayed");
 
         softAssert.assertAll();
     }
