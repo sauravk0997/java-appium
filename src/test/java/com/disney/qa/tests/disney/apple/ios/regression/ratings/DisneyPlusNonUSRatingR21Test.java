@@ -384,7 +384,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     public void navigateToHomePageForPinUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page was not open");
         whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
         pinPage.enterPin(PROFILE_PIN);
