@@ -221,7 +221,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
-        disneyPlusAppleTVLoginPage.clickSignUpButtonUnknownEmailScreen(); // error
+        disneyPlusAppleTVLoginPage.clickSignUpButtonUnknownEmailScreen();
 
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign Up page did not launch");
         sa.assertEquals(disneyPlusAppleTVSignUpPage.getEmailFieldText(), uniqueUserEmail);
