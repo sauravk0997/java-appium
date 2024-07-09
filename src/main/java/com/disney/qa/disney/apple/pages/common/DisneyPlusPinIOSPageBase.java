@@ -30,6 +30,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
     private ExtendedWebElement pinInputNumberWithKey;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"profilePin\"`]/XCUIElementTypeOther[2]")
+    private ExtendedWebElement pinInputField;
+
+
     @Override
     public boolean isOpened() {
         return pinInputTitle.isPresent();
@@ -122,6 +126,10 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isR21PinPageModalMessageDisplayed() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_MESSAGE.getText())).isPresent();
+    }
+
+    public void enterPin(String pin) {
+        pinInputField.type(pin);
     }
 
     public boolean isContinueButtonOnCancelModalDisplayed() {
