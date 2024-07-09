@@ -24,41 +24,27 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
-    //TODO this test will be fix when new flows are updated QAA-14797
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90469", "XCDQA-90465"})
-    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"}, enabled = false)
+    @Test(description = "Email Input screen for Sign Up flow: Details", groups = {"Onboarding", "Smoke"})
     public void signUpEmailScreenAppearance() {
-        String marketingText = ".text";
-        String legalText = "content.text";
-        List<String> dictionaryList = new ArrayList<>();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
 
-        String siteConfig = getLocalizationUtils().getOneIdSiteConfig();
-        dictionaryList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, AGREE_AND_CONTINUE_BTN.getText()));
-        dictionaryList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, SIGN_UP_TITLE.getText()));
-        dictionaryList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, PRIVACY_TERMS_BTN.getText()));
-        dictionaryList.add(getContentApiChecker().getMarketingItems(siteConfig, marketingText));
-        dictionaryList.add(getLocalizationUtils().getLegalItems(siteConfig, legalText).get(0).asText());
-        dictionaryList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ENTER_EMAIL.getText()));
         SoftAssert sa = new SoftAssert();
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickSignUpButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        IntStream.range(0, dictionaryList.size()).forEach(index -> {
-            if (index < 4) {
-                sa.assertEquals(dictionaryList.get(index), disneyPlusAppleTVSignUpPage.getTextFromStaticTextByLabel(dictionaryList.get(index)), dictionaryList.get(index) + " is not present on screen");
-            } else if (index == 4) {
-                //legalDisclosureView
-                sa.assertTrue(disneyPlusAppleTVSignUpPage.islegalDisclosureViewPresent(), "Legal Disclosure view is not found");
-            } else {
-                sa.assertEquals(disneyPlusAppleTVLoginPage.getEmailFieldText(), dictionaryList.get(index), dictionaryList.get(index) + " is not found");
-            }
-        });
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isCheckBoxChecked(), "Checkbox was not checked by default");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isStep1LabelDisplayed(), "Step 1 label was not displayed");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isEnterEmailHeaderDisplayed(), "Sign up title was not displayed");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isEnterEmailBodyDisplayed(), "Sign up body was not displayed");
+        sa.assertTrue(disneyPlusAppleTVLoginPage.isEmailFieldFocused(), "Email input is not focused by default");
+        sa.assertTrue(disneyPlusAppleTVLoginPage.isContinueButtonFocused(), "Continue button is not focused");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isLearnMoreHeaderDisplayed(), "Learn more header was not displayed");
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isLearnMoreBodyDisplayed(), "Learn more body was not displayed");
+
         sa.assertAll();
     }
 
