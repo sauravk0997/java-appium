@@ -26,7 +26,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
     private static final String PIN_PAGE_ERROR_MESSAGE = "R21 pin page did not open";
     private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "Must Create pin' popup header is not displayed";
-    private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Must Create pin' popup sub-header message is not displayed";
+    private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Manage your PIN message is not displayed";
     private static final String MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE = "You Must be 21 year older modal/popup is not displayed";
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "You must yerify your age Age modal/popup should displayed";
 
