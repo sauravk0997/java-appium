@@ -128,7 +128,7 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_MESSAGE.getText())).isPresent();
     }
 
-    public void typeProfilePin(String pin) {
+    public void enterPin(String pin) {
         pinInputField.type(pin);
     }
 
