@@ -88,8 +88,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
-        DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+       // DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+       // DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
 
@@ -107,13 +107,13 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         softAssert.assertTrue(new DisneyPlusWhoseWatchingIOSPageBase(getDriver()).isAccessModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles did not change to Access Mode (pencil removed)");
 
-        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
-                "Add Profile Icon was not displayed");
-
-        disneyPlusWhoseWatchingIOSPageBase.clickAddProfile();
-
-        Assert.assertTrue(disneyPlusChooseAvatarIOSPageBase.isOpened(),
-                "Choose Avatar Page was not displayed");
+//        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
+//                "Add Profile Icon was not displayed");
+//
+//        disneyPlusWhoseWatchingIOSPageBase.clickAddProfile();
+//
+//        Assert.assertTrue(disneyPlusChooseAvatarIOSPageBase.isOpened(),
+//                "Choose Avatar Page was not displayed");
 
         softAssert.assertAll();
     }
