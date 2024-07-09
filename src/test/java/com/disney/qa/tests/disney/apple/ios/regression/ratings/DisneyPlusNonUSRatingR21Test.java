@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.phone.DisneyPlusDownloadsIOSPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -355,6 +356,50 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
+    }
+
+//    D+ iOS Automation - R21 - Downloads - User Has PIN - Verify Playback Completed R21 Download
+//    XMOBQA-74741
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
+    @Test(description = " R21 - Downloads - Play Completed Download", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21DownloadsCompletedPlayback() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.startDownload();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open.");
+
+        IntStream.range(0, 4).forEach(i -> {
+            pinPage.getTypeKey(String.valueOf(i)).click();
+        });
+        pressByElement(pinPage.getR21SetPinButton(), 1);
+        detailsPage.waitForMovieDownloadComplete(150, 15);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        sa.assertTrue(downloads.isOpened(), "Downloads page did not open.");
+
+        downloads.tapDownloadedAsset(contentTitle);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertAll();
     }
 
     public void launchR21Content() {
