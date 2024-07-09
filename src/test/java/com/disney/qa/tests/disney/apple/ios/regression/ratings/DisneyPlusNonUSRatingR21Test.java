@@ -308,6 +308,30 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69776"})
+    @Test(description = "R21 - Create Pin - Set PIN - Error Modal", groups = {"NonUS-Ratings", "R21"})
+    public void verifyR21CreatePINCancelModalUIOnPINScreen() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_ERROR_MESSAGE);
+        pinPage.clickCancelButton();
+        sa.assertTrue(pinPage.isR21PinPageModalHeaderDisplayed(), "PIN Cancel modal header not displayed");
+        sa.assertTrue(pinPage.isR21PinPageModalMessageDisplayed(), "PIN Cancel modal sub message not displayed");
+        sa.assertTrue(pinPage.isContinueButtonOnCancelModalDisplayed(), "Continue button on cancel modal not displayed");
+        sa.assertTrue(pinPage.isNotNowButtonOnCancelModalDisplayed(), "Not now button on cancel modal not displayed");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
     @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {"NonUS-Ratings", "R21"})
     public void verifyR21CreatePINCancelModalOnPINScreen() {
