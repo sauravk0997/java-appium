@@ -35,6 +35,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final String DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
     private static final String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
     private static final String LEGAL_PAGE_HEADER_NOT_DISPLAYED = "Legal Page Header not displayed";
+    private static final String ONE_TRUST_PAGE_NOT_DISPLAYED = "One Trust Page not displayed";
 
     @DataProvider
     private Object[] fallbackLanguages() {
@@ -138,7 +139,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         legalIOSPageBase.clickLegalScreenSection(sa, PRIVACY_POLICY);
         legalIOSPageBase.clickLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
         legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         oneTrustPage.tapCloseButton();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
@@ -199,7 +200,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         confirmLegalPageOpens();
         String doNotSellString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
         disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
-        sa.assertTrue(oneTrustPage.isOpened(), "");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
         //Toggle switch but do not tap confirm your choice button
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
         oneTrustPage.tapConsentSwitch();
@@ -240,7 +241,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
 
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         sa.assertTrue(oneTrustPage.isCloseIconPresent(), "Close button was not found");
         sa.assertTrue(oneTrustPage.isWaltDisneyLogoPresent(), "Walt disney logo was not found");
@@ -280,7 +281,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Toggle switch off but do not tap confirm your choice button
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
@@ -332,19 +333,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         disneyPlusLegalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify US State Privacy Rights Link
         oneTrustPage.clickYourUSStatePrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15), "US State Privacy Rights Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify California Privacy Rights Link
         oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15), "California Privacy Rights Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page was not opened");
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify Opt out form Link
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
