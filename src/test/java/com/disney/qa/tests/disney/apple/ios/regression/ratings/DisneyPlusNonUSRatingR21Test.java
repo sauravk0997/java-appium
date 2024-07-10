@@ -396,7 +396,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74754"})
-    @Test(description = "R21 - User Has Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {"NonUS-Ratings", "R21"})
+    @Test(description = "R21 - User Has Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINCancelModalButtonOnDOBScreen() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
