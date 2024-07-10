@@ -27,9 +27,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
 
-    @FindBy(id = "//XCUIElementTextView")
-    private ExtendedWebElement textview;
-
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -68,10 +65,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
             maxSwipes--;
         }
         hyperlink.click();
-    }
-
-    public boolean isTextViewPresent(){
-        return textview.isElementPresent();
     }
 
     public void clickLegalScreenSection(SoftAssert sa, String legalSection) {

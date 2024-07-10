@@ -121,7 +121,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
 
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V1));
+        setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V2));
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         
