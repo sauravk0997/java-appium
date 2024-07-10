@@ -383,8 +383,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), BROWSE_OTHER_TITLE_ERROR_MESSAGE);
 
-        //Clicking Cancel button to validate that user can not dismiss the modal by clicking outside the bounds
-        verifyAgePage.clickCancelButton();
+        //Tap above the alert to validate that user can not dismiss the modal by clicking outside the bounds
+        verifyAgePage.tapAboveElement(verifyAgePage.getSystemAlert());
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
 
         //Click "Browse other titles" to return back to Home
