@@ -211,7 +211,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
         String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
-        String randomPassword = StringGenerator.generateWord(5) + StringGenerator.generateNumeric(1);
+       // String randomPassword = StringGenerator.generateWord(5) + StringGenerator.generateNumeric(1);
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -225,16 +225,14 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
 
         disneyPlusAppleTVPasswordPage.clickPassword();
-        disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(randomPassword);
+        disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
         disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
 
-        /*
         disneyPlusAppleTVPasswordPage.clickSignUp();
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isOpened(), "Complete Purchase screen did not launch");
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isCompleteSubscriptionBtnPresent(), "Complete Sub button not present");
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isLogOutBtnPresent(), "Log Out button not present");
-        */
+      //  sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isOpened(), "Complete Purchase screen did not launch");
+      //  sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isCompleteSubscriptionBtnPresent(), "Complete Sub button not present");
+       // sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isLogOutBtnPresent(), "Log Out button not present");
 
         sa.assertAll();
     }
