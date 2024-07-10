@@ -44,6 +44,8 @@ public final class TestGroup {
     public static final String VIDEO_PLAYER_ADS = "VideoPlayerAds";
     public static final String PROFILES = "Profiles";
     public static final String ONBOARDING = "Onboarding";
+    public static final String NON_US_RATINGS = "NonUS-Ratings";
+    public static final String R21 = "R21";
 
     //Analytics Groups
     public static final String QOE_PLAYBACK = "qoeplayback";
