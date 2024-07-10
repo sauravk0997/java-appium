@@ -15,6 +15,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.StringGenerator;
 import org.apache.commons.lang.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -210,6 +211,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
         SoftAssert sa = new SoftAssert();
         String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
+        String randomPassword = StringGenerator.generateWord(5) + StringGenerator.generateNumeric(1);
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -223,7 +225,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
 
         disneyPlusAppleTVPasswordPage.clickPassword();
-        disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.get("disney_qa_web_generic_pass"));
+        disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(randomPassword);
         disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
 
