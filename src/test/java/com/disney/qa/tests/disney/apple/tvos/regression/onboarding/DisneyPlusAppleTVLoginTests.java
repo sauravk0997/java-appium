@@ -10,12 +10,12 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneyApiCommon;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEdnaDOBCollectionPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.StringGenerator;
 import org.apache.commons.lang.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -205,7 +205,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertAll();
     }
-// RV
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
     @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
     public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
@@ -215,22 +215,19 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
-
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
         disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
-
         disneyPlusAppleTVPasswordPage.clickSignUp();
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isOpened(), "Complete Purchase screen did not launch");
-
+        sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
 
         sa.assertAll();
     }
