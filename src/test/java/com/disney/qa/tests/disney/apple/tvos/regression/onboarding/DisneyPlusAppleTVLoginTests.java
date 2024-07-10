@@ -224,13 +224,15 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.get("disney_qa_web_generic_pass"));
-
-       /*
         disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         disneyPlusAppleTVPasswordPage.clickSelect();
+
+        /*
         disneyPlusAppleTVPasswordPage.clickSignUp();
         sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isOpened(), "Complete Purchase screen did not launch");
-       */
+        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isCompleteSubscriptionBtnPresent(), "Complete Sub button not present");
+        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isLogOutBtnPresent(), "Log Out button not present");
+        */
 
         sa.assertAll();
     }
