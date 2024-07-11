@@ -2,12 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -88,11 +83,12 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67280"})
-    @Test(description = "User taps on Edit Profiles", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE})
+    @Test(description = "User taps on Edit Profiles", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.MORE_MENU, TestGroup.SMOKE})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
 
@@ -105,7 +101,16 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusEditProfileIOSPageBase.getTypeButtonByLabel("Done").isElementPresent(),
                 "Done button was not displayed");
 
+        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
+                "Add Profile Icon was not displayed");
+
+        softAssert.assertTrue(disneyPlusEditProfileIOSPageBase.isEditProfileImageDisplayed(),
+                "Avatar Image was not displayed");
+
         disneyPlusEditProfileIOSPageBase.getTypeButtonByLabel("Done").click();
+
+        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isOpened(),
+                "'Who is Watching Page was not opened");
 
         softAssert.assertTrue(new DisneyPlusWhoseWatchingIOSPageBase(getDriver()).isAccessModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles did not change to Access Mode (pencil removed)");
