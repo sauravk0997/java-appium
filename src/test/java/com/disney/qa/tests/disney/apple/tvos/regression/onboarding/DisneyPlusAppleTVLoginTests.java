@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -30,6 +29,7 @@ import java.util.stream.IntStream;
 import static com.disney.alice.labels.AliceLabels.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
 public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String WELCOME_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Welcome screen did not launch";
@@ -602,7 +602,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        ArrayList<Container> collections = disneyBaseTest.getExploreAPIPageContent(disneyBaseTest.HOME_PAGE_ID);
+        ArrayList<Container> collections = disneyBaseTest.getExploreAPIPageContent(HOME_PAGE.getEntityId());
         // Recommended collection titles are been listed
         List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(1).getId(), 50);
 
