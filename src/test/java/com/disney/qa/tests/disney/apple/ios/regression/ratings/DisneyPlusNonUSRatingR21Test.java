@@ -63,7 +63,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
-        Assert.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", "'"), incorrectPasswordError.replaceAll("’|‘","'"), "'We couldn't log you in' error message did not display for wrong password entered.");
+        Assert.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", "'"), incorrectPasswordError.replaceAll("‘|’","'"), "'We couldn't log you in' error message did not display for wrong password entered.");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69767"})
@@ -431,7 +431,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
-        Assert.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", "'"), incorrectPasswordError.replaceAll("’|‘","'"), "'We couldn't log you in' error message did not display for wrong password entered.");
+        Assert.assertEquals(passwordPage.getErrorMessageString().replaceAll("\"", "'"), incorrectPasswordError.replaceAll("‘|’","'"), "'We couldn't log you in' error message did not display for wrong password entered.");
     }
 
     private void launchR21Content() {
