@@ -329,6 +329,15 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
+     * Tap right above an element
+     * @param element ExtendedWebElement
+     */
+    default void tapAboveElement(ExtendedWebElement element) {
+        Point point = element.getLocation();
+        tap(point.getX() + 10, point.getY() - 10, 0);
+    }
+
+    /**
      * Drag and Drop an element to a given position
      *
      * @param startX X coord of the element
