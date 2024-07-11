@@ -35,8 +35,8 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "'You must verify your age' modal/popup is not displayed";
     private static final String BROWSE_OTHER_TITLE_ERROR_MESSAGE = "Browse other titles button not displayed on modal";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
-    private int WAIT_FOR_DOWNLOAD_TIMEOUT = 150;
-    private int WAIT_FOR_DOWNLOAD_POLLING = 15;
+    private int DOWNLOAD_TIMEOUT = 150;
+    private int DOWNLOAD_POLLING = 15;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
@@ -451,9 +451,9 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         if (detailsPage.isSeriesDownloadButtonPresent()) {
-            detailsPage.waitForSeriesDownloadToComplete(WAIT_FOR_DOWNLOAD_TIMEOUT, WAIT_FOR_DOWNLOAD_POLLING);
+            detailsPage.waitForSeriesDownloadToComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
         } else {
-            detailsPage.waitForMovieDownloadComplete(WAIT_FOR_DOWNLOAD_TIMEOUT, WAIT_FOR_DOWNLOAD_POLLING);
+            detailsPage.waitForMovieDownloadComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
         }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
