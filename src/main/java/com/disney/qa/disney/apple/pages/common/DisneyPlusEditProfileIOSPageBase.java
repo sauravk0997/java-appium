@@ -107,6 +107,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type='XCUIElementTypeCell'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[3]")
+    private ExtendedWebElement avatarImage;
+
+
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
@@ -553,5 +557,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.RATING_MDA_R21_DESCRIPTION.getText());
         return ratingDescriptionText.toLowerCase().contains(dictRatingDescription.toLowerCase());
+    }
+
+    public boolean isAvatarImageDisplayed() {
+        return avatarImage.isPresent();
     }
 }

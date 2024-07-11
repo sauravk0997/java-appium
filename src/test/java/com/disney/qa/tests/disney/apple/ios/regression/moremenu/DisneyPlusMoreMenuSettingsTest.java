@@ -102,13 +102,16 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusEditProfileIOSPageBase.getTypeButtonByLabel("Done").isElementPresent(),
                 "Done button was not displayed");
 
+        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
+                "Add Profile Icon was not displayed");
+
+        softAssert.assertTrue(disneyPlusEditProfileIOSPageBase.isAvatarImageDisplayed(),
+                "Avatar Image was not displayed");
+
         disneyPlusEditProfileIOSPageBase.getTypeButtonByLabel("Done").click();
 
         softAssert.assertTrue(new DisneyPlusWhoseWatchingIOSPageBase(getDriver()).isAccessModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles did not change to Access Mode (pencil removed)");
-
-        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
-                "Add Profile Icon was not displayed");
 
         disneyPlusWhoseWatchingIOSPageBase.clickAddProfile();
 
