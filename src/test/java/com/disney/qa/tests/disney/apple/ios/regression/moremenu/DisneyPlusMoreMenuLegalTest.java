@@ -141,19 +141,12 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
 
         sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(), "Back button not displayed");
-
-        getLocalizationUtils().getLegalHeaders().forEach(header -> {
-            LOGGER.info("Verifying Legal Section: {}", header);
-            legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, header);
-            String.format("Header '%s' was not displayed", header);
-        });
-
-        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
-        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
-        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY);
-        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
-        //legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        //sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
+        legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
+        legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
+        legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY);
+        legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
+        legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         oneTrustPage.tapCloseButton();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
