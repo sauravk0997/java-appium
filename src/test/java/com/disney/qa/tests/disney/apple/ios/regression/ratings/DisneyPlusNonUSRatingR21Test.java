@@ -369,6 +369,17 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74658"})
+    @Test(description = "R21 - User Has PIN - Verify Age - I Am 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINVerifyPasswordScreen() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+    }
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74659"})
     @Test(description = "R21 - User Has PIN - Verify Age - Not 21+ Error Modal", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINNot21ErrorMessage() {
@@ -378,7 +389,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         navigateToHomePageForPinUser();
         launchR21Content();
-        
         verifyAgePage.clickNoButton();
         sa.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), BROWSE_OTHER_TITLE_ERROR_MESSAGE);
@@ -393,6 +403,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
     @Test(description = "R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
@@ -419,6 +430,33 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchR21Content();
         verifyAgePage.clickCancelButton();
+        Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74754"})
+    @Test(description = "R21 - User Has Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINCancelModalButtonOnDOBScreen() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        //Click Continue button on alert
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
+        verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        //Click Not Now button on alert
+        verifyAgePage.clickCancelButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
+        verifyAgeDOBPage.clickDefaultAlertBtn();
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
     }
 
