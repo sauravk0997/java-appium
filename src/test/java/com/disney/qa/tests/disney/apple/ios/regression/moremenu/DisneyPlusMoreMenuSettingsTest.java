@@ -89,7 +89,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusChooseAvatarIOSPageBase disneyPlusChooseAvatarIOSPageBase = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
 
@@ -105,18 +104,16 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent(),
                 "Add Profile Icon was not displayed");
 
-        softAssert.assertTrue(disneyPlusEditProfileIOSPageBase.isAvatarImageDisplayed(),
+        softAssert.assertTrue(disneyPlusEditProfileIOSPageBase.isEditProfileImageDisplayed(),
                 "Avatar Image was not displayed");
 
         disneyPlusEditProfileIOSPageBase.getTypeButtonByLabel("Done").click();
 
+        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isOpened(),
+                "'Who is Watching Page was not opened");
+
         softAssert.assertTrue(new DisneyPlusWhoseWatchingIOSPageBase(getDriver()).isAccessModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles did not change to Access Mode (pencil removed)");
-
-        disneyPlusWhoseWatchingIOSPageBase.clickAddProfile();
-
-        Assert.assertTrue(disneyPlusChooseAvatarIOSPageBase.isOpened(),
-                "Choose Avatar Page was not displayed");
 
         softAssert.assertAll();
     }
