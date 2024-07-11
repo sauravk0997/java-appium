@@ -107,7 +107,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
     private ExtendedWebElement subtitleLabel;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
