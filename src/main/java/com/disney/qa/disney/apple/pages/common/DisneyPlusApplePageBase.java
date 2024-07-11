@@ -907,6 +907,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeSystemAlerts.getText();
     }
 
+    public ExtendedWebElement getSystemAlert() {
+        return typeSystemAlerts;
+    }
+
     public Consumer<IRemoteControllerAppleTV> getClickActionBasedOnLocalizedKeyboardOrientation() {
         localizedKeyboard.isPresent();
         return localizedKeyboard.getSize().getWidth() > 1000 ?
