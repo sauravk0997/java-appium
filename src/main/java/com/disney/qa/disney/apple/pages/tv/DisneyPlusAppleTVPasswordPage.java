@@ -213,8 +213,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public List<List<String>> getStrengthMeterVerificationLists() {
         var dictionaryList = new LinkedList<String>();
         String widthListName = getDevice().getName().contains("4K") ? "disney_password_meter_width_4K" : "disney_password_meter_width";
-        Stream.of(PASSWORD_RATING_FAIR, PASSWORD_RATING_FAIR, PASSWORD_RATING_FAIR, PASSWORD_RATING_GOOD, PASSWORD_RATING_GREAT, PASSWORD_RATING_GREAT)
-                .collect(Collectors.toList()).forEach(item -> dictionaryList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item.getText())));
+        Stream.of(MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GOOD, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GREAT, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GREAT)
+                .collect(Collectors.toList()).forEach(item -> dictionaryList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText())));
         return Stream.of(dictionaryList,
                         Stream.of(R.TESTDATA.get("disney_password_list").split(",")).collect(Collectors.toList()),
                         Stream.of(R.TESTDATA.get(widthListName).split(",")).collect(Collectors.toList()),

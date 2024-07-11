@@ -132,4 +132,13 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         pinInputField.type(pin);
     }
 
+    public boolean isContinueButtonOnCancelModalDisplayed() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_CONTINUE_BUTTON.getText())).isPresent();
+    }
+
+    public boolean isNotNowButtonOnCancelModalDisplayed() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_NOT_NOW_BUTTON.getText())).isPresent();
+    }
 }
