@@ -424,7 +424,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74741"})
-    @Test(description = " R21 - Downloads - Play Completed Download", groups = {"NonUS-Ratings", "R21"})
+    @Test(description = " R21 - Downloads - Play Completed Download", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21DownloadsCompletedPlayback() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
