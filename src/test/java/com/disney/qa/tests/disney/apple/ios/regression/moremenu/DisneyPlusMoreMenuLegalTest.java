@@ -116,7 +116,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68063"})
     @Test(description = "Verify Legal and return to More Menu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void testCheckLegalDisplay() {
+    public void testMoreMenuLegalDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
