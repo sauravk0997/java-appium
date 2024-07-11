@@ -378,7 +378,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         navigateToHomePageForPinUser();
         launchR21Content();
-
         verifyAgePage.clickNoButton();
         sa.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), BROWSE_OTHER_TITLE_ERROR_MESSAGE);
