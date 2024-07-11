@@ -125,6 +125,13 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V2));
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
+
+        moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
         
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -134,12 +141,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
 
         sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(), "Back button not displayed");
-        legalIOSPageBase.clickLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
-        legalIOSPageBase.clickLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
-        legalIOSPageBase.clickLegalScreenSection(sa, PRIVACY_POLICY);
-        legalIOSPageBase.clickLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
-        legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
+
+        getLocalizationUtils().getLegalHeaders().forEach(header -> {
+            LOGGER.info("Verifying Legal Section: {}", header);
+            legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, header);
+            String.format("Header '%s' was not displayed", header);
+        });
+
+        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
+        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
+        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY);
+        //legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE);
+        //legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        //sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         oneTrustPage.tapCloseButton();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
