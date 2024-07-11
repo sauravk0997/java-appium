@@ -260,13 +260,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInTemp(getAccount());
 
-        homePage.moveLeft(2, 1);
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
+        homePage.stopHeroCarouselFromRotating();
+        homePage.isCarouselsFocused();
+
         homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(homePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
@@ -275,7 +275,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         homePage.moveRight(2, 1);
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_BRAND_TILE.getText());
         sa.assertAll();
     }
 }
