@@ -207,8 +207,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
-    @Test(description = "Verify user is taken to sign up screen from unknown email screen and the email field is already filled and finish signing up", groups = {"Onboarding"})
-    public void verifyUserIsTakenToSignUpFromUnknownUserScreenAndCompleteSignUp() {
+    @Test(description = "Verify user flow from unknown user screen with completed sign up", groups = {"Onboarding"})
+    public void verifyUserFlowFromUnknownUserScreenWithCompletedSignUp() {
         SoftAssert sa = new SoftAssert();
         String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
