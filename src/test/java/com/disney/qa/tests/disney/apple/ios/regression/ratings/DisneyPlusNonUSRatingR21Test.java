@@ -436,7 +436,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
         Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
