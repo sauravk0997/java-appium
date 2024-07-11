@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.ORIGINALS_PAGE;
-
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
@@ -249,7 +247,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
 
         //To get the collections details of Originals from API
-        ArrayList<Container> collections = getExploreAPIPageContent(ORIGINALS_PAGE.getEntityId());
+        ArrayList<Container> collections = getExploreAPIPageContent(DisneyEntityIds.ORIGINALS_PAGE.getEntityId());
         collections.forEach(item -> {
             ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
             swipePageTillElementPresent(collectionName, 2, null, Direction.UP, 500);
