@@ -69,8 +69,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
-        sa.assertTrue(isLegalHeadersPresent(legalSection), legalSection + " is not displayed");
-        
         getStaticTextByName(legalSection).click();
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");

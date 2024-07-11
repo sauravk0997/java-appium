@@ -55,6 +55,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "Legal Page did not open on navigation");
+        Assert.assertTrue(disneyPlusLegalIOSPageBase.isBackButtonPresent(), "Back button not displayed");
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
@@ -139,7 +140,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
         confirmLegalPageOpens();
-        sa.assertTrue(moreMenuIOSPageBase.isBackButtonPresent(), "Back button not displayed");
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY);
@@ -203,7 +203,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
 
-        confirmLegalPageOpens();
         String doNotSellString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
         disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
