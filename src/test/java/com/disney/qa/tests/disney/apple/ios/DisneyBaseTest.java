@@ -457,6 +457,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
+    public void reduceR21PauseTimeout() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        installAndLaunchJarvis();
+        jarvis.openAppConfigOverrides();
+        applePageBase.scrollToItem("parentalControlsConfig").click();
+        LOGGER.info("Navigating to r21PauseTimeoutSeconds");
+        LOGGER.info("Is r21PauseTimeoutSeconds present? " + applePageBase.getStaticTextByLabel("r21PauseTimeoutSeconds").isPresent());
+        applePageBase.scrollToItem("r21PauseTimeoutSeconds").click();
+        System.out.println(getDriver().getPageSource());
+        //Reduce from 1800 seconds to 30 seconds
+        applePageBase.reduceTimeout();
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
+    }
+
     public void launchJarvisOrInstall() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
