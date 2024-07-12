@@ -266,7 +266,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         logInTemp(getAccount());
 
         homePage.stopHeroCarouselFromRotating();
-        homePage.isCarouselsFocused();
+        homePage.isCarouselFocused();
 
         homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");

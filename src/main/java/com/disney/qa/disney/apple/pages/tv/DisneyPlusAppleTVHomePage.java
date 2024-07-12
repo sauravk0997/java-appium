@@ -324,7 +324,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return homeContentView.isElementPresent();
     }
 
-    public boolean isCarouselsFocused() {
+    public boolean isCarouselFocused() {
         return isFocused(carouselFocusedElement);
     }
 
