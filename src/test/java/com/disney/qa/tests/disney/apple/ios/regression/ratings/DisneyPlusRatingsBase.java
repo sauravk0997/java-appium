@@ -18,6 +18,8 @@ import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundExcepti
 import java.net.URISyntaxException;
 import java.util.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+
 /**
  * Base ratings setup class
  * IF running on CI as a single class level: set lang/locale on Jenkins
@@ -152,9 +154,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private ArrayList<String> getHomePageBrandIDList(String locale, String language) {
-        LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE_ID);
+        LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE.getEntityId());
         try {
-            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE_ID, locale, language);
+            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE.getEntityId(), locale, language);
             //2nd index from the collections contains all the brand IDs displayed on the home page eg: Disney,Pixar etc
             List<Item> Items = getExploreAPIItemsFromSet(collections.get(1).getId(), locale, language);
             ArrayList<String> brandIDs = new ArrayList<>();

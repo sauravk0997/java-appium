@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -246,7 +247,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
 
         //To get the collections details of Originals from API
-        ArrayList<Container> collections = getExploreAPIPageContent(ORIGINALS_PAGE_ID);
+        ArrayList<Container> collections = getExploreAPIPageContent(DisneyEntityIds.ORIGINALS_PAGE.getEntityId());
         collections.forEach(item -> {
             ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
             swipePageTillElementPresent(collectionName, 2, null, Direction.UP, 500);
@@ -362,8 +363,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
             DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-            ExploreContent seriesApiContent = getApiSeriesContent(SERIES_ENTITY_ID);
-            ExploreContent movieApiContent = getApiMovieContent(MARVELS_MOVIE_ENTITY_ID);
+            ExploreContent seriesApiContent = getApiSeriesContent(DisneyEntityIds.SERIES.getEntityId());
+            ExploreContent movieApiContent = getApiMovieContent(DisneyEntityIds.MARVELS.getEntityId());
 
             setAppToHomeScreen(getAccount());
             homePage.clickSearchIcon();

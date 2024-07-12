@@ -27,6 +27,8 @@ import java.util.List;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
+
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
@@ -270,7 +272,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS_MOVIE_ENTITY_ID);
+        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(contentTimeFromAPI), "Expected runtime for ad-supportrd content was not found on detail page");
 
