@@ -55,6 +55,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
+    private ExtendedWebElement firstCollectionTitle;
 
     //FUNCTIONS
 
@@ -217,4 +219,12 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
+    public boolean isExploreTitleDisplayed() {
+        return exploreHeader.isPresent(HALF_TIMEOUT);
+    }
+
+    public void clickFirstCollection() {
+        firstCollectionTitle.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    }
 }
