@@ -24,6 +24,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
+
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
@@ -218,7 +220,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         //Get duration from explore api
-        ExploreContent series = getExploreApi().getSeries(getExploreSearchRequest().setEntityId(SERIES_EXTRA_ENTITY_ID).setProfileId(getAccount().getProfileId()));
+        ExploreContent series = getExploreApi().getSeries(getExploreSearchRequest().setEntityId(SERIES_EXTRA.getEntityId()).setProfileId(getAccount().getProfileId()));
         int seriesExtrasDuration = 0;
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage()));
