@@ -80,14 +80,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
-    public static final String IMAX_ENHANCED_SET_ID = "7cd344eb-73db-4b5f-9359-f51cead40e23";
-    public static final String SERIES_EXTRA_ENTITY_ID = "entity-aa7bff48-41cd-4fe3-9eaa-b9951bb316d6";
-    public static final String SERIES_ENTITY_ID = "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568";
-    public static final String MARVELS_MOVIE_ENTITY_ID = "entity-75c90eca-8969-4edb-ac1a-7165cff2671c";
-    public static final String ORIGINALS_PAGE_ID = "page-fc0d373c-12dc-498b-966b-197938a4264c";
-    public static final String HOME_PAGE_ID = "page-4a8e20b7-1848-49e1-ae23-d45624f4498a";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
-    public static final String HULU_PAGE_ID = "page-ff723d29-20d5-4303-9cce-4a9aac8e269e";
     public static final String PROFILE_PIN = "1234";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
