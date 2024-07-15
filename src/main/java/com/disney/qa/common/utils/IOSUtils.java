@@ -857,7 +857,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             By urlField = By.id(accessibilityID);
             wait.until(ExpectedConditions.visibilityOfElementLocated(urlField));
             getDriver().findElement(urlField).click();
-            wait.until(ExpectedConditions.visibilityOfElementLocated(urlField));
             String enterBtnUnicode = "\uE007";
             wait.until(ExpectedConditions.elementToBeClickable(urlField));
             getDriver().findElement(urlField).sendKeys(url);
