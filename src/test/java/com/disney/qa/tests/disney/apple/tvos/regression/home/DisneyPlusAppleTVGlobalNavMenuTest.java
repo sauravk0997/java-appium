@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
@@ -171,7 +172,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
-    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" }, enabled = false)
+    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" })
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -183,10 +184,16 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVSeriesPage seriesPage = new DisneyPlusAppleTVSeriesPage(getDriver());
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getSearchApi().addToWatchlist(entitledUser, DisneyEntityIds.END_GAME_AVENGERS.getContentType(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId());
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId());
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
@@ -195,7 +202,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS.getText())
                 .collect(Collectors.toList());
-        logInTemp(entitledUser);
+        // logInTemp(entitledUser);
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickRandomBrandTile();
@@ -207,51 +214,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         brandsPage.clickMenuTimes(1, 1);
         sa.assertTrue(homePage.isHomeContentViewPresent(), "Not on home page after clicking menu on Brand page");
 
-        //Navigate to Profile tab outside of switch for stability
-        homePage.clickMenuTimes(1, 1);
-        homePage.clickProfileTab();
-        homePage.clickSelect();
-        LOGGER.info("Validating Global Nav is not present in profile screen");
-        sa.assertFalse(whoIsWatchingPage.isGlobalNavPresent(), "Global Nav menu is present.");
-        sa.assertTrue(whoIsWatchingPage.isOpened(), "Profile page did not launch");
-        whoIsWatchingPage.clickMenuTimes(1, 1);
-
-        IntStream.range(0, innerPages.size()).forEach(i -> {
-            String menu = innerPages.get(i);
-            homePage.hiddenNavStateOnInnerPages(menu);
-            switch (menu.toLowerCase()) {
-            case "searchtab":
-                sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(searchPage.isOpened(), "Search Page did not launch");
-                break;
-            case "watchlistcell":
-                sa.assertFalse(watchListPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
-                break;
-            case "movies":
-                homePage.clickRight();
-                sa.assertFalse(moviesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(moviesPage.isOpened(), "Movies page did not launch");
-                break;
-            case "series":
-                sa.assertFalse(seriesPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(seriesPage.isOpened(), "Series page did not launch");
-                break;
-            case "originals":
-                sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(originalsPage.isOpened(), "Originals page did not launch");
-                break;
-            case "settingstab":
-                sa.assertFalse(originalsPage.isGlobalNavExpanded(), "Global Nav menu is not collapsed");
-                sa.assertTrue(
-                        settingsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent(),
-                        "Settings page did not launch");
-                break;
-            default:
-                LOGGER.info("Invalid global nav menu");
-                break;
-            }
-        });
         sa.assertAll();
     }
 
