@@ -327,9 +327,4 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public boolean isCarouselFocused() {
         return isFocused(carouselFocusedElement);
     }
-
-    public void stopHeroCarouselFromRotating() {
-        moveDown(1, 1);
-        moveUp(1,1);
-    }
 }

@@ -265,8 +265,11 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInTemp(getAccount());
 
-        homePage.stopHeroCarouselFromRotating();
+        homePage.moveLeft(2, 1);
+        System.out.print(getDriver().getPageSource());
         homePage.isCarouselFocused();
+        //Hero image is not been recognized https://jira.disney.com/browse/QAE-124
+        //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
 
         homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
