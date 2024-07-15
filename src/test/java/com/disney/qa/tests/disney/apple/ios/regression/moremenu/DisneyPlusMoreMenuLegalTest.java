@@ -149,6 +149,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         moreMenuIOSPageBase.getNavBackArrow().click();
         sa.assertTrue(moreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED);
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
