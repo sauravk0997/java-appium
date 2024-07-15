@@ -16,7 +16,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
     <parameter name="scheduling" value="H 12 * * 1-5"/>
     <parameter name="overrideFields" value="init_retry_count=0,init_retry_interval=15"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76647"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76659"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
