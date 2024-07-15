@@ -474,6 +474,21 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74747"})
+    @Test(description = "R21 - User Has PIN - Enter Password - Valid Input directs user to Enter Date of Birth", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINRedirectsToDateOfBirthScreen() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        launchR21Content();
+
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74753"})
     @Test(description = "R21: Has PIN - Enter Date of Birth - Error Modal when DOB is Not 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINDateOfBirthUnder21() {
