@@ -266,7 +266,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         logInTemp(getAccount());
 
         homePage.moveLeft(2, 1);
-        System.out.print(getDriver().getPageSource());
         homePage.isCarouselFocused();
         //Hero image is not been recognized https://jira.disney.com/browse/QAE-124
         //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
