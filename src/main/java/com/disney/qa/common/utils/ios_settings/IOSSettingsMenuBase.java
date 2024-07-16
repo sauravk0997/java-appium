@@ -215,10 +215,12 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
         swipeInContainerTillElementIsPresent(settingsContainer, generalTab, 3, Direction.UP);
         generalTab.click();
         swipeInContainerTillElementIsPresent(generalContainer, pictureInPictureTab, 3, Direction.UP);
-        pictureInPictureTab.click();
-        if(pipToggleSwitch.getAttribute("value").equals("1")){
-            pipToggleSwitch.click();
+        if (pictureInPictureTab.isPresent()) {
+            pictureInPictureTab.click();
+            pause(2);
+            if (pipToggleSwitch.getAttribute("value").equals("1")) {
+                pipToggleSwitch.click();
+            }
         }
     }
-
 }
