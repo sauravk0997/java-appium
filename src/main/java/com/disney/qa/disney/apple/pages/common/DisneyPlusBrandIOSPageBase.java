@@ -17,7 +17,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement collectionBrandImageExpanded;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name = \"buttonBack\"$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[4]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name = 'buttonBack'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[3]")
     protected ExtendedWebElement collectionBrandImageCollapsed;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeImage[1]")
@@ -52,7 +52,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeInCollectionBrandPage(Direction direction) {
-        swipeInContainer(brandLandingView, direction, 500);
+        swipeInContainer(brandLandingView, direction, 2, 500);
     }
 
     public ExtendedWebElement getBrandFeaturedImage() {

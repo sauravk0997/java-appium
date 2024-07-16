@@ -417,8 +417,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(brandIOSPageBase.isCollectionTitlesDisplayed(), "Collection titles not displayed");
 
         brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), "Back button is not present");
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
         brandIOSPageBase.swipeInCollectionBrandPage(Direction.DOWN);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), "Collection brand logo is not expanded");
         brandIOSPageBase.getBackArrow().click();
