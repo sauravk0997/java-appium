@@ -141,4 +141,8 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_NOT_NOW_BUTTON.getText())).isPresent();
     }
+
+    public boolean isPinInputFieldDisplayed() {
+        return pinInputField.isPresent();
+    }
 }
