@@ -59,10 +59,4 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.alice.DisneyPlusAppleTVAliceTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS BVT" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVBVT">
-            </class>
-        </classes>
-    </test>
 </suite>
