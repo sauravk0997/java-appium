@@ -13,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-import static com.disney.qa.api.disney.DisneyContentIds.END_GAME;
+import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME_AVENGERS;
 
 public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -57,7 +57,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(searchPage.isOpened(), "Search page not displayed");
 
         searchPage.typeInSearchField("endgame");
-        searchPage.clickSearchResult(END_GAME.getTitle());
+        searchPage.clickSearchResult(END_GAME_AVENGERS.getTitle());
         sa.assertTrue(detailsPage.isOpened(), "Details page not displayed");
         detailsPage.clickPlayButton();
         commonPage.goRightOnPlayerForDuration(3, 3, 30);
@@ -73,7 +73,7 @@ public class DisneyPlusAppleTVBVT extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         //TODO: watchlist bug - watchlist accessibility id currently set as "placeholder accessibility title label"
 //        sa.assertTrue(watchListPage.isOpened(), "Watchlist page not displayed.");
-        sa.assertTrue(watchListPage.areWatchlistTitlesDisplayed(END_GAME.getTitle()));
+        sa.assertTrue(watchListPage.areWatchlistTitlesDisplayed(END_GAME_AVENGERS.getTitle()));
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.MOVIES.getText());
         sa.assertTrue(moviesPage.isOpened());

@@ -10,9 +10,8 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
@@ -74,6 +73,10 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'settingsTab'`]")
     private ExtendedWebElement navMenuSettings;
+
+    //When QAE-124 is fixed remove this element and related method
+    @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]")
+    private ExtendedWebElement carouselFocusedElement;
 
     private ExtendedWebElement travelingAlertOkBtn = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_TRAVEL_MESSAGE_OK.getText()));
 
@@ -320,5 +323,9 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public boolean isHomeContentViewPresent() {
         return homeContentView.isElementPresent();
+    }
+
+    public boolean isCarouselFocused() {
+        return isFocused(carouselFocusedElement);
     }
 }
