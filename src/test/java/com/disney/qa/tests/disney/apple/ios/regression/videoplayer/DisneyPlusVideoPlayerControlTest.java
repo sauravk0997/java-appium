@@ -296,6 +296,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         initPage(IOSSettingsMenuBase.class).turnOffPictureInPicture();
+        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
