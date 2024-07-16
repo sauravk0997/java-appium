@@ -13,7 +13,9 @@ public enum DisneyEntityIds {
     IMAX_ENHANCED_SET("IMAX Enhanced Set","7cd344eb-73db-4b5f-9359-f51cead40e23"),
     ORIGINALS_PAGE("Originals Page", "page-fc0d373c-12dc-498b-966b-197938a4264c"),
     HOME_PAGE("Home Page","page-4a8e20b7-1848-49e1-ae23-d45624f4498a"),
-    HULU_PAGE("Hulu Page", "page-ff723d29-20d5-4303-9cce-4a9aac8e269e");
+    HULU_PAGE("Hulu Page", "page-ff723d29-20d5-4303-9cce-4a9aac8e269e"),
+    END_GAME_AVENGERS("Marvel Studios' Avengers: Endgame", "211b146d-13a0-4c71-b2f1-75de907781e9"),
+    DANCING_WITH_THE_STARS("Dancing with the Stars", "38c1eef7-aa8b-4fa4-8bdc-88e596ea565f");
 
     private final String title;
     private final String entityId;
