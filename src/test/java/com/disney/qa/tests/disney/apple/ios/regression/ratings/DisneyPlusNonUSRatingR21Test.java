@@ -607,7 +607,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74748"})
     @Test(description = "R21 - User Has Pin - Enter Password - Invalid Input", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINInvalidPasswordError() {
