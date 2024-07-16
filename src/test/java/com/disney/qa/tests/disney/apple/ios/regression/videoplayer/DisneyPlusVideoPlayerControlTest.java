@@ -295,6 +295,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "VOD Player Controls - Backgrounding from the Player Behavior", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         initPage(IOSSettingsMenuBase.class).turnOffPictureInPicture();
         terminateApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         loginAndStartPlayback(THE_MARVELS);
