@@ -465,7 +465,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         switch (buildType) {
             case ENTERPRISE:
                 installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/1.0.70045", platformName))
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
                         .getDirectLink());
                 break;
             case AD_HOC:

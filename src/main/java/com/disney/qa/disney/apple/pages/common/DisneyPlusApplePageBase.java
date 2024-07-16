@@ -133,7 +133,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement textEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
     private ExtendedWebElement textFieldValue;
-//    **/XCUIElementTypeKey[`label == "numbers"`][1]
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"numbers\"`][1]")
     private ExtendedWebElement numbersTypeKey;
 
