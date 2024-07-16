@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -294,6 +295,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "VOD Player Controls - Backgrounding from the Player Behavior", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        initPage(IOSSettingsMenuBase.class).turnOffPictureInPicture();
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
