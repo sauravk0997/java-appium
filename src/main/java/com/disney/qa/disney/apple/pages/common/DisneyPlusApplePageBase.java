@@ -71,7 +71,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
-    private static final String NO_OVERRIDE_SET = "No override set";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
