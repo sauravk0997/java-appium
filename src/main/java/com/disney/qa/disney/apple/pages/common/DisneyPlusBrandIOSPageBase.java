@@ -35,7 +35,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return brandLandingView.isPresent(SHORT_TIMEOUT);
+        return brandLandingView.isPresent(HALF_TIMEOUT);
     }
 
     public void clickFirstCarouselPoster() {

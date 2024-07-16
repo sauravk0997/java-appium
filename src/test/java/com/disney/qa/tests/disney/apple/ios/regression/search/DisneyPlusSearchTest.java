@@ -432,6 +432,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertAll();
