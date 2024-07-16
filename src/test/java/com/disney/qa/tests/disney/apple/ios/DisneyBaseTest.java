@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -442,26 +441,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Navigating to isEnabled..");
         applePageBase.scrollToItem("isEnabled").click();
         applePageBase.disableBrazeConfig();
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
-    }
-
-    public void reduceR21PauseTimeout() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        installAndLaunchJarvis();
-        jarvis.openAppConfigOverrides();
-        applePageBase.scrollToItem("parentalControlsConfig").click();
-        LOGGER.info("Navigating to r21PauseTimeoutSeconds");
-        LOGGER.info("Is r21PauseTimeoutSeconds present? " + applePageBase.getStaticTextByLabel("r21PauseTimeoutSeconds").isPresent());
-        applePageBase.scrollToItem("r21PauseTimeoutSeconds").click();
-        System.out.println(getDriver().getPageSource());
-        //Reduce from 1800 seconds to 30 seconds
-        applePageBase.reduceTimeout();
         LOGGER.info("Terminating Jarvis app..");
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         LOGGER.info("Restart Disney app..");

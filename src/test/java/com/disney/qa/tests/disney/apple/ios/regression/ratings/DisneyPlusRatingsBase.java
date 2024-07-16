@@ -66,25 +66,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-//    reduceR21PauseTimeout
-
-    public void ratingsJarvisReduceTimeoutAndSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        reduceR21PauseTimeout();
-        setAppToHomeScreen(getAccount());
-    }
-
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));

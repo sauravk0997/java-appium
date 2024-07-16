@@ -577,25 +577,34 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-XXXXX"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69773"})
     @Test(description = " R21 - Has Pin - Playback / Pause", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPinPlaybackPause() {
-        ratingsJarvisReduceTimeoutAndSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        SoftAssert sa = new SoftAssert();
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         navigateToHomePageForPinUser();
-
+        launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+        videoPlayer.clickPauseButton();
+        videoPlayer.runAppInBackground(15);
+        startApp(sessionBundles.get(DISNEY));
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
+        Assert.assertTrue(videoPlayer.isOpened(), String.format("%s after background app", VIDEO_PLAYER_DID_NOT_OPEN));
+
+        videoPlayer.clickPlayButton();
+        videoPlayer.verifyVideoPlaying(sa);
+        sa.assertAll();
     }
 
 
