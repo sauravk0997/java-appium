@@ -26,9 +26,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`]")
-    private ExtendedWebElement collectionTitles;
-
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -119,7 +116,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isCollectionTitlesDisplayed() {
-        return collectionTitles.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+        return getTypeCellLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                 DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }
 }
