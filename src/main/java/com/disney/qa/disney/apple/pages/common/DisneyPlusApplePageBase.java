@@ -62,7 +62,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SAVE_OVERRIDE = "SAVE OVERRIDE";
     private static final String REMOVE_OVERRIDE = "REMOVE OVERRIDE";
     private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
-    private static final String NO_OVERRIDE_SET = "No override set";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
     private static final String SET_TO_TRUE = "Set to: true";
@@ -72,6 +71,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
+    private static final String NO_OVERRIDE_SET = "No override set";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
