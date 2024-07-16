@@ -24,7 +24,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String PIN_PAGE_DID_NOT_OPEN = "R21 pin page did not open";
-    private static final String PIN_PAGE_DID_OPEN = "R21 pin page did open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
@@ -35,6 +34,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "'You must verify your age' modal/popup is not displayed";
     private static final String BROWSE_OTHER_TITLE_ERROR_MESSAGE = "Browse other titles button not displayed on modal";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
+    private static final String PIN_INPUT_FIELD_DISPLAYED = "R21 pin input field is displayed";
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;
 
@@ -611,7 +611,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         videoPlayer.waitForVideoToStart();
-        Assert.assertFalse(pinPage.isPinInputFieldDisplayed(), PIN_PAGE_DID_OPEN);
+        Assert.assertFalse(pinPage.isPinInputFieldDisplayed(), PIN_INPUT_FIELD_DISPLAYED);
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
