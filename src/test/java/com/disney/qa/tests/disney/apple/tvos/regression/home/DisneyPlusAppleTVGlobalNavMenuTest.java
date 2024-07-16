@@ -3,7 +3,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.disney.DisneyContentIds;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -186,7 +186,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getSearchApi().addToWatchlist(entitledUser, DisneyContentIds.END_GAME.getContentType(), DisneyContentIds.END_GAME.getContentId());
+        getWatchlistApi().addContentToWatchlist(entitledUser, entitledUser.getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId());
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),

@@ -10,7 +10,7 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.api.disney.DisneyContentIds.DANCING_WITH_THE_STARS;
+import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
