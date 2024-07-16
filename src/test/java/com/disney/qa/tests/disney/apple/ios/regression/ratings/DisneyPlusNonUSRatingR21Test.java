@@ -34,6 +34,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "'You must verify your age' modal/popup is not displayed";
     private static final String BROWSE_OTHER_TITLE_ERROR_MESSAGE = "Browse other titles button not displayed on modal";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
+    private static final String PIN_INPUT_FIELD_DISPLAYED = "R21 pin input field is displayed";
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;
 
@@ -622,6 +623,28 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
         Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69775"})
+    @Test(description = "R21 - User Has Pin - Playback Starts", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINPlaybackStarts() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+
+        navigateToHomePageForPinUser();
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertFalse(pinPage.isPinInputFieldDisplayed(), PIN_INPUT_FIELD_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
     private void launchR21Content() {
