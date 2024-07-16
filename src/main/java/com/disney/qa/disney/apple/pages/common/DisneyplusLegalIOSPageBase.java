@@ -70,10 +70,12 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
         getStaticTextByName(legalSection).click();
+        waitForPresenceOfAnElement(getStaticTextByName(legalSection));
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
+        waitForPresenceOfAnElement(getStaticTextByName(legalSection));
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
