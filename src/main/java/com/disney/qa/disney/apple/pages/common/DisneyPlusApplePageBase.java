@@ -133,8 +133,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement textEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
     private ExtendedWebElement textFieldValue;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"numbers\"`][1]")
-    private ExtendedWebElement numbersTypeKey;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
@@ -1224,22 +1222,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void reduceTimeout(String value) {
-        Assert.assertTrue(getStaticTextByLabelContains("r21PauseTimeoutSeconds").isPresent(), "r21PauseTimeoutSeconds config not found");
-        if (getStaticTextByLabelContains(NO_OVERRIDE_SET).isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("Reducing timeout..");
-            if (getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
-                pressByElement(getClearTextBtn(), 1);
-            }
-            clickNumbersTypeKey();
-            enterTextFieldValue(value);
-            getTypeButtonByLabel(SAVE_OVERRIDE).click();
-            Assert.assertTrue(getStaticTextByLabelContains("Current override set to: ").isPresent());
-        } else {
-            LOGGER.info("Timeout already reduced..");
-        }
-    }
-
     public void clickConfig(String appConfig) {
         clickItemWhileMovingDown(config.format(appConfig));
     }
@@ -1548,15 +1530,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return textFieldValue.format(value);
     }
 
-    public void enterTextFieldValue(String value) {
-        textEntryField.type(value);
-    }
-
     public void clickCancelButton() {
         cancelButton.click();
-    }
-
-    public void clickNumbersTypeKey() {
-        numbersTypeKey.click();
     }
 }
