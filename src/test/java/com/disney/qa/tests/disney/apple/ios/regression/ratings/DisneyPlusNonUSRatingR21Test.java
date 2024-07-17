@@ -660,7 +660,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
         navigateToHomePageForPinUser();
         reduceR21pauseTimeOut(newPausetimeOutInSeconds);
-        navigateToHomePageForPinUser();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
