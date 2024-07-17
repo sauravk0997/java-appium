@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -591,5 +590,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
+    }
+
+    public void setPictureInPictureConfig(String value) {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection("player");
+        jarvis.openOverrideSection("pictureInPicture");
+        applePageBase.removeDomainIdentifier();
+        applePageBase.getClearTextBtn().click();
+        applePageBase.saveDomainIdentifier(value);
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
     }
 }

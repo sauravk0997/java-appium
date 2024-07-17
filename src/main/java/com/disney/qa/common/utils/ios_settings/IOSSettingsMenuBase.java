@@ -77,19 +77,6 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"7.99 ✓\"`]")
     private ExtendedWebElement basicMonthlyPriceCheckmark;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == 'General'`]")
-    private ExtendedWebElement generalTab;
-
-    @ExtendedFindBy(accessibilityId = "PiP_SPEC")
-    protected ExtendedWebElement pictureInPictureTab;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTable[$type = 'XCUIElementTypeCell'$]")
-    private ExtendedWebElement generalContainer;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSwitch[2]")
-    private ExtendedWebElement pipToggleSwitch;
-
-
     public IOSSettingsMenuBase(WebDriver driver) {
         super(driver);
     }
@@ -208,19 +195,5 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
 
     public boolean isBasicMonthlyPriceCheckmarkPresent() {
         return basicMonthlyPriceCheckmark.isElementPresent();
-    }
-
-    public void turnOffPictureInPicture() {
-        launchSettings();
-        swipeInContainerTillElementIsPresent(settingsContainer, generalTab, 3, Direction.UP);
-        generalTab.click();
-        swipeInContainerTillElementIsPresent(generalContainer, pictureInPictureTab, 3, Direction.UP);
-        if (pictureInPictureTab.isPresent()) {
-            pictureInPictureTab.click();
-            pause(2);
-            if (pipToggleSwitch.getAttribute("value").equals("1")) {
-                pipToggleSwitch.click();
-            }
-        }
     }
 }
