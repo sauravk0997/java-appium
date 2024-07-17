@@ -58,8 +58,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
 
-    //FUNCTIONS
-
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -224,7 +222,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickFirstCollection() {
-        firstCollectionTitle.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+        firstCollectionTitle.format(
+                getDictionary().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
     }
 }

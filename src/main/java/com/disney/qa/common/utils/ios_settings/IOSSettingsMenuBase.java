@@ -197,18 +197,4 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     public boolean isBasicMonthlyPriceCheckmarkPresent() {
         return basicMonthlyPriceCheckmark.isElementPresent();
     }
-
-    public void turnOffPictureInPicture() {
-        launchSettings();
-        swipeInContainerTillElementIsPresent(settingsContainer, generalTab, 3, Direction.UP);
-        generalTab.click();
-        swipeInContainerTillElementIsPresent(generalContainer, pictureInPictureTab, 3, Direction.UP);
-        if (pictureInPictureTab.isPresent()) {
-            pictureInPictureTab.click();
-            pause(2);
-            if (pipToggleSwitch.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals("1")) {
-                pipToggleSwitch.click();
-            }
-        }
-    }
 }

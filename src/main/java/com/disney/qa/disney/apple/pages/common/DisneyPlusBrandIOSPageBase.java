@@ -32,7 +32,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return brandLandingView.isPresent(HALF_TIMEOUT);
+        return brandLandingView.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
@@ -48,8 +48,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         return collectionBrandImageCollapsed.isPresent() && !collectionBrandImageExpanded.isPresent(SHORT_TIMEOUT);
     }
 
-    public void swipeInCollectionBrandPage(Direction direction) {
-        swipeInContainer(brandLandingView, direction, 2, 500);
+    public void swipeInCollectionBrandPage(Direction direction, int swipeAttempt, int duration) {
+        swipeInContainer(brandLandingView, direction, swipeAttempt, duration);
     }
 
     public ExtendedWebElement getBrandFeaturedImage() {
@@ -116,7 +116,9 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isCollectionTitlesDisplayed() {
-        return getTypeCellLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
+        return getTypeCellLabelContains(
+                getDictionary().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }
 }

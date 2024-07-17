@@ -35,6 +35,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String SERIES = "Series";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAIL_PAGE_DID_NOT_OPEN = "Detail page did not open";
+    private static final String BACK_BUTTON_ERROR_MESSAGE = "Back button is not present";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -248,7 +249,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Verify Original page opened
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
         //Verify Back button is present
-        sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
+        sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
         //To get the collections details of Originals from API
         ArrayList<Container> collections = getExploreAPIPageContent(DisneyEntityIds.ORIGINALS_PAGE.getEntityId());
@@ -294,7 +295,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         searchPage.getNavBackArrow().click();
 
         if (collectionName.equalsIgnoreCase("movies")) {
@@ -303,7 +304,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.clickSeriesTab();
         }
         sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
         List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
         String tenthFeaturedResult = featuredFilterResults.get(10).getText();
@@ -311,12 +312,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             searchPage.swipeContentPageFilter(Direction.LEFT);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstKidsResult = kidsResults.get(0).getText();
@@ -324,20 +325,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.swipeContentPageFilter(Direction.RIGHT);
             searchPage.getTypeButtonByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
         } else {
             sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstComedyResult = kidsResults.get(0).getText();
@@ -397,6 +398,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchExploreEditorialsAndCollections() {
         String collectionPageDidNotOpen = "User did not land on the collection page";
+        String collectionLogoNotExpanded = "Collection brand logo is not expanded";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
@@ -411,16 +413,16 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickFirstCollection();
         Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), "Collection brand logo is not expanded");
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), "Back button is not present");
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandIOSPageBase.isCollectionTitlesDisplayed(), "Collection titles not displayed");
 
-        brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP);
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), "Back button is not present");
+        brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP, 2, 500);
+        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
-        brandIOSPageBase.swipeInCollectionBrandPage(Direction.DOWN);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), "Collection brand logo is not expanded");
+        brandIOSPageBase.swipeInCollectionBrandPage(Direction.DOWN,2, 500);
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         brandIOSPageBase.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
