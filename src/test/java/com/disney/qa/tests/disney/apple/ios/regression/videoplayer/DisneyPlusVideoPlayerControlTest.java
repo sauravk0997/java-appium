@@ -266,7 +266,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
         ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
-        sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scruuber bar not representing total length of current video");
+        sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
 
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
