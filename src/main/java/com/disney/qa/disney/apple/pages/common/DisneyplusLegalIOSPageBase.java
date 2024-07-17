@@ -1,12 +1,15 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.client.responses.identity.DisneyPlus;
 import com.disney.qa.common.utils.IOSUtils;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
@@ -26,6 +29,9 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeStaticText' AND label = '%s'$]")
+    private ExtendedWebElement expandedLegalSection;
 
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -67,13 +73,15 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         hyperlink.click();
     }
 
-    public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection) throws InterruptedException {
+    public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection) {
         LOGGER.info("Validating functions for: {}", legalSection);
         getStaticTextByName(legalSection).click();
+        pause(10);
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
+        pause(10);
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
