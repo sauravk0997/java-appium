@@ -3,7 +3,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.disney.DisneyContentIds;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -186,7 +186,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getSearchApi().addToWatchlist(entitledUser, DisneyContentIds.END_GAME.getContentType(), DisneyContentIds.END_GAME.getContentId());
+        getWatchlistApi().addContentToWatchlist(entitledUser, entitledUser.getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId());
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
@@ -266,14 +266,17 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         logInTemp(getAccount());
 
         homePage.moveLeft(2, 1);
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
+        homePage.isCarouselFocused();
+        //Hero image is not been recognized https://jira.disney.com/browse/QAE-124
+        //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
+
         homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(homePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
         sa.assertTrue(homePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default");
-        homePage.moveRight(2, 1);
         LOGGER.info("Collapsing Global Nav menu by moving right");
+        homePage.moveRight(2, 1);
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_BRAND_TILE.getText());
         sa.assertAll();
