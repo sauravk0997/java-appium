@@ -113,8 +113,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = new DisneyplusLegalIOSPageBase(getDriver());
 
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         setAppToHomeScreen(getAccount());
         
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
