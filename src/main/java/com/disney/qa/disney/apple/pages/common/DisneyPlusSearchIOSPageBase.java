@@ -64,7 +64,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return searchBar.isElementPresent();
+        return searchBar.isPresent();
     }
 
     public void clickMoviesTab() {
