@@ -24,7 +24,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_HUNDRED_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_HUNDRED_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
@@ -858,7 +858,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            editProfilePage.swipeUp(FIFTEEN_HUNDRED_TIMEOUT);
+            editProfilePage.swipeUp(FIFTEEN_HUNDRED_SEC_TIMEOUT);
         }
         sa.assertTrue(editProfilePage.isJuniorModeTextPresent(), JUNIOR_MODE_TEXT_ERROR_MESSAGE);
 

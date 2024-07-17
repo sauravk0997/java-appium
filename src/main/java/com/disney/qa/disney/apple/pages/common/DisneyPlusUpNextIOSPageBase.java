@@ -48,14 +48,14 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     public void tapSeeAllEpisodesButton() {
         LOGGER.info("Tapping on 'See All Episodes' button");
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see 'See All Episodes' button")
-                .until(it -> seeAllEpisodeButton.isElementPresent(SHORT_TIMEOUT));
+                .until(it -> seeAllEpisodeButton.isElementPresent(THREE_SEC_TIMEOUT));
         staticTextLabelName.format(seeAllEpisodeButton.getText()).click();
     }
 
     public void tapPlayIconOnUpNext() {
         LOGGER.info("Tapping on 'play' button");
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see 'play' button")
-                .until(it -> playButton.isElementPresent(SHORT_TIMEOUT));
+                .until(it -> playButton.isElementPresent(THREE_SEC_TIMEOUT));
         playButton.click();
     }
 
@@ -65,12 +65,12 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForUpNextUIToDisappear() {
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to start autoplay, check your autoplay settings in more menu")
-                .until(it -> playButton.isElementNotPresent(LONG_TIMEOUT));
+                .until(it -> playButton.isElementNotPresent(SIXTY_SEC_TIMEOUT));
     }
 
     public boolean waitForUpNextUIToAppear() {
        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "upNext UI didn't appear on video player")
-                .until(it -> upNextImageView.isElementPresent(EXTRA_LONG_TIMEOUT)));
+                .until(it -> upNextImageView.isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
     }
 
     public boolean isUpNextViewPresent() {

@@ -348,7 +348,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitForPresenceOfAnElement(ExtendedWebElement element) {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
@@ -368,7 +368,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void tapBackButton() {
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Back button is not present").until(it -> backButton.isElementPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Back button is not present").until(it -> backButton.isElementPresent(ONE_SEC_TIMEOUT));
         backButton.click();
     }
 
@@ -699,7 +699,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      * @return - The list of cell elements with Labels.
      */
     public List<ExtendedWebElement> getCellsWithLabels() {
-        pause(SHORT_TIMEOUT);
+        pause(THREE_SEC_TIMEOUT);
         List<ExtendedWebElement> cells = findExtendedWebElements(cell.getBy());
         cells.removeIf(labeledCell -> labeledCell.getText().isEmpty()
                 || Arrays.asList(getTabs()).contains(labeledCell.getAttribute("name")));
@@ -790,7 +790,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitUntilWebviewUrlContains(String expectedText) {
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Webview URL did not contain the expected text...").until(it -> getWebviewUrl().contains(expectedText));
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Webview URL did not contain the expected text...").until(it -> getWebviewUrl().contains(expectedText));
     }
 
     // Will take you to continue or done button on tvOS on screen keyboard
@@ -1061,7 +1061,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean verifyTextOnWebView(String text) {
-        return staticTextLabelContains.format(text).isPresent(SHORT_TIMEOUT);
+        return staticTextLabelContains.format(text).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void dismissPickerWheelKeyboard() {
@@ -1211,8 +1211,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void disableBrazeConfig() {
         Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
-        if (getStaticTextByLabelContains("default value of true").isPresent(SHORT_TIMEOUT) //to accommodate jarvis bug
-                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent(SHORT_TIMEOUT)) {
+        if (getStaticTextByLabelContains("default value of true").isPresent(THREE_SEC_TIMEOUT) //to accommodate jarvis bug
+                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent(THREE_SEC_TIMEOUT)) {
             LOGGER.info("disabling brazeConfig isEnable config..");
             clickToggleView();
             Assert.assertTrue(getStaticTextByLabelContains(SET_TO_FALSE).isPresent());
@@ -1299,7 +1299,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
      * @param direction  Up or Down
      */
     public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
-        while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(SHORT_TIMEOUT) && count >= 0) {
+        while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             swipeInContainer(container, direction, 1, 1200);
             count--;
         }
@@ -1447,7 +1447,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isPinProtectedProfileIconPresent(String name) {
-        if (getCellPinProtectedProfileIcon(name).isPresent(SHORT_TIMEOUT)) {
+        if (getCellPinProtectedProfileIcon(name).isPresent(THREE_SEC_TIMEOUT)) {
             return getCellPinProtectedProfileIcon(name).isPresent();
         } else {
             return getPinProtectedProfileIcon(name).isPresent();
@@ -1478,9 +1478,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
     public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
-        List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), SHORT_TIMEOUT);
+        List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), THREE_SEC_TIMEOUT);
         swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
-        List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), SHORT_TIMEOUT);
+        List<ExtendedWebElement> titles2 = findExtendedWebElements(secondCollection.getBy(), THREE_SEC_TIMEOUT);
         return !titles1.equals(titles2);
     }
 

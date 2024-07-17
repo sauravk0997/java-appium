@@ -147,7 +147,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> serviceAttributionLabel.isPresent(LONG_TIMEOUT)));
+                .until(it -> serviceAttributionLabel.isPresent(SIXTY_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
@@ -183,11 +183,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         //Check is due to placement of PlayPause, which will pause the video if clicked
         Dimension size = getDriver().manage().window().getSize();
         tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, HALF_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             clickElementAtLocation(playerView, 35, 50);
-        } while (attempts++ < 5 && !seekBar.isElementPresent(SHORT_TIMEOUT));
+        } while (attempts++ < 5 && !seekBar.isElementPresent(THREE_SEC_TIMEOUT));
         if (attempts == 6) {
             Assert.fail("Seek bar was present and attempts exceeded over 5.");
         }
@@ -368,7 +368,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapAudioSubtitleMenu() {
-        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "subtitle menu overlay didn't open")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
                     displayVideoController();
                     audioSubtitleMenuButton.click();
@@ -739,13 +739,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void skipPromoIfPresent() {
-        getSkipPromoButton().clickIfPresent(SHORT_TIMEOUT);
+        getSkipPromoButton().clickIfPresent(THREE_SEC_TIMEOUT);
     }
 
     public void waitForAdGracePeriodToEnd(int remainingTime) {
         int gracePeriod = remainingTime - FORTY_FIVE_SEC_TIMEOUT;
         LOGGER.info("Waiting for playback to move pass {} seconds grace period ", FORTY_FIVE_SEC_TIMEOUT);
-        fluentWait(getDriver(), LONG_TIMEOUT, HALF_TIMEOUT, "Playback unable to pass ad grace period").
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Playback unable to pass ad grace period").
                 until(it -> getRemainingTime() < gracePeriod);
     }
 }

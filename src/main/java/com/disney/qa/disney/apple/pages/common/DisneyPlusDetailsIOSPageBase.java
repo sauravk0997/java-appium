@@ -191,10 +191,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickPlayButton(int timeout) {
-        fluentWait(getDriver(), timeout, SHORT_TIMEOUT, "Couldn't tap on play button on details page")
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Couldn't tap on play button on details page")
                 .until(it -> {
                     getPlayButton().click();
-                    return getPlayButton().isElementNotPresent(SHORT_TIMEOUT);
+                    return getPlayButton().isElementNotPresent(THREE_SEC_TIMEOUT);
                 });
     }
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
@@ -312,13 +312,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForWatchlistButtonToAppear() {
         LOGGER.info("Waiting for  WatchlistButton to appear");
-        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Watchlist button is not present")
+        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Watchlist button is not present")
                 .until(it -> watchlistButton.isPresent());
     }
 
     public void waitForRestartButtonToAppear() {
         LOGGER.info("Waiting for restart button to appear");
-        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, SHORT_TIMEOUT, "Restart button is not present")
+        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Restart button is not present")
                 .until(it -> getRestartButton().isPresent());
     }
 
@@ -358,7 +358,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isExtrasTabPresent() {
-        if (!extrasTab.isPresent(SHORT_TIMEOUT)) {
+        if (!extrasTab.isPresent(THREE_SEC_TIMEOUT)) {
             swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, IMobileUtils.Direction.UP, 900);
         }
         return extrasTab.isPresent();
@@ -706,7 +706,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isStaticTextLabelPresent(String label) {
-        return getStaticTextByLabelContains(label).isElementPresent(HALF_TIMEOUT);
+        return getStaticTextByLabelContains(label).isElementPresent(FIVE_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getUpcomingDateTime() {
@@ -1044,11 +1044,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isDurationTimeLabelPresent() {
-        return getFirstDurationLabel().isPresent(SHORT_TIMEOUT) || getDurationTimeLabel().isPresent(SHORT_TIMEOUT);
+        return getFirstDurationLabel().isPresent(THREE_SEC_TIMEOUT) || getDurationTimeLabel().isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isSeriesDownloadButtonPresent(String seasonNumber, String episodeNumber) {
-        return getDownloadButton().isElementPresent(SHORT_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(SHORT_TIMEOUT);
+        return getDownloadButton().isElementPresent(THREE_SEC_TIMEOUT) || getEpisodeToDownload(seasonNumber, episodeNumber).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getEpisodeTitle(String season, String episode) {
