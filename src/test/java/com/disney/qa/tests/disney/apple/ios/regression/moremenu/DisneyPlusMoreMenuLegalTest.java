@@ -75,7 +75,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), lang, SUBSCRIPTION_V2));
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
