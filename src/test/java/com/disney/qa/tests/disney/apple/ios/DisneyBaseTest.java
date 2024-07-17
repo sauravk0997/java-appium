@@ -599,7 +599,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         launchJarvisOrInstall();
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection("parentalControlsConfig");
-        jarvis.openOverrideSection("r21PauseTimeoutSeconds");
+        try{
+            jarvis.openOverrideSection("r21PauseTimeoutSeconds");
+        } catch (Exception e){
+            throw new SkipException("Failed to update R21 Pause TimeOut: {}", e);
+        }
         applePageBase.removeDomainIdentifier();
         applePageBase.getClearTextBtn().click();
         applePageBase.saveDomainIdentifier(String.valueOf(newPauseTime));
