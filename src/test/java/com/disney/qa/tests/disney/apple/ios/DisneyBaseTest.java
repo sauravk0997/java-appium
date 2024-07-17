@@ -592,4 +592,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
     }
+
+    public void reduceR21pauseTimeOut(int newPauseTime){
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection("parentalControlsConfig");
+        jarvis.openOverrideSection("r21PauseTimeoutSeconds");
+        applePageBase.removeDomainIdentifier();
+        applePageBase.getClearTextBtn().click();
+        applePageBase.saveDomainIdentifier(String.valueOf(newPauseTime));
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
+    }
+
+
 }
