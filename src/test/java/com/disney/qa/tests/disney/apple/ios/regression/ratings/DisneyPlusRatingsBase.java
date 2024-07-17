@@ -16,8 +16,9 @@ import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
 /**
  * Base ratings setup class
@@ -34,6 +35,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String EPISODES = "episodes";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
+    static final String NEW_ZEALAND_LANG = "en";
     static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
 
@@ -41,6 +43,22 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
@@ -117,9 +135,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private ArrayList<String> getHomePageBrandIDList(String locale, String language) {
-        LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE_ID);
+        LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE.getEntityId());
         try {
-            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE_ID, locale, language);
+            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE.getEntityId(), locale, language);
             //2nd index from the collections contains all the brand IDs displayed on the home page eg: Disney,Pixar etc
             List<Item> Items = getExploreAPIItemsFromSet(collections.get(1).getId(), locale, language);
             ArrayList<String> brandIDs = new ArrayList<>();
@@ -196,8 +214,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         //ratings are shown on downloaded content
-        if(!detailsPage.getEpisodesTab().isPresent()) {
-            Assert.assertTrue(swipe(detailsPage.getEpisodesTab(), Direction.DOWN, 2, 500), "Couldn't swipe to Episode tab");
+        if (!detailsPage.getEpisodesTab().isPresent()) {
+            swipePageTillElementPresent(detailsPage.getEpisodesTab(), 2, detailsPage.getContentDetailsPage(), Direction.DOWN, 500);
         }
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {

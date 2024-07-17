@@ -18,6 +18,8 @@ import org.testng.asserts.SoftAssert;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
+
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     String UNENTITLED_SERIES_ID = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
@@ -102,7 +104,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         //To get the collections details of Hulu from API
-        ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE_ID);
+        ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE.getEntityId());
         //Click any title from collection
         try {
             String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();

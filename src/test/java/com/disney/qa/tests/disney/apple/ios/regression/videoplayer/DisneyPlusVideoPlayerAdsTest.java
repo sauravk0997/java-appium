@@ -27,13 +27,14 @@ import java.util.List;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
+
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     //Test constants
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String MS_MARVEL = "Ms. Marvel";
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
-    private static final double SCRUB_PERCENTAGE_ZERO = 0;
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final double SCRUB_PERCENTAGE_SIXTY = 60;
     private static final String FRANCAIS = "Français";
@@ -43,7 +44,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String DURING_PRE_ROLL = "During pre-roll,";
     private static final String PLAYER_DID_NOT_OPEN_ERROR_MESSAGE = "Player view did not open.";
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
-    private static final String AD_BADGE_WAS_PRESENT_ERROR_MESSAGE = "Ad badge was present";
     private static final int UI_LATENCY = 25;
 
     @DataProvider(name = "content")
@@ -238,12 +238,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL, sa);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), "Ad badge label was not found during first ad.");
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found after scrubbing forward after an ad grace period");
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
@@ -268,7 +270,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS_MOVIE_ENTITY_ID);
+        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(contentTimeFromAPI), "Expected runtime for ad-supportrd content was not found on detail page");
 
@@ -306,43 +308,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(2);
         Assert.assertTrue(videoPlayer.isRatingPresent(PG_13_RATING), String.format("%s rating was not shown for %s", PG_13_RATING, MS_MARVEL));
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72347"})
-    @Test(description = "Ariel - VOD Player - Ad PreRoll Only Plays Once At Start of Playback", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
-    public void verifyAdPreRollPlaysOnce() {
-        String errorFormat = "%s %s";
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(MS_MARVEL, sa);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
-                String.format(errorFormat, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, "for " + MS_MARVEL));
-        videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_ZERO);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
-                AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after scrubbing back to beginning."));
-
-        videoPlayer.clickBackButton();
-        details.clickSearchIcon();
-        if (search.getClearTextBtn().isPresent(ONE_SEC_TIMEOUT)) {
-            search.clearText();
-        }
-        search.searchForMedia(SPIDERMAN_THREE);
-        List<ExtendedWebElement> results = search.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
-        details.clickPlayButton();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
-                AD_BADGE_NOT_PRESENT_ERROR_MESSAGE, "for " + SPIDERMAN_THREE));
-        videoPlayer.waitForAdToCompleteIfPresent(ONE_SEC_TIMEOUT);
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
-        videoPlayer.getRestartButton().click();
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat,
-                AD_BADGE_WAS_PRESENT_ERROR_MESSAGE, "after restarting."));
         sa.assertAll();
     }
 

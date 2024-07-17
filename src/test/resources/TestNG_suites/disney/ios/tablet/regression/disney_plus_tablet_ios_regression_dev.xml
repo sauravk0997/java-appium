@@ -16,10 +16,10 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
     <parameter name="scheduling" value="H 7 * * 1-5"/>
-    <parameter name="jenkinsBuild" value="3.5.0.70537"/>
+    <parameter name="jenkinsBuild" value="3.5.0.70879"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76554"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76658"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding1" parallel="methods">
         <classes>
