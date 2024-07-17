@@ -64,7 +64,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return searchBar.isPresent();
+        return searchBar.isElementPresent();
     }
 
     public void clickMoviesTab() {
@@ -217,8 +217,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
-    public boolean isExploreTitleDisplayed() {
-        return exploreHeader.isPresent(HALF_TIMEOUT);
+    public boolean isExploreTitleDisplayed(int timeOut ) {
+        return exploreHeader.isPresent(timeOut);
     }
 
     public void clickFirstCollection() {

@@ -409,7 +409,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(), "Explore title not displayed");
+        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title not displayed");
 
         searchPage.clickFirstCollection();
         Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);

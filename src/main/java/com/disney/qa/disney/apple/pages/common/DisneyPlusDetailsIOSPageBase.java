@@ -178,7 +178,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isOpened(long time) {
         dismissNotificationsPopUp();
-        return shareBtn.isPresent(time);
+        return shareBtn.isElementPresent(time);
     }
 
     public boolean isDetailsScreenDisplayed() {
