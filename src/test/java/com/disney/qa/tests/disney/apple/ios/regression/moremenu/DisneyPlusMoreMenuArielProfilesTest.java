@@ -23,6 +23,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_HUNDRED_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
@@ -36,9 +38,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NEW_PROFILE_NAME = "New Name";
     private static final String OFF = "Off";
     private static final String ON = "On";
-    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off.";
-    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on.";
-    private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found.";
+    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off";
+    private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on";
+    private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
+    private static final String JUNIOR_MODE_TEXT_ERROR_MESSAGE = "Junior mode text was not present on edit profile page";
+    private static final String TURN_OFF_KIDS_PASSWORD_ERROR_MESSAGE = "Turn off kids profile password body is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(description = "Edit Profile - U13 Profile - Autoplay OFF / Hide Gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
@@ -841,32 +845,29 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69503"})
-    @Test(description = "Ariel: Profiles - Edit Profile - Kids Mode - Require Password to Disable Junior Mode Profile", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileKidsModeDisableJuniorMode() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-
         SoftAssert sa = new SoftAssert();
+
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount());
 
-        whoIsWatching.clickProfile("Test");
-        moreMenu.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-            editProfilePage.swipeUp(1500);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            editProfilePage.swipeUp(FIFTEEN_HUNDRED_TIMEOUT);
         }
-        sa.assertTrue(editProfilePage.isJuniorModeTextPresent(), "Junior mode text was not present on edit profile page");
+        sa.assertTrue(editProfilePage.isJuniorModeTextPresent(), JUNIOR_MODE_TEXT_ERROR_MESSAGE);
 
         editProfilePage.getKidProofExitToggleSwitch().click();
-        sa.assertTrue(passwordPage.isAuthPasswordKidsProfileBodyDisplayed(), "Password Kids profile body is not displayed");
+        sa.assertTrue(passwordPage.isAuthPasswordKidsProfileBodyDisplayed(), TURN_OFF_KIDS_PASSWORD_ERROR_MESSAGE);
 
-        passwordPage.typePassword(getAccount().getUserPass());
+        passwordPage.enterLogInPassword(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
-        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfilePage.isUpdatedToastPresent(), UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
         sa.assertAll();
     }
 

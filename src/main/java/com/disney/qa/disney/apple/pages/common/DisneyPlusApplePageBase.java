@@ -348,7 +348,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitForPresenceOfAnElement(ExtendedWebElement element) {
-        fluentWait(getDriver(), DELAY, SHORT_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
@@ -1085,7 +1085,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent(DELAY)) {
+        if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");

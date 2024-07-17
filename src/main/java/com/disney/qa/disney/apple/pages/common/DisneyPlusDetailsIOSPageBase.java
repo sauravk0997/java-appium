@@ -230,7 +230,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     //TODO Should discuss setting up Series vs. Movies page factories due to differences like this
     public void startDownload() {
-        if (!movieDownloadButton.isElementPresent(DELAY)) {
+        if (!movieDownloadButton.isElementPresent(TEN_SEC_TIMEOUT)) {
             swipePageTillElementPresent(getDownloadButton(), 5, null, Direction.UP, 1);
             getDownloadButton().click();
         } else {
@@ -243,7 +243,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void pauseDownload() {
-        if (!movieDownloadButton.isElementPresent(DELAY)) {
+        if (!movieDownloadButton.isElementPresent(TEN_SEC_TIMEOUT)) {
             swipe(getDownloadButton());
             getDownloadButton().click();
         } else {
