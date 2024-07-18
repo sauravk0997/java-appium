@@ -23,9 +23,6 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "oneTimePasscodeContainerInputView")
     protected ExtendedWebElement otpInputField;
 
-    @ExtendedFindBy(accessibilityId = "textFieldInputCode")
-    private ExtendedWebElement textFieldInputCode;
-
     private ExtendedWebElement resendButton = xpathNameOrName.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             RESEND_EMAIL_COPY_2.getText()),
