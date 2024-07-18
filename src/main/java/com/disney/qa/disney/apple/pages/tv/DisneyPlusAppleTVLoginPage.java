@@ -43,7 +43,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent() && getEmailHint().isPresent(SHORT_TIMEOUT);
+        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent() && getEmailHint().isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickEnterNewBtn() {
@@ -75,7 +75,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void selectPreviouslyUsedEmails() {
         if (enterNewBtn.isElementPresent()) {
-            fluentWait(getDriver(),LONG_TIMEOUT,ONE_SEC_TIMEOUT,"The first previously used email is not focused")
+            fluentWait(getDriver(), SIXTY_SEC_TIMEOUT,ONE_SEC_TIMEOUT,"The first previously used email is not focused")
                     .until(it -> isFocused(typeCell));
             clickSelect();
         }
@@ -174,7 +174,7 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         enterEmail(email);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, SHORT_TIMEOUT, "Continue button wasn't focused within 15 sec")
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Continue button wasn't focused within 15 sec")
                 .until(it -> isFocused(
                         getTypeButtonByLabel(
                                 getDictionary()

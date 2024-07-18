@@ -98,7 +98,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90624"})
-    @Test(description = "verify on screen numeric keyboard functionality", groups = {"Onboarding"})
+    @Test(description = "verify on screen numeric keyboard functionality", groups = {TestGroup.ONBOARDING})
     public void onScreenNumericKeyboardVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -131,7 +131,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     //TODO this test will be fix when new flows are updated QAA-14767
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90622", "XCDQA-90626"})
-    @Test(description = "Verify that the email with the appropriate subject has been sent and use the OTP to proceed to the Home Screen", groups = {"Onboarding"})
+    @Test(description = "Verify that the email with the appropriate subject has been sent and use the OTP to proceed to the Home Screen", groups = {TestGroup.ONBOARDING})
     public void otpEntryAndCodeVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -167,7 +167,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90628"})
-    @Test(description = "Email is resent with a different code and user is taken to new email sent page", groups = {"Onboarding"})
+    @Test(description = "Email is resent with a different code and user is taken to new email sent page", groups = {TestGroup.ONBOARDING})
     public void verifyEmailResentWithDifferentCode() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -200,7 +200,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90644"})
-    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {"Onboarding"})
+    @Test(description = "Attempting to continue without entering a code should result in an error", groups = {TestGroup.ONBOARDING})
     public void noCodeEntryError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -229,7 +229,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90646"})
-    @Test(description = "Attempting to continue entering a wrong code should result in an error", groups = {"Onboarding"})
+    @Test(description = "Attempting to continue entering a wrong code should result in an error", groups = {TestGroup.ONBOARDING})
     public void invalidCodeEntryError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -260,7 +260,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     //TODO this test will be fix when new flows are updated QAA-14770
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90652"})
-    @Test(description = "Enter OTP -> Create password screen -> back -> Check your email screen -> resend OTP -> entering and submitting original OTP should prompt an error", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Enter OTP -> Create password screen -> back -> Check your email screen -> resend OTP -> entering and submitting original OTP should prompt an error", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void verifyUsedOTPCodeDoesNotWorkAfterResending() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -319,7 +319,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90654"})
-    @Test(description = "Verify that after using an otp, coming back from create pass screen and attempting to reuse otp will result in an error", groups = {"Onboarding"})
+    @Test(description = "Verify that after using an otp, coming back from create pass screen and attempting to reuse otp will result in an error", groups = {TestGroup.ONBOARDING})
     public void verifyUsedOTPCodeDoesNotWork() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -371,7 +371,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90650"})
-    @Test(description = "Verify that 15 minutes after receiving OTP it doesn't work anymore", groups = {"Onboarding"})
+    @Test(description = "Verify that 15 minutes after receiving OTP it doesn't work anymore", groups = {TestGroup.ONBOARDING})
     public void otpDoesNotWorkAfterFifteenMinutes() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -413,7 +413,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
     //TODO this test will be fix when new flows are updated QAA-14759
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90630", "XCDQA-90632"})
-    @Test(description = "Verify create password screen details", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify create password screen details", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordScreenDetails() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -460,7 +460,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90634"})
-    @Test(description = "Verify create password navigation", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify create password navigation", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -506,7 +506,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     //TODO this test will be fix when new flows are updated QAA-14758
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90636"})
-    @Test(description = "Verify create password on screen keyboard", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Verify create password on screen keyboard", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordOnScreenKeyboardVerification() {
         SoftAssert sa = new SoftAssert();
         String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
@@ -557,7 +557,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     //TODO:Missing color check, add that when Alice is trained to recognize strength meter
     //TODO this test will be fix when new flows are updated QAA-14760
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90638", "XCDQA-90640"})
-    @Test(description = "Create password screen strength meter", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Create password screen strength meter", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordScreenStrengthMeterVerification() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -621,7 +621,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90679", "XCDQA-90681", "XCDQA-90683"})
-    @Test(description = "Empty password submission on create password screen from forgot password", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Empty password submission on create password screen from forgot password", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordNoPasswordSubmissionError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -678,7 +678,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     //TODO this test will be fix when new flows are updated QAA-14768
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90685"})
-    @Test(description = "Ensure after resetting password user is taken to home screen", groups = {"Onboarding"}, enabled = false)
+    @Test(description = "Ensure after resetting password user is taken to home screen", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void resettingPasswordTakesUserToHome() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -721,7 +721,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90687"})
-    @Test(description = "Fresh login with newly created password takes user to home screen", groups = {"Onboarding"})
+    @Test(description = "Fresh login with newly created password takes user to home screen", groups = {TestGroup.ONBOARDING})
     public void newPasswordAllowsSuccessfulLogIn() {
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
         String updatedPassword = MICKEY_MOUSE_PW;

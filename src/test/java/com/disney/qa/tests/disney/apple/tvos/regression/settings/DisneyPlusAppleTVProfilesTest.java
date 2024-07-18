@@ -6,6 +6,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -20,7 +21,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     private static final String globalNavMenuAssertMessage = "Global Nav menu is present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90920"})
-    @Test(description = "Profiles - Exit from Who's Watching view", groups = {"Profile", "Smoke"})
+    @Test(description = "Profiles - Exit from Who's Watching view", groups = {TestGroup.PROFILE, TestGroup.SMOKE})
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -52,7 +53,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90924"})
-    @Test(description = "Profiles - Exit from Add Profile view", groups = {"Profile"})
+    @Test(description = "Profiles - Exit from Add Profile view", groups = {TestGroup.PROFILE})
     public void exitFromAddProfile() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -81,7 +82,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90922"})
-    @Test(description = "Profiles - Exit from Select profile to edit view", groups = {"Profile"})
+    @Test(description = "Profiles - Exit from Select profile to edit view", groups = {TestGroup.PROFILE})
     public void exitFromSelectProfileToEdit() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -108,7 +109,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90926"})
-    @Test(description = "Profiles - Exit from Edit Profile view", groups = {"Profile"})
+    @Test(description = "Profiles - Exit from Edit Profile view", groups = {TestGroup.PROFILE})
     public void verifyExitFromEditProfileView() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();

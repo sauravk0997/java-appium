@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase {
+public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
@@ -21,31 +21,28 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     private ExtendedWebElement logoutAllDevicesChecked;
 
-    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
-                    DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
-
-    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
-                    DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
-
-    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
-                    DictionaryKeys.CANCEL_LABEL.getText()),
-                    DictionaryKeys.CANCEL_LABEL.getText());
-
-    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.BTN_SAVE.getText()),
-                    DictionaryKeys.BTN_SAVE.getText());
-
-    ExtendedWebElement logOutOfThisDeviceMessage = getStaticTextByLabel(getDictionary().
-            getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGOUT_OF_ALL_DEVICES_TITLE.getText()));
-
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidPassword;
+
+    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
+            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
+
+    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
+            DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
+
+    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
+                            DictionaryKeys.CANCEL_LABEL.getText()),
+            DictionaryKeys.CANCEL_LABEL.getText());
+
+    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                            DictionaryKeys.BTN_SAVE.getText()),
+            DictionaryKeys.BTN_SAVE.getText());
 
     public DisneyPlusChangePasswordIOSPageBase(WebDriver driver) {
         super(driver);
@@ -110,27 +107,15 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusApplePageBase
         return invalidPassword.isPresent();
     }
 
-    public String getInvalidPasswordText() {
-        return invalidPassword.getText();
-    }
-
-    public void enterNewPasswordValue(String value) {
-        secureTextEntryField.type(value);
-    }
-
     public void submitNewPasswordValue(String value) {
-        enterNewPasswordValue(value);
+        enterLogInPassword(value);
         clickSaveBtn();
     }
 
-    public boolean isPasswordDescriptionPresent(){
+    public boolean isPasswordDescriptionPresent() {
         String expectedString = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
         LOGGER.info("Expected auth headline: {}", expectedString);
         waitForPresenceOfAnElement(headlineSubtitle);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
-    }
-
-    public boolean isLogOutOfThisDeviceMessagePresent() {
-        return logOutOfThisDeviceMessage.isElementPresent();
     }
 }

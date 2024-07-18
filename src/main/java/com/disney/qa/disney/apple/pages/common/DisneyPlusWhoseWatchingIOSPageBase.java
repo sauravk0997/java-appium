@@ -117,7 +117,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void waitForProfileButton(String username) {
         LOGGER.info("Waiting for loading of profile button");
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Profile button is not present")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Profile button is not present")
                 .until(it -> dynamicAccessProfileIcon.format(
                         getDictionary().formatPlaceholderString(
                                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
