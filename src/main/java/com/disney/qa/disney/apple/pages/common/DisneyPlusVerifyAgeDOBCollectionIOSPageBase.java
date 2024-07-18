@@ -24,7 +24,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     @Override
     public boolean isOpened() {
         return getStaticTextByLabel(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_PAGE_HEADER.getText())).isPresent(SHORT_TIMEOUT);
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_PAGE_HEADER.getText())).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickVerifyAgeButton() {
