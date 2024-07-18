@@ -81,6 +81,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String INVALID_PASSWORD = "Invalid#1234";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
     public static final String PROFILE_PIN = "1234";
+    public static final String PLAYER = "player";
+    public static final String PICTURE_IN_PICTURE = "pictureInPicture";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -597,8 +599,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         JarvisAppleBase jarvis = getJarvisPageFactory();
         launchJarvisOrInstall();
         jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection("player");
-        jarvis.openOverrideSection("pictureInPicture");
+        jarvis.openOverrideSection(PLAYER);
+        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
         applePageBase.removeDomainIdentifier();
         applePageBase.getClearTextBtn().click();
         applePageBase.saveDomainIdentifier(value);

@@ -27,6 +27,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final String DISABLED = "disabled";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -294,13 +295,11 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(description = "VOD Player Controls - Backgrounding from the Player Behavior", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setPictureInPictureConfig("disabled");
+        setPictureInPictureConfig(DISABLED);
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
-        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        pause(5);
-        launchApp(buildType.getDisneyBundle());
+        runAppInBackground(5);
         Assert.assertTrue(videoPlayer.isSeekbarVisible(), "Video controls are not displayed");
         Assert.assertTrue(videoPlayer.verifyVideoPaused(), "Video was not paused");
     }
