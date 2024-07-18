@@ -61,8 +61,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForHomePageToOpen() {
         LOGGER.info("Waiting for Home page to load");
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Home page is not opened")
-                .until(it -> getHomePageMainElement().isPresent(SHORT_TIMEOUT));
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
+                .until(it -> getHomePageMainElement().isPresent(THREE_SEC_TIMEOUT));
     }
 
     public boolean isKidsHomePageOpen() {

@@ -13,17 +13,15 @@ import java.lang.invoke.MethodHandles;
 public abstract class DisneyAbstractPage extends AbstractPage implements IOSUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    protected static final long EXTRA_LONG_TIMEOUT = 300;
-    protected static final int LONG_TIMEOUT = 60;
-    protected static final int FORTY_FIVE_SEC_TIMEOUT = 45;
-    protected static final int DELAY = 10;
-    protected static final int HALF_TIMEOUT = 5;
-    protected static final int SHORT_TIMEOUT = 3;
     protected static final int ONE_SEC_TIMEOUT = 1;
+    protected static final int THREE_SEC_TIMEOUT = 3;
+    protected static final int FIVE_SEC_TIMEOUT = 5;
+    protected static final int TEN_SEC_TIMEOUT = 10;
     protected static final int FIFTEEN_SEC_TIMEOUT = 15;
-
-    protected static final int DEFAULT_TRIES = 10;
+    protected static final int FORTY_FIVE_SEC_TIMEOUT = 45;
+    protected static final int SIXTY_SEC_TIMEOUT = 60;
+    protected static final long THREE_HUNDRED_SEC_TIMEOUT = 300;
+    public static final int FIFTEEN_HUNDRED_SEC_TIMEOUT = 1500;
 
     public DisneyAbstractPage(WebDriver driver) {
         super(driver);

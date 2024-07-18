@@ -3,7 +3,6 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -49,21 +48,21 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHuluBrandImageExpanded() {
-        return huluBrandImageExpanded.isPresent() && !huluBrandImageCollapsed.isPresent(SHORT_TIMEOUT);
+        return huluBrandImageExpanded.isPresent() && !huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isHuluBrandImageCollapsed() {
-        return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(SHORT_TIMEOUT);
+        return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isNetworkLogoPresent(String logoName) {
         int count = 10;
-        while (!typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT) && count >= 0) {
+        while (!typeCellLabelContains.format(logoName).isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             // studiosAndNetworkCollection element has visible attribute in false. This is a workaround
             swipeLeftInCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS);
             count--;
         }
-        return typeCellLabelContains.format(logoName).isPresent(SHORT_TIMEOUT);
+        return typeCellLabelContains.format(logoName).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean validateScrollingInHuluCollection() {

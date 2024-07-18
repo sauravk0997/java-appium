@@ -142,7 +142,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @Override
     public boolean isOpened() {
-        return editProfileTitle.isPresent(SHORT_TIMEOUT);
+        return editProfileTitle.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getSharePlay() {
@@ -237,13 +237,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public boolean isLearnMoreLinkPresent() {
         ExtendedWebElement learnMoreLink = getLearnMoreLink();
         swipe(learnMoreLink);
-        return learnMoreLink.isPresent(SHORT_TIMEOUT);
+        return learnMoreLink.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickJuniorModeLearnMoreLink() {
         ExtendedWebElement learnMoreLink = getLearnMoreLink();
         swipe(learnMoreLink);
-        learnMoreLink.click(SHORT_TIMEOUT);
+        learnMoreLink.click(THREE_SEC_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
@@ -314,8 +314,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public void waitForUpdatedToastToDisappear() {
         ExtendedWebElement updatedToast = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText()));
-        fluentWait(getDriver(), LONG_TIMEOUT, SHORT_TIMEOUT, "Download complete text is not present")
-                .until(it -> updatedToast.isElementNotPresent(SHORT_TIMEOUT));
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Download complete text is not present")
+                .until(it -> updatedToast.isElementNotPresent(THREE_SEC_TIMEOUT));
     }
 
     public void toggleAutoplayButton(String newState) {
