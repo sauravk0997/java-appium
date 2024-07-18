@@ -92,7 +92,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74416"})
     @Test(description = "R21 - Create Pin - Enter Password - Forgot Password Flow", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
-    public void verifyR21CreatePINForgetPassword() {
+    public void verifyR21CreatePINForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         Date startTime = getEmailApi().getStartTime();
         ratingsSetupForOTPAccount(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
@@ -101,7 +101,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
@@ -114,7 +113,6 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
                 CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69894"})
