@@ -28,6 +28,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open.";
+    private static final String CHANGE_PASSWORD_PAGE_DID_NOT_OPEN = "Change Password screen did not open after submitting OTP";
     private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "'Must Create pin' popup header/message is not displayed";
     private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Manage your PIN message is not displayed";
     private static final String MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE = "'You Must be 21 year older' modal/popup is not displayed";
@@ -110,7 +111,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(),
-                "Change Password screen did not open after submitting OTP");
+                CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         sa.assertAll();
@@ -440,22 +441,14 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
-//        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
-
-//        passwordPage.clickR21ForgotPasswordLink();
-        pressByElement(passwordPage.getR21ForgotPasswordLink(), 1);
-
-//        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
+        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+        passwordPage.clickR21ForgotPasswordLink();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.getContinueCheckMailButton().click();
-//        Assert.assertTrue(changePasswordPage.isOpened(),
-//                "Change Password screen did not open after submitting OTP");
-
-        pause(5);
-        System.out.println(getDriver().getPageSource());
+        Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-//        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         videoPlayer.waitForVideoToStart();
