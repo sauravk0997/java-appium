@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -71,15 +72,16 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         hyperlink.click();
     }
 
-    public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection) {
+    public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
         LOGGER.info("Validating functions for: {}", legalSection);
+        String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
         getStaticTextByName(legalSection).click();
-        pause(10);
+        waitForPresenceOfAnElement(getDynamicAccessibilityId(expandedHeader));
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
-        pause(10);
+        //pause(10);
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
