@@ -396,6 +396,7 @@ public enum DictionaryKeys {
     R21_BIRTHDAY_FORMAT("r21_birthday_format"),
     R21_CREATE_PIN_CREATE_PIN("r21_createpin_createpin"),
     R21_CREATE_PIN_SET_PIN("r21_createpin_setpin"),
+    R21_DOB_PAGE_HEADER("r21_dob_enter"),
     R21_DOB_ERROR_INVALID_BIRTHDATE("r21_dob_error_invalidbirthdate"),
     R21_MUST_CREATE_PIN_MODAL_CONTINUE_BUTTON("r21_createpin_modal_continue"),
     R21_MUST_CREATE_PIN_MODAL_HEADER("r21_createpin_modal_youmust"),

@@ -24,7 +24,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     @Override
     public boolean isOpened() {
         return getStaticTextByLabel(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_SUBTITLE.getText())).isPresent(THREE_SEC_TIMEOUT);
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_DOB_PAGE_HEADER.getText())).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickVerifyAgeButton() {
@@ -45,5 +45,10 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     public void clickBrowseOtherTitlesButton() {
         getTypeButtonByLabel(getDictionary().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).click();
+    }
+
+    public boolean isVerifyAgeSubtitlePresent() {
+        return getStaticTextByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_SUBTITLE.getText())).isPresent(THREE_SEC_TIMEOUT);
     }
 }
