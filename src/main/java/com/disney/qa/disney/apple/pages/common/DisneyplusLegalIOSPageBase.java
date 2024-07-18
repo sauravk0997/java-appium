@@ -78,6 +78,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
         LOGGER.info("This is the expanded header text " + expandedHeader);
         getStaticTextByName(legalSection).click();
+        pause(10);
         waitForPresenceOfAnElement(getDynamicAccessibilityId(expandedHeader));
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
