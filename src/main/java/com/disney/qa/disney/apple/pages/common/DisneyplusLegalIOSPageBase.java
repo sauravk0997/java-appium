@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -81,7 +82,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
-        //pause(10);
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT);
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
