@@ -44,7 +44,7 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public boolean isConsentHeaderPresent() {
-        return consentMinorHeader.isPresent(SHORT_TIMEOUT);
+        return consentMinorHeader.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void tapDeclineButton() {

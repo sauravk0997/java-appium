@@ -12,11 +12,6 @@ public class DisneyPlusLogOutOfDevicesIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "headlineHeader")
     ExtendedWebElement header;
 
-    @FindBy(id = "headlineSubtitle")
-    ExtendedWebElement subTitle;
-
-    ExtendedWebElement forgotPasswordLink = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORGOT_PASSWORD.getText()));
-
     public DisneyPlusLogOutOfDevicesIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -26,32 +21,7 @@ public class DisneyPlusLogOutOfDevicesIOSPageBase extends DisneyPlusApplePageBas
         return header.isElementPresent();
     }
 
-    public boolean isSubtitleDisplayed() {
-        return subTitle.isElementPresent();
-    }
-
-    public boolean isPasswordTextEntryPresent() {
-        return secureTextEntryField.isElementPresent();
-    }
-
-    public boolean isCancelButtonPresent() {
-        return dismissBtn.isElementPresent();
-    }
-
     public void clickCancelButton() {
         dismissBtn.click();
-    }
-
-    public boolean isForgotPasswordLinkDisplayed() {
-        return forgotPasswordLink.isElementPresent();
-    }
-
-    public void clickForgotPasswordLink() {
-        forgotPasswordLink.click();
-    }
-
-    public void submitPasswordAndLogout(String value) {
-        secureTextEntryField.type(value);
-        clickPrimaryButton();
     }
 }
