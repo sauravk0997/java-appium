@@ -82,12 +82,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67128"})
     @Test(description = "Verify the Account submenu display elements are present", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyAccountDisplay() {
-        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
-        setAppToAccountSettings(accountV2);
+        setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.getStaticTextByLabel(accountV2.getEmail()).isPresent(), "User Email address was not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(), "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(), "Manage with MyDisney link was not displayed");
         sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(), "User Password (hidden) was not displayed");
         sa.assertTrue(accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())), "Change Password link was not displayed");
@@ -103,8 +102,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifySubscriptionDetails_DisneyPlus() {
-        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
-        setAppToAccountSettings(accountV2);
+        setAppToAccountSettings(getAccount());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isDisneyPlusPremiumSubscriptionPresent(),

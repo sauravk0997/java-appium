@@ -175,11 +175,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public DisneyAccount createV2Account(String offerType) {
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), offerType);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
-    }
-
     public DisneyAccount createAccountFor(String country, String language) {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(country, BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, country, language, SUBSCRIPTION_V2);
