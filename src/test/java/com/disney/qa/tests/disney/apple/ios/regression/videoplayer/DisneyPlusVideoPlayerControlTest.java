@@ -26,6 +26,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final long TEN_SECONDS_TIMEOUT = 10;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -132,7 +133,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(10), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -147,7 +148,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(10), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -167,7 +168,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isDetailPageOpened(10);
+        detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT);
         Assert.assertTrue(detailsPage.getContentTitle().equalsIgnoreCase(content), "We're not on the right content's detail page");
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
             String episodeTitle = detailsPage.getEpisodeContentTitle();
