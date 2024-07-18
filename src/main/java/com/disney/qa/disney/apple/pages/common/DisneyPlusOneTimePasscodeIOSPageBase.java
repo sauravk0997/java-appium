@@ -3,9 +3,11 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_CONTINUE_CHECK_MAIL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY_2;
 
 /*
@@ -20,6 +22,9 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     @FindBy(id = "oneTimePasscodeContainerInputView")
     protected ExtendedWebElement otpInputField;
+
+    @ExtendedFindBy(accessibilityId = "textFieldInputCode")
+    private ExtendedWebElement textFieldInputCode;
 
     private ExtendedWebElement resendButton = xpathNameOrName.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -51,4 +56,8 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
         otpInputField.type(value);
     }
 
+    public ExtendedWebElement getContinueCheckMailButton() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_CONTINUE_CHECK_MAIL.getText()));
+    }
 }

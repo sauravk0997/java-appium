@@ -87,6 +87,22 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
+    public void ratingSetupWithPINForOTPAccount(String ratingValue, String lang, String locale) {
+        setDictionary(lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(locale, lang));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
     private void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();

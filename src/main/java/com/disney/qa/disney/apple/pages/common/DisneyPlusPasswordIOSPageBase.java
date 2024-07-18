@@ -23,7 +23,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     private static final String LOGIN_BUTTON = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN.getText());
     private ExtendedWebElement forgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, FORGOT_PASSWORD.getText()));
     private ExtendedWebElement r21ForgotPasswordLink = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_R21_FORGOT_PASSSWORD_LINK.getText()));
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeSecureTextField'$]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
@@ -106,12 +105,20 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return forgotPasswordLink.isPresent();
     }
 
+    public ExtendedWebElement getForgotPasswordLink() {
+        return forgotPasswordLink;
+    }
+
     public void clickForgotPasswordLink() {
         forgotPasswordLink.click();
     }
 
     public void clickR21ForgotPasswordLink() {
         r21ForgotPasswordLink.click();
+    }
+
+    public ExtendedWebElement getR21ForgotPasswordLink() {
+        return r21ForgotPasswordLink;
     }
 
     public void typePassword(String password) {

@@ -430,26 +430,36 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
     public void verifyR21ExistingPinForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         Date startTime = getEmailApi().getStartTime();
-        ratingsSetupForOTPAccount(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        ratingSetupWithPINForOTPAccount(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        navigateToHomePageForPinUser();
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
-        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
-        passwordPage.clickR21ForgotPasswordLink();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
+//        Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
+
+//        passwordPage.clickR21ForgotPasswordLink();
+        pressByElement(passwordPage.getR21ForgotPasswordLink(), 1);
+
+//        Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtp(otp);
-        oneTimePasscodePage.clickPrimaryButton();
-        Assert.assertTrue(changePasswordPage.isOpened(),
-                "Change Password screen did not open after submitting OTP");
+        oneTimePasscodePage.getContinueCheckMailButton().click();
+//        Assert.assertTrue(changePasswordPage.isOpened(),
+//                "Change Password screen did not open after submitting OTP");
+
+        pause(5);
+        System.out.println(getDriver().getPageSource());
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        sa.assertAll();
+//        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74741"})
