@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
@@ -224,7 +225,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
 
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
-        String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET_ID);
+        String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
         if (entityID != null) {
             ExploreContent exploreMovieContent = getApiMovieContent(entityID);
             int duration = exploreMovieContent.getDurationMs();

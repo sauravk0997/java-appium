@@ -855,10 +855,10 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
             String accessibilityID = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
             By urlField = By.id(accessibilityID);
-            wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(urlField));
             getDriver().findElement(urlField).click();
-            wait.until(ExpectedConditions.presenceOfElementLocated(urlField));
             String enterBtnUnicode = "\uE007";
+            wait.until(ExpectedConditions.elementToBeClickable(urlField));
             getDriver().findElement(urlField).sendKeys(url);
             getDriver().findElement(urlField).sendKeys(enterBtnUnicode);
         } else launchDeeplink(url);

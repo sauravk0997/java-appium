@@ -5,8 +5,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSignUpIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +32,7 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     }
 
     public boolean isAgreeAndContinueFocused() {
+        moveDown(1,1);
         return isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())));
     }
 
@@ -67,7 +66,7 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     }
 
     public void waitUntilEmailFieldIsFocused() {
-        fluentWait(getDriver(), LONG_TIMEOUT, ONE_SEC_TIMEOUT,"Unable to focus email field on sign up page")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,"Unable to focus email field on sign up page")
                 .until(it -> isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()))));
     }
 

@@ -63,7 +63,7 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
 
     public List<ExtendedWebElement> getHeaderTitlesInView() {
         if (getAvatarHeaderTitle().isPresent()) {
-            return findExtendedWebElements(getAvatarHeaderTitle().getBy(), SHORT_TIMEOUT);
+            return findExtendedWebElements(getAvatarHeaderTitle().getBy(), THREE_SEC_TIMEOUT);
         } else {
             throw new java.util.NoSuchElementException("Failing test, header view elements not found.");
         }

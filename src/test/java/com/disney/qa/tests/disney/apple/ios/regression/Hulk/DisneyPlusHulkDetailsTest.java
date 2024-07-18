@@ -434,53 +434,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73818"})
-    @Test(description = "Hulk - Hulu Details Page - ShopDisney - Shop Tab Support", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyShopTabContainer() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(false).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-
-        //Tested this scenario with Disney content as we dont have any Hulu content with shop tab in PROD currently
-
-        //Primary Adult Profile
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(SPIDERMAN_THREE);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickShopTab();
-        if (R.CONFIG.get("capabilities.deviceType").equalsIgnoreCase("Phone")) {
-            detailsPage.swipeUp(1500);
-        }
-
-        //Currently we dont have copy key and value in dictionary for Hulu content copy hence while validating passed full string text
-        //Once we will get copy key and value in Dictionary, we need to replace String text with copy key in below validation
-        sa.assertTrue(detailsPage.getShopTabImage().isPresent(), "Background Image was not found");
-        sa.assertTrue(detailsPage.isShopTabHeadingTextPresent(), "Shop Tab Header was not found");
-        sa.assertTrue(detailsPage.isShopTabSubHeadingTextPresent(), "Shop Tab Sub-Header was not found");
-        sa.assertTrue(detailsPage.isShopTabNavigateToWebTextPresent(), "Shop Tab Go to Disney Text was not found");
-        sa.assertTrue(detailsPage.isShopTabLegalTextPresent(), "Shop Tab Legal text was not found");
-
-        detailsPage.navigateToShopWebPage();
-        sa.assertTrue(detailsPage.isShopWebviewOpen(), "Shop web page not opened");
-        moreMenu.goBackToDisneyAppFromSafari();
-
-        //Secondary
-        homePage.clickMoreTab();
-        whoseWatchingPage.clickProfile(SECONDARY_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(SPIDERMAN_THREE);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertFalse(detailsPage.getShopBtn().isPresent(), "Shop button was found on Secondary profile.");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
     @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {

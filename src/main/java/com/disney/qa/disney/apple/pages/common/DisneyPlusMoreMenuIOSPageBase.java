@@ -142,7 +142,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isMenuOptionNotPresent(MoreMenu option) {
-		return getDynamicCellByLabel(option.getMenuOption()).isElementNotPresent(SHORT_TIMEOUT);
+		return getDynamicCellByLabel(option.getMenuOption()).isElementNotPresent(THREE_SEC_TIMEOUT);
 	}
 
 	public void clickMenuOption(MoreMenu option) {
