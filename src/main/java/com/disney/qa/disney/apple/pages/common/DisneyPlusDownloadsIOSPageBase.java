@@ -50,7 +50,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void waitForDownloadToComplete() {
-		waitUntil(ExpectedConditions.elementToBeClickable(downloadCompleteButton.getBy()), EXTRA_LONG_TIMEOUT);
+		waitUntil(ExpectedConditions.elementToBeClickable(downloadCompleteButton.getBy()), THREE_HUNDRED_SEC_TIMEOUT);
 	}
 
 	public void tapDownloadedAssetFromListView(String downloadedAsset) {

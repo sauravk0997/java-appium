@@ -255,7 +255,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void waitForPasswordPageToDisappear() {
-        fluentWait(getDriver(), HALF_TIMEOUT, ONE_SEC_TIMEOUT, "Element is not present").until(it -> getSecureTextEntryField().isElementNotPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Element is not present").until(it -> getSecureTextEntryField().isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getSecureTextEntryField() {
