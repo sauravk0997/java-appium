@@ -48,7 +48,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertFalse(homePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
         homePage.moveUp(1,1);
         homePage.moveLeft(2,1); //stop carousel moving
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
+        homePage.isCarouselFocused();
         sa.assertAll();
     }
 
