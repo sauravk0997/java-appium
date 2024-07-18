@@ -9,6 +9,7 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.collections4.set.ListOrderedSet;
 import org.testng.Assert;
@@ -23,7 +24,7 @@ import java.util.stream.IntStream;
     public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
-    @Test(description = "No Watchlist Items", groups = {"Watchlist", "Smoke"})
+    @Test(description = "No Watchlist Items", groups = {TestGroup.WATCHLIST, TestGroup.SMOKE})
     public void verifyNoWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -44,7 +45,7 @@ import java.util.stream.IntStream;
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
-    @Test(description = "Watchlist Items Present - UI check", groups = {"Watchlist"})
+    @Test(description = "Watchlist Items Present - UI check", groups = {TestGroup.WATCHLIST})
     public void verifyWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -85,7 +86,7 @@ import java.util.stream.IntStream;
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
-    @Test(description = "Verify Removing Content from Watchlist", groups = {"Watchlist"})
+    @Test(description = "Verify Removing Content from Watchlist", groups = {TestGroup.WATCHLIST})
     public void verifyRemoveWatchlistContent() {
         List<DisneyEntityIds> titles =
                 new ArrayList<>(Arrays.asList(
