@@ -167,7 +167,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
-            sa.assertTrue(detailsPage.isOpened(5), "Details page did not open");
+            sa.assertTrue(detailsPage.isDetailPageOpened(5), "Details page did not open");
             detailsPage.getBackArrow().click();
         });
 
@@ -429,12 +429,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickFirstCollection();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         brandIOSPageBase.clickFirstCarouselPoster();
-        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         pressByElement(detailsPage.getBackArrow(),1);
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertAll();
