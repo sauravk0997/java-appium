@@ -23,11 +23,11 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
     public boolean isProfileSubcopyPresent() {
         return staticTextByLabel.format(getDictionary()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_SUB.getText()))
-                .isPresent(SHORT_TIMEOUT);
+                .isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isDismissButtonPresent() {
-        return dynamicBtnFindByName.format("secondaryButton").isPresent(SHORT_TIMEOUT);
+        return dynamicBtnFindByName.format("secondaryButton").isPresent(THREE_SEC_TIMEOUT);
     }
     public void tapDismissButton() {
         clickSecondaryButtonByCoordinates();

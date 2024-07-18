@@ -61,7 +61,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return languageSettingsView.isPresent(HALF_TIMEOUT);
+        return languageSettingsView.isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public void tapCloseButton() {
