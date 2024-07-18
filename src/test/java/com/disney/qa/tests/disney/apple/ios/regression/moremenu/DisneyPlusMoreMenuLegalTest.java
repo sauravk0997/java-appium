@@ -83,7 +83,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, "US", lang, SUBSCRIPTION_V1));
+        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), lang, SUBSCRIPTION_V2));
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -125,6 +125,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         setAccount(getAccountApi().createAccount(offer, "US", "en", SUBSCRIPTION_V2));
         SoftAssert sa = new SoftAssert();
+      
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -159,7 +160,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, country, "en", SUBSCRIPTION_V1));
+        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);

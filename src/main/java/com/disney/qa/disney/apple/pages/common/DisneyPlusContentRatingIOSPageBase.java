@@ -26,7 +26,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return contentRatingHeader.isPresent(SHORT_TIMEOUT);
+        return contentRatingHeader.isPresent(THREE_SEC_TIMEOUT);
     }
 
     private ExtendedWebElement gotItButton = xpathNameOrName.format(getDictionary()
