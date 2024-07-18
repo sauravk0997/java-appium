@@ -77,7 +77,6 @@ public class IOSSettingsMenuBase extends DisneyAbstractPage {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"7.99 ✓\"`]")
     private ExtendedWebElement basicMonthlyPriceCheckmark;
 
-
     public IOSSettingsMenuBase(WebDriver driver) {
         super(driver);
     }
