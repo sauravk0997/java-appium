@@ -77,7 +77,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String MONTHLY_OFFER = "monthly";
-    public static final String SUBSCRIPTION_V1 = "V1";
     public static final String SUBSCRIPTION_V2 = "V2";
     public static final String SUBSCRIPTION_V3 = "V3";
     public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
@@ -159,7 +158,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V1);
+        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     });
 
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
