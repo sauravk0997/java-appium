@@ -135,7 +135,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
-        Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
         confirmLegalPageOpens();
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE);
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT);
