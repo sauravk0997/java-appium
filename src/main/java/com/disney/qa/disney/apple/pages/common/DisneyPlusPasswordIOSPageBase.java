@@ -91,10 +91,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return forgotPasswordLink.isPresent();
     }
 
-    public ExtendedWebElement getForgotPasswordLink() {
-        return forgotPasswordLink;
-    }
-
     public void clickForgotPasswordLink() {
         forgotPasswordLink.click();
     }
