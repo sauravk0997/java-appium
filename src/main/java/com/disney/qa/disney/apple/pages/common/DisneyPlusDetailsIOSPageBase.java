@@ -1096,7 +1096,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in featured area");
-        Assert.assertTrue(isDetailPageOpened(ONE_SEC_TIMEOUT), "Details screen not displayed.");
+        Assert.assertTrue(isDetailPageOpened(FIVE_SEC_TIMEOUT), "Details screen not displayed.");
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on details page featured area.");
     }
 
