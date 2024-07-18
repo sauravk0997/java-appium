@@ -82,6 +82,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String INVALID_PASSWORD = "Invalid#1234";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
     public static final String PROFILE_PIN = "1234";
+    public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
+    public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -598,9 +600,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         JarvisAppleBase jarvis = getJarvisPageFactory();
         launchJarvisOrInstall();
         jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection("parentalControlsConfig");
+        jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
         try{
-            jarvis.openOverrideSection("r21PauseTimeoutSeconds");
+            jarvis.openOverrideSection(R21_PAUSE_TIMEOUT);
         } catch (Exception e){
             throw new SkipException("Failed to update R21 Pause TimeOut: {}", e);
         }

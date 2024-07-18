@@ -672,7 +672,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         videoPlayer.clickPauseButton();
         videoPlayer.waitForR21PauseTimeOutToComplete(newPausetimeOutInSeconds, SHORT_TIMEOUT);
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Correct R21 Content is not opened");
+        sa.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
         sa.assertAll();
     }
 
