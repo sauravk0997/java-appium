@@ -56,8 +56,8 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
         otpInputField.type(value);
     }
 
-    public ExtendedWebElement getContinueCheckMailButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                BTN_CONTINUE_CHECK_MAIL.getText()));
+    public void clickContinueCheckMailButton() {
+        getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_CONTINUE_CHECK_MAIL.getText())).click();
     }
 }

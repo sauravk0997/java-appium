@@ -103,10 +103,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         r21ForgotPasswordLink.click();
     }
 
-    public ExtendedWebElement getR21ForgotPasswordLink() {
-        return r21ForgotPasswordLink;
-    }
-
     public void typePassword(String password) {
         passwordFieldHint.type(password);
     }

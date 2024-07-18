@@ -367,7 +367,6 @@ public enum DictionaryKeys {
     PAYWALL_CANCEL_ANYTIME("paywall_copy_2"),
     PAYWALL_SWITCH_ANNUAL_PRICE("switch_annual_confirmation_price"),
     PAYWALL_SWITCH_ANNUAL_TITLE("switch_annual_confirmation_title"),
-    PCON_FORGOT_PASSWORD("pcon_forgot_password"),
     PCON_FORGOT_PIN_AUTH_PASSWORD_BODY("pcon_forgot_pin_auth_password_body"),
     PLAN_SWITCH_IAP_ANNUAL("plan_switch_iap_cta_annual"),
     PLAY("play"),
