@@ -167,7 +167,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
-            sa.assertTrue(detailsPage.isDetailPageOpened(5), "Details page did not open");
+            sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), "Details page did not open");
             detailsPage.getBackArrow().click();
         });
 
