@@ -46,6 +46,20 @@ public final class TestGroup {
     public static final String ONBOARDING = "Onboarding";
     public static final String NON_US_RATINGS = "NonUS-Ratings";
     public static final String R21 = "R21";
+    public static final String HOME = "Home";
+    public static final String DETAILS = "Details";
+    public static final String BG_IMAGE = "BGImage";
+    public static final String ARIEL = "Ariel";
+    public static final String ALICE = "Alice";
+    public static final String PROFILE = "Profile";
+    public static final String SUB_UI = "SubUI";
+    public static final String SUBSCRIBER_LOGIN_FLOW = "SubscriberLoginFlow";
+    public static final String SUBSCRIBER_FLOW_NAV_SEARCH_WATCHLIST = "SubscriberFlowNavSearchWatchlist";
+    public static final String SUBSCRIBER_FLOW_PROFILES = "SubscriberFlowProfiles";
+    public static final String SUBSCRIBER_FLOW_ACCOUNT_SETTINGS = "SubscriberFlowAccountSettings";
+    public static final String SUBSCRIBER_FLOW_SETTINGS = "SubscriberFlowSettings";
+    public static final String SUBSCRIBER_FLOW_PLAYER = "SubscriberFlowPlayer";
+    public static final String SUBSCRIBER_FLOW_SETTINGS_PCON = "SubscriberFlowSettingsPCON";
 
     //Analytics Groups
     public static final String QOE_PLAYBACK = "qoeplayback";

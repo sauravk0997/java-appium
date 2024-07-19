@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -82,6 +81,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String INVALID_PASSWORD = "Invalid#1234";
     public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
     public static final String PROFILE_PIN = "1234";
+    public static final String PLAYER = "player";
+    public static final String PICTURE_IN_PICTURE = "pictureInPicture";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -172,11 +173,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
-    }
-
-    public DisneyAccount createV2Account(String offerType) {
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), offerType);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     }
 
     public DisneyAccount createAccountFor(String country, String language) {
@@ -591,5 +587,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         setItemsFromApi.forEach(item ->
                 titlesFromApi.add(item.getVisuals().getTitle()));
         return titlesFromApi;
+    }
+
+    public void setPictureInPictureConfig(String value) {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(PLAYER);
+        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
+        applePageBase.removeDomainIdentifier();
+        applePageBase.getClearTextBtn().click();
+        applePageBase.saveDomainIdentifier(value);
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        LOGGER.info("Restart Disney app..");
+        restart();
+        LOGGER.info("Click allow to track your activity..");
+        handleAlert();
     }
 }

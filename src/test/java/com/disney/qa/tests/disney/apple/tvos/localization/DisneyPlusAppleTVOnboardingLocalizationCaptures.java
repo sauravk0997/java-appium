@@ -52,7 +52,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
     }
 
-    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { "Onboarding", "Ariel", TestGroup.PROXY })
+    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.ARIEL, TestGroup.PROXY })
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
         String baseDirectory = String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage());
 
@@ -237,7 +237,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { "Onboarding", TestGroup.PROXY })
+    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.PROXY })
     public void captureFullOnboardingFlowToExpiredAccount() {
         String baseDirectory = "Screenshots-Onboarding-PartTwo/";
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
@@ -286,7 +286,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Onboarding flows Background Images Check", groups = { "BGImage", TestGroup.PROXY })
+    @Test(description = "Onboarding flows Background Images Check", groups = { TestGroup.BG_IMAGE, TestGroup.PROXY })
     public void backgroundImage() {
         String baseDirectory = "Screenshots-BGImage/";
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
