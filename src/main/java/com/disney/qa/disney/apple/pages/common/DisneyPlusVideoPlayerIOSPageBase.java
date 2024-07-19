@@ -749,9 +749,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 until(it -> getRemainingTime() < gracePeriod);
     }
 
-    public void waitForR21PauseTimeOutToComplete(int waitTime, int polling) {
+    public void waitingForR21PauseTimeOutToEnd(int waitTime, int polling) {
         LOGGER.info("Waiting for R21 Pause timeout to pass ");
-        fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout").
-                until(it -> !getPlayerView().isPresent());
+        fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
+                .until(it -> !getPlayerView().isPresent());
     }
 }

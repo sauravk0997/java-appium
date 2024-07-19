@@ -660,7 +660,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
 
         navigateToHomePageForPinUser();
-        reduceR21pauseTimeOut(newPausetimeOutInSeconds);
+        setR21PauseTimeOut(newPausetimeOutInSeconds);
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
@@ -670,7 +670,7 @@ public class DisneyPlusNonUSRatingR21Test extends DisneyPlusRatingsBase {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.clickPauseButton();
-        videoPlayer.waitForR21PauseTimeOutToComplete(newPausetimeOutInSeconds, SHORT_TIMEOUT);
+        videoPlayer.waitingForR21PauseTimeOutToEnd(newPausetimeOutInSeconds, SHORT_TIMEOUT);
         sa.assertTrue(detailsPage.isOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
         sa.assertAll();

@@ -596,16 +596,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return titlesFromApi;
     }
 
-    public void setPictureInPictureConfig(String value) {
+    public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
-        jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection(PLAYER);
-        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
         applePageBase.removeDomainIdentifier();
         applePageBase.getClearTextBtn().click();
-        applePageBase.saveDomainIdentifier(value);
+        applePageBase.saveDomainIdentifier(newValue);
+    }
+
+    public void terminateJarvisInstallDisney() {
         LOGGER.info("Terminating Jarvis app..");
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         LOGGER.info("Restart Disney app..");
@@ -614,25 +612,27 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    public void reduceR21pauseTimeOut(int newPauseTime){
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+    public void setPictureInPictureConfig(String value) {
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(PLAYER);
+        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
+        setOverrideValue(value);
+        terminateJarvisInstallDisney();
+    }
+
+    public void setR21PauseTimeOut(int newPauseTime) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
         launchJarvisOrInstall();
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
-        try{
+        try {
             jarvis.openOverrideSection(R21_PAUSE_TIMEOUT);
-        } catch (Exception e){
+        } catch (NoSuchElementException e) {
             throw new SkipException("Failed to update R21 Pause TimeOut: {}", e);
         }
-        applePageBase.removeDomainIdentifier();
-        applePageBase.getClearTextBtn().click();
-        applePageBase.saveDomainIdentifier(String.valueOf(newPauseTime));
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
+        setOverrideValue(String.valueOf(newPauseTime));
+        terminateJarvisInstallDisney();
     }
 }
