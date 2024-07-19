@@ -1,8 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -28,7 +28,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final String DISABLED = "disabled";
-    private static final long TEN_SECONDS_TIMEOUT = 10;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -135,7 +134,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -150,7 +149,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -170,7 +169,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isDetailPageOpened(TEN_SECONDS_TIMEOUT);
+        detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getContentTitle().equalsIgnoreCase(content), "We're not on the right content's detail page");
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
             String episodeTitle = detailsPage.getEpisodeContentTitle();

@@ -167,7 +167,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
-            sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), "Details page did not open");
+            sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
             detailsPage.getBackArrow().click();
         });
 
@@ -411,14 +411,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title not displayed");
+        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
         searchPage.clickFirstCollection();
         Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
-        sa.assertTrue(brandIOSPageBase.isCollectionTitlesDisplayed(), "Collection titles not displayed");
+        sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
 
         brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP, swipeAttempt, swipeDuration);
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
