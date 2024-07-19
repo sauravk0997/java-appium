@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_8,iPhone_8Plus,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_13_Pro,iPhone_14;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_8,iPhone_8Plus,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_14;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
@@ -16,10 +16,10 @@
     <parameter name="scheduling" value="H 0 * * 1-5"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="jenkinsBuild" value="3.5.0.70879"/>
+    <parameter name="jenkinsBuild" value="3.5.0.71086"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-MoreMenu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76657"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76695"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
