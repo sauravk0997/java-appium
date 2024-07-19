@@ -400,7 +400,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         String collectionPageDidNotOpen = "User did not land on the collection page";
         String collectionLogoNotExpanded = "Collection brand logo is not expanded";
         int swipeAttempt = 2;
-        int swipeDuration = 500;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
