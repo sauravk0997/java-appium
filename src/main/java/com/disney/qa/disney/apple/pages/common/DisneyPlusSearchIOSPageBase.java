@@ -217,7 +217,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
-    public boolean isExploreTitleDisplayed(int timeOut ) {
+    public boolean isExploreTitleDisplayed(int timeOut) {
         return exploreHeader.isPresent(timeOut);
     }
 

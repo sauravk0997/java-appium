@@ -399,6 +399,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     public void verifySearchExploreEditorialsAndCollections() {
         String collectionPageDidNotOpen = "User did not land on the collection page";
         String collectionLogoNotExpanded = "Collection brand logo is not expanded";
+        int swipeAttempt = 2;
+        int swipeDuration = 500;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
@@ -418,10 +420,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandIOSPageBase.isCollectionTitlesDisplayed(), "Collection titles not displayed");
 
-        brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP, 2, 500);
+        brandIOSPageBase.swipeInCollectionBrandPage(Direction.UP, swipeAttempt, swipeDuration);
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
-        brandIOSPageBase.swipeInCollectionBrandPage(Direction.DOWN,2, 500);
+        brandIOSPageBase.swipeInCollectionBrandPage(Direction.DOWN, swipeAttempt, swipeDuration);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         brandIOSPageBase.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
