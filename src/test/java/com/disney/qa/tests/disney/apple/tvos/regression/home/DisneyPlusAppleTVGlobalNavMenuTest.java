@@ -11,6 +11,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -62,7 +63,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-89541", "XCDQA-89543", "XCDQA-89549", "XCDQA-89547", "XCDQA-89545" })
-    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { "Home", "Smoke" })
+    @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { TestGroup.HOME, TestGroup.SMOKE })
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -127,7 +128,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-91703", "XCDQA-91701" })
-    @Test(description = "Global Nav Menu appearance - kids mode", groups = { "Home", "Smoke" })
+    @Test(description = "Global Nav Menu appearance - kids mode", groups = { TestGroup.HOME, TestGroup.SMOKE })
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -171,7 +172,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
-    @Test(description = "Hidden Nav state - inner pages", groups = { "Home" }, enabled = false)
+    @Test(description = "Hidden Nav state - inner pages", groups = {TestGroup.HOME}, enabled = false)
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -256,7 +257,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90928" })
-    @Test(description = "Hidden state - Hero Carousel", groups = { "Home" })
+    @Test(description = "Hidden state - Hero Carousel", groups = { TestGroup.HOME })
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
