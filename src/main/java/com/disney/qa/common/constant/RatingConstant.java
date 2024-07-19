@@ -41,6 +41,8 @@ public class RatingConstant {
 
     public static String getMaxMaturityRating(String locale) {
         switch (locale) {
+            case "BR":
+                return "1850";
             case "US":
             case "CA":
                 return "1830";
@@ -60,6 +62,8 @@ public class RatingConstant {
 
     public static String getRoamingDas(String locale) {
         switch (locale) {
+            case "BR":
+                return "23044";
             case "CA":
                 return "23065";
             case "DE":
