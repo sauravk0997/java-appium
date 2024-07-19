@@ -420,12 +420,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileDeleteProfileUI() {
         SoftAssert sa = new SoftAssert();
-        DisneyAccount accountV2 = createV2Account(BUNDLE_PREMIUM);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(accountV2).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        setAppToHomeScreen(accountV2);
+        setAppToHomeScreen(getAccount());
 
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -450,18 +449,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Profile PIN - Profile Access", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyProfilePinProfileAccess() {
         SoftAssert sa = new SoftAssert();
-        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(account).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         try {
-            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-            getAccountApi().updateProfilePin(account, account.getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getAccount());
         sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
         //Validate UI
@@ -538,14 +536,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(account).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
         try {
-            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getAccount());
 
         //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
@@ -561,7 +558,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         editProfile.swipeUp(500);
         editProfile.getEditProfilePinSettingLabel().click();
-        passwordPage.enterPassword(account);
+        passwordPage.enterPassword(getAccount());
 
         //Verify clicking pin checkbox
         sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Checked checkbox was not found.");
@@ -670,8 +667,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getAccount());
 
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
@@ -742,8 +738,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyAccount account = createV2Account(BUNDLE_PREMIUM);
-        List<ContentSet> avatarSets = getAvatarSets(account);
+        List<ContentSet> avatarSets = getAvatarSets(getAccount());
         int lastSetId = avatarSets.size() - 1;
         String lastSetAvatarId = "";
         String avatarSetName = "";
@@ -757,7 +752,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } catch (IndexOutOfBoundsException e) {
             Assert.fail("Index out of bounds: " + e);
         }
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
