@@ -352,7 +352,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clickBackArrowFromWatchlist() {
 		//TEMP solution for bugged watchlist
-		getTypeButtonByName("buttonBack").click();
+		getBackArrow().click();
 	}
 
 	public boolean isBackArrowInWatchlistPresent() {
