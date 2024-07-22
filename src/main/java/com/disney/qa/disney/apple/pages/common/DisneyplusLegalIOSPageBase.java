@@ -30,9 +30,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeStaticText' AND label = '%s'$]")
-    private ExtendedWebElement expandedLegalSection;
-
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
     }
