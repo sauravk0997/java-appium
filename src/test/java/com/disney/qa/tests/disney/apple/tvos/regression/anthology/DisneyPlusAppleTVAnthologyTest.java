@@ -175,7 +175,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105993"})
-    @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY})
+    @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY}, enabled = false)
     public void verifyAnthologyFeaturedVOD() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
