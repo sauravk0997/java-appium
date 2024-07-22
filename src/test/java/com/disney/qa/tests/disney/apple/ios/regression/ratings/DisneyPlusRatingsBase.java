@@ -33,6 +33,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
+    static final String BRAZIL_LANG = "pt-BR";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
@@ -161,7 +162,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts() != null) {
+                if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                         LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                         contentTitle = item.getVisuals().getTitle();
