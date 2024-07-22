@@ -30,9 +30,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeStaticText' AND label = '%s'$]")
-    private ExtendedWebElement expandedLegalSection;
-
     public DisneyplusLegalIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -77,12 +74,12 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Validating functions for: {}", legalSection);
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
         getStaticTextByName(legalSection).click();
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT);
+        sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), "Expanded Header is not visible");
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
         getStaticTextByName(legalSection).click();
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT);
+        sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), "Expanded Header is visible");
         sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
