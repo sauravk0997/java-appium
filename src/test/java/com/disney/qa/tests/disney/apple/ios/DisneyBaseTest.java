@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
@@ -71,7 +72,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
-    public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
@@ -79,7 +79,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
-    public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
+    public static final EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY = EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
     public static final String PROFILE_PIN = "1234";
     public static final String PLAYER = "player";
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
