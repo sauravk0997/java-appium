@@ -21,7 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-    public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+
+public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
     @Test(description = "No Watchlist Items", groups = {TestGroup.WATCHLIST, TestGroup.SMOKE})
@@ -58,7 +60,7 @@ import java.util.stream.IntStream;
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId(), CONTENT_ENTITLEMENT_DISNEY));
         logInTemp(getAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
@@ -73,7 +75,7 @@ import java.util.stream.IntStream;
         });
         sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
 
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId());
+        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
         Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
@@ -97,7 +99,7 @@ import java.util.stream.IntStream;
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId()));
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId(), CONTENT_ENTITLEMENT_DISNEY));
 
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
