@@ -12,6 +12,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.collections4.set.ListOrderedSet;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -105,9 +106,10 @@ import java.util.stream.IntStream;
 
         watchListPage.getTypeCellLabelContains(titles.get(0).getTitle()).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-
+// here
         detailsPage.clickWatchlistButton();
-        watchListPage.clickMenuTimes(1, 1);
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        watchListPage.clickMenuTimes(1, 2);
         Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.IRONMAN.getTitle()).isElementPresent(),
                 "Ironman content is not present in Watchlist");
         Assert.assertFalse(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementPresent(),
