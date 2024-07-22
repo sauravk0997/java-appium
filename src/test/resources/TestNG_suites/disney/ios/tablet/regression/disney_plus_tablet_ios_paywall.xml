@@ -11,7 +11,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceType=Tablet;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_2,iPad_Air_4_Gen,iPad_5_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceType=Tablet;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;timeoutMs=120000"/>
 
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
