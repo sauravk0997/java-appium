@@ -46,7 +46,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         homePage.clickProfileBtn(PROFILE_NAME);
         Assert.assertTrue(homePage.isOpened(), "Home page is not open after selecting a profile");
         sa.assertFalse(homePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
-        homePage.moveUp(1,1);
         homePage.moveLeft(2,1); //stop carousel moving
         homePage.isCarouselFocused();
         sa.assertAll();
