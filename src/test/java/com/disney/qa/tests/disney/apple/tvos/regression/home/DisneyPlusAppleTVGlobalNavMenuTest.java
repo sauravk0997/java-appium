@@ -189,7 +189,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getWatchlistApi().addContentToWatchlist(entitledUser, entitledUser.getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId(),CONTENT_ENTITLEMENT_DISNEY);
+        getWatchlistApi().addContentToWatchlist(entitledUser, entitledUser.getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
