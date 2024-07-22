@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
@@ -127,7 +128,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), ENVIRONMENT, PLATFORM, UNENTITLED_SERIES_ID, EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE)),
+        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), ENVIRONMENT, PLATFORM, UNENTITLED_SERIES_ID, CONTENT_ENTITLEMENT_DISNEY),
                 "\"This content requires a Hulu subscription.\" message is displayed");
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");

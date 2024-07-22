@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
@@ -49,6 +48,7 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -79,7 +79,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
-    public static final EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY = EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
     public static final String PROFILE_PIN = "1234";
     public static final String PLAYER = "player";
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
