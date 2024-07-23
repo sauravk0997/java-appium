@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -106,7 +105,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         //To get the collections details of Hulu from API
-        ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE.getEntityId());
+        ArrayList<Container> collections = getHuluAPIPage(HULU_PAGE.getEntityId());
         //Click any title from collection
         try {
             String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();

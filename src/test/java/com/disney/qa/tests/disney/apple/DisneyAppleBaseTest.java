@@ -54,6 +54,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_HULU;
+
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
  */
@@ -377,7 +380,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     }
 
-    public static ExploreSearchRequest getExploreSearchRequest() { return EXPLORE_SEARCH_REQUEST.get(); }
+    public static ExploreSearchRequest getDisneyExploreSearchRequest() {
+        return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY);
+    }
+
+    public static ExploreSearchRequest getHuluExploreSearchRequest() {
+        return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
+    }
 
     ////////////////////////////
 
