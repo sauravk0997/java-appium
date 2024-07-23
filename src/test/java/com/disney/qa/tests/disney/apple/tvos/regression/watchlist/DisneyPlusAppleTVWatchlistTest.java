@@ -109,7 +109,8 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
 
         detailsPage.clickWatchlistButton();
-        watchListPage.clickMenuTimes(1, 1);
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        watchListPage.clickMenuTimes(1, 2);
         Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.IRONMAN.getTitle()).isElementPresent(),
                 "Ironman content is not present in Watchlist");
         Assert.assertFalse(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementPresent(),
