@@ -54,12 +54,11 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean swipeInCollectionTillImageCollapsed(Direction direction, int swipeAttempt) {
-        ExtendedWebElement brandImage = collectionBrandImageExpanded;
-        while (brandImage.isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
+        while (collectionBrandImageExpanded.isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
             swipeInContainer(brandLandingView, direction, 1, 900);
             swipeAttempt--;
         }
-        return brandImage.isPresent(FIVE_SEC_TIMEOUT);
+        return collectionBrandImageCollapsed.isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getBrandFeaturedImage() {
