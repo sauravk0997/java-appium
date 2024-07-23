@@ -37,9 +37,9 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         if(getDictionary().isSelectedLanguageSupported()) {
-            return legalHeader.isElementPresent() && getNavBackArrow().isElementPresent();
+            return legalHeader.isElementPresent() && getBackButton().isElementPresent();
         } else {
-            return backupHeader.isElementPresent() && getNavBackArrow().isElementPresent();
+            return backupHeader.isElementPresent() && getBackButton().isElementPresent();
         }
     }
 
@@ -48,7 +48,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLegalHeadersPresent(String header) {
-        return staticTextByName.format(header).isElementPresent();
+        return dynamicBtnFindByLabel.format(header).isElementPresent();
     }
 
     public String getLegalText() {

@@ -270,7 +270,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(MARVELS.getEntityId());
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(contentTimeFromAPI), "Expected runtime for ad-supportrd content was not found on detail page");
 

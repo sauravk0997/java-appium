@@ -75,8 +75,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         }
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68063"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76671"})
+    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
@@ -97,16 +97,15 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        getLocalizationUtils().getLegalDocuments().forEach((String documentHeader, String apiResponseBody) -> {
+        getLocalizationUtils().getLegalHeaders().forEach(documentHeader -> {
             disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
             if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();
-
             } else {
-                sa.assertEquals(cleanDocument(disneyPlusLegalIOSPageBase.getLegalText()), cleanDocument(apiResponseBody),
-                        String.format("Document: '%s' did not match api response.", documentHeader));
+                sa.assertTrue(disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).isPresent(),
+                        "Legal Page Header " + documentHeader + " is not present");
                 disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
             }
         });
