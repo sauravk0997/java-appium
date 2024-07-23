@@ -135,13 +135,13 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT, getLocalizationUtils());
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY, getLocalizationUtils());
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE, getLocalizationUtils());
-        legalIOSPageBase.getStaticTextByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        legalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         oneTrustPage.tapCloseButton();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
-
-        moreMenuIOSPageBase.getNavBackArrow().click();
+        
+        legalIOSPageBase.getBackButton().click();
         sa.assertTrue(moreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED);
 
         sa.assertAll();
