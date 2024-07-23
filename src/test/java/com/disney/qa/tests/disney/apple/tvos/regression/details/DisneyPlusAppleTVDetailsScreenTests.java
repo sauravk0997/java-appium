@@ -2,10 +2,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.api.watchlist.WatchlistApi;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -43,7 +41,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.END_GAME.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
-        ExploreContent movieApiContent = getApiMovieContent(END_GAME.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(END_GAME.getEntityId());
         String description = movieApiContent.getDescription().getBrief();
         String ratingsValue = movieApiContent.getRating();
         List<String> tabs = Stream.of("SUGGESTED", "EXTRAS", "DETAILS").collect(Collectors.toList());

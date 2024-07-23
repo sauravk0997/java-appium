@@ -1075,12 +1075,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
 
-    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId, EnumSet<ExploreSearchRequest.ContentEntitlement> contentEntitlements) throws URISyntaxException, JsonProcessingException {
+    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId) throws URISyntaxException, JsonProcessingException {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(platform)
                 .environment(environment).build();
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
         ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(seriesId)
-                .profileId(account.getProfileId()).contentEntitlements(contentEntitlements).build();
+                .profileId(account.getProfileId()).build();
         ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
         String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
