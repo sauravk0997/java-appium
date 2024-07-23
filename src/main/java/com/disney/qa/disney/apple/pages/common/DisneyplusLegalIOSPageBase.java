@@ -73,14 +73,14 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
         LOGGER.info("Validating functions for: {}", legalSection);
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
-        getStaticTextByName(legalSection).click();
+        getStaticTextByLabel(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), "Expanded Header is not visible");
-        sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
+        sa.assertTrue(getStaticTextByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalSection + " was not expanded");
 
-        getStaticTextByName(legalSection).click();
+        getStaticTextByLabel(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), "Expanded Header is visible");
-        sa.assertTrue(getStaticTextByName(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
+        sa.assertTrue(getStaticTextByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalSection + " was not collapsed");
     }
 }
