@@ -17,32 +17,37 @@
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAPACRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet KCC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKCCRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet KMRB Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKMRBTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKMRBRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet R21 Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingR21Test"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21RatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Turkey AI Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingTurkeyAITest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusTurkeyAIRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet New Zealand OFLC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingNewZealandOFLCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNewZealandOFLCRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Brazil DJCTQ Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
         </classes>
     </test>
 </suite>
