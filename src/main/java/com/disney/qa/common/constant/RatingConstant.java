@@ -2,6 +2,7 @@ package com.disney.qa.common.constant;
 
 public class RatingConstant {
 
+    public static final String BRAZIL = "BR";
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
     public static final String NEW_ZEALAND = "NZ";
@@ -11,10 +12,13 @@ public class RatingConstant {
 
     public enum Rating {
         G("G"),
+        L("L"),
         GA("General Audience"),
         M("M"),
         PG("PG"),
         R21("R21"),
+        TEN("10"),
+        TWELVE("12"),
         SEVEN_PLUS("7+"),
         TEN_PLUS("10+"),
         TWELVE_PLUS("12+"),
@@ -37,6 +41,8 @@ public class RatingConstant {
 
     public static String getMaxMaturityRating(String locale) {
         switch (locale) {
+            case "BR":
+                return "1850";
             case "US":
             case "CA":
                 return "1830";
@@ -56,6 +62,8 @@ public class RatingConstant {
 
     public static String getRoamingDas(String locale) {
         switch (locale) {
+            case "BR":
+                return "23044";
             case "CA":
                 return "23065";
             case "DE":

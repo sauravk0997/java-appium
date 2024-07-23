@@ -25,7 +25,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
@@ -46,9 +45,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         homePage.clickProfileBtn(PROFILE_NAME);
         Assert.assertTrue(homePage.isOpened(), "Home page is not open after selecting a profile");
         sa.assertFalse(homePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
-        homePage.moveUp(1,1);
         homePage.moveLeft(2,1); //stop carousel moving
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
+        homePage.isCarouselFocused();
         sa.assertAll();
     }
 
