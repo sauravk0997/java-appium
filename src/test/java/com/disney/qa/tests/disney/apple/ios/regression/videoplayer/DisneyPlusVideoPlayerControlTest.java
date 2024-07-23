@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -265,7 +264,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS);
 
         String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(MARVELS.getEntityId());
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
 
