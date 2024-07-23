@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import static com.disney.qa.common.constant.RatingConstant.JAPAN;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
-public class DisneyPlusNonUSRatingsAPACTest extends DisneyPlusRatingsBase {
+public class DisneyPlusAPACRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75201"})
     @Test(description = "Rating System - APAC Proprietary - G", groups = {"NonUS-Ratings"})
