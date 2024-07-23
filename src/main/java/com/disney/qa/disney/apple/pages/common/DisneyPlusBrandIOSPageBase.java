@@ -5,6 +5,7 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
@@ -52,11 +53,13 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         swipeInContainerTillElementIsPresent(brandLandingView, collectionBrandImageExpanded, swipeAttempt, direction);
     }
 
-    public void swipeInCollectionTillImageCollapsed(Direction direction, int swipeAttempt) {
-        while (collectionBrandImageExpanded.isElementPresent(5) && swipeAttempt >= 0) {
+    public boolean swipeInCollectionTillImageCollapsed(Direction direction, int swipeAttempt) {
+        ExtendedWebElement brandImage = collectionBrandImageExpanded;
+        while (brandImage.isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
             swipeInContainer(brandLandingView, direction, 1, 900);
             swipeAttempt--;
         }
+        return brandImage.isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getBrandFeaturedImage() {

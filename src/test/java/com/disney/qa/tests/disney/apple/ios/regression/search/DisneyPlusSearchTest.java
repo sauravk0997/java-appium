@@ -419,7 +419,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
 
-        brandIOSPageBase.swipeInCollectionTillImageCollapsed(Direction.UP, swipeAttempt);
+        sa.assertTrue(brandIOSPageBase.swipeInCollectionTillImageCollapsed(Direction.UP, swipeAttempt), "Image not collapsed after swipe");
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
         brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
@@ -436,7 +436,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
-        pressByElement(detailsPage.getBackArrow(),1);
+        //pressByElement(detailsPage.getBackArrow(), 1);
+        detailsPage.getBackArrow().click();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertAll();
     }
