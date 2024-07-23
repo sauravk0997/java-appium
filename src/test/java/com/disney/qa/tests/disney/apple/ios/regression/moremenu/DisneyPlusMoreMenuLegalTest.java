@@ -54,7 +54,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private void confirmLegalPageOpens() {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "Legal Page did not open on navigation");
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isNavBackArrowDisplayed(), "Back button not displayed");
+        Assert.assertTrue(disneyPlusLegalIOSPageBase.getBackButton().isElementPresent(), "Back button not displayed");
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
