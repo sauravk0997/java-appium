@@ -33,9 +33,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWatchListPage watchList = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -56,9 +55,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologySearch() {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         home.isOpened();
@@ -73,9 +71,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {TestGroup.ANTHOLOGY})
     public void verifyAnthologyTitleDescriptionDate() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -91,9 +88,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyVODProgress() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -119,9 +115,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Details Tab", groups = {TestGroup.ANTHOLOGY}, enabled = false)
     public void verifyAnthologyDetailsTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -146,9 +141,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Suggested Tab", groups = {TestGroup.ANTHOLOGY}, enabled = false)
     public void verifyAnthologySuggestedTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -162,9 +156,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY}, enabled = false)
     public void verifyAnthologyExtrasTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -179,9 +172,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyFeaturedVOD() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
@@ -218,9 +210,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
         searchAndOpenDWTSDetails();
