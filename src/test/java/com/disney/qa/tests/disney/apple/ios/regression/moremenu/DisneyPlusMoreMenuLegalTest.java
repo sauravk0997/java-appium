@@ -140,7 +140,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         oneTrustPage.tapCloseButton();
         Assert.assertTrue(legalIOSPageBase.isLegalHeaderPresent(), LEGAL_PAGE_HEADER_NOT_DISPLAYED);
-        
+
         legalIOSPageBase.getBackButton().click();
         sa.assertTrue(moreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED);
 
