@@ -176,13 +176,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDetailsTab().isPresent();
     }
 
-    public boolean isOpened(long time) {
+    public boolean isDetailPageOpened(long time) {
         dismissNotificationsPopUp();
-        return shareBtn.isElementPresent(time);
-    }
-
-    public boolean isDetailsScreenDisplayed() {
-        return contentDetailsPage.isElementPresent();
+        return shareBtn.isPresent(time);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
@@ -1100,7 +1096,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in featured area");
-        Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
+        Assert.assertTrue(isDetailPageOpened(FIVE_SEC_TIMEOUT), "Details screen not displayed.");
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on details page featured area.");
     }
 

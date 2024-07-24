@@ -55,8 +55,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
-
-    //FUNCTIONS
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
+    private ExtendedWebElement firstCollectionTitle;
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
@@ -64,7 +64,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return searchBar.isElementPresent();
+        return searchBar.isPresent();
     }
 
     public void clickMoviesTab() {
@@ -217,4 +217,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return ratingAndYearDetailsOfContent.format(title).getText();
     }
 
+    public boolean isExploreTitleDisplayed(int timeOut) {
+        return exploreHeader.isPresent(timeOut);
+    }
+
+    public void clickFirstCollection() {
+        firstCollectionTitle.format(
+                getDictionary().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    }
 }
