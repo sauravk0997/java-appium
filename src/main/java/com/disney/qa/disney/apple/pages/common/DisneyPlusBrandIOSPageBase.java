@@ -52,7 +52,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         swipeInContainerTillElementIsPresent(brandLandingView, collectionBrandImageExpanded, swipeAttempt, direction);
     }
 
-    public boolean swipeInCollectionTillImageCollapsed(Direction direction, int swipeAttempt) {
+    public boolean isCollectionImageCollapsedFromSwipe(Direction direction, int swipeAttempt) {
         while (collectionBrandImageExpanded.isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
             swipeInContainer(brandLandingView, direction, 1, 900);
             swipeAttempt--;
