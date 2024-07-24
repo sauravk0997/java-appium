@@ -265,7 +265,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS);
 
         String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(MARVELS.getEntityId());
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
 

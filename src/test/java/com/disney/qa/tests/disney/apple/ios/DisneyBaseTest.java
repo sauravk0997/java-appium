@@ -499,20 +499,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     //Explore API methods
-    public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSeries(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiSeries(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getMovie(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ArrayList<Container> getExploreAPIPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getDisneyExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
-    public ArrayList<Container> getExploreAPIPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getExploreSearchRequest()
+    public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getDisneyExploreSearchRequest()
                 .setEntityId(pageID)
                 .setProfileId(getAccount().getProfileId())
                 .setCountryCode(locale)
@@ -522,7 +526,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
-        ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+        ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
         String firstContentID = null;
         try {
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
@@ -558,7 +562,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
-            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
+            ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
@@ -572,7 +576,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSet(getExploreSearchRequest()
+        return getExploreApi().getSet(getDisneyExploreSearchRequest()
                         .setSetId(setId)
                         .setProfileId(getAccount().getProfileId())
                         .setCountryCode(locale)

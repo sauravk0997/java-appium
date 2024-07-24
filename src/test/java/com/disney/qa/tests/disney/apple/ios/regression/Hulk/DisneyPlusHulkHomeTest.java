@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -21,6 +20,7 @@ import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_HULU;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
@@ -106,7 +106,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         //To get the collections details of Hulu from API
-        ArrayList<Container> collections = getExploreAPIPageContent(HULU_PAGE.getEntityId());
+        ArrayList<Container> collections = getHuluAPIPage(HULU_PAGE.getEntityId());
         //Click any title from collection
         try {
             String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();
@@ -128,7 +128,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         launchDeeplink(true, deepLink, 10);
         homePage.clickOpenButton();
 
-        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), ENVIRONMENT, PLATFORM, UNENTITLED_SERIES_ID, CONTENT_ENTITLEMENT_DISNEY),
+        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), ENVIRONMENT, PLATFORM, UNENTITLED_SERIES_ID),
                 "\"This content requires a Hulu subscription.\" message is displayed");
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
