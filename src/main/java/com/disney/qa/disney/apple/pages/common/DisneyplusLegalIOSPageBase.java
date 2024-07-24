@@ -75,12 +75,10 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         expandedHeader = expandedHeader.trim();
         getTypeButtonByLabel(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is not visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
-                legalSection + " was not expanded");
+        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED), legalSection + " was not expanded");
 
         getTypeButtonByLabel(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
-                legalSection + " was not collapsed");
+        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED), legalSection + " was not collapsed");
     }
 }
