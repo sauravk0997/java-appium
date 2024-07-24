@@ -148,7 +148,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105989", "XCDQA-110046"})
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY}, enabled = false)
+    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY})
     public void verifyAnthologyExtrasTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
