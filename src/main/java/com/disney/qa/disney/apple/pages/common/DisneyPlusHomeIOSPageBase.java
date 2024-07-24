@@ -50,7 +50,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return dynamicCellByLabel.format("Disney, , Select for details on this title.");
+        return dynamicCellByLabel.format("Disney, Select for details on this title.");
     }
 
     @Override
