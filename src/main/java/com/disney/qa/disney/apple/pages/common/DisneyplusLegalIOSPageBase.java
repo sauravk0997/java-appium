@@ -3,7 +3,6 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
