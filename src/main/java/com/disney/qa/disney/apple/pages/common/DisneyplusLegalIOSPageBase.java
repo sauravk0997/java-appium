@@ -72,7 +72,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
         LOGGER.info("Validating functions for: {}", legalSection);
-        String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
+        String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).trim().split("\\n")[0];
         getTypeButtonByLabel(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is not visible");
         sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
