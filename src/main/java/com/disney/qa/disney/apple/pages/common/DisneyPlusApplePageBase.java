@@ -1541,15 +1541,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
     }
 
-    public boolean isTravelAlertOkButtonPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_TRAVEL_MESSAGE_OK.getText())).isPresent();
-    }
-
     public ExtendedWebElement getTravelAlertOk() {
         return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_TRAVEL_MESSAGE_OK.getText()));
     }
-//
-//    public void dismissTravelingAlert() {
-//
-//    }
 }
