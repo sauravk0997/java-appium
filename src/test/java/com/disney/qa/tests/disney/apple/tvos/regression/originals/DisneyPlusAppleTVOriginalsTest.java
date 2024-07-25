@@ -34,11 +34,13 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isOpened(), "Originals page is not open");
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isContentShownCertainNumberPerRow(3, 7), "Original items are not arranged 5 per row");
         List<String> originalContent = disneyPlusAppleTVOriginalsPage.getContentItems(3); //Originals begins at 3
-
         disneyPlusAppleTVOriginalsPage.moveRight(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(2))), "Moving right did not focus the 2nd item in Series");
         disneyPlusAppleTVOriginalsPage.moveRight(1, 1);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(3))), "Moving right did not focus the 1st item in Series");
+        disneyPlusAppleTVOriginalsPage.moveLeft(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(3))), "Moving left did not focus the 1st item in Series");
         disneyPlusAppleTVOriginalsPage.moveDown(1, 1);
