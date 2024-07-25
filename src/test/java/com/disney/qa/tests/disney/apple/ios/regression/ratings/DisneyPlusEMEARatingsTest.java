@@ -10,6 +10,12 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.TWELVE_PLUS;
 
 public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
 
+    private static final String HAITI = "Haiti";
+    private static final String MAURITIUS = "Mauritius";
+    private static final String MAYOTTE = "Mayotte";
+    private static final String REUNION = "Reunion";
+    private static final String UNITED_KINGDOM = "United Kingdom";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73149"})
     @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {"NonUS-Ratings"})
     public void verifyRatingSystemEMEA12() {
@@ -21,11 +27,11 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
 
     private String getEMEACountry() {
         ArrayList<String> countryList = new ArrayList<>();
-        countryList.add("Haiti");
-        countryList.add("Mauritius");
-        countryList.add("Mayotte");
-        countryList.add("Reunion");
-        countryList.add("United Kingdom");
+        countryList.add(HAITI);
+        countryList.add(MAURITIUS);
+        countryList.add(MAYOTTE);
+        countryList.add(REUNION);
+        countryList.add(UNITED_KINGDOM);
         LOGGER.info("Selecting random Country");
         return countryList.get(new SecureRandom().nextInt(countryList.size() - 1));
     }
