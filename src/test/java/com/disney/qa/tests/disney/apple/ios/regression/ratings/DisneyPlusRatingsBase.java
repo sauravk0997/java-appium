@@ -33,6 +33,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
+    static final String BRAZIL_LANG = "pt-BR";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
@@ -153,7 +154,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private ArrayList<String> getHomePageBrandIDList(String locale, String language) {
         LOGGER.info("Preparing brand list for home page ID: {}", HOME_PAGE.getEntityId());
         try {
-            ArrayList<Container> collections = getExploreAPIPageContent(HOME_PAGE.getEntityId(), locale, language);
+            ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(), locale, language);
             //2nd index from the collections contains all the brand IDs displayed on the home page eg: Disney,Pixar etc
             List<Item> Items = getExploreAPIItemsFromSet(collections.get(1).getId(), locale, language);
             ArrayList<String> brandIDs = new ArrayList<>();
@@ -167,7 +168,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     private String getContentForBrand(String brandID, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException {
         ArrayList<String> disneyCollectionIDs = new ArrayList<>();
-        ArrayList<Container> collections = getExploreAPIPageContent(PAGE_IDENTIFIER + brandID, locale, language);
+        ArrayList<Container> collections = getDisneyAPIPage(PAGE_IDENTIFIER + brandID, locale, language);
         collections.forEach(item -> disneyCollectionIDs.add(item.getId()));
         return getContentTitleFor(disneyCollectionIDs, rating, locale, language);
     }
@@ -177,11 +178,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts() != null) {
+                if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                         LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                         contentTitle = item.getVisuals().getTitle();
-                        Container pageContainer = getExploreAPIPageContent(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                        Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                         if (pageContainer != null) {
                             if (!pageContainer.getType().equals(EPISODES)) {
                                 isMovie = true;

@@ -176,13 +176,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDetailsTab().isPresent();
     }
 
-    public boolean isOpened(long time) {
+    public boolean isDetailPageOpened(long time) {
         dismissNotificationsPopUp();
-        return shareBtn.isElementPresent(time);
-    }
-
-    public boolean isDetailsScreenDisplayed() {
-        return contentDetailsPage.isElementPresent();
+        return shareBtn.isPresent(time);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPlayButton() {
@@ -1075,12 +1071,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
 
-    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId, String contentEntitlements) throws URISyntaxException, JsonProcessingException {
+    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId) throws URISyntaxException, JsonProcessingException {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(platform)
                 .environment(environment).build();
         ExploreApi exploreApi = new ExploreApi(apiConfiguration);
         ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(seriesId)
-                .profileId(account.getProfileId()).contentEntitlements(contentEntitlements).build();
+                .profileId(account.getProfileId()).build();
         ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
         String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
         return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
@@ -1100,7 +1096,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in featured area");
-        Assert.assertTrue(isDetailsScreenDisplayed(), "Details screen not displayed.");
+        Assert.assertTrue(isDetailPageOpened(FIVE_SEC_TIMEOUT), "Details screen not displayed.");
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on details page featured area.");
     }
 

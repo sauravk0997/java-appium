@@ -1,8 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -134,7 +134,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(10), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -149,7 +149,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(10), "Details Page is not shown after closing the player");
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
 
@@ -169,7 +169,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        detailsPage.isOpened(10);
+        detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getContentTitle().equalsIgnoreCase(content), "We're not on the right content's detail page");
         if (contentType.equalsIgnoreCase(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
             String episodeTitle = detailsPage.getEpisodeContentTitle();
@@ -265,7 +265,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS);
 
         String contentTimeFromUI = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
-        ExploreContent movieApiContent = getApiMovieContent(MARVELS.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(MARVELS.getEntityId());
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
 

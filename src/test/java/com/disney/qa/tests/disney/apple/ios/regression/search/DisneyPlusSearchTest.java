@@ -5,10 +5,12 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,6 +33,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String BLUEY = "Bluey";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
+    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
+    private static final String DETAIL_PAGE_DID_NOT_OPEN = "Detail page did not open";
+    private static final String BACK_BUTTON_ERROR_MESSAGE = "Back button is not present";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -48,7 +53,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
@@ -65,13 +70,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //User made search
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
         //Empty string to clear the keys
         searchPage.searchForMedia("");
@@ -109,18 +114,18 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //User made different search
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
         searchPage.searchForMedia(media);
         results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
 
         terminateApp(sessionBundles.get(DISNEY));
@@ -128,7 +133,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         //user selects a Recent Search from the Recent Searches list
         homePage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.getSearchBar().click();
         sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
         searchPage.tapTitleUnderRecentSearch(media);
@@ -136,7 +141,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         results.get(0).click();
 
         //verify selected recent search item opened
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
         sa.assertAll();
     }
@@ -151,7 +156,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //Add 11 search result in recent search list
         IntStream.range(0, getMedia().size()).forEach(i -> {
@@ -162,7 +167,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.searchForMedia(getMedia().get(i));
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
-            sa.assertTrue(detailsPage.isOpened(5), "Details page did not open");
+            sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
             detailsPage.getBackArrow().click();
         });
 
@@ -192,7 +197,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         if (collectionName.equalsIgnoreCase("movies")) {
             searchPage.clickMoviesTab();
@@ -238,16 +243,16 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB);
         setAppToHomeScreen(basicAccount);
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.clickOriginalsTab();
 
         //Verify Original page opened
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
         //Verify Back button is present
-        sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), "Back button was not found");
+        sa.assertTrue(originalsPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
         //To get the collections details of Originals from API
-        ArrayList<Container> collections = getExploreAPIPageContent(DisneyEntityIds.ORIGINALS_PAGE.getEntityId());
+        ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.ORIGINALS_PAGE.getEntityId());
         collections.forEach(item -> {
             ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
             swipePageTillElementPresent(collectionName, 2, null, Direction.UP, 500);
@@ -261,7 +266,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                     sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + collectionName.getText() + " collection");
                     //verify that correct titles of that collection opened in app, verify with 1 titles
                     originalsPage.getTypeCellLabelContains(titleFromCollection).click();
-                    sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+                    sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
                     sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
                     detailsPage.clickCloseButton();
                 } else {
@@ -286,11 +291,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         searchPage.getNavBackArrow().click();
 
         if (collectionName.equalsIgnoreCase("movies")) {
@@ -299,7 +304,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.clickSeriesTab();
         }
         sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
         List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
         String tenthFeaturedResult = featuredFilterResults.get(10).getText();
@@ -307,12 +312,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             searchPage.swipeContentPageFilter(Direction.LEFT);
             searchPage.getTypeButtonByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstKidsResult = kidsResults.get(0).getText();
@@ -320,20 +325,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.swipeContentPageFilter(Direction.RIGHT);
             searchPage.getTypeButtonByLabel(comedyFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
             sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
             sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
         } else {
             sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             searchPage.clickContentPageFilterDropDownAtMiddleTop();
             searchPage.swipeItemPicker(Direction.UP);
             searchPage.getStaticTextByLabel(kidsFilterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), "Back button is not present.");
+            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
             List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
             String firstComedyResult = kidsResults.get(0).getText();
@@ -363,12 +368,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
             DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-            ExploreContent seriesApiContent = getApiSeriesContent(DisneyEntityIds.SERIES.getEntityId());
-            ExploreContent movieApiContent = getApiMovieContent(DisneyEntityIds.MARVELS.getEntityId());
+            ExploreContent seriesApiContent = getDisneyApiSeries(DisneyEntityIds.SERIES.getEntityId());
+            ExploreContent movieApiContent = getDisneyApiMovie(DisneyEntityIds.MARVELS.getEntityId());
 
             setAppToHomeScreen(getAccount());
             homePage.clickSearchIcon();
-            Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+            Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
             //User made search with one letter
             String contentTitle = getFirstSearchResults(media);
@@ -387,6 +392,53 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent), getApiContentReleasedYearDetails(seriesApiContent));
             sa.assertAll();
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})
+    @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    public void verifySearchExploreEditorialsAndCollections() {
+        String collectionPageDidNotOpen = "User did not land on the collection page";
+        String collectionLogoNotExpanded = "Collection brand logo is not expanded";
+        int swipeAttempt = 2;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
+
+        searchPage.clickFirstCollection();
+        Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
+        sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
+
+        sa.assertTrue(brandIOSPageBase.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt), "Image not collapsed after swipe");
+        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
+        brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
+        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        brandIOSPageBase.getBackArrow().click();
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.clickFirstCollection();
+        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        brandIOSPageBase.clickFirstCarouselPoster();
+        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        pressByElement(detailsPage.getBackArrow(), 1);
+        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        sa.assertAll();
     }
 
     protected ArrayList<String> getMedia() {

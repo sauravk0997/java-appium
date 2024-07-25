@@ -227,7 +227,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
         String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
         if (entityID != null) {
-            ExploreContent exploreMovieContent = getApiMovieContent(entityID);
+            ExploreContent exploreMovieContent = getDisneyApiMovie(entityID);
             int duration = exploreMovieContent.getDurationMs();
             LOGGER.info("Duration returned from api: {}", duration);
             String durationTime = detailsPage.getHourMinFormatForDuration(duration);

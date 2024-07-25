@@ -48,6 +48,7 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -71,7 +72,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
-    public static final String SANDBOX_ACCOUNT_PREFIX = "dsqaaiap";
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
@@ -79,10 +79,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
-    public static final String CONTENT_ENTITLEMENT_DISNEY = "disney_plus_sub:base";
     public static final String PROFILE_PIN = "1234";
     public static final String PLAYER = "player";
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
+    public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
+    public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -498,20 +499,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     //Explore API methods
-    public ExploreContent getApiSeriesContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSeries(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiSeries(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ExploreContent getApiMovieContent(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getMovie(getExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getMovie(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
     }
 
-    public ArrayList<Container> getExploreAPIPageContent(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getDisneyExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
-    public ArrayList<Container> getExploreAPIPageContent(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getExploreSearchRequest()
+    public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
+        return getExploreApi().getPage(getDisneyExploreSearchRequest()
                 .setEntityId(pageID)
                 .setProfileId(getAccount().getProfileId())
                 .setCountryCode(locale)
@@ -521,7 +526,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
-        ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+        ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
         String firstContentID = null;
         try {
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
@@ -557,7 +562,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
-            ExploreSetResponse setResponse = getExploreApi().getSet(getExploreSearchRequest()
+            ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
@@ -571,7 +576,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSet(getExploreSearchRequest()
+        return getExploreApi().getSet(getDisneyExploreSearchRequest()
                         .setSetId(setId)
                         .setProfileId(getAccount().getProfileId())
                         .setCountryCode(locale)
@@ -589,21 +594,43 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return titlesFromApi;
     }
 
-    public void setPictureInPictureConfig(String value) {
+    public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
-        jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection(PLAYER);
-        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
         applePageBase.removeDomainIdentifier();
         applePageBase.getClearTextBtn().click();
-        applePageBase.saveDomainIdentifier(value);
+        applePageBase.saveDomainIdentifier(newValue);
+    }
+
+    public void terminateJarvisInstallDisney() {
         LOGGER.info("Terminating Jarvis app..");
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         LOGGER.info("Restart Disney app..");
         restart();
         LOGGER.info("Click allow to track your activity..");
         handleAlert();
+    }
+
+    public void setPictureInPictureConfig(String value) {
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(PLAYER);
+        jarvis.openOverrideSection(PICTURE_IN_PICTURE);
+        setOverrideValue(value);
+        terminateJarvisInstallDisney();
+    }
+
+    public void setR21PauseTimeOut(int newPauseTime) {
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvisOrInstall();
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
+        try {
+            jarvis.openOverrideSection(R21_PAUSE_TIMEOUT);
+        } catch (NoSuchElementException e) {
+            throw new SkipException("Failed to update R21 Pause TimeOut: {}", e);
+        }
+        setOverrideValue(String.valueOf(newPauseTime));
+        terminateJarvisInstallDisney();
     }
 }

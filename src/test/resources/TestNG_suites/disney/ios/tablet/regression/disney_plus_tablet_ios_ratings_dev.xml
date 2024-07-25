@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_2,iPad_Air_4_Gen,iPad_5_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
@@ -17,38 +17,43 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
     <!-- TODO: This needs to be update to not collide with iOS Tablet regression schedule -->
     <parameter name="scheduling" value="H 7 * * 6,0"/>
-    <parameter name="jenkinsBuild" value="3.5.0.70879"/>
+    <parameter name="jenkinsBuild" value="3.5.0.71304"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76658"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76745"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsAPACTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAPACRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet KCC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKCCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKCCRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet KMRB Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingsKMRBTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKMRBRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet R21 Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingR21Test"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21RatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Turkey AI Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingTurkeyAITest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusTurkeyAIRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet New Zealand OFLC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNonUSRatingNewZealandOFLCTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNewZealandOFLCRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Brazil DJCTQ Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
         </classes>
     </test>
 </suite>
