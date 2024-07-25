@@ -674,6 +674,32 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74834"})
+    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Backgrounded", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINPlaybackPauseBehaviourAfterBackgroundedTimeOut() {
+        int newPausetimeOutInSeconds = 30;
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        navigateToHomePageForPinUser();
+        setR21PauseTimeOut(newPausetimeOutInSeconds);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.runAppInBackground(newPausetimeOutInSeconds);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
+    }
+
     private void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
