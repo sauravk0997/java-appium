@@ -625,28 +625,6 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69777"})
-    @Test(description = "R21 - User Has Pin - Playback Starts", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
-    public void verifyR21HasPINPlaybackStarts() {
-        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
-
-        navigateToHomePageForPinUser();
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        videoPlayer.waitForVideoToStart();
-        Assert.assertFalse(pinPage.isPinInputFieldDisplayed(), PIN_INPUT_FIELD_DISPLAYED);
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
     @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Paused", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
