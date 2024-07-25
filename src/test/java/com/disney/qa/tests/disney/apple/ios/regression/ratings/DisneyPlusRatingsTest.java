@@ -14,7 +14,7 @@ public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
     @Test(groups = {TestGroup.RATINGS})
-    public void verifyRatingTravelingAlert() {
+    public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         ratingsSetupNoLogin(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
         getAccountApi().overrideLocations(getAccount(), USA);
