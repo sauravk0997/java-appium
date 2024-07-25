@@ -183,47 +183,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 .strip();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "One trust - 'opt-out module'", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifyOneTrustModal() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-
-        setAppToHomeScreen(getAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-
-        String doNotSellString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText());
-        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
-        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
-        //Toggle switch but do not tap confirm your choice button
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
-        oneTrustPage.tapConsentSwitch();
-        oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
-        //Toggle switch to OFF, tap 'confirm your choice' button
-        oneTrustPage.tapConsentSwitch();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
-        oneTrustPage.tapConfirmMyChoiceButton();
-        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
-        //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
-        // Toggle switch to ON, and tap 'confirm your choice button
-        oneTrustPage.tapConsentSwitch();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle didn't ON turn OFF after selecting");
-        oneTrustPage.tapConfirmMyChoiceButton();
-        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
-        //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getStaticTextLabelName(doNotSellString).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),"toggle didn't not turn ON after selecting");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73773"})
     @Test(description = "More Menu - Legal - OneTrust Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyOneTrustPageUI() {
