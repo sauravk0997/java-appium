@@ -172,8 +172,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
         LOGGER.info("Waiting for video buffering to complete...");
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 25);
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 25);
         LOGGER.info("Buffering completed.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
