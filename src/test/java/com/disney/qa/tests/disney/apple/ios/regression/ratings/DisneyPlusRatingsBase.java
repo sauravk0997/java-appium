@@ -15,6 +15,7 @@ import org.testng.*;
 import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -94,7 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
         setAccountRatingsMax(getAccount());
