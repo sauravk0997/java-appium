@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
@@ -57,6 +58,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement itemPickerView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s,' AND label CONTAINS '%s,'$]")
+    private ExtendedWebElement searchResults;
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
@@ -226,5 +229,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionary().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    }
+
+    public boolean isRatingPresentInSearchResults(String contentTitle, String rating) {
+        return searchResults.format(contentTitle, rating).isPresent();
+    }
+
+    public void verifyRatingInSearchResults(String contentTitle, String rating, SoftAssert sa) {
+        LOGGER.info("Verifying Ratings in search results");
+        sa.assertTrue(isRatingPresentInSearchResults(contentTitle, rating), "Rating is not displayed in search results");
     }
 }
