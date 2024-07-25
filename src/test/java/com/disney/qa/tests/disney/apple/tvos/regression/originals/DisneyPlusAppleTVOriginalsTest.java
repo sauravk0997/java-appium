@@ -42,13 +42,13 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(3))), "Moving right did not focus the 1st item in Series");
         disneyPlusAppleTVOriginalsPage.moveLeft(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(3))), "Moving left did not focus the 1st item in Series");
+        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(2))), "Moving left did not focus the 1st item in Series");
         disneyPlusAppleTVOriginalsPage.moveDown(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(9))), "Moving down did not focus the 1st item in Movies");
+        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(8))), "Moving down did not focus the 1st item in Movies");
         disneyPlusAppleTVOriginalsPage.moveUp(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(3))), "Moving up did not focus the 1st item in Series");
+        sa.assertTrue(disneyPlusAppleTVOriginalsPage.isFocused(disneyPlusAppleTVHomePage.getDynamicCellByLabel(originalContent.get(2))), "Moving up did not focus the 1st item in Series");
 
         sa.assertAll();
     }
