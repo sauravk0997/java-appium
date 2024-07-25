@@ -1481,7 +1481,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isNavBackArrowDisplayed() {
         return navBackButton.isElementPresent();
     }
-    
+
     public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
         List<ExtendedWebElement> titles1 = findExtendedWebElements(firstCollection.getBy(), THREE_SEC_TIMEOUT);
         swipePageTillElementPresent(secondCollection, 3, container, Direction.UP, 500);
@@ -1543,7 +1543,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isTravelAlertBodyPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
+        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_BODY.getText())).isPresent();
     }
 
     public ExtendedWebElement getTravelAlertOk() {

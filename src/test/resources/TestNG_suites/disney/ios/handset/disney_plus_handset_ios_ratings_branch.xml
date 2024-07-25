@@ -9,7 +9,7 @@
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_8,iPhone_8Plus,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_14;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::groups::Test Group selection" value="NonUS-Ratings"/>
+    <parameter name="stringParam::groups::Test Group selection" value="NonUS-Ratings,Ratings"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
@@ -48,6 +48,11 @@
     <test verbose="1" name="DisneyPlus iOS Handset Brazil DJCTQ Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsTest"/>
         </classes>
     </test>
 </suite>

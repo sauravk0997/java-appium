@@ -45,6 +45,7 @@ public final class TestGroup {
     public static final String PROFILES = "Profiles";
     public static final String ONBOARDING = "Onboarding";
     public static final String NON_US_RATINGS = "NonUS-Ratings";
+    public static final String RATINGS = "Ratings";
     public static final String R21 = "R21";
     public static final String HOME = "Home";
     public static final String DETAILS = "Details";

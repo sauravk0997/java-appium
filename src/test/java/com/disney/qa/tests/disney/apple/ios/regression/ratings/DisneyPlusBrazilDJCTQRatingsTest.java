@@ -32,19 +32,4 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
-    public void verifyBrazilRatingTraveling() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        ratingsSetupNoLogin(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
-        getAccountApi().overrideLocations(getAccount(), USA);
-        setAppToHomeScreen(getAccount());
-
-        Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
-        Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
-        Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
-        homePage.getTravelAlertOk().click();
-        Assert.assertFalse(homePage.isTravelAlertTitlePresent(), "Travel alert was not dismissed.");
-    }
 }
