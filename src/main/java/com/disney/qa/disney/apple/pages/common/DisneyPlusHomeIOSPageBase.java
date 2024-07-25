@@ -19,7 +19,7 @@ import java.util.Map;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DISNEY_TILE = "Disney, Select for details on this title.";
-    private static final String CELL_DETAILS_TILE =" Select for details on this title.";
+    private static final String CELL_DETAILS_TILE ="Select for details on this title.";
     @ExtendedFindBy(accessibilityId = "homeContentView")
     protected ExtendedWebElement homeContentView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$label='%s'$]/**/XCUIElementTypeCell/**XCUIElementTypeCell[$label == '%s'$][1]")
