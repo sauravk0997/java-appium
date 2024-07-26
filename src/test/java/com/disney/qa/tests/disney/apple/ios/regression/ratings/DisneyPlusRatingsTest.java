@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -16,7 +17,13 @@ public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
     @Test(groups = {TestGroup.RATINGS})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        ratingsSetupNoLogin(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
+        setDictionary(BRAZIL_LANG, BRAZIL);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), BRAZIL);
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
+        initialSetup();
+        handleAlert();
         getAccountApi().overrideLocations(getAccount(), USA);
         setAppToHomeScreen(getAccount());
 

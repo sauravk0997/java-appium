@@ -88,17 +88,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupNoLogin(String ratingValue, String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-    }
-
-    private void setAccountRatingsMax(DisneyAccount account) {
+    protected void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
@@ -107,7 +97,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDictionary(String lang, String locale) {
+    protected void setDictionary(String lang, String locale) {
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
@@ -121,7 +111,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     }
 
-    private void getDesiredRatingContent(String rating, String locale, String language) {
+    protected void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
         episodicRating = null;
