@@ -97,7 +97,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickR21ForgotPasswordLink() {
-        r21ForgotPasswordLink.click();
+        forgotPasswordBtn.click();
     }
 
     public void typePassword(String password) {
