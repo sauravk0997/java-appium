@@ -178,12 +178,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase minimumWaitForVideoToStart() {
+    public void waitForLoadingSpinner() {
+        SoftAssert sa = new SoftAssert();
         LOGGER.info("Waiting for video buffering to complete...");
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 25);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 25);
+        sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 25));
+        sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 25));
         LOGGER.info("Buffering completed.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
