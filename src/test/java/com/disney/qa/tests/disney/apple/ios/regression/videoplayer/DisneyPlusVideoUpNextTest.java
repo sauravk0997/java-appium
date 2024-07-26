@@ -140,7 +140,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertFalse(disneyPlusUpNextIOSPageBase.isUpNextViewPresent(),"Up Next UI is shown for extra content");
 
         //verify that details page is opened once playback is complete.
-        sa.assertTrue(detailsPage.isOpened(disneyPlusVideoPlayerIOSPageBase.getRemainingTime()),
+        sa.assertTrue(detailsPage.isDetailPageOpened(disneyPlusVideoPlayerIOSPageBase.getRemainingTime()),
                 "Control didn't return to the Detail page after 'Extra' content finished playing");
         sa.assertAll();
     }
