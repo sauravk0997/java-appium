@@ -96,7 +96,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (IOException e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
+            new Exception("Failed to update Profile pin: {}", e);
         }
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
