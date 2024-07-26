@@ -1,14 +1,11 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
-import static com.disney.qa.common.constant.RatingConstant.USA;
 
 public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
 
