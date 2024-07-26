@@ -1,5 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -8,12 +11,16 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    private static final String EXPANDED = "Expanded";
+    private static final String COLLAPSED = "Collapsed";
 
     private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
 
@@ -33,6 +40,10 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         } else {
             return backupHeader.isElementPresent() && getBackButton().isElementPresent();
         }
+    }
+
+    public boolean isLegalHeaderPresent() {
+        return legalHeader.isElementPresent(SHORT_TIMEOUT);
     }
 
     public boolean isLegalHeadersPresent(String header) {
@@ -56,5 +67,18 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
             maxSwipes--;
         }
         hyperlink.click();
+    }
+
+    public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
+        LOGGER.info("Validating functions for: {}", legalSection);
+        String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
+        expandedHeader = expandedHeader.trim();
+        getTypeButtonByLabel(legalSection).click();
+        sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is not visible");
+        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED), legalSection + " was not expanded");
+
+        getTypeButtonByLabel(legalSection).click();
+        sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is visible");
+        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED), legalSection + " was not collapsed");
     }
 }
