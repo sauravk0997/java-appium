@@ -443,7 +443,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
         String otp = getEmailApi().getDisneyOTP(getAccount().getEmail(), startTime);
         oneTimePasscodePage.enterOtp(otp);
-        oneTimePasscodePage.clickContinueCheckMailButton();
+        oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         Assert.assertTrue(verifyAgeDOBPage.isVerifyAgeSubtitlePresent(), DOB_PAGE_ERROR_MESSAGE);
