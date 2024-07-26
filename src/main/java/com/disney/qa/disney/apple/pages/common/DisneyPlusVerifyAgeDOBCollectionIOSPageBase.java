@@ -49,6 +49,6 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
 
     public boolean isVerifyAgeSubtitlePresent() {
         return getStaticTextByLabel(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_SUBTITLE.getText())).isPresent(THREE_SEC_TIMEOUT);
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_SUBTITLE.getText())).isPresent();
     }
 }
