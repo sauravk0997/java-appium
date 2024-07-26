@@ -6,7 +6,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_CONTINUE_CHECK_MAIL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY_2;
 
 /*
@@ -50,10 +49,5 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public void enterOtp(String value) {
         otpInputField.type(value);
-    }
-
-    public void clickContinueCheckMailButton() {
-        getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                BTN_CONTINUE_CHECK_MAIL.getText())).click();
     }
 }
