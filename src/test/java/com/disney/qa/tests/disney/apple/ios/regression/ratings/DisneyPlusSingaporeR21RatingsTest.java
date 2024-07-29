@@ -34,7 +34,6 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "'You must verify your age' modal/popup is not displayed";
     private static final String BROWSE_OTHER_TITLE_ERROR_MESSAGE = "Browse other titles button not displayed on modal";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
-    private static final String PIN_INPUT_FIELD_DISPLAYED = "R21 pin input field is displayed";
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;
 
@@ -578,6 +577,37 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74751"})
+    @Test(description = "R21 - User Has Pin - Enter Date Of Birth - Null and Missing Values - Inline Errors", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINNullAndMissingValuesInDOB() {
+        String EMPTY_DOB = " ";
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        navigateToHomePageForPinUser();
+        launchR21Content();
+
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        verifyAgeDOBPage.getTextEntryField().type(EMPTY_DOB);
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
+
+        //Date and year missing in  DOB
+        /*verifyAgeDOBPage.getTextEntryField().type(Person.ADULT.getMonth().getNum());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
+
+        //Year missing in  DOB
+        verifyAgeDOBPage.getTextEntryField().type(Person.ADULT.getMonth().getNum() + "/" + Person.ADULT.getDay());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);*/
+
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69773"})
     @Test(description = " R21 - Has Pin - Playback / Pause", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPinPlaybackPause() {
@@ -628,7 +658,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
     @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Paused", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
-        int newPausetimeOutInSeconds = 30;
+        int newPauseTimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -637,7 +667,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         navigateToHomePageForPinUser();
-        setR21PauseTimeOut(newPausetimeOutInSeconds);
+        setR21PauseTimeOut(newPauseTimeOutInSeconds);
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
@@ -647,7 +677,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.clickPauseButton();
-        videoPlayer.waitingForR21PauseTimeOutToEnd(newPausetimeOutInSeconds, SHORT_TIMEOUT);
+        videoPlayer.waitingForR21PauseTimeOutToEnd(newPauseTimeOutInSeconds, SHORT_TIMEOUT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
     }
