@@ -8,62 +8,41 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.disney.qa.common.constant.RatingConstant.HAITI;
+import static com.disney.qa.common.constant.RatingConstant.MAURITIUS;
+import static com.disney.qa.common.constant.RatingConstant.MAYOTTE;
+import static com.disney.qa.common.constant.RatingConstant.REUNION;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TWELVE_PLUS;
+import static com.disney.qa.common.constant.RatingConstant.UNITED_KINGDOM;
 
 public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
-
-    private static final String HAITI = "Haiti";
-    private static final String MAURITIUS = "Mauritius";
-    private static final String MAYOTTE = "Mayotte";
-    private static final String REUNION = "Reunion";
-    private static final String UNITED_KINGDOM = "United Kingdom";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73149"})
     @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {TestGroup.NON_US_RATINGS})
     public void verifyRatingSystemEMEA12() {
-        String country = getEMEACountry();
-        ratingsSetup(TWELVE_PLUS.getContentRating(), getEMEACountryLanguage(country), getEMEACountryCode(country));
+        String locale = getEMEACountryCode();
+        ratingsSetup(TWELVE_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
-    private String getEMEACountry() {
-        List<String> countryList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
+    private String getEMEACountryCode() {
+        List<String> countryCodeList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
         LOGGER.info("Selecting random Country code");
-        return countryList.get(new SecureRandom().nextInt(countryList.size() - 1));
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size() - 1));
     }
 
-    private String getEMEACountryCode(String country) {
-        switch (country.toUpperCase()) {
-            case "HAITI":
-                return "HT";
-            case "MAURITIUS":
-                return "MU";
-            case "MAYOTTE":
-                return "YT";
-            case "REUNION":
-                return "RE";
-            case "UNITED KINGDOM":
-                return "GB";
-            default:
-                throw new IllegalArgumentException(String.format("Country Code for %s is not found", country));
-        }
-    }
-
-    private String getEMEACountryLanguage(String country) {
-        switch (country.toUpperCase()) {
-            case "HAITI":
+    private String getEMEACountryLanguage(String countryCode) {
+        switch (countryCode.toUpperCase()) {
+            case "HT":
+            case "MU":
+            case "YT":
+            case "RE":
                 return "fr";
-            case "MAURITIUS":
-                return "fr";
-            case "MAYOTTE":
-                return "fr";
-            case "REUNION":
-                return "fr";
-            case "UNITED KINGDOM":
+            case "GB":
                 return "en";
             default:
-                throw new IllegalArgumentException(String.format("Country language for %s is not found", country));
+                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
         }
     }
 }
