@@ -83,7 +83,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
             case DISNEY:
                 return "Disney";
             case PIXAR:
-                return "Pixar";
+               return "Pixar";
             case MARVEL:
                 return "Marvel";
             case STAR_WARS:
@@ -107,23 +107,18 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     public void validateBrand(Brand brand, SoftAssert sa) {
         switch (brand) {
             case DISNEY:
-                LOGGER.info("***: " + CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS);
                 validateSwipeNavigation(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS, sa);
                 break;
             case PIXAR:
-                LOGGER.info("***: " + CollectionConstant.Collection.BRANDS_PIXAR_FEATURED);
                 validateSwipeNavigation(CollectionConstant.Collection.BRANDS_PIXAR_FEATURED, sa);
                 break;
             case MARVEL:
-                LOGGER.info("***: " + CollectionConstant.Collection.BRANDS_MARVEL_FEATURED);
                 validateSwipeNavigation(CollectionConstant.Collection.BRANDS_MARVEL_FEATURED, sa);
                 break;
             case STAR_WARS:
-                LOGGER.info("***: " + CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS);
                 validateSwipeNavigation(CollectionConstant.Collection.BRANDS_STAR_WARS_ORIGINALS, sa);
                 break;
             case NATIONAL_GEOGRAPHIC:
-                LOGGER.info("***: " + CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED);
                 validateSwipeNavigation(CollectionConstant.Collection.BRANDS_NATIONAL_GEOGRAPHIC_FEATURED, sa);
                 break;
             default:
