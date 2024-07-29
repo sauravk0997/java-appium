@@ -184,7 +184,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBrandCell(String brand) {
-        String CELL_DETAILS_TILE ="Select for details on this title.";
+        String CELL_DETAILS_TILE = "Select for details on this title.";
         return getDynamicCellByLabel(String.format("%s, " + CELL_DETAILS_TILE, brand));
     }
 
