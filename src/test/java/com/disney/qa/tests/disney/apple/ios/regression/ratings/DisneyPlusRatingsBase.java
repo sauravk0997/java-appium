@@ -39,6 +39,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String NEW_ZEALAND_LANG = "en";
     static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
+    static final String GERMANY_LANG = "de";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);

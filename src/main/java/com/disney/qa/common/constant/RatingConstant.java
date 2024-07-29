@@ -9,6 +9,7 @@ public class RatingConstant {
     public static final String SINGAPORE = "SG";
     public static final String TURKEY = "TR";
     public static final String USA = "US";
+    public static final String GERMANY = "DE";
 
     public enum Rating {
         G("G"),
@@ -17,6 +18,7 @@ public class RatingConstant {
         M("M"),
         PG("PG"),
         R21("R21"),
+        SIX("6"),
         TEN("10"),
         TWELVE("12"),
         SEVEN_PLUS("7+"),
