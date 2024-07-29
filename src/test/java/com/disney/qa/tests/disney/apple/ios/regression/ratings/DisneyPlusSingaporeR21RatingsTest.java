@@ -1,6 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.*;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -15,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Date;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
@@ -26,8 +27,9 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     private static final String PIN_PAGE_DID_NOT_OPEN = "R21 pin page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
-    private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
+    private static final String VIDEO_PLAYER_DID_NOT_EXIT = "Video player did not exit";
+    private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
     private static final String CHANGE_PASSWORD_PAGE_DID_NOT_OPEN = "Change Password screen did not open after submitting OTP";
     private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "'Must Create pin' popup header/message is not displayed";
     private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Manage your PIN message is not displayed";
@@ -670,6 +672,50 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
         Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
+    @Test(groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    public void verifyR21HasPINExceedTimeoutInBGWhilePlaybackIsPaused() {
+        int pauseTimeoutInSeconds = 30;
+        int halfPauseTimeoutInSeconds = pauseTimeoutInSeconds / 2;
+
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        //populate 'Continue Watching' carousel
+        navigateToHomePageForPinUser();
+        setR21PauseTimeOut(pauseTimeoutInSeconds);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+        videoPlayer.scrubToPlaybackPercentage(FORTY_FIVE_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton().getBackButton().click();
+        homePage.getHomeNav().click();
+        homePage.waitForHomePageToOpen();
+
+        //launch a Video from the Continue Watching carousel via details page
+        homePage.goToDetailsPageFromContinueWatching(contentTitle);
+        detailsPage.clickContinueButton();
+        videoPlayer.waitForVideoToStart();
+
+        videoPlayer.clickPauseButton();
+        pause(halfPauseTimeoutInSeconds);
+        videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
+
+        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
+        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "User is not navigated to the details page after pause timeout");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})

@@ -136,8 +136,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement seasonSelectorButton;
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
-    @ExtendedFindBy(accessibilityId = "playIcon")
-    private ExtendedWebElement playIcon;
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement detailsTabTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
@@ -808,10 +806,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getServiceAttribution() {
         return staticTextLabelContains.format("Included with your Hulu subscription");
-    }
-
-    public ExtendedWebElement getPlayIcon() {
-        return playIcon;
     }
 
     public ExtendedWebElement getFirstDescriptionLabel() {
