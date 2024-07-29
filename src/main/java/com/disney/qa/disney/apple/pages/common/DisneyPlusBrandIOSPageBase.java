@@ -79,7 +79,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
             case DISNEY:
                 return "Disney";
             case PIXAR:
-               return "Pixar";
+                return "Pixar";
             case MARVEL:
                 return "Marvel";
             case STAR_WARS:
