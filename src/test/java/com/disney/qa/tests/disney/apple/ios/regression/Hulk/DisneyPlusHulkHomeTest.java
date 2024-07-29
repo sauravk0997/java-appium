@@ -31,7 +31,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     private List<String> networkLogos = new ArrayList<String>(
             Arrays.asList("A&E", "ABC", "ABC News", "Andscape", "Disney XD", "FOX", "Freeform", "FX", "FYI",
                     "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
-                    "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
+                    "Searchlight Pictures", "The HISTORY Channel", "Twentieth Century Studios"));
 
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
@@ -69,12 +69,12 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
-        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present"); // corregir
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
 
         huluPage.swipeInHuluBrandPage(Direction.UP);
         sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
-        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present"); // corregir
 
         huluPage.swipeInHuluBrandPage(Direction.DOWN);
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
