@@ -132,8 +132,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement originalFormat;
     @FindBy(id = "seasonSelectorButton")
     private ExtendedWebElement seasonSelectorButton;
-    @ExtendedFindBy(accessibilityId = "seasonRating")
-    private ExtendedWebElement seasonRating;
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
     @ExtendedFindBy(accessibilityId = "playIcon")
@@ -729,8 +727,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return detailsTabTitle.getText();
     }
 
-    public boolean isSeasonRatingPresent() {
-        return seasonRating.isPresent();
+    public boolean isRatingPresent() {
+        return rating.isPresent();
     }
 
     public ExtendedWebElement getSuggestedTab() {
