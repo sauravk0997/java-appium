@@ -4,7 +4,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.Rating.TWELVE_PLUS;
 
@@ -26,13 +27,8 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     private String getEMEACountry() {
-        ArrayList<String> countryList = new ArrayList<>();
-        countryList.add(HAITI);
-        countryList.add(MAURITIUS);
-        countryList.add(MAYOTTE);
-        countryList.add(REUNION);
-        countryList.add(UNITED_KINGDOM);
-        LOGGER.info("Selecting random Country");
+        List<String> countryList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
+        LOGGER.info("Selecting random Country code");
         return countryList.get(new SecureRandom().nextInt(countryList.size() - 1));
     }
 

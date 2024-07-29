@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
-import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
@@ -232,11 +231,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isRatingPresentInSearchResults(String contentTitle, String rating) {
-        return searchResults.format(contentTitle, rating).isPresent();
-    }
-
-    public void verifyRatingInSearchResults(String contentTitle, String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in search results");
-        sa.assertTrue(isRatingPresentInSearchResults(contentTitle, rating), "Rating is not displayed in search results");
+        return searchResults.format(contentTitle, rating).isPresent();
     }
 }

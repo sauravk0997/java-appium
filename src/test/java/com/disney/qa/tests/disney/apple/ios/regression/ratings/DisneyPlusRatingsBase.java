@@ -208,7 +208,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        searchPage.verifyRatingInSearchResults(contentTitle, rating, sa);
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating is not displayed in search results");
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
@@ -240,7 +240,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        searchPage.verifyRatingInSearchResults(contentTitle, rating, sa);
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating is not displayed in search results");
         searchPage.getDisplayedTitles().get(0).click();
 
         //ratings are shown on downloaded content
@@ -260,6 +260,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void handleOneTrustPopUp() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust poup");
         if(oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
     }
