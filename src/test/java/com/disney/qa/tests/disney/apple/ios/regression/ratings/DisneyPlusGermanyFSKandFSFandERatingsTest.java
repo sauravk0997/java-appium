@@ -13,6 +13,7 @@ public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatings
     @Test(groups = {TestGroup.NON_US_RATINGS})
     public void verifyRatingSystemGermanyFSK6() {
         ratingsSetup(SIX.getContentRating(), GERMANY_LANG, GERMANY);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
 }

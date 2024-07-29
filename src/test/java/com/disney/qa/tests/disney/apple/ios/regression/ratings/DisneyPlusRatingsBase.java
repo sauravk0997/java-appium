@@ -256,4 +256,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust poup");
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+    }
 }
