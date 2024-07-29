@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
@@ -18,7 +19,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     private static final String UNITED_KINGDOM = "United Kingdom";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73149"})
-    @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {"NonUS-Ratings"})
+    @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {TestGroup.NON_US_RATINGS})
     public void verifyRatingSystemEMEA12() {
         String country = getEMEACountry();
         ratingsSetup(TWELVE_PLUS.getContentRating(), getEMEACountryLanguage(country), getEMEACountryCode(country));
