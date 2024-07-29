@@ -3,6 +3,7 @@ package com.disney.qa.common.constant;
 public class RatingConstant {
 
     public static final String BRAZIL = "BR";
+    public static final String GERMANY = "DE";
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
     public static final String NEW_ZEALAND = "NZ";
@@ -17,6 +18,7 @@ public class RatingConstant {
         M("M"),
         PG("PG"),
         R21("R21"),
+        ZERO("0"),
         TEN("10"),
         TWELVE("12"),
         SEVEN_PLUS("7+"),

@@ -34,6 +34,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
     static final String BRAZIL_LANG = "pt-BR";
+    static final String GERMAN_LANGUAGE = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
