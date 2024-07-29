@@ -128,6 +128,17 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public void submitPasswordForLoginAndAcceptPrivacySettings(String userPassword) {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        //To hide the keyboard, passing \n at the end of password value
+        enterLogInPassword(userPassword + "\n");
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DEFAULT_EXPLICIT_TIMEOUT),
+                "Login button is visible after entering password.");
+    }
+
     public String getPasswordText() {
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
