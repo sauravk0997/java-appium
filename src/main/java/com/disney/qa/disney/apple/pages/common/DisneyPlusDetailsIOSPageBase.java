@@ -756,6 +756,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return seasonSelector[1];
     }
 
+    public boolean isSeasonRatingPresent() {
+        return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(getSeasonSelector())))).isPresent();
+    }
+
+    public ExtendedWebElement getSeasonRating() {
+        String seasonRating = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(getSeasonSelector())));
+        return getStaticTextByLabel(seasonRating + " ");
+    }
+
     /**
      * Below are QA env specific methods for DWTS Anthology.
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
