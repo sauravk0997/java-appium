@@ -80,7 +80,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(locale, lang));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);

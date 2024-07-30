@@ -34,8 +34,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     private ExtendedWebElement createPasswordTextField;
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     private ExtendedWebElement signUpBtn;
-    @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
-    private ExtendedWebElement forgotPasswordBtn;
     @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
     private ExtendedWebElement hideShowPasswordBtn;
     @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeTextView\"")
