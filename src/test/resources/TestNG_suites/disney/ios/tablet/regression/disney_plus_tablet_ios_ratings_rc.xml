@@ -57,4 +57,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Germany FSK-FSF-E Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusGermanyFSKandFSFandERatingsTest"/>
+        </classes>
+    </test>
 </suite>
