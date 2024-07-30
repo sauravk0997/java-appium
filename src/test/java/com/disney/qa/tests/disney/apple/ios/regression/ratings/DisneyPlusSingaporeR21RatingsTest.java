@@ -595,17 +595,6 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.getTextEntryField().type(EMPTY_DOB);
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
-
-        //Date and year missing in  DOB
-        /*verifyAgeDOBPage.getTextEntryField().type(Person.ADULT.getMonth().getNum());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
-
-        //Year missing in  DOB
-        verifyAgeDOBPage.getTextEntryField().type(Person.ADULT.getMonth().getNum() + "/" + Person.ADULT.getDay());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);*/
-
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69773"})
