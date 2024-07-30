@@ -667,6 +667,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
 
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPausetimeOutInSeconds);
+        setPictureInPictureConfig(DISABLED);
         launchR21Content();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());

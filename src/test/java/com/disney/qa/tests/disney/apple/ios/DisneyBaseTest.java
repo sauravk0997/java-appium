@@ -84,6 +84,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
+    public static final String DISABLED = "disabled";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
