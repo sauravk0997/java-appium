@@ -37,6 +37,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     private static final String PIN_INPUT_FIELD_DISPLAYED = "R21 pin input field is displayed";
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;
+    private final int SCRUB_PERCENTAGE_TEN = 10;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
     @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
@@ -657,6 +658,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     public void verifyR21HasPINPlaybackBackgroundedTimeOut() {
         int newPausetimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
@@ -672,6 +674,12 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        videoPlayer.waitForVideoToStart();
+        terminateApp();
+        relaunch();
+        navigateToHomePageForPinUser();
+        homePage.initiatePlaybackFromContinueWatching(contentTitle);
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.runAppInBackground(newPausetimeOutInSeconds);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
