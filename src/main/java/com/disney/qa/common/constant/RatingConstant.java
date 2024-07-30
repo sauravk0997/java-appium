@@ -10,6 +10,11 @@ public class RatingConstant {
     public static final String SINGAPORE = "SG";
     public static final String TURKEY = "TR";
     public static final String USA = "US";
+    public static final String HAITI = "HT";
+    public static final String MAURITIUS = "MU";
+    public static final String MAYOTTE = "YT";
+    public static final String REUNION = "RE";
+    public static final String UNITED_KINGDOM = "GB";
 
     public enum Rating {
         G("G"),
@@ -19,6 +24,7 @@ public class RatingConstant {
         PG("PG"),
         R21("R21"),
         ZERO("0"),
+        SIX("6"),
         TEN("10"),
         TWELVE("12"),
         SEVEN_PLUS("7+"),
@@ -56,6 +62,11 @@ public class RatingConstant {
             case "JP":
             case "DE":
             case "TR":
+            case "HT":
+            case "MU":
+            case "YT":
+            case "RE":
+            case "GB":
                 return "1850";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
@@ -82,6 +93,16 @@ public class RatingConstant {
                 return "23144";
             case "US":
                 return "23831";
+            case "HT":
+                return "23155";
+            case "MU":
+                return "23114";
+            case "YT":
+                return "23124";
+            case "RE":
+                return "23101";
+            case "GB":
+                return "23136";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }
