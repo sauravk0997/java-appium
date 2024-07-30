@@ -34,12 +34,12 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
 
     private String getEMEACountryLanguage(String countryCode) {
         switch (countryCode.toUpperCase()) {
-            case "MU":
-            case "YT":
-            case "RE":
+            case MAURITIUS:
+            case MAYOTTE:
+            case REUNION:
                 return "fr";
-            case "HT":
-            case "GB":
+            case HAITI:
+            case UNITED_KINGDOM:
                 return "en";
             default:
                 throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
