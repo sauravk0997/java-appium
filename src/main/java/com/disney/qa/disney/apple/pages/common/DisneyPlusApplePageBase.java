@@ -266,6 +266,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement saveProfileButton;
     @ExtendedFindBy(accessibilityId = "viewAlert")
     private ExtendedWebElement viewAlert;
+    @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
+    protected ExtendedWebElement forgotPasswordBtn;
 
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
