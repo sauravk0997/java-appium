@@ -17,7 +17,6 @@ public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setDictionary(SINGAPORE_LANG, SINGAPORE);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().patchStarOnboardingStatus(getAccount(), true);
         getAccountApi().overrideLocations(getAccount(), BRAZIL);
         initialSetup();
         handleAlert();
