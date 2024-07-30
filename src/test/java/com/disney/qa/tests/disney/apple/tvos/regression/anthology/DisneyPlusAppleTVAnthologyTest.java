@@ -158,6 +158,10 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
+        sa.assertTrue(details.isExtrtasContentImageViewPresent(), "Artwork is not present");
+        sa.assertTrue(details.isTitleLabelPresent(), "Title is not present");
+        sa.assertTrue(details.isDurationTimeLabelPresent(), "Duration time is not present");
+        sa.assertTrue(details.isDescriptionLabelPresent(), "Description label is not present");
         details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
     }
