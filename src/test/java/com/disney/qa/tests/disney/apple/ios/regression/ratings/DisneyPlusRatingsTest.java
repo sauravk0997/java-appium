@@ -7,9 +7,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
-import static com.disney.qa.common.constant.RatingConstant.Rating.TWELVE;
-import static com.disney.qa.common.constant.RatingConstant.USA;
+import static com.disney.qa.common.constant.RatingConstant.*;
 
 public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
 
@@ -17,14 +15,12 @@ public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
     @Test(groups = {TestGroup.RATINGS})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setDictionary(BRAZIL_LANG, BRAZIL);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setDictionary(SINGAPORE_LANG, SINGAPORE);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().patchStarOnboardingStatus(getAccount(), true);
         getAccountApi().overrideLocations(getAccount(), BRAZIL);
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
         initialSetup();
         handleAlert();
-        getAccountApi().overrideLocations(getAccount(), USA);
         setAppToHomeScreen(getAccount());
 
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
