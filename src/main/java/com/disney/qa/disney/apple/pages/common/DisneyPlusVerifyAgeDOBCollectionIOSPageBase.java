@@ -46,9 +46,4 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
         getTypeButtonByLabel(getDictionary().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).click();
     }
-
-    public boolean isVerifyAgeSubtitlePresent() {
-        return getStaticTextByLabel(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_SUBTITLE.getText())).isPresent();
-    }
 }

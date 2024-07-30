@@ -405,7 +405,6 @@ public enum DictionaryKeys {
     R21_VERIFY_AGE_CANCEL_MODAL("r21_back_youmust_modal"),
     R21_VERIFY_AGE_MODEL_BUTTON("r21_verifyage_modal_button"),
     R21_VERIFY_AGE_MODEL_HEADER("r21_verifyage_modal_header"),
-    R21_VERIFY_AGE_SUBTITLE("r21_verifyage_subtitle"),
     RATING_MDA_R21_DESCRIPTION("rating_mda_r21_description"),
     RATING_MPAA_AND_TVPG_PG_13("rating_mpaaandtvpg_pg-13"),
     RATING_RESTRICTION_DETAIL_MESSAGE("rating_restriction_detail_message"),

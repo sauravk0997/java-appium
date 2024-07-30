@@ -92,7 +92,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingSetupWithPINForOTPAccount(String ratingValue, String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(locale, lang));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
