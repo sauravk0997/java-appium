@@ -23,6 +23,7 @@ public class RatingConstant {
         M("M"),
         PG("PG"),
         R21("R21"),
+        ZERO("0"),
         SIX("6"),
         TEN("10"),
         TWELVE("12"),
