@@ -52,19 +52,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingSetupWithPrivacySettings(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(getAccount().getEmail());
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLoginAndAcceptPrivacySettings(getAccount().getUserPass());
-    }
-
     public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
