@@ -129,7 +129,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     }
 
-    protected void getDesiredRatingContent(String rating, String locale, String language) {
+    private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
         isMovie = false;
         episodicRating = null;
