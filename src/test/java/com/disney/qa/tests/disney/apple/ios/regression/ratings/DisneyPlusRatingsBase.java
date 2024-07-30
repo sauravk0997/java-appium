@@ -34,6 +34,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
     static final String BRAZIL_LANG = "pt-BR";
+    static final String GERMANY_LANG = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
@@ -254,5 +255,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust poup");
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
     }
 }
