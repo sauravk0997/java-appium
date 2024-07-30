@@ -12,7 +12,7 @@ public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatings
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})
     @Test(description = "Ratings-Germany FSK0", groups = {"NonUS-Ratings"})
-    public void verifyRatingSystemGermanyFSK0() {
+    public void verifyGermanyFSKRating0() {
         ratingsSetup(ZERO.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(ZERO.getContentRating());
