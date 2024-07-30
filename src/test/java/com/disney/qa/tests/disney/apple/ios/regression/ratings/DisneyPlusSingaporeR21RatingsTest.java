@@ -631,22 +631,12 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
         int newPausetimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPausetimeOutInSeconds);
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        launchR21ContentFromContinueWatching();
         videoPlayer.clickPauseButton();
         videoPlayer.waitingForR21PauseTimeOutToEnd(newPausetimeOutInSeconds, SHORT_TIMEOUT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
@@ -658,30 +648,12 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     public void verifyR21HasPINPlaybackBackgroundedTimeOut() {
         int newPausetimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPausetimeOutInSeconds);
         setPictureInPictureConfig(DISABLED);
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
-        videoPlayer.waitForVideoToStart();
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
-        navigateToHomePageForPinUser();
-        homePage.initiatePlaybackFromContinueWatching(contentTitle);
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        launchR21ContentFromContinueWatching();
         videoPlayer.runAppInBackground(newPausetimeOutInSeconds);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
@@ -697,6 +669,28 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+    }
+
+    private void launchR21ContentFromContinueWatching() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        videoPlayer.waitForVideoToStart();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        navigateToHomePageForPinUser();
+        homePage.initiatePlaybackFromContinueWatching(contentTitle);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
     private void navigateToHomePageForPinUser() {
