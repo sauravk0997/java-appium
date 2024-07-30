@@ -570,8 +570,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return watchButton.isElementPresent();
     }
 
+    public ExtendedWebElement getTitleLabel() {
+        return titleLabel;
+    }
     public boolean isTitleLabelPresent() {
-        return titleLabel.isPresent();
+        return getTitleLabel().isPresent();
     }
 
     public String getContentTitle() {
