@@ -676,7 +676,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
-        terminateApp();
+        terminateApp(sessionBundles.get(DISNEY));
         relaunch();
         navigateToHomePageForPinUser();
         homePage.initiatePlaybackFromContinueWatching(contentTitle);
