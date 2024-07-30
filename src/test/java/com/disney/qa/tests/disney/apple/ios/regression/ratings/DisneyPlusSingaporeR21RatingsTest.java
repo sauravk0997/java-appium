@@ -26,8 +26,8 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     private static final String PIN_PAGE_DID_NOT_OPEN = "R21 pin page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
-    private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open.";
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open.";
+    private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String CHANGE_PASSWORD_PAGE_DID_NOT_OPEN = "Change Password screen did not open after submitting OTP";
     private static final String MUST_CREATE_PIN_POPUP_ERROR_MESSAGE = "'Must Create pin' popup header/message is not displayed";
     private static final String MUST_CREATE_PIN_POPUP_SUBHEADER_ERROR_MESSAGE = "Manage your PIN message is not displayed";
