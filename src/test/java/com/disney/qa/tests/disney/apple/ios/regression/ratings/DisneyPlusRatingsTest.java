@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.RatingConstant.*;
 
-public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase{
+public class DisneyPlusRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
     @Test(groups = {TestGroup.RATINGS})
