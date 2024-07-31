@@ -509,6 +509,8 @@ public enum DictionaryKeys {
     SWITCH_ANNUAL_CTA("switch_annual_account_settings_cta"),
     SWITCH_ANNUAL_DESCRIPTION("switch_annual_account_settings"),
     SWITCH_ANNUAL_FLASH_MESSAGE("switch_annual_flash_message"),
+    TRAVEL_MESSAGE_BODY("travel_message_body"),
+    TRAVEL_MESSAGE_TITLE("travel_message_title"),
     TERRITORY_REQUIREMENT_KR("territory_requirement_kr"),
     TOGGLE_OFF("toggle_off"),
     TOGGLE_ON("toggle_on"),

@@ -1,13 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,6 +15,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+
+import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
+import static com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase.SINGAPORE_LANG;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -95,5 +98,21 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
         sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
+    @Test(groups = {TestGroup.HOME})
+    public void verifyRatingRestrictionTravelingMessage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, SINGAPORE_LANG));
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+
+        Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
+        Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
+        Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
+        homePage.getTravelAlertOk().click();
+        Assert.assertFalse(homePage.isTravelAlertTitlePresent(), "Travel alert was not dismissed.");
     }
 }
