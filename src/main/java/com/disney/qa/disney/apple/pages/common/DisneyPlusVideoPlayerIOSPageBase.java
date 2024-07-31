@@ -450,13 +450,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             waitTime = timeout[0];
         }
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
+        return getStaticTextByLabel(adLabel).isPresent(waitTime);
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
-        return getDynamicAccessibilityId(adLabel).isElementPresent();
+        return getStaticTextByLabel(adLabel).isElementPresent();
     }
 
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
