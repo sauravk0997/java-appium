@@ -148,7 +148,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105989", "XCDQA-110046"})
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY}, enabled = false)
+    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY})
     public void verifyAnthologyExtrasTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -158,6 +158,10 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
+        sa.assertTrue(details.isExtrtasContentImageViewPresent(), "Artwork is not found in extras Tab");
+        sa.assertTrue(details.isExtrasTabTitlePresent(), "Content Title is not found in extras tab");
+        sa.assertTrue(details.isDurationTimeLabelPresent(), "Content Duration time is not found in extras tab");
+        sa.assertTrue(details.isExtrasTabTitleDescriptionPresent(), "Content Description is not found in extras tab");
         details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
     }
