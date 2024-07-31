@@ -39,7 +39,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
-    static final String SINGAPORE_LANG = "en";
+    public static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
@@ -47,7 +47,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -180,25 +180,27 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
-                    if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                        LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                        contentTitle = item.getVisuals().getTitle();
-                        Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
-                        if (pageContainer != null) {
-                            if (!pageContainer.getType().equals(EPISODES)) {
-                                isMovie = true;
-                            } else {
-                                if (pageContainer.getSeasons().get(0) != null) {
-                                    List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
-                                    if (seasonItems.get(0) != null) {
-                                        episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
-                                    } else {
-                                        throw new NullPointerException("Episodic rating is null");
+                if (item.getVisuals().getMetastringParts() != null) {
+                    if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
+                        if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
+                            LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                            contentTitle = item.getVisuals().getTitle();
+                            Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                            if (pageContainer != null) {
+                                if (!pageContainer.getType().equals(EPISODES)) {
+                                    isMovie = true;
+                                } else {
+                                    if (pageContainer.getSeasons().get(0) != null) {
+                                        List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
+                                        if (seasonItems.get(0) != null) {
+                                            episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                        } else {
+                                            throw new NullPointerException("Episodic rating is null");
+                                        }
                                     }
                                 }
+                                return contentTitle;
                             }
-                            return contentTitle;
                         }
                     }
                 }
