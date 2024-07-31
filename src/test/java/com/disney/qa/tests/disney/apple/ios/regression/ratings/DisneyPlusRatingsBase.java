@@ -15,6 +15,7 @@ import org.testng.*;
 import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -34,6 +35,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
     static final String BRAZIL_LANG = "pt-BR";
+    static final String GERMANY_LANG = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
     static final String NEW_ZEALAND_LANG = "en";
@@ -81,6 +83,22 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        getDesiredRatingContent(ratingValue, locale, lang);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingSetupWithPINForOTPAccount(String ratingValue, String lang, String locale) {
+        setDictionary(lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (IOException e) {
+            new Exception("Failed to update Profile pin: {}", e);
+        }
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
@@ -208,6 +226,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
@@ -239,6 +258,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
         searchPage.getDisplayedTitles().get(0).click();
 
         //ratings are shown on downloaded content
@@ -254,5 +274,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust poup");
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
     }
 }
