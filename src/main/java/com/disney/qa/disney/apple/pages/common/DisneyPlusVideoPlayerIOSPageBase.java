@@ -27,6 +27,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
     protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
     protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -730,6 +731,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player.");
+        waitForVideoToStart();
+        scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         waitForVideoToStart();
         clickBackButton();
     }
