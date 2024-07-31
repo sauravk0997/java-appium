@@ -102,7 +102,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
-    @Test(groups = {TestGroup.RATINGS})
+    @Test(groups = {TestGroup.HOME})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, SINGAPORE_LANG));
