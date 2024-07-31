@@ -115,7 +115,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    protected void setDictionary(String lang, String locale) {
+    private void setDictionary(String lang, String locale) {
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
