@@ -570,11 +570,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return watchButton.isElementPresent();
     }
 
-    public ExtendedWebElement getTitleLabel() {
+    public ExtendedWebElement getExtrasTabTitle() {
         return titleLabel;
     }
-    public boolean isTitleLabelPresent() {
-        return getTitleLabel().isPresent();
+
+    public boolean isExtrasTabTitlePresent() {
+        return getExtrasTabTitle().isPresent();
     }
 
     public String getContentTitle() {
@@ -597,7 +598,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return informationDescriptionLabel.isElementPresent();
     }
 
-    public boolean isDescriptionLabelPresent() {
+    public boolean isExtrasTabTitleDescriptionPresent() {
         return descriptionLabel.isPresent();
     }
 

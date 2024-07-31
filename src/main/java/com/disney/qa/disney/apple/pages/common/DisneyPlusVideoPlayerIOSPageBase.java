@@ -182,14 +182,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart(int timeout) {
         LOGGER.info("Checking for loading spinner...");
         try {
-            fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Loading spinner is not visible")
+            fluentWait(getDriver(), timeout, FIVE_SEC_TIMEOUT, "Loading spinner is not visible")
                     .until(it -> ucpLoadSpinner.isElementPresent());
         } catch (TimeoutException timeoutException) {
             LOGGER.info("Loading spinner not detected and skipping wait");
         }
         LOGGER.info("Loading spinner detected and waiting for animation to complete");
-        fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Loading spinner is still visible")
-                .until(it -> ucpLoadSpinner.isElementNotPresent(TWENTY_FIVE_SEC_TIMEOUT));
+        fluentWait(getDriver(), timeout, FIVE_SEC_TIMEOUT, "Loading spinner is still visible")
+                .until(it -> ucpLoadSpinner.isElementNotPresent(timeout));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
