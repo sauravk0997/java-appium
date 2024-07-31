@@ -150,7 +150,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         isFocused(extrasTab);
         String extrasCellTitle = titleLabel.getText();
         clickFirstTabCell(getExtrasTab());
-        videoPlayer.waitForVideoToStart(10);
+        videoPlayer.waitForVideoToStart(10,3);
         sa.assertTrue(extrasCellTitle.equalsIgnoreCase(getTypeOtherByLabel(videoPlayer.getTitleLabel()).getText()), "Extras title is not the same as video player title");
     }
 
