@@ -106,7 +106,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    private void setAccountRatingsMax(DisneyAccount account) {
+    void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
@@ -115,7 +115,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDictionary(String lang, String locale) {
+    void setDictionary(String lang, String locale) {
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
