@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -175,6 +176,20 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
         LOGGER.info("Buffering completed.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart(int timeout, int polling) {
+        LOGGER.info("Checking for loading spinner...");
+        try {
+            fluentWait(getDriver(), timeout, polling, "Loading spinner is not visible")
+                    .until(it -> ucpLoadSpinner.isElementPresent());
+        } catch (TimeoutException timeoutException) {
+            LOGGER.info("Loading spinner not detected and skipping wait");
+        }
+        LOGGER.info("Loading spinner detected and waiting for animation to complete");
+        fluentWait(getDriver(), timeout, polling, "Loading spinner is still visible")
+                .until(it -> ucpLoadSpinner.isElementNotPresent(timeout));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
