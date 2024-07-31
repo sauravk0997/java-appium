@@ -11,7 +11,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.ZERO;
 public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})
-    @Test(description = "Ratings-Germany FSK0", groups = {"NonUS-Ratings"})
+    @Test(description = "Ratings-Germany FSK0", groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK})
     public void verifyGermanyFSKRating0() {
         ratingsSetup(ZERO.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();
@@ -19,7 +19,7 @@ public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatings
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73153"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(description = "Ratings-Germany FSK6", groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK})
     public void verifyGermanyFSKRating6() {
         ratingsSetup(SIX.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();

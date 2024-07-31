@@ -18,7 +18,7 @@ import static com.disney.qa.common.constant.RatingConstant.UNITED_KINGDOM;
 public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73149"})
-    @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {TestGroup.NON_US_RATINGS})
+    @Test(description = "Rating System - Custom DisneyPlus: EMEA - 12+", groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyEMEARating12() {
         String locale = getEMEACountryCode();
         ratingsSetup(TWELVE_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
