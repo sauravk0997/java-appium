@@ -47,7 +47,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
