@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -16,10 +17,13 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
+
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String HOME_PAGE_ERROR = "Home page did not open";
+    private static final String SINGAPORE_LANG = "en";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
@@ -95,5 +99,21 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
         sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
+    @Test(groups = {TestGroup.RATINGS})
+    public void verifyRatingRestrictionTravelingMessage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, SINGAPORE_LANG));
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+
+        Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
+        Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
+        Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
+        homePage.getTravelAlertOk().click();
+        Assert.assertFalse(homePage.isTravelAlertTitlePresent(), "Travel alert was not dismissed.");
     }
 }
