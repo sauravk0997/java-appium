@@ -247,7 +247,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69535"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"Ariel-More Menu", TestGroup.SMOKE}, enabled = false)
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {TestGroup.PROFILES, TestGroup.SMOKE}, enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
@@ -294,7 +294,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
-    @Test(description = "Profiles - Add Profile - Kids Profile / Junior Mode UI", groups = {"Ariel-More Menu", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Profiles - Add Profile - Kids Profile / Junior Mode UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAddProfileJuniorProfileUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);

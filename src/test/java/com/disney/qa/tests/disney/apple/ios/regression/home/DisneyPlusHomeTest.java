@@ -25,7 +25,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String HOME_PAGE_ERROR = "Home page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
-    @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Home - Home Screen UI Elements", groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -58,7 +58,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
-    @Test(description = "Home - Recommended for You", groups = {"Home", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Home - Recommended for You", groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
         String recommendedContainerNotFound = "Recommended For You container was not found";

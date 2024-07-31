@@ -76,7 +76,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76671"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
@@ -148,7 +148,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyImpressumTab(String TUID) {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
