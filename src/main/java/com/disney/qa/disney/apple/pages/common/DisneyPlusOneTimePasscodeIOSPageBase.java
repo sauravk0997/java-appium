@@ -50,5 +50,4 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     public void enterOtp(String value) {
         otpInputField.type(value);
     }
-
 }

@@ -57,6 +57,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement itemPickerView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
+    private ExtendedWebElement searchResults;
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
@@ -226,5 +228,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionary().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    }
+
+    public boolean isRatingPresentInSearchResults(String contentTitle, String rating) {
+        LOGGER.info("Verifying Ratings in search results");
+        return searchResults.format(contentTitle, rating).isPresent();
     }
 }

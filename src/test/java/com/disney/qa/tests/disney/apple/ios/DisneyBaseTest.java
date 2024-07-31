@@ -400,36 +400,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(request);
     }
 
-    public void setOneTrustConfig() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
-        jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection("platformConfig");
-        applePageBase.scrollToItem("oneTrustConfig").click();
-        LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
-        boolean enableOneTrustConfig = Configuration.get(DisneyConfiguration.Parameter.ENABLE_ONE_TRUST_CONFIG, Boolean.class).orElse(false);
-        if (enableOneTrustConfig) {
-            LOGGER.info("Navigating to domainIdentifier..");
-            applePageBase.scrollToItem("domainIdentifier").click();
-            applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
-            applePageBase.navigateBack();
-            LOGGER.info("Navigating to isEnabledV2..");
-            applePageBase.scrollToItem("isEnabledV2").click();
-            applePageBase.enableOneTrustConfig();
-        } else {
-            applePageBase.removeDomainIdentifier();
-            applePageBase.navigateBack();
-            applePageBase.disableOneTrustConfig();
-        }
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
-    }
-
     public void disableBrazeConfig() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         JarvisAppleBase jarvis = getJarvisPageFactory();
@@ -439,12 +409,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Navigating to isEnabled..");
         applePageBase.scrollToItem("isEnabled").click();
         applePageBase.disableBrazeConfig();
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
+        terminateJarvisInstallDisney();
     }
 
     public void launchJarvisOrInstall() {

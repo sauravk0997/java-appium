@@ -181,7 +181,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.getStaticTextByLabel(playInFrench).click();
-        sa.assertTrue(videoPlayer.getDynamicAccessibilityId(adInFrench).isPresent(), "Ad Badge is not displayed in French language");
+        sa.assertTrue(videoPlayer.getStaticTextByLabel(adInFrench).isPresent(), "Ad Badge is not displayed in French language");
         sa.assertAll();
     }
 

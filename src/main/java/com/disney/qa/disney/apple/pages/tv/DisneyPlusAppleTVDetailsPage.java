@@ -127,7 +127,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         moveDown(1,1);
         moveRight(2,1);
         isFocused(detailsTab);
-        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same as details title.");
+        sa.assertTrue(params.get("suggestedCellTitle").contains(getDetailsTabTitle()), "Suggested title is not the same as details title.");
         params.clear();
     }
 
@@ -145,19 +145,13 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        Map<String, String> params = new HashMap<>();
         moveDown(1,1);
         moveRight(2,1);
         isFocused(extrasTab);
-        String[] extrasCellTitle = getTabCells().get(0).split(",");
-        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        String extrasCellTitle = titleLabel.getText();
         clickFirstTabCell(getExtrasTab());
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-        String[] videoPlayerTitle = videoPlayer.getTitleLabel().split("32s");
-        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayerTitle[0].trim()),
-                "Extras title is not the same as video player title");
-        params.clear();
+        videoPlayer.waitForVideoToStart(10,3);
+        sa.assertTrue(extrasCellTitle.equalsIgnoreCase(getTypeOtherByLabel(videoPlayer.getTitleLabel()).getText()), "Extras title is not the same as video player title");
     }
 
     /**

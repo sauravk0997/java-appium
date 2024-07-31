@@ -107,6 +107,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement iMaxEnhancedThumbnail;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
     protected ExtendedWebElement contentImageView;
+    @ExtendedFindBy(accessibilityId = "contentImageView")
+    protected ExtendedWebElement extrasContentImageView;
     @ExtendedFindBy(accessibilityId = "shareButton")
     private ExtendedWebElement shareBtn;
     @ExtendedFindBy(accessibilityId = "watchlistButton")
@@ -144,6 +146,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement tabletNetworkAttributionImage;
     @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
     private ExtendedWebElement firstDescriptionLabel;
+    @ExtendedFindBy(accessibilityId = "descriptionLabel")
+    private ExtendedWebElement descriptionLabel;
     @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
     private ExtendedWebElement firstRunTimeLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
@@ -566,6 +570,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return watchButton.isElementPresent();
     }
 
+    public ExtendedWebElement getExtrasTabTitle() {
+        return titleLabel;
+    }
+
+    public boolean isExtrasTabTitlePresent() {
+        return getExtrasTabTitle().isPresent();
+    }
+
     public String getContentTitle() {
         return logoImage.getText();
     }
@@ -584,6 +596,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isInformationDescriptionPresent() {
         return informationDescriptionLabel.isElementPresent();
+    }
+
+    public boolean isExtrasTabTitleDescriptionPresent() {
+        return descriptionLabel.isPresent();
     }
 
     public void clickInfoView() {
@@ -1012,6 +1028,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContentImageViewPresent() {
         return contentImageView.isPresent();
+    }
+
+    public boolean isExtrtasContentImageViewPresent() {
+        return extrasContentImageView.isPresent();
     }
 
     public ExtendedWebElement getSeasonItemPicker() {
