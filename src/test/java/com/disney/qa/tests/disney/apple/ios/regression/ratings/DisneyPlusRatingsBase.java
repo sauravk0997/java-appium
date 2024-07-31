@@ -180,25 +180,27 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
-                    if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                        LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                        contentTitle = item.getVisuals().getTitle();
-                        Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
-                        if (pageContainer != null) {
-                            if (!pageContainer.getType().equals(EPISODES)) {
-                                isMovie = true;
-                            } else {
-                                if (pageContainer.getSeasons().get(0) != null) {
-                                    List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
-                                    if (seasonItems.get(0) != null) {
-                                        episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
-                                    } else {
-                                        throw new NullPointerException("Episodic rating is null");
+                if (item.getVisuals().getMetastringParts() != null) {
+                    if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
+                        if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
+                            LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                            contentTitle = item.getVisuals().getTitle();
+                            Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                            if (pageContainer != null) {
+                                if (!pageContainer.getType().equals(EPISODES)) {
+                                    isMovie = true;
+                                } else {
+                                    if (pageContainer.getSeasons().get(0) != null) {
+                                        List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
+                                        if (seasonItems.get(0) != null) {
+                                            episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                        } else {
+                                            throw new NullPointerException("Episodic rating is null");
+                                        }
                                     }
                                 }
+                                return contentTitle;
                             }
-                            return contentTitle;
                         }
                     }
                 }
