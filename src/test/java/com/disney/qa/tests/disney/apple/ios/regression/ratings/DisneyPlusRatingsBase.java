@@ -229,7 +229,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(contentTitle).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
