@@ -8,7 +8,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,12 +17,12 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
+import static com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase.SINGAPORE_LANG;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DISNEY_PLUS = "Disney Plus";
     private static final String HOME_PAGE_ERROR = "Home page did not open";
-    private static final String SINGAPORE_LANG = "en";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(description = "Home - Home Screen UI Elements", groups = {"Home", TestGroup.PRE_CONFIGURATION})
