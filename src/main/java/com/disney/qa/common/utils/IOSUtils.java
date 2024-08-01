@@ -34,10 +34,12 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
@@ -993,5 +995,14 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             Assert.fail(String.format("Error occurred during scrolling from (X = %d; Y = %d) to (X = %d; Y = %d): %s",
                     startX, startY, endX, endY, e));
         }
+    }
+
+    default String convertToTitleCase(String text, String separator) {
+        return Arrays.stream(text.split(separator))
+                .map(word -> word.isEmpty()
+                        ? word
+                        : Character.toTitleCase(word.charAt(0)) + word.substring(1).toLowerCase()
+                )
+                .collect(Collectors.joining(separator));
     }
 }

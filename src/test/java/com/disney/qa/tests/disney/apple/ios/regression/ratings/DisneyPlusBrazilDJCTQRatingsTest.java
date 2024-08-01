@@ -46,36 +46,14 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
     public void verifyBrazilSeasonLevelRating() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         ratingsSetup(BRAZIL_LANG, BRAZIL);
-
-//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_VIVO_BR_STANDALONE, BRAZIL, RAZIL_LANG));
-//        initialSetup();
-//        handleAlert();
-//        setAppToHomeScreen(getAccount());
-//
-//        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("qaittestguid+1722457787867436a@gsuite.disneyplustesting.com");
-//        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
         launchDeeplink(true, R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"), 10);
         detailsPage.clickOpenButton();
-//        Assert.assertTrue(detailsPage.isOpened(), "Detail page did not open.");
-        String seasonRatingIntNum = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        String seasonRating = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(detailsPage.getSeasonSelector())));
-        String seasonRatingStringNum = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DETAILS_SEASON_RATING.getText()), Map.of("season_number", detailsPage.getSeasonSelector()));
-        pause(5);
-        System.out.println(getDriver().getPageSource());
-//        Classificação da temporada 1:
-//        LOGGER.info("Is season rating text present? " + detailsPage.getStaticTextByLabelContains("Classificação da Temporada 1:").isPresent());
-//        LOGGER.info("what is SEASON RATING DICT KEY - int num? " + seasonRatingIntNum + "something");
-//        LOGGER.info("is season rating text found - int num? " + detailsPage.getStaticTextByLabelContains(seasonRatingIntNum).isPresent());
-//        LOGGER.info("what is SEASON RATING DICT KEY string num? " + seasonRatingStringNum + "something");
-//
-//        LOGGER.info("is season rating text found - string num? " + detailsPage.getStaticTextByLabelContains(seasonRatingStringNum).isPresent());
-        String[] seasonRatingSplits = seasonRatingIntNum.split(" ");
-        String tFromSeasonRating = seasonRatingSplits[2].split("e")[0].toUpperCase();
-        LOGGER.info("t from season rating: " + tFromSeasonRating);
-
-//        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seasonRatingSplits[0] + " " + seasonRatingSplits[1]));
-        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seasonRatingIntNum).isPresent(), "Season rating was not found.");
+        String[] seasonRatingSplit = seasonRating.split(" ");
+        String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
+                seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent(), "Season rating was not found.");
     }
 
 
