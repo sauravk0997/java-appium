@@ -147,7 +147,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(CollectionConstant.getCollectionTitle(collection)).isPresent();
     }
 
-    public void goToContinueWatchingCarousel() {
+    public void swipeTillContinueWatchingCarouselPresent() {
         String wordSeparator = " ";
         String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
         String expectedTitle = convertToTitleCase(continueWatchingText, wordSeparator);
@@ -156,7 +156,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void goToDetailsPageFromContinueWatching(String title) {
-        goToContinueWatchingCarousel();
+        swipeTillContinueWatchingCarouselPresent();
         getDynamicAccessibilityId(title).click();
     }
 }
