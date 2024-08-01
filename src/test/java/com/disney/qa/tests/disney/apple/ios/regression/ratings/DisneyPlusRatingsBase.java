@@ -179,7 +179,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         LOGGER.info("Rating requested: " + rating);
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
-            LOGGER.info("what are the collection items? " + disneyCollectionItems);
             for (Item item : disneyCollectionItems) {
                 if (item.getVisuals().getMetastringParts() != null) {
                     if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
