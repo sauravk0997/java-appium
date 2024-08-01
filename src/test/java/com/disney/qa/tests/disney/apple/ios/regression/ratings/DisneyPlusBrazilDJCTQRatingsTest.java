@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
@@ -13,12 +12,10 @@ import java.util.Map;
 
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
-import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_SEASON_RATING;
 
 public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
-    private boolean isMovie;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68359"})
     @Test(groups = {TestGroup.NON_US_RATINGS})
@@ -54,16 +51,5 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
         String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
                 seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent(), "Season rating was not found.");
-    }
-
-
-    private void validateSeasonLevelRatigin(String rating) {
-        if (isMovie) {
-            LOGGER.info("Testing against Movie content.");
-            validateMovieContent(rating);
-        } else {
-            LOGGER.info("Testing against Series content.");
-            validateSeriesContent(rating);
-        }
     }
 }
