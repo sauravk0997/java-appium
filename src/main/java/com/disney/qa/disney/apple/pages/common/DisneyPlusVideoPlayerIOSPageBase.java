@@ -80,6 +80,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
+    private ExtendedWebElement adPod;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -771,5 +774,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for R21 Pause timeout to end");
         fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
                 .until(it -> !getPlayerView().isPresent());
+    }
+
+    public ExtendedWebElement getAdPod() {
+        displayVideoController();
+        return format(adPod);
     }
 }
