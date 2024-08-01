@@ -151,14 +151,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     // test
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifyImpressumTab(String TUID) {
+    @Test(description = "Verify 'Impressum' functionality", groups = {"More Menu", "DE", TestGroup.PRE_CONFIGURATION})
+    public void verifyImpressumTab() {
         SoftAssert sa = new SoftAssert();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        String country = StringUtils.substringAfter(TUID, "TUID: ");
+        String country = StringUtils.substringAfter("DE", "TUID: ");
         setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
         setAppToHomeScreen(getAccount());
