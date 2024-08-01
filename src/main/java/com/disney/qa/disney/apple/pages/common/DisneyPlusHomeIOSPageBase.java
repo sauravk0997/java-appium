@@ -13,7 +13,6 @@ import org.testng.*;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.*;
-import java.util.stream.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {

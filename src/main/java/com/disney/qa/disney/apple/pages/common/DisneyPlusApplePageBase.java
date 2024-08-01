@@ -187,8 +187,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
     private ExtendedWebElement globalNavBarView;
-    @ExtendedFindBy(accessibilityId = "playIcon")
-    private ExtendedWebElement playIcon;
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
     @ExtendedFindBy(accessibilityId = "headlineHeader")
@@ -600,10 +598,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getOkButton() {
         return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.OK_BTN.getText()));
-    }
-
-    public ExtendedWebElement getPlayIcon() {
-        return playIcon;
     }
 
     public void enterText(String text) {
