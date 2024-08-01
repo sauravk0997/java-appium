@@ -36,9 +36,6 @@ public final class TestGroup {
     public static final String ALICE = "Alice";
     public static final String ANTHOLOGY = "Anthology";
     public static final String ARIEL = "Ariel";
-    public static final String ARIEL_LOG_IN = "ArielLogIn";
-    public static final String ARIEL_LOGIN = "ArielLogIn";
-    public static final String ARIEL_SIGN_UP = "ArielSignUp";
     public static final String BG_IMAGE = "BGImage";
     public static final String CONCURRENCY = "Concurrency";
     public static final String DEEPLINKS = "Deeplinks";
