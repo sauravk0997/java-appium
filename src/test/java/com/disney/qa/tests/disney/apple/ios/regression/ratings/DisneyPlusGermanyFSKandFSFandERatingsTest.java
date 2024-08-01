@@ -5,8 +5,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
-import static com.disney.qa.common.constant.RatingConstant.Rating.SIX;
-import static com.disney.qa.common.constant.RatingConstant.Rating.ZERO;
+import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
 public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
 
@@ -24,5 +23,29 @@ public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatings
         ratingsSetup(SIX.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73154"})
+    @Test(groups = {TestGroup.NON_US_RATINGS})
+    public void verifyGermanyFSKRating12() {
+        ratingsSetup(TWELVE.getContentRating(), GERMANY_LANG, GERMANY);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(TWELVE.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73155"})
+    @Test(groups = {TestGroup.NON_US_RATINGS})
+    public void verifyGermanyFSKRating16() {
+        ratingsSetup(SIXTEEN.getContentRating(), GERMANY_LANG, GERMANY);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73156"})
+    @Test(groups = {TestGroup.NON_US_RATINGS})
+    public void verifyGermanyFSKRating18() {
+        ratingsSetup(EIGHTEEN.getContentRating(), GERMANY_LANG, GERMANY);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 }
