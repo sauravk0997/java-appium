@@ -318,6 +318,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS, sa);
+        videoPlayer.displayVideoController();
         List<ExtendedWebElement> allAdPods = videoPlayer.findExtendedWebElements(videoPlayer.getAdPod().getBy());
         IntStream.range(0, allAdPods.size()).forEach(i -> videoPlayer.getAdPod().isPresent());
         sa.assertAll();
