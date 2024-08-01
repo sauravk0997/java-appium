@@ -157,6 +157,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void goToDetailsPageFromContinueWatching(String title) {
         swipeTillContinueWatchingCarouselPresent();
-        getDynamicAccessibilityId(title).click();
+        getStaticTextByLabel(title).click();
     }
 }
