@@ -17,7 +17,7 @@
     <parameter name="scheduling" value="H 0 * * 6,0"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="jenkinsBuild" value="3.5.0.71304"/>
+    <parameter name="jenkinsBuild" value="3.5.0.71405"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76744"/>
 
@@ -54,6 +54,16 @@
     <test verbose="1" name="DisneyPlus iOS Handset Brazil DJCTQ Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset EMEA Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Germany FSK-FSF-E Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusGermanyFSKandFSFandERatingsTest"/>
         </classes>
     </test>
 </suite>
