@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
@@ -8,12 +7,8 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.util.Map;
-
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_SEASON_RATING;
 
 public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
 
@@ -59,11 +54,6 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(BRAZIL_LANG, BRAZIL);
         launchDeeplink(true, R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"), 10);
         detailsPage.clickOpenButton();
-        String seasonRating = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(detailsPage.getSeasonSelector())));
-        String[] seasonRatingSplit = seasonRating.split(" ");
-        String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
-        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
-                seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent(), "Season rating was not found.");
+        Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found.");
     }
 }
