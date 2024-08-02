@@ -27,6 +27,8 @@ public class RatingConstant {
         SIX("6"),
         TEN("10"),
         TWELVE("12"),
+        FOURTEEN("14"),
+        SIXTEEN("16"),
         SIX_PLUS("6+"),
         SEVEN_PLUS("7+"),
         NINE_PLUS("9+"),
@@ -52,8 +54,6 @@ public class RatingConstant {
 
     public static String getMaxMaturityRating(String locale) {
         switch (locale) {
-            case "BR":
-                return "1850";
             case "US":
             case "CA":
                 return "1830";
@@ -61,6 +61,7 @@ public class RatingConstant {
             case "SG":
             case "NZ":
                 return "1870";
+            case "BR":
             case "NL":
             case "JP":
             case "DE":
