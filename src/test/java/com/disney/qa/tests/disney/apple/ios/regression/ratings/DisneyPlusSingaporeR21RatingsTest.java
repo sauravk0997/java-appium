@@ -675,7 +675,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
-    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Paused", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Paused", groups = {TestGroup.R21})
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
         int newPauseTimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
@@ -693,7 +693,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74834"})
-    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Backgrounded", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Backgrounded", groups = {TestGroup.R21})
     public void verifyR21HasPINPlaybackBackgroundedTimeOut() {
         int newPausetimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
