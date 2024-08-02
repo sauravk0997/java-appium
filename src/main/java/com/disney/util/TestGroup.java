@@ -72,6 +72,21 @@ public final class TestGroup {
     public static final String WATCHLIST = "Watchlist";
     public static final String WELCH = "Welch";
 
+    //Rating Systems
+    public static final String RATING_SYSTEM_AI = "AI";
+    public static final String RATING_SYSTEM_APAC = "APAC";
+    public static final String RATING_SYSTEM_DJCTQ = "DJCTQ";
+    public static final String RATING_SYSTEM_EMEA = "EMEA";
+    public static final String RATING_SYSTEM_FSK = "FSK";
+    public static final String RATING_SYSTEM_KCC = "KCC";
+    public static final String RATING_SYSTEM_KIJKWIJZER = "Kijkwijzer";
+    public static final String RATING_SYSTEM_KMRB = "KMRB";
+    public static final String RATING_SYSTEM_LATAM = "LATAM";
+    public static final String RATING_SYSTEM_MDA = "MDA";
+    public static final String RATING_SYSTEM_MPAATVPG = "MPAATVPG";
+    public static final String RATING_SYSTEM_NCS = "NCS";
+    public static final String RATING_SYSTEM_OFLC = "OFLC";
+
     //Analytics Groups
     public static final String QOE_PLAYBACK = "qoeplayback";
 
