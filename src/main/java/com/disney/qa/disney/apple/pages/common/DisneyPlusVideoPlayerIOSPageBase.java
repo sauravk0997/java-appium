@@ -777,6 +777,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAdPod() {
-        return format(adPod);
+        return adPod;
     }
 }
