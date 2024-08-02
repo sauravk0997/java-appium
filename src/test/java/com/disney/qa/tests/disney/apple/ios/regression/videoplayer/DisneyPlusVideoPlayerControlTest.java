@@ -27,7 +27,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String DISABLED = "disabled";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
