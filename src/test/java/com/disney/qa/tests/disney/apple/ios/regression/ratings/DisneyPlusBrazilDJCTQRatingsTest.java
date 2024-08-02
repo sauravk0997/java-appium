@@ -31,14 +31,14 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73144"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
     public void verifyBrazilRating14() {
         ratingsSetup(FOURTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
         confirmRegionalRatingsDisplays(FOURTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73145"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
     public void verifyBrazilRating16() {
         ratingsSetup(SIXTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
