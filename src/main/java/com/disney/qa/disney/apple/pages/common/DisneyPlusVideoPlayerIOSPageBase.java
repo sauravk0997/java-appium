@@ -776,7 +776,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> !getPlayerView().isPresent());
     }
 
-    public ExtendedWebElement getAdPod() {
-        return adPod;
+    public boolean isAdPodPresent() {
+        return adPod.isPresent();
     }
 }
