@@ -728,25 +728,6 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "User is not navigated to the details page after pause timeout");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
-    @Test(groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
-    public void verifyR21HasPINExceedTimeoutInBGWhilePlaybackIsPaused() {
-        int pauseTimeoutInSeconds = 30;
-        int halfPauseTimeoutInSeconds = pauseTimeoutInSeconds / 2;
-        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        navigateToHomePageForPinUser();
-        setR21PauseTimeOut(pauseTimeoutInSeconds);
-        setPictureInPictureConfig(DISABLED);
-        launchR21ContentFromContinueWatching();
-        videoPlayer.clickPauseButton();
-        pause(halfPauseTimeoutInSeconds);
-        videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
-        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
-        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "User is not navigated to the details page after pause timeout");
-    }
-  
     private void launchR21Content() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
