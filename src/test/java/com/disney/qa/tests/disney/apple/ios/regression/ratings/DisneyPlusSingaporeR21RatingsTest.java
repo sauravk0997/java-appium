@@ -675,7 +675,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
-    @Test(groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.R21})
     public void verifyR21HasPINExceedTimeoutInBGWhilePlaybackIsPaused() {
         int pauseTimeoutInSeconds = 30;
         int halfPauseTimeoutInSeconds = pauseTimeoutInSeconds / 2;
