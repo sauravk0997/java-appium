@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
@@ -158,15 +159,16 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        String country = StringUtils.substringAfter("DE", "TUID: ");
+        String country = StringUtils.substringAfter("AT", "TUID: ");
         setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().overrideLocations(getAccount(), "DE");
+        getAccountApi().overrideLocations(getAccount(), "AT");
+
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, getLanguage(), MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
