@@ -54,6 +54,6 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(BRAZIL_LANG, BRAZIL);
         launchDeeplink(true, R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"), 10);
         detailsPage.clickOpenButton();
-        Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found.");
+        Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found");
     }
 }
