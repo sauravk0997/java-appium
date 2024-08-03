@@ -248,9 +248,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();
-        if (!downloads.isRatingPresent(episodicRating)) {
-            swipePageTillElementPresent(downloads.getStaticTextByLabelContains(episodicRating), 2, null, Direction.DOWN, 500);
-        }
         sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
