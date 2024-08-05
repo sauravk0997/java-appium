@@ -44,7 +44,7 @@ public class RatingConstant {
         TWELVE("12"),
         FOURTEEN("14"),
         SIXTEEN("16"),
-        ZERO_PLUS("0"),
+        ZERO_PLUS("0+"),
         SIX_PLUS("6+"),
         SEVEN_PLUS("7+"),
         NINE_PLUS("9+"),
