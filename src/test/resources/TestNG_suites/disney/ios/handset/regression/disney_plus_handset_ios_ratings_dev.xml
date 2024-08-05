@@ -28,32 +28,27 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset KCC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKCCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKCCRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset KMRB Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKMRBRatingsTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset R21 Ratings">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21RatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKMRBRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Turkey AI Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusTurkeyAIRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAIRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset New Zealand OFLC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNewZealandOFLCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Brazil DJCTQ Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset EMEA Ratings">
@@ -63,7 +58,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Germany FSK-FSF-E Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusGermanyFSKandFSFandERatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
         </classes>
     </test>
 </suite>

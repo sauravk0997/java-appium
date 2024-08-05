@@ -7,7 +7,7 @@ import org.testng.annotations.*;
 import static com.disney.qa.common.constant.RatingConstant.NEW_ZEALAND;
 import static com.disney.qa.common.constant.RatingConstant.Rating.M;
 
-public class DisneyPlusNewZealandOFLCRatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusOFLCRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73188"})
     @Test(description = "Rating System - OFLC - New Zealand - M", groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})

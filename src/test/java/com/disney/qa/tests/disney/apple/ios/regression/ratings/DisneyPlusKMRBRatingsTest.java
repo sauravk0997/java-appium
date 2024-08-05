@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 
-public class DisneyPlusKoreaKMRBRatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusKMRBRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75173"})
     @Test(description = "Ratings-South Korea 12+ KMRB", groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KMRB})
