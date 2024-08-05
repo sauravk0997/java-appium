@@ -486,6 +486,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                         .setProfileId(getAccount().getProfileId()).setLimit(30));
         return pageResponse.getData().getPage().getVisuals();
     }
+
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getDisneyExploreSearchRequest()
                 .setEntityId(pageID)

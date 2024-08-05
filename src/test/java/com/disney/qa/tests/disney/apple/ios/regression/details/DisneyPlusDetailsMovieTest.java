@@ -336,7 +336,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_deeplink");
-        //There is limitation of char that can be displayed in search bar
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 "String.format(\"Share link for movie %s is not the expected\", contentTitle)");
         sa.assertAll();
