@@ -16,7 +16,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74451"})
-    @Test(description = "Hulu Video Player - Network Watermark", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Video Player - Network Watermark", groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermark() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -74,7 +74,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74454"})
-    @Test(description = "Hulu Video Player - Network Watermark - User-interrupted (Skip FF/RW | Pause without Controls)", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Video Player - Network Watermark - User-interrupted (Skip FF/RW | Pause without Controls)", groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
     public void verifyHuluVideoPlayerNetworkWatermarkUserInterruptedSkipFFRWPause() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

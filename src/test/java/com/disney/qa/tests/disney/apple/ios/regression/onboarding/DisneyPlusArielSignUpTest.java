@@ -16,7 +16,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     private static final String DOB_INVALID = "01/01/1766";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
-    @Test(description = "Log in - Verify sign up - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Verify sign up - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDoBUnder18() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
@@ -50,7 +50,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
-    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDOBInvalid() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
@@ -82,7 +82,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
-    @Test(description = "Log in - Verify login - DOB under 18", groups = {"Ariel-IAP", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Verify login - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
