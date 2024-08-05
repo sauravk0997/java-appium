@@ -6,9 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.disney.qa.api.explore.response.Container;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
-import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -481,6 +479,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
+    public Visuals getExploreAPIPageVisuals (String entityID) throws URISyntaxException,
+            JsonProcessingException {
+        ExplorePageResponse pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                        .setEntityId(entityID)
+                        .setProfileId(getAccount().getProfileId()).setLimit(30));
+        return pageResponse.getData().getPage().getVisuals();
+    }
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getDisneyExploreSearchRequest()
                 .setEntityId(pageID)
