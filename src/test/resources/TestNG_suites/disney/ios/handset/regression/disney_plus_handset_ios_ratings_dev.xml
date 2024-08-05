@@ -36,17 +36,17 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKMRBRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Turkey AI Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset AI Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAIRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset New Zealand OFLC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset OFLC Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Brazil DJCTQ Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset DJCTQ Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
         </classes>
@@ -56,7 +56,7 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Germany FSK-FSF-E Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset FSK-FSF-E Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
         </classes>

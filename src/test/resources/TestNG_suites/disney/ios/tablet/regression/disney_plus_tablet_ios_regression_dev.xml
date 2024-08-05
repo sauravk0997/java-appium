@@ -52,7 +52,7 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuArielProfilesTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset More Menu Non US" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu Non US" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusNonUSMoreMenuProfilesTest"/>
         </classes>
@@ -110,6 +110,16 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Deep Links" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Profiles" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
