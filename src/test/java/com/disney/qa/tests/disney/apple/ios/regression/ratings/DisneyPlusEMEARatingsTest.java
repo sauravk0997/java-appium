@@ -33,7 +33,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73147"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyRatingSystemEMEA6() {
         String locale = getEMEACountryCode();
         ratingsSetup(SIX_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
@@ -42,7 +42,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73148"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyRatingSystemEMEA9() {
         String locale = getEMEACountryCode();
         ratingsSetup(NINE_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
@@ -51,7 +51,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73149"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyEMEARating12() {
         String locale = getEMEACountryCode();
         ratingsSetup(TWELVE_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
@@ -60,7 +60,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73150"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyRatingSystemEMEA14() {
         String locale = getEMEACountryCode();
         ratingsSetup(FOURTEEN_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
@@ -69,7 +69,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73151"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyRatingSystemEMEA16() {
         String locale = getEMEACountryCode();
         ratingsSetup(SIXTEEN_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
@@ -78,7 +78,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73152"})
-    @Test(groups = {TestGroup.NON_US_RATINGS})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA})
     public void verifyRatingSystemEMEA18() {
         String locale = getEMEACountryCode();
         ratingsSetup(EIGHTEEN_PLUS.getContentRating(), getEMEACountryLanguage(locale), locale);
