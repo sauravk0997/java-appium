@@ -38,8 +38,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM0() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(ZERO_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(ZERO_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(ZERO_PLUS.getContentRating());
     }
 
@@ -47,8 +46,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM7() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(SEVEN_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(SEVEN_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(SEVEN_PLUS.getContentRating());
     }
 
@@ -56,8 +54,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM10() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(TEN_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(TEN_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(TEN_PLUS.getContentRating());
     }
 
@@ -65,8 +62,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM12() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(TWELVE_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(TWELVE_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
@@ -74,8 +70,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM13() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(THIRTEEN_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(THIRTEEN_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(THIRTEEN_PLUS.getContentRating());
     }
 
@@ -83,8 +78,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM14() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(FOURTEEN_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(FOURTEEN_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(FOURTEEN_PLUS.getContentRating());
     }
 
@@ -92,8 +86,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM16() {
         String locale = getLATAMCountryCode();
-        ratingsSetup(SIXTEEN_PLUS.getContentRating(), getLATAMCountryLanguage(locale), locale);
-        handleOneTrustPopUp();
+        ratingsSetup(SIXTEEN_PLUS.getContentRating(), LATAM_LANG, locale);
         confirmRegionalRatingsDisplays(SIXTEEN_PLUS.getContentRating());
     }
 
@@ -102,29 +95,5 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
                 EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size() - 1));
-    }
-
-    private String getLATAMCountryLanguage(String countryCode) {
-        switch (countryCode.toUpperCase()) {
-            case ARGENTINA:
-            case BOLIVIA:
-            case CHILE:
-            case COLOMBIA:
-            case COSTA_RICA:
-            case DOMINICAN_REPUBLIC:
-            case ECUADOR:
-            case EL_SALVADOR:
-            case GUATEMALA:
-            case HONDURAS:
-            case MEXICO:
-            case NICARAGUA:
-            case PANAMA:
-            case PARAGUAY:
-            case PERU:
-            case URUGUAY:
-                return "es";
-            default:
-                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
-        }
     }
 }
