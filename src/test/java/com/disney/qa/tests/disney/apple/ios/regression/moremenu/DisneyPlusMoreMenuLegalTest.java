@@ -156,15 +156,10 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void verifyImpressumTab() {
         SoftAssert sa = new SoftAssert();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter("DE", "TUID: ");
-
-
-        CreateDisneyAccountRequest accountRequest = CreateDisneyAccountRequest.builder()
-                .country("DE").isStarOnboarded(false).build();
-        setAccount(getAccountApi().createAccount(accountRequest));
-
+        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
         setAppToHomeScreen(getAccount());
 
