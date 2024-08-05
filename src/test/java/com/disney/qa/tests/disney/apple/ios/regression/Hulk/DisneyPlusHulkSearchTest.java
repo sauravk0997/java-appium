@@ -18,7 +18,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String HULU_CONTENT = "Only Murders in the Building";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
-    @Test(description = "Search Hulu Content", groups = {"Hulk", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -100,7 +100,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
-    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySearchDisplayRecentSearches() {
         String media1 = "Luca";
         String media2 = "Bluey";
@@ -182,7 +182,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651"})
-    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {"Hulk", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyWatchlistAddAndRemoveItem() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
