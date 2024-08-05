@@ -23,7 +23,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String TWENTY_EIGHTEEN = "2018";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
-    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
+    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU}, enabled = false)
     public void verifyAddProfileFlow() {
         initialSetup();
         handleAlert();
@@ -71,7 +71,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66792"})
-    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {"NonUS-More Menu"})
+    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {TestGroup.MORE_MENU})
     public void verifyEditProfileUIPrimaryProfile() {
         initialSetup();
         handleAlert();
@@ -102,7 +102,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73708"})
-    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {"NonUS-More Menu"})
+    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU})
     public void verifyEditProfileUIKidsProfile() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -131,7 +131,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66776"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {"NonUS-More Menu"}, enabled = false)
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU}, enabled = false)
     public void verifyAddProfilePageUI() {
         initialSetup();
         handleAlert();
@@ -161,7 +161,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69535"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {"NonUS More Menu", TestGroup.PRE_CONFIGURATION},enabled = false)
+    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION},enabled = false)
     public void verifyProfileCreationRestrictedFunctionality() {
         SoftAssert sa = new SoftAssert();
         setAppToAccountSettings();
