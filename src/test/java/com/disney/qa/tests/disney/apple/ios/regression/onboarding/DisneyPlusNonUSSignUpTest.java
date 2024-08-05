@@ -11,7 +11,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for US based users", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify onboarding stepper for US based users", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION })
     public void verifyOnboardingStepperUS() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -27,7 +27,7 @@ public class DisneyPlusNonUSSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62237", "XMOBQA-62241"})
-    @Test(description = "Verify valid password submissions and hide/show button", groups = {"NonUS-Onboarding", TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Verify valid password submissions and hide/show button", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION })
     public void verifyValidPasswordSubmissions() {
         verifySignUpButtonNavigation();
         SoftAssert sa = new SoftAssert();
