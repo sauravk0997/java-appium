@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
@@ -149,7 +150,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
-    // test
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
     @Test(description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
@@ -158,11 +158,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
 
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        String country = StringUtils.substringAfter("AT", "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().overrideLocations(getAccount(), "AT");
+        String country = StringUtils.substringAfter("DE", "TUID: ");
 
+
+        CreateDisneyAccountRequest accountRequest = CreateDisneyAccountRequest.builder()
+                .country("DE").isStarOnboarded(false).build();
+        setAccount(getAccountApi().createAccount(accountRequest));
+
+        getAccountApi().overrideLocations(getAccount(), "DE");
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
