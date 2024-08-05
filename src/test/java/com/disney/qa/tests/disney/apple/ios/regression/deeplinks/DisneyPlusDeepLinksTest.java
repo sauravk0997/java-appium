@@ -124,7 +124,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
-    @Test(description = "Deep Links - New URL Structure - Hulu Series Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Deep Links - New URL Structure - Hulu Series Detail Page", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));

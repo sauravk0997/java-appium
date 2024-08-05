@@ -26,7 +26,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String MULAN_DEEPLINK = R.TESTDATA.get("disney_prod_mulan_2020_deeplink");
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67865"})
-    @Test(description = "Verify Menu, Languages and UI", groups = {TestGroup.VIDEO_PLAYER, "PlayerAudioSubtitles", TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(description = "Verify Menu, Languages and UI", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifySubtitleMenuLanguageUI() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
