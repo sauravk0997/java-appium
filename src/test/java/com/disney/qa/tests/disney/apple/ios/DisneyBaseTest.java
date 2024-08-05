@@ -479,11 +479,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
     }
 
-    public Visuals getExploreAPIPageVisuals (String entityID) throws URISyntaxException,
+    public Visuals getExploreAPIPageVisuals(String entityID) throws URISyntaxException,
             JsonProcessingException {
         ExplorePageResponse pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                        .setEntityId(entityID)
-                        .setProfileId(getAccount().getProfileId()).setLimit(30));
+                .setEntityId(entityID)
+                .setProfileId(getAccount().getProfileId()).setLimit(30));
         return pageResponse.getData().getPage().getVisuals();
     }
 

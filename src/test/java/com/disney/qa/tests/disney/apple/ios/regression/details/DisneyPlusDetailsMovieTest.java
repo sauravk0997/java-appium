@@ -156,8 +156,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         detailsPage.getShareBtn().click();
         sa.assertTrue(detailsPage.getTypeOtherByLabel(
                         String.format("%s | Disney+", HOCUS_POCUS)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions.",
-                        HOCUS_POCUS));
+                String.format("'%s | Disney+' title was not found on share actions", HOCUS_POCUS));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(),
                 "Share action 'Copy' was not found");
 
@@ -337,7 +336,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
-                "String.format(\"Share link for movie %s is not the expected\", contentTitle)");
+                String.format("Share link for movie %s is not the expected", contentTitle));
         sa.assertAll();
     }
 
