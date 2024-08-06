@@ -187,6 +187,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
     private ExtendedWebElement globalNavBarView;
+
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
     @ExtendedFindBy(accessibilityId = "headlineHeader")
@@ -343,6 +344,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Accept All\"`]")
+    protected ExtendedWebElement staticTextLabelAcceptAll;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1410,8 +1414,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return artworkBackground.isPresent();
     }
 
-    public void clickOnCollectionBackButton() {
-        collectionBackButton.click();
+    public boolean isBackButtonOnScreen() {
+        return backButton.isElementPresent();
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
@@ -1479,6 +1483,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
+    public ExtendedWebElement getAcceptAllButton() {
+        return staticTextLabelAcceptAll;
+    }
+
     public boolean isNavBackArrowDisplayed() {
         return navBackButton.isElementPresent();
     }
@@ -1537,17 +1545,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickCancelButton() {
         cancelButton.click();
-    }
-
-    public boolean isTravelAlertTitlePresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
-    }
-
-    public boolean isTravelAlertBodyPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_BODY.getText())).isPresent();
-    }
-
-    public ExtendedWebElement getTravelAlertOk() {
-        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_TRAVEL_MESSAGE_OK.getText()));
     }
 }

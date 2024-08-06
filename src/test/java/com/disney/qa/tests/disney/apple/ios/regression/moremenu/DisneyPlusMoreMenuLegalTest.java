@@ -162,6 +162,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        disneyPlusLegalIOSPageBase.getAcceptAllButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, getLanguage(), MobilePlatform.IOS,
@@ -169,6 +170,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
+
 
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
