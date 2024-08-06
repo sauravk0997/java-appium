@@ -27,6 +27,7 @@ public class RatingConstant {
         R21("R21"),
         ZERO("0"),
         SIX("6"),
+        NINE("9"),
         TEN("10"),
         TWELVE("12"),
         FOURTEEN("14"),

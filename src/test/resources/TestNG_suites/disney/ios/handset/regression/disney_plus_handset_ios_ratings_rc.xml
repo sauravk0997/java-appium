@@ -62,4 +62,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusGermanyFSKandFSFandERatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Netherlands Kijwijzer Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
+        </classes>
+    </test>
 </suite>
