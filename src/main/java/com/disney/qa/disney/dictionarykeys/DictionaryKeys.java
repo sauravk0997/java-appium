@@ -78,6 +78,7 @@ public enum DictionaryKeys {
     BTN_SET_PROFILE_PIN("btn_set_profile_pin"),
     BTN_SETTINGS_GENDER_SAVE("btn_settings_gender_save"),
     BTN_SIGN_UP("btn_signup"),
+    BTN_TRAILER("btn_trailer"),
     BTN_TRAVEL_MESSAGE_OK("btn_travel_message_ok"),
     BTN_ERROR_MEDIAUNAVAILABLE("btn_error_mediaunavailable"),
     CANCEL("cancel"),
