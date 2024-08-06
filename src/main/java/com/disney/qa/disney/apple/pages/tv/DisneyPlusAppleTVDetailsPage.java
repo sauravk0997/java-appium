@@ -26,7 +26,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
     @ExtendedFindBy(accessibilityId = "title")
@@ -58,7 +58,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName("play").click();
+        getTypeButtonByName("PLAY").click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
