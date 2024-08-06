@@ -337,9 +337,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private Map<String, Object> getMoviesMetaDataFromAPI(String entityID) {
         Map<String, Object> exploreAPIMetaData = new HashMap<>();
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
-        if (visualsResponse != null) {
-            exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
-        }
+        exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
         return exploreAPIMetaData;
     }
 }
