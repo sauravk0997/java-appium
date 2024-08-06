@@ -189,7 +189,6 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "Subtitles advisory was not found.");
-        sa.assertTrue(details.getTypeButtonByName("RESTART").isPresent(), "Restart button is not displayed");
         sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
@@ -199,6 +198,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.clickMenuTimes(1,1);
         details.isOpened();
         sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
+        sa.assertTrue(details.getTypeButtonContainsLabel("RESTART").isPresent(), "Restart button is not displayed");
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
     }
