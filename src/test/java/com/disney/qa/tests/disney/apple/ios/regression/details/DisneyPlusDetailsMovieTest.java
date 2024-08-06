@@ -293,15 +293,9 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickOpenButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        Map<String, Object> exploreAPIMetaData = getComingSoonMoviesMetaDataFromAPI(entityID);
-
-        if (exploreAPIMetaData != null && !exploreAPIMetaData.isEmpty()) {
-            sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIMetaData.get(CONTENT_PROMO_TITLE),
+        Map<String, Object> exploreAPIMetaData = getMoviesMetaDataFromAPI(entityID);
+        sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIMetaData.get(CONTENT_PROMO_TITLE),
                     "Promo title didn't match with api promo title");
-        } else {
-            LOGGER.warn("Promo text validation is being skipped as null values are returned by the API");
-        }
-
         //Subscriber can play trailer (if available)
         String contentTitle = detailsPage.getContentTitle();
         detailsPage.getTrailerActionButton().click();
@@ -340,13 +334,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private Map<String, Object> getComingSoonMoviesMetaDataFromAPI(String entityID) {
+    private Map<String, Object> getMoviesMetaDataFromAPI(String entityID) {
         Map<String, Object> exploreAPIMetaData = new HashMap<>();
-        try {
-            Visuals movieVisuals = getExploreAPIPageVisuals(entityID);
-            exploreAPIMetaData.put(CONTENT_PROMO_TITLE, movieVisuals.getPromoLabel().getHeader());
-        } catch (URISyntaxException | JsonProcessingException e) {
-            LOGGER.warn("Exception caught while making Explore API request:", e);
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        if (visualsResponse != null) {
+            exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
         }
         return exploreAPIMetaData;
     }
