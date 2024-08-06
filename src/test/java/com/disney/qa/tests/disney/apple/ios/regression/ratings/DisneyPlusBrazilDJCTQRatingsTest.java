@@ -1,7 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
+import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
@@ -42,5 +45,15 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
     public void verifyBrazilRating16() {
         ratingsSetup(SIXTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74582"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
+    public void verifyBrazilSeasonLevelRating() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        ratingsSetup(BRAZIL_LANG, BRAZIL);
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"), 10);
+        detailsPage.clickOpenButton();
+        Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found");
     }
 }

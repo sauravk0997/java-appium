@@ -1129,4 +1129,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
         sa.assertTrue(getTypeOtherContainsLabel(rating).isPresent(), rating + " Rating was not found on details tab area");
     }
-}
+
+    public String getSeasonRating() {
+        return getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(getSeasonSelector())));
+    }
+    public boolean isSeasonRatingPresent() {
+        String[] seasonRatingSplit = getSeasonRating().split(" ");
+        String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
+        return getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
+                seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent();
+    }
+ }
