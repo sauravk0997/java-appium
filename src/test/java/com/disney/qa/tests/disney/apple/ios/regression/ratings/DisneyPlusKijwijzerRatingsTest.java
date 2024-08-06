@@ -5,6 +5,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.RatingConstant.NETHERLANDS;
+import static com.disney.qa.common.constant.RatingConstant.Rating.AL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.SIX;
 
 public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
@@ -12,7 +13,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyKijwijzerRating6() {
-        ratingsSetup(SIX.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(SIX.getContentRating(), "en-GB", NETHERLANDS);
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
 }
