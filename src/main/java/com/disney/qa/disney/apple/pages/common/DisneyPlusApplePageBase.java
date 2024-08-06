@@ -345,7 +345,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Accept All\"`]")
+    @ExtendedFindBy(accessibilityId = "Accept All")
     protected ExtendedWebElement staticTextLabelAcceptAll;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
@@ -1484,6 +1484,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getAcceptAllButton() {
+        System.out.println("** staticTextLabelAcceptAll: " + staticTextLabelAcceptAll.toString());
         return staticTextLabelAcceptAll;
     }
 
@@ -1546,7 +1547,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void clickCancelButton() {
         cancelButton.click();
     }
-    
+
     public boolean isTravelAlertTitlePresent() {
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
     }

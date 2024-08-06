@@ -159,13 +159,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         String country = StringUtils.substringAfter("DE", "TUID: ");
         setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        disneyPlusLegalIOSPageBase.getAcceptAllButton().click();
+
         setAppToHomeScreen(getAccount());
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
-        disneyPlusLegalIOSPageBase.getAcceptAllButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, getLanguage(), MobilePlatform.IOS,
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
