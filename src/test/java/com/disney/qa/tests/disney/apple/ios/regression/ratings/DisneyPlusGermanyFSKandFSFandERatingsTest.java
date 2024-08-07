@@ -8,7 +8,7 @@ import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 import static com.disney.qa.common.constant.RatingConstant.Rating.SIX;
 import static com.disney.qa.common.constant.RatingConstant.Rating.ZERO;
 
-public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusGermanyFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK})

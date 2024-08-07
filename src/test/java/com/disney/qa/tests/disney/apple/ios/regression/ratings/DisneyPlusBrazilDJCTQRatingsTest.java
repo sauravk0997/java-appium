@@ -7,7 +7,7 @@ import org.testng.annotations.*;
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
-public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68359"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
