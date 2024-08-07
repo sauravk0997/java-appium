@@ -160,7 +160,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
-        disneyPlusLegalIOSPageBase.getAcceptAllButton().click();
+        disneyPlusLegalIOSPageBase.checkIfBannerIsPresent();
 
         setAppToHomeScreen(getAccount());
 

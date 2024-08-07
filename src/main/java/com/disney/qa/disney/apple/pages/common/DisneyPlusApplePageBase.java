@@ -1484,8 +1484,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getAcceptAllButton() {
-        System.out.println("** staticTextLabelAcceptAll: " + staticTextLabelAcceptAll.toString());
         return staticTextLabelAcceptAll;
+    }
+
+    public boolean isAcceptAllButtonPresent() {
+        return staticTextLabelAcceptAll.isElementPresent();
+    }
+
+    public void checkIfBannerIsPresent() {
+        if (isAcceptAllButtonPresent())
+            {
+                getAcceptAllButton().click();
+            }
     }
 
     public boolean isNavBackArrowDisplayed() {
