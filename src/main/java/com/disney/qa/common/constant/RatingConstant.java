@@ -33,8 +33,8 @@ public class RatingConstant {
 
     public enum Rating {
         G("G"),
-        L("L"),
         GA("General Audience"),
+        L("L"),
         M("M"),
         M_18("M18"),
         NC_16("NC16"),
