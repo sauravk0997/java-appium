@@ -11,43 +11,22 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRatingALEnglish() {
-        ratingsSetup(AL.getContentRating(), "en-GB", NETHERLANDS);
+    public void verifyKijwijzerRatingAL() {
+        ratingsSetup(AL.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(AL.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRatingALnl() {
-        ratingsSetup(AL.getContentRating(), "nl", NETHERLANDS);
-        confirmRegionalRatingsDisplays(AL.getContentRating());
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRating6enGB() {
-        ratingsSetup(SIX.getContentRating(), "en-GB", NETHERLANDS);
-        confirmRegionalRatingsDisplays(SIX.getContentRating());
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRating6nl() {
-        ratingsSetup(SIX.getContentRating(), "nl", NETHERLANDS);
+    public void verifyKijwijzerRating6() {
+        ratingsSetup(SIX.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyKijwijzerRating9enGB() {
-        ratingsSetup(NINE.getContentRating(), "en-GB", NETHERLANDS);
-        confirmRegionalRatingsDisplays(NINE.getContentRating());
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRating9nl() {
-        ratingsSetup(NINE.getContentRating(), "nl", NETHERLANDS);
+        ratingsSetup(NINE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(NINE.getContentRating());
     }
 }
