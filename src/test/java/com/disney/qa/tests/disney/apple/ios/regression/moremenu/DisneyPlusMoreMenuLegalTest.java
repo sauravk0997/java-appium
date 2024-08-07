@@ -163,6 +163,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         disneyPlusLegalIOSPageBase.checkIfBannerIsPresent();
 
         setAppToHomeScreen(getAccount());
+        disneyPlusLegalIOSPageBase.checkIfBannerIsPresent();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
