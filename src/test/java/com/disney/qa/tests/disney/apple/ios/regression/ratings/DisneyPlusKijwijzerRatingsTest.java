@@ -25,7 +25,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
-    public void verifyKijwijzerRating9enGB() {
+    public void verifyKijwijzerRating9() {
         ratingsSetup(NINE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(NINE.getContentRating());
     }
