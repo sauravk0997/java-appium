@@ -31,7 +31,6 @@ public class RatingConstant {
     public static final String TURKEY = "TR";
     public static final String URUGUAY = "UY";
     public static final String UNITED_KINGDOM = "GB";
-    public static final String USA = "US";
 
     public enum Rating {
         AL("AL"),
