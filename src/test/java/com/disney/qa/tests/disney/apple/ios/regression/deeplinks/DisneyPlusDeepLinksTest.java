@@ -173,9 +173,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {""})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
-    public void verifyAdultProfileDetailsUnavailableState() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74856"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
+    public void testDeeplinkMovieDetailsPageContentUnavailable() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -185,7 +185,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount());
         homePage.isOpened();
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_movie_content_unavailable_entity"), 10);
         homePage.clickOpenButton();
         sa.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
         sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
@@ -200,8 +200,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyJuniorProfileDetailsUnavailableState() {
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    public void testDeeplinkJuniorModeGenericContentUnavailable() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -210,7 +210,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
+        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulu_hub"), 10);
         homePage.clickOpenButton();
 
         sa.assertTrue(homePage.getUnavailableContentError().isPresent() ||  homePage.getUnavailableContentErrorPreview().isPresent(),
