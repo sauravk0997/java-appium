@@ -35,9 +35,12 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
