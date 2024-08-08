@@ -27,12 +27,4 @@ public class DisneyGlobalUtils {
             return false;
         }
     }
-
-    public String getStringValueFromCountries(String locale, String itemToSearch) {
-        try {
-            return (String)disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
-        } catch (NullPointerException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-    }
 }

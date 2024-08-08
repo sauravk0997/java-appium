@@ -49,6 +49,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
+import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
 /**
  * Base class for ios
@@ -498,7 +499,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .setProfileId(getAccount().getProfileId())
                 .setCountryCode(locale)
                 .setMaturity(getMaxMaturityRating(locale))
-                .setRoamingDas(new DisneyGlobalUtils().getStringValueFromCountries(locale, "roamingDas"))
+                .setRoamingDas(getRoamingDas(locale))
                 .setLanguage(language)).getData().getPage().getContainers();
     }
 
@@ -558,7 +559,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                         .setProfileId(getAccount().getProfileId())
                         .setCountryCode(locale)
                         .setMaturity(getMaxMaturityRating(locale))
-                        .setRoamingDas(new DisneyGlobalUtils().getStringValueFromCountries(locale, "roamingDas"))
+                        .setRoamingDas(getRoamingDas(locale))
                         .setLanguage(language))
                 .getData().getSet().getItems();
     }
