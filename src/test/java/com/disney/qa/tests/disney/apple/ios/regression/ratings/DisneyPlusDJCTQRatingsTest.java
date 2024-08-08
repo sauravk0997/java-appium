@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
-public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68359"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
@@ -45,6 +45,13 @@ public class DisneyPlusBrazilDJCTQRatingsTest extends DisneyPlusRatingsBase {
     public void verifyBrazilRating16() {
         ratingsSetup(SIXTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73146"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ})
+    public void verifyBrazilRating18() {
+        ratingsSetup(EIGHTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
+        confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74582"})

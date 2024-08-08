@@ -99,47 +99,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
-    @Test(description = "Search > Mobile clients displayRecent Searches on search box focus", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifySearchDisplayRecentSearches() {
-        String media1 = "Luca";
-        String media2 = "Bluey";
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().editContentRatingProfileSetting(getAccount(), "MPAAAndTVPG", "TV-MA");
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        homePage.getSearchNav().click();
-
-        searchPage.searchForMedia(media1);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
-        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase(media1), String.format("Details page for %s didn't open", media1));
-        homePage.getSearchNav().click();
-
-        searchPage.searchForMedia(media2);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after tapping on search list");
-        sa.assertTrue(detailsPage.getMediaTitle().equalsIgnoreCase(media2), String.format("Details page for %s didn't open", media2));
-        pause(2);
-        homePage.getSearchNav().click();
-        searchPage.isOpened();
-        searchPage.clearText();
-
-        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
-        sa.assertTrue(searchPage.isTitlePresent(media1), "recently searched title was not displayed under recent search");
-        sa.assertTrue(searchPage.isTitlePresent(media2), "recently searched title was not displayed under recent search");
-        searchPage.tapRecentSearchClearButton();
-        sa.assertFalse(searchPage.isTitlePresent(media2), "recently searched title was not displayed under recent search");
-        sa.assertTrue(searchPage.isTitlePresent(media1), "recently searched title was not displayed under recent search");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
     @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
     public void verifyEmptyWatchlistAndAddToWatchlist() {

@@ -49,6 +49,7 @@ public enum DictionaryKeys {
     BTN_DELETE("btn_delete"),
     BTN_DELETE_PROFILE("btn_delete_profile"),
     BTN_DELETE_ALL_DOWNLOADS("btn_delete_all_downloads"),
+    BTN_DETAILS_RESTART("btn_details_restart"),
     BTN_FINISH_LATER("btn_finish_later"),
     BTN_FULL_CATALOG("btn_fullcatalog"),
     BTN_HELP_CENTER("btn_help_center"),
