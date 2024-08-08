@@ -340,6 +340,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement clearText;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
+    @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
+    private ExtendedWebElement checkboxUncheckedNormal;
+    @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
+    private ExtendedWebElement checkboxCheckedNormal;
+    @ExtendedFindBy(accessibilityId = "**/XCUIElementTypeButton[`label == \"editIcon\"`][%s]")
+    private ExtendedWebElement editIcon;
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
@@ -1549,5 +1555,17 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTravelAlertOk() {
         return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_TRAVEL_MESSAGE_OK.getText()));
+    }
+
+    public void clickLogoutAllDevices() {
+        checkboxUncheckedNormal.click();
+    }
+
+    public boolean isLogoutAllDevicesChecked() {
+        return checkboxCheckedNormal.isPresent();
+    }
+
+    public boolean isLogoutAllDevicesUnchecked() {
+        return checkboxUncheckedNormal.isPresent();
     }
 }
