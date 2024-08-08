@@ -187,7 +187,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
     private ExtendedWebElement globalNavBarView;
-
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
     @ExtendedFindBy(accessibilityId = "headlineHeader")
@@ -1483,18 +1482,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
-    public ExtendedWebElement getAcceptAllButton() {
-        return staticTextLabelAcceptAll;
-    }
-
-    public boolean isAcceptAllButtonPresent() {
-        return staticTextLabelAcceptAll.isElementPresent();
-    }
-
-    public void checkIfBannerIsPresent() {
-        if (isAcceptAllButtonPresent())
+    public void tapIfBannerIsPresent() {
+        if (staticTextLabelAcceptAll.isElementPresent())
             {
-                getAcceptAllButton().click();
+                staticTextLabelAcceptAll.click();
             }
     }
 
