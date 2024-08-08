@@ -157,7 +157,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter("DE", "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(getAccountApi().createAccount(offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         disneyPlusLegalIOSPageBase.checkIfBannerIsPresent();
@@ -167,7 +167,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country,  getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
