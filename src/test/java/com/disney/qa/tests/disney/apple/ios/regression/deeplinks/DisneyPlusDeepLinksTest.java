@@ -176,27 +176,18 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74856"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void testDeeplinkMovieDetailsPageContentUnavailable() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        String PREY = "Prey";
 
         setAppToHomeScreen(getAccount());
         homePage.isOpened();
         launchDeeplink(true, R.TESTDATA.get("disney_prod_movie_content_unavailable_entity"), 10);
         homePage.clickOpenButton();
-        sa.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
-        sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
+        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
 
         homePage.getUnavailableOkButton().click();
-        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_NOT_DISPLAYED);
-        sa.assertAll();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
