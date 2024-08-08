@@ -167,7 +167,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country,  getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
+
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("DE",  "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
