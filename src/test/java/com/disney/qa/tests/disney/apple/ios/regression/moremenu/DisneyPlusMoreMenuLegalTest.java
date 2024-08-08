@@ -62,18 +62,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         });
     }
 
-    private void confirmLegalPageOpensImpressum() {
-        String[] legalHeaders = {"Privacy Policy", "Cookies Policy", "UK & EU Privacy Rights", "Imprint", "Subscriber Agreement"};
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
-                "XMOBQA-62261 - Legal Page did not open on navigation");
-        for (String header : legalHeaders) {
-            LOGGER.info("Verifying header is present: {}", header);
-            Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
-                    String.format("Header '%s' was not displayed", header));
-        }
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76671"})
     @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
