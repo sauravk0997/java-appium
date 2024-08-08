@@ -16,17 +16,31 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(AL.getContentRating());
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73167"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyKijwijzerRating6() {
         ratingsSetup(SIX.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73168"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyKijwijzerRating9() {
         ratingsSetup(NINE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(NINE.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73169"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
+    public void verifyKijwijzerRating12() {
+        ratingsSetup(TWELVE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        confirmRegionalRatingsDisplays(TWELVE.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73170"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
+    public void verifyKijwijzerRating16() {
+        ratingsSetup(SIXTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
 }
