@@ -1483,10 +1483,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void tapIfBannerIsPresent() {
-        if (staticTextLabelAcceptAll.isElementPresent())
-            {
+        if (staticTextLabelAcceptAll.isElementPresent()) {
                 staticTextLabelAcceptAll.click();
-            }
+        }
     }
 
     public boolean isNavBackArrowDisplayed() {
