@@ -344,8 +344,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement checkboxUncheckedNormal;
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
     private ExtendedWebElement checkboxCheckedNormal;
-    @ExtendedFindBy(accessibilityId = "**/XCUIElementTypeButton[`label == \"editIcon\"`][%s]")
-    private ExtendedWebElement editIcon;
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
