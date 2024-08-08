@@ -114,7 +114,8 @@ public class RatingConstant {
     }
 
     public static String getRoamingDas(String locale) {
-        switch (locale) {
+        String currentLocale = locale;
+        switch (currentLocale) {
             case "BR":
                 return "23044";
             case "CA":
