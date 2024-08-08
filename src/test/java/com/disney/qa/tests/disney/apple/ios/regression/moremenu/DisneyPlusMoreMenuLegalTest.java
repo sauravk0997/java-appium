@@ -150,15 +150,15 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
-    public void verifyImpressumTab() {
+    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {"More Menu", TestGroup.PRE_CONFIGURATION})
+    public void verifyImpressumTab(String TUID) {
         SoftAssert sa = new SoftAssert();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        String country = StringUtils.substringAfter("DE", "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().overrideLocations(getAccount(), "DE");
+        String country = StringUtils.substringAfter(TUID, "TUID: ");
+        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        getAccountApi().overrideLocations(getAccount(), country);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         disneyPlusLegalIOSPageBase.checkIfBannerIsPresent();
 
@@ -168,14 +168,13 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
 
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("DE",  "en", MobilePlatform.IOS,
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country,  "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
 
-
-        getLocalizationUtils().getLegalHeaders().forEach(header -> {
+        disneyLocalizationUtils.getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
