@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,6 +28,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
     protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
     protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
+    private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -72,11 +75,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    @FindBy(name = "serviceAttributionLabel")
-    private ExtendedWebElement serviceAttributionLabel;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
+    private ExtendedWebElement adPod;
 
     //FUNCTIONS
 
@@ -147,12 +150,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> serviceAttributionLabel.isPresent(SIXTY_SEC_TIMEOUT)));
+                .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
         displayVideoController();
-        return serviceAttributionLabel.isPresent();
+        return getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {
@@ -175,6 +178,20 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
         waitUntil(ExpectedConditions.invisibilityOfElementLocated(ucpLoadSpinner.getBy()), 30);
         LOGGER.info("Buffering completed.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart(int timeout, int polling) {
+        LOGGER.info("Checking for loading spinner...");
+        try {
+            fluentWait(getDriver(), timeout, polling, "Loading spinner is not visible")
+                    .until(it -> ucpLoadSpinner.isElementPresent());
+        } catch (TimeoutException timeoutException) {
+            LOGGER.info("Loading spinner not detected and skipping wait");
+        }
+        LOGGER.info("Loading spinner detected and waiting for animation to complete");
+        fluentWait(getDriver(), timeout, polling, "Loading spinner is still visible")
+                .until(it -> ucpLoadSpinner.isElementNotPresent(timeout));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -435,13 +452,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             waitTime = timeout[0];
         }
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getDynamicAccessibilityId(adLabel).isPresent(waitTime);
+        return getStaticTextByLabel(adLabel).isPresent(waitTime);
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
         String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
-        return getDynamicAccessibilityId(adLabel).isElementPresent();
+        return getStaticTextByLabel(adLabel).isElementPresent();
     }
 
     public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
@@ -731,6 +748,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         detailsPage.getPlayButton().click();
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player.");
         waitForVideoToStart();
+        scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        waitForVideoToStart();
         clickBackButton();
     }
 
@@ -753,5 +772,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for R21 Pause timeout to end");
         fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
                 .until(it -> !getPlayerView().isPresent());
+    }
+
+    public boolean isAdPodPresent() {
+        return adPod.isPresent();
     }
 }

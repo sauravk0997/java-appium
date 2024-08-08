@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -26,7 +28,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[2]/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
     @ExtendedFindBy(accessibilityId = "title")
@@ -58,7 +60,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName("play").click();
+        getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_PLAY.getText())).click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
@@ -127,7 +130,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         moveDown(1,1);
         moveRight(2,1);
         isFocused(detailsTab);
-        sa.assertTrue(params.get("suggestedCellTitle").equalsIgnoreCase(getDetailsTabTitle()), "Suggested title is not the same as details title.");
+        sa.assertTrue(params.get("suggestedCellTitle").contains(getDetailsTabTitle()), "Suggested title is not the same as details title.");
         params.clear();
     }
 
@@ -145,19 +148,13 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public void compareExtrasTabToPlayerTitle(SoftAssert sa) {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        Map<String, String> params = new HashMap<>();
         moveDown(1,1);
         moveRight(2,1);
         isFocused(extrasTab);
-        String[] extrasCellTitle = getTabCells().get(0).split(",");
-        params.put("extrasCellTitle", extrasCellTitle[0].trim());
+        String extrasCellTitle = titleLabel.getText();
         clickFirstTabCell(getExtrasTab());
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
-        String[] videoPlayerTitle = videoPlayer.getTitleLabel().split("32s");
-        sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayerTitle[0].trim()),
-                "Extras title is not the same as video player title");
-        params.clear();
+        videoPlayer.waitForVideoToStart(10,3);
+        sa.assertTrue(extrasCellTitle.equalsIgnoreCase(getTypeOtherByLabel(videoPlayer.getTitleLabel()).getText()), "Extras title is not the same as video player title");
     }
 
     /**

@@ -13,7 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 public class DisneyPlusWelcomeScreenTabletTest extends DisneyPlusWelcomeScreenTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67821"})
-    @Test(description = "Verify the Welcome screen elements in Landscape mode (Tablet only)", groups = TestGroup.PRE_CONFIGURATION, enabled = false)
+    @Test(description = "Verify the Welcome screen elements in Landscape mode (Tablet only)", groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyWelcomeScreenLandscape() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());

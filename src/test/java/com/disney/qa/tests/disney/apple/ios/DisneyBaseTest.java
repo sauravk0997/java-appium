@@ -6,9 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.disney.qa.api.explore.response.Container;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
-import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -84,6 +82,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
+    public static final String DISABLED = "disabled";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -400,36 +399,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(request);
     }
 
-    public void setOneTrustConfig() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
-        jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection("platformConfig");
-        applePageBase.scrollToItem("oneTrustConfig").click();
-        LOGGER.info("fetching oneTrustConfig value from config file:" + R.CONFIG.get("oneTrustConfig"));
-        boolean enableOneTrustConfig = Configuration.get(DisneyConfiguration.Parameter.ENABLE_ONE_TRUST_CONFIG, Boolean.class).orElse(false);
-        if (enableOneTrustConfig) {
-            LOGGER.info("Navigating to domainIdentifier..");
-            applePageBase.scrollToItem("domainIdentifier").click();
-            applePageBase.saveDomainIdentifier("ac7bd606-0412-421f-b094-4066acca7edd-test");
-            applePageBase.navigateBack();
-            LOGGER.info("Navigating to isEnabledV2..");
-            applePageBase.scrollToItem("isEnabledV2").click();
-            applePageBase.enableOneTrustConfig();
-        } else {
-            applePageBase.removeDomainIdentifier();
-            applePageBase.navigateBack();
-            applePageBase.disableOneTrustConfig();
-        }
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
-    }
-
     public void disableBrazeConfig() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         JarvisAppleBase jarvis = getJarvisPageFactory();
@@ -439,12 +408,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         LOGGER.info("Navigating to isEnabled..");
         applePageBase.scrollToItem("isEnabled").click();
         applePageBase.disableBrazeConfig();
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Restart Disney app..");
-        restart();
-        LOGGER.info("Click allow to track your activity..");
-        handleAlert();
+        terminateJarvisInstallDisney();
     }
 
     public void launchJarvisOrInstall() {
@@ -513,6 +477,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public Visuals getExploreAPIPageVisuals(String entityID) {
+        ExplorePageResponse pageResponse;
+        try {
+             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()).setLimit(30));
+        }
+        catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return pageResponse.getData().getPage().getVisuals();
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
