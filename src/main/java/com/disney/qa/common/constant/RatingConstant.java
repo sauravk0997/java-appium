@@ -1,9 +1,5 @@
 package com.disney.qa.common.constant;
 
-import lombok.Data;
-
-import java.util.List;
-
 public class RatingConstant {
 
     public static final String ARGENTINA = "AR";
