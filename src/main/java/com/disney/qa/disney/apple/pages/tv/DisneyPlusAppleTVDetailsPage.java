@@ -67,7 +67,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @Override
     public DisneyPlusAppleTVVideoPlayerPage clickContinueButton() {
-        getTypeButtonByName("bookmarked").click();
+        getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_CONTINUE_DETAILS.getText())).click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
