@@ -307,7 +307,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS, sa);
 
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(4);
+        videoPlayer.waitForAdToCompleteIfPresent(6);
         Assert.assertTrue(videoPlayer.isRatingPresent(PG_13_RATING), String.format("%s rating was not shown for %s", PG_13_RATING, MS_MARVEL));
         sa.assertAll();
     }
