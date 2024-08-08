@@ -1,5 +1,9 @@
 package com.disney.qa.common.constant;
 
+import lombok.Data;
+
+import java.util.List;
+
 public class RatingConstant {
 
     public static final String ARGENTINA = "AR";
@@ -108,76 +112,6 @@ public class RatingConstant {
             case "PE":
             case "UY":
                 return "1850";
-            default:
-                throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
-        }
-    }
-
-    public static String getRoamingDas(String locale) {
-        String currentLocale = locale;
-        switch (currentLocale) {
-            case "BR":
-                return "23044";
-            case "CA":
-                return "23065";
-            case "DE":
-                return "23117";
-            case "JP":
-                return "23098";
-            case "KR":
-                return "23126";
-            case "NZ":
-                return "23150";
-            case "SG":
-                return "23116";
-            case "TR":
-                return "23144";
-            case "US":
-                return "23831";
-            case "HT":
-                return "23155";
-            case "MU":
-                return "23114";
-            case "YT":
-                return "23124";
-            case "RE":
-                return "23101";
-            case "GB":
-                return "23136";
-            case "AR":
-                return "23034";
-            case "BO":
-                return "23042";
-            case "CL":
-                return "23028";
-            case "CO":
-                return "23040";
-            case "CR":
-                return "23033";
-            case "DO":
-                return "23038";
-            case "EC":
-                return "23039";
-            case "SV":
-                return "23043";
-            case "GT":
-                return "23031";
-            case "HN":
-                return "23041";
-            case "MX":
-                return "23045";
-            case "NI":
-                return "23035";
-            case "PA":
-                return "23029";
-            case "PY":
-                return "23036";
-            case "PE":
-                return "23032";
-            case "UY":
-                return "23030";
-            case "NL":
-                return "23104";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }

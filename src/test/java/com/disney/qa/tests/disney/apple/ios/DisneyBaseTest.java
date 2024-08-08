@@ -13,6 +13,7 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
+import com.disney.util.disney.DisneyGlobalUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
@@ -48,7 +49,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
-import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
 /**
  * Base class for ios
@@ -498,7 +498,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .setProfileId(getAccount().getProfileId())
                 .setCountryCode(locale)
                 .setMaturity(getMaxMaturityRating(locale))
-                .setRoamingDas(getRoamingDas(locale))
+                .setRoamingDas(new DisneyGlobalUtils().getStringValueFromCountries(locale, "roamingDas"))
                 .setLanguage(language)).getData().getPage().getContainers();
     }
 
@@ -558,7 +558,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                         .setProfileId(getAccount().getProfileId())
                         .setCountryCode(locale)
                         .setMaturity(getMaxMaturityRating(locale))
-                        .setRoamingDas(getRoamingDas(locale))
+                        .setRoamingDas(new DisneyGlobalUtils().getStringValueFromCountries(locale, "roamingDas"))
                         .setLanguage(language))
                 .getData().getSet().getItems();
     }
