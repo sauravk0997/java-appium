@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -11,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
@@ -198,7 +201,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.clickMenuTimes(1,1);
         details.isOpened();
         sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
-        sa.assertTrue(details.getTypeButtonContainsLabel("RESTART").isPresent(), "Restart button is not displayed");
+        sa.assertTrue(details.getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DETAILS_RESTART.getText())).isPresent(), "Restart button is not displayed");
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
     }

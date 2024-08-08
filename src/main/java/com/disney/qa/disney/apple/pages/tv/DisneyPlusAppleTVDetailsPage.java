@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -58,7 +60,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName("PLAY").click();
+        getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_PLAY.getText())).click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
