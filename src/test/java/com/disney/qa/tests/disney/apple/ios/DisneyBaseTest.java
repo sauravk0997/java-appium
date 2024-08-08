@@ -13,7 +13,6 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
-import com.disney.util.disney.DisneyGlobalUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;

@@ -1,5 +1,6 @@
 package com.disney.qa.common.constant;
 
+@SuppressWarnings({"squid:S1479"})
 public class RatingConstant {
 
     public static final String ARGENTINA = "AR";
@@ -175,6 +176,8 @@ public class RatingConstant {
                 return "23032";
             case "UY":
                 return "23030";
+            case "NL":
+                return "23104";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }
