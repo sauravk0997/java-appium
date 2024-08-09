@@ -341,9 +341,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
     @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
-    private ExtendedWebElement checkboxUncheckedNormal;
+    private ExtendedWebElement checkboxUnchecked;
     @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
-    private ExtendedWebElement checkboxCheckedNormal;
+    private ExtendedWebElement checkboxChecked;
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
@@ -1556,14 +1556,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickLogoutAllDevices() {
-        checkboxUncheckedNormal.click();
+        checkboxUnchecked.click();
     }
 
     public boolean isLogoutAllDevicesChecked() {
-        return checkboxCheckedNormal.isPresent();
+        return checkboxChecked.isPresent();
     }
 
     public boolean isLogoutAllDevicesUnchecked() {
-        return checkboxUncheckedNormal.isPresent();
+        return checkboxUnchecked.isPresent();
     }
 }
