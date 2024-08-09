@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.account.CancellationReasons;
 import com.disney.qa.api.account.PatchType;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
@@ -29,7 +28,6 @@ import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -301,7 +299,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangePasswordIOSPageBase changePasswordPage = new DisneyPlusChangePasswordIOSPageBase(getDriver());
 
-        accountPage.clickChangePasswordCell();
+        accountPage.clickManageWithMyDisneyButton();
+        accountPage.getDynamicRowButtonLabel("editIcon", 2).click();
         String otp = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
