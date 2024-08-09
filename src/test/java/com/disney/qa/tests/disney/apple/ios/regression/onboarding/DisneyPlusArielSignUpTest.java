@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,8 +12,6 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     private static final String DOB_MINOR = "01/01/2020";
-    private static final String FIRST = "01";
-    private static final String SEVENTEEN_SIXTY_SIX = "1766";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
@@ -74,7 +71,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open.");
-        ednaDOBCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, SEVENTEEN_SIXTY_SIX);
+        ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
                 "Invalid DOB Message did not appear.");
