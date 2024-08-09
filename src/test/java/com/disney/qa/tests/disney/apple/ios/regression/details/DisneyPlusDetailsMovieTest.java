@@ -357,7 +357,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),
                 "Promo title didn't match with api promo title");
         sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE),
-                "Content title didn't match with api promo title");
+                "Content title didn't match with api content title");
         sa.assertEquals(detailsPage.getContentDescriptionText(), exploreAPIData.get(CONTENT_DESCRIPTION),
                 "Description didn't match with api description value");
 
