@@ -43,4 +43,11 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(SIXTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73171"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
+    public void verifyNetherlandsKijwijzerRating18() {
+        ratingsSetup(EIGHTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
+    }
 }
