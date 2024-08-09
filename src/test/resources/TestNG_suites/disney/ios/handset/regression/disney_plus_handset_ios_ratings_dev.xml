@@ -63,7 +63,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Singapore MDA Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeMDARatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
         </classes>
     </test>
 </suite>

@@ -11,7 +11,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
-public class DisneyPlusSingaporeMDARatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69568"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA})
