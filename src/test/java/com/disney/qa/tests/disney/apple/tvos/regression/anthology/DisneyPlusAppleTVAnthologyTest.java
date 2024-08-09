@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -11,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 
@@ -79,7 +82,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110036"})
-    @Test(description = "Verify Anthology Series - VOD Progress", groups = {TestGroup.ANTHOLOGY}, enabled = false)
+    @Test(description = "Verify Anthology Series - VOD Progress", groups = {TestGroup.ANTHOLOGY})
     public void verifyAnthologyVODProgress() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -167,7 +170,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105993"})
-    @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY}, enabled = false)
+    @Test(description = "Verify Anthology Series - Featured VOD", groups = {TestGroup.ANTHOLOGY})
     public void verifyAnthologyFeaturedVOD() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -188,8 +191,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles for the Deaf and Hearing Impaired").isPresent(), "Subtitles advisory was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Audio Descriptions").isPresent(), "Audio description advisory was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "Subtitles advisory was not found.");
         sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
@@ -199,6 +201,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.clickMenuTimes(1,1);
         details.isOpened();
         sa.assertTrue(details.doesContinueButtonExist(), "Continue button not displayed after exiting playback.");
+        sa.assertTrue(details.getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DETAILS_RESTART.getText())).isPresent(), "Restart button is not displayed");
         sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
         sa.assertAll();
     }
