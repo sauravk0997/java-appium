@@ -42,4 +42,11 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
         String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
+
+    public boolean isCheckYourBirthdateErrorPresent() {
+        //TODO:
+//            potentially hard string error message
+        String birthdateError = "Please check your birthdate and try again";
+        return getStaticTextByLabelContains(birthdateError).isPresent();
+    }
 }

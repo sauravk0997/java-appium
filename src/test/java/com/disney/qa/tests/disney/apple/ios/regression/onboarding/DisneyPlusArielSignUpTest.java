@@ -12,8 +12,8 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     private static final String DOB_MINOR = "01/01/2020";
-    private static final String DOB_ADULT = "01/01/1983";
-    private static final String DOB_INVALID = "01/01/1766";
+    private static final String FIRST = "01";
+    private static final String SEVENTEEN_SIXTY_SIX = "1766";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
@@ -49,8 +49,9 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
-    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
     public void testSignUpDOBInvalid() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
@@ -58,6 +59,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
 
         createDisneyAccountRequest
                 .setDateOfBirth(null)
@@ -70,13 +72,10 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
-        welcomeScreen.clickCompleteSubscriptionButton();
-
-        dobCollectionPage.isOpened();
-        dobCollectionPage.enterDOB(DOB_INVALID);
-        sa.assertTrue(dobCollectionPage.isInvalidDOBMessageDisplayed(),
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open.");
+        ednaDOBCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, SEVENTEEN_SIXTY_SIX);
+        ednaDOBCollectionPage.tapSaveAndContinueButton();
+        sa.assertTrue(ednaDOBCollectionPage.isCheckYourBirthdateErrorPresent(),
                 "Invalid DOB Message did not appear.");
         sa.assertAll();
     }
