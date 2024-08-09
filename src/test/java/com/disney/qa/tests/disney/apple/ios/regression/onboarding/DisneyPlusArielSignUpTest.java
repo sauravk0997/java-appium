@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -75,9 +76,8 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open.");
         ednaDOBCollectionPage.enterDOB(DateHelper.Month.JANUARY, FIRST, SEVENTEEN_SIXTY_SIX);
         ednaDOBCollectionPage.tapSaveAndContinueButton();
-        sa.assertTrue(ednaDOBCollectionPage.isCheckYourBirthdateErrorPresent(),
+        Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
                 "Invalid DOB Message did not appear.");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})

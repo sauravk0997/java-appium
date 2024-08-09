@@ -26,6 +26,11 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
         return staticTextByLabel.format(ednaDateOfBirthPageDescription).isPresent();
     }
 
+    public boolean isEdnaDateOfBirthFormatErrorPresent() {
+        String ednaDateOfBirthFormatError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR.getText());
+        return staticTextByLabel.format(ednaDateOfBirthFormatError).isPresent();
+    }
+
     //format: Month, day, year
     public void enterDOB(DateHelper.Month month, String day, String year) {
         textEntryField.click();
@@ -41,12 +46,5 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     public void tapLogOutButton() {
         String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
-    }
-
-    public boolean isCheckYourBirthdateErrorPresent() {
-        //TODO:
-//            potentially hard string error message
-        String birthdateError = "Please check your birthdate and try again";
-        return getStaticTextByLabelContains(birthdateError).isPresent();
     }
 }
