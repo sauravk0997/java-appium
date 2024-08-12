@@ -1,4 +1,4 @@
-package com.disney.qa.tests.disney.apple.ios.regression.profiles;
+package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.dictionary.*;
 

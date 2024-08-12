@@ -21,7 +21,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,RalphLogIn,Ratings,R21,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
     <parameter name="jenkinsBuild" value="3.5.0.71405"/>
-    
+
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
@@ -115,7 +115,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Profiles" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21Test"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
