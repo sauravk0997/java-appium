@@ -5,10 +5,10 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
-import static com.disney.qa.common.constant.RatingConstant.Rating.M_18;
-import static com.disney.qa.common.constant.RatingConstant.Rating.NC_16;
+import static com.disney.qa.common.constant.RatingConstant.Rating.M18;
+import static com.disney.qa.common.constant.RatingConstant.Rating.NC16;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
-import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
@@ -30,21 +30,21 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73179"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA})
     public void verifyRatingSystemSingaporeMDA_PG13() {
-        ratingsSetup(PG_13.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        confirmRegionalRatingsDisplays(PG_13.getContentRating());
+        ratingsSetup(PG13.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        confirmRegionalRatingsDisplays(PG13.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73180"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA})
     public void verifyRatingSystemSingaporeMDA_NC16() {
-        ratingsSetup(NC_16.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        confirmRegionalRatingsDisplays(NC_16.getContentRating());
+        ratingsSetup(NC16.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        confirmRegionalRatingsDisplays(NC16.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73181"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA})
     public void verifyRatingSystemSingaporeMDA_M18() {
-        ratingsSetup(M_18.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        confirmRegionalRatingsDisplays(M_18.getContentRating());
+        ratingsSetup(M18.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        confirmRegionalRatingsDisplays(M18.getContentRating());
     }
 }
