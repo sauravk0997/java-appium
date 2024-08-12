@@ -15,12 +15,6 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @ExtendedFindBy(accessibilityId = "checkboxUncheckedNormal")
-    private ExtendedWebElement logoutAllDevicesUnchecked;
-
-    @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
-    private ExtendedWebElement logoutAllDevicesChecked;
-
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidPassword;
 
@@ -55,18 +49,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
 
     public boolean isBackButtonPresent() {
         return getBackArrow().isElementPresent();
-    }
-
-    public boolean isLogoutAllDevicesChecked() {
-        return logoutAllDevicesChecked.isPresent();
-    }
-
-    public boolean isLogoutAllDevicesUnchecked() {
-        return logoutAllDevicesUnchecked.isPresent();
-    }
-
-    public void clickLogoutAllDevices() {
-        logoutAllDevicesUnchecked.click();
     }
 
     public boolean isLogoutAllDevicesTitlePresent() {
