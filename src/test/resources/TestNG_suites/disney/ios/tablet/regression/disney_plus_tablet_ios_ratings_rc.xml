@@ -65,7 +65,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Singapore R21 Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
