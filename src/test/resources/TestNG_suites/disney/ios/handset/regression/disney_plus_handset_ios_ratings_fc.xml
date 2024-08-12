@@ -62,4 +62,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Singapore R21 Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
+        </classes>
+    </test>
 </suite>
