@@ -396,6 +396,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         detailsTab.click();
     }
 
+    public String getContentDescriptionText() {
+        return contentDescription.getText();
+    }
+
     public boolean isContentDescriptionDisplayed() {
         return contentDescription.isPresent();
     }
