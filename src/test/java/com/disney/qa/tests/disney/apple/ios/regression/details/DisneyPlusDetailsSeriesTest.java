@@ -459,7 +459,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72543"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72419"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
     public void verifyComingSoonSeriesBehavior() {
         String httpPrefix = "https://";
@@ -506,8 +506,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Subscriber can share link to title over social media
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", contentTitle)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions", contentTitle));
+        String expectedLabel = String.format("%s | Disney+", contentTitle);
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(expectedLabel).isPresent(),
+                String.format("'%s' title was not found on share actions", expectedLabel));
+
         detailsPage.clickOnCopyShareLink();
         detailsPage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
