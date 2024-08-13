@@ -486,7 +486,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getTrailerActionButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart().verifyVideoPlaying(sa);
-        videoPlayer.clickBackButton().isOpened();
+        Assert.assertTrue(videoPlayer.clickBackButton().isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         //Subscriber can add title to Watchlist
         detailsPage.clickWatchlistButton();
@@ -510,7 +510,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 String.format("'%s | Disney+' title was not found on share actions", contentTitle));
         detailsPage.clickOnCopyShareLink();
         detailsPage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
