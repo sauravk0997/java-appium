@@ -21,7 +21,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     private static final String CONTENT_UNAVAILABLE_ERROR = "Content Unavailable Error not displayed";
     private static final String CONTENT_UNAVAILABLE_OK_ERROR = "Content Unavailable Error OK cta is not displayed";
-    private static final String DETAIL_PAGE_NOT_DISPLAYED = "Detail Page not displayed";
     private static final String HOME_PAGE_NOT_DISPLAYED = "Home page not displayed";
     private static final String WATCHLIST_IS_EMPTY_ERROR = "Your watchlist is empty";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
