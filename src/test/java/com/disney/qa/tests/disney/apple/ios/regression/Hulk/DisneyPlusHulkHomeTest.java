@@ -69,12 +69,12 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
-        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present"); // corregir
+        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present 1");
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
 
         huluPage.swipeInHuluBrandPage(Direction.UP);
         sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
-        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present"); // corregir
+        sa.assertTrue(huluPage.isBackButtonOnScreen(), "Back button is not present 2");
 
         huluPage.swipeInHuluBrandPage(Direction.DOWN);
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");

@@ -48,11 +48,11 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHuluBrandImageExpanded() {
-        return huluBrandImageExpanded.isPresent() && !huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
+        return huluBrandImageExpanded.isPresent(); // && !huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isHuluBrandImageCollapsed() {
-        return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
+        return huluBrandImageCollapsed.isPresent(); // && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isNetworkLogoPresent(String logoName) {

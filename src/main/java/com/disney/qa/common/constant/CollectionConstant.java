@@ -73,7 +73,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "5438edd1-09c2-459e-9e0b-fe13c8604e00";
+                return "1a0db8e0-8a46-4a7e-8181-d236e9ce6696";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
