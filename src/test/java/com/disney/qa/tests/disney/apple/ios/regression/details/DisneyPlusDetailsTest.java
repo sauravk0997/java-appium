@@ -161,8 +161,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
 
         // Movies
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
@@ -176,8 +175,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
 
         // Series
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
@@ -348,15 +346,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
         if(tabName.equalsIgnoreCase("suggested")){
             tabName = "related";
         }
-        launchDeeplink(true, deeplinkFormat + tabName.toLowerCase(), 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deeplinkFormat + tabName.toLowerCase());
     }
 
     protected ArrayList<String> getTabname() {
