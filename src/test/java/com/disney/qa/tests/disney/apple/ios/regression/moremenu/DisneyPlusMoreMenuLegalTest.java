@@ -10,6 +10,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusSellingLegalIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -60,19 +61,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
             Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
         });
-    }
-
-    private void confirmLegalPageOpensImpressum() {
-        String[] legalHeaders = {"Privacy Policy", "Cookies Policy", "UK & EU Privacy Rights", "Imprint", "Subscriber Agreement"};
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-        Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
-                "XMOBQA-62261 - Legal Page did not open on navigation");
-        
-        for (String header : legalHeaders) {
-            LOGGER.info("Verifying header is present: {}", header);
-            Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
-                    String.format("Header '%s' was not displayed", header));
-        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76671"})
@@ -151,22 +139,32 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyImpressumTab(String TUID) {
         SoftAssert sa = new SoftAssert();
+        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        setAppToHomeScreen(getAccount());
-
+        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        getAccountApi().overrideLocations(getAccount(), country);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),"Legal Page did not open on navigation");
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
-        confirmLegalPageOpensImpressum();
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
+        disneyLocalizationUtils.getLegalHeaders().forEach(header -> {
+            LOGGER.info("Verifying header is present: {}", header);
+            Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
+                    String.format("Header '%s' was not displayed", header));
+        });
+
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
         String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody("Imprint"));
         String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
