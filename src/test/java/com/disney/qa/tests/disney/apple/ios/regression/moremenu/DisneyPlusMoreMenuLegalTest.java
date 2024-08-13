@@ -148,8 +148,9 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         getAccountApi().overrideLocations(getAccount(), country);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-        oneTrustPage.tapAcceptAllButton();
-
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
 
