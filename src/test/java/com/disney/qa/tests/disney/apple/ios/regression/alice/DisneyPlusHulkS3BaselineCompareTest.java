@@ -101,12 +101,10 @@ public class DisneyPlusHulkS3BaselineCompareTest extends DisneyBaseTest {
     }
 
     private void navigateToDeeplink(HulkContentS3 hulkContentS3) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
-        launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(deeplinkFormat + hulkContentS3.getEntityId());
     }
 
     private void isContentUnavailableErrorPresent(DisneyPlusAliceDataProvider.HulkContentS3 hulkContentS3) {

@@ -59,8 +59,7 @@ public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
     public void verifyBrazilSeasonLevelRating() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         ratingsSetup(BRAZIL_LANG, BRAZIL);
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"));
         Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found");
     }
 }
