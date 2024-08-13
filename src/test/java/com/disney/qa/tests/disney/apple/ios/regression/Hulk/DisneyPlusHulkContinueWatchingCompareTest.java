@@ -111,18 +111,16 @@ public class DisneyPlusHulkContinueWatchingCompareTest extends DisneyBaseTest {
     }
 
     private void navigateToDeeplink(HulkContentS3 hulkContentS3) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
         try {
-            launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+            launchDeeplink(deeplinkFormat + hulkContentS3.getEntityId());
         } catch (WebDriverException exception) {
             LOGGER.info("Error launching deeplink. Restarting driver and trying again... " + exception.getMessage());
             getDriver().navigate().refresh();
-            launchDeeplink(true, deeplinkFormat + hulkContentS3.getEntityId(), 10);
+            launchDeeplink(deeplinkFormat + hulkContentS3.getEntityId());
         }
-        detailsPage.clickOpenButton();
     }
 
 
