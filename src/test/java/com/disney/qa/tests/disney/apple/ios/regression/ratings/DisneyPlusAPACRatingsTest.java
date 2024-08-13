@@ -30,7 +30,7 @@ public class DisneyPlusAPACRatingsTest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75203"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75204"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_APAC})
     public void verifyRatingSystemAPAC15() {
         ratingsSetup(FIFTEEN_PLUS.getContentRating(), JAPAN_LANG, JAPAN);
