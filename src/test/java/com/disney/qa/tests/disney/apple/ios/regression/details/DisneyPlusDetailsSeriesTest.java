@@ -31,7 +31,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
-    private static final String DETAILS_TAB_METADATA_SERIES = "Loki";;
+    private static final String DETAILS_TAB_METADATA_SERIES = "Loki";
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
@@ -85,7 +85,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         results.get(0).click();
 
         disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
-        List <ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
+        List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
         seasons.get(1).click();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
@@ -538,7 +538,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
-        Map<String, Object> exploreAPIData = getContentMetaDataFromAPI(visualsResponse);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -552,17 +552,17 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Featured Metadata
         String metadataString = detailsPage.getMetaDataLabel().getText();
-        getMetaDataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+        getMetadataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
                 String.format("%s value was not present on Metadata label", value)));
 
-        //Audio/Video/Format Quality
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
             ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
                     sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
                             String.format("Audio video badge %s is not present on details page featured area for " +
                                     "coming soon content", badge)));
         }
-
+        //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
             sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area for coming soon content");
@@ -587,35 +587,37 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private Map<String, Object> getContentMetaDataFromAPI(Visuals visualsResponse) {
-        Map<String, Object> exploreAPIMetaData = new HashMap<>();
+    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetadata = new HashMap<>();
 
-        exploreAPIMetaData.put(CONTENT_TITLE, visualsResponse.getTitle());
-        exploreAPIMetaData.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
 
         //Audio visual badge
         if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
             List<String> audioVideoApiBadge = new ArrayList<>();
-            visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
-            exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
         }
 
         //Rating
         if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
-            exploreAPIMetaData.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
         }
-        return exploreAPIMetaData;
+        return exploreAPIMetadata;
     }
 
-    private ArrayList<String> getMetaDataLabelValuesFromAPI(Visuals visualsResponse) {
+    private ArrayList<String> getMetadataLabelValuesFromAPI(Visuals visualsResponse) {
         ArrayList<String> metadataArray = new ArrayList();
         if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
             metadataArray.add(visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
         }
 
         if (visualsResponse.getMetastringParts().getRuntime() != null) {
-            metadataArray.add(String.valueOf((visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
+            metadataArray.add(String.valueOf(
+                    (visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
         }
 
         if (visualsResponse.getMetastringParts().getGenres() != null) {
