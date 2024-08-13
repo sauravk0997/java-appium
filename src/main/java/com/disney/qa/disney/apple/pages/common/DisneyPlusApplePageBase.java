@@ -1562,8 +1562,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isLogoutAllDevicesUnchecked() {
         return checkboxUnchecked.isPresent();
     }
-
-    public boolean isBackButtonOnScreen() {
-        return backButton.isPresent();
-    }
 }
