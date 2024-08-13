@@ -12,7 +12,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.*;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -20,7 +19,6 @@ import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.*;
 import java.util.*;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
@@ -28,7 +26,10 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
+    private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
+    private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
+    private static final String CONTENT_TITLE = "Content_Title";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
@@ -279,7 +280,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     public void verifyComingSoonMovieBehavior() {
         String httpPrefix = "https://";
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -289,13 +289,13 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
         String entityID = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_deeplink");
-        launchDeeplink(true, deeplink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
 
-        Map<String, Object> exploreAPIMetaData = getMoviesMetaDataFromAPI(entityID);
+        Map<String, Object> exploreAPIMetaData = getMoviesMetaDataFromAPI(visualsResponse);
         sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIMetaData.get(CONTENT_PROMO_TITLE),
-                    "Promo title didn't match with api promo title");
+                "Promo title didn't match with api promo title");
         //Subscriber can play trailer (if available)
         String contentTitle = detailsPage.getContentTitle();
         detailsPage.getTrailerActionButton().click();
@@ -334,10 +334,90 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private Map<String, Object> getMoviesMetaDataFromAPI(String entityID) {
-        Map<String, Object> exploreAPIMetaData = new HashMap<>();
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69963"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION})
+    public void verifyComingSoonMovieUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
+        String entityID = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),
+                "Promo title didn't match with api promo title");
+        sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE),
+                "Content title didn't match with api content title");
+        sa.assertEquals(detailsPage.getContentDescriptionText(), exploreAPIData.get(CONTENT_DESCRIPTION),
+                "Description didn't match with api description value");
+
+        //Audio/Video/Format Quality
+        ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                        String.format("Audio video badge %s is not present on details page", badge)));
+
+        //Featured Metadata
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getMetaDataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if CTA buttons are present
+        sa.assertTrue(detailsPage.getTrailerActionButton().isPresent(),
+                "Trailer button is not present on coming soon content");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
+                "Watchlist button is not present on coming soon content");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(),
+                "Share button is not present on coming soon content");
+
+        //Verify if tabs are present
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(),
+                "Details tab is not present on coming soon content");
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(),
+                "Extra tab is not present on coming soon content");
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(),
+                "Suggested tab is not present on coming soon content");
+
+        sa.assertAll();
+    }
+
+    private Map<String, Object> getMoviesMetaDataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetaData = new HashMap<>();
+
+        exploreAPIMetaData.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetaData.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
         exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual().getFlags() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
         return exploreAPIMetaData;
+    }
+
+    private ArrayList<String> getMetaDataLabelValuesFromAPI(Visuals visualsResponse) {
+        ArrayList<String> metadataArray = new ArrayList();
+        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
+            metadataArray.add(visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
+        }
+
+        if (visualsResponse.getMetastringParts().getRuntime() != null) {
+            metadataArray.add(String.valueOf((visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
+        }
+
+        if (visualsResponse.getMetastringParts().getGenres() != null) {
+            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+            //get only first two values of genre
+            genreList.subList(0, 2).forEach(genre -> metadataArray.add(genre));
+        }
+        return metadataArray;
     }
 }

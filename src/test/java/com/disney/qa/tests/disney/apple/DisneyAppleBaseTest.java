@@ -130,20 +130,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
-    private static final LazyInitializer<DisneyAccountApi> ACCOUNT_API = new LazyInitializer<>() {
-        @Override
-        protected DisneyAccountApi initialize() {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                    .platform(APPLE)
-                    .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                    .partner(DisneyConfiguration.getPartner())
-                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                    .build();
-            return new DisneyAccountApi(apiConfiguration);
-        }
-    };
-
     private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
         @Override
         protected DisneySubscriptionApi initialize() {
@@ -161,6 +147,17 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
+    });
+
+    private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(DisneyConfiguration.getPartner())
+                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                .build();
+        return new DisneyAccountApi(apiConfiguration);
     });
 
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
@@ -281,6 +278,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
+        ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
     }
@@ -318,11 +316,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     public static DisneyAccountApi getAccountApi() {
-        try {
-            return ACCOUNT_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
+        return ACCOUNT_API.get();
     }
 
     public static DisneySubscriptionApi getSubscriptionApi() {

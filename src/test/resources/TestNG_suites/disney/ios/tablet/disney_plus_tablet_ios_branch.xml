@@ -1,7 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="ios_tablet_branch" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
 
-    <parameter name="suiteOwner" value="csolmaz"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
@@ -10,7 +9,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+               value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_Gen_3,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="0"/>
@@ -18,7 +17,7 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,appVersion=${appVersion},init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,RalphLogIn,Ratings,R21,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
+               value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,RalphLogIn,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
     <parameter name="jenkinsBuild" value="3.5.0.71405"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding Acceptance" parallel="methods">
