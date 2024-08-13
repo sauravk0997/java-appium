@@ -348,9 +348,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy(accessibilityId = "Accept All")
-    protected ExtendedWebElement staticTextLabelAcceptAll;
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1484,12 +1481,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
-    }
-
-    public void tapIfBannerIsPresent() {
-        if (staticTextLabelAcceptAll.isElementPresent()) {
-                staticTextLabelAcceptAll.click();
-        }
     }
 
     public boolean isNavBackArrowDisplayed() {
