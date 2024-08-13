@@ -51,7 +51,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
     @Test(description = "Validate of the UI and functional items of the Hulu brand page", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
-    public void verifyHuluBrandPage() throws URISyntaxException, JsonProcessingException {
+    public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -79,11 +79,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.validateScrollingInHuluCollection(), "User cannot scroll horizontally");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network logos are not present");
-        ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
-        for (Item item : logoCollection) {
-            String logo_title = item.getVisuals().getTitle();
-            sa.assertTrue(huluPage.isNetworkLogoPresent(logo_title), String.format("%s Network logo is not present", logo_title));
-        }
+        verifyNetworkLogoValues(sa, huluPage);
         sa.assertAll();
     }
 
@@ -131,5 +127,18 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
 
         sa.assertAll();
+    }
+
+    private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
+        try {
+            // Index 5 indicates the list of Network Logos from the Hulu Brand page
+            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
+            for (Item item : logoCollection) {
+                String logo_title = item.getVisuals().getTitle();
+                sa.assertTrue(huluPage.isNetworkLogoPresent(logo_title), String.format("%s Network logo is not present", logo_title));
+            }
+        } catch (URISyntaxException | JsonProcessingException e) {
+            sa.fail("There was a problem while validating Network Logos " + e.getMessage());
+        }
     }
 }
