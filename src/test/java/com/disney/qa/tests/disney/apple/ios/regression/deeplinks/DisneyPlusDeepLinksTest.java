@@ -42,21 +42,18 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyHomeDeeplink() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_home_deeplink"), 10);
-        homePage.clickOpenButton();
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink.");
+        launchDeeplink(R.TESTDATA.get("disney_prod_home_deeplink"));
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67547"})
     @Test(description = "Deep Link - Legacy Watchlist URL", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyDeepLinkWatchlist() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         String legacyWatchlistDeepLink = R.TESTDATA.get("disney_prod_watchlist_deeplink_legacy");
-        launchDeeplink(true, legacyWatchlistDeepLink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(legacyWatchlistDeepLink);
         Assert.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
     }
 
@@ -68,13 +65,11 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deepLink);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deepLink);
         homePage.dismissAppTrackingPopUp(10);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
@@ -85,11 +80,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(description = "Deep Link - New URL Structure - Watchlist - Un-authenticated", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_watchlist_deeplink_2"), 10);
-        homePage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
 
         handleAlert();
         login(getAccount());
@@ -104,8 +97,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyMovieDetailsDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_movie_detail_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains("Cars"),
                 "Cars Movie Details page did not open via deeplink.");
@@ -116,8 +108,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifySeriesDetailsDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_series_detail_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains("Avengers Assemble"),
                 "Avengers Assemble Details page did not open via deeplink.");
@@ -129,8 +120,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING),
                 "Only Murders In The Building - Hulu Series Details Page did not open via deeplink.");
@@ -146,8 +136,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, deepLink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deepLink);
 
         sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo page are not present");
 

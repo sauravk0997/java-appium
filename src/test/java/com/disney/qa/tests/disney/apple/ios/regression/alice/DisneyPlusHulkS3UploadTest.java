@@ -140,8 +140,7 @@ public class DisneyPlusHulkS3UploadTest extends DisneyBaseTest {
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
-        launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(deeplinkFormat + hulkContent.getEntityId());
     }
 
     private void recoverApp(DisneyPlusAliceDataProvider.HulkContent hulkContent, DisneyPlusAliceDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
