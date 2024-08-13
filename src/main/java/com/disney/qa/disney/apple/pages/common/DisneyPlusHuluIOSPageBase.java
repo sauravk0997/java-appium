@@ -12,7 +12,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageExpanded;
 
-    @FindBy(xpath = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @FindBy(xpath = "//XCUIElementTypeButton[@name=\"buttonBack\"]/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageCollapsed;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24LightActive\"`]")
@@ -48,11 +48,11 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHuluBrandImageExpanded() {
-        return huluBrandImageExpanded.isPresent(); // && !huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
+        return huluBrandImageExpanded.isPresent() && !huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isHuluBrandImageCollapsed() {
-        return huluBrandImageCollapsed.isPresent(); // && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
+        return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isNetworkLogoPresent(String logoName) {
