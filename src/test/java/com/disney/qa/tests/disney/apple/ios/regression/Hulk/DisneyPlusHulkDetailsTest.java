@@ -41,8 +41,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
-        homePage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"));
 
         sa.assertTrue(homePage.getUnavailableContentError().isPresent() ||  homePage.getUnavailableContentErrorPreview().isPresent(), "Unavailable content error not present.");
         sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
@@ -66,8 +65,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.isOpened();
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
-        homePage.clickOpenButton();
+        launchDeeplink( R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"));
 
         sa.assertTrue(homePage.getUnavailableContentError().isPresent(), "Unavailable content error not present.");
         sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
