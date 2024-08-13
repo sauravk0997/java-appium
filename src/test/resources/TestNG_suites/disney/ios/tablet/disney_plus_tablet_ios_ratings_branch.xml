@@ -7,7 +7,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_mini_4,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_2,iPad_Pro_Gen_3;deviceType=Tablet;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_Gen_3,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="choiceParam::groups::Test Group selection" value=",AI,APAC,DJCTQ,EMEA,FSK,KCC,Kijkwijzer,KMRB,LATAM,MDA,MPAATVPG,NCS,OFLC"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
@@ -53,6 +53,11 @@
     <test verbose="1" name="DisneyPlus iOS Tablet FSK-FSF-E Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Netherlands Kijwijzer Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
         </classes>
     </test>
 </suite>
