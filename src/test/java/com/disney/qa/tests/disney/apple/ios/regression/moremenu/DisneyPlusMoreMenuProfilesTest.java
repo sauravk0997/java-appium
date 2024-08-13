@@ -492,7 +492,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73134"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73134", "XMOBQA-69538"})
     @Test(description = "Ariel: Profiles - Edit Profile - Maturity Rating Slider", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileMaturityRatingSlider() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
