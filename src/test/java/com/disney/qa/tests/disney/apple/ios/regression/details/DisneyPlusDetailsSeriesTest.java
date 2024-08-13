@@ -39,6 +39,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
+    private static final String RATING = "Rating";
+    private static final String CONTENT_DESCRIPTION = "Content_Description";
+    private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
+    private static final String CONTENT_TITLE = "Content_Title";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
@@ -257,7 +262,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         sa.assertAll();
     }
 
@@ -277,7 +282,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.isOpened();
 
         detailsPage.clickPlayButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not opened");
+        sa.assertTrue(detailsPage.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.scrubToPlaybackPercentage(30);
 
         videoPlayer.clickBackButton();
@@ -319,7 +324,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.isOpened();
         detailsPage.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         videoPlayer.clickBackButton();
         detailsPage.isOpened();
@@ -343,7 +348,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.clickPlayButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not present");
@@ -400,7 +405,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.clickSeriesTab();
         searchPage.selectRandomTitle();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.verifyVideoPlayingFromBeginning(sa);
@@ -420,28 +425,28 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.clickPlayButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not present");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.scrubToPlaybackPercentage(5);
 
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present");
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present");
 
         detailsPage.clickContinueButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not present");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         videoPlayer.scrubToPlaybackPercentage(99);
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.tapBackButton();
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), "Episode Title not present");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
@@ -473,6 +478,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
         String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
@@ -519,5 +525,107 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71701"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    public void verifyComingSoonSeriesUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
+        String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetaDataFromAPI(visualsResponse);
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),
+                "Promo title didn't match with api promo title");
+        sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE),
+                "Content title didn't match with api content title");
+        sa.assertEquals(detailsPage.getContentDescriptionText(), exploreAPIData.get(CONTENT_DESCRIPTION),
+                "Description didn't match with api description value");
+
+        //Featured Metadata
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getMetaDataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Audio/Video/Format Quality
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area for " +
+                                    "coming soon content", badge)));
+        }
+
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area for coming soon content");
+        }
+
+        //Verify if CTA buttons are present
+        sa.assertTrue(detailsPage.getTrailerActionButton().isPresent(),
+                "Trailer button is not present on coming soon content");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
+                "Watchlist button is not present on coming soon content");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(),
+                "Share button is not present on coming soon content");
+
+        //Verify if tabs are present
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(),
+                "Details tab is not present on coming soon content");
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(),
+                "Extra tab is not present on coming soon content");
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(),
+                "Suggested tab is not present on coming soon content");
+
+        sa.assertAll();
+    }
+
+    private Map<String, Object> getContentMetaDataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetaData = new HashMap<>();
+
+        exploreAPIMetaData.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetaData.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
+            exploreAPIMetaData.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
+        return exploreAPIMetaData;
+    }
+
+    private ArrayList<String> getMetaDataLabelValuesFromAPI(Visuals visualsResponse) {
+        ArrayList<String> metadataArray = new ArrayList();
+        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
+            metadataArray.add(visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
+        }
+
+        if (visualsResponse.getMetastringParts().getRuntime() != null) {
+            metadataArray.add(String.valueOf((visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
+        }
+
+        if (visualsResponse.getMetastringParts().getGenres() != null) {
+            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+            //get only first two values of genre
+            if (genreList.size() > 2) {
+                genreList = (ArrayList<String>) genreList.subList(0, 2);
+            }
+            genreList.forEach(genre -> metadataArray.add(genre));
+        }
+        return metadataArray;
     }
 }
