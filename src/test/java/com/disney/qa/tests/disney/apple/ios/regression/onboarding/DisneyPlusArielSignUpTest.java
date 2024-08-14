@@ -12,8 +12,6 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     private static final String DOB_MINOR = "01/01/2020";
-    private static final String DOB_ADULT = "01/01/1983";
-    private static final String DOB_INVALID = "01/01/1766";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
@@ -49,15 +47,16 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
-    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
     public void testSignUpDOBInvalid() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+        String stepperTitle = "STEP 3 OF 5";
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
 
         createDisneyAccountRequest
                 .setDateOfBirth(null)
@@ -70,15 +69,12 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
-        welcomeScreen.clickCompleteSubscriptionButton();
-
-        dobCollectionPage.isOpened();
-        dobCollectionPage.enterDOB(DOB_INVALID);
-        sa.assertTrue(dobCollectionPage.isInvalidDOBMessageDisplayed(),
-                "Invalid DOB Message did not appear.");
-        sa.assertAll();
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
+        Assert.assertTrue(ednaDOBCollectionPage.getStaticTextByLabelContains(stepperTitle).isPresent(), "Step 3 out of Five is not present");
+        ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
+        ednaDOBCollectionPage.tapSaveAndContinueButton();
+        Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
+                "Invalid DOB Message did not appear");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
