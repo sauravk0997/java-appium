@@ -69,7 +69,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
-        Assert.assertTrue( ednaDOBCollectionPage.isStepThreeOutOfFivePresent(), "Step 3 out of Five is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.isStepThreeOutOfFivePresent(), "Step 3 out of Five is not present");
         ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
