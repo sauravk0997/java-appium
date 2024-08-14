@@ -67,6 +67,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet LATAM Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusLATAMRatingsTest"/>
+        </classes>
+    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Singapore MDA Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
