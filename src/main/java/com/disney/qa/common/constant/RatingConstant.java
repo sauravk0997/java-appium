@@ -155,7 +155,7 @@ public class RatingConstant {
             case "TR":
                 return "23144";
             case "US":
-                return "23831";
+                return "1";
             case "HT":
                 return "23155";
             case "MU":
