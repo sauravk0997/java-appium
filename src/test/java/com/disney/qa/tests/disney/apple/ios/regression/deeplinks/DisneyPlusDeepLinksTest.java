@@ -52,7 +52,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyDeepLinkWatchlist() {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         String legacyWatchlistDeepLink = R.TESTDATA.get("disney_prod_watchlist_deeplink_legacy");
         launchDeeplink(legacyWatchlistDeepLink);
@@ -65,7 +66,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(deepLink);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
@@ -83,7 +85,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
 
         handleAlert();
@@ -120,7 +123,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
         detailsPage.isOpened();
@@ -136,7 +140,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(deepLink);
 
@@ -156,7 +161,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         // Get Network logo by app navigation
         BufferedImage networkLogoImage = getElementImage(homePage.getNetworkLogoImage(network));
         sa.assertTrue(areImagesTheSame(networkLogoImageSelected, networkLogoImage, 10),
-                "The user doesn't land on the given "+network+" network page");
+                "The user doesn't land on the given " + network + " network page");
 
         sa.assertAll();
     }
@@ -165,10 +170,11 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void testDeeplinkMovieDetailsPageContentUnavailable() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         setAppToHomeScreen(getAccount());
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_content_unavailable_entity"));
         Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
@@ -181,11 +187,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION})
     public void testDeeplinkJuniorModeHuluHubContentUnavailable() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_hub"));
         Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
