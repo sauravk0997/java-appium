@@ -73,7 +73,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
-
+    public static final String SINGAPORE_LANG = "en";
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
