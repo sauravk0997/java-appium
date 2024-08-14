@@ -49,10 +49,8 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
-    @Test(description = "Log in - Verify sign up - Invalid DOB", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
     public void testSignUpDOBInvalid() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -70,11 +68,12 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open.");
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
+        Assert.assertTrue( ednaDOBCollectionPage.isStepThreeOutOfFivePresent(), "Step 3 out of Five is not present");
         ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
-                "Invalid DOB Message did not appear.");
+                "Invalid DOB Message did not appear");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})

@@ -47,4 +47,8 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
         String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
+
+    public boolean isStepThreeOutOfFivePresent() {
+        return getStaticTextByLabelContains("STEP 3 OF 5").isPresent();
+    }
 }
