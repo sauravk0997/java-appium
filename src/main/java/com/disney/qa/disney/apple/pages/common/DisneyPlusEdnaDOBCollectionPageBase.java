@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
-    private static final String STEP_THREE_OF_FIVE = "STEP 3 OF 5";
-
     //LOCATORS
 
     //FUNCTIONS
@@ -53,9 +51,5 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
         String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
-    }
-
-    public boolean isStepThreeOutOfFivePresent() {
-        return getStaticTextByLabelContains(STEP_THREE_OF_FIVE).isPresent();
     }
 }

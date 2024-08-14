@@ -51,6 +51,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74265"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
     public void testSignUpDOBInvalid() {
+        String stepperTitle = "STEP 3 OF 5";
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -69,7 +70,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
-        Assert.assertTrue(ednaDOBCollectionPage.isStepThreeOutOfFivePresent(), "Step 3 out of Five is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.getStaticTextByLabelContains(stepperTitle).isPresent(), "Step 3 out of Five is not present");
         ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthFormatErrorPresent(),
