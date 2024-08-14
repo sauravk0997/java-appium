@@ -1112,6 +1112,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return textEntryField;
     }
 
+    public ExtendedWebElement getPasswordEntryField() {
+        return passwordEntryField;
+    }
+
     /**
      * @param min     session to be kept alive for these many minutes
      * @param element check on this element to make sure session is alive
