@@ -22,7 +22,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -36,7 +35,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String AHSOKA = "Ahsoka";
     private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String SHOP_TAB_SERIES = "Bluey";
@@ -161,8 +159,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
 
         // Movies
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
@@ -176,8 +173,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
 
         // Series
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
@@ -345,26 +341,5 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
         detailsPage.clickShopTab();
         sa.assertTrue(detailsPage.isTabSelected(SHOP.toUpperCase()), "Shop tab is not focused");
-    }
-
-    private void navigateToIMAXEnhancedDetailPageFromDeeplink(String tabName) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        String deeplinkFormat = "disneyplus://www.disneyplus.com/movies/doctor-strange-in-the-multiverse-of-madness/27EiqSW4jIyH/";
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
-        if(tabName.equalsIgnoreCase("suggested")){
-            tabName = "related";
-        }
-        launchDeeplink(true, deeplinkFormat + tabName.toLowerCase(), 10);
-        homePage.clickOpenButton();
-    }
-
-    protected ArrayList<String> getTabname() {
-        ArrayList<String> contentList = new ArrayList<>();
-        contentList.add("Suggested");
-        contentList.add("Extras");
-        contentList.add("Versions");
-        contentList.add("Details");
-        return contentList;
     }
 }

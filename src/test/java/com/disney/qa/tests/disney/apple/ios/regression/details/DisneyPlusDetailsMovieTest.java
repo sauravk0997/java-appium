@@ -280,7 +280,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     public void verifyComingSoonMovieBehavior() {
         String httpPrefix = "https://";
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -290,8 +289,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
         String entityID = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_movie_deadpool_wolverine_deeplink");
-        launchDeeplink(true, deeplink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
 
@@ -340,7 +338,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION})
     public void verifyComingSoonMovieUI() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
@@ -350,8 +347,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
-        launchDeeplink(true, deeplink, 10);
-        homePage.clickOpenButton();
+        launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),

@@ -159,12 +159,10 @@ public class DisneyPlusHulkContinueWatchingUploadTest extends DisneyBaseTest {
     }
 
     private void navigateToDeeplink(DisneyPlusHulkDataProvider.HulkContent hulkContent) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String deeplinkFormat = "disneyplus://www.disneyplus.com/browse/entity-";
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
-        launchDeeplink(true, deeplinkFormat + hulkContent.getEntityId(), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(deeplinkFormat + hulkContent.getEntityId());
     }
 
     private void isContentUnavailableErrorPresent(DisneyPlusHulkDataProvider.HulkContent hulkContent, DisneyPlusHulkDataProvider.PlatformType platformType, @NotEmpty String s3DeviceName) {
