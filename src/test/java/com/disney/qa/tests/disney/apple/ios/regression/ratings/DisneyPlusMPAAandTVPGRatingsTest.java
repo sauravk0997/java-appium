@@ -54,7 +54,7 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
         List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, UNITED_STATES_VIRGIN_ISLANDS, GUAM,
                 PUERTO_RICO, AMERICAN_SAMOA, MARSHALL_ISLANDS, NORTHERN_MARINA_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
         LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size() - 1));
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
     private String getEMEACountryLanguage(String countryCode) {
