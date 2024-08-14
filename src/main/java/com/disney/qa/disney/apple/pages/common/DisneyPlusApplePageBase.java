@@ -138,9 +138,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByLabel;
-// **/XCUIElementTypeSecureTextField[`label == "Password"`]
     @ExtendedFindBy(accessibilityId = "secureTextFieldPassword")
     protected ExtendedWebElement passwordEntryField;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeSecureTextField[`label == \"Password\"`]")
+    protected ExtendedWebElement passwordField;
     @ExtendedFindBy(accessibilityId = "Password")
     protected ExtendedWebElement passwordFieldHint;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
@@ -1114,6 +1115,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getPasswordEntryField() {
         return passwordEntryField;
+    }
+
+    public ExtendedWebElement getPasswordField() {
+        return passwordField;
     }
 
     /**
