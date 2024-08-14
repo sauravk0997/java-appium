@@ -131,14 +131,14 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
         try {
-            // Index 5 indicates the list of Network Logos from the Hulu Brand page
+            // Items from index 5 indicates the list of Network Logos from the Hulu Brand page
             ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
             for (Item item : logoCollection) {
                 String logo_title = item.getVisuals().getTitle();
                 sa.assertTrue(huluPage.isNetworkLogoPresent(logo_title), String.format("%s Network logo is not present", logo_title));
             }
         } catch (URISyntaxException | JsonProcessingException e) {
-            sa.fail("There was a problem while validating Network Logos " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
