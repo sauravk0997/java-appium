@@ -7,9 +7,9 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_8,iPhone_8Plus,iPhone_Xr,iPhone_Xs,iPhone_11,iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_14;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_14;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::groups::Test Group selection" value="NonUS-Ratings"/>
+    <parameter name="choiceParam::groups::Test Group selection" value=",AI,APAC,DJCTQ,EMEA,FSK,KCC,Kijkwijzer,KMRB,LATAM,MDA,MPAATVPG,NCS,OFLC"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
@@ -22,42 +22,52 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset KCC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKCCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKCCRatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset KMRB Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKoreaKMRBRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKMRBRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset R21 Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset AI Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21RatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAIRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Turkey AI Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset OFLC Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusTurkeyAIRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset New Zealand OFLC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset DJCTQ Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNewZealandOFLCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Brazil DJCTQ Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset FSK-FSF-E Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusBrazilDJCTQRatingsTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Germany FSK-FSF-E Ratings">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusGermanyFSKandFSFandERatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset EMEA Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Netherlands Kijwijzer Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset LATAM Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusLATAMRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Singapore MDA Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
         </classes>
     </test>
 </suite>

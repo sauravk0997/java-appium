@@ -1,32 +1,58 @@
 package com.disney.qa.common.constant;
 
+@SuppressWarnings({"squid:S1479"})
 public class RatingConstant {
 
+    public static final String ARGENTINA = "AR";
+    public static final String BOLIVIA = "BO";
     public static final String BRAZIL = "BR";
+    public static final String CHILE = "CL";
+    public static final String COLOMBIA = "CO";
+    public static final String COSTA_RICA = "CR";
+    public static final String DOMINICAN_REPUBLIC = "DO";
+    public static final String ECUADOR = "EC";
+    public static final String EL_SALVADOR = "SV";
     public static final String GERMANY = "DE";
+    public static final String GUATEMALA = "GT";
+    public static final String HAITI = "HT";
+    public static final String HONDURAS = "HN";
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
-    public static final String NEW_ZEALAND = "NZ";
-    public static final String SINGAPORE = "SG";
-    public static final String TURKEY = "TR";
-    public static final String USA = "US";
-    public static final String HAITI = "HT";
     public static final String MAURITIUS = "MU";
     public static final String MAYOTTE = "YT";
+    public static final String MEXICO = "MX";
+    public static final String NETHERLANDS = "NL";
+    public static final String NEW_ZEALAND = "NZ";
+    public static final String NICARAGUA = "NI";
+    public static final String PANAMA = "PA";
+    public static final String PARAGUAY = "PY";
+    public static final String PERU = "PE";
     public static final String REUNION = "RE";
+    public static final String SINGAPORE = "SG";
+    public static final String TURKEY = "TR";
+    public static final String URUGUAY = "UY";
     public static final String UNITED_KINGDOM = "GB";
 
     public enum Rating {
+        AL("AL"),
         G("G"),
-        L("L"),
         GA("General Audience"),
+        L("L"),
         M("M"),
+        M18("M18"),
+        NC16("NC16"),
         PG("PG"),
+        PG13("PG13"),
         R21("R21"),
         ZERO("0"),
         SIX("6"),
+        NINE("9"),
         TEN("10"),
         TWELVE("12"),
+        FOURTEEN("14"),
+        SIXTEEN("16"),
+        EIGHTEEN("18"),
+        ZERO_PLUS("0+"),
         SIX_PLUS("6+"),
         SEVEN_PLUS("7+"),
         NINE_PLUS("9+"),
@@ -52,8 +78,6 @@ public class RatingConstant {
 
     public static String getMaxMaturityRating(String locale) {
         switch (locale) {
-            case "BR":
-                return "1850";
             case "US":
             case "CA":
                 return "1830";
@@ -61,6 +85,7 @@ public class RatingConstant {
             case "SG":
             case "NZ":
                 return "1870";
+            case "BR":
             case "NL":
             case "JP":
             case "DE":
@@ -70,6 +95,22 @@ public class RatingConstant {
             case "YT":
             case "RE":
             case "GB":
+            case "AR":
+            case "BO":
+            case "CL":
+            case "CO":
+            case "CR":
+            case "DO":
+            case "EC":
+            case "SV":
+            case "GT":
+            case "HN":
+            case "MX":
+            case "NI":
+            case "PA":
+            case "PY":
+            case "PE":
+            case "UY":
                 return "1850";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
@@ -106,6 +147,40 @@ public class RatingConstant {
                 return "23101";
             case "GB":
                 return "23136";
+            case "AR":
+                return "23034";
+            case "BO":
+                return "23042";
+            case "CL":
+                return "23028";
+            case "CO":
+                return "23040";
+            case "CR":
+                return "23033";
+            case "DO":
+                return "23038";
+            case "EC":
+                return "23039";
+            case "SV":
+                return "23043";
+            case "GT":
+                return "23031";
+            case "HN":
+                return "23041";
+            case "MX":
+                return "23045";
+            case "NI":
+                return "23035";
+            case "PA":
+                return "23029";
+            case "PY":
+                return "23036";
+            case "PE":
+                return "23032";
+            case "UY":
+                return "23030";
+            case "NL":
+                return "23104";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }

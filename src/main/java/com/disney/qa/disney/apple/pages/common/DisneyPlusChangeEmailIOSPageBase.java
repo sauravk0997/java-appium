@@ -48,18 +48,6 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
     }
 
-    public boolean isLogoutAllDevicesChecked() {
-        return logoutAllDevicesChecked.isElementPresent();
-    }
-
-    public boolean isLogoutAllDevicesUnchecked() {
-        return logoutAllDevicesUnchecked.isElementPresent();
-    }
-
-    public void clickLogoutAllDevices() {
-        logoutAllDevicesUnchecked.click();
-    }
-
     public boolean isLearnMoreAboutMyDisney() {
         return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }

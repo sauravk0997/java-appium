@@ -27,7 +27,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "'Details' page is not shown after closing the video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String DISABLED = "disabled";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -124,13 +123,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyCloseButtonForDeepLinkingContent() {
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    public void verifyCloseButtonForDeepLinkingContentSeries() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_episode_deeplink"), 10);
-        detailsPage.clickOpenButton();
+
+        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_episode_deeplink"));
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();
@@ -144,8 +143,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, R.TESTDATA.get("disney_debug_video_player_movie_deeplink"), 10);
-        detailsPage.clickOpenButton();
+
+        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_movie_deeplink"));
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
         videoPlayer.clickBackButton();

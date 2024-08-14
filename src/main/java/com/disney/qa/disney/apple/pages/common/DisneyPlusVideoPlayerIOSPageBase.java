@@ -29,6 +29,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
     protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -74,11 +75,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    @FindBy(name = "serviceAttributionLabel")
-    private ExtendedWebElement serviceAttributionLabel;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
+    private ExtendedWebElement adPod;
 
     //FUNCTIONS
 
@@ -149,12 +150,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> serviceAttributionLabel.isPresent(SIXTY_SEC_TIMEOUT)));
+                .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
         displayVideoController();
-        return serviceAttributionLabel.isPresent();
+        return getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {
@@ -771,5 +772,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for R21 Pause timeout to end");
         fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
                 .until(it -> !getPlayerView().isPresent());
+    }
+
+    public boolean isAdPodPresent() {
+        return adPod.isPresent();
     }
 }

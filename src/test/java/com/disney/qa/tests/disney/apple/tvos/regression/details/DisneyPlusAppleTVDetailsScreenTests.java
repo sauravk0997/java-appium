@@ -117,7 +117,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90976"})
-    @Test(description = "Verify after playing trailer user is taken back to details page", groups = {TestGroup.DETAILS})
+    @Test(description = "Verify after playing trailer user is taken back to details page", groups = {TestGroup.DETAILS, TestGroup.SMOKE})
     public void trailerCompletionTakesUserToDetailsPage() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());

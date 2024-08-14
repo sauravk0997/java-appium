@@ -26,7 +26,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String MULAN_DEEPLINK = R.TESTDATA.get("disney_prod_mulan_2020_deeplink");
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67865"})
-    @Test(description = "Verify Menu, Languages and UI", groups = {TestGroup.VIDEO_PLAYER, "PlayerAudioSubtitles", TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify Menu, Languages and UI", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifySubtitleMenuLanguageUI() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -162,7 +162,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(true, deeplink, 10);
+        launchDeeplink(deeplink);
         homePage.clickOpenButton();
         sa.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();

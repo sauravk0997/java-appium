@@ -35,9 +35,12 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
@@ -837,31 +840,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             }
             return js;
         }
-    }
-
-    /**
-     * Launches deeplink using safari
-     *
-     * @param useSafari    a boolean param to determine if deeplink should be launched in safari
-     * @param url          url address
-     * @param explicitWait the wait time for the expected condition
-     */
-    default void launchDeeplink(boolean useSafari, String url, int explicitWait) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        if (useSafari) {
-            HashMap<String, Object> args = new HashMap<>();
-            args.put(BUNDLE_ID, SystemBundles.SAFARI.getBundleId());
-            js.executeScript(Gestures.LAUNCH_APP.getGesture(), args);
-            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(explicitWait));
-            String accessibilityID = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? "CapsuleNavigationBar?isSelected=true" : "UnifiedTabBarItemView?isSelected=true";
-            By urlField = By.id(accessibilityID);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(urlField));
-            getDriver().findElement(urlField).click();
-            String enterBtnUnicode = "\uE007";
-            wait.until(ExpectedConditions.elementToBeClickable(urlField));
-            getDriver().findElement(urlField).sendKeys(url);
-            getDriver().findElement(urlField).sendKeys(enterBtnUnicode);
-        } else launchDeeplink(url);
     }
 
     /**

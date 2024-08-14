@@ -1,10 +1,11 @@
-package com.disney.qa.tests.disney.apple.ios.regression.ratings;
+package com.disney.qa.tests.disney.apple.ios.regression.profiles;
 
 import com.disney.qa.api.dictionary.*;
 
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -20,7 +21,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
-public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
+public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
@@ -41,7 +42,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     private final int DOWNLOAD_POLLING = 15;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69769"})
-    @Test(description = "R21: Edit Profile - Maturity Ratings Slider - R21 Extra Copy", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21MaturityRatingSliderCopy() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -60,7 +61,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74415"})
-    @Test(description = "R21: Create PIN - Enter Password - Invalid Input", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINInvalidPasswordError() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -76,7 +77,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69767"})
-    @Test(description = "R21 - Create Pin - Enter Password - Valid Input directs user to Enter Date Of Birth Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINDOBScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -92,7 +93,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74416"})
-    @Test(description = "R21 - Create Pin - Enter Password - Forgot Password Flow", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         Date startTime = getEmailApi().getStartTime();
@@ -116,7 +117,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69894"})
-    @Test(description = "R21 - Create Pin - Verify Age - Select Back Button on Verify Age Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINBackButtonOnVerifyAgeScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -127,7 +128,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74656"})
-    @Test(description = "R21 - Create Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINBackButtonOnDOBScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -155,7 +156,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69777"})
-    @Test(description = "R21 - Playback - Video Player - Play Another R21 Content", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21VideoPlayerTwoContents() {
         ratingsSetup(SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -165,8 +166,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
         verifyAgePage.clickIAm21PlusButton();
@@ -186,15 +186,14 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
 
         videoPlayer.clickBackButton();
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"), 10);
-        detailsPage.clickOpenButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"));
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for second R21 content.");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
-    @Test(description = "R21: Create PIN - Enter Date of Birth - Error Modal when DOB is Not 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINNot21ErrorModalOnDOBScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -217,7 +216,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69860"})
-    @Test(description = "R21: Create PIN - Enter Date of Birth - Missing Or Incorrect", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePinDateOfBirthMissingOrIncorrect() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -244,7 +243,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69893"})
-    @Test(description = "R21 - Create Pin - Date of Birth Format", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINDateOfBirthFormat() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
@@ -263,7 +262,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
-    @Test(description = "R21: Create PIN - Verify Age - Not 21+ Error Modal", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINNot21ErrorModalOnAgeScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -284,7 +283,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69766"})
-    @Test(description = "R21 - Create Pin - Set Pin - Select Cancel", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINCancelButtonOnPinScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -306,7 +305,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69768"})
-    @Test(description = "R21: Create PIN - Verify Age - I Am 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINPasswordScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -317,7 +316,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69776"})
-    @Test(description = "R21 - Create Pin - Set PIN - Error Modal", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINCancelModalUIOnPINScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -341,7 +340,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74657"})
-    @Test(description = "R21 - Create Pin - Set PIN - Select Back Button on Set PIN Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINCancelModalButtonOnPINScreen() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -373,7 +372,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74658"})
-    @Test(description = "R21 - User Has PIN - Verify Age - I Am 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINVerifyPasswordScreen() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -384,7 +383,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74659"})
-    @Test(description = "R21 - User Has PIN - Verify Age - Not 21+ Error Modal", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINNot21ErrorMessage() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -408,7 +407,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
-    @Test(description = "R21 - Create Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -425,7 +424,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74749"})
-    @Test(description = "R21 - Existing Pin - Enter Password - Forgot Password Flow", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21ExistingPinForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         Date startTime = getEmailApi().getStartTime();
@@ -455,7 +454,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74741"})
-    @Test(description = " R21 - Downloads - Play Completed Download", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21DownloadsCompletedPlayback() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -493,7 +492,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74746"})
-    @Test(description = "R21 - User Has Pin - Verify Age - Select Back Button on Verify Age Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINBackButtonOnVerifyAgeScreen() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -505,7 +504,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74747"})
-    @Test(description = "R21 - User Has PIN - Enter Password - Valid Input directs user to Enter Date of Birth", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINRedirectsToDateOfBirthScreen() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -520,7 +519,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74753"})
-    @Test(description = "R21: Has PIN - Enter Date of Birth - Error Modal when DOB is Not 21+", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINDateOfBirthUnder21() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -544,7 +543,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74754"})
-    @Test(description = "R21 - User Has Pin - Enter Date of Birth - Select Back Button on Enter Your Birthday Screen", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINCancelModalButtonOnDOBScreen() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -571,7 +570,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74750"})
-    @Test(description = "R21 - User Has Pin - Enter Date of Birth - DOB Date Format for Supported UI Languages", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINDateOfBirthFormat() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
@@ -590,7 +589,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74752"})
-    @Test(description = "R21 - User Has Pin - Enter Date of Birth - Inline Error if Date is Illogical", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINErrorMessageForInvalidDOB() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -608,7 +607,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74751"})
-    @Test(description = "R21 - User Has Pin - Enter Date Of Birth - Null and Missing Values - Inline Errors", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINNullAndMissingValuesInDOB() {
         String EMPTY_DOB = " ";
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -628,7 +627,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69773"})
-    @Test(description = " R21 - Has Pin - Playback / Pause", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPinPlaybackPause() {
         SoftAssert sa = new SoftAssert();
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
@@ -660,7 +659,7 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74748"})
-    @Test(description = "R21 - User Has Pin - Enter Password - Invalid Input", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINInvalidPasswordError() {
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -674,75 +673,58 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
-    @Test(groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
-    public void verifyR21HasPINExceedTimeoutInBGWhilePlaybackIsPaused() {
-        int pauseTimeoutInSeconds = 30;
-        int halfPauseTimeoutInSeconds = pauseTimeoutInSeconds / 2;
-
-        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-
-        //populate 'Continue Watching' carousel
-        navigateToHomePageForPinUser();
-        setR21PauseTimeOut(pauseTimeoutInSeconds);
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-
-        videoPlayer.scrubToPlaybackPercentage(FORTY_FIVE_SEC_TIMEOUT);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton().getBackButton().click();
-        homePage.getHomeNav().click();
-        homePage.waitForHomePageToOpen();
-
-        //launch a Video from the Continue Watching carousel via details page
-        homePage.goToDetailsPageFromContinueWatching(contentTitle);
-        detailsPage.clickContinueButton();
-        videoPlayer.waitForVideoToStart();
-
-        videoPlayer.clickPauseButton();
-        pause(halfPauseTimeoutInSeconds);
-        videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
-
-        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
-        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "User is not navigated to the details page after pause timeout");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
-    @Test(description = "R21 - Playback - User Has PIN - Playback Pause - Timeout While Paused", groups = {TestGroup.NON_US_RATINGS, TestGroup.R21})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
         int newPauseTimeOutInSeconds = 30;
         ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPauseTimeOutInSeconds);
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
-        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        verifyAgeDOBPage.clickVerifyAgeButton();
-        videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        launchR21ContentFromContinueWatching();
         videoPlayer.clickPauseButton();
         videoPlayer.waitingForR21PauseTimeOutToEnd(newPauseTimeOutInSeconds, SHORT_TIMEOUT);
+        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74834"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
+    public void verifyR21HasPINPlaybackBackgroundedTimeOut() {
+        int newPausetimeOutInSeconds = 30;
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        setR21PauseTimeOut(newPausetimeOutInSeconds);
+        setPictureInPictureConfig(DISABLED);
+        launchR21ContentFromContinueWatching();
+        videoPlayer.runAppInBackground(newPausetimeOutInSeconds);
+        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "Expected R21 Content is not opened");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
+    public void verifyR21HasPINExceedTimeoutInBGWhilePlaybackIsPaused() {
+        int pauseTimeoutInSeconds = 30;
+        int halfPauseTimeoutInSeconds = pauseTimeoutInSeconds / 2;
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        navigateToHomePageForPinUser();
+        setR21PauseTimeOut(pauseTimeoutInSeconds);
+        setPictureInPictureConfig(DISABLED);
+        launchR21ContentFromContinueWatching();
+        videoPlayer.clickPauseButton();
+        pause(halfPauseTimeoutInSeconds);
+        videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
+        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
+        Assert.assertTrue(detailsPage.getMediaTitle().equals(contentTitle), "User is not navigated to the details page after pause timeout");
     }
 
     private void launchR21Content() {
@@ -755,6 +737,30 @@ public class DisneyPlusSingaporeR21RatingsTest extends DisneyPlusRatingsBase {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+    }
+
+    private void launchR21ContentFromContinueWatching() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(FORTY_FIVE_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        navigateToHomePageForPinUser();
+        homePage.goToDetailsPageFromContinueWatching(contentTitle);
+        detailsPage.clickContinueButton();
+        Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
     private void navigateToHomePageForPinUser() {

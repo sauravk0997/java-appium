@@ -6,9 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.disney.qa.api.explore.response.Container;
-import com.disney.qa.api.explore.response.ExploreSetResponse;
-import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -84,6 +82,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
+    public static final String DISABLED = "disabled";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -478,6 +477,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    }
+
+    public Visuals getExploreAPIPageVisuals(String entityID) {
+        ExplorePageResponse pageResponse;
+        try {
+             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()).setLimit(30));
+        }
+        catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return pageResponse.getData().getPage().getVisuals();
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
