@@ -3,9 +3,11 @@ package com.disney.qa.common.constant;
 @SuppressWarnings({"squid:S1479"})
 public class RatingConstant {
 
+    public static final String AMERICAN_SAMOA = "AS";
     public static final String ARGENTINA = "AR";
     public static final String BOLIVIA = "BO";
     public static final String BRAZIL = "BR";
+    public static final String CANADA = "CA";
     public static final String CHILE = "CL";
     public static final String COLOMBIA = "CO";
     public static final String COSTA_RICA = "CR";
@@ -13,34 +15,44 @@ public class RatingConstant {
     public static final String ECUADOR = "EC";
     public static final String EL_SALVADOR = "SV";
     public static final String GERMANY = "DE";
+    public static final String GUAM = "GU";
     public static final String GUATEMALA = "GT";
     public static final String HAITI = "HT";
     public static final String HONDURAS = "HN";
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
+    public static final String MARSHALL_ISLANDS = "MH";
     public static final String MAURITIUS = "MU";
     public static final String MAYOTTE = "YT";
     public static final String MEXICO = "MX";
     public static final String NETHERLANDS = "NL";
     public static final String NEW_ZEALAND = "NZ";
     public static final String NICARAGUA = "NI";
+    public static final String NORTHERN_MARINA_ISLANDS = "MP";
     public static final String PANAMA = "PA";
     public static final String PARAGUAY = "PY";
     public static final String PERU = "PE";
+    public static final String PUERTO_RICO = "PR";
     public static final String REUNION = "RE";
     public static final String SINGAPORE = "SG";
     public static final String TURKEY = "TR";
     public static final String URUGUAY = "UY";
     public static final String UNITED_KINGDOM = "GB";
+    public static final String UNITED_STATES = "US";
+    public static final String UNITED_STATES_OUTLYING_ISLANDS = "UM";
+    public static final String UNITED_STATES_VIRGIN_ISLANDS = "VI";
 
     public enum Rating {
         AL("AL"),
         G("G"),
-        L("L"),
         GA("General Audience"),
+        L("L"),
         M("M"),
         PG("PG"),
         R21("R21"),
+        TV_Y("TV-Y"),
+        TV_Y7("TV-Y7"),
+        TV_Y7_FV("TV-Y7-FV"),
         ZERO("0"),
         SIX("6"),
         NINE("9"),
@@ -77,6 +89,13 @@ public class RatingConstant {
         switch (locale) {
             case "US":
             case "CA":
+            case "AS":
+            case "GU":
+            case "MH":
+            case "MP":
+            case "PR":
+            case "UM":
+            case "VI":
                 return "1830";
             case "KR":
             case "SG":
@@ -178,6 +197,20 @@ public class RatingConstant {
                 return "23030";
             case "NL":
                 return "23104";
+            case "MH":
+                return "23061";
+            case "PR":
+                return "23062";
+            case "MP":
+                return "23063";
+            case "VI":
+                return "23064";
+            case "AS":
+                return "23066";
+            case "GU":
+                return "23067";
+            case "UM":
+                return "23068";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }
