@@ -1,9 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
     <suite verbose="1" name="ios_tablet_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="6">
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.6.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76856"/>
-    <parameter name="jenkinsBuild" value="3.6.0.71561"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_ratings_fc"/>
