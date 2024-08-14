@@ -603,31 +603,19 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
 
         //Rating
-        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
-            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
-        }
+        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+
         return exploreAPIMetadata;
     }
 
     private ArrayList<String> getMetadataLabelValuesFromAPI(Visuals visualsResponse) {
         ArrayList<String> metadataArray = new ArrayList();
-        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
-            metadataArray.add(visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
-        }
-
-        if (visualsResponse.getMetastringParts().getRuntime() != null) {
-            metadataArray.add(String.valueOf(
-                    (visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
-        }
-
-        if (visualsResponse.getMetastringParts().getGenres() != null) {
             var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
             //get only first two values of genre
             if (genreList.size() > 2) {
                 genreList = (ArrayList<String>) genreList.subList(0, 2);
             }
             genreList.forEach(genre -> metadataArray.add(genre));
-        }
         return metadataArray;
     }
 }
