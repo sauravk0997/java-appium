@@ -10,6 +10,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.NC16;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
+import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 
 public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
 
@@ -46,5 +47,12 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     public void verifyRatingSystemSingaporeMDA_M18() {
         ratingsSetup(M18.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         confirmRegionalRatingsDisplays(M18.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73182"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.DETAILS, TestGroup.R21})
+    public void verifyRatingR21() {
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        confirmRegionalRatingsDisplays(R21.getContentRating());
     }
 }
