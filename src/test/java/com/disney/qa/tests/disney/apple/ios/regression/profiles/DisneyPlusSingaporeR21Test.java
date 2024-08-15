@@ -14,6 +14,9 @@ import com.zebrunner.carina.utils.R;
 import io.appium.java_client.remote.MobilePlatform;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -24,6 +27,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
+import static com.disney.qa.common.constant.RatingConstant.UNITED_STATES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
@@ -848,5 +852,25 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
         DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+    }
+
+    @AfterClass(alwaysRun = true)
+    private void clearSingaporeOverride() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        restart();
+        if (homePage.isOpened()) {
+            initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        }
+        getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+        setDictionary("en", UNITED_STATES);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), UNITED_STATES);
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+        if (homePage.getTravelAlertOk().isPresent(SHORT_TIMEOUT)) {
+            homePage.getTravelAlertOk().click();
+        }
     }
 }
