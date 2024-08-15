@@ -43,6 +43,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
     private static final String MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE = "'You must verify your age' modal/popup is not displayed";
     private static final String BROWSE_OTHER_TITLE_ERROR_MESSAGE = "Browse other titles button not displayed on modal";
     private static final String DOB_INVALID_BIRTHDATE_ERROR_MESSAGE = "Invalid birthdate error did not display";
+    private static final String WE_COULD_NOT_LOG_YOU_IN_ERROR_MESSAGE = "We couldn't log you in' error message did not display for wrong password entered";
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;
     private static final String OUT_TITLE = "Out";
@@ -73,12 +74,13 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String incorrectPasswordError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
+        String incorrectPasswordError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
-        sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+        sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, WE_COULD_NOT_LOG_YOU_IN_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -189,13 +191,13 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
         pressByElement(pinPage.getR21SetPinButton(), 1);
-        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content");
 
         videoPlayer.clickBackButton();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_black_swan_deeplink"));
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for second R21 content.");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for second R21 content");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69771"})
@@ -252,7 +254,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21CreatePINDateOfBirthFormat() {
         ratingsSetup(SINGAPORE_LANG, SINGAPORE);
-        String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
+        String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -264,7 +267,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
 
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
-        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
+        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69770"})
@@ -572,7 +575,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21})
     public void verifyR21HasPINDateOfBirthFormat() {
         ratingsSetupWithPINNew(SINGAPORE_LANG, SINGAPORE);
-        String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
+        String r21Format = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -584,7 +588,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.pressByElement(verifyAgeDOBPage.getClearTextBtn(), 1);
-        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(), "R21 birthday format is not present.");
+        Assert.assertTrue(verifyAgeDOBPage.getTextFieldValue(r21Format).isPresent(),
+                "R21 birthday format is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74752"})
@@ -663,13 +668,14 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         ratingsSetupWithPINNew(SINGAPORE_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        String incorrectPasswordError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
+        String incorrectPasswordError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
-        Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
+        Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, WE_COULD_NOT_LOG_YOU_IN_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
@@ -723,7 +729,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         pause(halfPauseTimeoutInSeconds);
         videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
         Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
-        Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE), "User is not navigated to the details page after pause timeout");
+        Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE),
+                "User is not navigated to the details page after pause timeout");
     }
 
     private void launchR21ContentFromContinueWatching() {
@@ -758,10 +765,71 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
         pinPage.enterPin(PROFILE_PIN);
         homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
+        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open");
     }
 
-    private void setAccountRatingMax(DisneyAccount account) {
+    private void launchDeeplinkAndPlay() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+    }
+
+    private void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    private void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupForOTPAccount(String lang, String locale) {
+        setDictionary(lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
+        setDictionary(lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (IOException e) {
+            new Exception("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    private void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().
                 getMaturityRating().getRatingSystemValues();
         getAccountApi().editContentRatingProfileSetting(getAccount(),
@@ -781,66 +849,5 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
         DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
-    }
-
-    private void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void launchDeeplinkAndPlay() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
-    }
-
-    public void ratingsSetupForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (IOException e) {
-            new Exception("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
     }
 }
