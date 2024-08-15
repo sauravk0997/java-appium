@@ -7,6 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.stream.IntStream;
+
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.M18;
 import static com.disney.qa.common.constant.RatingConstant.Rating.NC16;
@@ -77,6 +79,12 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
+        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
+
+        IntStream.range(0, 4).forEach(i -> {
+            pinPage.getTypeKey(String.valueOf(i)).click();
+        });
+        pressByElement(pinPage.getR21SetPinButton(), 1);
         confirmRegionalRatingsDisplays(R21.getContentRating());
 
         sa.assertAll();
