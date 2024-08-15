@@ -15,7 +15,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -524,7 +523,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         if (passwordPage.getPasswordEntryField().isElementNotPresent(3)) {
             editProfile.getContentRatingHeader().click();
         }
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(passwordPage.getPasswordEntryField().getBy()), 5);
         passwordPage.getPasswordEntryField().click();
         passwordPage.enterPassword(getAccount());
         contentRatingPage.selectContentRating(RATING_MATURE);
