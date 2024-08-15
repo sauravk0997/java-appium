@@ -324,6 +324,7 @@ public enum DictionaryKeys {
     MY_DISNEY_LOGOUT_ALL_CHECKBOX("mydisney_logoutall_checkbox"),
     MY_DISNEY_MANAGE("mydisney_manage_cta"),
     MY_DISNEY_MANAGE_EMAIL_CURRENT("mydisney_manage_email_current"),
+    MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR("mydisney_missing_info_birthdate_format_error"),
     MY_DISNEY_MISSING_INFO_BODY("mydisney_missing_info_body"),
     MY_DISNEY_MISSING_INFO_HEADER("mydisney_missing_info_header"),
     MY_DISNEY_OTP_BODY("mydisney_OTP_body"),
