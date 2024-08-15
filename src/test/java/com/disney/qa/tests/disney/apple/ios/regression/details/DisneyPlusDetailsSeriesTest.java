@@ -552,7 +552,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Featured Metadata
         String metadataString = detailsPage.getMetaDataLabel().getText();
-        getMetadataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
                 String.format("%s value was not present on Metadata label", value)));
 
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
@@ -608,7 +608,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         return exploreAPIMetadata;
     }
 
-    private ArrayList<String> getMetadataLabelValuesFromAPI(Visuals visualsResponse) {
+    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
         ArrayList<String> metadataArray = new ArrayList();
             var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
             //get only first two values of genre
