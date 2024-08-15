@@ -539,14 +539,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
-            ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
+            return getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
-                    .setLimit(limit));
-            return setResponse.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException(e.getMessage());
+                    .setLimit(limit)).getData().getSet().getItems();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
