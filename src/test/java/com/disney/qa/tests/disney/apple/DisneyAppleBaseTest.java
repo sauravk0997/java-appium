@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -188,12 +189,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
-    private static final LazyInitializer<EmailApi> EMAIL_API = new LazyInitializer<>() {
-        @Override
-        protected EmailApi initialize() throws ConcurrentException {
-            return new EmailApi();
-        }
-    };
+    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
 
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
 
@@ -278,6 +274,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
+        EMAIL_API.remove();
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
@@ -328,11 +325,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     public static EmailApi getEmailApi() {
-        try {
-            return EMAIL_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
+        return Objects.requireNonNull(EMAIL_API.get());
     }
 
     /**

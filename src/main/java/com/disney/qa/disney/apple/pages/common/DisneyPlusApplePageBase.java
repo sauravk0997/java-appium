@@ -1332,14 +1332,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getCollection(collection).isPresent();
     }
 
-    public ExtendedWebElement getUnavailableContentErrorPreview() {
-        return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
-    }
-
     public void swipeInHuluBrandPage(Direction direction) {
         swipeInContainer(brandLandingView, direction, 500);
     }
-
 
     public ExtendedWebElement getCollection(CollectionConstant.Collection collection) {
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
