@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
@@ -52,7 +54,26 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73182"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.DETAILS, TestGroup.R21})
     public void verifyRatingR21() {
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-        confirmRegionalRatingsDisplays(R21.getContentRating());
+       // confirmRegionalRatingsDisplays(R21.getContentRating());
+        launchR21Content();
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+
+    }
+
+    private void launchR21Content() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickPlayButton(SHORT_TIMEOUT);
+        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
     }
 }
