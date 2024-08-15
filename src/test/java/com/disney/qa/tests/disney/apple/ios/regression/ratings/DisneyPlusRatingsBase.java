@@ -230,7 +230,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(contentTitle).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
@@ -262,7 +262,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(contentTitle).click();
 
         //ratings are shown on downloaded content
