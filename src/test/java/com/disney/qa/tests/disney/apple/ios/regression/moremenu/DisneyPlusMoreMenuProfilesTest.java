@@ -526,8 +526,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
         waitUntil(ExpectedConditions.visibilityOfElementLocated(passwordPage.getPasswordEntryField().getBy()), 5);
         passwordPage.getPasswordEntryField().click();
-        passwordPage.getPasswordEntryField().type(getAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
+        passwordPage.enterPassword(getAccount());
         contentRatingPage.selectContentRating(RATING_MATURE);
         contentRatingPage.clickSaveButton();
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
