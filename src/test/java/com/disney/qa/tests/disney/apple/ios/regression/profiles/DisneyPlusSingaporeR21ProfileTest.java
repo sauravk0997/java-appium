@@ -15,8 +15,6 @@ import io.appium.java_client.remote.MobilePlatform;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -30,7 +28,7 @@ import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.common.constant.RatingConstant.UNITED_STATES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
-public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
+public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
