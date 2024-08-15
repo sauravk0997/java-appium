@@ -522,11 +522,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //User select Rating TV-MA
         waitUntil(ExpectedConditions.visibilityOfElementLocated(editProfile.getMaturityRatingLabel().getBy()), 5);
         editProfile.getContentRatingHeader().click();
-        if (passwordPage.getPasswordField().isElementNotPresent(3)) {
+        if (passwordPage.getPasswordEntryField().isElementNotPresent(3)) {
             editProfile.getContentRatingHeader().click();
         }
         waitUntil(ExpectedConditions.visibilityOfElementLocated(passwordPage.getPasswordEntryField().getBy()), 5);
-        passwordPage.getPasswordField().click();
+        passwordPage.getPasswordEntryField().click();
         passwordPage.getPasswordEntryField().type(getAccount().getUserPass());
         passwordPage.clickPrimaryButton();
         contentRatingPage.selectContentRating(RATING_MATURE);
