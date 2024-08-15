@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -19,19 +20,12 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
-import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
-import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_HULU;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     String UNENTITLED_SERIES_ID = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
     String PLATFORM = "apple";
     String ENVIRONMENT = "PROD";
-
-    private List<String> networkLogos = new ArrayList<String>(
-            Arrays.asList("A&E", "ABC", "ABC News", "Andscape", "Disney XD", "FOX", "Freeform", "FX", "FYI",
-                    "Hulu Original Series", "Lifetime", "LMN", "MTV", "National Geographic", "Nickelodeon",
-                    "Searchlight Pictures", "The HISTORY Channel", "TV Land", "Twentieth Century Studios"));
 
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
@@ -69,26 +63,23 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.tapHuluBrandTile();
 
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
-        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
 
         huluPage.swipeInHuluBrandPage(Direction.UP);
         sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
-        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");
 
         huluPage.swipeInHuluBrandPage(Direction.DOWN);
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
 
-        huluPage.clickOnCollectionBackButton();
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        huluPage.tapBackButton();
+        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
 
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.validateScrollingInHuluCollection(), "User cannot scroll horizontally");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network logos are not present");
-
-        networkLogos.forEach(item ->
-                sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item)));
-
+        verifyNetworkLogoValues(sa, huluPage);
         sa.assertAll();
     }
 
@@ -136,5 +127,18 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
 
         sa.assertAll();
+    }
+
+    private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
+        try {
+            // Items from index 5 indicates the list of Network Logos from the Hulu Brand page
+            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
+            for (Item item : logoCollection) {
+                String logo_title = item.getVisuals().getTitle();
+                sa.assertTrue(huluPage.isNetworkLogoPresent(logo_title), String.format("%s Network logo is not present", logo_title));
+            }
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

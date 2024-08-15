@@ -2,8 +2,8 @@
 <suite verbose="1" name="ios_tablet_regression_dev" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.6.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76856"/>
-    <parameter name="jenkinsBuild" value="3.6.0.71561"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76962"/>
+    <parameter name="jenkinsBuild" value="3.6.0.71576"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_regression_dev"/>
@@ -111,11 +111,6 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Deep Links" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
         </classes>
     </test>
 </suite>

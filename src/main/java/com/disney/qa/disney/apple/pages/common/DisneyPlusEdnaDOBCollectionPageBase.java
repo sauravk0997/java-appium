@@ -17,13 +17,21 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isOpened() {
-        String ednaDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_HEADER.getText());
+        String ednaDateOfBirthPageTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_HEADER.getText());
         return staticTextByLabel.format(ednaDateOfBirthPageTitle).isPresent();
     }
 
     public boolean isEdnaDateOfBirthDescriptionPresent() {
-        String ednaDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
+        String ednaDateOfBirthPageDescription = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
         return staticTextByLabel.format(ednaDateOfBirthPageDescription).isPresent();
+    }
+
+    public boolean isEdnaDateOfBirthFormatErrorPresent() {
+        String ednaDateOfBirthFormatError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR.getText());
+        return staticTextByLabel.format(ednaDateOfBirthFormatError).isPresent();
     }
 
     //format: Month, day, year
@@ -34,12 +42,14 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     }
 
     public void tapSaveAndContinueButton() {
-        String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
+        String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
 
     public void tapLogOutButton() {
-        String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
+        String enforceDateOfBirthLogOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
 }
