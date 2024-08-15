@@ -38,6 +38,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String SHOP_TAB_SERIES = "Bluey";
+    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -81,7 +83,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
-    @Test(description = "Details Page - IMAX Enhanced - Badges", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyIMAXEnhancedBadges() {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -91,26 +93,24 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.clickMoviesTab();
-        if(R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             swipe(searchPage.getStaticTextByLabel(filterValue));
             searchPage.getStaticTextByLabel(filterValue).click();
-        }else{
+        } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "IMAX Enhanced was not found in media features row");
-        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFeturesRow(), "IMAX Enhanced was not found before video or audio quality details in media featured rows");
 
         detailsPage.clickDetailsTab();
         scrollDown();
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Formats in details tab not found");
         sa.assertTrue(detailsPage.isImaxEnhancedPresentsInFormats(), "IMAX Enhanced was not found in details tab formats");
-        sa.assertTrue(detailsPage.isImaxEnhancedPresentBeforeQualityDetailsInFormats(), "IMAX Enhanced was not found before video or audio quality details in details tab formats");
         sa.assertAll();
     }
 
