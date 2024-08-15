@@ -26,8 +26,8 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71631"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
     public void verifyRatingSystemTV_Y() {
-        String locale = getEMEACountryCode();
-        ratingsSetup(TV_Y.getContentRating(), getEMEACountryLanguage(locale), locale);
+        String locale = getMPAACountryCode();
+        ratingsSetup(TV_Y.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y.getContentRating());
     }
@@ -35,8 +35,8 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73118"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
     public void verifyRatingSystemTV_Y7() {
-        String locale = getEMEACountryCode();
-        ratingsSetup(TV_Y7.getContentRating(), getEMEACountryLanguage(locale), locale);
+        String locale = getMPAACountryCode();
+        ratingsSetup(TV_Y7.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y7.getContentRating());
     }
@@ -44,20 +44,20 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73119"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
     public void verifyRatingSystemTV_Y7_FV() {
-        String locale = getEMEACountryCode();
-        ratingsSetup(TV_Y7_FV.getContentRating(), getEMEACountryLanguage(locale), locale);
+        String locale = getMPAACountryCode();
+        ratingsSetup(TV_Y7_FV.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y7_FV.getContentRating());
     }
 
-    private String getEMEACountryCode() {
+    private String getMPAACountryCode() {
         List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, UNITED_STATES_VIRGIN_ISLANDS, GUAM,
                 PUERTO_RICO, AMERICAN_SAMOA, MARSHALL_ISLANDS, NORTHERN_MARINA_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
-    private String getEMEACountryLanguage(String countryCode) {
+    private String getMPAACountryLanguage(String countryCode) {
         switch (countryCode.toUpperCase()) {
             case CANADA:
             case UNITED_STATES:
