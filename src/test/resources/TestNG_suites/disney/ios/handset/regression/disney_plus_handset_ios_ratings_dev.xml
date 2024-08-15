@@ -77,4 +77,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset US MPAA/TVPG Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMPAAandTVPGRatingsTest"/>
+        </classes>
+    </test>
 </suite>

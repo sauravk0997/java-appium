@@ -94,6 +94,6 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
         List<String> countryCodeList = Arrays.asList(ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC,
                 ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size() - 1));
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 }
