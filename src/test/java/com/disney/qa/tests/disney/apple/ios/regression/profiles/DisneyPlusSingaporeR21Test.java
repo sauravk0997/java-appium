@@ -733,6 +733,26 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
                 "User is not navigated to the details page after pause timeout");
     }
 
+    private void navigateToHomePageForPinUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page was not open");
+        whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
+        pinPage.enterPin(PROFILE_PIN);
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open");
+    }
+
+    private void launchDeeplinkAndPlay() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+    }
+
     private void launchR21ContentFromContinueWatching() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -755,26 +775,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
         homePage.goToDetailsPageFromContinueWatching(OUT_TITLE);
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-    }
-
-    private void navigateToHomePageForPinUser() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
-        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page was not open");
-        whoIsWatching.getStaticTextByLabel(DEFAULT_PROFILE).click();
-        pinPage.enterPin(PROFILE_PIN);
-        homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open");
-    }
-
-    private void launchDeeplinkAndPlay() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
-        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
     }
 
     private void ratingsSetup(String lang, String locale, boolean... ageVerified) {
@@ -844,7 +844,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyBaseTest {
                 new DisneyLocalizationUtils(
                         locale, lang, MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
