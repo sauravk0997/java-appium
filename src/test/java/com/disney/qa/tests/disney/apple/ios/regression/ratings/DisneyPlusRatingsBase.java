@@ -55,54 +55,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    public void ratingSetupWithPINForOTPAccount(String ratingValue, String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (IOException e) {
-            new Exception("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());

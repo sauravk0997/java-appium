@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
-import static com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase.SINGAPORE_LANG;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
