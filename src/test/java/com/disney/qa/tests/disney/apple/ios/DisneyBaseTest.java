@@ -546,9 +546,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     .setLimit(limit));
             return setResponse.getData().getSet().getItems();
         } catch (URISyntaxException | JsonProcessingException e) {
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            Assert.fail("Items from Set not found " + e.getMessage());
-            return ExceptionUtils.rethrow(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
