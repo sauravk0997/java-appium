@@ -5,6 +5,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.M18;
@@ -52,28 +53,32 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73182"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.DETAILS, TestGroup.R21})
-    public void verifyRatingR21() {
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, TestGroup.R21})
+    public void verifyRatingSystemSingaporeMDA_R21() {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-
-        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-       // confirmRegionalRatingsDisplays(R21.getContentRating());
-        launchR21Content();
-        verifyAgePage.clickIAm21PlusButton();
-        passwordPage.enterPassword(getAccount());
-
-    }
-
-    private void launchR21Content() {
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+
+        ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
-        Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+        sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+        sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page should open");
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
+        confirmRegionalRatingsDisplays(R21.getContentRating());
+
+        sa.assertAll();
     }
 }
