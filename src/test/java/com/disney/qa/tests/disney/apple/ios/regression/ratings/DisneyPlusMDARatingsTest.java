@@ -64,13 +64,30 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
 
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
+        // rating present in search results
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, R21.getContentRating()), "Rating was not found in search results");
+
+        // downloads validation
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.getDownloadNav().click();
+        sa.assertTrue(downloads.isRatingPresent(R21.getContentRating()), R21.getContentRating() + " Rating was not found on movie downloads.");
+        homePage.clickSearchIcon();
+        detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
+        videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage); // failing here
+        detailsPage.waitForRestartButtonToAppear();
+        detailsPage.validateRatingsInDetailsTab(R21.getContentRating(), sa);
         searchPage.getDisplayedTitles().get(0).click();
+     //   searchPage.getDynamicAccessibilityId(contentTitle).click();
+
+
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
@@ -85,7 +102,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
         pressByElement(pinPage.getR21SetPinButton(), 1);
-        confirmRegionalRatingsDisplays(R21.getContentRating());
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, R21.getContentRating()), "Rating was not found in search results");
 
         sa.assertAll();
     }
