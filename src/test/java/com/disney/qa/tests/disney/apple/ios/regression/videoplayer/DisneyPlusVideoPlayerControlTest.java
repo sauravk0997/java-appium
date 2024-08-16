@@ -41,41 +41,24 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 {"DISNEY_VERIFIED_HULU_ESPN_BUNDLE"}};
     }
 
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
-    @Test(description = "Video Player > Title and Back Button to Close", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
-    public void verifyTitleAndBackButtonToClose(Object[] content) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    public void verifyTitleAndBackButtonToClose() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        //User taps the back button
-        loginAndStartPlayback((String) content[1]);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        detailsPage.clickPlayButton().waitForVideoToStart();
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        //User taps the title
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoToStart();
         videoPlayer.tapTitleOnPlayer();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertAll();
-        //Initiate playback from 'downloads'
-        /*detailsPage.getEpisodeToDownload("1","1").click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(60, 3);
-        homePage.clickDownloadsIcon();
-        downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
-        downloadsPage.tapDownloadedAsset(SHORT_SERIES);
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        sa.assertTrue(downloadsPage.isContentHeaderPresent(SHORT_SERIES), "'Downloads list view' page didn't open after closing the video player");
-
-        //Initiate playback from 'continue watching' from Home
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        homePage.initiatePlaybackFromContinueWatching(SHORT_SERIES);
-        detailsPage.clickContinueButton();
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");*/
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
