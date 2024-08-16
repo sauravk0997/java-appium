@@ -47,7 +47,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyTitleAndBackButtonToClose() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-
+        setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
