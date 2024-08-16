@@ -14,8 +14,7 @@ import com.zebrunner.carina.utils.R;
 import io.appium.java_client.remote.MobilePlatform;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
@@ -852,23 +851,20 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
         DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterGroups(TestGroup.R21)
     private void clearSingaporeOverride() {
+        LOGGER.info("Clearing Singapore location override");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         restart();
-        if (homePage.isOpened()) {
-            initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        if (homePage.getHomePageMainElement().isPresent(SHORT_TIMEOUT)) {
+            navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+            moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         }
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
         setDictionary("en", UNITED_STATES);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), UNITED_STATES);
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-        if (homePage.getTravelAlertOk().isPresent(SHORT_TIMEOUT)) {
-            homePage.getTravelAlertOk().click();
-        }
     }
 }
