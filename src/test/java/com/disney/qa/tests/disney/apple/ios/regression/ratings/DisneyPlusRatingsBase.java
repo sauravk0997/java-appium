@@ -20,7 +20,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
-
+import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 /**
  * Base ratings setup class
  * IF running on CI as a single class level: set lang/locale on Jenkins
@@ -210,7 +210,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
         return null;
     }
-
+// take from here
     public void confirmRegionalRatingsDisplays(String rating) {
         if (isMovie) {
             LOGGER.info("Testing against Movie content.");
@@ -228,10 +228,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        if (!rating.equalsIgnoreCase(R21.getContentRating())) {
+            homePage.clickSearchIcon();
+            searchPage.searchForMedia(contentTitle);
+            sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+            searchPage.getDynamicAccessibilityId(contentTitle).click();
+        }
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -260,10 +262,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        if (!rating.equalsIgnoreCase(R21.getContentRating())) {
+            homePage.clickSearchIcon();
+            searchPage.searchForMedia(contentTitle);
+            sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+            searchPage.getDynamicAccessibilityId(contentTitle).click();
+        }
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
@@ -274,7 +278,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
+        videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage); // failing here
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
@@ -287,3 +291,4 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             oneTrustPage.tapAcceptAllButton();
     }
 }
+

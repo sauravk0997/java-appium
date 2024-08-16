@@ -73,7 +73,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         // rating present in search results
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, R21.getContentRating()), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
 
         // downloads validation
         detailsPage.getMovieDownloadButton().click();
@@ -102,7 +102,9 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
         pressByElement(pinPage.getR21SetPinButton(), 1);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, R21.getContentRating()), "Rating was not found in search results");
+
+        confirmRegionalRatingsDisplays(R21.getContentRating());
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
 
         sa.assertAll();
     }

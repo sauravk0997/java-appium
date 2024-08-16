@@ -773,4 +773,21 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), "After entering profile pin, home page did not open.");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73182"})
+    @Test(groups = {TestGroup.DETAILS, TestGroup.R21})
+    public void verifyR21() {
+        ratingsSetupWithPIN(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+     //   DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        navigateToHomePageForPinUser();
+        launchR21Content();
+
+     //   verifyAgePage.clickIAm21PlusButton();
+      //  passwordPage.enterPassword(getAccount());
+      //  Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+    }
 }
