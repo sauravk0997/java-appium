@@ -89,7 +89,7 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     private String getEMEACountryCode() {
         List<String> countryCodeList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
         LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size() - 1));
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
     private String getEMEACountryLanguage(String countryCode) {

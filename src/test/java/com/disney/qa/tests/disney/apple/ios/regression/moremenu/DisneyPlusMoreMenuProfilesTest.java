@@ -518,6 +518,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_R), "profile rating is not as expected");
 
+        editProfile.waitForUpdatedToastToDisappear();
         //User select Rating TV-MA
         editProfile.getContentRatingHeader().click();
         passwordPage.enterPassword(getAccount());
