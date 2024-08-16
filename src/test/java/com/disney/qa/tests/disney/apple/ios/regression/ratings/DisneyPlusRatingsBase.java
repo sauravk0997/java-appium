@@ -287,4 +287,3 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             oneTrustPage.tapAcceptAllButton();
     }
 }
-
