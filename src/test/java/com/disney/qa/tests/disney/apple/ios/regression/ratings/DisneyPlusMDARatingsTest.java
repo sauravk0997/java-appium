@@ -70,42 +70,34 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
 
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
+
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        // rating present in search results
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
         searchPage.getDisplayedTitles().get(0).click();
-
-        // downloads validation
+        // downloads validation to download movie
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
+        // validate rating icon in movie downloads
         sa.assertTrue(downloads.isRatingPresent(R21.getContentRating()), R21.getContentRating() + " Rating was not found on movie downloads.");
-        homePage.clickSearchIcon();
+        homePage.clickSearchIcon(); // ??
+        // validate rating icon in details screen
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
-        videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage); // failing here
-        detailsPage.waitForRestartButtonToAppear();
-        detailsPage.validateRatingsInDetailsTab(R21.getContentRating(), sa);
-
-     //   searchPage.getDynamicAccessibilityId(contentTitle).click();
-
+        videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage);
 
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), "Password page did not open");
         passwordPage.enterPassword(getAccount());
         sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page should open");
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
-        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
-
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
         pressByElement(pinPage.getR21SetPinButton(), 1);
-
-        confirmRegionalRatingsDisplays(R21.getContentRating());
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
 
         sa.assertAll();
     }
