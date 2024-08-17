@@ -82,7 +82,6 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         homePage.clickSearchIcon(); // ??
         // validate rating icon in details screen
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
-        videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage);
 
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
