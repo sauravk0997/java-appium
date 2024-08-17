@@ -96,6 +96,11 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
         pressByElement(pinPage.getR21SetPinButton(), 1);
+        verifyAgePage.clickIAm21PlusButton();
+        sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
+        IntStream.range(0, 4).forEach(i -> {
+            pinPage.getTypeKey(String.valueOf(i)).click();
+        });
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
 
         sa.assertAll();
