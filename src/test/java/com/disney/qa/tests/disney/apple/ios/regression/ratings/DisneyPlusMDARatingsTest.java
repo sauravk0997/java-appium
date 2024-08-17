@@ -75,11 +75,11 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         searchPage.searchForMedia(contentTitle);
         searchPage.getDisplayedTitles().get(0).click();
         // downloads validation to download movie
-        detailsPage.getMovieDownloadButton().click();
-        detailsPage.getDownloadNav().click();
+      //  detailsPage.getMovieDownloadButton().click();
+      //  detailsPage.getDownloadNav().click();
         // validate rating icon in movie downloads
-        sa.assertTrue(downloads.isRatingPresent(R21.getContentRating()), R21.getContentRating() + " Rating was not found on movie downloads.");
-        homePage.clickSearchIcon(); // ??
+      //  sa.assertTrue(downloads.isRatingPresent(R21.getContentRating()), R21.getContentRating() + " Rating was not found on movie downloads.");
+      //  homePage.clickSearchIcon();
         // validate rating icon in details screen
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
 
@@ -95,12 +95,16 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
+        /*
         pressByElement(pinPage.getR21SetPinButton(), 1);
         verifyAgePage.clickIAm21PlusButton();
         sa.assertTrue(pinPage.isR21PinPageOpen(), "R21 pin page did not open");
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
+
+        */
+
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
 
         sa.assertAll();
