@@ -29,7 +29,7 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isEdnaBirthdateLabelDisplayed() {
-        String birthdateLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        String birthdateLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.DATE_OF_BIRTH_LABEL.getText());
         return staticTextByLabel.format(birthdateLabel).isPresent();
     }
