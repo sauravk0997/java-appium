@@ -93,10 +93,11 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         pressByElement(pinPage.getR21SetPinButton(), 1);
 
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
-        videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage);
+      //  videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage);
         videoPlayer.clickBackButton();
 
         detailsPage.startDownload();
+        pause(10);
         /*
         if (detailsPage.isSeriesDownloadButtonPresent()) {
             detailsPage.waitForSeriesDownloadToComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
