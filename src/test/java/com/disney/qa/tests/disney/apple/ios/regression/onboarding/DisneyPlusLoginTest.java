@@ -420,8 +420,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
                 new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
 
         //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -457,15 +459,17 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         dobCollectionPage.clickConfirmBtn();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
-        //Log Out -> Log In -> DOB Collection not shown after Saving
-        ednaDOBCollectionPage.tapLogOutButton();
-        dobCollectionPage.clickConfirmBtn();
+        //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
+        addProfilePage.chooseGender();
+        addProfilePage.clickSaveBtn();
+        moreMenuPage.open();
+        moreMenuPage.clickLogoutButton();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(homePage.isOpened(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         sa.assertAll();
     }
