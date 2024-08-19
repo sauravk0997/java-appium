@@ -66,6 +66,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
 
@@ -98,15 +99,14 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
 
         detailsPage.startDownload();
         pause(10);
-        /*
-        if (detailsPage.isSeriesDownloadButtonPresent()) {
-            detailsPage.waitForSeriesDownloadToComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
-        } else {
-            detailsPage.waitForMovieDownloadComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
-        }
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        */
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(downloads.isOpened(), "Downloads page did not open");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(contentTitle).isPresent(), contentTitle + " title was not found on downloads tab.");
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        detailsPage.addToWatchlist();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
 
         sa.assertAll();
     }
