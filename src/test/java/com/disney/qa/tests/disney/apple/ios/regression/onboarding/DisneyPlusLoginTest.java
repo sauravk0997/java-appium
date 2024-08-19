@@ -431,7 +431,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Element validations
         //Disney+ Logo
@@ -445,7 +445,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
         ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
