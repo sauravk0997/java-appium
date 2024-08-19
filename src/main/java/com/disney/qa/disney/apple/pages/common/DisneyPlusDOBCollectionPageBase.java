@@ -66,6 +66,10 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAccountHolderEmailTextDisplayed() { return accountHolderEmailLabel.isElementPresent(); }
 
+    public void clickLogOutBtn() {
+        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
+    }
+
     public void enterDOB(String dob) {
         dateTextField.type(dob);
         confirmButton.click();

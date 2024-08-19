@@ -411,14 +411,15 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusSignUpIOSPageBase signUpPage = new DisneyPlusSignUpIOSPageBase(getDriver());
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
+                new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
 
+        //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-
-        //Create Disney account without DOB and Gender
         createDisneyAccountRequest
                 .setDateOfBirth(null)
                 .setGender(null)
@@ -430,52 +431,28 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        //This checks header
         Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
-        //subcopy
-        sa.assertTrue(dobCollectionPage.isDOBSubTitleDisplayed(), "DOB Sub Title not displayed");
 
+        //Element validations
+        //Disney+ Logo
+        //myDisney Logo
+        sa.assertTrue(signUpPage.isStepperDictValueDisplayed("3", "5"),
+                "'STEP 3 OF 5' should be displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "BIRTHDATE label not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out Btn not displayed");
 
-        //NOT COMPLETE
-
-        //string account holder email
-        //sa.assertTrue(dobCollectionPage.isAccountHolderEmailTextDisplayed(), "Account Holder Email: not displayed");
-        //email address ACCOUNT_HOLDER_EMAIL -> Applicat Dictionary = "account_holder_email": "Account Holder Email:",
-        //sa.assertTrue(dobCollectionPage.isEmailDisplayed(), "User Email not displayed");
-        //log out
-        sa.assertTrue(dobCollectionPage.isLogOutBtnPresent(), "Log Out Btn not displayed");
-
-
-        //label: Birthdate
-        sa.assertTrue(dobCollectionPage.isEnterYourDOBTitleDisplayed(), "Enter Your DOB Title not displayed");
-        //DDMMYYYY & text field
-        sa.assertTrue(dobCollectionPage.isBirthdateTextFieldHeaderDisplayed(), "DOB Text header not displayed");
-        sa.assertTrue(dobCollectionPage.isDateTextFieldDisplayed(), "Date Text Field not displayed");
-        //CONFIRM cta & text
-        sa.assertTrue(dobCollectionPage.isConfirmBtnDisplayed(), "Confirm Button not displayed");
-
-
-        //NOT COMPLETE
-
-        //visit Help Center string
-        //sa.assertTrue(dobCollectionPage.isHelpCenterSectionDisplayed(), "Help Center Section not displayed");
-        //dobCollectionPage.clickHelpCenterLink();
-        //sa.assertTrue(moreMenuPage.isHelpWebviewOpen(), "'Help' web view was not opened");
-        //sa.assertTrue(dobCollectionPage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"D+ Help Center not displayed");
-
-        //close and reopen (step 2)
+        //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
         Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
-        //submit >18 step 3
-        dobCollectionPage.enterDOB(ADULT_DOB);
+        //Save DOB
+        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), "Complete Profile Page is not displayed");
 
-        //step 4 Log Out and user is not shown DOB screen (they are shown complete profile page (gender page)
-        //dobCollectionPage.clickLogOutBtn();
-        //confirm
-        //close and relaunch -> log in steps
+        //Log In -> DOB Collection not shown after Saving
         terminateApp(sessionBundles.get(DISNEY));
         clearAppCache();
         relaunch();
@@ -486,5 +463,4 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
-
 }
