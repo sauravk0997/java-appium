@@ -457,10 +457,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         dobCollectionPage.clickConfirmBtn();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
-        //Log In -> DOB Collection not shown after Saving
+        //Log Out -> Log In -> DOB Collection not shown after Saving
+        dobCollectionPage.clickLogoutButton();
+        dobCollectionPage.clickConfirmBtn();
         terminateApp(sessionBundles.get(DISNEY));
-        removeApp(sessionBundles.get(DISNEY));
-        installApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
