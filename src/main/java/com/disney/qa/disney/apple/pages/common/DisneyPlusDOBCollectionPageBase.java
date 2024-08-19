@@ -39,7 +39,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public ExtendedWebElement getDateOfBirthHeader(){ return dateOfBirthHeader; }
+    public ExtendedWebElement getDateOfBirthHeader() { return dateOfBirthHeader; }
 
     @Override
     public boolean isOpened() {
@@ -48,6 +48,21 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isInvalidDOBMessageDisplayed() { return labelError.isPresent(); }
+
+    public boolean isEnterYourDOBTitleDisplayed() { return enterYourDOBTitle.isElementPresent(); }
+
+    public boolean isDOBSubTitleDisplayed() { return dobSubTitle.isElementPresent(); }
+
+    public boolean isBirthdateTextFieldHeaderDisplayed() { return birthdateTextFieldHeaderLabel.isElementPresent(); }
+
+    public boolean isCancelBtnDisplayed() { return cancelBtn.isElementPresent(); }
+
+    public boolean isDateTextFieldDisplayed() { return dateTextField.isElementPresent(); }
+
+    public boolean isConfirmBtnDisplayed() { return confirmButton.isElementPresent(); }
+
+    public boolean isDoneBtnDisplayed() { return doneBtn.isElementPresent(); }
+
 
     public void enterDOB(String dob) {
         dateTextField.type(dob);
