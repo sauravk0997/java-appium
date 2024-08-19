@@ -459,8 +459,9 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         //Log In -> DOB Collection not shown after Saving
         terminateApp(sessionBundles.get(DISNEY));
-        clearAppCache();
-        relaunch();
+        removeApp(sessionBundles.get(DISNEY));
+        installApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());

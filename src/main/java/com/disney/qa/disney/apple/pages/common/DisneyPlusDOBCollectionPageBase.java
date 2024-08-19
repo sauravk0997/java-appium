@@ -35,8 +35,6 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "accountHolderEmailLabel")
     private ExtendedWebElement accountHolderEmailLabel;
 
-
-
     protected ExtendedWebElement dateOfBirthHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DATE_OF_BIRTH_TITLE.getText()));
 
     //FUNCTIONS
