@@ -327,7 +327,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int polling = 5;
         int backgroundDuration = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setPictureInPictureConfig(DISABLED);
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
