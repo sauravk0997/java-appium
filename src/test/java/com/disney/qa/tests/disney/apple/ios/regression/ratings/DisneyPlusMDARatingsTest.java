@@ -104,6 +104,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         sa.assertTrue(downloads.getStaticTextByLabelContains(contentTitle).isPresent(), contentTitle + " title was not found on downloads tab.");
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        searchPage.getDisplayedTitles().get(0).click();
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
