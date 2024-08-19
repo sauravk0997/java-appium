@@ -454,7 +454,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         //Save DOB
         dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        ednaDOBCollectionPage.tapSaveAndContinueButton();
+        dobCollectionPage.clickConfirmBtn();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         //Log In -> DOB Collection not shown after Saving

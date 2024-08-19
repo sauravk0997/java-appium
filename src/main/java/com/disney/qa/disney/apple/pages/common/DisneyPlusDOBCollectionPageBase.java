@@ -52,23 +52,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         return dateOfBirthHeader.isPresent();
     }
 
-    public boolean isInvalidDOBMessageDisplayed() { return labelError.isPresent(); }
-
-    public boolean isEnterYourDOBTitleDisplayed() { return enterYourDOBTitle.isElementPresent(); }
-
-    public boolean isDOBSubTitleDisplayed() { return dobSubTitle.isElementPresent(); }
-
-    public boolean isBirthdateTextFieldHeaderDisplayed() { return birthdateTextFieldHeaderLabel.isElementPresent(); }
-
-    public boolean isDateTextFieldDisplayed() { return dateTextField.isElementPresent(); }
-
-    public boolean isConfirmBtnDisplayed() { return confirmButton.isElementPresent(); }
-
-    public boolean isAccountHolderEmailTextDisplayed() { return accountHolderEmailLabel.isElementPresent(); }
-
-    public void clickLogOutBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
-    }
+    public void clickConfirmBtn() { confirmButton.click(); }
 
     public void enterDOB(String dob) {
         dateTextField.type(dob);
