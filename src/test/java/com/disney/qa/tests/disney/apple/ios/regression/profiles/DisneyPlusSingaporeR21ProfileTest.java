@@ -862,7 +862,7 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
             moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         }
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
-        setDictionary("en", UNITED_STATES);
+        setDictionary(ENGLISH_LANG, UNITED_STATES);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), UNITED_STATES);
