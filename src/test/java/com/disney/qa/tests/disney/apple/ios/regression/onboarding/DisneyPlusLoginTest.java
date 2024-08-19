@@ -29,7 +29,12 @@ import java.util.List;
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
+    public static final String COMPLETE_PROFILE_PAGE_NOT_DISPLAYED = "Complete Profile Page is not displayed";
+    public static final String DISNEY_PLUS_LOGO_NOT_DISPLAYED = "Disney+ Logo is not displayed";
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
+    public static final String LOG_OUT_BTN_NOT_DISPLAYED = "Log Out Button is not displayed";
+    public static final String MYDISNEY_LOGO_NOT_DISPLAYED = "myDisney Logo is not displayed";
+    public static final String BACK_ARROW_NOT_DISPLAYED = "Back Arrow is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72745"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
@@ -39,9 +44,9 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), "Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(), "MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(), "STEP 1 text should be displayed");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(), "'Enter your email to continue' text should be displayed");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field should be present");
@@ -62,9 +67,9 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackButtonPresent(), "Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), "MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isStep2LabelDisplayed(), "stepper should be displayed");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isHeaderTextDisplayed(), "Header text should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordEntryFieldDisplayed(), "Password field should be present");
@@ -370,7 +375,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(accountWithBillingHold);
 
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), "Logout button not present");
+        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), LOG_OUT_BTN_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldTitle().isPresent(), "Account Hold Title not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldSubText().isPresent(), "Account Hold Subtext not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getUpdatePaymentButton().isPresent(), "Update Payment Button not present");
@@ -432,14 +437,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
-        //Element validations
-        //Disney+ Logo
-        //myDisney Logo
+        //Element Validations
+        sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         sa.assertTrue(signUpPage.isStepperDictValueDisplayed("3", "5"),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "BIRTHDATE label not displayed");
-        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out Btn not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), LOG_OUT_BTN_NOT_DISPLAYED);
 
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
@@ -449,7 +454,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Save DOB
         ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
-        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), "Complete Profile Page is not displayed");
+        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         //Log In -> DOB Collection not shown after Saving
         terminateApp(sessionBundles.get(DISNEY));
@@ -458,7 +463,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), "Complete Profile Page is not displayed");
+        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         sa.assertAll();
     }
