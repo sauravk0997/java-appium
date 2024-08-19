@@ -11,6 +11,8 @@ import org.testng.asserts.SoftAssert;
 
 public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
+    private static final String DOB_MINOR = "01/01/2020";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
     @Test(description = "Log in - Verify sign up - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void testSignUpDoBUnder18() {
@@ -76,7 +78,7 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
-    @Test(description = "Log in - Verify login - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
