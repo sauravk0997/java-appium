@@ -415,7 +415,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
                 new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
 
         //Create Disney account without DOB
@@ -445,7 +444,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
         ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
