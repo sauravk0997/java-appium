@@ -78,9 +78,10 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
-    @Test(description = "Log in - Verify login - DOB under 18", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testLoginDobUnder18() {
         SoftAssert softAssert = new SoftAssert();
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
         DisneyPlusDOBCollectionPageBase disneyPlusDOBCollectionPageBase = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -101,12 +102,10 @@ public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
 
-        softAssert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
-        disneyPlusWelcomeScreenIOSPageBase.clickCompleteSubscriptionButton();
-
         disneyPlusDOBCollectionPageBase.isOpened();
-        disneyPlusDOBCollectionPageBase.enterDOB(DOB_MINOR);
+        ednaDOBCollectionPage.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        ednaDOBCollectionPage.tapSaveAndContinueButton();
+
         softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
                 "Contact CS screen did not appear.");
         disneyPlusAccountIsMinorIOSPageBase.clickHelpCenterButton();
