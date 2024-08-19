@@ -32,6 +32,11 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label ==\"Done\"`]")
     private ExtendedWebElement doneBtn;
 
+    @ExtendedFindBy(accessibilityId = "accountHolderEmailLabel")
+    private ExtendedWebElement accountHolderEmailLabel;
+
+
+
     protected ExtendedWebElement dateOfBirthHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DATE_OF_BIRTH_TITLE.getText()));
 
     //FUNCTIONS
@@ -55,14 +60,11 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
     public boolean isBirthdateTextFieldHeaderDisplayed() { return birthdateTextFieldHeaderLabel.isElementPresent(); }
 
-    public boolean isCancelBtnDisplayed() { return cancelBtn.isElementPresent(); }
-
     public boolean isDateTextFieldDisplayed() { return dateTextField.isElementPresent(); }
 
     public boolean isConfirmBtnDisplayed() { return confirmButton.isElementPresent(); }
 
-    public boolean isDoneBtnDisplayed() { return doneBtn.isElementPresent(); }
-
+    public boolean isAccountHolderEmailTextDisplayed() { return accountHolderEmailLabel.isElementPresent(); }
 
     public void enterDOB(String dob) {
         dateTextField.type(dob);

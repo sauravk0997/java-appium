@@ -406,7 +406,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72163"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testLogInEntitledDOBCollectionOver18() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -414,6 +414,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
 
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
@@ -433,20 +434,34 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
         //subcopy
         sa.assertTrue(dobCollectionPage.isDOBSubTitleDisplayed(), "DOB Sub Title not displayed");
-        //string account holder email
 
-        //email address
+
+        //NOT COMPLETE
+
+        //string account holder email
+        //sa.assertTrue(dobCollectionPage.isAccountHolderEmailTextDisplayed(), "Account Holder Email: not displayed");
+        //email address ACCOUNT_HOLDER_EMAIL -> Applicat Dictionary = "account_holder_email": "Account Holder Email:",
+        //sa.assertTrue(dobCollectionPage.isEmailDisplayed(), "User Email not displayed");
+        //log out
+        sa.assertTrue(dobCollectionPage.isLogOutBtnPresent(), "Log Out Btn not displayed");
+
 
         //label: Birthdate
         sa.assertTrue(dobCollectionPage.isEnterYourDOBTitleDisplayed(), "Enter Your DOB Title not displayed");
         //DDMMYYYY & text field
         sa.assertTrue(dobCollectionPage.isBirthdateTextFieldHeaderDisplayed(), "DOB Text header not displayed");
+        sa.assertTrue(dobCollectionPage.isDateTextFieldDisplayed(), "Date Text Field not displayed");
         //CONFIRM cta & text
         sa.assertTrue(dobCollectionPage.isConfirmBtnDisplayed(), "Confirm Button not displayed");
-        //visit helpcenter string
-        //sa.assertTrue(dobCollectionPage.isHelpCenterCopyDisplayed, "Help Center Section not displayed");
-        //dobCollectionPageBase.clickHelpCenterLink();
-        //dobCollectPageBase.isHelpCenterWebViewDisplayed();
+
+
+        //NOT COMPLETE
+
+        //visit Help Center string
+        //sa.assertTrue(dobCollectionPage.isHelpCenterSectionDisplayed(), "Help Center Section not displayed");
+        //dobCollectionPage.clickHelpCenterLink();
+        //sa.assertTrue(moreMenuPage.isHelpWebviewOpen(), "'Help' web view was not opened");
+        //sa.assertTrue(dobCollectionPage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"D+ Help Center not displayed");
 
         //close and reopen (step 2)
         terminateApp(sessionBundles.get(DISNEY));
@@ -457,9 +472,16 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         dobCollectionPage.enterDOB(ADULT_DOB);
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), "Complete Profile Page is not displayed");
 
-        //step 4 close and reopen and user is not shown DOB screen (they are shown complete profile page (gender page)
+        //step 4 Log Out and user is not shown DOB screen (they are shown complete profile page (gender page)
+        //dobCollectionPage.clickLogOutBtn();
+        //confirm
+        //close and relaunch -> log in steps
         terminateApp(sessionBundles.get(DISNEY));
+        clearAppCache();
         relaunch();
+        welcomeScreen.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), "Complete Profile Page is not displayed");
 
         sa.assertAll();
