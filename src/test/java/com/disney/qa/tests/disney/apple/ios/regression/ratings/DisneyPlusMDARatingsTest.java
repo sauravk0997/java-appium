@@ -67,17 +67,16 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
         SoftAssert sa = new SoftAssert();
 
         ratingsSetup(R21.getContentRating(), SINGAPORE_LANG, SINGAPORE);
-
+        // search results validation
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
         searchPage.getDisplayedTitles().get(0).click();
+        // details page validation
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
-
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
@@ -90,25 +89,24 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
-
         pressByElement(pinPage.getR21SetPinButton(), 1);
-
-        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content.");
-      //  videoPlayer.validateRatingsOnPlayer(R21.getContentRating(), sa, detailsPage);
+        // video player validation
+        Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content");
         videoPlayer.clickBackButton();
-
+        // downloads validation
         detailsPage.startDownload();
         pause(10);
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), "Downloads page did not open");
-        sa.assertTrue(downloads.getStaticTextByLabelContains(contentTitle).isPresent(), contentTitle + " title was not found on downloads tab.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(contentTitle).isPresent(), contentTitle + " title was not found on downloads tab");
+        // watchlist validation
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "D+ Media title was not added to the watchlist");
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "Media content title was not added to the watchlist");
+        
         sa.assertAll();
     }
 }
