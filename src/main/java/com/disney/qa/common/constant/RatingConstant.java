@@ -5,6 +5,7 @@ public class RatingConstant {
 
     public static final String AMERICAN_SAMOA = "AS";
     public static final String ARGENTINA = "AR";
+    public static final String AUSTRALIA = "AU";
     public static final String BOLIVIA = "BO";
     public static final String BRAZIL = "BR";
     public static final String CANADA = "CA";
@@ -100,6 +101,7 @@ public class RatingConstant {
             case "UM":
             case "VI":
                 return "1830";
+            case "AU":
             case "KR":
             case "SG":
             case "NZ":
@@ -138,6 +140,8 @@ public class RatingConstant {
 
     public static String getRoamingDas(String locale) {
         switch (locale) {
+            case "AU":
+                return "23151";
             case "BR":
                 return "23044";
             case "CA":
