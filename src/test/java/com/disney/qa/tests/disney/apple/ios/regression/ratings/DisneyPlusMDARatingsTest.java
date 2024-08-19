@@ -108,7 +108,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "D+ Media title was not added to the watchlist");
         sa.assertAll();
     }
 }
