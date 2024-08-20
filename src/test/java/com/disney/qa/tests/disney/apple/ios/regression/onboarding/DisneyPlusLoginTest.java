@@ -449,10 +449,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "BIRTHDATE label not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), LOG_OUT_BTN_NOT_DISPLAYED);
 
-        //Close and Reopen -> Shows non-Edna UI
+        //Close and Reopen -> Bug IOS-12497 Shows non-Edna UI
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        sa.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
         dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -461,7 +461,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
-        addProfilePage.clickSaveBtn();
+        addProfilePage.clickSaveByDictionaryKey();
+        //or addProfilePage.tapSaveButton();
         moreMenuPage.open();
         moreMenuPage.clickLogoutButton();
         terminateApp(sessionBundles.get(DISNEY));
@@ -469,7 +470,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(homePage.isOpened(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(homePage.isOpened(), "Home Page is not displayed");
 
         sa.assertAll();
     }
