@@ -466,8 +466,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        moreMenuPage.goBackToDisneyAppFromSafari();
-        moreMenuPage.open();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickLogoutButton();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
