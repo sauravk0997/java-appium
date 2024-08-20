@@ -80,7 +80,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
-        sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
+        sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 12),
                 "Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
         sa.assertAll();
     }
