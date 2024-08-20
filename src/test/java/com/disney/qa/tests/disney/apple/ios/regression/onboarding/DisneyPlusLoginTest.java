@@ -418,7 +418,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusSignUpIOSPageBase signUpPage = new DisneyPlusSignUpIOSPageBase(getDriver());
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
                 new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -452,14 +451,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), LOG_OUT_BTN_NOT_DISPLAYED);
 
-        //Close and Reopen -> Bug IOS-12497 Shows non-Edna UI
+        //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        //Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
-        dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        dobCollectionPage.clickConfirmBtn();
+        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPage.tapSaveAndContinueButton();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
