@@ -3,6 +3,7 @@
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="jenkinsBuild" value="3.6.0.71608"/>
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="tvos_regression_rc"/>
