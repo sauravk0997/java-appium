@@ -3,10 +3,10 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.client.responses.identity.DisneyPlus;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.phone.DisneyPlusAddProfileBannerIOSPage;
 import com.disney.util.TestGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -426,6 +426,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = new DisneyPlusUpdateProfileIOSPageBase(getDriver());
+        DisneyPlusAddProfileBannerIOSPage addProfileBannerPage = new DisneyPlusAddProfileBannerIOSPage(getDriver());
 
         //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -464,7 +465,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
-        //addProfilePage.dissmiss
+        addProfileBannerPage.tapDismissButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
         terminateApp(sessionBundles.get(DISNEY));
