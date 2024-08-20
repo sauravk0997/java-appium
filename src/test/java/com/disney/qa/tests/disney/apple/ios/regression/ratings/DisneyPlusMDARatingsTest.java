@@ -98,13 +98,14 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         videoPlayer.clickBackButton();
         // downloads validation
         detailsPage.startDownload();
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(downloads.isOpened(), "Downloads page did not open");
         if (detailsPage.isSeriesDownloadButtonPresent()) {
             detailsPage.waitForSeriesDownloadToComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
         } else {
             detailsPage.waitForMovieDownloadComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
         }
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(downloads.isOpened(), "Downloads page did not open");
+
         // watchlist validation
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
