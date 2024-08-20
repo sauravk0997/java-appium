@@ -18,6 +18,8 @@ import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 
 public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
+    private final int DOWNLOAD_TIMEOUT = 150;
+    private final int DOWNLOAD_POLLING = 15;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69568"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA})
@@ -74,9 +76,10 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
-        searchPage.getDisplayedTitles().get(0).click();
-        // details page validation
+        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        // adding title to watchlist and details page validation
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
+        detailsPage.addToWatchlist();
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
@@ -95,18 +98,19 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         videoPlayer.clickBackButton();
         // downloads validation
         detailsPage.startDownload();
-        pause(10);
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), "Downloads page did not open");
-        sa.assertTrue(downloads.getStaticTextByLabelContains(contentTitle).isPresent(), contentTitle + " title was not found on downloads tab");
+        if (detailsPage.isSeriesDownloadButtonPresent()) {
+            detailsPage.waitForSeriesDownloadToComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
+        } else {
+            detailsPage.waitForMovieDownloadComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);
+        }
         // watchlist validation
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "Media content title was not added to the watchlist");
-        
+
         sa.assertAll();
     }
 }
+
