@@ -464,10 +464,11 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
+        //addProfilePage.dissmiss
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.clickLogoutButton();
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
