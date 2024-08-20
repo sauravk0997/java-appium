@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.client.responses.identity.DisneyPlus;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -425,6 +426,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfilePage = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = new DisneyPlusUpdateProfileIOSPageBase(getDriver());
 
         //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -462,7 +464,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
-        editProfilePage.clickSaveBtn();
+        updateProfilePage.tapSaveButton();
+        //addProfileBanner.tapDismissButton();
         moreMenuPage.open();
         moreMenuPage.clickLogoutButton();
         terminateApp(sessionBundles.get(DISNEY));
