@@ -424,6 +424,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfilePage = new DisneyPlusEditProfileIOSPageBase(getDriver());
 
         //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -461,7 +462,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
-        addProfilePage.clickSaveByDictionaryKey();
+        editProfilePage.clickSaveBtn();
         moreMenuPage.open();
         moreMenuPage.clickLogoutButton();
         terminateApp(sessionBundles.get(DISNEY));
