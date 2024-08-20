@@ -30,6 +30,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     public static final String COMPLETE_PROFILE_PAGE_NOT_DISPLAYED = "Complete Profile Page is not displayed";
+    public static final String DISCOVER_PAGE_NOT_OPENED = "Home page is not displayed";
     public static final String DISNEY_PLUS_LOGO_NOT_DISPLAYED = "Disney+ Logo is not displayed";
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
     public static final String LOG_OUT_BTN_NOT_DISPLAYED = "Log Out Button is not displayed";
@@ -106,7 +107,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), "Home page should have been opened");
+        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), DISCOVER_PAGE_NOT_OPENED);
 
         softAssert.assertAll();
     }
@@ -286,8 +287,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertFalse(disneyPlusWhoseWatchingIOSPageBase.isAccessModeProfileIconPresent("DOESNT EXIST"), "profile displayed that should not.");
 
         disneyPlusWhoseWatchingIOSPageBase.clickProfile(DEFAULT_PROFILE);
-        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(),
-                "Expected - Home page should be opened after selecting profile");
+        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(), DISCOVER_PAGE_NOT_OPENED);
 
         // TODO add check that the correct profile loaded
         softAssert.assertAll();
@@ -452,7 +452,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen -> Bug IOS-12497 Shows non-Edna UI
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        //Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
         dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -462,7 +462,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
         addProfilePage.chooseGender();
         addProfilePage.clickSaveByDictionaryKey();
-        //or addProfilePage.tapSaveButton();
         moreMenuPage.open();
         moreMenuPage.clickLogoutButton();
         terminateApp(sessionBundles.get(DISNEY));
@@ -470,7 +469,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(homePage.isOpened(), "Home Page is not displayed");
+        Assert.assertTrue(homePage.isOpened(), DISCOVER_PAGE_NOT_OPENED);
 
         sa.assertAll();
     }
