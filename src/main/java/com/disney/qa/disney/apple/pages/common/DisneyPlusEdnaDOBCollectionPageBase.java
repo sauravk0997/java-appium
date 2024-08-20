@@ -29,8 +29,8 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     }
 
     public boolean isEdnaBirthdateLabelDisplayed() {
-        String birthdateLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.DATE_OF_BIRTH_LABEL.getText());
+        String birthdateLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_HEADER.getText());
         return staticTextByLabel.format(birthdateLabel).isPresent();
     }
 
@@ -43,7 +43,7 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     public boolean isLogOutBtnDisplayed() {
         String logOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
-        return staticTextByLabel.format(logOutButton).isPresent();
+        return dynamicBtnFindByLabel.format(logOutButton).isPresent();
     }
 
     //format: Month, day, year
