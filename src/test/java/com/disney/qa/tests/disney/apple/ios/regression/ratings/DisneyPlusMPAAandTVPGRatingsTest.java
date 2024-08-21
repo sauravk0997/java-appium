@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.common.constant.RatingConstant;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
@@ -15,7 +16,6 @@ import static com.disney.qa.common.constant.RatingConstant.MARSHALL_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.NORTHERN_MARINA_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.PUERTO_RICO;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
-import static com.disney.qa.common.constant.RatingConstant.Rating.R;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_MA;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y;
@@ -76,9 +76,9 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
     public void verifyRatingSystemR() {
         String locale = getMPAACountryCode();
-        ratingsSetup(R.getContentRating(), getMPAACountryLanguage(locale), locale);
+        ratingsSetup(RatingConstant.Rating.RESTRICTED.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
-        confirmRegionalRatingsDisplays(R.getContentRating());
+        confirmRegionalRatingsDisplays(RatingConstant.Rating.RESTRICTED.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73134"})
