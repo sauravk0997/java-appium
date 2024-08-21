@@ -14,6 +14,10 @@ import static com.disney.qa.common.constant.RatingConstant.GUAM;
 import static com.disney.qa.common.constant.RatingConstant.MARSHALL_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.NORTHERN_MARINA_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.PUERTO_RICO;
+import static com.disney.qa.common.constant.RatingConstant.Rating.G;
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_G;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y7;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y7_FV;
@@ -48,6 +52,42 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(TV_Y7_FV.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y7_FV.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73127"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
+    public void verifyRatingSystemTV_G() {
+        String locale = getMPAACountryCode();
+        ratingsSetup(TV_G.getContentRating(), getMPAACountryLanguage(locale), locale);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(TV_G.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73128"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
+    public void verifyRatingSystemG() {
+        String locale = getMPAACountryCode();
+        ratingsSetup(G.getContentRating(), getMPAACountryLanguage(locale), locale);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(G.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73129"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
+    public void verifyRatingSystemTV_PG() {
+        String locale = getMPAACountryCode();
+        ratingsSetup(TV_PG.getContentRating(), getMPAACountryLanguage(locale), locale);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(TV_PG.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73130"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
+    public void verifyRatingSystemPG() {
+        String locale = getMPAACountryCode();
+        ratingsSetup(PG.getContentRating(), getMPAACountryLanguage(locale), locale);
+        handleOneTrustPopUp();
+        confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
     private String getMPAACountryCode() {
