@@ -77,7 +77,8 @@ public class RatingConstant {
         SIXTEEN_PLUS("16+"),
         EIGHTEEN_PLUS("18+"),
         NINETEEN_PLUS("19+"),
-        MA15_PLUS("MA15+");
+        MA15_PLUS("MA15+"),
+        R18_PLUS("R18+");
 
         private final String contentRating;
 
