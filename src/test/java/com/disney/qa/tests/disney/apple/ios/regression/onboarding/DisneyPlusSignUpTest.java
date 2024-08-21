@@ -215,7 +215,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(description = "Verify Legal Center UI is present", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
     public void verifyUSLegalCenterUI() {
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
