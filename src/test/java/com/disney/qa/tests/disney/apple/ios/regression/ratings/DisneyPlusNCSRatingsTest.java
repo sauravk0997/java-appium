@@ -22,10 +22,17 @@ public class DisneyPlusNCSRatingsTest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-63184"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73184"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS})
     public void verifyRatingSystemAustralia_NCS_M() {
         ratingsSetup(M.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
         confirmRegionalRatingsDisplays(M.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73185"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS})
+    public void verifyRatingSystemAustralia_NCS_MA15_PLUS() {
+        ratingsSetup(MA15_PLUS.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        confirmRegionalRatingsDisplays(MA15_PLUS.getContentRating());
     }
 }
