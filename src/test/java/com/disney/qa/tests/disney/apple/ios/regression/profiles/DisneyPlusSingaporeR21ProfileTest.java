@@ -853,9 +853,6 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
     @AfterGroups(TestGroup.R21)
     private void clearSingaporeOverride() {
         LOGGER.info("Clearing Singapore location override");
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        restart();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
         setDictionary(ENGLISH_LANG, R.CONFIG.get(LOCALE));
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
