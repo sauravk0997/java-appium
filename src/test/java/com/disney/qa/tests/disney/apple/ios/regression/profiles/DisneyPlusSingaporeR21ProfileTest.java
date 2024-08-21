@@ -24,7 +24,6 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
-import static com.disney.qa.common.constant.RatingConstant.UNITED_STATES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
@@ -857,14 +856,10 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         restart();
-        if (homePage.getHomePageMainElement().isPresent(SHORT_TIMEOUT)) {
-            navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-            moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
-        }
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
-        setDictionary(ENGLISH_LANG, UNITED_STATES);
+        setDictionary(ENGLISH_LANG, R.CONFIG.get(LOCALE));
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), UNITED_STATES);
+        getAccountApi().overrideLocations(getAccount(), R.CONFIG.get(LOCALE));
     }
 }
