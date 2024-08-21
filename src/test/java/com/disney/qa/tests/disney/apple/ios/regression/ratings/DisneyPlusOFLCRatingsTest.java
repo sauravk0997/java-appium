@@ -51,4 +51,3 @@ public class DisneyPlusOFLCRatingsTest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(R15.getContentRating());
     }
 }
-
