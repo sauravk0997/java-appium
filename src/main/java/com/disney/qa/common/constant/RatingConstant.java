@@ -54,6 +54,8 @@ public class RatingConstant {
         PG("PG"),
         PG13("PG13"),
         R21("R21"),
+        TV_G("TV-G"),
+        TV_PG("TV-PG"),
         TV_Y("TV-Y"),
         TV_Y7("TV-Y7"),
         TV_Y7_FV("TV-Y7-FV"),
