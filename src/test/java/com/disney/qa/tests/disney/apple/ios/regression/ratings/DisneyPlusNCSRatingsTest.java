@@ -35,4 +35,11 @@ public class DisneyPlusNCSRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(MA15_PLUS.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
         confirmRegionalRatingsDisplays(MA15_PLUS.getContentRating());
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73186"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS})
+    public void verifyRatingSystemAustralia_NCS_R18_PLUS() {
+        ratingsSetup(R18_PLUS.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        confirmRegionalRatingsDisplays(R18_PLUS.getContentRating());
+    }
 }
