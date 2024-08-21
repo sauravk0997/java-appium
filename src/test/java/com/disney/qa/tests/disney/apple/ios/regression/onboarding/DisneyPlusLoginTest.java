@@ -31,7 +31,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     public static final String COMPLETE_PROFILE_PAGE_NOT_DISPLAYED = "Complete Profile Page is not displayed";
-    public static final String DISCOVER_PAGE_NOT_OPENED = "Home page is not displayed";
+    public static final String HOME_PAGE_NOT_DISPLAYED = "Home page is not displayed";
     public static final String DISNEY_PLUS_LOGO_NOT_DISPLAYED = "Disney+ Logo is not displayed";
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
     public static final String LOG_OUT_BTN_NOT_DISPLAYED = "Log Out Button is not displayed";
@@ -108,7 +108,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), DISCOVER_PAGE_NOT_OPENED);
+        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         softAssert.assertAll();
     }
@@ -288,7 +288,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertFalse(disneyPlusWhoseWatchingIOSPageBase.isAccessModeProfileIconPresent("DOESNT EXIST"), "profile displayed that should not.");
 
         disneyPlusWhoseWatchingIOSPageBase.clickProfile(DEFAULT_PROFILE);
-        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(), DISCOVER_PAGE_NOT_OPENED);
+        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // TODO add check that the correct profile loaded
         softAssert.assertAll();
@@ -415,7 +415,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testLogInEntitledDOBCollectionOver18() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusSignUpIOSPageBase signUpPage = new DisneyPlusSignUpIOSPageBase(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
@@ -437,7 +437,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
-        welcomeScreen.clickLogInButton();
+        welcomePage.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
@@ -469,10 +469,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        welcomeScreen.clickLogInButton();
+        welcomePage.clickLogInButton();
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        Assert.assertTrue(homePage.isOpened(), DISCOVER_PAGE_NOT_OPENED);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         sa.assertAll();
     }
