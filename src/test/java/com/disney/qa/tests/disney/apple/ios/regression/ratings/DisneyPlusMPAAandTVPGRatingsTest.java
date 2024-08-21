@@ -15,7 +15,7 @@ import static com.disney.qa.common.constant.RatingConstant.GUAM;
 import static com.disney.qa.common.constant.RatingConstant.MARSHALL_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.NORTHERN_MARINA_ISLANDS;
 import static com.disney.qa.common.constant.RatingConstant.PUERTO_RICO;
-import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_MA;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y;
@@ -56,11 +56,11 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73131"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG})
-    public void verifyRatingSystemPG13() {
+    public void verifyRatingSystemPG_13() {
         String locale = getMPAACountryCode();
-        ratingsSetup(PG13.getContentRating(), getMPAACountryLanguage(locale), locale);
+        ratingsSetup(PG_13.getContentRating(), getMPAACountryLanguage(locale), locale);
         handleOneTrustPopUp();
-        confirmRegionalRatingsDisplays(PG13.getContentRating());
+        confirmRegionalRatingsDisplays(PG_13.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73132"})

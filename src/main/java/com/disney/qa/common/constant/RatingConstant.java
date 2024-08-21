@@ -53,6 +53,7 @@ public class RatingConstant {
         NC16("NC16"),
         PG("PG"),
         PG13("PG13"),
+        PG_13("PG-13"),
         RESTRICTED("R"),
         R21("R21"),
         TV_14("TV-14"),
