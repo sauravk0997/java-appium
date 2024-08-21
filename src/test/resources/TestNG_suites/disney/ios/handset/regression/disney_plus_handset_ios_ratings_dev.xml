@@ -82,4 +82,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMPAAandTVPGRatingsTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Australia NCS Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNCSRatingsTest"/>
+        </classes>
+    </test>
 </suite>
