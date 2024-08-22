@@ -17,11 +17,11 @@ import static com.disney.qa.common.constant.RatingConstant.NORTHERN_MARINA_ISLAN
 import static com.disney.qa.common.constant.RatingConstant.PUERTO_RICO;
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
-import static com.disney.qa.common.constant.RatingConstant.Rating.TV_G;
-import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_MA;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y7;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y7_FV;
