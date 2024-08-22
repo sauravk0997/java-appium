@@ -455,7 +455,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(dobCollectionPage.isExistingSubDOBHeaderDisplayed(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
         dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
