@@ -52,7 +52,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66772"})
-    @Test(description = "Ariel: Profiles - Add Profile - Choose an Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileAvatarSelection() {
         DisneyPlusMoreMenuIOSPageBase MoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
