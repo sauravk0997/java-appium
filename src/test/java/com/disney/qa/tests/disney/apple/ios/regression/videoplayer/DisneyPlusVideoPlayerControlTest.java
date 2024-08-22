@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.SERIES;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -61,7 +60,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         if (contentType[0].equals(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
-            detailsPage.clickPlayOrContinue().waitForVideoToStart().tapSubtitleOnPlayer();
+            detailsPage.clickContinueButton().waitForVideoToStart().tapSubtitleOnPlayer();
             Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         }
     }
