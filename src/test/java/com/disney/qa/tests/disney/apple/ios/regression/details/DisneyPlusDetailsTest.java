@@ -278,7 +278,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -313,7 +313,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
         sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
         sa.assertAll();
