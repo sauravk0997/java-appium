@@ -148,11 +148,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        homePage.swipeInContainerTillElementIsPresent(
-                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU),
-                homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU),
-                3,
-                Direction.UP);
+        homePage.scrollToItem(RECOMMENDED_FOR_YOU);
         homePage.clickCollectionTile(CollectionConstant.Collection.RECOMMENDED_FOR_YOU, 1);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
