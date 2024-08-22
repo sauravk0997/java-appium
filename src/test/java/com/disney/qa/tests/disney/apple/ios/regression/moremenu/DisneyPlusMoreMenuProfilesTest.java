@@ -71,9 +71,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
 
         addProfile.enterProfileName(SECONDARY_PROFILE);
-        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
-        addProfile.clickSaveByDictionaryKey();
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.clickSaveProfileButton();
         addProfile.clickSecondaryButton();
         Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
 
