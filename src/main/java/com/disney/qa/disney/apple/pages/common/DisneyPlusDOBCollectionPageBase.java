@@ -48,7 +48,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         return dateOfBirthHeader.isPresent();
     }
 
-    public boolean isExistingSubDOBHeaderDisplayed() { return existingSubDOBHeader.isDisplayed(); }
+    public boolean isExistingSubDOBHeaderDisplayed() { return existingSubDOBHeader.isPresent(); }
 
     public void clickConfirmBtn() { confirmButton.click(); }
 
