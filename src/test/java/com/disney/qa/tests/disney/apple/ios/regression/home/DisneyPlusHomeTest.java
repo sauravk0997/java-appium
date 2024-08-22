@@ -20,24 +20,30 @@ import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
-    private static final String DISNEY_PLUS = "Disney Plus";
-    private static final String HOME_PAGE_ERROR = "Home page did not open";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
-    @Test(description = "Home - Home Screen UI Elements", groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         //Validate top of home
-        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found.");
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found");
+        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
+                "'Recommend For You' collection was not found");
         homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouLastTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        BufferedImage recommendedForYouLastTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
         homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouFirstTileInView = getElementImage(homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-        sa.assertTrue(areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView), "Recommended For You first tile in view and last tile in view images are the same.");
+        BufferedImage recommendedForYouFirstTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        sa.assertTrue(areImagesDifferent(
+                        recommendedForYouFirstTileInView,
+                        recommendedForYouLastTileInView),
+                "Recommended For You first tile in view and last tile in view images are the same");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
@@ -46,18 +52,24 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         BufferedImage closeToBottomOfHome = getCurrentScreenView();
 
         //Validate back at top of home
-        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS), 10, null, Direction.DOWN, 300);
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(), "'Recommend For You' collection was not found.");
-        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found after return to top of home.");
+        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS),
+                10,
+                null,
+                Direction.DOWN,
+                300);
+        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
+                "'Recommend For You' collection was not found");
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(),
+                "`Disney Plus` image was not found after return to top of home");
 
         //Validate images are different
         sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
-                "Top of home image is the same as bottom of home image.");
+                "Top of home image is the same as bottom of home image");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
-    @Test(description = "Home - Recommended for You", groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
         String recommendedContainerNotFound = "Recommended For You container was not found";
@@ -69,7 +81,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyAccount account = getAccount();
         setAppToHomeScreen(account);
 
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
@@ -78,24 +90,39 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         int size = recommendationTitlesFromApi.size();
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(collection).split(",")[0];
-        ExtendedWebElement firstTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(0));
-        ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(collection, recommendationTitlesFromApi.get(size-1));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)), "UI title value not matched with API title value");
+        ExtendedWebElement firstTitle = homePage.getCellElementFromContainer(
+                collection,
+                recommendationTitlesFromApi.get(0));
+        ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(
+                collection,
+                recommendationTitlesFromApi.get(size - 1));
+        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)),
+                "UI title value not matched with API title value");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection), lastTitle, 30, Direction.LEFT );
-        Assert.assertTrue(lastTitle.isPresent(), "User is not able to swipe through end of container");
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
+                lastTitle,
+                30,
+                Direction.LEFT);
+        Assert.assertTrue(lastTitle.isPresent(),
+                "User is not able to swipe through end of container");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection), firstTitle, 30, Direction.RIGHT);
-        Assert.assertTrue(firstTitle.isPresent(), "User is not able to swipe to the begining of container");
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
+                firstTitle,
+                30,
+                Direction.RIGHT);
+        Assert.assertTrue(firstTitle.isPresent(),
+                "User is not able to swipe to the beginning of container");
 
         firstTitle.click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page was not opened");
-        sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle), "Content title not matched");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle),
+                "Content title not matched");
         detailsPage.clickCloseButton();
-        sa.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR);
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
-        sa.assertTrue(firstTitle.isPresent(), "Same position was not retained in Recommend for Your container after coming back from detail page");
+        sa.assertTrue(firstTitle.isPresent(),
+                "Same position was not retained in Recommend for Your container after coming back from detail page");
         sa.assertAll();
     }
 
@@ -112,6 +139,19 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
         Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
         homePage.getTravelAlertOk().click();
-        Assert.assertFalse(homePage.isTravelAlertTitlePresent(), "Travel alert was not dismissed.");
+        Assert.assertFalse(homePage.isTravelAlertTitlePresent(), "Travel alert was not dismissed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67375"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, TestGroup.SMOKE})
+    public void verifyUserTapsOnHomeContent() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickCollectionTile(CollectionConstant.Collection.RECOMMENDED_FOR_YOU, 1);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickCloseButton();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
     }
 }
