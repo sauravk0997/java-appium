@@ -18,15 +18,15 @@ import java.util.*;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String DISNEY_TILE = "Disney, Select for details on this title.";
-    @ExtendedFindBy(accessibilityId = "bbbeb38b-d5ae-47dd-a049-b089735c7453")
+    @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title.")
     private ExtendedWebElement disneyTile;
-    @ExtendedFindBy(accessibilityId = "b8b35f0b-342d-4128-87ac-d3d5353121fa")
+    @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title.")
     private ExtendedWebElement pixarTile;
-    @ExtendedFindBy(accessibilityId = "152b43dd-e9df-4bc5-94f3-ee4ffe99c8ae")
+    @ExtendedFindBy(accessibilityId = "Marvel, Select for details on this title.")
     private ExtendedWebElement marvelTile;
-    @ExtendedFindBy(accessibilityId = "6f7a054a-cdde-4285-ae4b-b0887ece18e8")
+    @ExtendedFindBy(accessibilityId = "Star Wars, Select for details on this title.")
     private ExtendedWebElement starWarsTile;
-    @ExtendedFindBy(accessibilityId = "3bf4b88f-49a0-4533-ad24-97af0ca9b1d3")
+    @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title.")
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
