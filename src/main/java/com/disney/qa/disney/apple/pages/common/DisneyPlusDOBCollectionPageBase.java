@@ -39,7 +39,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public ExtendedWebElement getDateOfBirthHeader(){ return dateOfBirthHeader; }
+    public ExtendedWebElement getDateOfBirthHeader() { return dateOfBirthHeader; }
 
     @Override
     public boolean isOpened() {
@@ -47,7 +47,7 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
         return dateOfBirthHeader.isPresent();
     }
 
-    public boolean isInvalidDOBMessageDisplayed() { return labelError.isPresent(); }
+    public void clickConfirmBtn() { confirmButton.click(); }
 
     public void enterDOB(String dob) {
         dateTextField.type(dob);

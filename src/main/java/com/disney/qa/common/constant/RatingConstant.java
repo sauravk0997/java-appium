@@ -54,6 +54,8 @@ public class RatingConstant {
         PG("PG"),
         PG13("PG13"),
         R21("R21"),
+        TV_G("TV-G"),
+        TV_PG("TV-PG"),
         TV_Y("TV-Y"),
         TV_Y7("TV-Y7"),
         TV_Y7_FV("TV-Y7-FV"),
@@ -76,7 +78,9 @@ public class RatingConstant {
         FIFTEEN_PLUS("15+"),
         SIXTEEN_PLUS("16+"),
         EIGHTEEN_PLUS("18+"),
-        NINETEEN_PLUS("19+");
+        NINETEEN_PLUS("19+"),
+        MA15_PLUS("MA15+"),
+        R18_PLUS("R18+");
 
         private final String contentRating;
 
