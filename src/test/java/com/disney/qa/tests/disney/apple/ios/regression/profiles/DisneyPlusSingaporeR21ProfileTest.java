@@ -804,7 +804,7 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String lang, String locale) {
+    private void ratingsSetupForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -814,7 +814,7 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
+    private void ratingSetupWithPINForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
