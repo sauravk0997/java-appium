@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.SERIES;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,9 +32,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
-        return new Object[][]{{DisneyPlusApplePageBase.contentType.MOVIE.toString(), "Ice Age"},
-                {DisneyPlusApplePageBase.contentType.SERIES.toString(), SHORT_SERIES},
-                {DisneyPlusApplePageBase.contentType.EXTRAS.toString(), "Thor: Love and Thunder"}};
+        return new Object[][]{
+                {DisneyPlusApplePageBase.contentType.MOVIE.toString(),
+                        R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink")},
+                {DisneyPlusApplePageBase.contentType.SERIES.toString(),
+                        R.TESTDATA.get("disney_prod_series_detail_deeplink")}
+        };
     }
 
     @DataProvider(name = "userType")
@@ -41,24 +46,24 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 {"DISNEY_VERIFIED_HULU_ESPN_BUNDLE"}};
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
-    public void verifyTitleAndBackButtonToClose() {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
+    public void verifyTitleAndBackButtonToClose(@NotNull Object[] contentType) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        launchDeeplink((String) contentType[1]);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        detailsPage.clickPlayButton().waitForVideoToStart();
-        videoPlayer.clickBackButton();
+        detailsPage.clickPlayButton().waitForVideoToStart().clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        detailsPage.clickPlayOrContinue();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.tapTitleOnPlayer();
+        detailsPage.clickPlayOrContinue().waitForVideoToStart().tapTitleOnPlayer();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        if (contentType[0].equals(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
+            detailsPage.clickPlayOrContinue().waitForVideoToStart().tapSubtitleOnPlayer();
+            Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
