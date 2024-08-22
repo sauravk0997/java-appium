@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
-import static com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase.SINGAPORE_LANG;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -104,7 +103,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, SINGAPORE_LANG));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, ENGLISH_LANG));
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
