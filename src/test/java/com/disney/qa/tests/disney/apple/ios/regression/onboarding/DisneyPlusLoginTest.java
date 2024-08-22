@@ -426,6 +426,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = new DisneyPlusUpdateProfileIOSPageBase(getDriver());
         DisneyPlusAddProfileBannerIOSPage addProfileBannerPage = new DisneyPlusAddProfileBannerIOSPage(getDriver());
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
 
         //Create Disney account without DOB
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
@@ -454,11 +455,11 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(dobCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
-        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        ednaDOBCollectionPage.tapSaveAndContinueButton();
+        dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        dobCollectionPage.clickConfirmBtn();
         Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
 
         //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
