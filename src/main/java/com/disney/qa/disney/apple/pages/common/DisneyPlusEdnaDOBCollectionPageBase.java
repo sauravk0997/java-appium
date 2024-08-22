@@ -28,10 +28,22 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
         return staticTextByLabel.format(ednaDateOfBirthPageDescription).isPresent();
     }
 
+    public boolean isEdnaBirthdateLabelDisplayed() {
+        String birthdateLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_HEADER.getText());
+        return staticTextByLabel.format(birthdateLabel).isPresent();
+    }
+
     public boolean isEdnaDateOfBirthFormatErrorPresent() {
         String ednaDateOfBirthFormatError = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR.getText());
         return staticTextByLabel.format(ednaDateOfBirthFormatError).isPresent();
+    }
+
+    public boolean isLogOutBtnDisplayed() {
+        String logOutButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_LOGOUT_BTN.getText());
+        return dynamicBtnFindByLabel.format(logOutButton).isPresent();
     }
 
     //format: Month, day, year
