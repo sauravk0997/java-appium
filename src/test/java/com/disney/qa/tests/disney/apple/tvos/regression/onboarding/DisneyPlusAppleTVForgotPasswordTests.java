@@ -115,8 +115,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyOTPAccount.getEmail());
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-
-
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having Trouble Loggin In page did not launch");
 
@@ -252,7 +250,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertAll();
     }
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90652"})
     @Test(description = "Enter OTP -> Create password screen -> back -> Check your email screen -> resend OTP -> entering and submitting original OTP should prompt an error", groups = {TestGroup.ONBOARDING}, enabled = false)
@@ -468,7 +465,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90636"})
     @Test(description = "Verify create password on screen keyboard", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordOnScreenKeyboardVerification() {
@@ -583,7 +579,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90679", "XCDQA-90681", "XCDQA-90683"})
     @Test(description = "Empty password submission on create password screen from forgot password", groups = {TestGroup.ONBOARDING}, enabled = false)
     public void createPasswordNoPasswordSubmissionError() {
@@ -639,7 +634,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertAll();
     }
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90685"})
     @Test(description = "Ensure after resetting password user is taken to home screen", groups = {TestGroup.ONBOARDING}, enabled = false)
