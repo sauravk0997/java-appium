@@ -68,6 +68,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
+    public static final String DISNEY_PLUS = "Disney Plus";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
     public static final String RATING_MATURE = "TV-MA";
