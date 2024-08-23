@@ -73,6 +73,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String APPLE = "apple";
     public static final String DISNEY = "disney";
     public static final String LANGUAGE = "language";
+    public static final String LOCALE = "locale";
     public static final String PROD = "prod";
     public static final String IOS_PLATFORM = "ios";
     public static final String APP = "app";

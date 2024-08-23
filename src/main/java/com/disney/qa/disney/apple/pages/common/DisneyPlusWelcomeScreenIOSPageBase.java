@@ -70,13 +70,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
-    //TODO: Investigate why this dictionary key is not found QAA-12657
-    public boolean isSubCopyPresent() {
-        String subscribeText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
-        String subscribeText2 = getDictionary().formatPlaceholderString(subscribeText, Map.of("PRICE_0", "---", "TIME_UNIT_0", "---"));
-        return staticTextByLabel.format(subscribeText2).isPresent();
-    }
-
     public boolean isSubCopyDirectTextPresent() {
         String subCopyDirectText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();

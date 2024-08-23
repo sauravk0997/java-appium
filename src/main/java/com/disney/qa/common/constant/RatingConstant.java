@@ -53,7 +53,11 @@ public class RatingConstant {
         NC16("NC16"),
         PG("PG"),
         PG13("PG13"),
+        R15("R15"),
         R21("R21"),
+        RP13("RP13"),
+        TV_G("TV-G"),
+        TV_PG("TV-PG"),
         TV_Y("TV-Y"),
         TV_Y7("TV-Y7"),
         TV_Y7_FV("TV-Y7-FV"),
@@ -62,6 +66,7 @@ public class RatingConstant {
         NINE("9"),
         TEN("10"),
         TWELVE("12"),
+        THIRTEEN("13"),
         FOURTEEN("14"),
         SIXTEEN("16"),
         EIGHTEEN("18"),
@@ -77,7 +82,8 @@ public class RatingConstant {
         SIXTEEN_PLUS("16+"),
         EIGHTEEN_PLUS("18+"),
         NINETEEN_PLUS("19+"),
-        MA15_PLUS("MA15+");
+        MA15_PLUS("MA15+"),
+        R18_PLUS("R18+");
 
         private final String contentRating;
 

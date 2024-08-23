@@ -755,7 +755,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74482"})
-    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Max profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileBannerIsNotDisplayedForTheMaxAmountOfProfiles() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);

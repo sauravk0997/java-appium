@@ -77,41 +77,6 @@ public class DisneyPlusIAPSubscriptionTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72385"})
-    @Test(description = "Log in - Verify sign up - DOB Over 18", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
-    public void testSignUpDOBOver18() {
-        if (buildType != BuildType.IAP) {
-            skipExecution("Test run is not against IAP compatible build.");
-        }
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusPaywallIOSPageBase paywallPage = new DisneyPlusPaywallIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-
-        createDisneyAccountRequest
-                .setDateOfBirth(null)
-                .setCountry(getLocalizationUtils().getLocale())
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
-
-        welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        sa.assertTrue(welcomeScreen.isCompleteSubscriptionButtonDisplayed(),
-                "Complete Subscription Button did not appear.");
-        welcomeScreen.clickCompleteSubscriptionButton();
-
-        dobCollectionPage.isOpened();
-        dobCollectionPage.enterDOB(DOB_ADULT);
-        pause(5);
-        sa.assertTrue(paywallPage.isChooseYourPlanHeaderPresent(), "Choose your plan card 'title' is not as expected");
-        sa.assertTrue(paywallPage.isChooseYourPlanSubHeaderPresent(), "Choose your plan card 'subtitle' is not as expected");
-        sa.assertAll();
-    }
-
     private void verifySignUpButtonNavigation() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
