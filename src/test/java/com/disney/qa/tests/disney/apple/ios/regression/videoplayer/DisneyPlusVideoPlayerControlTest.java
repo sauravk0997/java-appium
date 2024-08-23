@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,9 +31,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
-        return new Object[][]{{DisneyPlusApplePageBase.contentType.MOVIE.toString(), "Ice Age"},
-                {DisneyPlusApplePageBase.contentType.SERIES.toString(), SHORT_SERIES},
-                {DisneyPlusApplePageBase.contentType.EXTRAS.toString(), "Thor: Love and Thunder"}};
+        return new Object[][]{
+                {DisneyPlusApplePageBase.contentType.MOVIE.toString(),
+                        R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink")},
+                {DisneyPlusApplePageBase.contentType.SERIES.toString(),
+                        R.TESTDATA.get("disney_prod_series_detail_deeplink")}
+        };
     }
 
     @DataProvider(name = "userType")
@@ -42,40 +46,23 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
-    @Test(description = "Video Player > Title and Back Button to Close", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
-    public void verifyTitleAndBackButtonToClose(Object[] content) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
+    public void verifyTitleAndBackButtonToClose(@NotNull Object[] contentType) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        //User taps the back button
-        loginAndStartPlayback((String) content[1]);
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        //User taps the title
-        detailsPage.clickPlayOrContinue();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.tapTitleOnPlayer();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertAll();
-        //Initiate playback from 'downloads'
-        /*detailsPage.getEpisodeToDownload("1","1").click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(60, 3);
-        homePage.clickDownloadsIcon();
-        downloadsPage.tapDownloadedAssetFromListView(SHORT_SERIES);
-        downloadsPage.tapDownloadedAsset(SHORT_SERIES);
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        sa.assertTrue(downloadsPage.isContentHeaderPresent(SHORT_SERIES), "'Downloads list view' page didn't open after closing the video player");
+        setAppToHomeScreen(getAccount());
+        launchDeeplink((String) contentType[1]);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        //Initiate playback from 'continue watching' from Home
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        homePage.initiatePlaybackFromContinueWatching(SHORT_SERIES);
-        detailsPage.clickContinueButton();
-        videoPlayer.isOpened();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "'Details' page didn't open after closing the video player");*/
+        detailsPage.clickPlayButton().waitForVideoToStart().clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        detailsPage.clickPlayOrContinue().waitForVideoToStart().tapTitleOnPlayer();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        if (contentType[0].equals(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
+            detailsPage.clickContinueButton().waitForVideoToStart().tapSubtitleOnPlayer();
+            Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})

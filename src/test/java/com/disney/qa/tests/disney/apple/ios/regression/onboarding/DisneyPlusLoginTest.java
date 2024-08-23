@@ -6,6 +6,7 @@ import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.phone.DisneyPlusAddProfileBannerIOSPage;
 import com.disney.util.TestGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +30,25 @@ import java.util.List;
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
+    public static final String COMPLETE_PROFILE_PAGE_NOT_DISPLAYED = "Complete Profile Page is not displayed";
+    public static final String HOME_PAGE_NOT_DISPLAYED = "Home page is not displayed";
+    public static final String DISNEY_PLUS_LOGO_NOT_DISPLAYED = "Disney+ Logo is not displayed";
+    public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
+    public static final String LOG_OUT_BTN_NOT_DISPLAYED = "Log Out Button is not displayed";
+    public static final String MYDISNEY_LOGO_NOT_DISPLAYED = "myDisney Logo is not displayed";
+    public static final String BACK_ARROW_NOT_DISPLAYED = "Back Arrow is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72745"})
-    @Test(description = "Log In - Verify Login Screen UI", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testLogInScreen() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), "Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(), "MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(), "STEP 1 text should be displayed");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(), "'Enter your email to continue' text should be displayed");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field should be present");
@@ -52,7 +60,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72744"})
-    @Test(description = "Log In - Verify Password Screen UI", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testPasswordScreen() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -61,9 +69,9 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackButtonPresent(), "Back Arrow should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), "Disney+ logo image should be displayed");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), "MyDisney logo image should be displayed");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isStep2LabelDisplayed(), "stepper should be displayed");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isHeaderTextDisplayed(), "Header text should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isPasswordEntryFieldDisplayed(), "Password field should be present");
@@ -77,7 +85,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67222"})
-    @Test(description = "Log in - Verify valid email", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testValidEmailLogin() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -89,7 +97,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62046"})
-    @Test(description = "Log in - Verify valid password - One Profile", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testValidPasswordOneProfile() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -100,13 +108,13 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
         disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), "Home page should have been opened");
+        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         softAssert.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75711"})
-    @Test(description = "Log in - Verify valid password - Multiple Profiles", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testValidPasswordMultipleProfiles() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -124,7 +132,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(description = "Log in - Verify invalid email formats - One Character, No Top Level Domain, No Email, Invalid Email", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testInvalidEmailFormat() {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
@@ -152,7 +160,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67236"})
-    @Test(description = "Log in - Verify invalid password", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testInvalidPassword() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -170,7 +178,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(description = "Log in - Verify empty password", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testEmptyPassword() {
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -184,7 +192,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67230"})
-    @Test(description = "Log in - Verify Show and Hide Password", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testShowHidePassword() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
@@ -210,7 +218,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
     //TODO: QAA-14561
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68436"})
-    @Test(description = "Log in - Unknown email - try again", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testEmailNoAccountTryAgain() {
         String noEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -232,7 +240,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
     //TODO: QAA-14561
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68436"})
-    @Test(description = "Log in - Unknown email - sign up", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void testEmailNoAccountSignUp() {
         String noEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -258,7 +266,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66764"})
-    @Test(description = "Verify Choose Profiles Screen", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testChooseProfiles() {
         String kidProfile = "kidProfile";
         String profile3 = "profile 3";
@@ -280,15 +288,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertFalse(disneyPlusWhoseWatchingIOSPageBase.isAccessModeProfileIconPresent("DOESNT EXIST"), "profile displayed that should not.");
 
         disneyPlusWhoseWatchingIOSPageBase.clickProfile(DEFAULT_PROFILE);
-        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(),
-                "Expected - Home page should be opened after selecting profile");
+        softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // TODO add check that the correct profile loaded
         softAssert.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67250"})
-    @Test(description = "Log In - Complete Subscription UI", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testNotEntitledAccount() {
         DisneyAccount nonActiveAccount = getAccountApi().createAccount("US", "en");
         SoftAssert softAssert = new SoftAssert();
@@ -310,7 +317,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67254"})
-    @Test(description = "Log in - expired account", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testExpiredAccount() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert softAssert = new SoftAssert();
@@ -333,7 +340,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67236"})
-    @Test(description = "Log in - Incorrect Password", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testIncorrectPassword() {
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -350,7 +357,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62679"})
-    @Test(description = "Log in - Verify Account on Hold", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyAccountOnHold() {
         SoftAssert softAssert = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -369,7 +376,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(accountWithBillingHold);
 
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), "Logout button not present");
+        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), LOG_OUT_BTN_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldTitle().isPresent(), "Account Hold Title not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldSubText().isPresent(), "Account Hold Subtext not present");
         softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getUpdatePaymentButton().isPresent(), "Update Payment Button not present");
@@ -384,7 +391,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67266"})
-    @Test(description = "Log in - Verify Minor User is blocked from logging in", groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void verifyMinorLogInBlocked() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -402,5 +409,74 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getDismissButton().isPresent(), "Dismiss Button not present");
 
         softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72163"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION })
+    public void testLogInEntitledDOBCollectionOver18() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusSignUpIOSPageBase signUpPage = new DisneyPlusSignUpIOSPageBase(getDriver());
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
+                new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = new DisneyPlusUpdateProfileIOSPageBase(getDriver());
+        DisneyPlusAddProfileBannerIOSPage addProfileBannerPage = new DisneyPlusAddProfileBannerIOSPage(getDriver());
+        DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage =
+                new DisneyPlusEnforceDOBCollectionPageBase(getDriver());
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+
+        //Create Disney account without DOB
+        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
+        createDisneyAccountRequest
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+
+        //Element Validations
+        sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
+        sa.assertTrue(signUpPage.isStepperDictValueDisplayed("3", "5"),
+                "'STEP 3 OF 5' should be displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), LOG_OUT_BTN_NOT_DISPLAYED);
+
+        //Close and Reopen
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        Assert.assertTrue(enforceDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+
+        //Save DOB
+        dobCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        dobCollectionPage.clickConfirmBtn();
+        Assert.assertTrue(addProfilePage.isGenderFieldPresent(), COMPLETE_PROFILE_PAGE_NOT_DISPLAYED);
+
+        //Finish Flow -> Log Out -> Log In -> DOB Collection not shown after Saving
+        addProfilePage.chooseGender();
+        updateProfilePage.tapSaveButton();
+        addProfileBannerPage.tapDismissButton();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        sa.assertAll();
     }
 }
