@@ -16,6 +16,41 @@ public class DisneyPlusOFLCRatingsTest extends DisneyPlusRatingsBase {
         confirmRegionalRatingsDisplays(M.getContentRating());
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71630"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
+    public void verifyNewZealandOFLCRatingG() {
+        ratingsSetup(G.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
+        confirmRegionalRatingsDisplays(G.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73187"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
+    public void verifyNewZealandOFLCRatingPG() {
+        ratingsSetup(PG.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
+        confirmRegionalRatingsDisplays(PG.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73190"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
+    public void verifyNewZealandOFLCRating13() {
+        ratingsSetup(THIRTEEN.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
+        confirmRegionalRatingsDisplays(THIRTEEN.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73191"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
+    public void verifyNewZealandOFLCRatingRP13() {
+        ratingsSetup(RP13.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
+        confirmRegionalRatingsDisplays(RP13.getContentRating());
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73192"})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
+    public void verifyNewZealandOFLCRatingR15() {
+        ratingsSetup(R15.getContentRating(), NEW_ZEALAND_LANG, NEW_ZEALAND);
+        confirmRegionalRatingsDisplays(R15.getContentRating());
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73193"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_OFLC})
     public void verifyNewZealandOFLCRatingR16() {
