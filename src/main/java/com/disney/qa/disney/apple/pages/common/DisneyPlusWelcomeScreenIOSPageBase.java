@@ -17,7 +17,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpButton;
 
-    @ExtendedFindBy(accessibilityId = "loginButton")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"LOG IN\"`]")
     protected ExtendedWebElement loginButton;
 
     @ExtendedFindBy(accessibilityId = "dismissButton")
