@@ -28,6 +28,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeImage' AND name='badgeIcon'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[1]")
     protected ExtendedWebElement addProfileAvatar;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access JUNIOR's profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
+    protected ExtendedWebElement profileAvatar;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     protected ExtendedWebElement addProfileBtn;
 
@@ -78,6 +81,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getAddProfileAvatar() {
         return addProfileAvatar;
+    }
+
+    public ExtendedWebElement getProfileAvatar() {
+        return profileAvatar;
     }
 
     public void enterProfileNameOnLocalizedKeyboard(String name) {

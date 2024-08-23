@@ -35,6 +35,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"%s\"]/preceding-sibling::*")
 	private ExtendedWebElement profileAvatar;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"JUNIOR\"`]")
+	private ExtendedWebElement juniorProfileName;
+
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
 	private ExtendedWebElement pinProtectedProfileLock;
 
@@ -87,6 +90,10 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitKidsProfile() {
 		return exitKidsProfileButton;
+	}
+
+	public ExtendedWebElement getJuniorProfileName() {
+		return juniorProfileName;
 	}
 
 	public ExtendedWebElement getExitJuniorModePin() {
@@ -202,6 +209,10 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public String getAppVersionText() {
 		return appVersion.getText();
+	}
+
+	public ExtendedWebElement getAppVersionNumber() {
+		return appVersion;
 	}
 
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {

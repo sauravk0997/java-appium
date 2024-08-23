@@ -13,6 +13,7 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
+    private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -827,5 +829,30 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             parentalConsent.scrollConsentContent(4);
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67787"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyMoreMenuSimplifiedJuniorProfile() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        moreMenu.clickMoreTab();
+
+       // sa.assertEquals(editProfile.getProfileAvatar().isPresent(), "Avatar is not present");
+        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel("Access JUNIOR's profile").isPresent(), "Junior mode name was not present on profile page2");
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE","Exit junior mode text is not present");
+       // sa.assertTrue(moreMenu.getJuniorProfileName().isPresent(), "Junior mode name was not present on profile page");
+        sa.assertTrue(moreMenu.getAppVersionNumber().isPresent(), "App Version is not present");
+        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(), "Watchlist element is not present");
+        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(), "Junior mode name was not present on profile page2");
+
+        sa.assertAll();
     }
 }
