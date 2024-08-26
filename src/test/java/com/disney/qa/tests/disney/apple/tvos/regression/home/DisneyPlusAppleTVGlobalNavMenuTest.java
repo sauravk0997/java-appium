@@ -174,7 +174,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
-    @Test(description = "Hidden Nav state - inner pages", groups = {TestGroup.HOME}, enabled = false)
+    @Test(description = "Hidden Nav state - inner pages", groups = {TestGroup.HOME})
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -187,9 +187,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        getWatchlistApi().addContentToWatchlist(entitledUser, entitledUser.getProfileId(), DisneyEntityIds.END_GAME_AVENGERS.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
+                DisneyEntityIds.END_GAME.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
@@ -198,7 +198,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS.getText())
                 .collect(Collectors.toList());
-        logInTemp(entitledUser);
+        logInTemp(getAccount());
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickRandomBrandTile();
@@ -208,7 +208,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
 
         brandsPage.clickMenuTimes(1, 1);
-        sa.assertTrue(homePage.isHomeContentViewPresent(), "Not on home page after clicking menu on Brand page");
+        sa.assertTrue(homePage.isOpened(), "Not on home page after clicking menu on Brand page");
 
         //Navigate to Profile tab outside of switch for stability
         homePage.clickMenuTimes(1, 1);

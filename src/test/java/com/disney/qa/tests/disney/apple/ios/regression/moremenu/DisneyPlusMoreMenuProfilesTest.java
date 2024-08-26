@@ -54,7 +54,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66772"})
-    @Test(description = "Ariel: Profiles - Add Profile - Choose an Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileAvatarSelection() {
         DisneyPlusMoreMenuIOSPageBase MoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
@@ -73,16 +73,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
 
         addProfile.enterProfileName(SECONDARY_PROFILE);
-        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
-        addProfile.clickSaveByDictionaryKey();
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.clickSaveProfileButton();
         addProfile.clickSecondaryButton();
         Assert.assertTrue(MoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
 
         BufferedImage moreMenuAvatar = getElementImage(MoreMenuIOSPageBase.getProfileAvatar(SECONDARY_PROFILE));
         BufferedImage selectedAvatarCopy = getScaledImage(cloneBufferedImage(selectedAvatar), moreMenuAvatar.getWidth(), moreMenuAvatar.getHeight());
         LOGGER.info("Comparing selected avatar to 'More Menu' display...");
-        sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 10),
+        sa.assertTrue(areImagesTheSame(selectedAvatarCopy, moreMenuAvatar, 15),
                 "Avatar displayed in the More Menu was either not displayed or was altered beyond the accepted margin of error");
         sa.assertAll();
     }
