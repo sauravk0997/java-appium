@@ -6,6 +6,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
@@ -51,15 +52,11 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
 
     @Override
     public void clickLogInButton() {
-        fluentWait(getDriver(),getDefaultWaitTimeout().toSeconds(), 2, "Sign Up button was not focused")
-                //TODO: TVOS-3456 focus not found on sign up button, temp fix use of isElementPresent
-                .until(it -> getSignupButton().isPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 1, "Login Button was not focused")
                 .until(it -> {
-                    clickDown();
-                    return isFocused(getLoginButton());
+                    return isFocused(loginButton);
                 });
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
