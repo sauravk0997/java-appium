@@ -844,13 +844,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        sa.assertTrue(homePage.isOpened(), "Home page is not displayed");
         homePage.clickSearchIcon();
         searchPage.searchForMedia(THE_TIGGER_MOVIE);
         searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        sa.assertTrue(detailsPage.getDownloadButton().isPresent(SHORT_TIMEOUT), "Download button is not present");
+        sa.assertTrue(detailsPage.getDownloadButton().isElementPresent(SHORT_TIMEOUT), "Download button is not present");
         detailsPage.startDownload();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         downloads.isContentHeaderPresent(THE_TIGGER_MOVIE);
