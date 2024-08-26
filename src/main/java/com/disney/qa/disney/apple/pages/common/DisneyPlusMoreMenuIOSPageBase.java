@@ -81,7 +81,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement profileSelectionCollectionView;
 
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='unlockedProfileCell']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
-	private ExtendedWebElement xpathAvatar;
+	private ExtendedWebElement avatarIconProfile;
 
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -157,7 +157,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		}
 	}
 
-	public void clickMenuOptionByIndex(MoreMenu option) {
+	public void  clickMenuOptionByIndex(MoreMenu option) {
 		moreMenuItemByIndex.format(option.getIndex()).click();
 	}
 
@@ -175,7 +175,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public ExtendedWebElement getProfileCell(String profile, boolean secured) {
-		if (secured) {
+		if  (secured) {
 			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		} else {
 			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
@@ -220,14 +220,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
-		if (!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
+		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
 			clickElementAtLocation(downloadContainer, 50, 90);
 		}
 	}
 
 	public boolean isDeviceStorageCorrectlyDisplayed() {
 		ExtendedWebElement storageText = getTypeCellLabelContains(String.format("iPhone %s", getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
-		if (storageText.isElementPresent()) {
+		if(storageText.isElementPresent()) {
 			return storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
 					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
 					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
@@ -256,7 +256,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDeleteDownloadsEnabled() {
 		ExtendedWebElement deleteAllDownloads = deleteAllDownloadsCell.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
-		if (deleteAllDownloads.isElementPresent()) {
+		if(deleteAllDownloads.isElementPresent()) {
 			return deleteAllDownloads.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 		} else {
 			return false;
@@ -343,7 +343,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		exitKidsProfileButton.click();
 	}
 
-	public void tapAccountTab() {
+	public void tapAccountTab(){
 		accountTab.click();
 	}
 
@@ -375,7 +375,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return pinProtectedProfileLock.format(profileName).isPresent();
 	}
 
-	public ExtendedWebElement getXpathAvatar() {
-		return xpathAvatar;
+	public ExtendedWebElement getAvatarIconProfile() {
+		return avatarIconProfile;
 	}
 }

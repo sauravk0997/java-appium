@@ -845,7 +845,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         moreMenu.clickMoreTab();
         // Elements that should be seen
-        sa.assertTrue(moreMenu.getXpathAvatar().isPresent(SHORT_TIMEOUT), "Avatar not present ***");
+        sa.assertTrue(moreMenu.getAvatarIconProfile().isPresent(SHORT_TIMEOUT), "Avatar is not present");
         sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(), "Junior Mode name was not present on profile page");
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE","Exit Junior Mode text is not present");
         sa.assertTrue(moreMenu.getAppVersionNumber().isPresent(SHORT_TIMEOUT), "App Version is not present");
