@@ -45,6 +45,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
+    private static final String THE_TIGGER_MOVIE = "The Tigger Movie";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -827,5 +828,32 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             parentalConsent.scrollConsentContent(4);
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageMovieDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        sa.assertTrue(homePage.isOpened(), "Home page is not displayed");
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(THE_TIGGER_MOVIE);
+        searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.getDownloadButton().isPresent(SHORT_TIMEOUT), "Download button is not present");
+        detailsPage.startDownload();
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        downloads.isContentHeaderPresent(THE_TIGGER_MOVIE);
+        sa.assertAll();
     }
 }
