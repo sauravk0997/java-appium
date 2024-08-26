@@ -962,6 +962,57 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75275"})
+    @Test(description = "Add Profile U13-> Minor Consent Agree", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    public void  verifyAddProfileU13MinorConsentAgree() {
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        SoftAssert softAssert = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        //wait for action grant to expire
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
+        createKidsProfile();
+        //Consent screen validation
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
+        softAssert.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected dict values");
+        softAssert.assertTrue(parentalConsent.verifyPrivacyPolicyLink(), "Privacy Policy Link is not present on Consent screen");
+        softAssert.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), "Children's Privacy Policy Link is not present on Consent screen");
+        //TODO: Not able to tap Agree/Decline button using IDs, fix this issue in iOS code(parentalConsent.tapAgreeButton();)
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
+            parentalConsent.clickAlertConfirm();
+            parentalConsent.scrollConsentContent(4);
+            //Accept parental consent
+            clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        }
+        //Verify KIDS profile is created
+        softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
+        softAssert.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75274"})
+    @Test(description = "Add Profile U13-> Minor Consent Decline", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    public void verifyAddProfileU13MinorConsentDecline() {
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        SoftAssert softAssert = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        //wait for action grant to expire
+        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
+        createKidsProfile();
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        //Decline consent
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        //Verify KIDS profile is created
+        softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
+        softAssert.assertAll();
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
