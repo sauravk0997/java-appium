@@ -845,16 +845,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         moreMenu.clickMoreTab();
         // Elements that should be seen
-        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(), "Junior Mode name was not present on profile page");
+        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(SHORT_TIMEOUT), "Junior Mode name was not present on profile page");
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE","Exit Junior Mode text is not present");
-        sa.assertTrue(moreMenu.getAppVersionNumber().isPresent(), "App Version is not present");
-        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(), "Watchlist Menu is not present");
+        sa.assertTrue(moreMenu.getAppVersionNumber().isPresent(SHORT_TIMEOUT), "App Version is not present");
+        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT), "Watchlist Menu is not present");
         // Elements that should not be seen
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isPresent(), "App Settings Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT.getMenuOption()).isPresent(), "Account Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).isPresent(), "Account Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).isPresent(), "Legal Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).isPresent(), "Log Out Menu is present");
+        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isPresent(SHORT_TIMEOUT), "App Settings Menu is present");
+        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT.getMenuOption()).isPresent(SHORT_TIMEOUT), "Account Menu is present");
+        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).isPresent(SHORT_TIMEOUT), "Account Menu is present");
+        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).isPresent(SHORT_TIMEOUT), "Legal Menu is present");
+        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).isPresent(SHORT_TIMEOUT), "Log Out Menu is present");
         sa.assertAll();
     }
 }
