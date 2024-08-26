@@ -33,7 +33,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public ExtendedWebElement getLoginButton() {
-        return dynamicBtnFindByName.format("loginButton");
+        return loginButton;
     }
 
     public void waitForWelcomePageToLoad() {
