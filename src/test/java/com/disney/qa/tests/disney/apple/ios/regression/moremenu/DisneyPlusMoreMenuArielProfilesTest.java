@@ -970,8 +970,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(getAccount());
-        //wait for action grant to expire
-        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
@@ -1002,8 +1000,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
         setAppToHomeScreen(getAccount());
-        //wait for action grant to expire
-        addProfile.keepSessionAlive(15, addProfile.getHomeNav());
         createKidsProfile();
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         //Decline consent
