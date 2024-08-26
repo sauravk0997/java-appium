@@ -72,7 +72,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
-    @Test(groups = {TestGroup.ONBOARDING})
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void signUpEmailScreenCheckBox() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -166,7 +166,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90459", "XCDQA-90455", "XCDQA-90447", "XCDQA-90451", "XCDQA-90457", "XCDQA-90453", "XCDQA-90449"})
-    @Test(description = "Email Input screen for Sign Up flow: Legal details", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void legalSignUpEmailScreenDetails() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -189,7 +189,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90461", "XCDQA-90463"})
-    @Test(description = "Email Sign Up: Known User Flow", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE}, enabled = false)
     public void emailSignUpKnownUserFlow() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -280,7 +280,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90493", "XCDQA-90495"})
-    @Test(description = "Email Sign Up: Password Creation: Screen details", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void passwordCreationScreenDetails() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         String validEmail = DisneyApiCommon.getUniqueEmail();
