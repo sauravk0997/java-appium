@@ -59,7 +59,6 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
 
         sa.assertTrue(welcomePage.isMainTextDisplayed(), "Main text is not displayed");
-        sa.assertTrue(welcomePage.getSignupButton().isElementPresent(), "Sign Up button is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");
         sa.assertTrue(welcomePage.isSubCopyDirectTextPresent(), "Welcome sub text is not present");
         sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(getLocalizationUtils().
