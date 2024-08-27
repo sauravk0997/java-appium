@@ -205,10 +205,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return appVersion.getText();
 	}
 
-	public ExtendedWebElement getAppVersionNumber() {
-		return appVersion;
-	}
-
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
 		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
 		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
