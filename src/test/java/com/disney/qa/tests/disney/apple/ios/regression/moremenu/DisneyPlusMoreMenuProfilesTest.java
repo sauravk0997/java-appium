@@ -47,8 +47,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String THE_TIGGER_MOVIE = "The Tigger Movie";
     private static final String GIGANTOSAURUS_SERIES = "Gigantosaurus";
-    private final int DOWNLOAD_TIMEOUT = 150;
-    private final int DOWNLOAD_POLLING = 15;
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
