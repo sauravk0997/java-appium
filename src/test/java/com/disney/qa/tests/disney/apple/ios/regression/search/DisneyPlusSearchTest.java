@@ -359,7 +359,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
     @Test(description = "Search - Search Results Contains Rating And Released Year details (Handset Only)", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             String media = "M";
             String movie = "The Marvels";
             String series = "The Simpsons";
@@ -391,7 +390,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             //Verify search result have Rating and released year details also
             validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent), getApiContentReleasedYearDetails(seriesApiContent));
             sa.assertAll();
-        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})
