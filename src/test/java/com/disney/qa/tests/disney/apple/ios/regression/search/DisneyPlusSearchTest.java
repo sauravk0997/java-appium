@@ -357,7 +357,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
-    @Test(description = "Search - Search Results Contains Rating And Released Year details (Handset Only)", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
             String media = "M";
             String movie = "The Marvels";
