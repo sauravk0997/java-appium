@@ -46,6 +46,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String ESPAÑOL = "Español";
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String THE_TIGGER_MOVIE = "The Tigger Movie";
+    private static final String GIGANTOSAURUS_SERIES = "Gigantosaurus";
+    private final int DOWNLOAD_TIMEOUT = 150;
+    private final int DOWNLOAD_POLLING = 15;
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -852,6 +855,35 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         detailsPage.startDownload();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         downloads.isContentHeaderPresent(THE_TIGGER_MOVIE);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageSeriesDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(GIGANTOSAURUS_SERIES);
+        searchPage.getDynamicAccessibilityId(GIGANTOSAURUS_SERIES).click();
+
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertDismissBtn();
+
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        downloads.isContentHeaderPresent(GIGANTOSAURUS_SERIES);
         sa.assertAll();
     }
 }
