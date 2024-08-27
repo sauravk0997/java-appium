@@ -33,7 +33,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     @Override
     public boolean isOpened() {
-        return getOTPHeader().isPresent();
+        return getOTPHeader().isPresent(5);
     }
 
     public ExtendedWebElement getOTPHeader() {

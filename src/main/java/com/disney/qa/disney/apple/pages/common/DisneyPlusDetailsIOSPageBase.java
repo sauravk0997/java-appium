@@ -976,12 +976,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     /**
      * To be used with continually navigating back and forth between details and player of same content.
      */
-    public void clickPlayOrContinue() {
+    public DisneyPlusVideoPlayerIOSPageBase clickPlayOrContinue() {
         if (getPlayButton().isPresent()) {
             clickPlayButton();
         } else {
             clickContinueButton();
         }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
