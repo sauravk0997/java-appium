@@ -843,18 +843,29 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 kidsModeEnabled(true).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         moreMenu.clickMoreTab();
-        // Elements that should be seen
-        sa.assertTrue(moreMenu.getAvatarIconProfile().isPresent(SHORT_TIMEOUT), "Avatar is not present");
-        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(), "Junior Mode name was not present on profile page");
-        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE","Exit Junior Mode text is not present");
-        sa.assertTrue(moreMenu.getAppVersionNumber().isPresent(SHORT_TIMEOUT), "App Version is not present");
-        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT), "Watchlist Menu is not present");
-        // Elements that should not be seen
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isPresent(SHORT_TIMEOUT), "App Settings Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT.getMenuOption()).isPresent(SHORT_TIMEOUT), "Account Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).isPresent(SHORT_TIMEOUT), "Account Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).isPresent(SHORT_TIMEOUT), "Legal Menu is present");
-        sa.assertTrue(!moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).isPresent(SHORT_TIMEOUT), "Log Out Menu is present");
+
+        // Elements that should be present on screen
+        sa.assertTrue(moreMenu.getProfileAvatar(JUNIOR_PROFILE).isPresent(SHORT_TIMEOUT),
+                "Avatar is not present");
+        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(),
+                "Junior Mode name was not present on profile page");
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
+                "Exit Junior Mode text is not present");
+        sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version is not present");
+        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT),
+                "Watchlist Menu is not present");
+
+        // Elements that should not be present on screen
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
+                "App Settings Menu is present");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+                "Account Menu is present");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
+                "Help Menu is present");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
+                "Legal Menu is present");
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
+                "Log Out Menu is present");
         sa.assertAll();
     }
 }
