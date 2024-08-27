@@ -63,7 +63,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67325"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH})
     public void verifyMaintainSearchQuery() {
-        SoftAssert sa = new SoftAssert();
         String content = "The Simpsons";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -79,10 +78,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         detailsPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         String firstSearchResultTitleAfterNavi = searchPage.getDisplayedTitles().get(0).getText();
-        Assert.assertEquals(firstSearchResultTitleAfterNavi,
-                firstSearchResultTitle,
+        Assert.assertEquals(firstSearchResultTitleAfterNavi, firstSearchResultTitle,
                 "Search results after navigation are not the same");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
