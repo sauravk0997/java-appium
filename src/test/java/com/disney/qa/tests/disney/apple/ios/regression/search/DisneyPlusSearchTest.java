@@ -382,13 +382,15 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             contentTitle = getFirstSearchResults(movie);
             sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent), getApiContentReleasedYearDetails(movieApiContent));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent),
+                    getApiContentReleasedYearDetails(movieApiContent));
 
             //User made search with series name
             contentTitle = getFirstSearchResults(series);
             sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent), getApiContentReleasedYearDetails(seriesApiContent));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent),
+                    getApiContentReleasedYearDetails(seriesApiContent));
             sa.assertAll();
     }
 
