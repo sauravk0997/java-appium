@@ -41,7 +41,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"EDIT PROFILES\"`]/preceding-sibling::*")
 	private ExtendedWebElement profilesTray;
 
-	@FindBy(xpath = "//*[contains(@name, 'Version')]")
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Version\"`]")
 	private ExtendedWebElement appVersion;
 
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
@@ -80,7 +80,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
 	private ExtendedWebElement profileSelectionCollectionView;
 
-	@FindBy(xpath = "//XCUIElementTypeCell[@name='unlockedProfileCell']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access JUNIOR's profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
 	private ExtendedWebElement avatarIconProfile;
 
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
