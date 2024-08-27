@@ -60,6 +60,31 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67325"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH})
+    public void verifyMaintainSearchQuery() {
+        SoftAssert sa = new SoftAssert();
+        String content = "The Simpsons";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(content);
+        String firstSearchResultTitle = searchPage.getDisplayedTitles().get(0).getText();
+        searchPage.getDynamicAccessibilityId(content).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        detailsPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        String firstSearchResultTitleAfterNavi = searchPage.getDisplayedTitles().get(0).getText();
+        Assert.assertEquals(firstSearchResultTitleAfterNavi,
+                firstSearchResultTitle,
+                "Search results after navigation are not the same");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void clearRecentSearches() {
