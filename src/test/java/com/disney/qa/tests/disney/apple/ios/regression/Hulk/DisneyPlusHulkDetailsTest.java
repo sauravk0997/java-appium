@@ -6,6 +6,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 
@@ -517,5 +518,57 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+    }
+
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
+    public void verifyExpiredHuluWatchlistDisplay() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().
+                getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+
+       String huluSubscriptionId = getHuluSubscriptionId();
+        System.out.println(" *** huluSubscriptionId " + huluSubscriptionId.toString());
+
+        revokeSubscriptionById(huluSubscriptionId);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+       // System.out.println(" *** huluSubscriptionId " + activeSubscriptions.toString());
+        /*
+     //   onboard();
+
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistHeaderDisplayed(),
+                "'Watchlist' header was not properly displayed");
+
+        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistEmptyBackgroundDisplayed(),
+                "Empty Watchlist text/logo was not properly displayed");
+*/
+        sa.assertAll();
+    }
+
+    private void revokeSubscriptionById(String subscriptionId) {
+        getSubscriptionApi().revokeSubscription(getAccount(), subscriptionId);
+        getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
+    }
+
+    private String getHuluSubscriptionId() {
+        try {
+            // Get active subscriptions using the API
+            JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
+            // Determine the Hulu subscription index
+            int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
+                    .get("sku").textValue()
+                    .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
+            // get SubscriptionId
+            return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(e.getMessage());
+        }
     }
 }
