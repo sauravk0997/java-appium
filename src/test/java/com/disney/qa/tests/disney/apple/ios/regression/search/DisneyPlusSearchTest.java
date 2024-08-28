@@ -376,7 +376,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             //User made search with one letter
             String contentTitle = getFirstSearchResults(media);
-            sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
+            sa.assertTrue(contentTitle.startsWith(media), "Result doesnt start with letter " + media);
 
             //User made search with movie name
             contentTitle = getFirstSearchResults(movie);
