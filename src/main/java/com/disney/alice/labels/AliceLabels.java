@@ -27,6 +27,7 @@ public enum AliceLabels {
     PASSWORD_STRENGTH_BAR("password_strength_bar"),
     PIXAR_LOGO("pixar_logo"),
     PROFILE_BUTTON("profile_button"),
+    PROFILE_BUTTON_HOVERED("profile_button_hovered"),
     RECTANGLE_TILE("rectangle_tile"),
     ROUND_TILE("round_tile"),
     ROUND_TILE_HOVERED("round_tile_hovered"),

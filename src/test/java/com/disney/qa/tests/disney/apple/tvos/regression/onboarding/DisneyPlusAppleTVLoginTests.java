@@ -476,7 +476,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90695"})
-    @Test(description = "User's profile selected post login is displayed in global nav", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(description = "User's profile selected post login is displayed in global nav", groups = {TestGroup.ONBOARDING})
     public void profileNameRetention() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyOffer offer = new DisneyOffer();
@@ -491,7 +491,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
 
         aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON.getText());
+                .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
         sa.assertAll();
     }
 
