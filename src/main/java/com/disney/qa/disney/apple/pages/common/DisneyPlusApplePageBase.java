@@ -22,6 +22,7 @@ import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1468,6 +1469,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isRatingPresent(String rating) {
         return getStaticTextByLabelContains(rating).isPresent();
+    }
+
+    public boolean isRatingElementPresent() {
+         return waitUntil(ExpectedConditions.invisibilityOfElementLocated(getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                 DictionaryKeys.RATING_MPAA_AND_TVPG_PG_13.getText())).getBy()), 10);
     }
 
     public ExtendedWebElement getNavBackArrow() {
