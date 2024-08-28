@@ -24,6 +24,8 @@
   isZipCodeCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isSubscriberAgreementCountry: "false"
+  maturityCode: "1830"
+  roamingDas: "1"
 - country: Norfolk Island (AU)
   code: NF
   paypalEmail: "sidformlb+ppaus@gmail.com"
@@ -60,6 +62,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23104"
 - country: Niue (NZ)
   code: NU
   paypalEmail: "sidformlb+ppnz@gmail.com"
@@ -90,6 +94,8 @@
   isOneIdTrustedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23135"
 - country: Anguilla
   code: AI
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -136,6 +142,8 @@
   isOneIdTrustedRegion: "true"
   isMatureContentOnboardingCountry: "true"
   isSubscriberAgreementCountry: "false"
+  maturityCode: "1850"
+  roamingDas: "23084"
 - country: Argentina
   code: AR
   paypalEmail: "sb-a8f602852683@personal.example.com"
@@ -160,6 +168,8 @@
   isMegaBundleCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23034"
 - country: American Samoa (US)
   code: AS
   paypalEmail: "pankaj_1314128573_per@mlb.com"
@@ -172,6 +182,7 @@
   live: disable
   supportedLanguages: [en-GB]
   fallbackLanguage: en-GB
+  ratingSystem: MPAAAndTVPG
   isZipCodeCountry: "true"
   isBundleCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
@@ -181,7 +192,7 @@
   paypalEmail: "fsmlbam+paypal_test_na@gmail.com"
   paypalPass: "Welcome123$"
   cc: "5455 8100 0021 9254"
-  prod-cc: "4520 3976 7006 951"
+  prod-cc: "5455 8100 0021 9254"
   zip: "00200"
   exp: "03/30"
   cvv: "555"
@@ -192,6 +203,7 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isCreditCardOnlyCountry: "true"
+  isMatureContentOnboardingCountry: "true"
   isExcludedForcedSACountry: "true"
 - country: Australia
   code: AU
@@ -208,6 +220,8 @@
   ratingSystem: NCS
   ratingValues: [ "G","PG","M","MA15+","R18+" ]
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1870"
+  roamingDas: "23151"
 - country: Austria
   code: AT
   paypalEmail: "sb-nvfuk1776762@personal.example.com"
@@ -226,6 +240,8 @@
   isReviewSubscriptionCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23132"
 - country: Åland Islands
   code: AX
   paypalEmail: "fsmlbam+paypal_test_fi@gmail.com"
@@ -245,6 +261,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23355"
 - country: Bosnia and Herzegovina
   code: BA
   paypalEmail: "bosniatest@disney.com"
@@ -264,6 +282,8 @@
   isMatureContentOnboardingCountry: "true"
   isSubscriberAgreementCountry: "false"
   isCreditCardOnlyCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23143"
 - country: Bahamas
   code: BS
   paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
@@ -313,6 +333,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23100"
 - country: Belize
   code: BZ
   paypalEmail: "fsmlbam+paypal_test_bz@gmail.com"
@@ -360,6 +382,9 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
+  isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23042"
 - country: Bonaire, Sint Eustatius and Saba
   code: BQ
   paypalEmail: "fsmlbam+paypal_test_na@gmail.com"
@@ -401,6 +426,8 @@
   isComboCountry: "true"
   isMegaBundleCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23044"
 - country: British Virgin Islands
   code: VG
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -434,6 +461,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23137"
 - country: Canada
   code: CA
   paypalEmail: "sidformlb+ppca@gmail.com"
@@ -450,7 +479,9 @@
   ratingSystem: MPAAAndTVPG
   ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
   isZipCodeCountry: "true"
-  isMatureContentOnboardingCountry: "true" 
+  isMatureContentOnboardingCountry: "true"
+  maturityCode: "1830"
+  roamingDas: "23065"
 - country: Cayman Islands
   code: KY
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -510,6 +541,8 @@
   isMegaBundleCountry: "true"
   isPaypalQACountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23028"
 #- country: China
 #  code: CN
 #  live: disable
@@ -552,7 +585,7 @@
   code: CO
   paypalEmail: "sb-datbe2853187@personal.example.com"
   paypalPass: "EZ.d?7\","
-  cc: "4010 9345 8780 3487" 
+  cc: "4010 9345 8780 3487"
   prod-cc: "4027 3900 2015 615"
   prod-ftf-cc: "4080 2938 1617 4599"
   zip: "110831"
@@ -570,7 +603,9 @@
   isComboCountry: "true"
   isGeoEdgeSupportedRegionWithIssues: "true"
   isMegaBundleCountry: "true"
-  isMatureContentOnboardingCountry: "true" 
+  isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23040"
 - country: Cook Islands (NZ)
   code: CK
   paypalEmail: "sidformlb+ppnz@gmail.com"
@@ -607,6 +642,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23033"
 - country: Czech Republic
   code: CZ
   paypalEmail: "sb-mcgpb12057379@personal.example.com"
@@ -625,6 +662,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23091"
 - country: Denmark
   code: DK
   paypalEmail: "sb-nvfuk1776762@personal.example.com"
@@ -643,6 +682,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23110"
 - country: Dominican Republic
   code: DO
   paypalEmail: "sb-eonnv3124523@personal.example.com"
@@ -661,6 +702,8 @@
   isComboCountry: "true"
   isGeoEdgeSupportedRegionWithIssues: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23038"
 - country: Dominica
   code: DM
   paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
@@ -693,6 +736,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23087"
 - country: Ecuador
   code: EC
   paypalEmail: "fsmlbam+paypal_test_ec@gmail.com"
@@ -713,6 +758,8 @@
   isComboCountry: "true"
   isMegaBundleCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23039"
 #- country: Egypt
 #  code: EG
 #  live: disable
@@ -734,6 +781,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23043"
 - country: Falkland Islands (Malvinas)
   code: FK
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -769,6 +818,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23121"
 - country: Finland
   code: FI
   paypalEmail: "fsmlbam+paypal_test_fi@gmail.com"
@@ -787,6 +838,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23115"
 - country: France
   code: FR
   paypalEmail: "sb-g1z1a860428@personal.example.com"
@@ -806,6 +859,8 @@
   isReviewSubscriptionCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23090"
 - country: French Guiana
   code: GF
   paypalEmail: "sb-g1z1a860428@personal.example.com"
@@ -840,6 +895,8 @@
   isMatureContentOnboardingCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "false"
+  maturityCode: "1850"
+  roamingDas: "23102"
 - country: Germany
   code: DE
   paypalEmail: "sb-psw8j898588@personal.example.com"
@@ -860,6 +917,8 @@
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isGeoEdgeSupportedRegionWithIssues: "true"
+  maturityCode: "1850"
+  roamingDas: "23117"
 - country: Greece
   code: GR
   paypalEmail: "sb-okn1g12056753@personal.example.com"
@@ -878,6 +937,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23127"
 - country: Greenland
   code: GL
   paypalEmail: "sb-nvfuk1776762@personal.example.com"
@@ -897,6 +958,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23131"
 - country: Grenada
   code: GD
   paypalEmail: "fsmlbam+paypal_test_svg@gmail.com"
@@ -966,6 +1029,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23031"
 - country: Guernsey
   code: GG
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -985,6 +1050,8 @@
   isMatureContentOnboardingCountry: "true"
   isPaypalQACountry: "true"
   isExcludedForcedSACountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23123"
 - country: Guyana
   code: GY
   paypalEmail: "fsmlbam+paypal_test_gy@gmail.com"
@@ -1015,6 +1082,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isCreditCardOnlyCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23155"
 - country: Honduras
   code: HN
   paypalEmail: "sb-eijvv3440880@personal.example.com"
@@ -1032,6 +1101,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23041"
 - country: Hong Kong
   code: HK
   paypalEmail: "sb-82i8w7110769@personal.example.com"
@@ -1049,6 +1120,8 @@
   isSubscriberAgreementCountry: "false"
   isStarOnboardingCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23106"
 - country: Croatia
   code: HR
   paypalEmail: "croatiatest@disney.com"
@@ -1067,6 +1140,8 @@
   isOneIdTrustedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23097"
 - country: Hungary
   code: HU
   paypalEmail: "sb-bh8gh11893999@personal.example.com"
@@ -1085,6 +1160,8 @@
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23083"
 - country: Iceland
   code: IS
   paypalEmail: "fsmlbam+paypal_test_is@gmail.com"
@@ -1103,6 +1180,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23099"
 - country: Ireland
   code: IE
   paypalEmail: "sb-vg9js895089@personal.example.com"
@@ -1120,6 +1199,8 @@
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23094"
 - country: India
   code: IN
   live: disable
@@ -1144,6 +1225,8 @@
   isMatureContentOnboardingCountry: "true"
   isPaypalQACountry: "true"
   isExcludedForcedSACountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23086"
 - country: British Indian Ocean (GB)
   code: IO
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -1164,6 +1247,8 @@
   isSubscriberAgreementCountry: "false"
   isMatureContentOnboardingCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
+  maturityCode: "1850"
+  roamingDas: "23129"
 - country: Israel
   code: IL
   live: disable
@@ -1185,6 +1270,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23120"
 - country: Jamaica
   code: JM
   paypalEmail: "sb-u547n53445833@personal.example.com"
@@ -1205,7 +1292,7 @@
   paypalPass: "Z-2|M+Qp"
   cc: "5154 8496 0810 5758"
   prod-cc: 4244 1899 9941 562
-  zip: "540-0002" 
+  zip: "540-0002"
   exp: "03/30"
   cvv: "555"
   live: disable
@@ -1216,6 +1303,8 @@
   isSubscriberAgreementCountry: "false"
   isStarOnboardingCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23098"
 - country: Jersey
   code: JE
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -1235,6 +1324,8 @@
   isMatureContentOnboardingCountry: "true"
   isPaypalQACountry: "true"
   isExcludedForcedSACountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23141"
 - country: Jordan
   code: JO
   live: disable
@@ -1243,10 +1334,10 @@
   live: disable
   cc: "9490 2200 1166 9217"
   prod-cc: "4009 2347 8364 9823"
-  zip: "01000" 
+  zip: "01000"
   exp: "03/30"
   cvv: "55"
-  supportedLanguages: [ko-KR, en]
+  supportedLanguages: [ko, en]
   fallbackLanguage: en
   ratingSystem: KCCAndKMRB
   ratingValues: [ "All","7+","12+","15+","18","19+" ]
@@ -1259,6 +1350,8 @@
   isBillingDOBCountry: "true"
   billingMinimumAge: "19"
   isGeoEdgeSupportedRegionWithIssues: "true"
+  maturityCode: "1870"
+  roamingDas: "23126"
 #- country: Kuwait
 #  code: KW
 #  live: disable
@@ -1283,6 +1376,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23070"
 - country: North Macedonia
   code: MK
   paypalEmail: "macedoniatest@disney.com"
@@ -1301,6 +1396,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isOneIdTrustedRegion: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23108"
 - country: Marshall Islands (US)
   code: MH
   paypalEmail: "pankaj_1314128573_per@mlb.com"
@@ -1315,7 +1412,7 @@
   fallbackLanguage: en
   ratingSystem: MPAAAndTVPG
   ratingValues: [ TV-Y,TV-Y7,TV-Y7-FV,G+TV-G,PG+TV-PG,PG-13,TV-14,R,TV-MA ]
-  isZipCodeCountry: "true"  
+  isZipCodeCountry: "true"
   isSubscriberAgreementCountry: "false"
   isGeoEdgeUnsupportedRegion: "true"
   isMatureContentOnboardingCountry: "true"
@@ -1360,6 +1457,8 @@
   isReviewSubscriptionCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isEuCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23114"
 - country: Mayotte
   code: YT
   paypalEmail: "sb-g1z1a860428@personal.example.com"
@@ -1380,6 +1479,8 @@
   isReviewSubscriptionCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23124"
 - country: Mexico
   code: MX
   paypalEmail: "sb-rsuzc2853666@personal.example.com"
@@ -1403,6 +1504,8 @@
   isComboCountry: "true"
   isMegaBundleCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23045"
 - country: Monaco
   code: MC
   paypalEmail: "fsmlbam+paypal_test_mc@gmail.com"
@@ -1423,6 +1526,8 @@
   isReviewSubscriptionCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23093"
 - country: Montenegro
   code: ME
   paypalEmail: "montenegrotest@disney.com"
@@ -1441,6 +1546,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isOneIdTrustedRegion: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23085"
 - country: Malta
   code: MT
   paypalEmail: "maltatest@disney.com"
@@ -1459,6 +1566,8 @@
   isMatureContentOnboardingCountry: "true"
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23118"
 - country: Montserrat
   code: MS
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -1508,6 +1617,8 @@
   ratingSystem: OFLC
   ratingValues: [ G,PG,M,RP13+13+R13,R15,RP16+16+R16,RP18+18+R18 ]
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1870"
+  roamingDas: "23150"
 - country: Nicaragua
   code: NI
   paypalEmail: "fsmlbam+paypal_test_ni@gmail.com"
@@ -1525,6 +1636,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isGeoEdgeSupportedRegionWithIssues: "true"
+  maturityCode: "1850"
+  roamingDas: "23035"
 - country: Norway
   code: "NO"
   paypalEmail: "fsmlbam+paypal_test_no@gmail.com"
@@ -1542,6 +1655,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23095"
   #  live: disable
   #- country: Oman
   #  code: OM
@@ -1566,6 +1681,8 @@
   isComboCountry: "true"
   isGeoEdgeSupportedRegionWithIssues: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23029"
 - country: St. Pierre and Miquelon
   code: PM
   paypalEmail: "sb-g1z1a860428@personal.example.com"
@@ -1576,6 +1693,8 @@
   exp: "03/30"
   cvv: "555"
   live: disable
+  supportedLanguages: [ fr-FR, en-GB ]
+  fallbackLanguage: en-GB
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
@@ -1592,6 +1711,8 @@
   exp: "03/30"
   cvv: "555"
   live: disable
+  supportedLanguages: [ en-GB ]
+  fallbackLanguage: en-GB
   isGeoEdgeUnsupportedRegion: "true"
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
@@ -1616,6 +1737,8 @@
   isSubscriberAgreementCountry: "true"
   isReviewSubscriptionCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23134"
 - country: Paraguay
   code: PY
   paypalEmail: "fsmlbam+paypal_test_py@gmail.com"
@@ -1633,6 +1756,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23036"
 - country: Peru
   code: PE
   paypalEmail: "sb-mvp5b2852712@personal.example.com"
@@ -1653,6 +1778,8 @@
   isComboCountry: "true"
   isMegaBundleCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23032"
 # - country: Philippines
 #  code: PH
 #  live: disable
@@ -1674,6 +1801,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23112"
 - country: Portugal
   code: PT
   paypalEmail: "fsmlbam+paypal_test_pt@gmail.com"
@@ -1694,6 +1823,8 @@
   isEuCountry: "true"
   isProvinceDropdownCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23092"
 - country: Puerto Rico
   code: PR
   paypalEmail: "pankaj_1314128573_per@mlb.com"
@@ -1706,6 +1837,7 @@
   live: enable
   supportedLanguages: [en, es-419]
   fallbackLanguage: en
+  ratingSystem: MPAAAndTVPG
   isStarzCountry: "false"
   isBundleCountry: "true"
   isZipCodeCountry: "true"
@@ -1732,6 +1864,8 @@
   isReviewSubscriptionCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23101"
 - country: Romania
   code: RO
   paypalEmail: "romaniatest@disney.com"
@@ -1750,6 +1884,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23073"
 - country: Serbia
   code: RS
   paypalEmail: "serbiatest@disney.com"
@@ -1769,6 +1905,8 @@
   isMatureContentOnboardingCountry: "true"
   isCreditCardOnlyCountry: "true"
   isProvinceDropdownCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23130"
 - country: Russia
   code: RU
   live: disable
@@ -1847,6 +1985,7 @@
   live: disable
   supportedLanguages: [fr-FR, en-GB]
   fallbackLanguage: en-GB
+  ratingSystem: MPAAAndTVPG
   isZipCodeCountry: "true"
   isBundleCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
@@ -1885,6 +2024,8 @@
   isSubscriberAgreementCountry: "false"
   isStarOnboardingCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1870"
+  roamingDas: "23116"
 - country: Svalbard & Jan Mayen (NO)
   code: SJ
   paypalEmail: "fsmlbam+paypal_test_no@gmail.com"
@@ -1903,6 +2044,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23138"
 - country: Sint Maarten (NL)
   code: SX
   paypalEmail: "sidformlb+ppnlds@gmail.com"
@@ -1940,6 +2083,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23125"
 - country: Slovakia
   code: SK
   paypalEmail: "sb-xnj1o11934034@personal.example.com"
@@ -1974,6 +2119,8 @@
   isOneIdTrustedRegion: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23125"
 - country: South Africa
   code: ZA
   live: disable
@@ -2013,6 +2160,8 @@
   isEuCountry: "true"
   isProvinceDropdownCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23105"
 - country: St Helena (GB)
   code: SH
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -2031,6 +2180,8 @@
   isEuCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23109"
 - country: Suriname
   code: SR
   paypalEmail: "fsmlbam+paypal_test_sr@gmail.com"
@@ -2064,6 +2215,8 @@
   isSubscriberAgreementCountry: "true"
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23113"
 - country: Switzerland
   code: CH
   paypalEmail: "sb-1n0ui887748@personal.example.com"
@@ -2082,6 +2235,8 @@
   isEuCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isSubscriberAgreementCountry: "false"
+  maturityCode: "1850"
+  roamingDas: "23071"
 - country: French Southern Territories (FR)
   code: TF
   paypalEmail: "fsmlbam+paypal_test_re@gmail.com"
@@ -2103,6 +2258,8 @@
   isReviewSubscriptionCountry: "true"
   isCreditCardOnlyCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23111"
 - country: Taiwan
   code: TW
   paypalEmail: "disneytaiwantest1@paypal.com"
@@ -2121,6 +2278,8 @@
   isStarOnboardingCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
+  maturityCode: "1850"
+  roamingDas: "23140"
 - country: Thailand
   code: TH
   live: disable
@@ -2172,6 +2331,8 @@
   isSubscriberAgreementCountry: "true"
   isReviewSubscriptionCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23144"
 - country: Turks and Caicos Islands
   code: TC
   paypalEmail: "sb-yrtem898379@personal.example.com"
@@ -2209,6 +2370,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "false"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23136"
 - country: Vatican City
   code: VA
   paypalEmail: "vaticancitytest@disney.com"
@@ -2219,6 +2382,8 @@
   exp: "03/30"
   cvv: "555"
   live: disable
+  supportedLanguages: [ it, en-GB ]
+  fallbackLanguage: en-GB
   isOneIdTrustedRegion: "true"
   isGeoEdgeUnsupportedRegion: "true"
   isSubscriberAgreementCountry: "true"
@@ -2233,6 +2398,9 @@
   exp: "03/30"
   cvv: "555"
   live: disable
+  supportedLanguages: [ en, es-419 ]
+  fallbackLanguage: en
+  ratingSystem: MPAAAndTVPG
   isStarzCountry: "false"
   isGeoEdgeUnsupportedRegion: "true"
   isBundleCountry: "true"
@@ -2249,8 +2417,9 @@
   exp: "03/30"
   cvv: "555"
   live: enable
-  supportedLanguages: [en-GB, nl]
+  supportedLanguages: [ en-GB, nl ]
   fallbackLanguage: en-GB
+  ratingSystem: MPAAAndTVPG
   isGeoEdgeUnsupportedRegion: "true"
   isZipCodeCountry: "true"
   isMatureContentOnboardingCountry: "true"
@@ -2274,6 +2443,8 @@
   isSubscriberAgreementCountry: "true"
   isComboCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23030"
 - country: Venezuela
   code: VE
   paypalEmail: "sb-cdb5y1295237@personal.example.com"
@@ -2327,6 +2498,8 @@
   isGeoEdgeUnsupportedRegion: "true"
   isMatureContentOnboardingCountry: "true"
   isReviewSubscriptionCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23117"
 - country: Lithuania
   code: LT
   paypalEmail: "lithuania@disney.com "
@@ -2345,6 +2518,8 @@
   isEuCountry: "true"
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
+  maturityCode: "1850"
+  roamingDas: "23142"
 - country: Latvia
   code: LV
   paypalEmail: "sb-z0uwx12061282@personal.example.com"
@@ -2364,6 +2539,8 @@
   isSubscriberAgreementCountry: "true"
   isMatureContentOnboardingCountry: "true"
   isGeoEdgeUnsupportedRegion: "true"
+  maturityCode: "1850"
+  roamingDas: "23107"
 - country: Cyprus
   code: CY
   live: disable

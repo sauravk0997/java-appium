@@ -29,58 +29,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String HULU = "Hulu";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String ADULT_DOB = "1980-10-23";
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
-    @Test(description = "On Junior Profile verify unavailable details page", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyJuniorProfileDetailsUnavailableState() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
-        homePage.clickOpenButton();
-
-        sa.assertTrue(homePage.getUnavailableContentError().isPresent() ||  homePage.getUnavailableContentErrorPreview().isPresent(), "Unavailable content error not present.");
-        sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
-        pause(2);
-        homePage.getUnavailableOkButton().click();
-        sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia("Mickey");
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
-    @Test(description = "On Adult profile verify unavailable details page", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
-    public void verifyAdultProfileDetailsUnavailableState() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
-        homePage.isOpened();
-        launchDeeplink(true, R.TESTDATA.get("disney_prod_generic_unavailable_deeplink"), 10);
-        homePage.clickOpenButton();
-
-        sa.assertTrue(homePage.getUnavailableContentError().isPresent(), "Unavailable content error not present.");
-        sa.assertTrue(homePage.getUnavailableOkButton().isPresent(), "Unavailable content error button not present.");
-
-        homePage.getUnavailableOkButton().click();
-        sa.assertTrue(homePage.isOpened(), "Home page not present");
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
-        sa.assertAll();
-    }
-
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
     public void verifyHulkMovieDetailsTab() {

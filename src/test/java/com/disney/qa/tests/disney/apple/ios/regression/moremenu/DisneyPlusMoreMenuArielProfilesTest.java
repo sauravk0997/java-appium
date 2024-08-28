@@ -247,50 +247,38 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69535"})
-    @Test(description = "Verify the flows when Profile Creation is restricted", groups = {TestGroup.PROFILES, TestGroup.SMOKE}, enabled = false)
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROFILES, TestGroup.SMOKE})
     public void verifyProfileCreationRestrictedFunctionality() {
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
 
-        disneyPlusAccountIOSPageBase.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
-
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        accountPage.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
+        Assert.assertTrue(passwordPage.isOpened(),
                 "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase1 = new DisneyPlusAccountIOSPageBase(getDriver());
-        sa.assertTrue(disneyPlusAccountIOSPageBase1.isRestrictProfileCreationEnabled(),
+        passwordPage.enterPassword(getAccount());
+        editProfilePage.waitForUpdatedToastToDisappear();
+        Assert.assertTrue(accountPage.isRestrictProfileCreationEnabled(),
                 "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
 
-        disneyPlusAccountIOSPageBase.getBackArrow().click();
-        disneyPlusMoreMenuIOSPageBase.clickAddProfile();
-
-        Assert.assertTrue(disneyPlusPasswordIOSPageBase.isOpened(),
+        accountPage.getBackArrow().click();
+        moreMenuPage.clickAddProfile();
+        Assert.assertTrue(passwordPage.isOpened(),
                 "User was not directed to Password entry upon clicking 'Add Profile'");
 
-        disneyPlusPasswordIOSPageBase.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-
-        try {
-            disneyPlusEditProfileIOSPageBase.clickSkipBtn();
-            disneyPlusEditProfileIOSPageBase.enterProfileName(RESTRICTED);
-            disneyPlusEditProfileIOSPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-            disneyPlusEditProfileIOSPageBase.chooseGender();
-            disneyPlusEditProfileIOSPageBase.clickSaveBtn();
-            disneyPlusEditProfileIOSPageBase.clickPrimaryButton();
-            disneyPlusEditProfileIOSPageBase.clickSecondaryButtonByCoordinates();
-
-            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed(RESTRICTED),
-                    "Profile created after submitting credentials was not saved");
-        } catch (NoSuchElementException e) {
-            sa.fail("Could not create a profile after submitting user credentials.");
-        }
-
-        sa.assertAll();
+        passwordPage.enterPassword(getAccount());
+        editProfilePage.clickSkipBtn();
+        editProfilePage.enterProfileName(RESTRICTED);
+        editProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        editProfilePage.chooseGender();
+        editProfilePage.clickSaveBtn();
+        editProfilePage.clickPrimaryButton();
+        editProfilePage.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(moreMenuPage.isProfileSwitchDisplayed(RESTRICTED),
+                "Profile created after submitting credentials was not saved");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
@@ -634,7 +622,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72223"})
-    @Test(description = "Profiles > Existing Subscribers, enforce DOB Account Holder collection", groups = {TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION})
     public void verifyEnforceDOBAndGenderAccountHolderCollectionScreen() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
@@ -767,7 +755,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74482"})
-    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Max profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyAddProfileBannerIsNotDisplayedForTheMaxAmountOfProfiles() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
@@ -946,8 +934,36 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66822"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyProfileSelectionScreenBehaviourBeforeBackgroundLimit() {
+        String errorMsg = "profile was not found";
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
+        moreMenu.clickSearchIcon();
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        pause(5);
+        launchApp(buildType.getDisneyBundle());
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        sa.assertFalse(whoIsWatching.isOpened(), "Who is watching screen/page was opened");
+        searchPage.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(JUNIOR_PROFILE), JUNIOR_PROFILE + " " + errorMsg);
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), DEFAULT_PROFILE + " " + errorMsg);
+        LOGGER.info("If Other profile then default profile means Kids profile selected, then Exit Junior mode button should be displayed on more menu page");
+        sa.assertFalse(moreMenu.isExitKidsProfileButtonPresent(), DEFAULT_PROFILE + " profile was not selected");
+        sa.assertAll();
+    }
+
     private void setAppToAccountSettings() {
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }

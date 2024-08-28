@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,6 +73,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String APPLE = "apple";
     public static final String DISNEY = "disney";
     public static final String LANGUAGE = "language";
+    public static final String LOCALE = "locale";
     public static final String PROD = "prod";
     public static final String IOS_PLATFORM = "ios";
     public static final String APP = "app";
@@ -130,20 +132,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
-    private static final LazyInitializer<DisneyAccountApi> ACCOUNT_API = new LazyInitializer<>() {
-        @Override
-        protected DisneyAccountApi initialize() {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                    .platform(APPLE)
-                    .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                    .partner(DisneyConfiguration.getPartner())
-                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                    .build();
-            return new DisneyAccountApi(apiConfiguration);
-        }
-    };
-
     private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
         @Override
         protected DisneySubscriptionApi initialize() {
@@ -161,6 +149,17 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
+    });
+
+    private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(DisneyConfiguration.getPartner())
+                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                .build();
+        return new DisneyAccountApi(apiConfiguration);
     });
 
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
@@ -191,12 +190,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
-    private static final LazyInitializer<EmailApi> EMAIL_API = new LazyInitializer<>() {
-        @Override
-        protected EmailApi initialize() throws ConcurrentException {
-            return new EmailApi();
-        }
-    };
+    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
 
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
 
@@ -281,6 +275,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
+        EMAIL_API.remove();
+        ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
     }
@@ -318,11 +314,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     public static DisneyAccountApi getAccountApi() {
-        try {
-            return ACCOUNT_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
+        return ACCOUNT_API.get();
     }
 
     public static DisneySubscriptionApi getSubscriptionApi() {
@@ -334,11 +326,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     }
 
     public static EmailApi getEmailApi() {
-        try {
-            return EMAIL_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
+        return Objects.requireNonNull(EMAIL_API.get());
     }
 
     /**

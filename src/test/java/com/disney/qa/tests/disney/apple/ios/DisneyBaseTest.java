@@ -68,12 +68,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
+    public static final String DISNEY_PLUS = "Disney Plus";
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
     public static final String RATING_MATURE = "TV-MA";
     public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
-
+    public static final String ENGLISH_LANG = "en";
     public static final String MULTIVERSE_STAGING_ENDPOINT = "https://multiverse-alice-client-staging.qateam.bamgrid.com";
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
     public static final String INVALID_PASSWORD = "Invalid#1234";
@@ -539,16 +540,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public List<Item> getExploreAPIItemsFromSet(String setId, int limit) {
         try {
-            ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
+            return getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
                     .setProfileId(getAccount().getProfileId())
-                    .setLimit(limit));
-            return setResponse.getData().getSet().getItems();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            UNIVERSAL_UTILS_LOGGER.error(String.valueOf(e));
-            Assert.fail("Items from Set not found " + e.getMessage());
-            return ExceptionUtils.rethrow(e);
+                    .setLimit(limit)).getData().getSet().getItems();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 

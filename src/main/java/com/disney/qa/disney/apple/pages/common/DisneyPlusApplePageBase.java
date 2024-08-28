@@ -340,6 +340,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement clearText;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeKey[`label == \"%s\"`]")
     private ExtendedWebElement typeKey;
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnchecked")
+    private ExtendedWebElement checkboxUnchecked;
+    @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxChecked")
+    private ExtendedWebElement checkboxChecked;
 
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
@@ -1324,14 +1328,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getCollection(collection).isPresent();
     }
 
-    public ExtendedWebElement getUnavailableContentErrorPreview() {
-        return typeAlertByLabel.format("Sorry, content you are trying to access is not currently available. You will be redirected to Disney+ Home.");
-    }
-
     public void swipeInHuluBrandPage(Direction direction) {
         swipeInContainer(brandLandingView, direction, 500);
     }
-
 
     public ExtendedWebElement getCollection(CollectionConstant.Collection collection) {
         return collectionCell.format(CollectionConstant.getCollectionName(collection));
@@ -1408,10 +1407,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isArtworkBackgroundPresent() {
         return artworkBackground.isPresent();
-    }
-
-    public void clickOnCollectionBackButton() {
-        collectionBackButton.click();
     }
 
     public ExtendedWebElement getBackButton() { return backButton; }
@@ -1549,5 +1544,17 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTravelAlertOk() {
         return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_TRAVEL_MESSAGE_OK.getText()));
+    }
+
+    public void clickLogoutAllDevices() {
+        checkboxUnchecked.click();
+    }
+
+    public boolean isLogoutAllDevicesChecked() {
+        return checkboxChecked.isPresent();
+    }
+
+    public boolean isLogoutAllDevicesUnchecked() {
+        return checkboxUnchecked.isPresent();
     }
 }

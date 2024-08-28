@@ -34,10 +34,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
+    static final String AUSTRALIA_LANG = "en-GB";
     static final String BRAZIL_LANG = "pt-BR";
     static final String GERMANY_LANG = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
+    static final String NETHERLANDS_LANG = "en-GB";
     static final String NEW_ZEALAND_LANG = "en";
     public static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
@@ -54,54 +56,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupWithPIN(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    public void ratingsSetupForOTPAccount(String ratingValue, String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    public void ratingSetupWithPINForOTPAccount(String ratingValue, String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (IOException e) {
-            new Exception("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -229,7 +188,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(contentTitle).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
@@ -261,7 +220,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(contentTitle, rating), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(contentTitle).click();
 
         //ratings are shown on downloaded content
