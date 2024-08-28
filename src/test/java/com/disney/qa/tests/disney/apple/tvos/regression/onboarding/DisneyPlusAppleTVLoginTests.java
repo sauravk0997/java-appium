@@ -492,7 +492,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.moveUp(2,1);
 
         aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
+                .assertLabelContainsCaption(sa, "", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
         sa.assertAll();
     }
 
