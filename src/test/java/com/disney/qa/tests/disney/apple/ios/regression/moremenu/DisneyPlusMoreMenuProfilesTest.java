@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.responses.content.ContentSet;
