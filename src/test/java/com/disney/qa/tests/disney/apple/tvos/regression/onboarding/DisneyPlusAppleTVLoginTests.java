@@ -489,6 +489,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.clickMenu();
 
         sa.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
+        disneyPlusAppleTVHomePage.moveUp(2,1);
 
         aliceDriver.screenshotAndRecognize()
                 .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
