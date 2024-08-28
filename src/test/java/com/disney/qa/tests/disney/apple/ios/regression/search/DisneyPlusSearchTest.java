@@ -64,6 +64,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH})
     public void verifyMaintainSearchQuery() {
         String content = "The Simpsons";
+        List<String> firstResultList = new ArrayList<>();
+        List<String> secondResultList = new ArrayList<>();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -72,14 +74,19 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.searchForMedia(content);
-        String firstSearchResultTitle = searchPage.getDisplayedTitles().get(0).getText();
+        searchPage.getDisplayedTitles().forEach(searchResult -> firstResultList.add(searchResult.getText()));
+
         searchPage.getDynamicAccessibilityId(content).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        String firstSearchResultTitleAfterNavi = searchPage.getDisplayedTitles().get(0).getText();
-        Assert.assertEquals(firstSearchResultTitleAfterNavi, firstSearchResultTitle,
-                "Search results after navigation are not the same");
+
+        searchPage.getDisplayedTitles()
+                .subList(0, firstResultList.size())
+                .forEach(searchResult -> secondResultList.add(searchResult.getText()));
+
+        Assert.assertTrue(firstResultList.containsAll(secondResultList),
+                "Search Result list doesn't match with the previous navigation");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
