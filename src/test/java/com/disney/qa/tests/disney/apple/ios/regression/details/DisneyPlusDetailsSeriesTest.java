@@ -635,6 +635,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(TANGLED_THE_SERIES);
         searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        sa.assertTrue(basePage.getTypeButtonContainsLabel("Download season 1, episode 1").isPresent(), "Download episode button is not present");
+        basePage.getTypeButtonContainsLabel("Download season 1, episode 1").click();
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
         detailsPage.downloadAllOfSeason();
