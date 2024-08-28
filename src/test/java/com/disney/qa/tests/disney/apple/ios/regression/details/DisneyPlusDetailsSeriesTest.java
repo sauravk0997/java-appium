@@ -41,8 +41,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
-    private final int DOWNLOAD_TIMEOUT = 150;
-    private final int DOWNLOAD_POLLING = 15;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
