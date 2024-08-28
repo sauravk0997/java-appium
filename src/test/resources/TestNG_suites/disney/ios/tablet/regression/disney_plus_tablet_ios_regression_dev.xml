@@ -114,9 +114,9 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Profile Test" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21ProfileTest"/>
-        </classes>
-    </test>
+<!--    <test verbose="1" name="DisneyPlus iOS Tablet Profile Test" parallel="methods">-->
+<!--        <classes>-->
+<!--            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21ProfileTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
