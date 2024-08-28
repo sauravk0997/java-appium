@@ -40,7 +40,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
-    private static final String GIGANTOSAURUS_SERIES = "Gigantosaurus";
+    private static final String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
+    private final int DOWNLOAD_TIMEOUT = 150;
+    private final int DOWNLOAD_POLLING = 15;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
@@ -622,7 +624,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusApplePageBase basePage = initPage(DisneyPlusApplePageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
@@ -631,17 +633,17 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(GIGANTOSAURUS_SERIES);
-        searchPage.getDynamicAccessibilityId(GIGANTOSAURUS_SERIES).click();
+        searchPage.searchForMedia(TANGLED_THE_SERIES);
+        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertDismissBtn();
-
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        downloads.isContentHeaderPresent(GIGANTOSAURUS_SERIES);
+        sa.assertTrue(basePage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
         sa.assertAll();
     }
 }
