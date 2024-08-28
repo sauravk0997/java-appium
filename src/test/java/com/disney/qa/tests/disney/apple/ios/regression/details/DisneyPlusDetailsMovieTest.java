@@ -417,7 +417,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         }
         return metadataArray;
     }
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileDetailsPageMovieDownload() {
