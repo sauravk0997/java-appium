@@ -1,15 +1,11 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,6 +40,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
+    private static final String GIGANTOSAURUS_SERIES = "Gigantosaurus";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
@@ -617,5 +614,34 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
             }
             genreList.forEach(genre -> metadataArray.add(genre));
         return metadataArray;
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageSeriesDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(GIGANTOSAURUS_SERIES);
+        searchPage.getDynamicAccessibilityId(GIGANTOSAURUS_SERIES).click();
+
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertDismissBtn();
+
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        downloads.isContentHeaderPresent(GIGANTOSAURUS_SERIES);
+        sa.assertAll();
     }
 }

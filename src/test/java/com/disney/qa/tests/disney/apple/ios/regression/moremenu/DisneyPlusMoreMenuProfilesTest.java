@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.responses.content.ContentSet;
@@ -45,8 +44,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String THREE = "3";
     private static final String ESPAÑOL = "Español";
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
-    private static final String THE_TIGGER_MOVIE = "The Tigger Movie";
-    private static final String GIGANTOSAURUS_SERIES = "Gigantosaurus";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -829,59 +826,5 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             parentalConsent.scrollConsentContent(4);
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageMovieDownload() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(THE_TIGGER_MOVIE);
-        searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
-        detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        detailsPage.startDownload();
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        downloads.isContentHeaderPresent(THE_TIGGER_MOVIE);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageSeriesDownload() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(GIGANTOSAURUS_SERIES);
-        searchPage.getDynamicAccessibilityId(GIGANTOSAURUS_SERIES).click();
-
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertDismissBtn();
-
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertConfirm();
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        downloads.isContentHeaderPresent(GIGANTOSAURUS_SERIES);
-        sa.assertAll();
     }
 }
