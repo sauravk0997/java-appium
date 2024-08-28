@@ -1474,7 +1474,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isRatingElementPresent(DictionaryKeys rating) {
          return waitUntil(ExpectedConditions.invisibilityOfElementLocated(getStaticTextByLabelContains(getDictionary()
                  .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                 rating.getText())).getBy()), 10);
+                 rating.getText())).getBy()), TEN_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getNavBackArrow() {
