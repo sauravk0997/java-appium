@@ -44,9 +44,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement cancelButtonRecentSearch;
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     private ExtendedWebElement headerViewTitleLabel;
-    private ExtendedWebElement cancelButton = getStaticTextByLabelOrLabel(getDictionary()
-            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                    DictionaryKeys.CANCEL.getText()), DictionaryKeys.CANCEL.getText());
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
@@ -117,7 +114,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getCancelButton() {
-        return cancelButton;
+        String cancelButtonText = getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
     }
 
     public ExtendedWebElement getOriginalsTile() {
@@ -217,6 +217,12 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getRatingAndYearDetailsFromSearchResults(String title) {
         return ratingAndYearDetailsOfContent.format(title).getText();
+    }
+
+    public String getPlaceholderText() {
+        return getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.SEARCH_PLACEHOLDER.getText());
     }
 
     public boolean isExploreTitleDisplayed(int timeOut) {

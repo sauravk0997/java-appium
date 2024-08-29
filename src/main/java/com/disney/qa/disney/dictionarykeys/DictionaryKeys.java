@@ -429,6 +429,7 @@ public enum DictionaryKeys {
     RESUME_BTN("btn_resume"),
     SDK_ERROR_PROFILE_PIN_MISSING("sdk_error_profilepinmissing"),
     SEARCH_CALL_TO_ACTION("search_call_to_action"),
+    SEARCH_PLACEHOLDER("search_placeholder"),
     SEARCH_NO_RESULTS("search_noresults"),
     SEASON_EPISODE_TITLE_PLACEHOLDER("season_episode_title_placeholder"),
     SECURE_PROFILE_PIN_ACTION("secure_profile_pin_action"),

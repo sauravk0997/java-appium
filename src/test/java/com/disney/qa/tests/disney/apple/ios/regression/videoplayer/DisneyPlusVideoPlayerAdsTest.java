@@ -179,6 +179,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         String adInFrench = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
 
         editProfile.clickElementAtLocation(editProfile.getStaticTextByLabel(doneInFrench), 50, 50);
+        editProfile.waitForUpdatedToastToDisappear();
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(THE_MARVELS);
