@@ -5,6 +5,7 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,16 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isKidsHomePageOpen() {
         return mickeyAndFriends.isElementPresent();
+    }
+
+    public boolean isHeroCarouselDisplayed() {
+        return getDynamicAccessibilityId(CollectionConstant.getCollectionName(
+                CollectionConstant.Collection.HERO_CAROUSEL)).isPresent();
+    }
+
+    public ExtendedWebElement getHeroCarouselContainer() {
+        return getDynamicAccessibilityId(CollectionConstant.getCollectionName(
+                CollectionConstant.Collection.HERO_CAROUSEL));
     }
 
     public void clickFirstCarouselPoster() {
@@ -158,5 +169,24 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void goToDetailsPageFromContinueWatching(String title) {
         swipeTillContinueWatchingCarouselPresent();
         getStaticTextByLabel(title).click();
+    }
+
+    public String getCurrentHeroCarouselTitle() {
+        return getFirstCellTitleFromContainer(CollectionConstant.Collection.HERO_CAROUSEL).split(",")[0];
+    }
+
+    public boolean isHeroCarouselAutoRotating(String title) {
+        try {
+            fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Hero Carousel did not auto-rotate")
+                    .until(it -> !getFirstCellTitleFromContainer(
+                            CollectionConstant.Collection.HERO_CAROUSEL).contains(title));
+        } catch (TimeoutException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void swipeInHomePage(Direction direction) {
+        swipeInContainer(null, direction, 500);
     }
 }

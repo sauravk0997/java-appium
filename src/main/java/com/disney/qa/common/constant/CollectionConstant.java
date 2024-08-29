@@ -11,7 +11,6 @@ public class CollectionConstant {
         BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
         BRANDS_MARVEL_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
-        CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
@@ -22,6 +21,7 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         TRENDING,
+        HERO_CAROUSEL, //carousel rotating slides
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -48,8 +48,6 @@ public class CollectionConstant {
                 return "d64d932f-8dd3-490a-be9d-d20b9db12b58";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "057bb59d-40cc-4067-9d7a-ec2b244c2255";
-            case CAROUSEL:
-                return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:
                 return "ed2d5ad2-cfc6-42c7-942e-aa539772f10c";
             case COMEDIES:
@@ -60,6 +58,8 @@ public class CollectionConstant {
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
+            case HERO_CAROUSEL:
+                return "3766321d-ea10-4dc1-b086-d8fd557b7a62";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
