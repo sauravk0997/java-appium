@@ -835,7 +835,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuSimplifiedJuniorProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusApplePageBase disneyPlusApplePageBase = initPage(DisneyPlusApplePageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
