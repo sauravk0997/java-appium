@@ -29,7 +29,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
-    private static final String THE_TIGGER_MOVIE = "The Tigger Movie";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
@@ -424,6 +423,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String THE_TIGGER_MOVIE = "The Tigger Movie";
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
