@@ -847,7 +847,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Elements that should be present on screen
         sa.assertTrue(moreMenu.getProfileAvatar(JUNIOR_PROFILE).isPresent(SHORT_TIMEOUT),
                 "Avatar is not present");
-        sa.assertTrue(disneyPlusApplePageBase.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(),
+        sa.assertTrue(moreMenu.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(),
                 "Junior Mode name was not present on profile page");
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode text is not present");
