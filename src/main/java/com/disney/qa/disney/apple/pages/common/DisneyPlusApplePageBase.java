@@ -1477,8 +1477,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS,
                             rating.getText())).getBy()), TEN_SEC_TIMEOUT);
             }
-        catch (TimeoutException e)
-        {
+        catch (TimeoutException e) {
             return false;
         }
     }
