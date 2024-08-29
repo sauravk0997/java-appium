@@ -307,6 +307,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
 
+        videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(2);
         Assert.assertTrue(videoPlayer.isRatingPresent(DictionaryKeys.RATING_TVPG_TV_PG),  "rating was" +
