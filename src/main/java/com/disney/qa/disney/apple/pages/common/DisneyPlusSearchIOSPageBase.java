@@ -22,7 +22,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeStaticText' AND label = 'RECENT SEARCHES'$]")
     protected ExtendedWebElement recentSearchResultsView;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type = 'XCUIElementTypeStaticText' AND name = '%s'$]")
     protected ExtendedWebElement ratingAndYearDetailsOfContent;
     private String ratingImage = "current_rating_value_image";
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
