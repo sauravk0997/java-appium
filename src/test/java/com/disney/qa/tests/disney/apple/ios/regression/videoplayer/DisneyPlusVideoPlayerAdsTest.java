@@ -303,7 +303,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72834"})
     @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyContentRatingDisplayedAfterPreRoll() {
-        String TV_PG_RATING = DictionaryKeys.RATING_TVPG_TV_PG.getText();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
 
