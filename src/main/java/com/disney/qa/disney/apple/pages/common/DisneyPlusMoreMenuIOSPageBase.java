@@ -32,7 +32,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	@FindBy(xpath = "//XCUIElementTypeApplication[@name=\"Disney+\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther")
 	private ExtendedWebElement exitJuniorModePin;
-	@FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"%s\"]/preceding-sibling::*")
+
+	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]")
 	private ExtendedWebElement profileAvatar;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
@@ -41,7 +42,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"EDIT PROFILES\"`]/preceding-sibling::*")
 	private ExtendedWebElement profilesTray;
 
-	@FindBy(xpath = "//*[contains(@name, 'Version')]")
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Version\"`]")
 	private ExtendedWebElement appVersion;
 
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
