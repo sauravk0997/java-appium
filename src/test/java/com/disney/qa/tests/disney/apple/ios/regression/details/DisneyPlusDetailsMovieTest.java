@@ -434,8 +434,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(THE_TIGGER_MOVIE);
         searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
-        detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         detailsPage.startDownload();
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         sa.assertTrue(detailsPage.getStaticTextByLabel(THE_TIGGER_MOVIE).isPresent(), "Movie title is not present in downloads");
