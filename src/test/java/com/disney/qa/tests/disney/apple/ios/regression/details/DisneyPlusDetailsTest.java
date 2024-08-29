@@ -278,7 +278,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -302,20 +302,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayerPage.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime), "Correct remaining time is not reflecting in progress bar");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(),
+                "Continue button not present after exiting playback");
+        sa.assertTrue(detailsPage.isProgressBarPresent(),
+                "Progress bar is not present after exiting playback");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching - time remaining is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime),
+                "Correct remaining time is not reflecting in progress bar");
 
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
-        videoPlayerPage.scrubToPlaybackPercentage(99);
+        videoPlayerPage.scrubToPlaybackPercentage(99.5);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(),
+                "Continue button on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isProgressBarPresent(),
+                "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
 
