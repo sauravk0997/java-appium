@@ -622,7 +622,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusApplePageBase basePage = initPage(DisneyPlusApplePageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
@@ -633,8 +632,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(TANGLED_THE_SERIES);
         searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
-        sa.assertTrue(basePage.getTypeButtonContainsLabel("Download season 1, episode 1").isPresent(), "Download episode button is not present");
-        basePage.getTypeButtonContainsLabel("Download season 1, episode 1").click();
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel("Download season 1, episode 1").isPresent(), "Download episode button is not present");
+        detailsPage.getTypeButtonContainsLabel("Download season 1, episode 1").click();
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
         detailsPage.downloadAllOfSeason();
@@ -643,7 +642,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickAlertConfirm();
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        sa.assertTrue(basePage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
         sa.assertAll();
     }
 }
