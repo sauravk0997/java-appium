@@ -60,6 +60,35 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67325"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH})
+    public void verifyMaintainSearchQuery() {
+        String content = "The Simpsons";
+        List<String> firstResultList = new ArrayList<>();
+        List<String> secondResultList = new ArrayList<>();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(content);
+        searchPage.getDisplayedTitles().forEach(searchResult -> firstResultList.add(searchResult.getText()));
+
+        searchPage.getDynamicAccessibilityId(content).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        detailsPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getDisplayedTitles()
+                .subList(0, firstResultList.size())
+                .forEach(searchResult -> secondResultList.add(searchResult.getText()));
+
+        Assert.assertTrue(firstResultList.containsAll(secondResultList),
+                "Search Result list doesn't match with the previous navigation");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void clearRecentSearches() {
@@ -376,7 +405,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             //User made search with one letter
             String contentTitle = getFirstSearchResults(media);
-            sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
+            sa.assertTrue(contentTitle.startsWith(media), "Result doesnt start with letter " + media);
 
             //User made search with movie name
             contentTitle = getFirstSearchResults(movie);

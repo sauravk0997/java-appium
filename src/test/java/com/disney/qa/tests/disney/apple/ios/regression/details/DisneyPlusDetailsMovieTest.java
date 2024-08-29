@@ -1,14 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.search.assets.DisneyMovies;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -419,5 +415,26 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
             genreList.subList(0, 2).forEach(genre -> metadataArray.add(genre));
         }
         return metadataArray;
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageMovieDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String THE_TIGGER_MOVIE = "The Tigger Movie";
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(THE_TIGGER_MOVIE);
+        searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
+        detailsPage.startDownload();
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(THE_TIGGER_MOVIE).isPresent(), "Movie title is not present in downloads");
     }
 }
