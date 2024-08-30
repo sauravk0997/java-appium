@@ -1,15 +1,11 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -617,5 +613,34 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
             }
             genreList.forEach(genre -> metadataArray.add(genre));
         return metadataArray;
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageSeriesDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(TANGLED_THE_SERIES);
+        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
+        Assert.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
+
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.isAlertDismissBtnPresent(), "Alert message was not dismissed");
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
     }
 }

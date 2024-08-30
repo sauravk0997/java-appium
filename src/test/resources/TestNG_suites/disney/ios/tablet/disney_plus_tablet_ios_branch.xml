@@ -2,10 +2,11 @@
 <suite verbose="1" name="ios_tablet_branch" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
 
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name"
+               value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_branch"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="choiceParam::jenkinsEnvironments" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
@@ -18,7 +19,7 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="3.7.0.72257"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding Acceptance" parallel="methods">
         <classes>
@@ -95,11 +96,6 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Deep Links" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Tablet Profile Test" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21ProfileTest"/>
         </classes>
     </test>
 </suite>
