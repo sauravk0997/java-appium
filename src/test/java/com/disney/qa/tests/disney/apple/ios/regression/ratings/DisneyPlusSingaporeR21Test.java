@@ -1,33 +1,25 @@
-package com.disney.qa.tests.disney.apple.ios.regression.profiles;
-
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.dictionary.*;
-
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.disney.util.TestGroup;
-import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
-import io.appium.java_client.remote.MobilePlatform;
-import org.testng.Assert;
-import org.testng.SkipException;
-import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.IntStream;
+package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
-public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
-    private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
+import com.disney.qa.api.dictionary.*;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+
+import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
+
+import java.util.Date;
+import java.util.stream.IntStream;
+
+public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
     private static final String PIN_PAGE_DID_NOT_OPEN = "R21 pin page did not open";
@@ -775,88 +767,5 @@ public class DisneyPlusSingaporeR21ProfileTest extends DisneyBaseTest {
         homePage.goToDetailsPageFromContinueWatching(OUT_TITLE);
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-    }
-
-    private void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (Exception e) {
-            throw new SkipException("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void ratingsSetupForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void ratingSetupWithPINForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-        } catch (IOException e) {
-            new Exception("Failed to update Profile pin: {}", e);
-        }
-        setAccountRatingsMax(getAccount());
-        initialSetup();
-        handleAlert();
-        setAppToHomeScreen(getAccount());
-    }
-
-    private void setAccountRatingsMax(DisneyAccount account) {
-        List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().
-                getMaturityRating().getRatingSystemValues();
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getLocalizationUtils().getRatingSystem(),
-                ratingSystemValues.get(ratingSystemValues.size() - 1));
-    }
-
-    private void setDictionary(String lang, String locale) {
-        getLocalizationUtils().setCountryDataByCode(locale);
-        getLocalizationUtils().setLanguageCode(lang);
-        DisneyLocalizationUtils disneyLocalizationUtils =
-                new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
-        LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
-    }
-
-    @AfterGroups(TestGroup.R21)
-    private void clearSingaporeOverride() {
-        LOGGER.info("Clearing Singapore location override");
-        getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
-        setDictionary(ENGLISH_LANG, R.CONFIG.get(LOCALE));
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), R.CONFIG.get(LOCALE));
     }
 }
