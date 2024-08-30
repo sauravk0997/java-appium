@@ -12,7 +12,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -881,9 +880,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
 
-        prepareKidsProfileProofExit(moreMenu, sa);
+        configureKidsProfileProofExit(moreMenu, sa);
 
-        whoIsWatching.clickProfile(KIDS_PROFILE);
+        // whoIsWatching.clickProfile(KIDS_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.tapExitKidsProfileButton();
         moreMenu.getTypeButtonByName("btnClose").click();
@@ -893,7 +892,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void prepareKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
+    public void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
     {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -904,12 +903,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         // Validates kids proof exit option and toggle it
         sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
-        //editProfile.getKidProofExitLabel().click();
         editProfile.toggleKidsProofExit();
-        //  passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        //  sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "kids exit toggle is not 'On'");
         passwordPage.enterPassword(getAccount());
         passwordPage.getTypeButtonByLabel("Done").click();
-
     }
 }
