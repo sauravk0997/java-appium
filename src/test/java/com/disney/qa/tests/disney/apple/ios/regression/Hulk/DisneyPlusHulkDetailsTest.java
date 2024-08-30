@@ -528,43 +528,32 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().
                 getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+      //  getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Test2").
+              //  language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
 
-       String huluSubscriptionId = getHuluSubscriptionId();
+        String huluSubscriptionId = getHuluSubscriptionId();
         System.out.println(" *** huluSubscriptionId " + huluSubscriptionId.toString());
 
-        revokeSubscriptionById(huluSubscriptionId);
+        getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
+        getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
+
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-       // System.out.println(" *** huluSubscriptionId " + activeSubscriptions.toString());
-        /*
-     //   onboard();
-
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistHeaderDisplayed(),
-                "'Watchlist' header was not properly displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistEmptyBackgroundDisplayed(),
-                "Empty Watchlist text/logo was not properly displayed");
-*/
         sa.assertAll();
     }
 
-    private void revokeSubscriptionById(String subscriptionId) {
-        getSubscriptionApi().revokeSubscription(getAccount(), subscriptionId);
-        getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-    }
 
     private String getHuluSubscriptionId() {
         try {
-            // Get active subscriptions using the API
             JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-            // Determine the Hulu subscription index
+            System.out.println("** activeSubscriptions: " + activeSubscriptions.toString());
             int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
                     .get("sku").textValue()
                     .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
-            // get SubscriptionId
             return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
 
         } catch (IndexOutOfBoundsException e) {
