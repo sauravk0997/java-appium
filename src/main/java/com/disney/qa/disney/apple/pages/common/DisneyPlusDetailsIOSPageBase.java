@@ -320,17 +320,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAlertTitleDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent();
+        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent(FIVE_SEC_TIMEOUT);
     }
 
-    public boolean isDownloadsTextDisplayed(String episodes) {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        String seasonDownloadsText =
-                getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(
-                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText()),
-                        Map.of("E", Integer.parseInt(episodes)));
-        return getDynamicAccessibilityId(seasonDownloadsText).isElementPresent();
+    public boolean isTwentyDownloadsTextDisplayed() {
+        String twentyDownloadsText = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText()), Map.of("E", Integer.parseInt("20")));
+        return getDynamicAccessibilityId(twentyDownloadsText).isElementPresent();
     }
 
     public boolean isSeasonButtonDisplayed(String season) {

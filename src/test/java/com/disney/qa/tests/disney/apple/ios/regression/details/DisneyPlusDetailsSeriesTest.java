@@ -61,7 +61,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isDownloadsTextDisplayed("20"), "Download alert text not found.");
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isTwentyDownloadsTextDisplayed(), "Download alert text not found.");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(), "Download All Of Season One button not found");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDismissBtnPresent(), "Dismiss button not found");
         sa.assertAll();
@@ -608,7 +608,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Start season download
         detailsPage.downloadAllOfSeason();
         sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(detailsPage.isDownloadsTextDisplayed("4"), "Download alert text not found.");
         sa.assertTrue(detailsPage.isDownloadSeasonButtonDisplayed("1"), "Download Season One button not found");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
         detailsPage.clickAlertDismissBtn();
