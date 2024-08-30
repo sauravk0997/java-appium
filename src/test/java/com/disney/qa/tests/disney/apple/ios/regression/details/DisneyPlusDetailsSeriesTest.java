@@ -585,50 +585,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageSeriesEpisodeDownload() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(TANGLED_THE_SERIES);
-        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
-
-        detailsPage.getEpisodeToDownload("1","1").click();
-        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(), "Download not started, Stop or Pause Download " +
-                "button not displayed");
-        detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed");
-        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed");
-        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
-        detailsPage.clickAlertDismissBtn();
-        sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
-
-        //Remove Download
-        downloads.clickEditButton();
-        downloads.clickUncheckedCheckbox();
-        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
-        downloads.clickDeleteDownloadButton();
-        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76972"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileDetailsPageSeriesDownload() {
@@ -673,6 +629,50 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+
+        //Remove Download
+        downloads.clickEditButton();
+        downloads.clickUncheckedCheckbox();
+        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
+        downloads.clickDeleteDownloadButton();
+        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageSeriesEpisodeDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(TANGLED_THE_SERIES);
+        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
+
+        detailsPage.getEpisodeToDownload("1","1").click();
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(), "Download not started, Stop or Pause Download " +
+                "button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+        sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
+        detailsPage.clickAlertDismissBtn();
+        sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
+
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
 
         //Remove Download
