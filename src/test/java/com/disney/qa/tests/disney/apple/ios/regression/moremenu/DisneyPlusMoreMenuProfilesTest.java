@@ -12,6 +12,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -866,5 +867,50 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
                 "Log Out Menu is present");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75399"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileCloseButton() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        prepareKidsProfileProofExit(moreMenu, sa);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.tapExitKidsProfileButton();
+        moreMenu.getTypeButtonByName("btnClose").click();
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT KIDS MODE",
+                "Exit Junior Mode text is not present");
+
+        sa.assertAll();
+    }
+
+    public void prepareKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
+    {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        // Validates kids proof exit option and toggle it
+        sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
+        //editProfile.getKidProofExitLabel().click();
+        editProfile.toggleKidsProofExit();
+        //  passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        //  sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "kids exit toggle is not 'On'");
+        passwordPage.enterPassword(getAccount());
+        passwordPage.getTypeButtonByLabel("Done").click();
+
     }
 }
