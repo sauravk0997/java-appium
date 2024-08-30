@@ -152,7 +152,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "Keyboard was not shown when entering the search term");
         Assert.assertEquals(searchPage.getSearchBar().getText(),
                 searchPage.getPlaceholderText(),
-                "Placeholder text is not as expected");
+                placeholderError);
         searchPage.searchForMedia(title);
         Assert.assertNotEquals(searchPage.getSearchBar().getText(),
                 searchPage.getPlaceholderText(),
