@@ -883,7 +883,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         configureKidsProfileProofExit(moreMenu, sa);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         moreMenu.getTypeButtonByName("btnClose").click();
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT KIDS MODE",
