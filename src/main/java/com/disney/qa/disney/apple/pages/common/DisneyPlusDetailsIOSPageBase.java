@@ -1020,13 +1020,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent();
     }
 
-    public boolean isDownloadSeasonButtonDisplayed(String seasonNumber) {
-        return getTypeButtonByLabel(getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.DOWNLOAD_SEASON_NUMBER_BTN.getText()), Map.of("seasonNumber",
-                        Integer.parseInt(seasonNumber)))).isPresent();
-    }
-
     public boolean isStopOrPauseDownloadDisplayed() {
         fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Download not started")
                 .until(it -> stopOrPauseDownloadButton.isPresent());
@@ -1035,6 +1028,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickStopOrPauseDownload() {
         stopOrPauseDownloadButton.click();
+    }
+
+    public boolean isDownloadSeasonButtonDisplayed(String seasonNumber) {
+        return getTypeButtonByLabel(getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_SEASON_NUMBER_BTN.getText()), Map.of("seasonNumber",
+                        Integer.parseInt(seasonNumber)))).isPresent();
     }
 
     public boolean isPauseDownloadButtonDisplayd() {
