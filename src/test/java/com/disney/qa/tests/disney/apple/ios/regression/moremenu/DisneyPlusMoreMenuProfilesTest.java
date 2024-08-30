@@ -886,7 +886,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
-        moreMenu.getEscapeButton().click();
+        moreMenu.getCloseButtonExit().click();
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode text is not present");
 
