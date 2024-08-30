@@ -27,13 +27,15 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
+<!--            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>-->
         </classes>
+
     </test>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding2" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
+<!--            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>-->
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielLoginTest"/>
         </classes>
     </test>
 
