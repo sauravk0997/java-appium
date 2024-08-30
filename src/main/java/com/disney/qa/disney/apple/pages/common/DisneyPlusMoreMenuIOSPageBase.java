@@ -198,7 +198,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public String getAppVersion() {
-		String[] versionNum = getTypeCellLabelContains("Version").getText().split(": ");
+		String[] versionNum = appVersion.getText().split(": ");
 		return versionNum[1];
 	}
 

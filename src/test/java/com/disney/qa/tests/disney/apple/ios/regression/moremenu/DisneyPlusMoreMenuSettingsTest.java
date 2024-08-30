@@ -188,10 +188,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
                 "App Version was not displayed");
-        String[] capabilitiesAppVersion =  R.CONFIG.get("capabilities.app").split("-");
-        String versionMinusIpa = capabilitiesAppVersion[3].split(".ipa")[0];
-        String versionNumTogether = String.format("%s.%s", capabilitiesAppVersion[2], versionMinusIpa);
-        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersion(), versionNumTogether,
+        String[] capabilitiesAppVersion =  R.CONFIG.get("capabilities.app").split("/");
+        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersion(), capabilitiesAppVersion[5],
                 "Displayed App Version was not correct");
     }
 
