@@ -20,7 +20,7 @@
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="3.7.0.72257"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
