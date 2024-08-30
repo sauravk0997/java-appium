@@ -88,10 +88,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
-    @Test(description = "Ariel: Profiles - Edit Profile - Change Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyEditProfileUserCanChangeAvatar() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase =
+                new DisneyPlusEditProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         ExtendedWebElement[] avatars;
@@ -108,11 +109,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[3].click();
         BufferedImage addProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
-        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
+        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(),
+                addProfileAvatar.getHeight());
 
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
-                "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
+                "Updated Avatar displayed in the Edit Profiles display was either not displayed " +
+                         "or was altered beyond the accepted margin of error");
         disneyPlusEditProfileIOSPageBase.clickDoneBtnByDictionaryKey();
 
         sa.assertAll();
