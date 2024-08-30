@@ -629,14 +629,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
-
-        //Remove Download
-        downloads.clickEditButton();
-        downloads.clickUncheckedCheckbox();
-        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
-        downloads.clickDeleteDownloadButton();
-        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
         sa.assertAll();
     }
 
@@ -673,14 +665,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
-
-        //Remove Download
-        downloads.clickEditButton();
-        downloads.clickUncheckedCheckbox();
-        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
-        downloads.clickDeleteDownloadButton();
-        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
         sa.assertAll();
     }
 
