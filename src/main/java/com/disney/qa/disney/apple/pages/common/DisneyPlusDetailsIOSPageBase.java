@@ -1034,9 +1034,24 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                         Integer.parseInt(seasonNumber)))).isPresent();
     }
 
+    public boolean isDownloadInProgressStatusDisplayed() {
+        String downLoadInProgress = getDictionary().getValuesBetweenPlaceholders(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_IN_PROGRESS_PERCENT.getText())).get(0);
+        return getStaticTextByLabelContains(downLoadInProgress).isPresent();
+    }
+
     public boolean isPauseDownloadButtonDisplayd() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText())).isPresent();
+        int count = 2;
+        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        while (!pauseDownloadButton.isPresent() && count >= 0) {
+            clickAlertDismissBtn();
+            clickStopOrPauseDownload();
+            count--;
+        }
+        return pauseDownloadButton.isPresent();
     }
 
     public boolean isRemoveDownloadButtonDisplayd() {

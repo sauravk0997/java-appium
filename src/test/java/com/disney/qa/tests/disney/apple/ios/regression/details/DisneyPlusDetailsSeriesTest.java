@@ -608,7 +608,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Start season download
         detailsPage.downloadAllOfSeason();
         sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(detailsPage.isDownloadSeasonButtonDisplayed("1"), "Download Season One button not found");
+        sa.assertTrue(detailsPage.isDownloadSeasonButtonDisplayed("1"),
+                "Download Season One button not found");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
         detailsPage.clickAlertDismissBtn();
         sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Download Alert was not dismissed");
@@ -616,13 +617,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //verify pause and remove download
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
-        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(), "Download not started, Stop or Pause Download " +
-                "button not displayed");
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed");
-        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed");
-        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on alert");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on alert");
         detailsPage.clickAlertDismissBtn();
         sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
@@ -638,7 +640,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
@@ -650,21 +651,24 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.searchForMedia(TANGLED_THE_SERIES);
         searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"),
+                "Series download button is not present");
 
         detailsPage.getEpisodeToDownload("1","1").click();
-        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(), "Download not started, Stop or Pause Download " +
-                "button not displayed");
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
-        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed");
-        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed");
-        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on alert");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on alert");
         detailsPage.clickAlertDismissBtn();
         sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(),
+                "Series content title is not present");
         sa.assertAll();
     }
 
