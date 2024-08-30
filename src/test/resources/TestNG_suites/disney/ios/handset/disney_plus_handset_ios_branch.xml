@@ -3,10 +3,10 @@
 
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
-               value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Disney-Prod-Enterprise"/>
+               value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_branch"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="choiceParam::jenkinsEnvironments" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
@@ -20,7 +20,7 @@
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,ArielLogIn,ArielSignUp,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="3.7.0.72257"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
