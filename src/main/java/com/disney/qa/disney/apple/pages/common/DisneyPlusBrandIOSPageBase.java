@@ -11,10 +11,7 @@ import java.awt.image.BufferedImage;
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     private static final String IMAGES_ARE_THE_SAME_ERROR_MESSAGE = "Images are the same";
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]")
-    private ExtendedWebElement brandLandingView;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement collectionBrandImageExpanded;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name = 'buttonBack'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[3]")
