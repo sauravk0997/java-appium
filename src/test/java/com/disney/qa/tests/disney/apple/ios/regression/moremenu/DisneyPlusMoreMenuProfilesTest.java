@@ -875,29 +875,25 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfileIOSPageBase = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
-        SoftAssert sa = new SoftAssert();
-
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
                 profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
 
-        configureKidsProfileProofExit(moreMenu, sa);
+        configureKidsProfileProofExit(moreMenu);
 
         moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        sa.assertTrue(editProfileIOSPageBase.getKidProofDialogDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(editProfileIOSPageBase.getKidProofDialogDisplayed(), "Kid Proof Exit screen was not displayed");
         moreMenu.getCloseButtonExit().click();
         // Validates that Kid Proof Exit Screen has been closed
-        sa.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
+        Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
                 "Junior Profile screen was not open");
-
-        sa.assertAll();
     }
 
-    private void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
+    private void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu)
     {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
