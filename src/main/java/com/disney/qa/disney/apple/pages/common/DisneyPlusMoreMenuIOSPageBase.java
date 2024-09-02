@@ -200,12 +200,15 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return addressbar.getText().contains("help.disneyplus.com");
 	}
 
-	public boolean isAppVersionDisplayed() {
-		return getTypeCellLabelContains("Version").isPresent();
+	public String getAppVersion() {
+		String[] versionNum = appVersion.getText().split(": ");
+		return versionNum[1];
 	}
 
-	public String getAppVersionText() {
-		return appVersion.getText();
+	public boolean isAppVersionDisplayed() {
+		String appVersionKey = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.APP_VERSION_NUMBER.getText()), Map.of("app_version_number_build_number", getAppVersion()));
+		return getTypeCellLabelContains(appVersionKey).isPresent();
 	}
 
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
