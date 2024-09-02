@@ -107,6 +107,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         chooseAvatarPage.isOpened();
         chooseAvatarPage.verifyChooseAvatarPage();
         avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        sa.assertTrue(chooseAvatarPage.getBackButton().isPresent());
         avatars[3].click();
         BufferedImage addProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
         BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(),
