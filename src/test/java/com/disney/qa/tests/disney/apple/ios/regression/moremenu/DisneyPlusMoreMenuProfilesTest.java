@@ -117,7 +117,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
                 "Updated Avatar displayed in the Edit Profiles display was either not displayed " +
                          "or was altered beyond the accepted margin of error");
-        disneyPlusEditProfileIOSPageBase.clickDoneBtnByDictionaryKey();
 
         sa.assertAll();
     }
