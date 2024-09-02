@@ -893,7 +893,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
+    private void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu, SoftAssert sa)
     {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
