@@ -103,18 +103,31 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
         disneyPlusEditProfileIOSPageBase.clickEditModeProfile(DEFAULT_PROFILE);
+        BufferedImage avatarProfileBeforeClickingBackBtn = getElementImage(disneyPlusEditProfileIOSPageBase
+                .getAddProfileAvatar());
         disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
         chooseAvatarPage.isOpened();
         chooseAvatarPage.verifyChooseAvatarPage();
+        chooseAvatarPage.tapBackButton();
+
+        BufferedImage avatarProfileAfterClickingBackBtn = getElementImage(disneyPlusEditProfileIOSPageBase
+                .getAddProfileAvatar());
+        LOGGER.info("Comparing Both avatars in 'Edit Profiles' display are same...");
+        sa.assertTrue(areImagesTheSame(avatarProfileBeforeClickingBackBtn,
+                        avatarProfileAfterClickingBackBtn,10),
+                " Avatar displayed in the Edit Profiles display was not same " );
+        disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
+
+        chooseAvatarPage.isOpened();
+        chooseAvatarPage.verifyChooseAvatarPage();
         avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        sa.assertTrue(chooseAvatarPage.getBackButton().isPresent());
         avatars[3].click();
-        BufferedImage addProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
-        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(),
-                addProfileAvatar.getHeight());
+        BufferedImage editProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
+        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, editProfileAvatar.getWidth(),
+                editProfileAvatar.getHeight());
 
         LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
-        sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
+        sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, editProfileAvatar, 10),
                 "Updated Avatar displayed in the Edit Profiles display was either not displayed " +
                          "or was altered beyond the accepted margin of error");
 
