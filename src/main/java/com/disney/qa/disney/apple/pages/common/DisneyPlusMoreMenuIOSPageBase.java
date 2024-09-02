@@ -81,7 +81,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
 	private ExtendedWebElement profileSelectionCollectionView;
 
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]")
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
 	private ExtendedWebElement closeButtonExit;
 
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
