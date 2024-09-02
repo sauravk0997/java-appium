@@ -886,9 +886,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
+        // Validates title text from Kid Proof Exit Screen
+        sa.assertTrue(moreMenu.getStaticTextByLabelContains("To exit Junior Mode").isPresent(), "Kid Proof Exit screen was not displayed");
         moreMenu.getCloseButtonExit().click();
-        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
-                "Exit Junior Mode text is not present");
+        // Validates that Kid Proof Exit Screen has been closed
+        sa.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
+                "Junior Profile screen was not open");
 
         sa.assertAll();
     }
@@ -906,6 +909,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
         editProfile.toggleKidsProofExit();
         passwordPage.enterPassword(getAccount());
-        passwordPage.getTypeButtonByLabel("Done").click();
+        editProfile.clickDoneBtn();
     }
 }
