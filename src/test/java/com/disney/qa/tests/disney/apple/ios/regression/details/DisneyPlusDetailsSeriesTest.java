@@ -41,7 +41,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
-    private static final String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
+    private static final String BLUEY = "Bluey";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
@@ -600,8 +600,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(TANGLED_THE_SERIES);
-        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDynamicAccessibilityId(BLUEY).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
@@ -617,7 +617,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //verify pause and remove download
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
-        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(),
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
@@ -630,7 +630,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(BLUEY).isPresent(), "Series content title is not present");
         sa.assertAll();
     }
 
@@ -648,14 +648,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(TANGLED_THE_SERIES);
-        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDynamicAccessibilityId(BLUEY).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"),
                 "Series download button is not present");
 
         detailsPage.getEpisodeToDownload("1","1").click();
-        sa.assertTrue(detailsPage.isStopOrPauseDownloadDisplayed(),
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
@@ -667,7 +667,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(),
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(BLUEY).isPresent(),
                 "Series content title is not present");
         sa.assertAll();
     }
