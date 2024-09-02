@@ -903,7 +903,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         // Validates kids proof exit option and toggle it
-        sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
+        Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
         editProfile.toggleKidsProofExit();
         passwordPage.enterPassword(getAccount());
         passwordPage.getTypeButtonByLabel("Done").click();
