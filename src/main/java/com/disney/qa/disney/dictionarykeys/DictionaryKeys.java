@@ -26,6 +26,7 @@ public enum DictionaryKeys {
     AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY("auth_password_kidsprofile_off_body"),
     AUTOPLAY_SUBCOPY("autoplay_subcopy"),
     APP_SETTINGS_TITLE("app_settings_title"),
+    APP_VERSION_NUMBER("app_version_number"),
     ATTRIBUTE_VALIDATION("attributeValidation"),
     BACK_BTN("btn_back"),
     BILLING_INFO_TITLE("billinginfo_title"),
