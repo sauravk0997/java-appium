@@ -4,11 +4,11 @@
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76979"/>
     <parameter name="jenkinsBuild" value="3.6.0.71608"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_handset_regression_rc"/>
     <parameter name="jenkinsEmail" value="Katie.Hampton@disney.com,Sydnee.Stanley@disney.com,Eric.Appel@disney.com,Eric.Liao@disney.com,vaibhavi.zaveri@disney.com"/>
-    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="choiceParam::jenkinsEnvironments" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_1,iPhone_11_2,iPhone_11_3,iPhone_12,iPhone_14;deviceType=Phone;timeoutMs=120000"/>
@@ -18,7 +18,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,R21,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
@@ -109,11 +109,6 @@
     <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Profile Test" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.profiles.DisneyPlusSingaporeR21ProfileTest"/>
         </classes>
     </test>
 </suite>

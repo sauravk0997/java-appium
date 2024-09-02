@@ -20,7 +20,7 @@
     <parameter name="scheduling" value="H 0 * * 6,0"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset APAC Ratings">
         <classes>
@@ -85,6 +85,11 @@
     <test verbose="1" name="DisneyPlus iOS Handset Australia NCS Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNCSRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Singapore R21 Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
