@@ -873,6 +873,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyKidProofExitJuniorProfileCloseButton() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfileIOSPageBase = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
 
@@ -887,7 +888,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        sa.assertTrue(moreMenu.getStaticTextByLabelContains("To exit Junior Mode").isPresent(), "Kid Proof Exit screen was not displayed");
+        sa.assertTrue(editProfileIOSPageBase.getKidProofDialogDisplayed(), "Kid Proof Exit screen was not displayed");
         moreMenu.getCloseButtonExit().click();
         // Validates that Kid Proof Exit Screen has been closed
         sa.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),

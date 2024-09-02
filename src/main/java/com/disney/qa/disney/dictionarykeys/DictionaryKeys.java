@@ -234,6 +234,7 @@ public enum DictionaryKeys {
     INVALID_REQUEST("invalidrequest"),
     JUNIOR_MODE_LEARN_MORE("btn_junior_mode_learn_more_link_1_text"),
     KEYBOARD_CONTINUE("keyboard_continue"),
+    KIDPROOF_DIALOG_TITLE("kidproof_dialog_title"),
     KIDS_PROFILE_SUBCOPY("kidsprofile_subcopy"),
     LEGAL_TITLE("legalcenter_title"),
     LIVE_PROGRESS("live_progress"),

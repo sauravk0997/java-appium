@@ -561,4 +561,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public boolean isEditProfileImageDisplayed() {
         return editProfileImage.isPresent();
     }
+
+    public boolean getKidProofDialogDisplayed() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                KIDPROOF_DIALOG_TITLE.getText())).isPresent();
+    }
 }
