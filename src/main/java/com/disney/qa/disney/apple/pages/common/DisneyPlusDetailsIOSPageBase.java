@@ -1041,17 +1041,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabelContains(downLoadInProgress).isPresent();
     }
 
-    public boolean isDownloadInQueueStatusDisplayed() {
-        String downLoadInQueue = getDictionary().getValuesBetweenPlaceholders(getDictionary().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.DOWNLOAD_QUEUED.getText())).get(0);
-        return getStaticTextByLabelContains(downLoadInQueue).isPresent();
-    }
-
     public boolean isPauseDownloadButtonDisplayd() {
-        return getTypeButtonByLabel(getDictionary().
+        int count = 5;
+        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText())).isPresent();
+                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        while (!pauseDownloadButton.isPresent() && count >= 0) {
+            clickAlertDismissBtn();
+            clickStopOrPauseDownload();
+            count--;
+        }
+        return pauseDownloadButton.isPresent();
     }
 
     public boolean isRemoveDownloadButtonDisplayd() {

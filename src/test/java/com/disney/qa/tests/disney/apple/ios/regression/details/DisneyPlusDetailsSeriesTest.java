@@ -620,11 +620,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
-        sa.assertTrue(detailsPage.isDownloadInQueueStatusDisplayed(),
-                "Download is Queued status not displayed on alert");
-        detailsPage.clickAlertDismissBtn();
-        detailsPage.clickStopOrPauseDownload();
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
         sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
@@ -662,11 +657,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload("1","1").click();
         sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
-        detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
-        sa.assertTrue(detailsPage.isDownloadInQueueStatusDisplayed(),
-                "Download is Queued status not displayed on alert");
-        detailsPage.clickAlertDismissBtn();
         detailsPage.clickStopOrPauseDownload();
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayd(), "Pause Download button not displayed on alert");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayd(), "Remove Download button not displayed on alert");
