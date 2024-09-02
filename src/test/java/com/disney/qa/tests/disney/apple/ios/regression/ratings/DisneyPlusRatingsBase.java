@@ -45,6 +45,15 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String TURKEY_LANG = "tr";
     static final String LATAM_LANG = "es";
 
+    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
@@ -55,15 +64,62 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
-
-    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (IOException e) {
+            new Exception("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
+        setDictionary(lang, locale);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupForOTPAccount(String lang, String locale) {
+        setDictionary(lang, locale);
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust poup");
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+    }
+
+    public void confirmRegionalRatingsDisplays(String rating) {
+        if (isMovie) {
+            LOGGER.info("Testing against Movie content.");
+            validateMovieContent(rating);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating);
+        }
     }
 
     private void setAccountRatingsMax(DisneyAccount account) {
@@ -169,17 +225,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         return null;
     }
 
-    public void confirmRegionalRatingsDisplays(String rating) {
-        if (isMovie) {
-            LOGGER.info("Testing against Movie content.");
-            validateMovieContent(rating);
-        } else {
-            LOGGER.info("Testing against Series content.");
-            validateSeriesContent(rating);
-        }
-    }
-
-    public void validateSeriesContent(String rating) {
+    private void validateSeriesContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -211,7 +257,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void validateMovieContent(String rating) {
+    private void validateMovieContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -236,12 +282,5 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
-    }
-
-    public void handleOneTrustPopUp() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        LOGGER.info("Checking for one trust poup");
-        if (oneTrustPage.isOpened())
-            oneTrustPage.tapAcceptAllButton();
     }
 }

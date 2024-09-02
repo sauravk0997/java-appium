@@ -2,8 +2,8 @@
 <suite verbose="1" name="ios_tablet_ratings_dev" annotations="JDK" configfailurepolicy="continue" thread-count="6">
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.7.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77069"/>
-    <parameter name="jenkinsBuild" value="3.7.0.72257"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77094"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="ios_tablet_ratings_dev"/>
@@ -20,7 +20,7 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
     <!-- TODO: This needs to be update to not collide with iOS Tablet regression schedule -->
     <parameter name="scheduling" value="H 7 * * 6,0"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
         <classes>
@@ -85,6 +85,11 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Australia NCS Ratings">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNCSRatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Singapore R21 Ratings">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
