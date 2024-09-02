@@ -41,7 +41,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
-    private static final String BLUEY = "Bluey";
+    private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
@@ -600,8 +600,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(BLUEY);
-        searchPage.getDynamicAccessibilityId(BLUEY).click();
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
@@ -635,7 +635,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(BLUEY).isPresent(), "Series content title is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(), "Series content title is not present");
         sa.assertAll();
     }
 
@@ -653,8 +653,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(BLUEY);
-        searchPage.getDynamicAccessibilityId(BLUEY).click();
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"),
                 "Series download button is not present");
@@ -677,7 +677,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(BLUEY).isPresent(),
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
                 "Series content title is not present");
         sa.assertAll();
     }
