@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="ios_handset_regression_fc" annotations="JDK" configfailurepolicy="continue" thread-count="8" parallel="tests">
+<suite verbose="1" name="ios_handset_regression_fc" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
