@@ -82,7 +82,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement profileSelectionCollectionView;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
-	private ExtendedWebElement closeButtonExit;
+	private ExtendedWebElement closeButton;
 
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -375,7 +375,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return pinProtectedProfileLock.format(profileName).isPresent();
 	}
 
-	public ExtendedWebElement getCloseButtonExit() {
-		return closeButtonExit;
+	public ExtendedWebElement getCloseButton() {
+		return closeButton;
 	}
 }
