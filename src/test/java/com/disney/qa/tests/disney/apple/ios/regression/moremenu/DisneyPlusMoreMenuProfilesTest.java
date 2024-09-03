@@ -110,14 +110,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         chooseAvatarPage.verifyChooseAvatarPage();
         chooseAvatarPage.tapBackButton();
 
+        LOGGER.info("Comparing the avatars in 'Edit Profiles' display are same, before and after clicking Back Btn...");
         BufferedImage avatarProfileAfterClickingBackBtn = getElementImage(disneyPlusEditProfileIOSPageBase
                 .getAddProfileAvatar());
-        LOGGER.info("Comparing the avatars in 'Edit Profiles' display are same, before and after clicking Back Btn...");
         sa.assertTrue(areImagesTheSame(avatarProfileBeforeClickingBackBtn,
                         avatarProfileAfterClickingBackBtn,10),
                 " Avatar displayed in the Edit Profiles display was not same " );
-        disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
 
+        disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
         chooseAvatarPage.isOpened();
         chooseAvatarPage.verifyChooseAvatarPage();
         avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
